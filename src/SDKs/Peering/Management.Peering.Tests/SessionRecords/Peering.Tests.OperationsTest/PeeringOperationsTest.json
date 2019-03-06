@@ -1,0 +1,68 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Peering/operations?api-version=2018-10-01-preview",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy9vcGVyYXRpb25zP2FwaS12ZXJzaW9uPTIwMTgtMTAtMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "91d704e5-217f-4850-b534-ec13892a9f57"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Peering.EdgeRpClient/0.4.2.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "00000000-0000-0000-0000-000000000000"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "00b12667-8925-4975-986b-7376a2757549"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20190305T224224Z:00b12667-8925-4975-986b-7376a2757549"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Tue, 05 Mar 2019 22:42:24 GMT"
+        ],
+        "Content-Length": [
+          "1459"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Peering/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"Peering Resource Provider\",\r\n        \"operation\": \"Registers the Peering Resource Provider\",\r\n        \"description\": \"Registers the subscription for the Peering Resource Provider and enables the creation of peerings\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringLocations/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peeringLocations\",\r\n        \"operation\": \"Read PeeringLocation\",\r\n        \"description\": \"Read any peeringLocations\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peeringPartners/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Read PeeringPartner\",\r\n        \"description\": \"Read any peeringPartners\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Read Peering\",\r\n        \"description\": \"Read any peerings\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Peering/peerings/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Peering\",\r\n        \"resource\": \"peerings\",\r\n        \"operation\": \"Write Peering\",\r\n        \"description\": \"Write any peerings\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4445bf11-61c4-436f-a940-60194f8aca57"
+  }
+}

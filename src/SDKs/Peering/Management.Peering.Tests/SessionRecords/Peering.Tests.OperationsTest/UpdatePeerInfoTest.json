@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/4445bf11-61c4-436f-a940-60194f8aca57/providers/Microsoft.Peering/updatePeerInfo?api-version=2018-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDQ0NWJmMTEtNjFjNC00MzZmLWE5NDAtNjAxOTRmOGFjYTU3L3Byb3ZpZGVycy9NaWNyb3NvZnQuUGVlcmluZy91cGRhdGVQZWVySW5mbz9hcGktdmVyc2lvbj0yMDE4LTEwLTAxLXByZXZpZXc=",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"peerAsn\": 6453,\r\n  \"peerContactInfo\": {\r\n    \"emails\": [\r\n      \"noc@tata.com\"\r\n    ],\r\n    \"phone\": [\r\n      \"9999999\"\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "810fb948-bdfd-4cf0-b44c-a001b68abf97"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Peering.EdgeRpClient/0.4.2.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "140"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "00000000-0000-0000-0000-000000000000"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "153cdfaf-3d7a-446d-b235-3d3f668d7ea5"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20190306T002604Z:153cdfaf-3d7a-446d-b235-3d3f668d7ea5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Date": [
+          "Wed, 06 Mar 2019 00:26:04 GMT"
+        ],
+        "Content-Length": [
+          "140"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"peerAsn\": 6453,\r\n  \"peerContactInfo\": {\r\n    \"emails\": [\r\n      \"noc@tata.com\"\r\n    ],\r\n    \"phone\": [\r\n      \"9999999\"\r\n    ]\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "4445bf11-61c4-436f-a940-60194f8aca57"
+  }
+}
