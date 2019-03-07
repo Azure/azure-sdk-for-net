@@ -12,16 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for DiskCreateOption.
+    /// Defines values for HyperVGeneration.
     /// </summary>
-    public static class DiskCreateOption
+    public static class HyperVGeneration
     {
-        public const string Empty = "Empty";
-        public const string Attach = "Attach";
-        public const string FromImage = "FromImage";
-        public const string Import = "Import";
-        public const string Copy = "Copy";
-        public const string Restore = "Restore";
-        public const string Upload = "Upload";
+        public const string V1 = "V1";
+        public const string V2 = "V2";
     }
 }

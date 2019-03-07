@@ -14,34 +14,28 @@ namespace Microsoft.Azure.Management.Compute.Models
     using System.Linq;
 
     /// <summary>
-    /// Encryption settings for disk or snapshot
+    /// Encryption settings for one disk volume.
     /// </summary>
-    public partial class EncryptionSettings
+    public partial class EncryptionSettingsElement
     {
         /// <summary>
-        /// Initializes a new instance of the EncryptionSettings class.
+        /// Initializes a new instance of the EncryptionSettingsElement class.
         /// </summary>
-        public EncryptionSettings()
+        public EncryptionSettingsElement()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EncryptionSettings class.
+        /// Initializes a new instance of the EncryptionSettingsElement class.
         /// </summary>
-        /// <param name="enabled">Set this flag to true and provide
-        /// DiskEncryptionKey and optional KeyEncryptionKey to enable
-        /// encryption. Set this flag to false and remove DiskEncryptionKey and
-        /// KeyEncryptionKey to disable encryption. If EncryptionSettings is
-        /// null in the request object, the existing settings remain
-        /// unchanged.</param>
         /// <param name="diskEncryptionKey">Key Vault Secret Url and vault id
         /// of the disk encryption key</param>
         /// <param name="keyEncryptionKey">Key Vault Key Url and vault id of
-        /// the key encryption key</param>
-        public EncryptionSettings(bool? enabled = default(bool?), KeyVaultAndSecretReference diskEncryptionKey = default(KeyVaultAndSecretReference), KeyVaultAndKeyReference keyEncryptionKey = default(KeyVaultAndKeyReference))
+        /// the key encryption key. KeyEncryptionKey is optional and when
+        /// provided is used to unwrap the disk encryption key.</param>
+        public EncryptionSettingsElement(KeyVaultAndSecretReference diskEncryptionKey = default(KeyVaultAndSecretReference), KeyVaultAndKeyReference keyEncryptionKey = default(KeyVaultAndKeyReference))
         {
-            Enabled = enabled;
             DiskEncryptionKey = diskEncryptionKey;
             KeyEncryptionKey = keyEncryptionKey;
             CustomInit();
@@ -53,16 +47,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets set this flag to true and provide DiskEncryptionKey
-        /// and optional KeyEncryptionKey to enable encryption. Set this flag
-        /// to false and remove DiskEncryptionKey and KeyEncryptionKey to
-        /// disable encryption. If EncryptionSettings is null in the request
-        /// object, the existing settings remain unchanged.
-        /// </summary>
-        [JsonProperty(PropertyName = "enabled")]
-        public bool? Enabled { get; set; }
-
-        /// <summary>
         /// Gets or sets key Vault Secret Url and vault id of the disk
         /// encryption key
         /// </summary>
@@ -71,7 +55,8 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets key Vault Key Url and vault id of the key encryption
-        /// key
+        /// key. KeyEncryptionKey is optional and when provided is used to
+        /// unwrap the disk encryption key.
         /// </summary>
         [JsonProperty(PropertyName = "keyEncryptionKey")]
         public KeyVaultAndKeyReference KeyEncryptionKey { get; set; }
