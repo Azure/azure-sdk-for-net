@@ -12,16 +12,15 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for DiskCreateOption.
+    /// Defines values for DiskState.
     /// </summary>
-    public static class DiskCreateOption
+    public static class DiskState
     {
-        public const string Empty = "Empty";
-        public const string Attach = "Attach";
-        public const string FromImage = "FromImage";
-        public const string Import = "Import";
-        public const string Copy = "Copy";
-        public const string Restore = "Restore";
-        public const string Upload = "Upload";
+        public const string Unattached = "Unattached";
+        public const string Attached = "Attached";
+        public const string Reserved = "Reserved";
+        public const string ActiveSAS = "ActiveSAS";
+        public const string ReadyToUpload = "ReadyToUpload";
+        public const string ActiveUpload = "ActiveUpload";
     }
 }

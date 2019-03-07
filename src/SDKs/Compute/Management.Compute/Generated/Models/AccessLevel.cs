@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Compute.Models
     {
         public const string None = "None";
         public const string Read = "Read";
+        public const string Write = "Write";
     }
 }
