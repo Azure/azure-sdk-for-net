@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the JobInputClip class.
         /// </summary>
-        /// <param name="files">List of files. Required for
-        /// JobInputHttp.</param>
+        /// <param name="files">List of files. Required for JobInputHttp.
+        /// Maximum of 4000 characters each.</param>
         /// <param name="label">A label that is assigned to a JobInputClip,
         /// that is used to satisfy a reference used in the Transform. For
         /// example, a Transform can be authored so as to take an image file
@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of files. Required for JobInputHttp.
+        /// Gets or sets list of files. Required for JobInputHttp. Maximum of
+        /// 4000 characters each.
         /// </summary>
         [JsonProperty(PropertyName = "files")]
         public IList<string> Files { get; set; }
