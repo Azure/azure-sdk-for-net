@@ -27,10 +27,10 @@ namespace ClientRuntime.NetCore.Tests
 
             var retryHandler = new RetryAfterDelegatingHandler(fakeHttpHandler);
 
-            // Setup HttpClient to timeout after 500 milliseconds.
+            // Setup HttpClient to timeout after 5 seconds.
             var httpClient = new HttpClient(retryHandler, false)
             {
-                Timeout = TimeSpan.FromMilliseconds(500)
+                Timeout = TimeSpan.FromSeconds(5)
             };
 
             // Make a request using the HttpClient.
@@ -67,10 +67,10 @@ namespace ClientRuntime.NetCore.Tests
 
             var retryHandler = new RetryAfterDelegatingHandler(fakeHttpHandler);
 
-            // Setup HttpClient to timeout after 500 milliseconds.
+            // Setup HttpClient to timeout after 5 seconds.
             var httpClient = new HttpClient(retryHandler, false)
             {
-                Timeout = TimeSpan.FromMilliseconds(500)
+                Timeout = TimeSpan.FromSeconds(5)
             };
 
             // Make a request using the HttpClient.
