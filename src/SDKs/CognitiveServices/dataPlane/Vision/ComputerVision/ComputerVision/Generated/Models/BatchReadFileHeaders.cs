@@ -11,26 +11,29 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class RecognitionResult
+    /// <summary>
+    /// Defines headers for BatchReadFile operation.
+    /// </summary>
+    public partial class BatchReadFileHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the RecognitionResult class.
+        /// Initializes a new instance of the BatchReadFileHeaders class.
         /// </summary>
-        public RecognitionResult()
+        public BatchReadFileHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RecognitionResult class.
+        /// Initializes a new instance of the BatchReadFileHeaders class.
         /// </summary>
-        public RecognitionResult(IList<Line> lines = default(IList<Line>))
+        /// <param name="operationLocation">URL to query for status of the
+        /// operation. The operation ID will expire in 48 hours. </param>
+        public BatchReadFileHeaders(string operationLocation = default(string))
         {
-            Lines = lines;
+            OperationLocation = operationLocation;
             CustomInit();
         }
 
@@ -40,9 +43,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets URL to query for status of the operation. The
+        /// operation ID will expire in 48 hours.
         /// </summary>
-        [JsonProperty(PropertyName = "lines")]
-        public IList<Line> Lines { get; set; }
+        [JsonProperty(PropertyName = "Operation-Location")]
+        public string OperationLocation { get; set; }
 
     }
 }
