@@ -11,7 +11,9 @@
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
-    The Analyze methods support Brand (Logo) detection.
+    Changes in this release:
+    1. Support new OCR operations, `BatchReadFile` and `GetReadOperationResult`.
+    2. Change class name `RecognitionResult` to `TextRecognitionResult.`
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
