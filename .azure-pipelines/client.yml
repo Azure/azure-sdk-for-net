@@ -65,17 +65,39 @@ jobs:
         Linux:
           OSName: 'Linux'
           OSVmImage: 'ubuntu-16.04'
+          # Script to check OS Agent on VM
+          OSUniqueScript: |
+            function Verify-OSAgent {
+              $OSVersion = [System.Environment]::OSVersion.Platform
+              If ($OSVersion -ne 'Unix') { throw "Wrong Agent OS" }}
+              Verify-OSAgent
         Windows:
           OSName: 'Windows'
           OSVmImage: 'vs2017-win2016'
+          OSUniqueScript: |
+            function Verify-OSAgent {
+              $OSVersion = [System.Environment]::OSVersion.Platform
+              If ($OSVersion -ne 'Win32NT') { throw "Wrong Agent OS" }}
+              Verify-OSAgent
         MacOs:
           OSName: 'MacOS'
           OSVmImage: 'macOS-10.13'
-
+          OSUniqueScript: |
+            function Verify-OSAgent {
+              $OSVersion = [System.Environment]::OSVersion.Platform
+              If ($OSVersion -ne 'macOS') { throw "Wrong Agent OS" }}
+              Verify-OSAgent
     pool:
       vmImage: '$(OSVmImage)'
 
     steps:
+      - pwsh: '$(OSUniqueScript)'
+        displayName: Verify OS Agent
+        name: verifyOSAgent
+        workingDirectory: $(build.sourcesDirectory)
+        continueOnError: false
+        enabled: true
+
       - task: DotNetCoreInstaller@0
         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
         inputs:
@@ -83,7 +105,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (no live tests)'
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: eq(variables['System.TeamProject'], 'playground')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -96,7 +118,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (with live tests)'
-        condition: ne(variables['System.TeamProject'], 'public')
+        condition: ne(variables['System.TeamProject'], 'playground')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
