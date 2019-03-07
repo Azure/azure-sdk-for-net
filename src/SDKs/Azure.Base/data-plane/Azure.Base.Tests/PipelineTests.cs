@@ -7,6 +7,8 @@ using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
 using System.Diagnostics.Tracing;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Azure.Base.Tests
 {
@@ -18,16 +20,16 @@ namespace Azure.Base.Tests
         [Test]
         public void Basics() {
 
-            var options = new HttpPipeline.Options();
-            options.Transport = new MockTransport(500, 1);
+            var options = new HttpPipelineOptions(new MockTransport(500, 1));
             options.RetryPolicy = new CustomRetryPolicy();
+            options.LoggingPolicy = new LoggingPolicy();
 
             var listener = new TestEventListener();
             listener.EnableEvents(EventLevel.LogAlways);
 
-            var pipeline = HttpPipeline.Create(options, "test", "1.0.0");
+            var pipeline = options.Build("test", "1.0.0");
 
-            using (var message = pipeline.CreateMessage(options, cancellation: default))
+            using (var message = pipeline.CreateMessage(cancellation: default))
             {
                 message.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
                 pipeline.SendMessageAsync(message).Wait();
@@ -38,6 +40,13 @@ namespace Azure.Base.Tests
             }
         }
 
+        [Test]
+        public async Task EmptyPipeline()
+        {
+            var pipeline = new HttpPipeline();
+            await pipeline.SendMessageAsync(new NullMessage());
+        }
+
         class CustomRetryPolicy : RetryPolicy
         {
             protected override bool ShouldRetry(HttpMessage message, int retry, out TimeSpan delay)
@@ -46,6 +55,36 @@ namespace Azure.Base.Tests
                 if (retry > 5) return false;
                 if (message.Response.Status == 1) return false;
                 return true;
+            }
+        }
+
+        class NullMessage : HttpMessage
+        {
+            public NullMessage() : base(default) { }
+            public override HttpVerb Method => throw new NotImplementedException();
+
+            protected override int Status => throw new NotImplementedException();
+
+            protected override Stream ResponseContentStream => throw new NotImplementedException();
+
+            public override void AddHeader(HttpHeader header)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SetContent(HttpMessageContent content)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override void SetRequestLine(HttpVerb method, Uri uri)
+            {
+                throw new NotImplementedException();
+            }
+
+            protected override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            {
+                throw new NotImplementedException();
             }
         }
     }

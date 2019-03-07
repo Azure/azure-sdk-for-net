@@ -43,6 +43,3 @@ public async Task HelloWorld()
 # Other Samples
 
 Comming soon ...
-
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FAzure.Base%2Fdata-plane%2FREADME.png)
