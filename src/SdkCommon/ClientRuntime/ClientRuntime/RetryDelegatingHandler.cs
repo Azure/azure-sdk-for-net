@@ -79,6 +79,11 @@ namespace Microsoft.Rest
         public RetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
+        /// Get delegate count associated with the event
+        /// </summary>
+        public int EventCallbackCount => this.RetryPolicy.EventCallbackCount;
+
+        /// <summary>
         /// Sends an HTTP request to the inner handler to send to the server as an asynchronous
         /// operation. Retries request if needed based on Retry Policy.
         /// </summary>
