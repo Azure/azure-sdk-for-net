@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Search.Models
         /// </typeparam>
         /// <param name="document">The document to delete; Fields other than the key are ignored.</param>
         /// <returns>A new IndexAction.</returns>
-        public static IndexAction<T> Delete<T>(T document) where T : class
+        public static IndexAction<T> Delete<T>(T document)
         {
             return new IndexAction<T>(document, IndexActionType.Delete);
         }
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Search.Models
         /// properties to be nullable in type T.</para>
         /// <para>The above does not apply if you are using <c cref="Document">Document</c> as type T.</para>
         /// </remarks>
-        public static IndexAction<T> Merge<T>(T document) where T : class
+        public static IndexAction<T> Merge<T>(T document)
         {
             return new IndexAction<T>(document, IndexActionType.Merge);
         }
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Search.Models
         /// properties to be nullable in type T.</para>
         /// <para>The above does not apply if you are using <c cref="Document">Document</c> as type T.</para>
         /// </remarks>
-        public static IndexAction<T> MergeOrUpload<T>(T document) where T : class
+        public static IndexAction<T> MergeOrUpload<T>(T document)
         {
             return new IndexAction<T>(document, IndexActionType.MergeOrUpload);
         }
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Search.Models
         /// </typeparam>
         /// <param name="document">The document to upload.</param>
         /// <returns>A new IndexAction.</returns>
-        public static IndexAction<T> Upload<T>(T document) where T : class
+        public static IndexAction<T> Upload<T>(T document)
         {
             return new IndexAction<T>(document, IndexActionType.Upload);
         }

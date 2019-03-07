@@ -22,13 +22,10 @@ namespace Microsoft.Azure.Search.Serialization
 
         private static IContractResolver DefaultResolver { get; } = new DefaultContractResolver();
 
-        public static JsonSerializerSettings CreateTypedSerializerSettings<T>(
-            JsonSerializerSettings baseSettings,
-            bool useCamelCase) where T : class =>
+        public static JsonSerializerSettings CreateTypedSerializerSettings<T>(JsonSerializerSettings baseSettings, bool useCamelCase) =>
             CreateSerializerSettings<T>(baseSettings, useCamelCase);
 
-        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings)
-            where T : class =>
+        public static JsonSerializerSettings CreateTypedDeserializerSettings<T>(JsonSerializerSettings baseSettings) =>
             CreateDeserializerSettings<T>(baseSettings);
 
         public static JsonSerializerSettings CreateDocumentSerializerSettings(JsonSerializerSettings baseSettings) =>
@@ -39,7 +36,7 @@ namespace Microsoft.Azure.Search.Serialization
 
         private static JsonSerializerSettings CreateSerializerSettings<T>(
             JsonSerializerSettings baseSettings,
-            bool useCamelCase) where T : class
+            bool useCamelCase)
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
             settings.Converters.Add(new GeographyPointConverter());
@@ -61,7 +58,6 @@ namespace Microsoft.Azure.Search.Serialization
         }
 
         private static JsonSerializerSettings CreateDeserializerSettings<T>(JsonSerializerSettings baseSettings)
-            where T : class
         {
             JsonSerializerSettings settings = CopySettings(baseSettings);
             settings.Converters.Add(new GeographyPointConverter());

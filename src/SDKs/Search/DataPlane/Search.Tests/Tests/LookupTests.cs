@@ -145,6 +145,39 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanGetDocumentMappedToStruct()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var expectedDoc =
+                    new StructHotel()
+                    {
+                        HotelId = "1",
+                        BaseRate = 199.0,
+                        Description = "Best hotel in town",
+                        DescriptionFr = "Meilleur hôtel en ville",
+                        HotelName = "Fancy Stay",
+                        Category = "Luxury",
+                        Tags = new[] { "pool", "view", "wifi", "concierge" },
+                        ParkingIncluded = false,
+                        SmokingAllowed = false,
+                        LastRenovationDate = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.Zero),
+                        Rating = 5,
+                        Location = GeographyPoint.Create(47.678581, -122.131577)
+                    };
+
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
+                client.Documents.Index(batch);
+
+                StructHotel actualDoc = client.Documents.Get<StructHotel>("1");
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
         public void CanGetDocumentWithBase64EncodedKey()
         {
             Run(() =>

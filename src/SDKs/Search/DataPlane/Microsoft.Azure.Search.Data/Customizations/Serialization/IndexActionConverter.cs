@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Serialization
     /// <typeparam name="T">
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
-    internal class IndexActionConverter<T> : JsonConverter where T : class
+    internal class IndexActionConverter<T> : JsonConverter
     {
         public override bool CanRead => false;
 

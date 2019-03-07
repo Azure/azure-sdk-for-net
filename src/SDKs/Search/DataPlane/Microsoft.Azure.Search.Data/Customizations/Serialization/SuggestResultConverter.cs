@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Search.Serialization
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
     internal class SuggestResultConverter<T> : JsonConverter
-        where T : class
     {
         public override bool CanRead => true;
 

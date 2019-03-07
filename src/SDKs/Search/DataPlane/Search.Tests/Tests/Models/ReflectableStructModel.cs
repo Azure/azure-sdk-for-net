@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Spatial;
     using Newtonsoft.Json;
 
-    public class ReflectableModel
+    public struct ReflectableStructModel
     {
         [Key]
         public int Id { get; set; }
@@ -76,11 +76,5 @@ namespace Microsoft.Azure.Search.Tests
 #pragma warning disable IDE1006 // Naming Styles
         public RecordEnum recordEnum { get; set; }
 #pragma warning restore IDE1006 // Naming Styles
-    }
-
-    public enum RecordEnum
-    {
-        Test1,
-        Test2
     }
 }

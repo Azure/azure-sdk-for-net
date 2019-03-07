@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Search
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
 
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Search
             IEnumerable<string> selectedFields,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             JsonSerializerSettings jsonSerializerSettings = 
                 JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Search
             IndexBatch<T> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType<T>();
             JsonSerializerSettings jsonSettings = JsonUtility.CreateTypedSerializerSettings<T>(Client.SerializationSettings, useCamelCase);
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Search
             SearchParameters searchParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
 
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Search
             SuggestParameters suggestParameters,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             var deserializerSettings = JsonUtility.CreateTypedDeserializerSettings<T>(Client.DeserializationSettings);
 
@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
             JsonSerializerSettings jsonSettings,
-            CancellationToken cancellationToken) where T : class
+            CancellationToken cancellationToken)
         {
             var result =
                 await Client.DocumentsProxy.IndexWithHttpMessagesAsync(
@@ -318,7 +318,6 @@ namespace Microsoft.Azure.Search
             Dictionary<string, List<string>> customHeaders,
             CancellationToken cancellationToken,
             JsonSerializerSettings deserializerSettings)
-            where T : class
         {
             // Validate
             if (Client.ApiVersion == null)
@@ -378,7 +377,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
             JsonSerializerSettings deserializerSettings,
-            CancellationToken cancellationToken) where T : class
+            CancellationToken cancellationToken)
         {
             searchText = searchText ?? "*";
 
@@ -410,7 +409,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions,
             Dictionary<string, List<string>> customHeaders,
             JsonSerializerSettings deserializerSettings,
-            CancellationToken cancellationToken) where T : class
+            CancellationToken cancellationToken)
         {
             if (Client.UseHttpGetForQueries)
             {
