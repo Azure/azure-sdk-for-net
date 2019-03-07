@@ -176,6 +176,84 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
+        public void CanIndexDocumentsMappedFromStructs()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var batch = IndexBatch.New(new[]
+                {
+                    IndexAction.Upload(
+                        new StructHotel()
+                        {
+                            HotelId = "1",
+                            BaseRate = 199.0,
+                            Description = "Best hotel in town",
+                            DescriptionFr = "Meilleur hôtel en ville",
+                            HotelName = "Fancy Stay",
+                            Category = "Luxury",
+                            Tags = new[] { "pool", "view", "wifi", "concierge" },
+                            ParkingIncluded = false,
+                            SmokingAllowed = false,
+                            LastRenovationDate = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.FromHours(-8)),
+                            Rating = 5,
+                            Location = GeographyPoint.Create(47.678581, -122.131577)
+                        }),
+                    IndexAction.Upload(
+                        new StructHotel()
+                        {
+                            HotelId = "2",
+                            BaseRate = 79.99,
+                            Description = "Cheapest hotel in town",
+                            DescriptionFr = "Hôtel le moins cher en ville",
+                            HotelName = "Roach Motel",
+                            Category = "Budget",
+                            Tags = new[] { "motel", "budget" },
+                            ParkingIncluded = true,
+                            SmokingAllowed = true,
+                            LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
+                            Rating = 1,
+                            Location = GeographyPoint.Create(49.678581, -122.131577)
+                        }),
+                    IndexAction.Merge(
+                        new StructHotel()
+                        {
+                            HotelId = "3",
+                            BaseRate = 279.99,
+                            Description = "Surprisingly expensive",
+                            LastRenovationDate = null
+                        }),
+                    IndexAction.Delete(new StructHotel() { HotelId = "4" }),
+                    IndexAction.MergeOrUpload(
+                        new StructHotel()
+                        {
+                            HotelId = "5",
+                            BaseRate = Double.NaN,
+                            HotelName = null,
+                            Tags = new string[0]
+                        })
+                });
+
+                IndexBatchException e = Assert.Throws<IndexBatchException>(() => client.Documents.Index(batch));
+                AssertIsPartialFailure(e, "3");
+
+                Assert.Equal(5, e.IndexingResults.Count);
+
+                AssertIndexActionSucceeded("1", e.IndexingResults[0], 201);
+                AssertIndexActionSucceeded("2", e.IndexingResults[1], 201);
+                AssertIndexActionFailed("3", e.IndexingResults[2], "Document not found.", 404);
+                AssertIndexActionSucceeded("4", e.IndexingResults[3], 200);
+                AssertIndexActionSucceeded("5", e.IndexingResults[4], 201);
+
+                SearchTestUtilities.WaitForIndexing();
+
+                Assert.Equal(3, client.Documents.Count());
+            });
+        }
+
+        [Fact]
         public void IndexDoesNotThrowWhenAllActionsSucceed()
         {
             Run(() =>

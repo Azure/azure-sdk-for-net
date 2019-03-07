@@ -65,14 +65,12 @@ namespace Microsoft.Azure.Search
         /// A new batch containing all the actions from the given batch that failed and should be retried.
         /// </returns>
         public IndexBatch<T> FindFailedActionsToRetry<T>(IndexBatch<T> originalBatch, Func<T, string> keySelector)
-            where T : class
         {
             IEnumerable<IndexAction<T>> failedActions = DoFindFailedActionsToRetry(originalBatch, keySelector);
             return IndexBatch.New(failedActions);
         }
 
         private IEnumerable<IndexAction<T>> DoFindFailedActionsToRetry<T>(IndexBatch<T> originalBatch, Func<T, string> keySelector)
-            where T : class
         {
             IEnumerable<string> allRetriableKeys = IndexingResults.Where(r => IsRetriableStatusCode(r.StatusCode)).Select(r => r.Key);
 

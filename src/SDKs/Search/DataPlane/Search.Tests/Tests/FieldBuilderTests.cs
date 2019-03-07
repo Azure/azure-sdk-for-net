@@ -91,30 +91,6 @@ namespace Microsoft.Azure.Search.Tests
             Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringList"].Type));
         }
 
-        private void OnlyTrueFor(Func<Field, bool> check, params string[] ids)
-        {
-            Run(fields =>
-            {
-                foreach (var kv in fields)
-                {
-                    string id = kv.Key;
-                    Field field = kv.Value;
-                    bool result = check(field);
-                    if (ids.Contains(id))
-                    {
-                        Assert.True(result);
-                    }
-                    else
-                    {
-                        Assert.False(result);
-                    }
-                }
-            });
-        }
-
-        private void OnlyFalseFor(Func<Field, bool> check, params string[] ids) =>
-            OnlyTrueFor(f => !check(f), ids);
-
         [Fact]
         public void ReportsKeyOnlyOnPropertyWithKeyAttribute()
         {
@@ -179,21 +155,49 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        private void OnlyTrueFor(Func<Field, bool> check, params string[] ids)
+        {
+            Run(fields =>
+            {
+                foreach (var kv in fields)
+                {
+                    string id = kv.Key;
+                    Field field = kv.Value;
+                    bool result = check(field);
+                    if (ids.Contains(id))
+                    {
+                        Assert.True(result);
+                    }
+                    else
+                    {
+                        Assert.False(result);
+                    }
+                }
+            });
+        }
+
+        private void OnlyFalseFor(Func<Field, bool> check, params string[] ids) =>
+            OnlyTrueFor(f => !check(f), ids);
+
         private void Run(Action<Dictionary<string, Field>> run)
         {
-            // Test with both with and without bring-your-own-resolver.
+            // Test with both with and without bring-your-own-resolver, and with classes and structs.
             RunForFields(run, FieldBuilder.BuildForType<ReflectableModel>(new ReadOnlyJsonContractResolver()));
             RunForFields(run, FieldBuilder.BuildForType<ReflectableModel>());
+            RunForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>(new ReadOnlyJsonContractResolver()));
+            RunForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>());
         }
 
         private void RunCamelCase(Action<Dictionary<string, Field>> run)
         {
+            // Test with both classes and structs.
             RunForFields(run, FieldBuilder.BuildForType<ReflectableCamelCaseModel>());
+            RunForFields(run, FieldBuilder.BuildForType<ReflectableStructCamelCaseModel>());
         }
 
         private void RunForFields(Action<Dictionary<string, Field>> run, IList<Field> fields)
         {
-            Dictionary<string, Field> fieldMap = fields.ToDictionary(f => f.Name);
+            var fieldMap = fields.ToDictionary(f => f.Name);
             run(fieldMap);
         }
     }

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Search.Models
         /// </typeparam>
         /// <param name="documents">The documents to delete; Fields other than the key are ignored.</param>
         /// <returns>A new IndexBatch.</returns>
-        public static IndexBatch<T> Delete<T>(IEnumerable<T> documents) where T : class
+        public static IndexBatch<T> Delete<T>(IEnumerable<T> documents)
         {
             Throw.IfArgumentNull(documents, "documents");
 
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Search.Models
         /// properties to be nullable in type T.</para>
         /// <para>The above does not apply if you are using <c cref="Document">Document</c> as type T.</para>
         /// </remarks>
-        public static IndexBatch<T> Merge<T>(IEnumerable<T> documents) where T : class
+        public static IndexBatch<T> Merge<T>(IEnumerable<T> documents)
         {
             Throw.IfArgumentNull(documents, "documents");
 
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Search.Models
         /// properties to be nullable in type T.</para>
         /// <para>The above does not apply if you are using <c cref="Document">Document</c> as type T.</para>
         /// </remarks>
-        public static IndexBatch<T> MergeOrUpload<T>(IEnumerable<T> documents) where T : class
+        public static IndexBatch<T> MergeOrUpload<T>(IEnumerable<T> documents)
         {
             Throw.IfArgumentNull(documents, "documents");
 
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Search.Models
         /// You can use this method as a convenience if you don't want to explicitly specify your model class as a
         /// type parameter.
         /// </remarks>
-        public static IndexBatch<T> New<T>(IEnumerable<IndexAction<T>> actions) where T : class
+        public static IndexBatch<T> New<T>(IEnumerable<IndexAction<T>> actions)
         {
             return new IndexBatch<T>(actions);
         }
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Search.Models
         /// </typeparam>
         /// <param name="documents">The documents to upload.</param>
         /// <returns>A new IndexBatch.</returns>
-        public static IndexBatch<T> Upload<T>(IEnumerable<T> documents) where T : class
+        public static IndexBatch<T> Upload<T>(IEnumerable<T> documents)
         {
             Throw.IfArgumentNull(documents, "documents");
 

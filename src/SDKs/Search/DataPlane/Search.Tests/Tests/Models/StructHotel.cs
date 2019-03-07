@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Search.Tests
     using Spatial;
 
     [SerializePropertyNamesAsCamelCase]
-    public class Hotel
+    public struct StructHotel
     {
         public string HotelId { get; set; }
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Search.Tests
 
         public override bool Equals(object obj)
         {
-            if (!(obj is Hotel other))
+            if (!(obj is StructHotel other))
             {
                 return false;
             }

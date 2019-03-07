@@ -242,7 +242,6 @@ namespace Microsoft.Azure.Search
             this IDocumentsOperations operations, 
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-            where T : class
         {
             return operations.ContinueSearchAsync<T>(continuationToken, searchRequestOptions).GetAwaiter().GetResult();
         }
@@ -295,7 +294,7 @@ namespace Microsoft.Azure.Search
             this IDocumentsOperations operations,
             SearchContinuationToken continuationToken,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<DocumentSearchResult<T>> result = await operations.ContinueSearchWithHttpMessagesAsync<T>(continuationToken, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
@@ -418,7 +417,6 @@ namespace Microsoft.Azure.Search
             string key,
             IEnumerable<string> selectedFields = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-            where T : class
         {
             return operations.GetAsync<T>(key, selectedFields, searchRequestOptions).GetAwaiter().GetResult();
         }
@@ -464,7 +462,7 @@ namespace Microsoft.Azure.Search
             string key,
             IEnumerable<string> selectedFields = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<T> result = await operations.GetWithHttpMessagesAsync<T>(key, selectedFields ?? DocumentsOperations.SelectAll, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
@@ -588,7 +586,6 @@ namespace Microsoft.Azure.Search
             this IDocumentsOperations operations,
             IndexBatch<T> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-            where T : class
         {
             return operations.IndexAsync<T>(batch, searchRequestOptions).GetAwaiter().GetResult();
         }
@@ -633,7 +630,7 @@ namespace Microsoft.Azure.Search
             this IDocumentsOperations operations,
             IndexBatch<T> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<DocumentIndexResult> result = await operations.IndexWithHttpMessagesAsync<T>(batch, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
@@ -776,7 +773,6 @@ namespace Microsoft.Azure.Search
             string searchText,
             SearchParameters searchParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-            where T : class
         {
             return operations.SearchAsync<T>(searchText, searchParameters, searchRequestOptions).GetAwaiter().GetResult();
         }
@@ -828,7 +824,7 @@ namespace Microsoft.Azure.Search
             string searchText,
             SearchParameters searchParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<DocumentSearchResult<T>> result = await operations.SearchWithHttpMessagesAsync<T>(searchText, searchParameters ?? new SearchParameters(), searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
@@ -953,7 +949,6 @@ namespace Microsoft.Azure.Search
             string suggesterName,
             SuggestParameters suggestParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
-            where T : class
         {
             return operations.SuggestAsync<T>(searchText, suggesterName, suggestParameters, searchRequestOptions).GetAwaiter().GetResult();
         }
@@ -999,7 +994,7 @@ namespace Microsoft.Azure.Search
             string suggesterName,
             SuggestParameters suggestParameters = null,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
-            CancellationToken cancellationToken = default(CancellationToken)) where T : class
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             AzureOperationResponse<DocumentSuggestResult<T>> result = await operations.SuggestWithHttpMessagesAsync<T>(searchText, suggesterName, suggestParameters ?? new SuggestParameters(), searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
