@@ -1,9 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-
-    <IsPackable>false</IsPackable>
+    <PackageId>Peering.Tests</PackageId>
+    <AssemblyName>Peering.Tests</AssemblyName>
+    <Version>0.8.0-preview</Version>
+    <Description>Test Project for Peering tests</Description>
   </PropertyGroup>
 
   <ItemGroup>

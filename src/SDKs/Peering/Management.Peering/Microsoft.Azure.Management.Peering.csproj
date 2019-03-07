@@ -5,45 +5,20 @@
 
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.Peering</PackageId>
-		<Description>Provides management capabilities for Microsoft Peering Services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.Peering</AssemblyName>
-		<Version>0.4.14</Version>
-		<Version>0.4.2</Version>
+		<Version>0.8.0-preview</Version>
 		<PackageTags>Microsoft Azure Network management;Network;Network management; Peering; Interconnect</PackageTags>    
-		<PackageReleaseNotes></PackageReleaseNotes>
+		<PackageReleaseNotes>
+      <![CDATA[
+        Provides management capabilities for Microsoft Peering Services.
+      ]]>
+    </PackageReleaseNotes>
 	</PropertyGroup>
-	<PropertyGroup>
-		<TargetFrameworks>net452</TargetFrameworks>
-		<DelaySign>false</DelaySign>
-		<SignAssembly>false</SignAssembly>
-		<RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-		<RootNamespace>Microsoft.Azure.Management.Peering</RootNamespace>
-		<AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-		<AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-		<Company>Microsoft</Company>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net452|AnyCPU'">
-	  <OutputPath>..\..\..\Package\Debug\ResourceManager\AzureResourceManager\AzureRM.Peering\</OutputPath>
-	  <DocumentationFile></DocumentationFile>
-	  <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-	  <WarningsAsErrors />
-	  <DefineConstants>TRACE;DEBUG; SIGN</DefineConstants>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>true</DelaySign>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|AnyCPU'">
-	  <OutputPath>\\tala\public\rimckenn\AzureRM.Peering\</OutputPath>
-	  <PlatformTarget>x64</PlatformTarget>
-	</PropertyGroup>
+	
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
-	<ItemGroup>
-	  <Compile Remove="Properties\AssemblyInfo.cs" />
-	</ItemGroup>
+
 	<ItemGroup>
 	  <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.4.0" />
 	  <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.4.0" />
@@ -54,8 +29,5 @@
 	<ItemGroup>
 	  <Folder Include="Properties\" />
 	</ItemGroup>
-	<ItemGroup>
-	  <PackageReference Include="AzureGalleryClientLibrary" Version="0.1.19" />
-	</ItemGroup>
-	<!-- Please do not move/edit code above this line -->
+		<!-- Please do not move/edit code above this line -->
 </Project>
