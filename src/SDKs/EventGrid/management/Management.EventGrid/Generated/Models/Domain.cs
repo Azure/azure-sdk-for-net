@@ -18,40 +18,39 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// EventGrid Topic
+    /// EventGrid Domain
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class Topic : TrackedResource
+    public partial class Domain : TrackedResource
     {
         /// <summary>
-        /// Initializes a new instance of the Topic class.
+        /// Initializes a new instance of the Domain class.
         /// </summary>
-        public Topic()
+        public Domain()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Topic class.
+        /// Initializes a new instance of the Domain class.
         /// </summary>
         /// <param name="location">Location of the resource</param>
         /// <param name="id">Fully qualified identifier of the resource</param>
         /// <param name="name">Name of the resource</param>
         /// <param name="type">Type of the resource</param>
         /// <param name="tags">Tags of the resource</param>
-        /// <param name="provisioningState">Provisioning state of the topic.
+        /// <param name="provisioningState">Provisioning state of the domain.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Canceled', 'Failed'</param>
-        /// <param name="endpoint">Endpoint for the topic.</param>
+        /// <param name="endpoint">Endpoint for the domain.</param>
         /// <param name="inputSchema">This determines the format that Event
-        /// Grid should expect for incoming events published to the topic.
+        /// Grid should expect for incoming events published to the domain.
         /// Possible values include: 'EventGridSchema', 'CustomEventSchema',
         /// 'CloudEventV01Schema'</param>
-        /// <param name="inputSchemaMapping">This enables publishing using
-        /// custom event schemas. An InputSchemaMapping can be specified to map
-        /// various properties of a source schema to various required
-        /// properties of the EventGridEvent schema.</param>
-        public Topic(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping))
+        /// <param name="inputSchemaMapping">Information about the
+        /// InputSchemaMapping which specified the info about mapping event
+        /// payload.</param>
+        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string endpoint = default(string), string inputSchema = default(string), InputSchemaMapping inputSchemaMapping = default(InputSchemaMapping))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -67,7 +66,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets provisioning state of the topic. Possible values include:
+        /// Gets provisioning state of the domain. Possible values include:
         /// 'Creating', 'Updating', 'Deleting', 'Succeeded', 'Canceled',
         /// 'Failed'
         /// </summary>
@@ -75,14 +74,14 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets endpoint for the topic.
+        /// Gets endpoint for the domain.
         /// </summary>
         [JsonProperty(PropertyName = "properties.endpoint")]
         public string Endpoint { get; private set; }
 
         /// <summary>
         /// Gets or sets this determines the format that Event Grid should
-        /// expect for incoming events published to the topic. Possible values
+        /// expect for incoming events published to the domain. Possible values
         /// include: 'EventGridSchema', 'CustomEventSchema',
         /// 'CloudEventV01Schema'
         /// </summary>
@@ -90,10 +89,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         public string InputSchema { get; set; }
 
         /// <summary>
-        /// Gets or sets this enables publishing using custom event schemas. An
-        /// InputSchemaMapping can be specified to map various properties of a
-        /// source schema to various required properties of the EventGridEvent
-        /// schema.
+        /// Gets or sets information about the InputSchemaMapping which
+        /// specified the info about mapping event payload.
         /// </summary>
         [JsonProperty(PropertyName = "properties.inputSchemaMapping")]
         public InputSchemaMapping InputSchemaMapping { get; set; }

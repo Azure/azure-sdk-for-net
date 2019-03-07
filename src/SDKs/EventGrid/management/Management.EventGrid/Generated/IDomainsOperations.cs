@@ -19,21 +19,21 @@ namespace Microsoft.Azure.Management.EventGrid
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TopicsOperations operations.
+    /// DomainsOperations operations.
     /// </summary>
-    public partial interface ITopicsOperations
+    public partial interface IDomainsOperations
     {
         /// <summary>
-        /// Get a topic
+        /// Get a domain
         /// </summary>
         /// <remarks>
-        /// Get properties of a topic
+        /// Get properties of a domain
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,21 +50,22 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Topic>> GetWithHttpMessagesAsync(string resourceGroupName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Domain>> GetWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create a topic
+        /// Create or update a domain
         /// </summary>
         /// <remarks>
-        /// Asynchronously creates a new topic with the specified parameters.
+        /// Asynchronously creates or updates a new domain with the specified
+        /// parameters.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
-        /// <param name='topicInfo'>
-        /// Topic information
+        /// <param name='domainInfo'>
+        /// Domain information
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -81,18 +82,18 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Topic>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, Topic topicInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Domain>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, Domain domainInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a topic
+        /// Delete a domain
         /// </summary>
         /// <remarks>
-        /// Delete existing topic
+        /// Delete existing domain
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,21 +107,21 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a topic
+        /// Update a domain
         /// </summary>
         /// <remarks>
-        /// Asynchronously updates a topic with the specified parameters.
+        /// Asynchronously updates a domain with the specified parameters.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
         /// <param name='tags'>
-        /// Tags of the resource
+        /// Tags of the domains resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -137,12 +138,12 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Topic>> UpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Domain>> UpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List topics under an Azure subscription
+        /// List domains under an Azure subscription
         /// </summary>
         /// <remarks>
-        /// List all the topics under an Azure subscription
+        /// List all the domains under an Azure subscription
         /// </remarks>
         /// <param name='filter'>
         /// Filter the results using OData syntax.
@@ -165,12 +166,12 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Topic>>> ListBySubscriptionWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Domain>>> ListBySubscriptionWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List topics under a resource group
+        /// List domains under a resource group
         /// </summary>
         /// <remarks>
-        /// List all the topics under a resource group
+        /// List all the domains under a resource group
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
@@ -196,18 +197,18 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Topic>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Domain>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List keys for a topic
+        /// List keys for a domain
         /// </summary>
         /// <remarks>
-        /// List the two keys used to publish to a topic
+        /// List the two keys used to publish to a domain
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -224,18 +225,18 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TopicSharedAccessKeys>> ListSharedAccessKeysWithHttpMessagesAsync(string resourceGroupName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DomainSharedAccessKeys>> ListSharedAccessKeysWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerate key for a topic
+        /// Regenerate key for a domain
         /// </summary>
         /// <remarks>
-        /// Regenerate a shared access key for a topic
+        /// Regenerate a shared access key for a domain
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
         /// <param name='keyName'>
         /// Key name to regenerate key1 or key2
@@ -255,24 +256,22 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TopicSharedAccessKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string topicName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DomainSharedAccessKeys>> RegenerateKeyWithHttpMessagesAsync(string resourceGroupName, string domainName, string keyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List topic event types
+        /// Create or update a domain
         /// </summary>
         /// <remarks>
-        /// List event types for a topic
+        /// Asynchronously creates or updates a new domain with the specified
+        /// parameters.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='providerNamespace'>
-        /// Namespace of the provider of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
-        /// <param name='resourceTypeName'>
-        /// Name of the topic type
-        /// </param>
-        /// <param name='resourceName'>
-        /// Name of the topic
+        /// <param name='domainInfo'>
+        /// Domain information
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -289,49 +288,18 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventType>>> ListEventTypesWithHttpMessagesAsync(string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Domain>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, Domain domainInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create a topic
+        /// Delete a domain
         /// </summary>
         /// <remarks>
-        /// Asynchronously creates a new topic with the specified parameters.
+        /// Delete existing domain
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
-        /// </param>
-        /// <param name='topicInfo'>
-        /// Topic information
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<Topic>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, Topic topicInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Delete a topic
-        /// </summary>
-        /// <remarks>
-        /// Delete existing topic
-        /// </remarks>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription.
-        /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -345,21 +313,21 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update a topic
+        /// Update a domain
         /// </summary>
         /// <remarks>
-        /// Asynchronously updates a topic with the specified parameters.
+        /// Asynchronously updates a domain with the specified parameters.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
-        /// <param name='topicName'>
-        /// Name of the topic
+        /// <param name='domainName'>
+        /// Name of the domain
         /// </param>
         /// <param name='tags'>
-        /// Tags of the resource
+        /// Tags of the domains resource
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -376,12 +344,12 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Topic>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Domain>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List topics under an Azure subscription
+        /// List domains under an Azure subscription
         /// </summary>
         /// <remarks>
-        /// List all the topics under an Azure subscription
+        /// List all the domains under an Azure subscription
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -401,12 +369,12 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Topic>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Domain>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List topics under a resource group
+        /// List domains under a resource group
         /// </summary>
         /// <remarks>
-        /// List all the topics under a resource group
+        /// List all the domains under a resource group
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -426,6 +394,6 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<Topic>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Domain>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

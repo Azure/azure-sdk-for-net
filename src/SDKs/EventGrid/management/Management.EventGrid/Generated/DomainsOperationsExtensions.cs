@@ -19,15 +19,15 @@ namespace Microsoft.Azure.Management.EventGrid
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for TopicsOperations.
+    /// Extension methods for DomainsOperations.
     /// </summary>
-    public static partial class TopicsOperationsExtensions
+    public static partial class DomainsOperationsExtensions
     {
             /// <summary>
-            /// Get a topic
+            /// Get a domain
             /// </summary>
             /// <remarks>
-            /// Get properties of a topic
+            /// Get properties of a domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -35,19 +35,19 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            public static Topic Get(this ITopicsOperations operations, string resourceGroupName, string topicName)
+            public static Domain Get(this IDomainsOperations operations, string resourceGroupName, string domainName)
             {
-                return operations.GetAsync(resourceGroupName, topicName).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get a topic
+            /// Get a domain
             /// </summary>
             /// <remarks>
-            /// Get properties of a topic
+            /// Get properties of a domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,25 +55,26 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> GetAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Domain> GetAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, topicName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, domainName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create a topic
+            /// Create or update a domain
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new topic with the specified parameters.
+            /// Asynchronously creates or updates a new domain with the specified
+            /// parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -81,22 +82,23 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            /// <param name='topicInfo'>
-            /// Topic information
+            /// <param name='domainInfo'>
+            /// Domain information
             /// </param>
-            public static Topic CreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, Topic topicInfo)
+            public static Domain CreateOrUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, Domain domainInfo)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, topicName, topicInfo).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, domainName, domainInfo).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create a topic
+            /// Create or update a domain
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new topic with the specified parameters.
+            /// Asynchronously creates or updates a new domain with the specified
+            /// parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -104,28 +106,28 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            /// <param name='topicInfo'>
-            /// Topic information
+            /// <param name='domainInfo'>
+            /// Domain information
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> CreateOrUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, Topic topicInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Domain> CreateOrUpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, Domain domainInfo, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, topicName, topicInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, domainName, domainInfo, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete a topic
+            /// Delete a domain
             /// </summary>
             /// <remarks>
-            /// Delete existing topic
+            /// Delete existing domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -133,19 +135,19 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            public static void Delete(this ITopicsOperations operations, string resourceGroupName, string topicName)
+            public static void Delete(this IDomainsOperations operations, string resourceGroupName, string domainName)
             {
-                operations.DeleteAsync(resourceGroupName, topicName).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Delete a topic
+            /// Delete a domain
             /// </summary>
             /// <remarks>
-            /// Delete existing topic
+            /// Delete existing domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -153,22 +155,22 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, topicName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Update a topic
+            /// Update a domain
             /// </summary>
             /// <remarks>
-            /// Asynchronously updates a topic with the specified parameters.
+            /// Asynchronously updates a domain with the specified parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -176,22 +178,22 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the domains resource
             /// </param>
-            public static Topic Update(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Domain Update(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.UpdateAsync(resourceGroupName, topicName, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, domainName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Update a topic
+            /// Update a domain
             /// </summary>
             /// <remarks>
-            /// Asynchronously updates a topic with the specified parameters.
+            /// Asynchronously updates a domain with the specified parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -199,28 +201,28 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the domains resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> UpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Domain> UpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, domainName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List domains under an Azure subscription
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the domains under an Azure subscription
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -231,16 +233,16 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return.
             /// </param>
-            public static IPage<Topic> ListBySubscription(this ITopicsOperations operations, string filter = default(string), int? top = default(int?))
+            public static IPage<Domain> ListBySubscription(this IDomainsOperations operations, string filter = default(string), int? top = default(int?))
             {
                 return operations.ListBySubscriptionAsync(filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List domains under an Azure subscription
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the domains under an Azure subscription
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -254,7 +256,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Topic>> ListBySubscriptionAsync(this ITopicsOperations operations, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Domain>> ListBySubscriptionAsync(this IDomainsOperations operations, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -263,10 +265,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List domains under a resource group
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the domains under a resource group
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -280,16 +282,16 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return.
             /// </param>
-            public static IPage<Topic> ListByResourceGroup(this ITopicsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?))
+            public static IPage<Domain> ListByResourceGroup(this IDomainsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?))
             {
                 return operations.ListByResourceGroupAsync(resourceGroupName, filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List domains under a resource group
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the domains under a resource group
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -306,7 +308,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Topic>> ListByResourceGroupAsync(this ITopicsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Domain>> ListByResourceGroupAsync(this IDomainsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -315,10 +317,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List keys for a topic
+            /// List keys for a domain
             /// </summary>
             /// <remarks>
-            /// List the two keys used to publish to a topic
+            /// List the two keys used to publish to a domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -326,19 +328,19 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            public static TopicSharedAccessKeys ListSharedAccessKeys(this ITopicsOperations operations, string resourceGroupName, string topicName)
+            public static DomainSharedAccessKeys ListSharedAccessKeys(this IDomainsOperations operations, string resourceGroupName, string domainName)
             {
-                return operations.ListSharedAccessKeysAsync(resourceGroupName, topicName).GetAwaiter().GetResult();
+                return operations.ListSharedAccessKeysAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List keys for a topic
+            /// List keys for a domain
             /// </summary>
             /// <remarks>
-            /// List the two keys used to publish to a topic
+            /// List the two keys used to publish to a domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -346,25 +348,25 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TopicSharedAccessKeys> ListSharedAccessKeysAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainSharedAccessKeys> ListSharedAccessKeysAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListSharedAccessKeysWithHttpMessagesAsync(resourceGroupName, topicName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListSharedAccessKeysWithHttpMessagesAsync(resourceGroupName, domainName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Regenerate key for a topic
+            /// Regenerate key for a domain
             /// </summary>
             /// <remarks>
-            /// Regenerate a shared access key for a topic
+            /// Regenerate a shared access key for a domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -372,22 +374,22 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='keyName'>
             /// Key name to regenerate key1 or key2
             /// </param>
-            public static TopicSharedAccessKeys RegenerateKey(this ITopicsOperations operations, string resourceGroupName, string topicName, string keyName)
+            public static DomainSharedAccessKeys RegenerateKey(this IDomainsOperations operations, string resourceGroupName, string domainName, string keyName)
             {
-                return operations.RegenerateKeyAsync(resourceGroupName, topicName, keyName).GetAwaiter().GetResult();
+                return operations.RegenerateKeyAsync(resourceGroupName, domainName, keyName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Regenerate key for a topic
+            /// Regenerate key for a domain
             /// </summary>
             /// <remarks>
-            /// Regenerate a shared access key for a topic
+            /// Regenerate a shared access key for a domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -395,8 +397,8 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='keyName'>
             /// Key name to regenerate key1 or key2
@@ -404,19 +406,20 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TopicSharedAccessKeys> RegenerateKeyAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, string keyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DomainSharedAccessKeys> RegenerateKeyAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, string keyName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, topicName, keyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, domainName, keyName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List topic event types
+            /// Create or update a domain
             /// </summary>
             /// <remarks>
-            /// List event types for a topic
+            /// Asynchronously creates or updates a new domain with the specified
+            /// parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -424,25 +427,23 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='providerNamespace'>
-            /// Namespace of the provider of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            /// <param name='resourceTypeName'>
-            /// Name of the topic type
+            /// <param name='domainInfo'>
+            /// Domain information
             /// </param>
-            /// <param name='resourceName'>
-            /// Name of the topic
-            /// </param>
-            public static IEnumerable<EventType> ListEventTypes(this ITopicsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName)
+            public static Domain BeginCreateOrUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, Domain domainInfo)
             {
-                return operations.ListEventTypesAsync(resourceGroupName, providerNamespace, resourceTypeName, resourceName).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, domainName, domainInfo).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List topic event types
+            /// Create or update a domain
             /// </summary>
             /// <remarks>
-            /// List event types for a topic
+            /// Asynchronously creates or updates a new domain with the specified
+            /// parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -450,31 +451,28 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='providerNamespace'>
-            /// Namespace of the provider of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            /// <param name='resourceTypeName'>
-            /// Name of the topic type
-            /// </param>
-            /// <param name='resourceName'>
-            /// Name of the topic
+            /// <param name='domainInfo'>
+            /// Domain information
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<EventType>> ListEventTypesAsync(this ITopicsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Domain> BeginCreateOrUpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, Domain domainInfo, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListEventTypesWithHttpMessagesAsync(resourceGroupName, providerNamespace, resourceTypeName, resourceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, domainName, domainInfo, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create a topic
+            /// Delete a domain
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new topic with the specified parameters.
+            /// Delete existing domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -482,22 +480,19 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
-            /// <param name='topicInfo'>
-            /// Topic information
-            /// </param>
-            public static Topic BeginCreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, Topic topicInfo)
+            public static void BeginDelete(this IDomainsOperations operations, string resourceGroupName, string domainName)
             {
-                return operations.BeginCreateOrUpdateAsync(resourceGroupName, topicName, topicInfo).GetAwaiter().GetResult();
+                operations.BeginDeleteAsync(resourceGroupName, domainName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create a topic
+            /// Delete a domain
             /// </summary>
             /// <remarks>
-            /// Asynchronously creates a new topic with the specified parameters.
+            /// Delete existing domain
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -505,28 +500,22 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
-            /// </param>
-            /// <param name='topicInfo'>
-            /// Topic information
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> BeginCreateOrUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, Topic topicInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginDeleteAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, topicName, topicInfo, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, domainName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Delete a topic
+            /// Update a domain
             /// </summary>
             /// <remarks>
-            /// Delete existing topic
+            /// Asynchronously updates a domain with the specified parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -534,65 +523,22 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
-            /// </param>
-            public static void BeginDelete(this ITopicsOperations operations, string resourceGroupName, string topicName)
-            {
-                operations.BeginDeleteAsync(resourceGroupName, topicName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete a topic
-            /// </summary>
-            /// <remarks>
-            /// Delete existing topic
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginDeleteAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, topicName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Update a topic
-            /// </summary>
-            /// <remarks>
-            /// Asynchronously updates a topic with the specified parameters.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription.
-            /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the domains resource
             /// </param>
-            public static Topic BeginUpdate(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            public static Domain BeginUpdate(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                return operations.BeginUpdateAsync(resourceGroupName, topicName, tags).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, domainName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Update a topic
+            /// Update a domain
             /// </summary>
             /// <remarks>
-            /// Asynchronously updates a topic with the specified parameters.
+            /// Asynchronously updates a domain with the specified parameters.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -600,28 +546,28 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            /// <param name='topicName'>
-            /// Name of the topic
+            /// <param name='domainName'>
+            /// Name of the domain
             /// </param>
             /// <param name='tags'>
-            /// Tags of the resource
+            /// Tags of the domains resource
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Topic> BeginUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Domain> BeginUpdateAsync(this IDomainsOperations operations, string resourceGroupName, string domainName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, domainName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List domains under an Azure subscription
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the domains under an Azure subscription
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -629,16 +575,16 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Topic> ListBySubscriptionNext(this ITopicsOperations operations, string nextPageLink)
+            public static IPage<Domain> ListBySubscriptionNext(this IDomainsOperations operations, string nextPageLink)
             {
                 return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List topics under an Azure subscription
+            /// List domains under an Azure subscription
             /// </summary>
             /// <remarks>
-            /// List all the topics under an Azure subscription
+            /// List all the domains under an Azure subscription
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -649,7 +595,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Topic>> ListBySubscriptionNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Domain>> ListBySubscriptionNextAsync(this IDomainsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -658,10 +604,10 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List domains under a resource group
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the domains under a resource group
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -669,16 +615,16 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<Topic> ListByResourceGroupNext(this ITopicsOperations operations, string nextPageLink)
+            public static IPage<Domain> ListByResourceGroupNext(this IDomainsOperations operations, string nextPageLink)
             {
                 return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// List topics under a resource group
+            /// List domains under a resource group
             /// </summary>
             /// <remarks>
-            /// List all the topics under a resource group
+            /// List all the domains under a resource group
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -689,7 +635,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Topic>> ListByResourceGroupNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Domain>> ListByResourceGroupNextAsync(this IDomainsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
