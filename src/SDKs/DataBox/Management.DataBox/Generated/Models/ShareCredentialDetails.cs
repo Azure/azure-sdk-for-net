@@ -33,7 +33,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         /// <param name="shareName">Name of the share.</param>
         /// <param name="shareType">Type of the share. Possible values include:
-        /// 'UnknownType', 'HCS', 'BlockBlob', 'PageBlob', 'AzureFile'</param>
+        /// 'UnknownType', 'HCS', 'BlockBlob', 'PageBlob', 'AzureFile',
+        /// 'ManagedDisk'</param>
         /// <param name="userName">User name for the share.</param>
         /// <param name="password">Password for the share.</param>
         /// <param name="supportedAccessProtocols">Access protocols supported
@@ -61,7 +62,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
 
         /// <summary>
         /// Gets type of the share. Possible values include: 'UnknownType',
-        /// 'HCS', 'BlockBlob', 'PageBlob', 'AzureFile'
+        /// 'HCS', 'BlockBlob', 'PageBlob', 'AzureFile', 'ManagedDisk'
         /// </summary>
         [JsonProperty(PropertyName = "shareType")]
         public ShareDestinationFormatType? ShareType { get; private set; }

@@ -37,12 +37,18 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// as of now.</param>
         /// <param name="totalBytesToProcess">Total amount of data to be
         /// processed by the job.</param>
-        public CopyProgress(string storageAccountName = default(string), string accountId = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?))
+        /// <param name="filesProcessed">Number of files processed by the job
+        /// as of now.</param>
+        /// <param name="totalFilesToProcess">Total number of files to be
+        /// processed by the job.</param>
+        public CopyProgress(string storageAccountName = default(string), string accountId = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?))
         {
             StorageAccountName = storageAccountName;
             AccountId = accountId;
             BytesSentToCloud = bytesSentToCloud;
             TotalBytesToProcess = totalBytesToProcess;
+            FilesProcessed = filesProcessed;
+            TotalFilesToProcess = totalFilesToProcess;
             CustomInit();
         }
 
@@ -75,6 +81,18 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// </summary>
         [JsonProperty(PropertyName = "totalBytesToProcess")]
         public long? TotalBytesToProcess { get; private set; }
+
+        /// <summary>
+        /// Gets number of files processed by the job as of now.
+        /// </summary>
+        [JsonProperty(PropertyName = "filesProcessed")]
+        public long? FilesProcessed { get; private set; }
+
+        /// <summary>
+        /// Gets total number of files to be processed by the job.
+        /// </summary>
+        [JsonProperty(PropertyName = "totalFilesToProcess")]
+        public long? TotalFilesToProcess { get; private set; }
 
     }
 }

@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// <param name="destinationAccountDetails">Destination account
         /// details.</param>
         /// <param name="expectedDataSizeInTeraBytes">The expected size of the
-        /// data, which needs to be transfered in this job, in tera
-        /// bytes.</param>
+        /// data, which needs to be transferred in this job, in
+        /// terabytes.</param>
         /// <param name="jobStages">List of stages that run in the job.</param>
         /// <param name="deliveryPackage">Delivery package shipping
         /// details.</param>

@@ -85,16 +85,6 @@ namespace Microsoft.Azure.Management.DataBox.Models
             {
                 Details.Validate();
             }
-            if (DestinationAccountDetails != null)
-            {
-                foreach (var element in DestinationAccountDetails)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
-            }
         }
     }
 }

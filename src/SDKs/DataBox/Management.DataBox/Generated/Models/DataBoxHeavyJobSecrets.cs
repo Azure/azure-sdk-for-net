@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// The secrets related to a databox heavy job.
+    /// The secrets related to a DataBoxHeavy job.
     /// </summary>
     [Newtonsoft.Json.JsonObject("DataBoxHeavy")]
     public partial class DataBoxHeavyJobSecrets : JobSecrets
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// Initializes a new instance of the DataBoxHeavyJobSecrets class.
         /// </summary>
         /// <param name="cabinetPodSecrets">Contains the list of secret objects
-        /// for a databox heavy job.</param>
+        /// for a DataBoxHeavy job.</param>
         public DataBoxHeavyJobSecrets(IList<DataBoxHeavySecret> cabinetPodSecrets = default(IList<DataBoxHeavySecret>))
         {
             CabinetPodSecrets = cabinetPodSecrets;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets contains the list of secret objects for a databox heavy job.
+        /// Gets contains the list of secret objects for a DataBoxHeavy job.
         /// </summary>
         [JsonProperty(PropertyName = "cabinetPodSecrets")]
         public IList<DataBoxHeavySecret> CabinetPodSecrets { get; private set; }

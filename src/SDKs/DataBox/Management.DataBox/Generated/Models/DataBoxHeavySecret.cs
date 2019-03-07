@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// The secrets related to a databox heavy.
+    /// The secrets related to a DataBoxHeavy.
     /// </summary>
     public partial class DataBoxHeavySecret
     {

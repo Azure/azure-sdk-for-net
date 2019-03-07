@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     public enum CopyStatus
     {
         /// <summary>
-        /// Data copy hasnt started yet.
+        /// Data copy hasn't started yet.
         /// </summary>
         [EnumMember(Value = "NotStarted")]
         NotStarted,

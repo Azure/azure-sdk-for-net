@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataBox.Models
     using System.Linq;
 
     /// <summary>
-    /// The secrets related to a databox job.
+    /// The secrets related to a DataBox job.
     /// </summary>
     [Newtonsoft.Json.JsonObject("DataBox")]
     public partial class DataboxJobSecrets : JobSecrets
