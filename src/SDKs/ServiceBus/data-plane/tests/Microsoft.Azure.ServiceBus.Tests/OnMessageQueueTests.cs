@@ -21,6 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnMessagePeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
         {
@@ -29,6 +30,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnMessagePeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
         {
@@ -37,6 +39,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnMessageReceiveDelete(string queueName, int maxConcurrentCalls)
         {
@@ -45,6 +48,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task OnMessageRegistrationWithoutPendingMessagesReceiveAndDelete(string queueName, int maxConcurrentCalls)
         {
@@ -60,6 +64,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task OnMessageExceptionHandlerCalledTest()
         {

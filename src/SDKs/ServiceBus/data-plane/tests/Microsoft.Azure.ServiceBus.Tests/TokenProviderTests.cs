@@ -17,6 +17,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         /// </summary>
         /// <returns></returns>
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task UseITokenProviderWithAad()
         {
@@ -43,6 +44,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async void SasTokenWithLargeExpiryTimeShouldBeAccepted()
         {

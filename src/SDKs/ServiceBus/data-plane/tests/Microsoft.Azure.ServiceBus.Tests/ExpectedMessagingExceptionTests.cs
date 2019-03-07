@@ -12,6 +12,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     public class ExpectedMessagingExceptionTests
     {
         [Fact]
+        [LiveTest]
         async Task MessageLockLostExceptionTest()
         {
             const int messageCount = 2;
@@ -47,6 +48,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         async Task CompleteOnPeekedMessagesShouldThrowTest()
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
@@ -72,6 +74,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         async Task SessionLockLostExceptionTest()
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
@@ -122,6 +125,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         async Task OperationsOnMessageSenderReceiverAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
@@ -136,6 +140,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         async Task OperationsOnMessageSessionAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
             var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);

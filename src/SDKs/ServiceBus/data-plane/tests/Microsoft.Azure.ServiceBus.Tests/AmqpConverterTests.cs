@@ -14,7 +14,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     public class AmqpConverterTests
     {
         [Fact]
-        [DisplayTestMethodName]
+        [LiveTest]
+        [DisplayTestMethodName]        
         void Convert_Amqp_message_with_Amqp_value_array_segment_to_SB_message()
         {
             var messageBody = Encoding.UTF8.GetBytes("message1");
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         void Convert_Amqp_message_with_Amqp_value_byte_array_to_SB_message()
         {
@@ -42,6 +44,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         void Convert_Amqp_message_with_data_value_array_segment_to_SB_message()
         {
@@ -56,6 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         void Convert_Amqp_message_with_data_value_byte_array_to_SB_message()
         {
@@ -70,6 +74,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         void Convert_SB_message_to_Amqp_message_and_back()
         {
@@ -122,6 +127,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         void SB_message_with_no_TTL_results_in_empty_Ampq_TTL()
         {
@@ -133,6 +139,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         void When_message_is_peeked_should_have_delivery_count_set_to_zero()
         {
@@ -150,6 +157,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         void When_message_is_received_should_have_delivery_count_increased()
         {

@@ -27,6 +27,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnSessionPeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
         {
@@ -35,6 +36,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnSessionPeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
         {
@@ -43,6 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(PartitionedNonPartitionedTestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnSessionReceiveDelete(string queueName, int maxConcurrentCalls)
         {
@@ -50,6 +53,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task OnSessionCanStartWithNullMessageButReturnSessionLater()
         {
@@ -96,6 +100,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulQueue()
         {

@@ -125,6 +125,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact(Skip = "Flaky Test in Appveyor, fix and enable back")]
+        [LiveTest]
         async void RunOperationShouldReturnImmediatelyIfRetryIntervalIsGreaterThanOperationTimeout()
         {
             var policy = RetryPolicy.Default;

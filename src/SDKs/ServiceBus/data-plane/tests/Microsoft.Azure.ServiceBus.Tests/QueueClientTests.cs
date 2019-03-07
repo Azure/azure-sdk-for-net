@@ -18,6 +18,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockTest(string queueName, int messageCount = 10)
         {
@@ -34,6 +35,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekDeliveryCountTest(string queueName)
         {
@@ -57,6 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockDeliveryCountTest(string queueName)
         {
@@ -80,6 +83,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ReceiveDeleteTest(string queueName, int messageCount = 10)
         {
@@ -96,6 +100,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockWithAbandonTest(string queueName, int messageCount = 10)
         {
@@ -112,6 +117,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockWithDeadLetterTest(string queueName, int messageCount = 10)
         {
@@ -138,6 +144,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task BasicRenewLockTest(string queueName, int messageCount = 10)
         {
@@ -154,6 +161,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(string queueName, int messageCount = 1)
         {
@@ -170,6 +178,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task CancelScheduledMessagesAsyncTest(string queueName, int messageCount = 1)
         {
@@ -185,6 +194,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task UpdatingPrefetchCountOnQueueClientUpdatesTheReceiverPrefetchCount()
         {

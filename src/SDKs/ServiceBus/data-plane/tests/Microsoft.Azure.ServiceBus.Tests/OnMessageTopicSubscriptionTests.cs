@@ -19,6 +19,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnMessagePeekLockWithAutoCompleteTrue(string topicName, int maxConcurrentCalls)
         {
@@ -27,6 +28,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnMessageReceiveDelete(string topicName, int maxConcurrentCalls)
         {

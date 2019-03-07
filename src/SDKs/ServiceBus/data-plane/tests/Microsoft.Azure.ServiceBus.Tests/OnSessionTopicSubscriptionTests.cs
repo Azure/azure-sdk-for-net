@@ -23,6 +23,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnSessionPeekLockWithAutoCompleteTrue(string topicName, int maxConcurrentCalls)
         {
@@ -31,6 +32,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         Task OnSessionPeekLockWithAutoCompleteFalse(string topicName, int maxConcurrentCalls)
         {
@@ -38,6 +40,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulSubscription()
         {

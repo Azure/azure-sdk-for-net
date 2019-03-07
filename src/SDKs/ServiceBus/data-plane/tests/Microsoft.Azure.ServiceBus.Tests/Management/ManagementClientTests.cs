@@ -21,6 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task BasicQueueCrudTest()
         {
@@ -84,6 +85,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task BasicTopicCrudTest()
         {
@@ -137,6 +139,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task BasicSubscriptionCrudTest()
         {
@@ -191,6 +194,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task BasicRulesCrudTest()
         {
@@ -258,6 +262,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task GetQueueRuntimeInfoTest()
         {
@@ -295,6 +300,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task GetTopicAndSubscriptionRuntimeInfoTest()
         {
@@ -352,6 +358,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task MessagingEntityNotFoundExceptionTest()
         {
@@ -426,6 +433,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task MessagingEntityAlreadyExistsExceptionTest()
         {
@@ -471,6 +479,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         };
         [Theory]
         [MemberData(nameof(TestData_EntityNameValidationTest))]
+        [LiveTest]
         [DisplayTestMethodName]
         public void EntityNameValidationTest(string entityName, bool isPathSeparatorAllowed)
         {
@@ -489,6 +498,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task ForwardingEntitySetupTest()
         {
@@ -534,6 +544,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public void AuthRulesEqualityCheckTest()
         {
@@ -551,6 +562,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task QueueDescriptionParsedFromResponseEqualityCheckTest()
         {
@@ -565,6 +577,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TopicDescriptionParsedFromResponseEqualityCheckTest()
         {
@@ -579,6 +592,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task SqlFilterParamsTest()
         {
@@ -612,6 +626,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task CorrelationFilterPropertiesTest()
         {
@@ -634,6 +649,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task GetNamespaceInfoTest()
         {

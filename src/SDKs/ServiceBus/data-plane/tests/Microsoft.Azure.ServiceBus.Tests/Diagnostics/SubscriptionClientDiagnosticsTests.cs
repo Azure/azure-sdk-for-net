@@ -16,6 +16,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         private bool disposed;
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task AddRemoveGetFireEvents()
         {
@@ -54,6 +55,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task EventsAreNotFiredWhenDiagnosticsIsDisabled()
         {

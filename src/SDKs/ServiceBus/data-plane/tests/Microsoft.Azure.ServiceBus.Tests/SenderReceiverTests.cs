@@ -23,6 +23,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task MessageReceiverAndMessageSenderCreationWorksAsExpected(string queueName, int messageCount = 10)
         {
@@ -42,6 +43,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientPeekLockDeferTestCase(string queueName, int messageCount = 10)
         {
@@ -62,6 +64,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekAsyncTest(string queueName, int messageCount = 10)
         {
@@ -81,6 +84,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTest(string queueName, int messageCount = 1)
         {
@@ -100,6 +104,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ReceiveShouldThrowForServerTimeoutZeroTest(string queueName)
         {
@@ -116,6 +121,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ReceiverShouldUseTheLatestPrefetchCount()
         {
@@ -186,6 +192,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact(Skip = "Flaky Test in Appveyor, fix and enable back")]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task WaitingReceiveShouldReturnImmediatelyWhenReceiverIsClosed()
         {
@@ -237,6 +244,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task DeadLetterReasonShouldPropagateToTheReceivedMessage()
         {
@@ -273,6 +281,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task DispositionWithUpdatedPropertiesShouldPropagateToReceivedMessage()
         {
@@ -318,6 +327,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task CancelScheduledMessageShouldThrowMessageNotFoundException()
         {
@@ -336,6 +346,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task ClientThrowsUnauthorizedExceptionWhenUserDoesntHaveAccess()
         {
@@ -361,6 +372,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task ClientThrowsObjectDisposedExceptionWhenUserCloseConnectionAndWouldUseOldSeviceBusConnection()
         {
@@ -388,6 +400,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task SendMesageCloseConnectionCreateAnotherConnectionSendAgainMessage()
         {
@@ -426,6 +439,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task ClientsUseGlobalConnectionCloseFirstClientSecoundClientShouldSendMessage()
         {
@@ -462,6 +476,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [InlineData(TestConstants.NonPartitionedQueueName)]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task MessageSenderShouldNotThrowWhenSendingEmptyCollection(string queueName)
         {

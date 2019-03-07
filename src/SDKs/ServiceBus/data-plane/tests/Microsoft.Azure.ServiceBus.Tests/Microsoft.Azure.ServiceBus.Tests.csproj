@@ -9,6 +9,12 @@
     <None Remove="API\ApiApprovals.ApproveAzureServiceBus.received.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="obj\**" />
+    <EmbeddedResource Remove="obj\**" />
+    <None Remove="obj\**" />
+  </ItemGroup>
+
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\ExpectedMessagingExceptionTests.cs" />
     <Compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\OnMessageQueueTests.cs" />

@@ -14,6 +14,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     public class MessageTests
     {
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public void TestClone()
         {
@@ -67,6 +68,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         public class WhenQueryingIsReceivedProperty
         {
             [Fact]
+            [LiveTest]
             [DisplayTestMethodName]
             public void Should_return_false_for_message_that_was_not_sent()
             {
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             [DisplayTestMethodName]
             [InlineData(ReceiveMode.ReceiveAndDelete)]
             [InlineData(ReceiveMode.PeekLock)]
+            [LiveTest]
             public async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
             {
                 var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, receiveMode);
@@ -102,6 +105,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
 
             [Fact]
+            [LiveTest]
             [DisplayTestMethodName]
             public async Task Should_return_true_for_peeked_message()
             {
@@ -123,6 +127,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
 
             [Fact]
+            [LiveTest]
             [DisplayTestMethodName]
             public async Task MessageWithMaxMessageSizeShouldWorkAsExpected()
             {
@@ -157,6 +162,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [InlineData(null)]
         [InlineData("123")]
         [InlineData("jøbber-nå")]
+        [LiveTest]
         public void Should_return_string_representation_of_message(string id)
         {
             var message = new Message();
@@ -169,6 +175,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async void LargeMessageShouldThrowMessageSizeExceededException()
         {
@@ -192,6 +199,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task MessagePropertiesShouldSupportValidPropertyTypes()
         {

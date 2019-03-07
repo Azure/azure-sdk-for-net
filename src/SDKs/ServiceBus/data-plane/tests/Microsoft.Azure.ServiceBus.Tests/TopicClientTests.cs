@@ -19,6 +19,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockTest(string topicName, int messageCount = 10)
         {
@@ -44,6 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientReceiveDeleteTestCase(string topicName, int messageCount = 10)
         {
@@ -70,6 +72,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientPeekLockWithAbandonTestCase(string topicName, int messageCount = 10)
         {
@@ -95,6 +98,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientPeekLockWithDeadLetterTestCase(string topicName, int messageCount = 10)
         {
@@ -130,6 +134,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientRenewLockTestCase(string topicName, int messageCount = 10)
         {
@@ -154,6 +159,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(string topicName, int messageCount = 1)
         {
@@ -180,6 +186,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task CancelScheduledMessagesAsyncTest(string topicName, int messageCount = 1)
         {

@@ -30,6 +30,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalSendCommitTest(string queueName)
         {
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalSendRollbackTest(string queueName)
         {
@@ -93,6 +95,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalCompleteCommitTest(string queueName)
         {
@@ -130,6 +133,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalCompleteRollbackTest(string queueName)
         {
@@ -167,6 +171,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(SessionTestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalSessionDispositionTest(string queueName)
         {
@@ -224,6 +229,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalRequestResponseDispositionTest(string queueName)
         {
@@ -274,6 +280,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionThrowsWhenOperationsOfDifferentPartitionsAreInSameTransaction()
         {
@@ -350,6 +357,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionCommitWorksAcrossClientsUsingSameConnectionToSameEntity()
         {
@@ -398,6 +406,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionRollbackWorksAcrossClientsUsingSameConnectionToSameEntity()
         {
@@ -444,6 +453,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalSendViaCommitTest()
         {

@@ -12,6 +12,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
 
         [Fact]
+        [LiveTest]
         async Task SendAndReceiveWithWebSocketsTest()
         {
             var taskCompletionSource = new TaskCompletionSource<Message>();

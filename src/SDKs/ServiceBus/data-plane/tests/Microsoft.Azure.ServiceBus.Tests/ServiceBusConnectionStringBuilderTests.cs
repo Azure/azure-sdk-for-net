@@ -93,8 +93,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal("amqps://hello.servicebus.windows.net", csBuilder.Endpoint);
             Assert.Equal("myQ", csBuilder.EntityPath);
             Assert.Single(csBuilder.ConnectionStringProperties);
-            Assert.True(csBuilder.ConnectionStringProperties.ContainsKey("secretmessage"));
-            Assert.Equal("h=llo", csBuilder.ConnectionStringProperties["secretmessage"]);
+            Assert.True(csBuilder.ConnectionStringProperties.ContainsKey("SecretMessage"));
+            Assert.Equal("h=llo", csBuilder.ConnectionStringProperties["SecretMessage"]);
         }
 
         [Fact]
@@ -136,6 +136,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task NonAmqpUriSchemesShouldWorkAsExpected()
         {

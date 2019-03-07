@@ -19,6 +19,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 
         [Theory]
         [MemberData(nameof(TestSerializerPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         void RunSerializerTests(XmlObjectSerializer serializer)
         {

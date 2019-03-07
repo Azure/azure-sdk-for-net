@@ -17,6 +17,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         private bool disposed = false;
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task EventsAreNotFiredWhenDiagnosticsIsDisabled()
         {
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task EventsAreNotFiredWhenDiagnosticsIsDisabledForQueue()
         {
@@ -69,6 +71,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task SendAndHandlerFireEvents()
         {
@@ -137,6 +140,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task SendAndHandlerFireExceptionEvents()
         {
@@ -206,6 +210,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task AbandonCompleteFireEvents()
         {
@@ -240,6 +245,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ReceiveNoMessageFireEvents()
         {
@@ -266,6 +272,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task BatchSendReceiveFireEvents()
         {
@@ -310,6 +317,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekFireEvents()
         {
@@ -340,6 +348,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task DeadLetterFireEvents()
         {
@@ -375,6 +384,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task RenewLockFireEvents()
         {
@@ -400,6 +410,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task DeferReceiveDeferredFireEvents()
         {
@@ -442,6 +453,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task SendAndHandlerFilterOutStartEvents()
         {
@@ -475,6 +487,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         async Task ScheduleAndCancelFireEvents()
         {

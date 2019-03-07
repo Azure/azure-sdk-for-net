@@ -22,5 +22,11 @@
         names, such as declaration of friend assemblies for testing, can be adjusted as necessary
     -->
     <DefineConstants Condition="'$(SignAssembly)' != 'false'">$(DefineConstants);CODESIGN</DefineConstants>
+
+    <!--
+        Certain tests are only relevant on a Windows platform, due to behavioral differences of third-party
+        dependencies.  Emit a constant to allow such tests to be skipped on non-Windows platforms.
+    -->
+    <DefineConstants Condition="'$(OS)' == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
   </PropertyGroup>
 </Project>

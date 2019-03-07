@@ -20,6 +20,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task SessionTest(string queueName)
         {
@@ -61,6 +62,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task GetAndSetSessionStateTest(string queueName)
         {
@@ -119,6 +121,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task SessionRenewLockTest(string queueName)
         {
@@ -172,6 +175,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task PeekSessionAsyncTest(string queueName)
         {
@@ -205,6 +209,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task ReceiveDeferredMessageForSessionTest(string qName)
         {
@@ -230,6 +235,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
+        [LiveTest]
         [DisplayTestMethodName]
         public async Task AcceptSessionThrowsSessionCannotBeLockedException()
         {
