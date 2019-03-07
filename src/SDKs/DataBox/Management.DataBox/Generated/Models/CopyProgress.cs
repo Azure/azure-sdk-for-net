@@ -33,15 +33,13 @@ namespace Microsoft.Azure.Management.DataBox.Models
         /// the data needs to be uploaded.</param>
         /// <param name="accountId">Id of the account where the data needs to
         /// be uploaded.</param>
-        /// <param name="bytesSentToCloud">Amount of data uploaded by the job
-        /// as of now.</param>
         /// <param name="totalBytesToProcess">Total amount of data to be
         /// processed by the job.</param>
         /// <param name="filesProcessed">Number of files processed by the job
         /// as of now.</param>
         /// <param name="totalFilesToProcess">Total number of files to be
         /// processed by the job.</param>
-        public CopyProgress(string storageAccountName = default(string), string accountId = default(string), long? bytesSentToCloud = default(long?), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?))
+        public CopyProgress(string storageAccountName = default(string), string accountId = default(string), string bytesSentToCloud = default(string), long? totalBytesToProcess = default(long?), long? filesProcessed = default(long?), long? totalFilesToProcess = default(long?))
         {
             StorageAccountName = storageAccountName;
             AccountId = accountId;
@@ -71,10 +69,9 @@ namespace Microsoft.Azure.Management.DataBox.Models
         public string AccountId { get; private set; }
 
         /// <summary>
-        /// Gets amount of data uploaded by the job as of now.
         /// </summary>
         [JsonProperty(PropertyName = "bytesSentToCloud")]
-        public long? BytesSentToCloud { get; private set; }
+        public string BytesSentToCloud { get; private set; }
 
         /// <summary>
         /// Gets total amount of data to be processed by the job.
