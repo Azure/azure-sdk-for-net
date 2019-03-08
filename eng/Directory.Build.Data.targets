@@ -15,6 +15,10 @@
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(IsTestProject)' != 'true' and '$(IsTestHelperLibrary)' != 'true'">
+    <SignTestAssembly>false</SignTestAssembly>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
     <IsPackable>false</IsPackable>
     <SignAssembly>false</SignAssembly>
@@ -41,7 +45,7 @@
   </PropertyGroup>
 
   <!-- If signing is enabled for a Test library, sign immediately using the test key -->
-  <PropertyGroup Condition="'$(SignTestAssembly)' == 'true' and '$(IsTestProject)' == 'true'">
+  <PropertyGroup Condition="'$(SignTestAssembly)' == 'true'">
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
