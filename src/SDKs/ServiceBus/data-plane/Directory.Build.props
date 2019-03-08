@@ -3,7 +3,6 @@
 
   <PropertyGroup>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <LangVersion>7.1</LangVersion>
 
     <!-- This is a workaorund until https://github.com/Azure/azure-sdk-for-net/issues/5214 is addressed -->
     <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
