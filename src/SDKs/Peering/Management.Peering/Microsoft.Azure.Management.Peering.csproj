@@ -14,7 +14,10 @@
       ]]>
     </PackageReleaseNotes>
 	</PropertyGroup>
-	
+
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
