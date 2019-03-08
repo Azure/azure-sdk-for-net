@@ -117,7 +117,7 @@ namespace Azure.Base.Http
         public bool Equals(HttpHeader other)
             => _utf8.AsSpan().SequenceEqual(other._utf8);
 
-        public static class Constants
+        public static class Names
         {
             static readonly byte[] s_host = Encoding.ASCII.GetBytes("Host");
             public static ReadOnlySpan<byte> Host => s_host;
@@ -131,12 +131,6 @@ namespace Azure.Base.Http
             static readonly byte[] s_contentType = Encoding.ASCII.GetBytes("Content-Type");
             public static ReadOnlySpan<byte> ContentType => s_contentType;
 
-            static readonly byte[] s_applicationJson = Encoding.ASCII.GetBytes("application/json");
-            public static ReadOnlySpan<byte> ApplicationJson => s_applicationJson;
-
-            static readonly byte[] s_applicationOctetStream = Encoding.ASCII.GetBytes("application/octet-stream");
-            public static ReadOnlySpan<byte> ApplicationOctetStream => s_applicationOctetStream;
-
             static readonly byte[] s_userAgent = Encoding.ASCII.GetBytes("User-Agent");
             public static ReadOnlySpan<byte> UserAgent => s_userAgent;
 
@@ -147,16 +141,19 @@ namespace Azure.Base.Http
 
         public static class Common
         {
-            public static readonly HttpHeader JsonContentType = new HttpHeader(Constants.ContentType, Constants.ApplicationJson);
-            public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Constants.ContentType, Constants.ApplicationOctetStream);
+            static readonly byte[] s_applicationJson = Encoding.ASCII.GetBytes("application/json");
+            static readonly byte[] s_applicationOctetStream = Encoding.ASCII.GetBytes("application/octet-stream");
+
+            public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, s_applicationJson);
+            public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Names.ContentType, s_applicationOctetStream);
 
             static readonly string PlatfromInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
 
-            public static HttpHeader CreateUserAgent(string sdkName, string sdkVersion, string applicationId = default)
+            public static HttpHeader CreateUserAgent(string componentName, string componentVersion, string applicationId = default)
             {
                 byte[] utf8 = null;
-                if (applicationId == default) utf8 = Encoding.ASCII.GetBytes($"User-Agent:{sdkName}/{sdkVersion} {PlatfromInformation}\r\n");
-                else utf8 = Encoding.ASCII.GetBytes($"User-Agent:{applicationId} {sdkName}/{sdkVersion} {PlatfromInformation}\r\n");
+                if (applicationId == default) utf8 = Encoding.ASCII.GetBytes($"User-Agent:{componentName}/{componentVersion} {PlatfromInformation}\r\n");
+                else utf8 = Encoding.ASCII.GetBytes($"User-Agent:{applicationId} {componentName}/{componentVersion} {PlatfromInformation}\r\n");
                 return new HttpHeader(utf8);
             }
 
@@ -168,10 +165,10 @@ namespace Azure.Base.Http
 
             public static HttpHeader CreateHost(ReadOnlySpan<byte> hostName)
             {
-                var buffer = new byte[Constants.Host.Length + hostName.Length + 3];
-                Constants.Host.CopyTo(buffer);
-                buffer[Constants.Host.Length] = (byte)':';
-                hostName.CopyTo(buffer.AsSpan(Constants.Host.Length + 1));
+                var buffer = new byte[Names.Host.Length + hostName.Length + 3];
+                Names.Host.CopyTo(buffer);
+                buffer[Names.Host.Length] = (byte)':';
+                hostName.CopyTo(buffer.AsSpan(Names.Host.Length + 1));
                 buffer[buffer.Length - 1] = (byte)'\n';
                 buffer[buffer.Length - 2] = (byte)'\r';
                 return new HttpHeader(buffer);
