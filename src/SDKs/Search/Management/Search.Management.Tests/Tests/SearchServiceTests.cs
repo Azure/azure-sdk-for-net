@@ -354,6 +354,98 @@ namespace Microsoft.Azure.Management.Search.Tests
             });
         }
 
+        [Fact]
+        public void CanCreateServiceWithIdentity()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                string serviceName = SearchTestUtilities.GenerateServiceName();
+                SearchService service = DefineServiceWithSku(SkuName.Basic);
+                service.Identity = new Identity(IdentityType.SystemAssigned);
+                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+                Assert.NotNull(service);
+                Assert.NotNull(service.Identity);
+                Assert.Equal(IdentityType.SystemAssigned, service.Identity.Type);
+
+                string principalId = string.IsNullOrWhiteSpace(service.Identity.PrincipalId) ? null : service.Identity.PrincipalId;
+                Assert.NotNull(principalId);
+
+                string tenantId = string.IsNullOrWhiteSpace(service.Identity.TenantId) ? null : service.Identity.TenantId;
+                Assert.NotNull(tenantId);
+
+                searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
+        [Fact]
+        public void CanAddAndRemoveServiceIdentity()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+                string serviceName = SearchTestUtilities.GenerateServiceName();
+                SearchService service = DefineServiceWithSku(SkuName.Basic);
+                service.Identity = null;
+                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+                Assert.NotNull(service);
+                Assert.Equal(IdentityType.None, service.Identity?.Type ?? IdentityType.None);
+
+                // assign an identity of type 'SystemAssigned'
+                service.Identity = new Identity(IdentityType.SystemAssigned);
+                service = searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, service);
+                Assert.NotNull(service);
+                Assert.NotNull(service.Identity);
+                Assert.Equal(IdentityType.SystemAssigned, service.Identity.Type);
+
+                string principalId = string.IsNullOrWhiteSpace(service.Identity.PrincipalId) ? null : service.Identity.PrincipalId;
+                Assert.NotNull(principalId);
+
+                string tenantId = string.IsNullOrWhiteSpace(service.Identity.TenantId) ? null : service.Identity.TenantId;
+                Assert.NotNull(tenantId);
+
+                // remove the identity by setting it's type to 'None'
+                service.Identity.Type = IdentityType.None;
+                service = searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, service);
+                Assert.NotNull(service);
+                Assert.Equal(IdentityType.None, service.Identity?.Type ?? IdentityType.None);
+
+                searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
+        [Fact]
+        public void CantCreateOrUpdateFreeServiceWithIdentity()
+        {
+            Run(() =>
+            {
+                SearchManagementClient searchMgmt = GetSearchManagementClient();
+
+                string serviceName = SearchTestUtilities.GenerateServiceName();
+                SearchService service = DefineServiceWithSku(SkuName.Free);
+                service.Identity = new Identity(IdentityType.SystemAssigned);
+
+                CloudException e = Assert.Throws<CloudException>(() => 
+                    searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service));
+
+                Assert.Equal("Resource identity is not supported for the selected SKU", e.Message);
+
+                // retry create without identity
+                service.Identity = null;
+                service = searchMgmt.Services.CreateOrUpdate(Data.ResourceGroupName, serviceName, service);
+                Assert.NotNull(service);
+                Assert.Null(service.Identity);
+
+                // try update the created service by defining an identity
+                service.Identity = new Identity();
+                e = Assert.Throws<CloudException>(() =>
+                    searchMgmt.Services.Update(Data.ResourceGroupName, service.Name, service));
+
+                Assert.Equal("Resource identity is not supported for the selected SKU", e.Message);
+                searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
+            });
+        }
+
         private static void AssertServicesEqual(SearchService a, SearchService b) =>
             Assert.Equal(a, b, new ModelComparer<SearchService>());
 
