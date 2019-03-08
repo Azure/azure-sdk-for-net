@@ -10,13 +10,12 @@
 
 namespace Microsoft.Azure.Management.Security.Models
 {
-    using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
     /// Represents a security setting in Azure Security Center.
     /// </summary>
-    public partial class Setting
+    public partial class Setting : SettingResource
     {
         /// <summary>
         /// Initializes a new instance of the Setting class.
@@ -29,14 +28,15 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the Setting class.
         /// </summary>
+        /// <param name="kind">the kind of the settings string
+        /// (DataExportSetting). Possible values include: 'DataExportSetting',
+        /// 'AlertSuppressionSetting'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public Setting(string id = default(string), string name = default(string), string type = default(string))
+        public Setting(string kind, string id = default(string), string name = default(string), string type = default(string))
+            : base(kind, id, name, type)
         {
-            Id = id;
-            Name = name;
-            Type = type;
             CustomInit();
         }
 
@@ -46,22 +46,14 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets resource Id
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets resource name
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets resource type
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Description>This is the implementation of the Azure Client Pipeline</Description>
     <AssemblyTitle>Microsoft Azure Client Pipeline</AssemblyTitle>
-    <Version>1.0.0-preview.1</Version>
+    <Version>1.0.0-preview.2</Version>
     <PackageTags>Microsoft Azure Client Pipeline</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
@@ -11,9 +11,11 @@
 
     <!-- This is a workaorund until https://github.com/Azure/azure-sdk-for-net/issues/5214 is addressed -->
     <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
+
+    <!-- Make sure that we don't pull in additional dependencies during build or package -->
+    <ImportDefaultReferences>false</ImportDefaultReferences>
     
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <LangVersion>7.3</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 

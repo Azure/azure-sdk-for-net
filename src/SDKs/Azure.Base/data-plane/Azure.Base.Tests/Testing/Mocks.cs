@@ -52,7 +52,7 @@ namespace Azure.Base.Testing
             =>string.Join(" # ", Logged);
     }
 
-    public class MockTransport : PipelineTransport
+    public class MockTransport : HttpPipelineTransport
     {
         int[] _statusCodes;
         int _index;
@@ -60,7 +60,7 @@ namespace Azure.Base.Testing
         public MockTransport(params int[] statusCodes)
             => _statusCodes = statusCodes;
 
-        public override HttpMessage CreateMessage(PipelineOptions options, CancellationToken cancellation)
+        public override HttpMessage CreateMessage(HttpPipeline.Options options, CancellationToken cancellation)
             => new Message(ref options, cancellation);
 
         public override Task ProcessAsync(HttpMessage message)
@@ -77,21 +77,21 @@ namespace Azure.Base.Testing
         {
             string _uri;
             int _status;
-            PipelineMethod _method;
+            HttpVerb _method;
 
             protected override int Status => _status;
 
             protected override Stream ResponseContentStream => throw new NotImplementedException();
 
-            public override PipelineMethod Method => throw new NotImplementedException();
+            public override HttpVerb Method => throw new NotImplementedException();
 
-            public Message(ref PipelineOptions client, CancellationToken cancellation)
+            public Message(ref HttpPipeline.Options options, CancellationToken cancellation)
                 : base(cancellation)
             { }
 
             public void SetStatus(int status) => _status = status;
 
-            public override void SetRequestLine(PipelineMethod method, Uri uri)
+            public override void SetRequestLine(HttpVerb method, Uri uri)
             {
                 _uri = uri.ToString();
                 _method = method;
@@ -110,7 +110,7 @@ namespace Azure.Base.Testing
             {
             }
 
-            public override void SetContent(PipelineContent content)
+            public override void SetContent(HttpMessageContent content)
             {
                 throw new NotImplementedException();
             }

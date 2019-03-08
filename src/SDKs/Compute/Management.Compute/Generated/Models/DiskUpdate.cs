@@ -42,8 +42,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// options, it indicates a resize. Resizes are only allowed if the
         /// disk is not attached to a running VM, and can only increase the
         /// disk's size.</param>
-        /// <param name="encryptionSettings">Encryption settings for disk or
-        /// snapshot</param>
+        /// <param name="encryptionSettingsCollection">Encryption settings
+        /// collection used be Azure Disk Encryption, can contain multiple
+        /// encryption settings per disk or snapshot.</param>
         /// <param name="diskIOPSReadWrite">The number of IOPS allowed for this
         /// disk; only settable for UltraSSD disks. One operation can transfer
         /// between 4k and 256k bytes.</param>
@@ -52,11 +53,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// bytes per second - MB here uses the ISO notation, of powers of
         /// 10.</param>
         /// <param name="tags">Resource tags</param>
-        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
+        public DiskUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), IDictionary<string, string> tags = default(IDictionary<string, string>), DiskSku sku = default(DiskSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
-            EncryptionSettings = encryptionSettings;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
             Tags = tags;
@@ -87,10 +88,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary>
-        /// Gets or sets encryption settings for disk or snapshot
+        /// Gets or sets encryption settings collection used be Azure Disk
+        /// Encryption, can contain multiple encryption settings per disk or
+        /// snapshot.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.encryptionSettings")]
-        public EncryptionSettings EncryptionSettings { get; set; }
+        [JsonProperty(PropertyName = "properties.encryptionSettingsCollection")]
+        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
 
         /// <summary>
         /// Gets or sets the number of IOPS allowed for this disk; only
@@ -127,9 +130,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (EncryptionSettings != null)
+            if (EncryptionSettingsCollection != null)
             {
-                EncryptionSettings.Validate();
+                EncryptionSettingsCollection.Validate();
             }
         }
     }

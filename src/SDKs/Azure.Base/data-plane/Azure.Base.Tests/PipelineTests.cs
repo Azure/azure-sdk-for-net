@@ -18,7 +18,7 @@ namespace Azure.Base.Tests
         [Test]
         public void Basics() {
 
-            var options = new PipelineOptions();
+            var options = new HttpPipeline.Options();
             options.Transport = new MockTransport(500, 1);
             options.RetryPolicy = new CustomRetryPolicy();
 
@@ -29,8 +29,8 @@ namespace Azure.Base.Tests
 
             using (var message = pipeline.CreateMessage(options, cancellation: default))
             {
-                message.SetRequestLine(PipelineMethod.Get, new Uri("https://contoso.a.io"));
-                pipeline.ProcessAsync(message).Wait();
+                message.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+                pipeline.SendMessageAsync(message).Wait();
 
                 Assert.AreEqual(1, message.Response.Status);
                 var result = listener.ToString();

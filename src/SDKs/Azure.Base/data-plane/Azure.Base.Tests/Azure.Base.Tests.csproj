@@ -1,8 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <IsPackable>false</IsPackable>
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
-    <LangVersion>7.2</LangVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
@@ -10,7 +8,6 @@
     <PackageReference Include="nunit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="System.Memory" Version="4.5.1" />
-    <PackageReference Include="System.Text.Primitives" Version="0.1.0-preview1-180216-4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Azure.Base\Azure.Base.csproj">

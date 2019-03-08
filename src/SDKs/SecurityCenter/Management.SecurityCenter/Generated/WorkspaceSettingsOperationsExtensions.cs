@@ -22,7 +22,8 @@ namespace Microsoft.Azure.Management.Security
     public static partial class WorkspaceSettingsOperationsExtensions
     {
             /// <summary>
-            /// Settings about where we should store your security data and logs
+            /// Settings about where we should store your security data and logs. If the
+            /// result is empty, it means that no custom-workspace configuration was set
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +34,8 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about where we should store your security data and logs
+            /// Settings about where we should store your security data and logs. If the
+            /// result is empty, it means that no custom-workspace configuration was set
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -50,7 +52,8 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about where we should store your security data and logs
+            /// Settings about where we should store your security data and logs. If the
+            /// result is empty, it means that no custom-workspace configuration was set
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,7 +67,8 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about where we should store your security data and logs
+            /// Settings about where we should store your security data and logs. If the
+            /// result is empty, it means that no custom-workspace configuration was set
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -213,7 +217,8 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about where we should store your security data and logs
+            /// Settings about where we should store your security data and logs. If the
+            /// result is empty, it means that no custom-workspace configuration was set
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -227,7 +232,8 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Settings about where we should store your security data and logs
+            /// Settings about where we should store your security data and logs. If the
+            /// result is empty, it means that no custom-workspace configuration was set
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
