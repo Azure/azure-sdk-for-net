@@ -78,8 +78,8 @@ jobs:
     steps:
       - pwsh: |
           $OSAgentCheck = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::$(OSName))
-          $SystemOS = [System.Environment]::OSVersion.VersionString
-          Write-Host 'Job runing on' $SystemOS
+          $OSDescription = [System.Runtime.InteropServices.RuntimeInformation]::OSDescription
+          Write-Host 'Job is runing on' $OSDescription
           If ($OSAgentCheck -ne 'true') { throw "Wrong Agent OS" }
         displayName: Verify OS Agent
         name: verifyOSAgent
