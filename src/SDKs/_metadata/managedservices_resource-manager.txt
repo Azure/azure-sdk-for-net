@@ -1,0 +1,14 @@
+﻿Installing AutoRest version: latest
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/managedservices/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\src\azure-sdk-for-net\src\SDKs
+2019-03-08 23:15:20 UTC
+Azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      master
+Commit:      bba2477583a7ca51d1363fde1c2bc1493dc64bd9
+AutoRest information
+Requested version: latest
+Bootstrapper version:    autorest@2.0.4283
