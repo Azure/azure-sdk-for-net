@@ -10,31 +10,28 @@
 
 namespace Microsoft.Azure.Graph.RBAC.Models
 {
-    using Microsoft.Rest;
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Request parameters for creating a new service principal.
+    /// Request parameters for update an existing service principal.
     /// </summary>
-    public partial class ServicePrincipalCreateParameters : ServicePrincipalBase
+    public partial class ServicePrincipalUpdateParameters : ServicePrincipalBase
     {
         /// <summary>
-        /// Initializes a new instance of the ServicePrincipalCreateParameters
+        /// Initializes a new instance of the ServicePrincipalUpdateParameters
         /// class.
         /// </summary>
-        public ServicePrincipalCreateParameters()
+        public ServicePrincipalUpdateParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServicePrincipalCreateParameters
+        /// Initializes a new instance of the ServicePrincipalUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="appId">The application ID.</param>
         /// <param name="keyCredentials">The collection of key credentials
         /// associated with the service principal.</param>
         /// <param name="passwordCredentials">The collection of password
@@ -45,10 +42,9 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// account is enabled</param>
         /// <param name="tags">Optional list of tags that you can apply to your
         /// service principals. Not nullable.</param>
-        public ServicePrincipalCreateParameters(string appId, IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string servicePrincipalType = default(string), string accountEnabled = default(string), IList<string> tags = default(IList<string>))
+        public ServicePrincipalUpdateParameters(IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string servicePrincipalType = default(string), string accountEnabled = default(string), IList<string> tags = default(IList<string>))
             : base(keyCredentials, passwordCredentials, servicePrincipalType, accountEnabled, tags)
         {
-            AppId = appId;
             CustomInit();
         }
 
@@ -57,24 +53,5 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         partial void CustomInit();
 
-        /// <summary>
-        /// Gets or sets the application ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "appId")]
-        public string AppId { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (AppId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AppId");
-            }
-        }
     }
 }

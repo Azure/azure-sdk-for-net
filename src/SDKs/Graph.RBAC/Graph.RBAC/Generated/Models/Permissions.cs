@@ -30,6 +30,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// name="odatatype">Microsoft.DirectoryServices.OAuth2PermissionGrant</param>
         /// <param name="clientId">The objectId of the Service Principal
         /// associated with the app</param>
+        /// <param name="objectId">The objectId of the permission grant</param>
         /// <param name="consentType">Typically set to AllPrincipals</param>
         /// <param name="principalId">Set to null if AllPrincipals is
         /// set</param>
@@ -38,10 +39,11 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <param name="scope">Typically set to user_impersonation</param>
         /// <param name="startTime">Start time for TTL</param>
         /// <param name="expiryTime">Expiry time for TTL</param>
-        public Permissions(string odatatype = default(string), string clientId = default(string), string consentType = default(string), object principalId = default(object), string resourceId = default(string), string scope = default(string), string startTime = default(string), string expiryTime = default(string))
+        public Permissions(string odatatype = default(string), string clientId = default(string), string objectId = default(string), string consentType = default(string), object principalId = default(object), string resourceId = default(string), string scope = default(string), string startTime = default(string), string expiryTime = default(string))
         {
             Odatatype = odatatype;
             ClientId = clientId;
+            ObjectId = objectId;
             ConsentType = consentType;
             PrincipalId = principalId;
             ResourceId = resourceId;
@@ -68,6 +70,12 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         [JsonProperty(PropertyName = "clientId")]
         public string ClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the objectId of the permission grant
+        /// </summary>
+        [JsonProperty(PropertyName = "objectId")]
+        public string ObjectId { get; set; }
 
         /// <summary>
         /// Gets or sets typically set to AllPrincipals

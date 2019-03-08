@@ -75,14 +75,19 @@ namespace Microsoft.Azure.Graph.RBAC
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IObjectsOperations.
+        /// Gets the ISignedInUserOperations.
         /// </summary>
-        public virtual IObjectsOperations Objects { get; private set; }
+        public virtual ISignedInUserOperations SignedInUser { get; private set; }
 
         /// <summary>
         /// Gets the IApplicationsOperations.
         /// </summary>
         public virtual IApplicationsOperations Applications { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedApplicationsOperations.
+        /// </summary>
+        public virtual IDeletedApplicationsOperations DeletedApplications { get; private set; }
 
         /// <summary>
         /// Gets the IGroupsOperations.
@@ -98,6 +103,11 @@ namespace Microsoft.Azure.Graph.RBAC
         /// Gets the IUsersOperations.
         /// </summary>
         public virtual IUsersOperations Users { get; private set; }
+
+        /// <summary>
+        /// Gets the IObjectsOperations.
+        /// </summary>
+        public virtual IObjectsOperations Objects { get; private set; }
 
         /// <summary>
         /// Gets the IDomainsOperations.
@@ -350,11 +360,13 @@ namespace Microsoft.Azure.Graph.RBAC
         /// </summary>
         private void Initialize()
         {
-            Objects = new ObjectsOperations(this);
+            SignedInUser = new SignedInUserOperations(this);
             Applications = new ApplicationsOperations(this);
+            DeletedApplications = new DeletedApplicationsOperations(this);
             Groups = new GroupsOperations(this);
             ServicePrincipals = new ServicePrincipalsOperations(this);
             Users = new UsersOperations(this);
+            Objects = new ObjectsOperations(this);
             Domains = new DomainsOperations(this);
             OAuth2 = new OAuth2Operations(this);
             BaseUri = new System.Uri("https://graph.windows.net");

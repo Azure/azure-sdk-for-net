@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Graph.RBAC
     public static partial class OAuth2OperationsExtensions
     {
             /// <summary>
-            /// Queries OAuth2 permissions for the relevant SP ObjectId of an app.
+            /// Queries OAuth2 permissions grants for the relevant SP ObjectId of an app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -30,13 +30,13 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='filter'>
             /// This is the Service Principal ObjectId associated with the app
             /// </param>
-            public static Permissions Get(this IOAuth2Operations operations, string filter = default(string))
+            public static IPage<Permissions> Get(this IOAuth2Operations operations, string filter = default(string))
             {
                 return operations.GetAsync(filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Queries OAuth2 permissions for the relevant SP ObjectId of an app.
+            /// Queries OAuth2 permissions grants for the relevant SP ObjectId of an app.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Permissions> GetAsync(this IOAuth2Operations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Permissions>> GetAsync(this IOAuth2Operations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -63,11 +63,11 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             /// <param name='body'>
             /// The relevant app Service Principal Object Id and the Service Principal
-            /// Objecit Id you want to grant.
+            /// Object Id you want to grant.
             /// </param>
-            public static Permissions Post(this IOAuth2Operations operations, Permissions body = default(Permissions))
+            public static Permissions Grant(this IOAuth2Operations operations, Permissions body = default(Permissions))
             {
-                return operations.PostAsync(body).GetAwaiter().GetResult();
+                return operations.GrantAsync(body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -78,14 +78,79 @@ namespace Microsoft.Azure.Graph.RBAC
             /// </param>
             /// <param name='body'>
             /// The relevant app Service Principal Object Id and the Service Principal
-            /// Objecit Id you want to grant.
+            /// Object Id you want to grant.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Permissions> PostAsync(this IOAuth2Operations operations, Permissions body = default(Permissions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Permissions> GrantAsync(this IOAuth2Operations operations, Permissions body = default(Permissions), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PostWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GrantWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a OAuth2 permission grant for the relevant resource Ids of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of a permission grant.
+            /// </param>
+            public static void Delete(this IOAuth2Operations operations, string objectId)
+            {
+                operations.DeleteAsync(objectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a OAuth2 permission grant for the relevant resource Ids of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of a permission grant.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IOAuth2Operations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Queries OAuth2 permissions grants for the relevant SP ObjectId of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Permissions> GetNext(this IOAuth2Operations operations, string nextPageLink)
+            {
+                return operations.GetNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queries OAuth2 permissions grants for the relevant SP ObjectId of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Permissions>> GetNextAsync(this IOAuth2Operations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
