@@ -17,12 +17,10 @@
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
     <IsPackable>false</IsPackable>
+    <SignAssembly>false</SignAssembly>
     <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
-
-    <!-- Disable signing of test assemblies unless it has been explicitly opted into -->
-    <SignAssembly Condition="'$(AllowTestAssemblySigning)' != 'true'">false</SignAssembly>
 
     <!-- Disable running of tests for test helper libraries -->
     <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>
@@ -36,14 +34,14 @@
   </ItemGroup>
 
   <!-- If signing is enabled for an SDK library, delay sign using the shared key -->
-  <PropertyGroup Condition="'$(SignAssembly)' != 'false' and '$(IsTestProject)' != 'true' ">
+  <PropertyGroup Condition="'$(SignAssembly)' != 'false'">
     <SignAssembly>true</SignAssembly>
-    <DelaySign >true</DelaySign>
+    <DelaySign>true</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <!-- If signing is enabled for a Test library, sign immediately using the test key -->
-  <PropertyGroup Condition="'$(SignAssembly)' != 'false' and '$(IsTestProject)' == 'true'">
+  <PropertyGroup Condition="'$(SignTestAssembly)' == 'true' and '$(IsTestProject)' == 'true'">
     <SignAssembly>true</SignAssembly>
     <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>

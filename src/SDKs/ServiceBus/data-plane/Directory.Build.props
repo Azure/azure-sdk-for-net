@@ -14,7 +14,7 @@
       Override the inherited behavior of forcing test assemblies to be unsigned; this is needed
       due to the use of "InternalsVisibleTo" grants for test visibility of non-public members
     -->
-    <AllowTestAssemblySigning>true</AllowTestAssemblySigning>
+    <SignTestAssembly>true</SignTestAssembly>
 
     <!--
         If the assembly is to be signed, emit a constant so that any constructs which rely on the assembly
