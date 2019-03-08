@@ -77,12 +77,12 @@ jobs:
 
     steps:
       - pwsh: |
-          $OSAgentCheck = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::$(OSName))
+          $AgentOSCheck = [System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform([System.Runtime.InteropServices.OSPlatform]::$(OSName))
           $OSDescription = [System.Runtime.InteropServices.RuntimeInformation]::OSDescription
           Write-Host 'Job is runing on' $OSDescription
-          If ($OSAgentCheck -ne 'true') { throw "Wrong Agent OS" }
-        displayName: Verify OS Agent
-        name: verifyOSAgent
+          If ($AgentOSCheck -ne 'true') { throw "Wrong Agent OS" }
+        displayName: Verify Agent OS
+        name: verifyAgentOS
         workingDirectory: $(build.sourcesDirectory)
 
       - task: DotNetCoreInstaller@0
