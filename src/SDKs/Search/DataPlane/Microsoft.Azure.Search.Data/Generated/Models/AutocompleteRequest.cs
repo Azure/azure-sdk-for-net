@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Parameters for fuzzy matching, and other autocomplete query behaviors.
     /// </summary>
-    public partial class AutocompleteRequest
+    internal partial class AutocompleteRequest
     {
         /// <summary>
         /// Initializes a new instance of the AutocompleteRequest class.
@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Search.Models
         /// fuzzy matching for the autocomplete query. Default is false. When
         /// set to true, the query will autocomplete terms even if there's a
         /// substituted or missing character in the search text. While this
-        /// provides a better experience in some scenarios it comes at a
+        /// provides a better experience in some scenarios, it comes at a
         /// performance cost as fuzzy autocomplete queries are slower and
         /// consume more resources.</param>
         /// <param name="highlightPostTag">A string tag that is appended to hit
-        /// highlights. Must be set with HighlightPreTag. If omitted, hit
+        /// highlights. Must be set with highlightPreTag. If omitted, hit
         /// highlighting is disabled.</param>
         /// <param name="highlightPreTag">A string tag that is prepended to hit
-        /// highlights. Must be set with HighlightPostTag. If omitted, hit
+        /// highlights. Must be set with highlightPostTag. If omitted, hit
         /// highlighting is disabled.</param>
         /// <param name="minimumCoverage">A number between 0 and 100 indicating
         /// the percentage of the index that must be covered by an autocomplete
@@ -55,13 +55,13 @@ namespace Microsoft.Azure.Search.Models
         /// parameter can be useful for ensuring search availability even for
         /// services with only one replica. The default is 80.</param>
         /// <param name="searchFields">The comma-separated list of field names
-        /// to consider when querying for auto-completed terms.</param>
+        /// to consider when querying for auto-completed terms. Target fields
+        /// must be included in the specified suggester.</param>
         /// <param name="suggesterName">The name of the suggester as specified
         /// in the suggesters collection that's part of the index
         /// definition.</param>
         /// <param name="top">The number of auto-completed terms to retrieve.
-        /// This must be a value between 1 and 100. The default is to
-        /// 5.</param>
+        /// This must be a value between 1 and 100. The default is 5.</param>
         public AutocompleteRequest(string searchText = default(string), AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string searchFields = default(string), string suggesterName = default(string), int? top = default(int?))
         {
             SearchText = searchText;
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Search.Models
         /// the autocomplete query. Default is false. When set to true, the
         /// query will autocomplete terms even if there's a substituted or
         /// missing character in the search text. While this provides a better
-        /// experience in some scenarios it comes at a performance cost as
+        /// experience in some scenarios, it comes at a performance cost as
         /// fuzzy autocomplete queries are slower and consume more resources.
         /// </summary>
         [JsonProperty(PropertyName = "fuzzy")]
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a string tag that is appended to hit highlights. Must
-        /// be set with HighlightPreTag. If omitted, hit highlighting is
+        /// be set with highlightPreTag. If omitted, hit highlighting is
         /// disabled.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPostTag")]
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a string tag that is prepended to hit highlights. Must
-        /// be set with HighlightPostTag. If omitted, hit highlighting is
+        /// be set with highlightPostTag. If omitted, hit highlighting is
         /// disabled.
         /// </summary>
         [JsonProperty(PropertyName = "highlightPreTag")]
@@ -136,7 +136,8 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the comma-separated list of field names to consider
-        /// when querying for auto-completed terms.
+        /// when querying for auto-completed terms. Target fields must be
+        /// included in the specified suggester.
         /// </summary>
         [JsonProperty(PropertyName = "searchFields")]
         public string SearchFields { get; set; }
@@ -150,7 +151,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the number of auto-completed terms to retrieve. This
-        /// must be a value between 1 and 100. The default is to 5.
+        /// must be a value between 1 and 100. The default is 5.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public int? Top { get; set; }

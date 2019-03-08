@@ -115,12 +115,12 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Empty(GetTypedRetryBatch().Actions);
         }
 
-        private IndexBatch GetRetryBatch()
+        private IndexBatch<Document> GetRetryBatch()
         {
             IEnumerable<string> allKeys = _results.Results.Select(r => r.Key);
 
             var exception = new IndexBatchException(_results);
-            IndexBatch originalBatch = IndexBatch.Upload(allKeys.Select(k => new Document() { { KeyFieldName, k } }));
+            var originalBatch = IndexBatch.Upload(allKeys.Select(k => new Document() { { KeyFieldName, k } }));
             return exception.FindFailedActionsToRetry(originalBatch, KeyFieldName);
         }
 
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<string> allKeys = _results.Results.Select(r => r.Key);
 
             var exception = new IndexBatchException(_results);
-            IndexBatch<Hotel> originalBatch = IndexBatch.Upload(allKeys.Select(k => new Hotel() { HotelId = k }));
+            var originalBatch = IndexBatch.Upload(allKeys.Select(k => new Hotel() { HotelId = k }));
             return exception.FindFailedActionsToRetry(originalBatch, h => h.HotelId);
         }
     }

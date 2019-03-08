@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Search
         /// Response containing the status of operations for all actions in the batch.
         /// </returns>
         Task<AzureOperationResponse<DocumentIndexResult>> IndexWithHttpMessagesAsync(
-            IndexBatch batch,
+            IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken));
@@ -517,7 +517,7 @@ namespace Microsoft.Azure.Search
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
         /// </remarks>
-        Task<AzureOperationResponse<DocumentSuggestResult>> SuggestWithHttpMessagesAsync(
+        Task<AzureOperationResponse<DocumentSuggestResult<Document>>> SuggestWithHttpMessagesAsync(
             string searchText,
             string suggesterName,
             SuggestParameters suggestParameters,

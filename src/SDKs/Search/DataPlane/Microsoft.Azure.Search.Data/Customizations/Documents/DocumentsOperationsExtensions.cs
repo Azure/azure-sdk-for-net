@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Search
         /// </returns>
         public static DocumentIndexResult Index(
             this IDocumentsOperations operations,
-            IndexBatch batch,
+            IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
         {
             return operations.IndexAsync(batch, searchRequestOptions).GetAwaiter().GetResult();
@@ -543,7 +543,7 @@ namespace Microsoft.Azure.Search
         /// </returns>
         public static async Task<DocumentIndexResult> IndexAsync(
             this IDocumentsOperations operations,
-            IndexBatch batch,
+            IndexBatch<Document> batch,
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -862,7 +862,7 @@ namespace Microsoft.Azure.Search
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
         /// </remarks>
-        public static DocumentSuggestResult Suggest(
+        public static DocumentSuggestResult<Document> Suggest(
             this IDocumentsOperations operations,
             string searchText,
             string suggesterName,
@@ -903,7 +903,7 @@ namespace Microsoft.Azure.Search
         /// <see cref="IDocumentsOperations.GetWithHttpMessagesAsync(string, System.Collections.Generic.IEnumerable&lt;string&gt;, SearchRequestOptions, System.Collections.Generic.Dictionary&lt;string, System.Collections.Generic.List&lt;string&gt;&gt;, CancellationToken)"/>
         /// for more information.
         /// </remarks>
-        public static async Task<DocumentSuggestResult> SuggestAsync(
+        public static async Task<DocumentSuggestResult<Document>> SuggestAsync(
             this IDocumentsOperations operations,
             string searchText,
             string suggesterName,
@@ -911,7 +911,7 @@ namespace Microsoft.Azure.Search
             SearchRequestOptions searchRequestOptions = default(SearchRequestOptions),
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<DocumentSuggestResult> result = await operations.SuggestWithHttpMessagesAsync(searchText, suggesterName, suggestParameters ?? new SuggestParameters(), searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DocumentSuggestResult<Document>> result = await operations.SuggestWithHttpMessagesAsync(searchText, suggesterName, suggestParameters ?? new SuggestParameters(), searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
             return result.Body;
         }
 

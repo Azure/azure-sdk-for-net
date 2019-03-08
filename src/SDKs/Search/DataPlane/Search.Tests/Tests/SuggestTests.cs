@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
-            DocumentSuggestResult response = client.Documents.Suggest("good", "sg", suggestParameters);
+            DocumentSuggestResult<Document> response = client.Documents.Suggest("good", "sg", suggestParameters);
 
             Assert.Null(response.Coverage);
             Assert.NotNull(response.Results);
@@ -269,14 +269,13 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestCanSuggestWithCustomConverterViaSettings()
         {
-            Action<SearchIndexClient> customizeSettings =
-                client =>
-                {
-                    var converter = new CustomBookConverter<CustomBook>();
-                    converter.Install(client);
-                };
+            void CustomizeSettings(SearchIndexClient client)
+            {
+                var converter = new CustomBookConverter<CustomBook>();
+                converter.Install(client);
+            }
 
-            TestCanSuggestWithCustomConverter<CustomBook>(customizeSettings);
+            TestCanSuggestWithCustomConverter<CustomBook>(CustomizeSettings);
         }
 
         private void TestCanSuggestWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)

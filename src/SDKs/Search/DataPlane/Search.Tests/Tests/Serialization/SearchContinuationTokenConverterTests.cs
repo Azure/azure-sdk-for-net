@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Search.Tests
         private SearchContinuationToken _token =
             new SearchContinuationToken(
                 "https://tempuri.org?api-version=2017-11-11-Preview",
-                new SearchParametersPayload()
+                new SearchRequest()
                 {
                     Count = true,
                     Facets = new[] { "testfacets" },
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Search.Tests
                 return obj.GetHashCode();
             }
 
-            private static bool NextPageParametersEquals(SearchParametersPayload x, SearchParametersPayload y)
+            private static bool NextPageParametersEquals(SearchRequest x, SearchRequest y)
             {
                 if (x == null && y == null)
                 {
