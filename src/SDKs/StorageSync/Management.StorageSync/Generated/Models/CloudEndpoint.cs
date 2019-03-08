@@ -40,8 +40,7 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="storageAccountResourceId">Storage Account Resource
         /// Id</param>
-        /// <param name="storageAccountShareName">Storage Account Share
-        /// name</param>
+        /// <param name="azureFileShareName">Storage Account Share name</param>
         /// <param name="storageAccountTenantId">Storage Account Tenant
         /// Id</param>
         /// <param name="partnershipId">Partnership Id</param>
@@ -52,11 +51,11 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <param name="lastWorkflowId">CloudEndpoint lastWorkflowId</param>
         /// <param name="lastOperationName">Resource Last Operation
         /// Name</param>
-        public CloudEndpoint(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string storageAccountShareName = default(string), string storageAccountTenantId = default(string), string partnershipId = default(string), string friendlyName = default(string), string backupEnabled = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string))
+        public CloudEndpoint(string id = default(string), string name = default(string), string type = default(string), string storageAccountResourceId = default(string), string azureFileShareName = default(string), string storageAccountTenantId = default(string), string partnershipId = default(string), string friendlyName = default(string), string backupEnabled = default(string), string provisioningState = default(string), string lastWorkflowId = default(string), string lastOperationName = default(string))
             : base(id, name, type)
         {
             StorageAccountResourceId = storageAccountResourceId;
-            StorageAccountShareName = storageAccountShareName;
+            AzureFileShareName = azureFileShareName;
             StorageAccountTenantId = storageAccountTenantId;
             PartnershipId = partnershipId;
             FriendlyName = friendlyName;
@@ -81,8 +80,8 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <summary>
         /// Gets or sets storage Account Share name
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccountShareName")]
-        public string StorageAccountShareName { get; set; }
+        [JsonProperty(PropertyName = "properties.azureFileShareName")]
+        public string AzureFileShareName { get; set; }
 
         /// <summary>
         /// Gets or sets storage Account Tenant Id
