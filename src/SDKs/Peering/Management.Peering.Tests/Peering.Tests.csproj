@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Peering.Tests</PackageId>
     <AssemblyName>Peering.Tests</AssemblyName>
-    <Version>0.8.0-preview</Version>
+    <Version>1.0.0</Version>
     <Description>Test Project for Peering tests</Description>
   </PropertyGroup>
 
