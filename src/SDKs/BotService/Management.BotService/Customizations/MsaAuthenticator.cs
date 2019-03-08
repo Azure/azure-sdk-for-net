@@ -32,8 +32,7 @@ namespace Microsoft.Azure.Management.BotService
             this.tenantId = tenantId;
         }
 
-#endif
-#if NETSTANDARD1_4
+#else
 
         private readonly Action<DeviceCodeResult> deviceCodeAuthHandler;
 
@@ -68,25 +67,25 @@ namespace Microsoft.Azure.Management.BotService
                 clientId: AadClientId,
                 redirectUri: new Uri(AadRedirectUri),
                 promptBehavior: PromptBehavior.Always);
-#endif
-#if NETSTANDARD1_4
+#else
 
             // Request a device code
             var deviceCodeResult = await context.AcquireDeviceCodeAsync(BotFirstPartyAppId, AadClientId);
 
-            if (deviceCodeAuthHandler == null)
+            if (this.deviceCodeAuthHandler == null)
             {
                 throw new ArgumentException(BotServiceErrorMessages.DeviceCodeAuthNotProvided,
-                    nameof(deviceCodeAuthHandler));
+                    nameof(this.deviceCodeAuthHandler));
             }
 
             // Execute the user-provided handler for device code. It should prompt the user to
             // do device login
-            deviceCodeAuthHandler(deviceCodeResult);
+            this.deviceCodeAuthHandler(deviceCodeResult);
             
             // Now, the user should have entered the device code, acquire token
             return await context.AcquireTokenByDeviceCodeAsync(deviceCodeResult);
 #endif
+
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.BotService
         /// </summary>
         public string TenantId { get; set; }
 
-#if NETSTANDARD1_4
+#if !NET452
 
         /// <summary>
         /// Device code authentication callback, only if MsaAppId is not provided.

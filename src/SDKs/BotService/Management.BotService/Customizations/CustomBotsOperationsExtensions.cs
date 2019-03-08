@@ -328,9 +328,9 @@ namespace Microsoft.Azure.Management.BotService.Customizations
 #if NET452
                 // Obtain user token with bot first party app as audience
                 var authenticator = new MsaAuthenticator(tenantId);
-#endif
 
-#if NETSTANDARD1_4
+#else
+
                 // Obtain user token with bot first party app as audience
                 var authenticator = new MsaAuthenticator(tenantId, client.DeviceCodeAuthCallback);
 #endif
