@@ -345,7 +345,7 @@ namespace EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "This is not yet enabled for the new API version, will re-record once it is enabled")]
         public void EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -403,7 +403,7 @@ namespace EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "This is not yet enabled for the new API version, will re-record once it is enabled")]
         public void EventSubscriptionToResourceGroupCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

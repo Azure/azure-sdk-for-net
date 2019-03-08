@@ -9,11 +9,11 @@ using Microsoft.Rest;
 
 namespace Microsoft.Azure.EventGrid.Models
 {
-    public class TopicCredentials : ServiceClientCredentials
+    public class ResourceCredentials : ServiceClientCredentials
     {
         readonly string topicKey;
 
-        public TopicCredentials(string topicKey)
+        public ResourceCredentials(string topicKey)
         {
             this.topicKey = topicKey;
         }
