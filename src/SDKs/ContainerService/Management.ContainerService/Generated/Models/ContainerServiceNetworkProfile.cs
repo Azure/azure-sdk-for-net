@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// Kubernetes network. Possible values include: 'azure',
         /// 'kubenet'</param>
         /// <param name="networkPolicy">Network policy used for building
-        /// Kubernetes network. Possible values include: 'calico'</param>
+        /// Kubernetes network. Possible values include: 'calico',
+        /// 'azure'</param>
         /// <param name="podCidr">A CIDR notation IP range from which to assign
         /// pod IPs when kubenet is used.</param>
         /// <param name="serviceCidr">A CIDR notation IP range from which to
@@ -73,7 +74,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// Gets or sets network policy used for building Kubernetes network.
-        /// Possible values include: 'calico'
+        /// Possible values include: 'calico', 'azure'
         /// </summary>
         [JsonProperty(PropertyName = "networkPolicy")]
         public string NetworkPolicy { get; set; }
