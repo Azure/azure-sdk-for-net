@@ -35,10 +35,18 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(SignAssembly)' != 'false'">
+  <!-- If signing is enabled for an SDK library, delay sign using the shared key -->
+  <PropertyGroup Condition="'$(SignAssembly)' != 'false' and '$(IsTestProject)' != 'true' ">
     <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
+    <DelaySign >true</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <!-- If signing is enabled for a Test library, sign immediately using the test key -->
+  <PropertyGroup Condition="'$(SignAssembly)' != 'false' and '$(IsTestProject)' == 'true'">
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <!-- Import default references if this is not set -->

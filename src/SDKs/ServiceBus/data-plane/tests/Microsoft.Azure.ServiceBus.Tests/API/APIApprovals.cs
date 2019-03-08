@@ -23,7 +23,7 @@
         public void ApproveAzureServiceBus()
         {           
             var assembly = typeof(Message).Assembly;
-            var publicApi = Filter(PublicApiGenerator.ApiGenerator.GeneratePublicApi(assembly, whitelistedNamespacePrefixes: new[] { "Microsoft.Azure.ServiceBus." }));            
+            var publicApi = Filter(PublicApiGenerator.ApiGenerator.GeneratePublicApi(assembly, whitelistedNamespacePrefixes: new[] { "Microsoft.Azure.ServiceBus." }));  
             Approvals.Verify(publicApi);
         }
 
