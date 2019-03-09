@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/signage.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "2d87718b4b6c48f08d70b8dbb18c19e3"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -67,7 +67,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "2d87718b4b6c48f08d70b8dbb18c19e3"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
