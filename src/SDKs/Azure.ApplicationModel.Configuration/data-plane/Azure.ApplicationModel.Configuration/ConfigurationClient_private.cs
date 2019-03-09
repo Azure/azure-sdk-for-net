@@ -31,7 +31,7 @@ namespace Azure.ApplicationModel.Configuration
         const string IfNoneMatch = "If-None-Match";
 
         static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
-            HttpHeader.Constants.Accept,
+            HttpHeader.Names.Accept,
             Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
         );
 
