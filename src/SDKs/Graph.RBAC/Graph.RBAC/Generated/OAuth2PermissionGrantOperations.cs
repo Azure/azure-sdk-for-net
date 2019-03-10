@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Graph.RBAC
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ObjectsOperations operations.
+    /// OAuth2PermissionGrantOperations operations.
     /// </summary>
-    internal partial class ObjectsOperations : IServiceOperations<GraphRbacManagementClient>, IObjectsOperations
+    internal partial class OAuth2PermissionGrantOperations : IServiceOperations<GraphRbacManagementClient>, IOAuth2PermissionGrantOperations
     {
         /// <summary>
-        /// Initializes a new instance of the ObjectsOperations class.
+        /// Initializes a new instance of the OAuth2PermissionGrantOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal ObjectsOperations(GraphRbacManagementClient client)
+        internal OAuth2PermissionGrantOperations(GraphRbacManagementClient client)
         {
             if (client == null)
             {
@@ -51,12 +51,10 @@ namespace Microsoft.Azure.Graph.RBAC
         public GraphRbacManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Gets the directory objects specified in a list of object IDs. You can also
-        /// specify which resource collections (users, groups, etc.) should be searched
-        /// by specifying the optional types parameter.
+        /// Queries OAuth2 permissions grants for the relevant SP ObjectId of an app.
         /// </summary>
-        /// <param name='parameters'>
-        /// Objects filtering parameters.
+        /// <param name='filter'>
+        /// This is the Service Principal ObjectId associated with the app
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -79,12 +77,8 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DirectoryObject>>> GetObjectsByObjectIdsWithHttpMessagesAsync(GetObjectsParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<OAuth2PermissionGrant>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
-            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -100,15 +94,19 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetObjectsByObjectIds", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/getObjectsByObjectIds").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/oauth2PermissionGrants").ToString();
             _url = _url.Replace("{tenantID}", System.Uri.EscapeDataString(Client.TenantID));
             List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -120,7 +118,7 @@ namespace Microsoft.Azure.Graph.RBAC
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -151,12 +149,6 @@ namespace Microsoft.Azure.Graph.RBAC
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
-            {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
             // Set Credentials
             if (Client.Credentials != null)
             {
@@ -212,7 +204,7 @@ namespace Microsoft.Azure.Graph.RBAC
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<DirectoryObject>>();
+            var _result = new AzureOperationResponse<IPage<OAuth2PermissionGrant>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -225,7 +217,7 @@ namespace Microsoft.Azure.Graph.RBAC
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DirectoryObject>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OAuth2PermissionGrant>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -245,7 +237,7 @@ namespace Microsoft.Azure.Graph.RBAC
         }
 
         /// <summary>
-        /// Gets AD group membership for the specified AD object IDs.
+        /// Gets the next page of OAuth2 permission grants
         /// </summary>
         /// <param name='nextLink'>
         /// Next link for the list operation.
@@ -256,7 +248,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="CloudException">
+        /// <exception cref="GraphErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -271,7 +263,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<DirectoryObject>>> GetObjectsByObjectIdsNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<OAuth2PermissionGrant>>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextLink == null)
             {
@@ -294,7 +286,7 @@ namespace Microsoft.Azure.Graph.RBAC
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextLink", nextLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetObjectsByObjectIdsNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListNext", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -313,7 +305,7 @@ namespace Microsoft.Azure.Graph.RBAC
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
@@ -366,14 +358,13 @@ namespace Microsoft.Azure.Graph.RBAC
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new GraphErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    GraphError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<GraphError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
-                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -383,10 +374,6 @@ namespace Microsoft.Azure.Graph.RBAC
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -399,7 +386,7 @@ namespace Microsoft.Azure.Graph.RBAC
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<DirectoryObject>>();
+            var _result = new AzureOperationResponse<IPage<OAuth2PermissionGrant>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -412,7 +399,7 @@ namespace Microsoft.Azure.Graph.RBAC
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DirectoryObject>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<OAuth2PermissionGrant>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
