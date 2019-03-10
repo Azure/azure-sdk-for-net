@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.Security.Models
     /// </summary>
     public static class ReportedSeverity
     {
-        public const string Informational = "Informational";
+        public const string Silent = "Silent";
+        public const string Information = "Information";
         public const string Low = "Low";
-        public const string Medium = "Medium";
         public const string High = "High";
     }
 }

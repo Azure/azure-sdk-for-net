@@ -32,19 +32,15 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the Pricing class.
         /// </summary>
-        /// <param name="pricingTier">The pricing tier value. Possible values
+        /// <param name="pricingTier">Pricing tier type. Possible values
         /// include: 'Free', 'Standard'</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        /// <param name="freeTrialRemainingTime">The duration left for the
-        /// subscriptions free trial period - in ISO 8601 format (e.g.
-        /// P3Y6M4DT12H30M5S).</param>
-        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string), System.TimeSpan? freeTrialRemainingTime = default(System.TimeSpan?))
+        public Pricing(string pricingTier, string id = default(string), string name = default(string), string type = default(string))
             : base(id, name, type)
         {
             PricingTier = pricingTier;
-            FreeTrialRemainingTime = freeTrialRemainingTime;
             CustomInit();
         }
 
@@ -54,18 +50,11 @@ namespace Microsoft.Azure.Management.Security.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the pricing tier value. Possible values include:
-        /// 'Free', 'Standard'
+        /// Gets or sets pricing tier type. Possible values include: 'Free',
+        /// 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "properties.pricingTier")]
         public string PricingTier { get; set; }
-
-        /// <summary>
-        /// Gets the duration left for the subscriptions free trial period - in
-        /// ISO 8601 format (e.g. P3Y6M4DT12H30M5S).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.freeTrialRemainingTime")]
-        public System.TimeSpan? FreeTrialRemainingTime { get; private set; }
 
         /// <summary>
         /// Validate the object.

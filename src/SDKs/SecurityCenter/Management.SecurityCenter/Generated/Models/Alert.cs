@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="actionTaken">The action that was taken as a response
         /// to the alert (Active, Blocked etc.)</param>
         /// <param name="reportedSeverity">Estimated severity of this alert.
-        /// Possible values include: 'Informational', 'Low', 'Medium',
+        /// Possible values include: 'Silent', 'Information', 'Low',
         /// 'High'</param>
         /// <param name="compromisedEntity">The entity that the incident
         /// happened on</param>
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Security.Models
 
         /// <summary>
         /// Gets estimated severity of this alert. Possible values include:
-        /// 'Informational', 'Low', 'Medium', 'High'
+        /// 'Silent', 'Information', 'Low', 'High'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reportedSeverity")]
         public string ReportedSeverity { get; private set; }
