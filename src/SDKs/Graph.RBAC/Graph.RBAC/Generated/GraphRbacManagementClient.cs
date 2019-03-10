@@ -120,11 +120,6 @@ namespace Microsoft.Azure.Graph.RBAC
         public virtual IOAuth2PermissionGrantOperations OAuth2PermissionGrant { get; private set; }
 
         /// <summary>
-        /// Gets the IOAuth2Operations.
-        /// </summary>
-        public virtual IOAuth2Operations OAuth2 { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the GraphRbacManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -374,7 +369,6 @@ namespace Microsoft.Azure.Graph.RBAC
             Objects = new ObjectsOperations(this);
             Domains = new DomainsOperations(this);
             OAuth2PermissionGrant = new OAuth2PermissionGrantOperations(this);
-            OAuth2 = new OAuth2Operations(this);
             BaseUri = new System.Uri("https://graph.windows.net");
             ApiVersion = "1.6";
             AcceptLanguage = "en-US";

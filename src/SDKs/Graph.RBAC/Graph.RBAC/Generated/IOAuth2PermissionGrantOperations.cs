@@ -47,6 +47,49 @@ namespace Microsoft.Azure.Graph.RBAC
         /// </exception>
         Task<AzureOperationResponse<IPage<OAuth2PermissionGrant>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Grants OAuth2 permissions for the relevant resource Ids of an app.
+        /// </summary>
+        /// <param name='body'>
+        /// The relevant app Service Principal Object Id and the Service
+        /// Principal Object Id you want to grant.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<OAuth2PermissionGrant>> CreateWithHttpMessagesAsync(OAuth2PermissionGrant body = default(OAuth2PermissionGrant), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Delete a OAuth2 permission grant for the relevant resource Ids of
+        /// an app.
+        /// </summary>
+        /// <param name='objectId'>
+        /// The object ID of a permission grant.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="GraphErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string objectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets the next page of OAuth2 permission grants
         /// </summary>
         /// <param name='nextLink'>

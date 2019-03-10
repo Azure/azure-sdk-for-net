@@ -56,6 +56,73 @@ namespace Microsoft.Azure.Graph.RBAC
             }
 
             /// <summary>
+            /// Grants OAuth2 permissions for the relevant resource Ids of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The relevant app Service Principal Object Id and the Service Principal
+            /// Object Id you want to grant.
+            /// </param>
+            public static OAuth2PermissionGrant Create(this IOAuth2PermissionGrantOperations operations, OAuth2PermissionGrant body = default(OAuth2PermissionGrant))
+            {
+                return operations.CreateAsync(body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Grants OAuth2 permissions for the relevant resource Ids of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// The relevant app Service Principal Object Id and the Service Principal
+            /// Object Id you want to grant.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<OAuth2PermissionGrant> CreateAsync(this IOAuth2PermissionGrantOperations operations, OAuth2PermissionGrant body = default(OAuth2PermissionGrant), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete a OAuth2 permission grant for the relevant resource Ids of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of a permission grant.
+            /// </param>
+            public static void Delete(this IOAuth2PermissionGrantOperations operations, string objectId)
+            {
+                operations.DeleteAsync(objectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete a OAuth2 permission grant for the relevant resource Ids of an app.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='objectId'>
+            /// The object ID of a permission grant.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IOAuth2PermissionGrantOperations operations, string objectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(objectId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Gets the next page of OAuth2 permission grants
             /// </summary>
             /// <param name='operations'>

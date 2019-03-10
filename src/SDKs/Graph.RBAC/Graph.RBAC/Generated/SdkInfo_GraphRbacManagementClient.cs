@@ -23,7 +23,6 @@ namespace Microsoft.Azure.Graph.RBAC
                 new Tuple<string, string, string>("GraphRbacManagementClient", "DeletedApplications", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Domains", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Groups", "1.6"),
-                new Tuple<string, string, string>("GraphRbacManagementClient", "OAuth2", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "OAuth2PermissionGrant", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Objects", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "ServicePrincipals", "1.6"),

@@ -114,10 +114,5 @@ namespace Microsoft.Azure.Graph.RBAC
         /// </summary>
         IOAuth2PermissionGrantOperations OAuth2PermissionGrant { get; }
 
-        /// <summary>
-        /// Gets the IOAuth2Operations.
-        /// </summary>
-        IOAuth2Operations OAuth2 { get; }
-
     }
 }
