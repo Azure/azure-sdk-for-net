@@ -72,6 +72,16 @@ namespace Microsoft.Azure.Management.EventGrid
 
 
         /// <summary>
+        /// Gets the IDomainsOperations.
+        /// </summary>
+        IDomainsOperations Domains { get; }
+
+        /// <summary>
+        /// Gets the IDomainTopicsOperations.
+        /// </summary>
+        IDomainTopicsOperations DomainTopics { get; }
+
+        /// <summary>
         /// Gets the IEventSubscriptionsOperations.
         /// </summary>
         IEventSubscriptionsOperations EventSubscriptions { get; }
