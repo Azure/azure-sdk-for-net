@@ -73,11 +73,11 @@ public async Task HelloWorld()
 ```
 
 # Other Samples
-1. [How to access diagnostic logs](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/samples/Sample4_Logging.cs)
-2. [How to configure retry policy](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/samples/Sample6_ConfiguringRetries.cs)
-3. [How to configure service requests](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/samples/Sample7_ConfiguringPipeline.cs)
+1. [How to access diagnostic logs](Azure.ApplicationModel.Configuration.Tests/samples/Sample4_Logging.cs)
+2. [How to configure retry policy](Azure.ApplicationModel.Configuration.Tests/samples/Sample6_ConfiguringRetries.cs)
+3. [How to configure service requests](Azure.ApplicationModel.Configuration.Tests/samples/Sample7_ConfiguringPipeline.cs)
 
-[More...](https://github.com/Azure/azure-sdk-for-net/blob/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/Azure.Configuration.Tests/ConfigurationLiveTests.cs)
+[More...](Azure.ApplicationModel.Configuration.Tests/ConfigurationLiveTests.cs)
 
 # Contributing
 If the changes you are working on span both Azure.Base and Azure.Configuration then you can set this environment variable before launching Visual Studio. That will use Project To Project references between Azure.Configuration and Azure.Base instead of package references.
