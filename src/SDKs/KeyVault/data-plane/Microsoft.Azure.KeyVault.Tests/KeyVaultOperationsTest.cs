@@ -402,7 +402,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             Assert.False(verified);
 #endif
         }
-
+/*
         public void CreateGetDeleteKeyTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -457,7 +457,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
-
+*/
         [Fact]
         public void CreateHsmKeyTest()
         {
@@ -764,7 +764,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                 try
                 {
-                    // Backup the secret 
+                    // Backup the secret
                     var backupResponse = client.BackupSecretAsync(_vaultAddress, name).GetAwaiter().GetResult();
 
                     client.DeleteSecretAsync(_vaultAddress, name).Wait();
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
-
+/*
         public void KeyCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -1065,7 +1065,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
-
+*/
         [Fact]
         public void ListDeletedKeysTest()
         {
@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 #endregion
 
 #region Secret Operations
-
+/*
         public void SecretCreateUpdateDeleteTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -1231,7 +1231,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 }
             }
         }
-
+*/
         [Fact]
         public void GetSecretVersionTest()
         {
@@ -1542,7 +1542,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "the 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
-
+/*
         public void SecretCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -1643,7 +1643,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelAttributeIsConsistent, "The 'recoveryLevel' attribute did not consistently return the expected value");
             }
         }
-
+*/
         [Fact]
         public void ListDeletedSecretsTest()
         {
@@ -2421,7 +2421,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.True(0 == string.CompareOrdinal(retrievedCertificate.SubjectName.Name, certificateSubjectName));
                     Assert.True(0 == string.CompareOrdinal(retrievedCertificate.IssuerName.Name, certificateSubjectName));
 
-                    // 24 months (ie 2 years) is 729 or 730 days. 
+                    // 24 months (ie 2 years) is 729 or 730 days.
                     // for some reason the validity is 731 (+ some) days though
                     var validity = retrievedCertificate.NotAfter - retrievedCertificate.NotBefore;
                     Assert.True(validity >= TimeSpan.FromDays(729));
@@ -2512,7 +2512,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.True(0 == string.CompareOrdinal(retrievedCertificate.SubjectName.Name, certificateSubjectName));
                     Assert.True(0 == string.CompareOrdinal(retrievedCertificate.IssuerName.Name, certificateSubjectName));
 
-                    // 24 months (ie 2 years) is 729 or 730 days. 
+                    // 24 months (ie 2 years) is 729 or 730 days.
                     // for some reason the validity is 731 (+ some) days though
                     var validity = retrievedCertificate.NotAfter - retrievedCertificate.NotBefore;
                     Assert.True(validity >= TimeSpan.FromDays(729));
@@ -2601,7 +2601,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 }
             }
         }
-
+/*
         public void CertificateAsyncDeleteOperationTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -2695,7 +2695,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 }
             }
         }
-
+*/
         [Fact]
         public void CertificateUpdateTest()
         {
@@ -3151,7 +3151,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     policy).GetAwaiter().GetResult();
                 recoveryLevelIsConsistent &= VerifyDeletionRecoveryLevel(createdCertificateBundle.Attributes, _softDeleteEnabled);
 
-                // add another version 
+                // add another version
                 var attributes = new CertificateAttributes
                 {
                     Enabled = true,
@@ -3201,7 +3201,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "The 'recoveryLevel' attribute did not consistently return the expected value.");
             }
         }
-
+/*
         public void CertificateCreateDeleteRecoverPurgeTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -3328,7 +3328,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 Assert.True(recoveryLevelIsConsistent, "The 'recoveryLevel' attribute did not consistently return the expected value");
             }
         }
-
+*/
         [Fact]
         public void ListDeletedCertificatesTest()
         {
@@ -3649,7 +3649,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 }
             }
         }
-
+/*
         public void StorageSasDefCreateTest()
         {
             using (MockContext.Start(this.GetType().FullName))
@@ -3834,7 +3834,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 }
             }
         }
-
+*/
 #endregion
 
 #region Helper Methods
@@ -3902,7 +3902,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         /// </summary>
         /// <param name="keyIdentifier"> key identifier </param>
         /// <param name="algorithm"> sign algorithm </param>
-        /// <param name="digest"> digest hash </param> 
+        /// <param name="digest"> digest hash </param>
         private void SignVerify(KeyVaultClient client, KeyIdentifier keyIdentifier, string algorithm, byte[] digest)
         {
             var signResult = client.SignAsync(keyIdentifier.BaseIdentifier, algorithm, digest).GetAwaiter().GetResult();
@@ -4037,7 +4037,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         /// Creates a key bundle from existing key material.
         /// </summary>
         /// <param name="keyType">Key type.</param>
-        /// <param name="keyToken">Key material or content description.</param>        
+        /// <param name="keyToken">Key material or content description.</param>
         /// <param name="enabled">Initial 'enabled' state.</param>
         /// <param name="notBefore">Key cannot be used before this time.</param>
         /// <param name="notAfter">Key cannot be used after this time.</param>
@@ -4050,7 +4050,7 @@ namespace Microsoft.Azure.KeyVault.Tests
         /// <summary>
         /// Creates a key bundle from an existing JSON web key.
         /// </summary>
-        /// <param name="key">The key to import. Must contain public and private components.</param>     
+        /// <param name="key">The key to import. Must contain public and private components.</param>
         /// <param name="enabled">Initial 'enabled' state.</param>
         /// <param name="notBefore">Key cannot be used before this time.</param>
         /// <param name="notAfter">Key cannot be used after this time.</param>
@@ -4238,7 +4238,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             /// <returns>An http client instance with the specified delegating handlers as the inner pipeline.</returns>
             /// <remarks>
             /// * The original implementation of this class is in the System.Net.Http.Formatting assembly, which
-            /// does not support .netcoreApp as a target framework. 
+            /// does not support .netcoreApp as a target framework.
             /// * Since the class is private, no parameter validation is required. However, the provider
             /// of the delegating handler array must behave, and ensure there are no preset inners.
             /// </remarks>
@@ -4246,7 +4246,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             {
                 for (int idx = 1; idx < handlers.Length; idx++)
                 {
-                    // set each previous handler as the inner of the subsequent one. 
+                    // set each previous handler as the inner of the subsequent one.
                     // Last handler becomes the first handler in the pipeline.
                     handlers[idx].InnerHandler = handlers[idx - 1];
                 }
