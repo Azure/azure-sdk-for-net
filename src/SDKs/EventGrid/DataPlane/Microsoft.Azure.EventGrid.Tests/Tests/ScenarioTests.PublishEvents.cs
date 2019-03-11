@@ -59,11 +59,11 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
 
                 // Publish events to topic
                 string topicHostname = new Uri(createTopicResponse.Endpoint).Host;
-                ResourceCredentials resourceCredentials = new ResourceCredentials(keys.Key1);
+                ResourceCredentials credentials = new ResourceCredentials(keys.Key1);
 
                 EventGridClient client = EventGridManagementHelper.GetEventGridClient(
                     context,
-                    resourceCredentials,
+                    credentials,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 Console.WriteLine("Publishing to Azure Event Grid Topic");
@@ -116,11 +116,11 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
 
                 // Publish events to domain
                 string domainHostname = new Uri(createDomainResponse.Endpoint).Host;
-                ResourceCredentials resourceCredentials = new ResourceCredentials(keys.Key1);
+                ResourceCredentials credentials = new ResourceCredentials(keys.Key1);
 
                 EventGridClient client = EventGridManagementHelper.GetEventGridClient(
                     context,
-                    resourceCredentials,
+                    credentials,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
                 Console.WriteLine("Publishing to Azure Event Grid Domain");

@@ -9,13 +9,13 @@ using Microsoft.Rest;
 
 namespace Microsoft.Azure.EventGrid.Models
 {
-    public class ResourceCredentials : ServiceClientCredentials
+    public class TopicCredentials : ServiceClientCredentials
     {
-        readonly string resourceKey;
+        readonly string topicKey;
 
-        public ResourceCredentials(string resourceKey)
+        public TopicCredentials(string topicKey)
         {
-            this.resourceKey = resourceKey;
+            this.topicKey = topicKey;
         }
 
         public override void InitializeServiceClient<T>(ServiceClient<T> client)
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.EventGrid.Models
 
         public override async Task ProcessHttpRequestAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            request.Headers.Add("aeg-sas-key", this.resourceKey);
+            request.Headers.Add("aeg-sas-key", this.topicKey);
             await base.ProcessHttpRequestAsync(request, cancellationToken);
         }
     }
