@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering bandwidth offer class.
+    /// The properties that define a peering bandwidth offer.
     /// </summary>
     public partial class PeeringBandwidthOffer
     {
@@ -25,10 +25,9 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the PeeringBandwidthOffer class.
         /// </summary>
-        /// <param name="offerName">Gets or sets the bandwidth offer
-        /// name.</param>
-        /// <param name="valueInMbps">Gets or sets the value of the bandwidth
-        /// offer in Mbps.</param>
+        /// <param name="offerName">The name of the bandwidth offer.</param>
+        /// <param name="valueInMbps">The value of the bandwidth offer in
+        /// Mbps.</param>
         public PeeringBandwidthOffer(string offerName = default(string), int? valueInMbps = default(int?))
         {
             OfferName = offerName;
@@ -42,7 +41,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the bandwidth offer name.
+        /// Gets or sets the name of the bandwidth offer.
         /// </summary>
         [JsonProperty(PropertyName = "offerName")]
         public string OfferName { get; set; }

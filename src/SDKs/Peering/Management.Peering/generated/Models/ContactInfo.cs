@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// Contact Info
+    /// The contact information of the peer.
     /// </summary>
     public partial class ContactInfo
     {
@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the ContactInfo class.
         /// </summary>
-        /// <param name="emails">Gets or sets the list of emails.</param>
-        /// <param name="phone">Gets or sets the list of phones.</param>
+        /// <param name="emails">The list of email addresses.</param>
+        /// <param name="phone">The list of contact numbers.</param>
         public ContactInfo(IList<string> emails = default(IList<string>), IList<string> phone = default(IList<string>))
         {
             Emails = emails;
@@ -42,13 +42,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of emails.
+        /// Gets or sets the list of email addresses.
         /// </summary>
         [JsonProperty(PropertyName = "emails")]
         public IList<string> Emails { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of phones.
+        /// Gets or sets the list of contact numbers.
         /// </summary>
         [JsonProperty(PropertyName = "phone")]
         public IList<string> Phone { get; set; }

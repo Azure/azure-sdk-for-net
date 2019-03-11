@@ -15,14 +15,17 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PeeringLocationsOperations operations.
+    /// LegacyPeeringsOperations operations.
     /// </summary>
-    public partial interface IPeeringLocationsOperations
+    public partial interface ILegacyPeeringsOperations
     {
         /// <summary>
-        /// Lists all of the available peering locations for the specified kind
-        /// of peering.
+        /// Lists all of the legacy peerings under the given subscription
+        /// matching the specified kind and location.
         /// </summary>
+        /// <param name='peeringLocation'>
+        /// The location of the peering.
+        /// </param>
         /// <param name='kind'>
         /// The kind of the peering. Possible values include: 'Direct',
         /// 'Exchange'
@@ -42,6 +45,6 @@ namespace Microsoft.Azure.Management.Peering
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<PeeringLocation>>> ListWithHttpMessagesAsync(string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<PeeringModel>>> ListWithHttpMessagesAsync(string peeringLocation, string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

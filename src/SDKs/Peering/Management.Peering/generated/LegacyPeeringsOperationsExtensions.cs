@@ -15,31 +15,37 @@ namespace Microsoft.Azure.Management.Peering
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PeeringLocationsOperations.
+    /// Extension methods for LegacyPeeringsOperations.
     /// </summary>
-    public static partial class PeeringLocationsOperationsExtensions
+    public static partial class LegacyPeeringsOperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available peering locations for the specified kind of
-            /// peering.
+            /// Lists all of the legacy peerings under the given subscription matching the
+            /// specified kind and location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='peeringLocation'>
+            /// The location of the peering.
             /// </param>
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
             /// </param>
-            public static IEnumerable<PeeringLocation> List(this IPeeringLocationsOperations operations, string kind)
+            public static IEnumerable<PeeringModel> List(this ILegacyPeeringsOperations operations, string peeringLocation, string kind)
             {
-                return operations.ListAsync(kind).GetAwaiter().GetResult();
+                return operations.ListAsync(peeringLocation, kind).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all of the available peering locations for the specified kind of
-            /// peering.
+            /// Lists all of the legacy peerings under the given subscription matching the
+            /// specified kind and location.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='peeringLocation'>
+            /// The location of the peering.
             /// </param>
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
@@ -47,9 +53,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<PeeringLocation>> ListAsync(this IPeeringLocationsOperations operations, string kind, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<PeeringModel>> ListAsync(this ILegacyPeeringsOperations operations, string peeringLocation, string kind, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(kind, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(peeringLocation, kind, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

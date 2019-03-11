@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering location properties class.
+    /// The properties that define an exchange peering facility.
     /// </summary>
     public partial class ExchangePeeringFacility
     {
@@ -25,21 +25,22 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the ExchangePeeringFacility class.
         /// </summary>
-        /// <param name="exchangeName">Gets or sets the facility name.</param>
-        /// <param name="bandwidthInMbps">Gets or sets the bandwidth in
-        /// Mbps.</param>
-        /// <param name="microsoftIPv4Address">Gets or sets the Microsoft IP v4
-        /// address.</param>
-        /// <param name="microsoftIPv6Address">Gets or sets the Microsoft IP v6
-        /// address.</param>
-        /// <param name="facilityIPv4Prefix">Gets or sets the Facility IPv4
-        /// Prefix.</param>
-        /// <param name="facilityIPv6Prefix">Gets or sets the Facility IPv6
-        /// Prefix.</param>
-        /// <param name="peeringDBFacilityId">Gets or sets the facility
-        /// id.</param>
-        /// <param name="peeringDBFacilityLink">Gets or sets the Peering
-        /// Facility Link.</param>
+        /// <param name="exchangeName">The name of the exchange peering
+        /// facility.</param>
+        /// <param name="bandwidthInMbps">The bandwidth of the connection
+        /// between Microsoft and the exchange peering facility.</param>
+        /// <param name="microsoftIPv4Address">The IPv4 address of Microsoft at
+        /// the exchange peering facility.</param>
+        /// <param name="microsoftIPv6Address">The IPv6 address of Microsoft at
+        /// the exchange peering facility.</param>
+        /// <param name="facilityIPv4Prefix">The IPv4 prefixes associated with
+        /// the exchange peering facility.</param>
+        /// <param name="facilityIPv6Prefix">The IPv6 prefixes associated with
+        /// the exchange peering facility.</param>
+        /// <param name="peeringDBFacilityId">The PeeringDB.com ID of the
+        /// facility.</param>
+        /// <param name="peeringDBFacilityLink">The PeeringDB.com URL of the
+        /// facility.</param>
         public ExchangePeeringFacility(string exchangeName = default(string), int? bandwidthInMbps = default(int?), string microsoftIPv4Address = default(string), string microsoftIPv6Address = default(string), string facilityIPv4Prefix = default(string), string facilityIPv6Prefix = default(string), int? peeringDBFacilityId = default(int?), string peeringDBFacilityLink = default(string))
         {
             ExchangeName = exchangeName;
@@ -59,49 +60,54 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the facility name.
+        /// Gets or sets the name of the exchange peering facility.
         /// </summary>
         [JsonProperty(PropertyName = "exchangeName")]
         public string ExchangeName { get; set; }
 
         /// <summary>
-        /// Gets or sets the bandwidth in Mbps.
+        /// Gets or sets the bandwidth of the connection between Microsoft and
+        /// the exchange peering facility.
         /// </summary>
         [JsonProperty(PropertyName = "bandwidthInMbps")]
         public int? BandwidthInMbps { get; set; }
 
         /// <summary>
-        /// Gets or sets the Microsoft IP v4 address.
+        /// Gets or sets the IPv4 address of Microsoft at the exchange peering
+        /// facility.
         /// </summary>
         [JsonProperty(PropertyName = "microsoftIPv4Address")]
         public string MicrosoftIPv4Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the Microsoft IP v6 address.
+        /// Gets or sets the IPv6 address of Microsoft at the exchange peering
+        /// facility.
         /// </summary>
         [JsonProperty(PropertyName = "microsoftIPv6Address")]
         public string MicrosoftIPv6Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the Facility IPv4 Prefix.
+        /// Gets or sets the IPv4 prefixes associated with the exchange peering
+        /// facility.
         /// </summary>
         [JsonProperty(PropertyName = "facilityIPv4Prefix")]
         public string FacilityIPv4Prefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the Facility IPv6 Prefix.
+        /// Gets or sets the IPv6 prefixes associated with the exchange peering
+        /// facility.
         /// </summary>
         [JsonProperty(PropertyName = "facilityIPv6Prefix")]
         public string FacilityIPv6Prefix { get; set; }
 
         /// <summary>
-        /// Gets or sets the facility id.
+        /// Gets or sets the PeeringDB.com ID of the facility.
         /// </summary>
         [JsonProperty(PropertyName = "peeringDBFacilityId")]
         public int? PeeringDBFacilityId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Peering Facility Link.
+        /// Gets or sets the PeeringDB.com URL of the facility.
         /// </summary>
         [JsonProperty(PropertyName = "peeringDBFacilityLink")]
         public string PeeringDBFacilityLink { get; set; }

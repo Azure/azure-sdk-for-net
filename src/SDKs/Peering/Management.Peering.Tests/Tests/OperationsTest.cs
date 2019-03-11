@@ -17,7 +17,7 @@ namespace Peering.Tests
     public class OperationsTest
     {
         private readonly Random random = new Random();
-        public EdgeRpClient client { get; set; }
+        public PeeringManagementClient client { get; set; }
         public ResourceManagementClient resourcesClient { get; set; }
 
         [Fact]
@@ -25,7 +25,7 @@ namespace Peering.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<EdgeRpClient>();
+                this.client = context.GetServiceClient<PeeringManagementClient>();
                 var peeringLists = this.client.Operations.List();
                 Assert.NotNull(peeringLists);
             }
@@ -36,7 +36,7 @@ namespace Peering.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<EdgeRpClient>();
+                this.client = context.GetServiceClient<PeeringManagementClient>();
                 var result = this.client.PeeringLocations.List("Direct");
                 Assert.NotNull(result);
             }
@@ -47,7 +47,7 @@ namespace Peering.Tests
         {
            using (var context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<EdgeRpClient>();
+                this.client = context.GetServiceClient<PeeringManagementClient>();
                 var result = this.client.PeeringLocations.List("Exchange");
                 Assert.NotNull(result);
             }
@@ -61,10 +61,10 @@ namespace Peering.Tests
                 string[] phone = { "9999999" };
                 string[] email = { "noc@microsoft.com" };
                 var contactInfo = new ContactInfo(email, phone);
-                var peerInfo = new PeerInfo(9999, contactInfo);
+                var peerInfo = new List<PeerInfo>() { new PeerInfo(65000, contactInfo) };
 
-                this.client = context.GetServiceClient<EdgeRpClient>();
-                var result = this.client.Operations.UpdatePeerInfo(peerInfo);
+                this.client = context.GetServiceClient<PeeringManagementClient>();
+                var result = this.client.UpdatePeerInfo(peerInfo);
                 Assert.NotNull(peerInfo);
             }
         }
@@ -74,8 +74,8 @@ namespace Peering.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<EdgeRpClient>();
-                var result = this.client.Operations.GetPeerInfo();
+                this.client = context.GetServiceClient<PeeringManagementClient>();
+                var result = this.client.GetPeerInfo();
                 Assert.NotNull(result);
             }
         }
@@ -85,7 +85,7 @@ namespace Peering.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<EdgeRpClient>();
+                this.client = context.GetServiceClient<PeeringManagementClient>();
 
                 //Create a Resource Group
                 this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
@@ -101,14 +101,14 @@ namespace Peering.Tests
                 var directConnection = new DirectConnection
                 {
                     BandwidthInMbps = 10000,
-                    PeeringDBFacilityId = 99,
+                    PeeringDBFacilityId = 63,
                     BgpSession = new Microsoft.Azure.Management.Peering.Models.BgpSession()
                     {
                         SessionPrefixV4 = this.CreateIpv4Address(true),
                         MaxPrefixesAdvertisedV4 = 20000
                     }
                 };
-                var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), false);
+                var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), 65000,false);
                 directPeeringProperties.Connections.Add(directConnection);
                 var peeringModel = new PeeringModel
                 {
@@ -129,7 +129,7 @@ namespace Peering.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                this.client = context.GetServiceClient<EdgeRpClient>();
+                this.client = context.GetServiceClient<PeeringManagementClient>();
 
                 //Create a Resource Group
                 this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
@@ -144,14 +144,14 @@ namespace Peering.Tests
                 //Create Exchange Peering
                 var exchangeConnection = new ExchangeConnection
                 {
-                    PeeringDBFacilityId = 99,
+                    PeeringDBFacilityId = 26,
                     BgpSession = new Microsoft.Azure.Management.Peering.Models.BgpSession()
                     {
                         PeerSessionIPv4Address = "80.249.208.2",
                         MaxPrefixesAdvertisedV4 = 20000
                     }
                 };
-                var exchangePeeringProperties = new PeeringPropertiesExchange(new List<ExchangeConnection>());
+                var exchangePeeringProperties = new PeeringPropertiesExchange(new List<ExchangeConnection>(), 65000);
                 exchangePeeringProperties.Connections.Add(exchangeConnection);
                 var peeringModel = new PeeringModel
                 {

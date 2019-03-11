@@ -12,24 +12,24 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The tags object class.
+    /// The resource tags.
     /// </summary>
-    public partial class ArmTags
+    public partial class ResourceTags
     {
         /// <summary>
-        /// Initializes a new instance of the ArmTags class.
+        /// Initializes a new instance of the ResourceTags class.
         /// </summary>
-        public ArmTags()
+        public ResourceTags()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ArmTags class.
+        /// Initializes a new instance of the ResourceTags class.
         /// </summary>
         /// <param name="tags">Gets or sets the tags, a dictionary of
         /// descriptors arm object</param>
-        public ArmTags(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ResourceTags(IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Tags = tags;
             CustomInit();

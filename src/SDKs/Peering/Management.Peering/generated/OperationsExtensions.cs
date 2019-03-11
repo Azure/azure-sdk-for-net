@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Management.Peering
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -18,18 +20,18 @@ namespace Microsoft.Azure.Management.Peering
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Lists all the peering operations.
+            /// Lists all of the available API operations for peering resources.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<ArmOperation> List(this IOperations operations)
+            public static IEnumerable<Operation> List(this IOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all the peering operations.
+            /// Lists all of the available API operations for peering resources.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,139 +39,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ArmOperation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Operation>> ListAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Checks the name availability.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='requestBody'>
-            /// The request body.
-            /// </param>
-            public static ArmCheckNameAvailabilityResponseBody CheckNameAvailability(this IOperations operations, ArmCheckNameAvailabilityRequestBody requestBody)
-            {
-                return operations.CheckNameAvailabilityAsync(requestBody).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks the name availability.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='requestBody'>
-            /// The request body.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ArmCheckNameAvailabilityResponseBody> CheckNameAvailabilityAsync(this IOperations operations, ArmCheckNameAvailabilityRequestBody requestBody, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(requestBody, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the peer info.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static PeerInfo GetPeerInfo(this IOperations operations)
-            {
-                return operations.GetPeerInfoAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the peer info.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<PeerInfo> GetPeerInfoAsync(this IOperations operations, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetPeerInfoWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates the peer info.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='peerInfo'>
-            /// The peer info.
-            /// </param>
-            public static PeerInfo UpdatePeerInfo(this IOperations operations, PeerInfo peerInfo)
-            {
-                return operations.UpdatePeerInfoAsync(peerInfo).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the peer info.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='peerInfo'>
-            /// The peer info.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<PeerInfo> UpdatePeerInfoAsync(this IOperations operations, PeerInfo peerInfo, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdatePeerInfoWithHttpMessagesAsync(peerInfo, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists all the peering operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<ArmOperation> ListNext(this IOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the peering operations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<ArmOperation>> ListNextAsync(this IOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

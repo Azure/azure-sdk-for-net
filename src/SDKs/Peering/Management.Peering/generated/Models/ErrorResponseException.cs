@@ -9,9 +9,10 @@ namespace Microsoft.Azure.Management.Peering.Models
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with ArmError information.
+    /// Exception thrown for an invalid response with ErrorResponse
+    /// information.
     /// </summary>
-    public partial class ArmErrorException : RestException
+    public partial class ErrorResponseException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -26,30 +27,30 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public ArmError Body { get; set; }
+        public ErrorResponse Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the ArmErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
-        public ArmErrorException()
+        public ErrorResponseException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ArmErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public ArmErrorException(string message)
+        public ErrorResponseException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the ArmErrorException class.
+        /// Initializes a new instance of the ErrorResponseException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public ArmErrorException(string message, System.Exception innerException)
+        public ErrorResponseException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }

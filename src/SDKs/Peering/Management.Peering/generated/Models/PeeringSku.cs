@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering SKU class.
+    /// The SKU that defines the tier and kind of the peering.
     /// </summary>
     public partial class PeeringSku
     {
@@ -25,16 +25,15 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the PeeringSku class.
         /// </summary>
-        /// <param name="name">Gets or sets the peering SKU name. Possible
-        /// values include: 'Basic_Exchange_Free', 'Basic_Direct_Free',
-        /// 'Premium_Direct_Free', 'Premium_Partner_Metered',
-        /// 'Premium_Exchange_Metered'</param>
-        /// <param name="tier">Gets or sets the peering SKU tier. Possible
-        /// values include: 'Basic', 'Premium'</param>
-        /// <param name="family">Gets or sets the peering SKU family. Possible
-        /// values include: 'Direct', 'Exchange', 'Partner'</param>
-        /// <param name="size">Gets or sets the peering SKU size. Possible
-        /// values include: 'Free', 'Metered', 'Unlimited'</param>
+        /// <param name="name">The name of the peering SKU. Possible values
+        /// include: 'Basic_Exchange_Free', 'Basic_Direct_Free',
+        /// 'Premium_Direct_Free', 'Premium_Exchange_Metered'</param>
+        /// <param name="tier">The tier of the peering SKU. Possible values
+        /// include: 'Basic', 'Premium'</param>
+        /// <param name="family">The family of the peering SKU. Possible values
+        /// include: 'Direct', 'Exchange'</param>
+        /// <param name="size">The size of the peering SKU. Possible values
+        /// include: 'Free', 'Metered', 'Unlimited'</param>
         public PeeringSku(string name = default(string), string tier = default(string), string family = default(string), string size = default(string))
         {
             Name = name;
@@ -50,30 +49,30 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the peering SKU name. Possible values include:
+        /// Gets or sets the name of the peering SKU. Possible values include:
         /// 'Basic_Exchange_Free', 'Basic_Direct_Free', 'Premium_Direct_Free',
-        /// 'Premium_Partner_Metered', 'Premium_Exchange_Metered'
+        /// 'Premium_Exchange_Metered'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the peering SKU tier. Possible values include:
+        /// Gets or sets the tier of the peering SKU. Possible values include:
         /// 'Basic', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets the peering SKU family. Possible values include:
-        /// 'Direct', 'Exchange', 'Partner'
+        /// Gets or sets the family of the peering SKU. Possible values
+        /// include: 'Direct', 'Exchange'
         /// </summary>
         [JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
         /// <summary>
-        /// Gets or sets the peering SKU size. Possible values include: 'Free',
-        /// 'Metered', 'Unlimited'
+        /// Gets or sets the size of the peering SKU. Possible values include:
+        /// 'Free', 'Metered', 'Unlimited'
         /// </summary>
         [JsonProperty(PropertyName = "size")]
         public string Size { get; set; }

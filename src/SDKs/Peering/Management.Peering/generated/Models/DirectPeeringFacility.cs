@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering direct peering facility class.
+    /// The properties that define a direct peering facility.
     /// </summary>
     public partial class DirectPeeringFacility
     {
@@ -25,11 +25,12 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the DirectPeeringFacility class.
         /// </summary>
-        /// <param name="address">Gets or sets the facility address.</param>
-        /// <param name="peeringDBFacilityId">Gets or sets the facility
-        /// id.</param>
-        /// <param name="peeringDBFacilityLink">Gets or sets the Peering
-        /// Facility Link.</param>
+        /// <param name="address">The address of the direct peering
+        /// facility.</param>
+        /// <param name="peeringDBFacilityId">The PeeringDB.com ID of the
+        /// facility.</param>
+        /// <param name="peeringDBFacilityLink">The PeeringDB.com URL of the
+        /// facility.</param>
         public DirectPeeringFacility(string address = default(string), int? peeringDBFacilityId = default(int?), string peeringDBFacilityLink = default(string))
         {
             Address = address;
@@ -44,19 +45,19 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the facility address.
+        /// Gets or sets the address of the direct peering facility.
         /// </summary>
         [JsonProperty(PropertyName = "address")]
         public string Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the facility id.
+        /// Gets or sets the PeeringDB.com ID of the facility.
         /// </summary>
         [JsonProperty(PropertyName = "peeringDBFacilityId")]
         public int? PeeringDBFacilityId { get; set; }
 
         /// <summary>
-        /// Gets or sets the Peering Facility Link.
+        /// Gets or sets the PeeringDB.com URL of the facility.
         /// </summary>
         [JsonProperty(PropertyName = "peeringDBFacilityLink")]
         public string PeeringDBFacilityLink { get; set; }

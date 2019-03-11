@@ -17,6 +17,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
 
 	<!-- Please do not move/edit code below this line -->

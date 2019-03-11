@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering location properties class.
+    /// The properties that define an exchange peering location.
     /// </summary>
     public partial class PeeringLocationPropertiesExchange
     {
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// Initializes a new instance of the PeeringLocationPropertiesExchange
         /// class.
         /// </summary>
-        /// <param name="peeringFacilities">Gets or sets the peering facilities
-        /// available at the location.</param>
+        /// <param name="peeringFacilities">The list of exchange peering
+        /// facilities at the peering location.</param>
         public PeeringLocationPropertiesExchange(IList<ExchangePeeringFacility> peeringFacilities = default(IList<ExchangePeeringFacility>))
         {
             PeeringFacilities = peeringFacilities;
@@ -43,7 +43,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the peering facilities available at the location.
+        /// Gets or sets the list of exchange peering facilities at the peering
+        /// location.
         /// </summary>
         [JsonProperty(PropertyName = "peeringFacilities")]
         public IList<ExchangePeeringFacility> PeeringFacilities { get; set; }

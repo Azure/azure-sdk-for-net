@@ -14,6 +14,5 @@ namespace Microsoft.Azure.Management.Peering.Models
     {
         public const string Direct = "Direct";
         public const string Exchange = "Exchange";
-        public const string Partner = "Partner";
     }
 }

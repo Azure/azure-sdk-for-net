@@ -9,6 +9,8 @@ namespace Microsoft.Azure.Management.Peering
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -18,16 +20,17 @@ namespace Microsoft.Azure.Management.Peering
     public static partial class PeeringsOperationsExtensions
     {
             /// <summary>
-            /// Gets the peering.
+            /// Gets an existing peering with the specified name under the given
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             public static PeeringModel Get(this IPeeringsOperations operations, string resourceGroupName, string peeringName)
             {
@@ -35,16 +38,17 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Gets the peering.
+            /// Gets an existing peering with the specified name under the given
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -58,19 +62,20 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Creates or updates the peering.
+            /// Creates a new peering or updates an existing peering with the specified
+            /// name under the given subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             /// <param name='peering'>
-            /// The peering object.
+            /// The properties needed to create or update a peering.
             /// </param>
             public static PeeringModel CreateOrUpdate(this IPeeringsOperations operations, string resourceGroupName, string peeringName, PeeringModel peering)
             {
@@ -78,19 +83,20 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Creates or updates the peering.
+            /// Creates a new peering or updates an existing peering with the specified
+            /// name under the given subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             /// <param name='peering'>
-            /// The peering object.
+            /// The properties needed to create or update a peering.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -104,16 +110,17 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Deletes the peering.
+            /// Deletes an existing peering with the specified name under the given
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             public static void Delete(this IPeeringsOperations operations, string resourceGroupName, string peeringName)
             {
@@ -121,16 +128,17 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Deletes the peering.
+            /// Deletes an existing peering with the specified name under the given
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -141,44 +149,46 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Updates the peering tags
+            /// Updates tags for a peering with the specified name under the given
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             /// <param name='tags'>
-            /// The ARM tags.
+            /// The resource tags.
             /// </param>
-            public static PeeringModel Update(this IPeeringsOperations operations, string resourceGroupName, string peeringName, ArmTags tags)
+            public static PeeringModel Update(this IPeeringsOperations operations, string resourceGroupName, string peeringName, ResourceTags tags)
             {
                 return operations.UpdateAsync(resourceGroupName, peeringName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Updates the peering tags
+            /// Updates tags for a peering with the specified name under the given
+            /// subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='peeringName'>
-            /// The peering name.
+            /// The name of the peering.
             /// </param>
             /// <param name='tags'>
-            /// The ARM tags.
+            /// The resource tags.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeeringModel> UpdateAsync(this IPeeringsOperations operations, string resourceGroupName, string peeringName, ArmTags tags, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeeringModel> UpdateAsync(this IPeeringsOperations operations, string resourceGroupName, string peeringName, ResourceTags tags, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, peeringName, tags, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -187,52 +197,52 @@ namespace Microsoft.Azure.Management.Peering
             }
 
             /// <summary>
-            /// Lists the peerings in the resource group.
+            /// Lists all of the peerings under the given subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
-            public static IPage<PeeringModel> List(this IPeeringsOperations operations, string resourceGroupName)
+            public static IEnumerable<PeeringModel> ListByResourceGroup(this IPeeringsOperations operations, string resourceGroupName)
             {
-                return operations.ListAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the peerings in the resource group.
+            /// Lists all of the peerings under the given subscription and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The resource group name.
+            /// The name of the resource group.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringModel>> ListAsync(this IPeeringsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<PeeringModel>> ListByResourceGroupAsync(this IPeeringsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all the peerings in the subscription.
+            /// Lists all of the peerings under the given subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<PeeringModel> ListAll(this IPeeringsOperations operations)
+            public static IEnumerable<PeeringModel> ListBySubscription(this IPeeringsOperations operations)
             {
-                return operations.ListAllAsync().GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all the peerings in the subscription.
+            /// Lists all of the peerings under the given subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,77 +250,9 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<PeeringModel>> ListAllAsync(this IPeeringsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<PeeringModel>> ListBySubscriptionAsync(this IPeeringsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the peerings in the resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PeeringModel> ListNext(this IPeeringsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the peerings in the resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PeeringModel>> ListNextAsync(this IPeeringsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists all the peerings in the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<PeeringModel> ListAllNext(this IPeeringsOperations operations, string nextPageLink)
-            {
-                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all the peerings in the subscription.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<PeeringModel>> ListAllNextAsync(this IPeeringsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

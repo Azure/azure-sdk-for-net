@@ -10,11 +10,15 @@ namespace Microsoft.Azure.Management.Peering
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// EdgeRp API
+    /// APIs to manage Peering resources through the Azure Resource Manager.
     /// </summary>
-    public partial interface IEdgeRpClient : System.IDisposable
+    public partial interface IPeeringManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -37,12 +41,12 @@ namespace Microsoft.Azure.Management.Peering
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// The subscription id.
+        /// The Azure subscription ID.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The API version
+        /// The client API version.
         /// </summary>
         string ApiVersion { get; }
 
@@ -66,14 +70,14 @@ namespace Microsoft.Azure.Management.Peering
 
 
         /// <summary>
+        /// Gets the ILegacyPeeringsOperations.
+        /// </summary>
+        ILegacyPeeringsOperations LegacyPeerings { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the IPeeringBgpCommunityListsOperations.
-        /// </summary>
-        IPeeringBgpCommunityListsOperations PeeringBgpCommunityLists { get; }
 
         /// <summary>
         /// Gets the IPeeringLocationsOperations.
@@ -81,39 +85,34 @@ namespace Microsoft.Azure.Management.Peering
         IPeeringLocationsOperations PeeringLocations { get; }
 
         /// <summary>
-        /// Gets the IPeeringPartnersOperations.
-        /// </summary>
-        IPeeringPartnersOperations PeeringPartners { get; }
-
-        /// <summary>
-        /// Gets the IPeeringPrefixesOperations.
-        /// </summary>
-        IPeeringPrefixesOperations PeeringPrefixes { get; }
-
-        /// <summary>
-        /// Gets the IPrefixesOperations.
-        /// </summary>
-        IPrefixesOperations Prefixes { get; }
-
-        /// <summary>
         /// Gets the IPeeringsOperations.
         /// </summary>
         IPeeringsOperations Peerings { get; }
 
         /// <summary>
-        /// Gets the IPeeringLegacyPeeringsOperations.
+        /// Gets the peer info associated with the specified subscription.
         /// </summary>
-        IPeeringLegacyPeeringsOperations PeeringLegacyPeerings { get; }
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IList<PeerInfo>>> GetPeerInfoWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Gets the IPeeringSubscribersOperations.
+        /// Updates the peer info associated with the specified subscription.
         /// </summary>
-        IPeeringSubscribersOperations PeeringSubscribers { get; }
-
-        /// <summary>
-        /// Gets the ISubscribersOperations.
-        /// </summary>
-        ISubscribersOperations Subscribers { get; }
+        /// <param name='peerInfo'>
+        /// The peer info.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IList<PeerInfo>>> UpdatePeerInfoWithHttpMessagesAsync(IList<PeerInfo> peerInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

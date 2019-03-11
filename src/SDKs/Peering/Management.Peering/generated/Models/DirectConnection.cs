@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering session configuration class.
+    /// The properties that define a direct connection.
     /// </summary>
     public partial class DirectConnection
     {
@@ -25,18 +25,22 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the DirectConnection class.
         /// </summary>
-        /// <param name="bandwidthInMbps">Gets or sets the bandwidth in
-        /// Mbps.</param>
-        /// <param name="peeringDBFacilityId">Gets or sets the facility id. Set
-        /// by frontend on add. Cannot be updated.</param>
-        /// <param name="connectionState">The state of the connection with
-        /// Microsoft. Possible values include: 'None', 'PendingApproval',
-        /// 'Approved', 'ProvisioningStarted', 'ProvisioningFailed',
+        /// <param name="bandwidthInMbps">The bandwidth of the
+        /// connection.</param>
+        /// <param name="provisionedBandwidthInMbps">The bandwidth that is
+        /// actually provisioned.</param>
+        /// <param name="peeringDBFacilityId">The PeeringDB.com ID of the
+        /// facility at which the connection has to be set up.</param>
+        /// <param name="connectionState">The state of the connection. Possible
+        /// values include: 'None', 'PendingApproval', 'Approved',
+        /// 'ProvisioningStarted', 'ProvisioningFailed',
         /// 'ProvisioningCompleted', 'Validating', 'Active'</param>
-        /// <param name="bgpSession">Gets or sets the BGP session.</param>
-        public DirectConnection(int? bandwidthInMbps = default(int?), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession))
+        /// <param name="bgpSession">The BGP session associated with the
+        /// connection.</param>
+        public DirectConnection(int? bandwidthInMbps = default(int?), int? provisionedBandwidthInMbps = default(int?), int? peeringDBFacilityId = default(int?), string connectionState = default(string), BgpSession bgpSession = default(BgpSession))
         {
             BandwidthInMbps = bandwidthInMbps;
+            ProvisionedBandwidthInMbps = provisionedBandwidthInMbps;
             PeeringDBFacilityId = peeringDBFacilityId;
             ConnectionState = connectionState;
             BgpSession = bgpSession;
@@ -49,29 +53,35 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the bandwidth in Mbps.
+        /// Gets or sets the bandwidth of the connection.
         /// </summary>
         [JsonProperty(PropertyName = "bandwidthInMbps")]
         public int? BandwidthInMbps { get; set; }
 
         /// <summary>
-        /// Gets or sets the facility id. Set by frontend on add. Cannot be
-        /// updated.
+        /// Gets or sets the bandwidth that is actually provisioned.
+        /// </summary>
+        [JsonProperty(PropertyName = "provisionedBandwidthInMbps")]
+        public int? ProvisionedBandwidthInMbps { get; set; }
+
+        /// <summary>
+        /// Gets or sets the PeeringDB.com ID of the facility at which the
+        /// connection has to be set up.
         /// </summary>
         [JsonProperty(PropertyName = "peeringDBFacilityId")]
         public int? PeeringDBFacilityId { get; set; }
 
         /// <summary>
-        /// Gets or sets the state of the connection with Microsoft. Possible
-        /// values include: 'None', 'PendingApproval', 'Approved',
-        /// 'ProvisioningStarted', 'ProvisioningFailed',
-        /// 'ProvisioningCompleted', 'Validating', 'Active'
+        /// Gets the state of the connection. Possible values include: 'None',
+        /// 'PendingApproval', 'Approved', 'ProvisioningStarted',
+        /// 'ProvisioningFailed', 'ProvisioningCompleted', 'Validating',
+        /// 'Active'
         /// </summary>
         [JsonProperty(PropertyName = "connectionState")]
-        public string ConnectionState { get; set; }
+        public string ConnectionState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the BGP session.
+        /// Gets or sets the BGP session associated with the connection.
         /// </summary>
         [JsonProperty(PropertyName = "bgpSession")]
         public BgpSession BgpSession { get; set; }

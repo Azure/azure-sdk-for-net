@@ -10,26 +10,26 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The ARM operation display information class.
+    /// The information related to the operation.
     /// </summary>
-    public partial class ArmOperationDisplayInfo
+    public partial class OperationDisplayInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ArmOperationDisplayInfo class.
+        /// Initializes a new instance of the OperationDisplayInfo class.
         /// </summary>
-        public ArmOperationDisplayInfo()
+        public OperationDisplayInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ArmOperationDisplayInfo class.
+        /// Initializes a new instance of the OperationDisplayInfo class.
         /// </summary>
-        /// <param name="provider">Gets or sets the provider.</param>
-        /// <param name="resource">Gets or sets the resource.</param>
-        /// <param name="operation">Gets or sets the operation.</param>
-        /// <param name="description">Gets or sets the description.</param>
-        public ArmOperationDisplayInfo(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
+        /// <param name="provider">The name of the resource provider.</param>
+        /// <param name="resource">The type of the resource.</param>
+        /// <param name="operation">The name of the operation.</param>
+        /// <param name="description">The description of the operation.</param>
+        public OperationDisplayInfo(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
             Resource = resource;
@@ -44,28 +44,28 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the provider.
+        /// Gets the name of the resource provider.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
-        public string Provider { get; set; }
+        public string Provider { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource.
+        /// Gets the type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "resource")]
-        public string Resource { get; set; }
+        public string Resource { get; private set; }
 
         /// <summary>
-        /// Gets or sets the operation.
+        /// Gets the name of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public string Operation { get; private set; }
 
         /// <summary>
-        /// Gets or sets the description.
+        /// Gets the description of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
-        public string Description { get; set; }
+        public string Description { get; private set; }
 
     }
 }

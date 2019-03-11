@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering class.
+    /// Peering is a logical representation of a set of connections to the
+    /// Microsoft Cloud Edge at a location.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PeeringModel : IResource
@@ -31,45 +32,36 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the PeeringModel class.
         /// </summary>
-        /// <param name="sku">The SKU that defines the tier and type of the
+        /// <param name="sku">The SKU that defines the tier and kind of the
         /// peering.</param>
-        /// <param name="kind">Gets or sets the kind. Possible values include:
-        /// 'Direct', 'Exchange', 'Partner'</param>
-        /// <param name="direct">Gets or sets the peering direct
-        /// properties.</param>
-        /// <param name="partner">Gets or sets the peering carrier
-        /// properties.</param>
-        /// <param name="exchange">Gets or sets the peering exchange
-        /// properties.</param>
-        /// <param name="peeringLocation">Gets or sets the peering
-        /// location.</param>
-        /// <param name="provisioningState">Gets or sets the provisioning
-        /// state. Not set by frontend (readonly by user). Possible values
-        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'</param>
-        /// <param name="name">Gets or sets the resource name.</param>
-        /// <param name="id">Gets or sets the resource id. Not set by frontend
-        /// (readonly by user)</param>
-        /// <param name="type">Gets or sets the resource type. Not set by
-        /// frontend (readonly by user)</param>
-        /// <param name="location">Gets or sets the location.</param>
-        /// <param name="eTag">Gets or sets the entity tag. Not set by frontend
-        /// (readonly by user)</param>
-        /// <param name="tags">Gets or sets the tags.</param>
-        public PeeringModel(PeeringSku sku = default(PeeringSku), string kind = default(string), PeeringPropertiesDirect direct = default(PeeringPropertiesDirect), PeeringPropertiesPartner partner = default(PeeringPropertiesPartner), PeeringPropertiesExchange exchange = default(PeeringPropertiesExchange), string peeringLocation = default(string), string provisioningState = default(string), string name = default(string), string id = default(string), string type = default(string), string location = default(string), string eTag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="kind">The kind of the peering. Possible values
+        /// include: 'Direct', 'Exchange'</param>
+        /// <param name="location">The location of the resource.</param>
+        /// <param name="direct">The properties that define a direct
+        /// peering.</param>
+        /// <param name="exchange">The properties that define an exchange
+        /// peering.</param>
+        /// <param name="peeringLocation">The location of the peering.</param>
+        /// <param name="provisioningState">The provisioning state of the
+        /// resource. Possible values include: 'Succeeded', 'Updating',
+        /// 'Deleting', 'Failed'</param>
+        /// <param name="tags">The resource tags.</param>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="id">The ID of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
+        public PeeringModel(PeeringSku sku, string kind, string location, PeeringPropertiesDirect direct = default(PeeringPropertiesDirect), PeeringPropertiesExchange exchange = default(PeeringPropertiesExchange), string peeringLocation = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string name = default(string), string id = default(string), string type = default(string))
         {
             Sku = sku;
             Kind = kind;
             Direct = direct;
-            Partner = partner;
             Exchange = exchange;
             PeeringLocation = peeringLocation;
             ProvisioningState = provisioningState;
+            Location = location;
+            Tags = tags;
             Name = name;
             Id = id;
             Type = type;
-            Location = location;
-            ETag = eTag;
-            Tags = tags;
             CustomInit();
         }
 
@@ -79,87 +71,93 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the SKU that defines the tier and type of the peering.
+        /// Gets or sets the SKU that defines the tier and kind of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public PeeringSku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the kind. Possible values include: 'Direct',
-        /// 'Exchange', 'Partner'
+        /// Gets or sets the kind of the peering. Possible values include:
+        /// 'Direct', 'Exchange'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
 
         /// <summary>
-        /// Gets or sets the peering direct properties.
+        /// Gets or sets the properties that define a direct peering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.direct")]
         public PeeringPropertiesDirect Direct { get; set; }
 
         /// <summary>
-        /// Gets or sets the peering carrier properties.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.partner")]
-        public PeeringPropertiesPartner Partner { get; set; }
-
-        /// <summary>
-        /// Gets or sets the peering exchange properties.
+        /// Gets or sets the properties that define an exchange peering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.exchange")]
         public PeeringPropertiesExchange Exchange { get; set; }
 
         /// <summary>
-        /// Gets or sets the peering location.
+        /// Gets or sets the location of the peering.
         /// </summary>
         [JsonProperty(PropertyName = "properties.peeringLocation")]
         public string PeeringLocation { get; set; }
 
         /// <summary>
-        /// Gets or sets the provisioning state. Not set by frontend (readonly
-        /// by user). Possible values include: 'Succeeded', 'Updating',
-        /// 'Deleting', 'Failed'
+        /// Gets the provisioning state of the resource. Possible values
+        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the resource name.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the resource id. Not set by frontend (readonly by
-        /// user)
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the resource type. Not set by frontend (readonly by
-        /// user)
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the location.
+        /// Gets or sets the location of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the entity tag. Not set by frontend (readonly by user)
-        /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
-        public string ETag { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags.
+        /// Gets or sets the resource tags.
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Gets the name of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets the ID of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets the type of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Sku == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (Kind == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Kind");
+            }
+            if (Location == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Location");
+            }
+        }
     }
 }

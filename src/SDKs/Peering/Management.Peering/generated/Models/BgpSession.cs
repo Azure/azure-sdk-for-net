@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering session configuration class.
+    /// The properties that define a BGP session.
     /// </summary>
     public partial class BgpSession
     {
@@ -25,43 +25,32 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the BgpSession class.
         /// </summary>
-        /// <param name="sessionPrefixV4">Gets or sets the IP v4 session
-        /// prefix. Sample formats: "192.168.1.0/31"; "192.168.1.0/30".
-        /// SessionPrefixV4 ends with 00 or 11, Peer will end with 01 and
-        /// Microsoft will end with 10
-        /// SessionPrefixV4 ends with 01 or 10, Peer will match sessionPrefix
-        /// and Microsoft will be inverse
-        /// SessionPrefixV4 ends with 0 or 1 (/31), Peer will match
-        /// sessionPrefix and Microsoft will be inverse</param>
-        /// <param name="sessionPrefixV6">Gets or sets the IP v6 session
-        /// prefix. Sample formats: "fd00::0/127"; "fd00::0/126"</param>
-        /// <param name="microsoftSessionIPv4Address">Gets derived value from
-        /// SessionIP, or custom value if set.</param>
-        /// <param name="microsoftSessionIPv6Address">Gets derived value from
-        /// SessionIP, or custom value if set.</param>
-        /// <param name="peerSessionIPv4Address">Gets derived value from
-        /// SessionIP, or custom value if set.</param>
-        /// <param name="peerSessionIPv6Address">Gets derived value from
-        /// SessionIP, or custom value if set.</param>
-        /// <param name="sessionStateV4">Gets or sets the IP v4 BGP Session
-        /// state. Not set by frontend (readonly to user). Possible values
-        /// include: 'None', 'Idle', 'Connect', 'Active', 'OpenSent',
-        /// 'OpenConfirm', 'Established', 'PendingAdd', 'PendingUpdate',
-        /// 'PendingRemove'</param>
-        /// <param name="sessionStateV6">Gets or sets the IP v6 BGP Session
-        /// state. Not set by frontend (readonly to user). Possible values
-        /// include: 'None', 'Idle', 'Connect', 'Active', 'OpenSent',
-        /// 'OpenConfirm', 'Established', 'PendingAdd', 'PendingUpdate',
-        /// 'PendingRemove'</param>
-        /// <param name="maxPrefixesAdvertisedV4">Gets or sets the Max Prefix
-        /// Advertised v4. Optionally set by frontend, default to 20,000
-        /// (readonly to user)</param>
-        /// <param name="maxPrefixesAdvertisedV6">Gets or sets the Max Prefix
-        /// Advertised v6. Optionally set by frontend, default to 20,000
-        /// (readonly to user)</param>
-        /// <param name="md5AuthenticationKey">Gets or sets the MD5
-        /// authentication key. Optionally set by frontend, default to empty
-        /// string (readonly to user)</param>
+        /// <param name="sessionPrefixV4">The IPv4 prefix that contains both
+        /// ends' IPv4 addresses.</param>
+        /// <param name="sessionPrefixV6">The IPv6 prefix that contains both
+        /// ends' IPv6 addresses.</param>
+        /// <param name="microsoftSessionIPv4Address">The IPv4 session address
+        /// on Microsoft's end.</param>
+        /// <param name="microsoftSessionIPv6Address">The IPv6 session address
+        /// on Microsoft's end.</param>
+        /// <param name="peerSessionIPv4Address">The IPv4 session address on
+        /// peer's end.</param>
+        /// <param name="peerSessionIPv6Address">The IPv6 session address on
+        /// peer's end.</param>
+        /// <param name="sessionStateV4">The state of the IPv4 session.
+        /// Possible values include: 'None', 'Idle', 'Connect', 'Active',
+        /// 'OpenSent', 'OpenConfirm', 'Established', 'PendingAdd',
+        /// 'PendingUpdate', 'PendingRemove'</param>
+        /// <param name="sessionStateV6">The state of the IPv6 session.
+        /// Possible values include: 'None', 'Idle', 'Connect', 'Active',
+        /// 'OpenSent', 'OpenConfirm', 'Established', 'PendingAdd',
+        /// 'PendingUpdate', 'PendingRemove'</param>
+        /// <param name="maxPrefixesAdvertisedV4">The maximum number of
+        /// prefixes advertised over the IPv4 session.</param>
+        /// <param name="maxPrefixesAdvertisedV6">The maximum number of
+        /// prefixes advertised over the IPv6 session.</param>
+        /// <param name="md5AuthenticationKey">The MD5 authentication key of
+        /// the session.</param>
         public BgpSession(string sessionPrefixV4 = default(string), string sessionPrefixV6 = default(string), string microsoftSessionIPv4Address = default(string), string microsoftSessionIPv6Address = default(string), string peerSessionIPv4Address = default(string), string peerSessionIPv6Address = default(string), string sessionStateV4 = default(string), string sessionStateV6 = default(string), int? maxPrefixesAdvertisedV4 = default(int?), int? maxPrefixesAdvertisedV6 = default(int?), string md5AuthenticationKey = default(string))
         {
             SessionPrefixV4 = sessionPrefixV4;
@@ -84,84 +73,75 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the IP v4 session prefix. Sample formats:
-        /// "192.168.1.0/31"; "192.168.1.0/30".
-        /// SessionPrefixV4 ends with 00 or 11, Peer will end with 01 and
-        /// Microsoft will end with 10
-        /// SessionPrefixV4 ends with 01 or 10, Peer will match sessionPrefix
-        /// and Microsoft will be inverse
-        /// SessionPrefixV4 ends with 0 or 1 (/31), Peer will match
-        /// sessionPrefix and Microsoft will be inverse
+        /// Gets or sets the IPv4 prefix that contains both ends' IPv4
+        /// addresses.
         /// </summary>
         [JsonProperty(PropertyName = "sessionPrefixV4")]
         public string SessionPrefixV4 { get; set; }
 
         /// <summary>
-        /// Gets or sets the IP v6 session prefix. Sample formats:
-        /// "fd00::0/127"; "fd00::0/126"
+        /// Gets or sets the IPv6 prefix that contains both ends' IPv6
+        /// addresses.
         /// </summary>
         [JsonProperty(PropertyName = "sessionPrefixV6")]
         public string SessionPrefixV6 { get; set; }
 
         /// <summary>
-        /// Gets derived value from SessionIP, or custom value if set.
+        /// Gets the IPv4 session address on Microsoft's end.
         /// </summary>
         [JsonProperty(PropertyName = "microsoftSessionIPv4Address")]
-        public string MicrosoftSessionIPv4Address { get; set; }
+        public string MicrosoftSessionIPv4Address { get; private set; }
 
         /// <summary>
-        /// Gets derived value from SessionIP, or custom value if set.
+        /// Gets the IPv6 session address on Microsoft's end.
         /// </summary>
         [JsonProperty(PropertyName = "microsoftSessionIPv6Address")]
-        public string MicrosoftSessionIPv6Address { get; set; }
+        public string MicrosoftSessionIPv6Address { get; private set; }
 
         /// <summary>
-        /// Gets derived value from SessionIP, or custom value if set.
+        /// Gets or sets the IPv4 session address on peer's end.
         /// </summary>
         [JsonProperty(PropertyName = "peerSessionIPv4Address")]
         public string PeerSessionIPv4Address { get; set; }
 
         /// <summary>
-        /// Gets derived value from SessionIP, or custom value if set.
+        /// Gets or sets the IPv6 session address on peer's end.
         /// </summary>
         [JsonProperty(PropertyName = "peerSessionIPv6Address")]
         public string PeerSessionIPv6Address { get; set; }
 
         /// <summary>
-        /// Gets or sets the IP v4 BGP Session state. Not set by frontend
-        /// (readonly to user). Possible values include: 'None', 'Idle',
-        /// 'Connect', 'Active', 'OpenSent', 'OpenConfirm', 'Established',
-        /// 'PendingAdd', 'PendingUpdate', 'PendingRemove'
+        /// Gets the state of the IPv4 session. Possible values include:
+        /// 'None', 'Idle', 'Connect', 'Active', 'OpenSent', 'OpenConfirm',
+        /// 'Established', 'PendingAdd', 'PendingUpdate', 'PendingRemove'
         /// </summary>
         [JsonProperty(PropertyName = "sessionStateV4")]
-        public string SessionStateV4 { get; set; }
+        public string SessionStateV4 { get; private set; }
 
         /// <summary>
-        /// Gets or sets the IP v6 BGP Session state. Not set by frontend
-        /// (readonly to user). Possible values include: 'None', 'Idle',
-        /// 'Connect', 'Active', 'OpenSent', 'OpenConfirm', 'Established',
-        /// 'PendingAdd', 'PendingUpdate', 'PendingRemove'
+        /// Gets the state of the IPv6 session. Possible values include:
+        /// 'None', 'Idle', 'Connect', 'Active', 'OpenSent', 'OpenConfirm',
+        /// 'Established', 'PendingAdd', 'PendingUpdate', 'PendingRemove'
         /// </summary>
         [JsonProperty(PropertyName = "sessionStateV6")]
-        public string SessionStateV6 { get; set; }
+        public string SessionStateV6 { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Max Prefix Advertised v4. Optionally set by
-        /// frontend, default to 20,000 (readonly to user)
+        /// Gets or sets the maximum number of prefixes advertised over the
+        /// IPv4 session.
         /// </summary>
         [JsonProperty(PropertyName = "maxPrefixesAdvertisedV4")]
         public int? MaxPrefixesAdvertisedV4 { get; set; }
 
         /// <summary>
-        /// Gets or sets the Max Prefix Advertised v6. Optionally set by
-        /// frontend, default to 20,000 (readonly to user)
+        /// Gets or sets the maximum number of prefixes advertised over the
+        /// IPv6 session.
         /// </summary>
         [JsonProperty(PropertyName = "maxPrefixesAdvertisedV6")]
         public int? MaxPrefixesAdvertisedV6 { get; set; }
 
         /// <summary>
-        /// Gets or sets the MD5 authentication key. Optionally set by
-        /// frontend, default to empty string (readonly to user)
+        /// Gets or sets the MD5 authentication key of the session.
         /// </summary>
         [JsonProperty(PropertyName = "md5AuthenticationKey")]
         public string Md5AuthenticationKey { get; set; }

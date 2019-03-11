@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// Peer Info class
+    /// The essential information related to the peer.
     /// </summary>
     public partial class PeerInfo
     {
@@ -25,15 +25,20 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the PeerInfo class.
         /// </summary>
-        /// <param name="peerAsn">Gets or sets the peer ASN.</param>
-        /// <param name="peerContactInfo">Gets or sets the peer contact
-        /// info.</param>
-        /// <param name="peerName">Gets or sets the peer name.</param>
-        public PeerInfo(int? peerAsn = default(int?), ContactInfo peerContactInfo = default(ContactInfo), string peerName = default(string))
+        /// <param name="peerAsn">The Autonomous System Number (ASN) of the
+        /// peer.</param>
+        /// <param name="peerContactInfo">The contact information of the
+        /// peer.</param>
+        /// <param name="peerName">The name of the peer.</param>
+        /// <param name="validationState">The validation state of the ASN
+        /// associated with the peer. Possible values include: 'None',
+        /// 'Pending', 'Approved', 'Failed'</param>
+        public PeerInfo(int? peerAsn = default(int?), ContactInfo peerContactInfo = default(ContactInfo), string peerName = default(string), string validationState = default(string))
         {
             PeerAsn = peerAsn;
             PeerContactInfo = peerContactInfo;
             PeerName = peerName;
+            ValidationState = validationState;
             CustomInit();
         }
 
@@ -43,22 +48,30 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the peer ASN.
+        /// Gets or sets the Autonomous System Number (ASN) of the peer.
         /// </summary>
         [JsonProperty(PropertyName = "peerAsn")]
         public int? PeerAsn { get; set; }
 
         /// <summary>
-        /// Gets or sets the peer contact info.
+        /// Gets or sets the contact information of the peer.
         /// </summary>
         [JsonProperty(PropertyName = "peerContactInfo")]
         public ContactInfo PeerContactInfo { get; set; }
 
         /// <summary>
-        /// Gets or sets the peer name.
+        /// Gets or sets the name of the peer.
         /// </summary>
         [JsonProperty(PropertyName = "peerName")]
         public string PeerName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the validation state of the ASN associated with the
+        /// peer. Possible values include: 'None', 'Pending', 'Approved',
+        /// 'Failed'
+        /// </summary>
+        [JsonProperty(PropertyName = "validationState")]
+        public string ValidationState { get; set; }
 
     }
 }

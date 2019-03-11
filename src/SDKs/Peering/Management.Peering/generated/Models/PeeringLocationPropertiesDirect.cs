@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering location properties class.
+    /// The properties that define a direct peering location.
     /// </summary>
     public partial class PeeringLocationPropertiesDirect
     {
@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// Initializes a new instance of the PeeringLocationPropertiesDirect
         /// class.
         /// </summary>
-        /// <param name="peeringFacilities">Gets or sets the peering facilities
-        /// available at the location.</param>
-        /// <param name="bandwidthOffers">Gets or sets the bandwidth offers
-        /// available at the location.</param>
+        /// <param name="peeringFacilities">The list of direct peering
+        /// facilities at the peering location.</param>
+        /// <param name="bandwidthOffers">The list of bandwidth offers avaiable
+        /// at the peering location.</param>
         public PeeringLocationPropertiesDirect(IList<DirectPeeringFacility> peeringFacilities = default(IList<DirectPeeringFacility>), IList<PeeringBandwidthOffer> bandwidthOffers = default(IList<PeeringBandwidthOffer>))
         {
             PeeringFacilities = peeringFacilities;
@@ -46,13 +46,15 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the peering facilities available at the location.
+        /// Gets or sets the list of direct peering facilities at the peering
+        /// location.
         /// </summary>
         [JsonProperty(PropertyName = "peeringFacilities")]
         public IList<DirectPeeringFacility> PeeringFacilities { get; set; }
 
         /// <summary>
-        /// Gets or sets the bandwidth offers available at the location.
+        /// Gets or sets the list of bandwidth offers avaiable at the peering
+        /// location.
         /// </summary>
         [JsonProperty(PropertyName = "bandwidthOffers")]
         public IList<PeeringBandwidthOffer> BandwidthOffers { get; set; }

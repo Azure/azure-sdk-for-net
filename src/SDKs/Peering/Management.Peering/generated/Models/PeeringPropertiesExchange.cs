@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The peering exchange properties class.
+    /// The properties that define an exchange peering.
     /// </summary>
     public partial class PeeringPropertiesExchange
     {
@@ -27,11 +27,14 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the PeeringPropertiesExchange class.
         /// </summary>
-        /// <param name="connections">Gets or sets the primary session
-        /// configuration.</param>
-        public PeeringPropertiesExchange(IList<ExchangeConnection> connections = default(IList<ExchangeConnection>))
+        /// <param name="connections">The set of connections that constitute an
+        /// exchange peering.</param>
+        /// <param name="peerAsn">The Autonomous System Number (ASN) associated
+        /// with the peering.</param>
+        public PeeringPropertiesExchange(IList<ExchangeConnection> connections = default(IList<ExchangeConnection>), int? peerAsn = default(int?))
         {
             Connections = connections;
+            PeerAsn = peerAsn;
             CustomInit();
         }
 
@@ -41,10 +44,18 @@ namespace Microsoft.Azure.Management.Peering.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the primary session configuration.
+        /// Gets or sets the set of connections that constitute an exchange
+        /// peering.
         /// </summary>
         [JsonProperty(PropertyName = "connections")]
         public IList<ExchangeConnection> Connections { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Autonomous System Number (ASN) associated with the
+        /// peering.
+        /// </summary>
+        [JsonProperty(PropertyName = "peerAsn")]
+        public int? PeerAsn { get; set; }
 
     }
 }

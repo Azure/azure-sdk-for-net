@@ -13,10 +13,8 @@ namespace Microsoft.Azure.Management.Peering.Models
     public static class ValidationState
     {
         public const string None = "None";
-        public const string Invalid = "Invalid";
-        public const string Verified = "Verified";
-        public const string Failed = "Failed";
         public const string Pending = "Pending";
-        public const string Unknown = "Unknown";
+        public const string Approved = "Approved";
+        public const string Failed = "Failed";
     }
 }
