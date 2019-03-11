@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Indicates a CosmosDB datasource.
         /// </summary>
-        public static readonly DataSourceType CosmosDb = new DataSourceType("documentdb");
+        public static readonly DataSourceType CosmosDb = new DataSourceType("cosmosdb");
 
         /// <summary>
         /// Indicates a Azure Blob datasource.
