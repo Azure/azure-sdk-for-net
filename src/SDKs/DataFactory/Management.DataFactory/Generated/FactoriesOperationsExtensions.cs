@@ -311,6 +311,46 @@ namespace Microsoft.Azure.Management.DataFactory
             }
 
             /// <summary>
+            /// Upgrade preview version factory to G.A. version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            public static Factory Upgrade(this IFactoriesOperations operations, string resourceGroupName, string factoryName)
+            {
+                return operations.UpgradeAsync(resourceGroupName, factoryName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Upgrade preview version factory to G.A. version.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Factory> UpgradeAsync(this IFactoriesOperations operations, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpgradeWithHttpMessagesAsync(resourceGroupName, factoryName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get GitHub Access Token.
             /// </summary>
             /// <param name='operations'>
