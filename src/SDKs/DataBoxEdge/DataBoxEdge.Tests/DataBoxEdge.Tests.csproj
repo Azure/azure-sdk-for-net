@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <PackageId>DataBoxEdge.Tests</PackageId>
@@ -6,9 +6,17 @@
     <AssemblyName>DataBoxEdge.Tests</AssemblyName>
     <VersionPrefix>1.0.0</VersionPrefix>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Management.DataBoxEdge\Microsoft.Azure.Management.DataBoxEdge.csproj" />
+    <!-- <ProjectReference Include="..\Management.DataBoxEdge\Microsoft.Azure.Management.DataBoxEdge.csproj" /> -->
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
