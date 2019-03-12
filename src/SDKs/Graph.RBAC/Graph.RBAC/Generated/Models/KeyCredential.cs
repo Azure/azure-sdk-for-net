@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <param name="type">Type. Acceptable values are 'AsymmetricX509Cert'
         /// and 'Symmetric'.</param>
         /// <param name="customKeyIdentifier">Custom Key Identifier</param>
-        public KeyCredential(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string value = default(string), string keyId = default(string), string usage = default(string), string type = default(string), byte[] customKeyIdentifier = default(byte[]))
+        public KeyCredential(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string value = default(string), string keyId = default(string), string usage = default(string), string type = default(string), string customKeyIdentifier = default(string))
         {
             AdditionalProperties = additionalProperties;
             StartDate = startDate;
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// Gets or sets custom Key Identifier
         /// </summary>
         [JsonProperty(PropertyName = "customKeyIdentifier")]
-        public byte[] CustomKeyIdentifier { get; set; }
+        public string CustomKeyIdentifier { get; set; }
 
     }
 }
