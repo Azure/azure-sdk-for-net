@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Managed Service Identity
+    /// Managed identity generic object.
     /// </summary>
     public partial class ManagedServiceIdentity
     {
@@ -32,14 +32,14 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the ManagedServiceIdentity class.
         /// </summary>
-        /// <param name="type">Type of the Managed Service Identity. Possible
-        /// values include: 'None', 'SystemAssigned', 'UserAssigned'</param>
+        /// <param name="type">Type of the managed identity. Possible values
+        /// include: 'None', 'SystemAssigned', 'UserAssigned'</param>
         /// <param name="principalId">Azure Active Directory principal ID
         /// associated with this Identity.</param>
         /// <param name="tenantId">ID of the Azure Active Directory.</param>
-        /// <param name="userAssignedIdentities">The list of user identities
-        /// associated with the resource, key will be Azure resource Id of the
-        /// ManagedIdentity.</param>
+        /// <param name="userAssignedIdentities">The list of user-assigned
+        /// managed identities associated with the resource. Key is the Azure
+        /// resource Id of the managed identity.</param>
         public ManagedServiceIdentity(string type, string principalId = default(string), string tenantId = default(string), IDictionary<string, UserAssignedIdentity> userAssignedIdentities = default(IDictionary<string, UserAssignedIdentity>))
         {
             Type = type;
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of the Managed Service Identity. Possible values
-        /// include: 'None', 'SystemAssigned', 'UserAssigned'
+        /// Gets or sets type of the managed identity. Possible values include:
+        /// 'None', 'SystemAssigned', 'UserAssigned'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
@@ -75,8 +75,9 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public string TenantId { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of user identities associated with the
-        /// resource, key will be Azure resource Id of the ManagedIdentity.
+        /// Gets or sets the list of user-assigned managed identities
+        /// associated with the resource. Key is the Azure resource Id of the
+        /// managed identity.
         /// </summary>
         [JsonProperty(PropertyName = "userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; set; }

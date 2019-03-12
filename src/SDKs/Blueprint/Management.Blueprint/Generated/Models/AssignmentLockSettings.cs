@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines how Blueprint-managed resources will be locked.
+    /// Defines how resources deployed by a blueprint assignment are locked.
     /// </summary>
     public partial class AssignmentLockSettings
     {
