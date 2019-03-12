@@ -46,7 +46,7 @@ restoreBuildAzStack() {
                 if [ -f $testProj ]; then
                     printf "Test ------ $testProj for framework $netcore20\n"
                     dotnet build $testProj -f $netcore20
-                    dotnet test $testProj -f $netcore20
+                    #dotnet test $testProj -f $netcore20
                 fi
             fi
         fi
@@ -77,7 +77,7 @@ restoreBuildRepo() {
                         if [ "$skipTest" == "false" ]; then
                             printf "Test ------ $tp for framework $netcore20\n"
                             dotnet build $tp -f $netcore20
-                            dotnet test $tp -f $netcore20
+                            #dotnet test $tp -f $netcore20
                         fi
                     done
                 fi
@@ -99,7 +99,7 @@ restoreBuildCog() {
     if [ -d $cogMgmtDir/*.Tests ]; then
         cogMgmtTestProj=($cogMgmtDir/*.Tests/*.csproj)
         printf "Test ------ $cogMgmtTestProj for framework $netcore20\n"
-        dotnet test $cogMgmtTestProj -f $netcore20
+        #dotnet test $cogMgmtTestProj -f $netcore20
     fi
 
 
@@ -115,7 +115,7 @@ restoreBuildCog() {
         if [ -d $cogDir/*.Tests ]; then
             cogDataTestProj=($cogDir/*.Tests/*.csproj)
             printf "Test ------ $cogDataTestProj for framework $netcore20\n"
-            dotnet test $cogDataTestProj -f $netcore20
+            #dotnet test $cogDataTestProj -f $netcore20
         fi
     done
 }
@@ -142,7 +142,7 @@ restoreBuildKV() {
                     if [ "$kvTProj" == "false" ]; then
                         printf "KV TestProject ... $kvTestProj\n"
                         dotnet restore $kvTestProj -r $ubuntu1404
-                        dotnet test $kvTestProj -f $netcore20
+                        #dotnet test $kvTestProj -f $netcore20
                     fi
             else
                 if [ -f $kvDir/*.csproj ]; then
@@ -164,7 +164,7 @@ skip_Rps() {
     if [[ ("$1" =~ "Authorization")  || ( "$1" =~ "Gallery" ) || ("$1" =~ "Automation") || ( "$1" =~ "Intune" ) || ( "$1" =~ "DataLake.Store" ) 
                 || ( "$1" =~ "Monitor" ) || ( "$1" =~ "RedisCache" ) || ( "$1" =~ "Search" ) || ( "$1" =~ "KeyVault.Tests" ) 
                 || ( "$1" =~ "DeviceProvisioningServices") || ("$1" =~ "ServerManagement") || ( "$1" =~ "BotService")
-                || ("$1" =~ "Batch") || ("$1" =~ "KeyVault") || ("$1" =~ "management") || ("$1" =~ "Management")
+                || ("$1" =~ "Batch") || ("$1" =~ "KeyVault")
                 || ( "$1" =~ "KeyVault.TestFramework") || ( "$1" =~ "Subscription.FullDesktop.Tests") ]]; then                
         retVal=true
     fi
