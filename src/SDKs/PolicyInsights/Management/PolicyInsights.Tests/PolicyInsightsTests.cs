@@ -77,7 +77,7 @@ namespace PolicyInsights.Tests
             }
         }
 
-        private void ValidatePolicyStatesQueryResults(PolicyStatesQueryResults queryResults)
+        private void ValidatePolicyStatesQueryResults(PolicyStatesQueryResults queryResults, bool expandPolicyEvaluationDetails = false)
         {
             Assert.NotNull(queryResults);
 
@@ -101,6 +101,15 @@ namespace PolicyInsights.Tests
                 Assert.True(policyState.IsCompliant.HasValue);
                 Assert.False(string.IsNullOrEmpty(policyState.SubscriptionId));
                 Assert.False(string.IsNullOrEmpty(policyState.PolicyDefinitionAction));
+
+                if (expandPolicyEvaluationDetails && string.Equals(policyState.ComplianceState, "NonCompliant", StringComparison.OrdinalIgnoreCase))
+                {
+                    Assert.NotNull(policyState.PolicyEvaluationDetails);
+                }
+                else
+                {
+                    Assert.Null(policyState.PolicyEvaluationDetails);
+                }
 
                 Assert.NotNull(policyState.AdditionalProperties);
             }
@@ -306,6 +315,17 @@ namespace PolicyInsights.Tests
         }
 
         [Fact]
+        public void PolicyStates_LatestResourceScopeExpandPolicyEvaluationDetails()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Latest, ResourceId, new QueryOptions { Top = 10, Expand = "PolicyEvaluationDetails" });
+                ValidatePolicyStatesQueryResults(queryResults: queryResults, expandPolicyEvaluationDetails: true);
+            }
+        }
+
+        [Fact]
         public void PolicyStates_LatestPolicySetDefinitionScope()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -394,6 +414,17 @@ namespace PolicyInsights.Tests
                 var policyInsightsClient = GetPolicyInsightsClient(context);
                 var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Default, ResourceId, DefaultQueryOptions);
                 ValidatePolicyStatesQueryResults(queryResults);
+            }
+        }
+
+        [Fact]
+        public void PolicyStates_DefaultResourceScopeExpandPolicyEvaluationDetails()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                var policyInsightsClient = GetPolicyInsightsClient(context);
+                var queryResults = policyInsightsClient.PolicyStates.ListQueryResultsForResource(PolicyStatesResource.Default, ResourceId, new QueryOptions { Top = 10, Expand = "PolicyEvaluationDetails" });
+                ValidatePolicyStatesQueryResults(queryResults: queryResults, expandPolicyEvaluationDetails: true);
             }
         }
 
