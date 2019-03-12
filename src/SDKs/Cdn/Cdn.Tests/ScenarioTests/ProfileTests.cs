@@ -381,11 +381,7 @@ namespace Cdn.Tests.ScenarioTests
                 // Create clients
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
                 var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
-
-                // List profiles should return none
-                var profiles = cdnMgmtClient.Profiles.List();
-                Assert.Empty(profiles);
-
+                
                 // Create resource group
                 var resourceGroupName1 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
 
@@ -578,7 +574,7 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Single(subscriptionLevelUsages);
 
                 var defaultUsage = subscriptionLevelUsages.First();
-                Assert.Equal(25, defaultUsage.Limit);
+                Assert.Equal(200, defaultUsage.Limit);
                 Assert.Equal(0, defaultUsage.CurrentValue);
 
                 // Create resource group
