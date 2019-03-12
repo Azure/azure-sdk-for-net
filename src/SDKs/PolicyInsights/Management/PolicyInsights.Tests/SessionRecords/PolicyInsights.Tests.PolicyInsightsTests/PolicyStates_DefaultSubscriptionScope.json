@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.PolicyInsights/policyStates/default/queryResults?api-version=2018-04-04&$top=10&$from=2018-04-04T00:00:00Z",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Byb3ZpZGVycy9NaWNyb3NvZnQuUG9saWN5SW5zaWdodHMvcG9saWN5U3RhdGVzL2RlZmF1bHQvcXVlcnlSZXN1bHRzP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDQmJHRvcD0xMCYkZnJvbT0yMDE4LTA0LTA0VDAwJTNBMDAlM0EwMFo=",
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.PolicyInsights/policyStates/default/queryResults?api-version=2018-07-01-preview&$top=10&$from=2018-04-04T00:00:00Z",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Byb3ZpZGVycy9NaWNyb3NvZnQuUG9saWN5SW5zaWdodHMvcG9saWN5U3RhdGVzL2RlZmF1bHQvcXVlcnlSZXN1bHRzP2FwaS12ZXJzaW9uPTIwMTgtMDctMDEtcHJldmlldyYkdG9wPTEwJiRmcm9tPTIwMTgtMDQtMDRUMDAlM0EwMCUzQTAwWg==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {

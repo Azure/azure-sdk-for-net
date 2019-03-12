@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "//subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/govintpolicyrp/providers/microsoft.network/trafficmanagerprofiles/gov-int-policy-rp/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2018-04-04&$top=10&$from=2018-04-04T00:00:00Z",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2QwNjEwYjI3LTk2NjMtNGMwNS04OWY4LTViNGJlMDFlODZhNS9yZXNvdXJjZWdyb3Vwcy9nb3ZpbnRwb2xpY3lycC9wcm92aWRlcnMvbWljcm9zb2Z0Lm5ldHdvcmsvdHJhZmZpY21hbmFnZXJwcm9maWxlcy9nb3YtaW50LXBvbGljeS1ycC9wcm92aWRlcnMvTWljcm9zb2Z0LlBvbGljeUluc2lnaHRzL3BvbGljeVN0YXRlcy9sYXRlc3QvcXVlcnlSZXN1bHRzP2FwaS12ZXJzaW9uPTIwMTgtMDQtMDQmJHRvcD0xMCYkZnJvbT0yMDE4LTA0LTA0VDAwJTNBMDAlM0EwMFo=",
+      "RequestUri": "//subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/govintpolicyrp/providers/microsoft.network/trafficmanagerprofiles/gov-int-policy-rp/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2018-07-01-preview&$top=10&$from=2018-04-04T00:00:00Z",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2QwNjEwYjI3LTk2NjMtNGMwNS04OWY4LTViNGJlMDFlODZhNS9yZXNvdXJjZWdyb3Vwcy9nb3ZpbnRwb2xpY3lycC9wcm92aWRlcnMvbWljcm9zb2Z0Lm5ldHdvcmsvdHJhZmZpY21hbmFnZXJwcm9maWxlcy9nb3YtaW50LXBvbGljeS1ycC9wcm92aWRlcnMvTWljcm9zb2Z0LlBvbGljeUluc2lnaHRzL3BvbGljeVN0YXRlcy9sYXRlc3QvcXVlcnlSZXN1bHRzP2FwaS12ZXJzaW9uPTIwMTgtMDctMDEtcHJldmlldyYkdG9wPTEwJiRmcm9tPTIwMTgtMDQtMDRUMDAlM0EwMCUzQTAwWg==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
