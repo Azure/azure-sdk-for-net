@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
-        /// <param name="name">The name of the resouce.</param>
+        /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the service - e.g.
         /// "Microsoft.SignalRService/SignalR"</param>
         /// <param name="location">The GEO location of the SignalR service.
