@@ -36,7 +36,7 @@ namespace Microsoft.NetApp.Models
         /// <param name="nfsv3">Allows NFSv3 protocol</param>
         /// <param name="nfsv4">Allows NFSv4 protocol</param>
         /// <param name="allowedClients">Client ingress specification as comma
-        /// seperated string with IPv4 CIDRs, IPv4 host addresses and host
+        /// separated string with IPv4 CIDRs, IPv4 host addresses and host
         /// names</param>
         public ExportPolicyRule(int? ruleIndex = default(int?), bool? unixReadOnly = default(bool?), bool? unixReadWrite = default(bool?), bool? cifs = default(bool?), bool? nfsv3 = default(bool?), bool? nfsv4 = default(bool?), string allowedClients = default(string))
         {
@@ -92,7 +92,7 @@ namespace Microsoft.NetApp.Models
         public bool? Nfsv4 { get; set; }
 
         /// <summary>
-        /// Gets or sets client ingress specification as comma seperated string
+        /// Gets or sets client ingress specification as comma separated string
         /// with IPv4 CIDRs, IPv4 host addresses and host names
         /// </summary>
         [JsonProperty(PropertyName = "allowedClients")]

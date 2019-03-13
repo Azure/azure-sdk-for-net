@@ -174,7 +174,7 @@ namespace Microsoft.NetApp.Models
         /// Gets or sets smbServerFQDN
         /// </summary>
         /// <remarks>
-        /// The SMB server's Fully Qualified Doman Name, FQDN
+        /// The SMB server's Fully Qualified Domain Name, FQDN
         /// </remarks>
         [JsonProperty(PropertyName = "properties.smbServerFqdn")]
         public string SmbServerFqdn { get; set; }

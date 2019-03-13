@@ -29,7 +29,7 @@ namespace Microsoft.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the ActiveDirectories class.
         /// </summary>
-        /// <param name="activeDirectoryId">Id of the active drectory</param>
+        /// <param name="activeDirectoryId">Id of the Active Directory</param>
         /// <param name="username">Username of Active Directory domain
         /// administrator</param>
         /// <param name="password">Plain text password of Active Directory
@@ -37,7 +37,7 @@ namespace Microsoft.NetApp.Models
         /// <param name="domain">Name of the Active Directory domain</param>
         /// <param name="dNS">Comma separated list of DNS server IP addresses
         /// for the Active Directory domain</param>
-        /// <param name="status">Status of the active drectory</param>
+        /// <param name="status">Status of the Active Directory</param>
         /// <param name="sMBServerName">NetBIOS name of the SMB server. This
         /// name will be registered as a computer account in the AD and used to
         /// mount volumes</param>
@@ -62,7 +62,7 @@ namespace Microsoft.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets id of the active drectory
+        /// Gets or sets id of the Active Directory
         /// </summary>
         [JsonProperty(PropertyName = "activeDirectoryId")]
         public string ActiveDirectoryId { get; set; }
@@ -94,7 +94,7 @@ namespace Microsoft.NetApp.Models
         public string DNS { get; set; }
 
         /// <summary>
-        /// Gets or sets status of the active drectory
+        /// Gets or sets status of the Active Directory
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
