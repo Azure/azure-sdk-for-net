@@ -15,7 +15,8 @@ namespace Azure.Base.Http.Pipeline
 
         int[] _excludeErrors = Array.Empty<int>();
 
-        // TODO (pri 3): should this be a true singleton?
+        public readonly static LoggingPolicy Shared = new LoggingPolicy();
+
         public LoggingPolicy(params int[] excludeErrors)
             => _excludeErrors = excludeErrors;
 

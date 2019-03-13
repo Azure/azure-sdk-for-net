@@ -32,10 +32,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the OSProfile class.
         /// </summary>
         /// <param name="computerName">Specifies the host OS name of the
-        /// virtual machine. &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 15
-        /// characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 64
-        /// characters. &lt;br&gt;&lt;br&gt; For naming conventions and
-        /// restrictions see [Azure infrastructure services implementation
+        /// virtual machine. &lt;br&gt;&lt;br&gt; This name cannot be updated
+        /// after the VM is created. &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Windows):** 15 characters &lt;br&gt;&lt;br&gt; **Max-length
+        /// (Linux):** 64 characters. &lt;br&gt;&lt;br&gt; For naming
+        /// conventions and restrictions see [Azure infrastructure services
+        /// implementation
         /// guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions).</param>
         /// <param name="adminUsername">Specifies the name of the administrator
         /// account. &lt;br&gt;&lt;br&gt; **Windows-only restriction:** Cannot
@@ -115,11 +117,13 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// Gets or sets specifies the host OS name of the virtual machine.
-        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Max-length (Windows):** 15
-        /// characters &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Max-length
-        /// (Linux):** 64 characters. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For
-        /// naming conventions and restrictions see [Azure infrastructure
-        /// services implementation
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; This name cannot be updated
+        /// after the VM is created. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;
+        /// **Max-length (Windows):** 15 characters
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; **Max-length (Linux):** 64
+        /// characters. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt; For naming
+        /// conventions and restrictions see [Azure infrastructure services
+        /// implementation
         /// guidelines](https://docs.microsoft.com/azure/virtual-machines/virtual-machines-linux-infrastructure-subscription-accounts-guidelines?toc=%2fazure%2fvirtual-machines%2flinux%2ftoc.json#1-naming-conventions).
         /// </summary>
         [JsonProperty(PropertyName = "computerName")]
