@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// Initializes a new instance of the AssignmentLockSettings class.
         /// </summary>
         /// <param name="mode">Lock mode. Possible values include: 'None',
-        /// 'AllResources'</param>
+        /// 'AllResourcesReadOnly', 'AllResourcesDoNotDelete'</param>
         public AssignmentLockSettings(string mode = default(string))
         {
             Mode = mode;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 
         /// <summary>
         /// Gets or sets lock mode. Possible values include: 'None',
-        /// 'AllResources'
+        /// 'AllResourcesReadOnly', 'AllResourcesDoNotDelete'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public string Mode { get; set; }
