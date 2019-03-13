@@ -15,31 +15,30 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// A webhook receiver.
+    /// An arm role receiver.
     /// </summary>
-    public partial class WebhookReceiver
+    public partial class ArmRoleReceiver
     {
         /// <summary>
-        /// Initializes a new instance of the WebhookReceiver class.
+        /// Initializes a new instance of the ArmRoleReceiver class.
         /// </summary>
-        public WebhookReceiver()
+        public ArmRoleReceiver()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebhookReceiver class.
+        /// Initializes a new instance of the ArmRoleReceiver class.
         /// </summary>
-        /// <param name="name">The name of the webhook receiver. Names must be
+        /// <param name="name">The name of the arm role receiver. Names must be
         /// unique across all receivers within an action group.</param>
-        /// <param name="serviceUri">The URI where webhooks should be
-        /// sent.</param>
+        /// <param name="roleId">The arm role id.</param>
         /// <param name="useCommonAlertSchema">Indicates whether to use common
         /// alert schema.</param>
-        public WebhookReceiver(string name, string serviceUri, bool useCommonAlertSchema)
+        public ArmRoleReceiver(string name, string roleId, bool useCommonAlertSchema)
         {
             Name = name;
-            ServiceUri = serviceUri;
+            RoleId = roleId;
             UseCommonAlertSchema = useCommonAlertSchema;
             CustomInit();
         }
@@ -50,17 +49,17 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the webhook receiver. Names must be unique
-        /// across all receivers within an action group.
+        /// Gets or sets the name of the arm role receiver. Names must be
+        /// unique across all receivers within an action group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI where webhooks should be sent.
+        /// Gets or sets the arm role id.
         /// </summary>
-        [JsonProperty(PropertyName = "serviceUri")]
-        public string ServiceUri { get; set; }
+        [JsonProperty(PropertyName = "roleId")]
+        public string RoleId { get; set; }
 
         /// <summary>
         /// Gets or sets indicates whether to use common alert schema.
@@ -80,9 +79,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (ServiceUri == null)
+            if (RoleId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "RoleId");
             }
         }
     }

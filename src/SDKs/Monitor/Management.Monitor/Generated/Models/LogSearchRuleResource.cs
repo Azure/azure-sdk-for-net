@@ -37,8 +37,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="location">Resource location</param>
         /// <param name="source">Data Source against which rule will Query
         /// Data</param>
-        /// <param name="schedule">Schedule (Frequnecy, Time Window) for
-        /// rule.</param>
         /// <param name="action">Action needs to be taken on rule
         /// execution.</param>
         /// <param name="id">Azure resource Id</param>
@@ -52,10 +50,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// values include: 'true', 'false'</param>
         /// <param name="lastUpdatedTime">Last time the rule was updated in
         /// IS08601 format.</param>
-        /// <param name="provisioningState">Provisioning state of the
-        /// scheduledquery rule. Possible values include: 'Succeeded',
-        /// 'Deploying', 'Canceled', 'Failed'</param>
-        public LogSearchRuleResource(string location, Source source, Schedule schedule, Action action, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string enabled = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string provisioningState = default(string))
+        /// <param name="provisioningState">Provisioning state of the scheduled
+        /// query rule. Possible values include: 'Succeeded', 'Deploying',
+        /// 'Canceled', 'Failed'</param>
+        /// <param name="schedule">Schedule (Frequency, Time Window) for rule.
+        /// Required for action type - AlertingAction</param>
+        public LogSearchRuleResource(string location, Source source, Action action, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string description = default(string), string enabled = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string provisioningState = default(string), Schedule schedule = default(Schedule))
             : base(location, id, name, type, tags)
         {
             Description = description;
@@ -94,8 +94,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public System.DateTime? LastUpdatedTime { get; private set; }
 
         /// <summary>
-        /// Gets provisioning state of the scheduledquery rule. Possible values
-        /// include: 'Succeeded', 'Deploying', 'Canceled', 'Failed'
+        /// Gets provisioning state of the scheduled query rule. Possible
+        /// values include: 'Succeeded', 'Deploying', 'Canceled', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -107,7 +107,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public Source Source { get; set; }
 
         /// <summary>
-        /// Gets or sets schedule (Frequnecy, Time Window) for rule.
+        /// Gets or sets schedule (Frequency, Time Window) for rule. Required
+        /// for action type - AlertingAction
         /// </summary>
         [JsonProperty(PropertyName = "properties.schedule")]
         public Schedule Schedule { get; set; }
@@ -130,10 +131,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (Source == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Source");
-            }
-            if (Schedule == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Schedule");
             }
             if (Action == null)
             {

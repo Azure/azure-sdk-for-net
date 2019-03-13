@@ -12,36 +12,40 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A webhook receiver.
+    /// Specifies the criteria for converting log to metric.
     /// </summary>
-    public partial class WebhookReceiver
+    public partial class Dimension
     {
         /// <summary>
-        /// Initializes a new instance of the WebhookReceiver class.
+        /// Initializes a new instance of the Dimension class.
         /// </summary>
-        public WebhookReceiver()
+        public Dimension()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebhookReceiver class.
+        /// Initializes a new instance of the Dimension class.
         /// </summary>
-        /// <param name="name">The name of the webhook receiver. Names must be
-        /// unique across all receivers within an action group.</param>
-        /// <param name="serviceUri">The URI where webhooks should be
-        /// sent.</param>
-        /// <param name="useCommonAlertSchema">Indicates whether to use common
-        /// alert schema.</param>
-        public WebhookReceiver(string name, string serviceUri, bool useCommonAlertSchema)
+        /// <param name="name">Name of the dimension</param>
+        /// <param name="values">List of dimension values</param>
+        public Dimension(string name, IList<string> values)
         {
             Name = name;
-            ServiceUri = serviceUri;
-            UseCommonAlertSchema = useCommonAlertSchema;
+            Values = values;
             CustomInit();
+        }
+        /// <summary>
+        /// Static constructor for Dimension class.
+        /// </summary>
+        static Dimension()
+        {
+            OperatorProperty = "Include";
         }
 
         /// <summary>
@@ -50,23 +54,22 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the webhook receiver. Names must be unique
-        /// across all receivers within an action group.
+        /// Gets or sets name of the dimension
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI where webhooks should be sent.
+        /// Gets or sets list of dimension values
         /// </summary>
-        [JsonProperty(PropertyName = "serviceUri")]
-        public string ServiceUri { get; set; }
+        [JsonProperty(PropertyName = "values")]
+        public IList<string> Values { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether to use common alert schema.
+        /// Operator for dimension values
         /// </summary>
-        [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        [JsonProperty(PropertyName = "operator")]
+        public static string OperatorProperty { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -80,9 +83,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (ServiceUri == null)
+            if (Values == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Values");
             }
         }
     }
