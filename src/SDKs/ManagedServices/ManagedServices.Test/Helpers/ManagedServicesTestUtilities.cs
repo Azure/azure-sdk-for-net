@@ -16,9 +16,9 @@ namespace ManagedServices.Tests.Helpers
     public static class ManagedServicesTestUtilities
     {
 
-        public static string registratonDefinitionId = Guid.NewGuid().ToString(),
-                registrationAssignmentId = Guid.NewGuid().ToString(),
-                subscriptionId = Guid.NewGuid().ToString(),
+        public static string registratonDefinitionId = "0cb6fbd6-90df-4923-9d92-c266f6c27bba",
+                registrationAssignmentId = "46c2a6a8-3dda-49ae-bc99-ecc5d28dd98a",
+                subscriptionId = "45062c92-741a-4e9b-acc4-f0afbfce9c7a",
                 apiVersion = "2018-06-01-preview",
                 scope = string.Format("subscriptions/{0}", subscriptionId),
                 planName = "planName",
@@ -26,10 +26,10 @@ namespace ManagedServices.Tests.Helpers
                 product = "product",
                 version = "1.0.0",
                 defintionDesctiption = "Registration Defintion Description",
-                principalId = Guid.NewGuid().ToString(),
+                principalId = "1445e20d-2d4f-4616-9c19-564f4a963499",
                 roleDefinitionId = "acdd72a7-3385-48ef-bd42-f606fba81ae7",
                 registrationDefinitionName = "registrationDefinitionName",
-                managedByTenantId = Guid.NewGuid().ToString();
+                managedByTenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
 
         public static RegistrationDefinition GetRegistrationDefintion()
         {
