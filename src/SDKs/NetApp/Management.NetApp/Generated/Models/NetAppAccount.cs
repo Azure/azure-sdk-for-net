@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.NetApp.Models
+namespace Microsoft.NetApp.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string provisioningState = default(string))
+        /// <param name="activeDirectories">Active Directories</param>
+        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string provisioningState = default(string), ActiveDirectories activeDirectories = default(ActiveDirectories))
         {
             Location = location;
             Id = id;
@@ -47,6 +48,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Type = type;
             Tags = tags;
             ProvisioningState = provisioningState;
+            ActiveDirectories = activeDirectories;
             CustomInit();
         }
 
@@ -90,6 +92,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets active Directories
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.activeDirectories")]
+        public ActiveDirectories ActiveDirectories { get; set; }
 
         /// <summary>
         /// Validate the object.
