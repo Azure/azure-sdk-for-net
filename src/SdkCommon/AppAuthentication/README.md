@@ -51,3 +51,5 @@ Before running these test cases, ensure that you
 On Windows, open a command prompt, navigate to the integration test folder, and run **dotnet test**. This will run tests for both .NET 4.5.2 and .NET Standard 1.4. 
 
 On Linux, open a command prompt, navigate to the integration test folder, and run **dotnet test -f netcoreapp1.1**. This will run tests for .NET Standard 1.4. 
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSdkCommon%2FAppAuthentication%2FREADME.png)

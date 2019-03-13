@@ -39,12 +39,15 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="description">Description of the event type.</param>
         /// <param name="schemaUrl">Url of the schema for this event
         /// type.</param>
-        public EventType(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string description = default(string), string schemaUrl = default(string))
+        /// <param name="isInDefaultSet">IsInDefaultSet flag of the event
+        /// type.</param>
+        public EventType(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string description = default(string), string schemaUrl = default(string), bool? isInDefaultSet = default(bool?))
             : base(id, name, type)
         {
             DisplayName = displayName;
             Description = description;
             SchemaUrl = schemaUrl;
+            IsInDefaultSet = isInDefaultSet;
             CustomInit();
         }
 
@@ -70,6 +73,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.schemaUrl")]
         public string SchemaUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets isInDefaultSet flag of the event type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.isInDefaultSet")]
+        public bool? IsInDefaultSet { get; set; }
 
     }
 }

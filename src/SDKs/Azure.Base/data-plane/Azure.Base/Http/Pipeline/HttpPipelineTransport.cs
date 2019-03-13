@@ -11,7 +11,7 @@ namespace Azure.Base.Http.Pipeline
     {
         public abstract Task ProcessAsync(HttpMessage message);
 
-        public abstract HttpMessage CreateMessage(HttpPipeline.Options options, CancellationToken cancellation);
+        public abstract HttpMessage CreateMessage(IServiceProvider services, CancellationToken cancellation);
 
         public sealed override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> next)
         {
