@@ -28,7 +28,7 @@ namespace EdgeGateway.Tests
         public void Test_UserManagement()
         {
             // Create the encrypted password for the user
-            AsymmetricEncryptedSecret encryptedSecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "Password1", TestConstants.GatewayActivationKey);
+            AsymmetricEncryptedSecret encryptedSecret = Client.Devices.GetAsymmetricEncryptedSecretUsingActivationKey(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "Password1", TestConstants.GatewayActivationKey);
             User user = new User() { EncryptedPassword = encryptedSecret };
 
             // Create user.
