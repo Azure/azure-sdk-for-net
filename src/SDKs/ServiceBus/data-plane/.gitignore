@@ -1,8 +1,0 @@
-# Ignore patterns specific to Service Bus
-
-/build/OpenCoverReport/*
-/build/coverage.xml
-
-tests/Microsoft.Azure.ServiceBus.Tests/API/ApiApprovals.ApproveAzureServiceBus.received.txt
-
-nuget.config
