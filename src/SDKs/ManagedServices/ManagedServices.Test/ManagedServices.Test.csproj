@@ -12,6 +12,20 @@
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="SessionRecords\ManagedServices.Tests.ScenarioTests.RegistrationAssignmentTests\RegistrationAssignmentTests_CRUD.json" />
+    <None Remove="SessionRecords\ManagedServices.Tests.ScenarioTests.RegistrationDefintionTests\RegistrationDefintionTests_CRUD.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SessionRecords\ManagedServices.Tests.ScenarioTests.RegistrationDefintionTests\RegistrationDefintionTests_CRUD.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SessionRecords\ManagedServices.Tests.ScenarioTests.RegistrationAssignmentTests\RegistrationAssignmentTests_CRUD.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Management.ManagedServices\Microsoft.Azure.Management.ManagedServices.csproj" />
   </ItemGroup>
   <!--Do not remove until VS Test Tools fixes #472-->
