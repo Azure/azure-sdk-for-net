@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Initializes a new instance of the Response class.
         /// </summary>
         /// <param name="timespan">The timespan for which the data was
-        /// retrieved. Its value consists of two datatimes concatenated,
+        /// retrieved. Its value consists of two datetimes concatenated,
         /// separated by '/'.  This may be adjusted in the future and returned
         /// back from what was originally requested.</param>
         /// <param name="value">the value of the collection.</param>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets the timespan for which the data was retrieved. Its
-        /// value consists of two datatimes concatenated, separated by '/'.
+        /// value consists of two datetimes concatenated, separated by '/'.
         /// This may be adjusted in the future and returned back from what was
         /// originally requested.
         /// </summary>

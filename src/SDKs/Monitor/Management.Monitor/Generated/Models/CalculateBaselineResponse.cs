@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// The response to a calcualte baseline call.
+    /// The response to a calculate baseline call.
     /// </summary>
     public partial class CalculateBaselineResponse
     {
