@@ -76,17 +76,23 @@ jobs:
         Linux:
           OSName: 'Linux'
           OSVmImage: 'ubuntu-16.04'
+          OSTestCommand: 'lsb_release'
         Windows:
           OSName: 'Windows'
           OSVmImage: 'vs2017-win2016'
+          OSTestCommand: 'ver'
         MacOs:
           OSName: 'MacOS'
           OSVmImage: 'macOS-10.13'
+          OSTestCommand: 'sw_vers'
 
     pool:
       vmImage: '$(OSVmImage)'
 
     steps:
+      - script: '$(OSTestCommand)'
+        displayName: Verify Agent OS
+
       - task: DotNetCoreInstaller@0
         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
         inputs:
