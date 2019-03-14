@@ -60,7 +60,6 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-            if (!string.IsNullOrEmpty(setting.ETag)) throw new ArgumentException($"{nameof(setting)}.{nameof(setting.ETag)} has to be null");
 
             Uri uri = BuildUriForKvRoute(setting);
 
@@ -92,8 +91,6 @@ namespace Azure.ApplicationModel.Configuration
         public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException($"{nameof(value)}");
-
             return await AddAsync(new ConfigurationSetting(key, value));
         }
 
@@ -133,8 +130,6 @@ namespace Azure.ApplicationModel.Configuration
         public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException($"{nameof(value)}");
-
             return await SetAsync(new ConfigurationSetting(key, value));
         }
 
@@ -180,8 +175,6 @@ namespace Azure.ApplicationModel.Configuration
         public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            if (string.IsNullOrEmpty(value)) throw new ArgumentNullException($"{nameof(value)}");
-
             return await UpdateAsync(new ConfigurationSetting(key, value));
         }
 

@@ -198,10 +198,13 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 ConfigurationSetting setting = await service.AddAsync(s_testSetting);
 
-                Assert.ThrowsAsync<ArgumentException>(async () =>
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.AddAsync(setting);
                 });
+
+                var response = exception.Response;
+                Assert.AreEqual(412, response.Status);
             }
             finally
             {
