@@ -56,8 +56,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// blob written to storage. Value should be between 10485760(10MB) and
         /// 524288000(500MB). Default value is 314572800(300MB).</param>
         /// <param name="encoding">Encoding that is used to serialize messages
-        /// to blobs. Supported values are 'avro' and 'avrodeflate'. Default
-        /// value is 'avro'.</param>
+        /// to blobs. Supported values are 'avro', 'avrodeflate', and 'JSON'.
+        /// Default value is 'avro'. Possible values include: 'Avro',
+        /// 'AvroDeflate', 'JSON'</param>
         public RoutingStorageContainerProperties(string connectionString, string name, string containerName, string subscriptionId = default(string), string resourceGroup = default(string), string fileNameFormat = default(string), int? batchFrequencyInSeconds = default(int?), int? maxChunkSizeInBytes = default(int?), string encoding = default(string))
         {
             ConnectionString = connectionString;
@@ -137,8 +138,9 @@ namespace Microsoft.Azure.Management.IotHub.Models
 
         /// <summary>
         /// Gets or sets encoding that is used to serialize messages to blobs.
-        /// Supported values are 'avro' and 'avrodeflate'. Default value is
-        /// 'avro'.
+        /// Supported values are 'avro', 'avrodeflate', and 'JSON'. Default
+        /// value is 'avro'. Possible values include: 'Avro', 'AvroDeflate',
+        /// 'JSON'
         /// </summary>
         [JsonProperty(PropertyName = "encoding")]
         public string Encoding { get; set; }
