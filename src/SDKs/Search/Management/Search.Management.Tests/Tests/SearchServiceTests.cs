@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.Search.Tests
         }
 
         [Fact]
-        public void CantCreateOrUpdateFreeServiceWithIdentity()
+        public void CannotCreateOrUpdateFreeServiceWithIdentity()
         {
             Run(() =>
             {
