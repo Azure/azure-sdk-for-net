@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
@@ -113,7 +114,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource">Resource to access.</param>
         /// <param name="authority">Authority where resource is.</param>
         /// <returns></returns>
-        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             // If authority is not specified, create it using azureAdInstance and tenantId. Tenant ID comes from the connection string. 
             if (string.IsNullOrWhiteSpace(authority))
@@ -128,7 +130,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     // Get certificate for the given Key Vault secret identifier
                     try
                     {
-                        var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier);
+                        var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier, cancellationToken);
                         certs = new List<X509Certificate2>() { keyVaultCert };
                     }
                     catch (Exception exp)

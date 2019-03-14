@@ -42,7 +42,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _httpClient = httpClient;
         }
 
-        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpClient. 
             HttpClient httpClient = _httpClient ?? DefaultHttpClient;
@@ -57,23 +58,26 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 // if App Service MSI is not available then Azure VM IMDS must be available, verify with a probe request
                 if (!isAppServicesMsiAvailable)
                 {
-                    HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, AzureVmImdsEndpoint);
-                    var cancellationTokenSource = new CancellationTokenSource();
+                    using (var internalTokenSource = new CancellationTokenSource())
+                    using (var linkedTokenSource = CancellationTokenSource.CreateLinkedTokenSource(internalTokenSource.Token, cancellationToken))
+                    {
+                        HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, AzureVmImdsEndpoint);
 
-                    try
-                    {
-                        cancellationTokenSource.CancelAfter(AzureVmImdsTimeout);
-                        await httpClient.SendAsync(imdsProbeRequest, cancellationTokenSource.Token).ConfigureAwait(false);
-                    }
-                    catch (TaskCanceledException)
-                    {
-                        // request to IMDS timed out, neither Azure VM IMDS nor App Services MSI are available
-                        if (cancellationTokenSource.Token.IsCancellationRequested)
+                        try
                         {
-                            throw new HttpRequestException();
+                            internalTokenSource.CancelAfter(AzureVmImdsTimeout);
+                            await httpClient.SendAsync(imdsProbeRequest, linkedTokenSource.Token).ConfigureAwait(false);
                         }
+                        catch (TaskCanceledException)
+                        {
+                            // request to IMDS timed out (internal cancellation token cancelled), neither Azure VM IMDS nor App Services MSI are available
+                            if (internalTokenSource.Token.IsCancellationRequested)
+                            {
+                                throw new HttpRequestException();
+                            }
 
-                        throw;
+                            throw;
+                        }
                     }
                 }
 
@@ -99,7 +103,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     request.Headers.Add("Metadata", "true");
                 }
 
-                HttpResponseMessage response = await httpClient.SendAsync(request).ConfigureAwait(false);
+                HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
                 // If the response is successful, it should have JSON response with an access_token field
                 if (response.IsSuccessStatusCode)

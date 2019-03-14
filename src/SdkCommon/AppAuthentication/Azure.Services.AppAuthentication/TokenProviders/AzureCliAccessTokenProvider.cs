@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -79,7 +80,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return startInfo;
         }
 
-        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -87,7 +89,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 ValidationHelper.ValidateResource(resource);
 
                 // Execute Azure CLI to get token
-                string response = await _processManager.ExecuteAsync(new Process { StartInfo = GetProcessStartInfo(resource)}).ConfigureAwait(false);
+                string response = await _processManager.ExecuteAsync(new Process { StartInfo = GetProcessStartInfo(resource)}, cancellationToken).ConfigureAwait(false);
 
                 // Parse the response
                 TokenResponse tokenResponse = TokenResponse.Parse(response);

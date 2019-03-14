@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// KeyVaultClient keyVaultClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
         /// </code>
         /// </example>
-        public TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) => 
-        {   
+        public TokenCallback KeyVaultTokenCallback => async (authority, resource, scope) =>
+        {
             var authResult = await GetAuthResultAsyncImpl(authority, resource, scope).ConfigureAwait(false);
             return authResult.AccessToken;
         };
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 #endif
                 };
             }
-            
+
         }
 
         /// <summary>
@@ -127,7 +127,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string authority, string resource, string scope)
+        private async Task<AppAuthenticationResult> GetAuthResultAsyncImpl(string authority, string resource, string scope,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             // Check if the auth result is present in cache, for the given connection string, authority, and resource
             // This is an in-memory global cache, that will be used across instances of this class. 
@@ -163,7 +164,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
                 // If the auth result was not in cache, try to get it
                 List<NonInteractiveAzureServiceTokenProviderBase> tokenProviders = GetTokenProviders();
-                
+
                 // Try to get the token using the selected providers
                 foreach (var tokenProvider in tokenProviders)
                 {
@@ -171,7 +172,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
                         // Get the auth result, add to the cache, and return the auth result.
                         var authResult = await tokenProvider.GetAuthResultAsync(authority, resource,
-                                string.Empty)
+                                string.Empty, cancellationToken)
                             .ConfigureAwait(false);
 
                         // Set the token provider to the one that worked. 
@@ -197,7 +198,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 // Whichever way the try block exits, the semaphore must be released. 
                 Semaphore.Release();
             }
-            
+
             // Throw exception so that the caller knows why the token could not be acquired.
             if (exceptions.Count == 1)
             {
@@ -221,8 +222,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns></returns>
         private List<NonInteractiveAzureServiceTokenProviderBase> GetTokenProviders()
         {
-            return _selectedAccessTokenProvider != null 
-                ? new List<NonInteractiveAzureServiceTokenProviderBase> { _selectedAccessTokenProvider } 
+            return _selectedAccessTokenProvider != null
+                ? new List<NonInteractiveAzureServiceTokenProviderBase> { _selectedAccessTokenProvider }
                 : _potentialAccessTokenProviders;
         }
 
@@ -240,9 +241,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string))
+        public async Task<string> GetAccessTokenAsync(string resource, string tenantId = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
         {
-            var authResult = await GetAuthenticationResultAsync(resource, tenantId).ConfigureAwait(false);
+            var authResult = await GetAuthenticationResultAsync(resource, tenantId, cancellationToken).ConfigureAwait(false);
 
             return authResult.AccessToken;
         }
@@ -261,7 +263,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns>Access token</returns>
         /// <exception cref="ArgumentNullException">Thrown if resource is null or empty.</exception>
         /// <exception cref="AzureServiceTokenProviderException">Thrown if access token cannot be acquired.</exception>
-        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string))
+        public async Task<AppAuthenticationResult> GetAuthenticationResultAsync(string resource, string tenantId = default(string),
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(resource))
             {
@@ -270,7 +273,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
             string authority = string.IsNullOrEmpty(tenantId) ? string.Empty : $"{_azureAdInstance}{tenantId}";
 
-            return await GetAuthResultAsyncImpl(authority, resource, string.Empty).ConfigureAwait(false);
+            return await GetAuthResultAsyncImpl(authority, resource, string.Empty, cancellationToken).ConfigureAwait(false);
         }
     }
 }
