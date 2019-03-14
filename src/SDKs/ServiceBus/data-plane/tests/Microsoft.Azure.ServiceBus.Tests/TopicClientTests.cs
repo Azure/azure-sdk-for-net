@@ -16,9 +16,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { true, false }
         };
         
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -45,9 +44,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientReceiveDeleteTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -75,9 +73,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientPeekLockWithAbandonTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -104,9 +101,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientPeekLockWithDeadLetterTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -143,9 +139,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task TopicClientRenewLockTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -171,9 +166,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
@@ -201,9 +195,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task CancelScheduledMessagesAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {

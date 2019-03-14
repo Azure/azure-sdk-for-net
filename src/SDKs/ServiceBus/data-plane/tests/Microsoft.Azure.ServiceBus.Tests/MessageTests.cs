@@ -75,11 +75,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 Assert.False(message.SystemProperties.IsReceived);
             }
 
-            [Theory]
+            [LiveTheory]
             [DisplayTestMethodName]
             [InlineData(ReceiveMode.ReceiveAndDelete)]
-            [InlineData(ReceiveMode.PeekLock)]
-            [LiveTest]
+            [InlineData(ReceiveMode.PeekLock)]            
             public async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
             {
                 await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
@@ -105,8 +104,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 });
             }
 
-            [Fact]
-            [LiveTest]
+            [LiveFact]
             [DisplayTestMethodName]
             public async Task Should_return_true_for_peeked_message()
             {
@@ -130,8 +128,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 });
             }
 
-            [Fact]
-            [LiveTest]
+            [LiveFact]
             [DisplayTestMethodName]
             public async Task MessageWithMaxMessageSizeShouldWorkAsExpected()
             {
@@ -180,8 +177,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal($"{{MessageId:{id}}}", result);
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async void LargeMessageShouldThrowMessageSizeExceededException()
         {
@@ -207,8 +203,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task MessagePropertiesShouldSupportValidPropertyTypes()
         {

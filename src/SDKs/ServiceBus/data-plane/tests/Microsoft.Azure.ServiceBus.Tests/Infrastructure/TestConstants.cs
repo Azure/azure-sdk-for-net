@@ -12,8 +12,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         
         // General 
         internal const string SessionPrefix = "session";
-        internal const int MaxAttemptsCount = 5;
+        internal const int MaxAttemptsCount = 5;        
         internal readonly static TimeSpan WaitTimeBetweenAttempts = TimeSpan.FromSeconds(1);
+
+        // Live Test Defaults
+        internal const int LiveTestDefaultMaxAttempts = 2;
+        internal const int LiveTestRetryDelayMilliseconds = 250;
 
         // Retry Policy Defaults
         internal const int RetryMaxAttempts = 5;

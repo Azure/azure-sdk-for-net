@@ -16,18 +16,16 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { true, false, 5 },
         };
                 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         Task OnMessagePeekLockWithAutoCompleteTrue(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
             return this.OnMessageTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         Task OnMessageReceiveDelete(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {

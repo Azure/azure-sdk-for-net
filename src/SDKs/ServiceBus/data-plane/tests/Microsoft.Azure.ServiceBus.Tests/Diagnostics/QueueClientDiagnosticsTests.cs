@@ -15,13 +15,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         private QueueClient queueClient;        
         private bool disposed = false;
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task EventsAreNotFiredWhenDiagnosticsIsDisabled()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
-            {                
+            {   
                 this.queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
 
                 Activity processActivity = null;
@@ -40,11 +39,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 processingDone.WaitOne(TimeSpan.FromSeconds(maxWaitSec));
                 Assert.True(this.events.IsEmpty);
                 Assert.Null(processActivity);
+
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task EventsAreNotFiredWhenDiagnosticsIsDisabledForQueue()
         {
@@ -73,8 +72,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task SendAndHandlerFireEvents()
         {
@@ -144,8 +142,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task SendAndHandlerFireExceptionEvents()
         {
@@ -216,8 +213,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task AbandonCompleteFireEvents()
         {
@@ -253,8 +249,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task ReceiveNoMessageFireEvents()
         {
@@ -281,8 +276,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task BatchSendReceiveFireEvents()
         {
@@ -327,8 +321,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task PeekFireEvents()
         {
@@ -361,8 +354,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task DeadLetterFireEvents()
         {
@@ -399,8 +391,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task RenewLockFireEvents()
         {
@@ -427,8 +418,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task DeferReceiveDeferredFireEvents()
         {
@@ -472,8 +462,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task SendAndHandlerFilterOutStartEvents()
         {
@@ -509,8 +498,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task ScheduleAndCancelFireEvents()
         {

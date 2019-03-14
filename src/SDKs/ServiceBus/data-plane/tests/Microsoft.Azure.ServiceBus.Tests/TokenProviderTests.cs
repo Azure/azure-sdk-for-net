@@ -17,6 +17,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         ///   This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret and uncomment 
         ///   the [Fact] attribute before running.
         /// </remarks>
+        /// 
         //[Fact]
         [DisplayTestMethodName]        
         public async Task UseITokenProviderWithAad()
@@ -44,8 +45,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
         #pragma warning restore xUnit1013 
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async void SasTokenWithLargeExpiryTimeShouldBeAccepted()
         {

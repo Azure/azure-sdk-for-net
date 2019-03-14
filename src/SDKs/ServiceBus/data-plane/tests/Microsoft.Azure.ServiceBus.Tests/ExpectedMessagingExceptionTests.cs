@@ -11,8 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class ExpectedMessagingExceptionTests
     {
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         async Task MessageLockLostExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
@@ -50,8 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         async Task CompleteOnPeekedMessagesShouldThrowTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
@@ -79,8 +77,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         async Task SessionLockLostExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
@@ -133,8 +130,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         async Task OperationsOnMessageSenderReceiverAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
@@ -151,8 +147,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         async Task OperationsOnMessageSessionAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>

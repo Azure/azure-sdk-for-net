@@ -19,9 +19,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { true, true }
         };
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task SessionTest(bool partitioned, bool sessionEnabled)
         {
@@ -64,9 +63,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task GetAndSetSessionStateTest(bool partitioned, bool sessionEnabled)
         {
@@ -126,9 +124,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task SessionRenewLockTest(bool partitioned, bool sessionEnabled)
         {
@@ -183,9 +180,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task PeekSessionAsyncTest(bool partitioned, bool sessionEnabled)
         {
@@ -220,9 +216,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task ReceiveDeferredMessageForSessionTest(bool partitioned, bool sessionEnabled)
         {
@@ -258,8 +253,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task AcceptSessionThrowsSessionCannotBeLockedException()
         {

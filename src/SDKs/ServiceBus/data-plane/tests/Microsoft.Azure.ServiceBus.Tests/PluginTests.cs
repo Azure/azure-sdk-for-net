@@ -13,8 +13,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class PluginTests
     {
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task Registering_plugin_multiple_times_should_throw()
         {
@@ -36,8 +35,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task Unregistering_plugin_should_complete_with_plugin_set()
         {
@@ -58,8 +56,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task Unregistering_plugin_should_complete_without_plugin_set()
         {
@@ -77,8 +74,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task Multiple_plugins_should_run_in_order()
         {
@@ -112,8 +108,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task Multiple_plugins_should_be_able_to_manipulate_message()
         {
@@ -149,8 +144,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task Plugin_without_ShouldContinueOnException_should_throw()
         {
@@ -173,8 +167,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task Plugin_with_ShouldContinueOnException_should_continue()
         {
@@ -207,8 +200,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task QueueClientShouldPassPluginsToMessageSession()
         {

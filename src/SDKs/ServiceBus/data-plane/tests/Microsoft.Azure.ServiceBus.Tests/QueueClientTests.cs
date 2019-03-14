@@ -17,9 +17,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { true, false }
         };
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockTest(bool partitioned, bool sessionEnabled,  int messageCount = 10)
         {
@@ -37,9 +36,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekDeliveryCountTest(bool partitioned, bool sessionEnabled)
         {
@@ -64,9 +62,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockDeliveryCountTest(bool partitioned, bool sessionEnabled)
         {
@@ -91,9 +88,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task ReceiveDeleteTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -111,9 +107,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockWithAbandonTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -131,9 +126,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task PeekLockWithDeadLetterTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -161,9 +155,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task BasicRenewLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
@@ -181,9 +174,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
@@ -201,9 +193,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         async Task CancelScheduledMessagesAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
@@ -220,9 +211,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
             });
         }
-
-        [Fact]
-        [LiveTest]
+                
+        [LiveFact]
         [DisplayTestMethodName]
         async Task UpdatingPrefetchCountOnQueueClientUpdatesTheReceiverPrefetchCount()
         {

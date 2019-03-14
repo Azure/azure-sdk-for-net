@@ -18,9 +18,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { true, false }
         };
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task CorrelationFilterTestCase(bool partitioned, bool sessionEnabled)
         {
@@ -81,9 +80,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task SqlFilterTestCase(bool partitioned, bool sessionEnabled)
         {
@@ -154,9 +152,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task SqlActionTestCase(bool partitioned, bool sessionEnabled)
         {
@@ -221,8 +218,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task GetRulesTestCase()
         {
@@ -316,8 +312,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task UpdatingPrefetchCountOnSubscriptionClientUpdatesTheReceiverPrefetchCount()
         {

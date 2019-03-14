@@ -20,8 +20,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         private QueueClient queueClient;
         private bool disposed;
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task AcceptSetAndGetStateGetFireEvents()
         {
@@ -87,8 +86,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task EventsAreNotFiredWhenDiagnosticsIsDisabled()
         {
@@ -117,8 +115,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         async Task SessionHandlerFireEvents()
         {

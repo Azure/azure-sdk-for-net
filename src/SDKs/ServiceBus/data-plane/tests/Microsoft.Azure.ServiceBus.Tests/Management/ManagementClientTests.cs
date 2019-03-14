@@ -21,8 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             client = new ManagementClient(new ServiceBusConnectionStringBuilder(ConnectionString));
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task BasicQueueCrudTest()
         {
@@ -93,8 +92,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task BasicTopicCrudTest()
         {
@@ -155,8 +153,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task BasicSubscriptionCrudTest()
         {
@@ -219,8 +216,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task BasicRulesCrudTest()
         {
@@ -295,8 +291,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task GetQueueRuntimeInfoTest()
         {
@@ -341,8 +336,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task GetTopicAndSubscriptionRuntimeInfoTest()
         {
@@ -408,8 +402,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task MessagingEntityNotFoundExceptionTest()
         {
@@ -492,8 +485,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task MessagingEntityAlreadyExistsExceptionTest()
         {
@@ -546,9 +538,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             new object[] {"qq?", true},
             new object[] {"qq#", true},
         };
-        [Theory]
-        [MemberData(nameof(TestData_EntityNameValidationTest))]    
-        [LiveTest]
+        [LiveTheory]
+        [MemberData(nameof(TestData_EntityNameValidationTest))]        
         [DisplayTestMethodName]
         public void EntityNameValidationTest(string entityName, bool isPathSeparatorAllowed)
         {
@@ -566,8 +557,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task ForwardingEntitySetupTest()
         {
@@ -620,8 +610,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]   
-        [LiveTest]
+        [LiveFact]        
         [DisplayTestMethodName]
         public void AuthRulesEqualityCheckTest()
         {
@@ -638,8 +627,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             Assert.Equal(qd, qd2);
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task QueueDescriptionParsedFromResponseEqualityCheckTest()
         {
@@ -662,8 +650,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task TopicDescriptionParsedFromResponseEqualityCheckTest()
         {
@@ -686,8 +673,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task SqlFilterParamsTest()
         {
@@ -729,8 +715,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task CorrelationFilterPropertiesTest()
         {
@@ -761,8 +746,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task GetNamespaceInfoTest()
         {

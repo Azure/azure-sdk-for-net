@@ -13,8 +13,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         async Task SendAndReceiveWithWebSocketsTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>

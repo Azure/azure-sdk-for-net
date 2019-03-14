@@ -30,9 +30,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new object[] { true, true }
         };
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalSendCommitTest(bool partitioned, bool sessionEnabled)
         {
@@ -65,9 +64,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalSendRollbackTest(bool partitioned, bool sessionEnabled)
         {
@@ -101,9 +99,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalCompleteCommitTest(bool partitioned, bool sessionEnabled)
         {
@@ -142,9 +139,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalCompleteRollbackTest(bool partitioned, bool sessionEnabled)
         {
@@ -183,9 +179,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(SessionTestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalSessionDispositionTest(bool partitioned, bool sessionEnabled)
         {
@@ -241,9 +236,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Theory]
+        [LiveTheory]
         [MemberData(nameof(TestPermutations))]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task TransactionalRequestResponseDispositionTest(bool partitioned, bool sessionEnabled)
         {
@@ -296,8 +290,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task TransactionThrowsWhenOperationsOfDifferentPartitionsAreInSameTransaction()
         {
@@ -375,8 +368,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task TransactionCommitWorksAcrossClientsUsingSameConnectionToSameEntity()
         {
@@ -427,8 +419,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task TransactionRollbackWorksAcrossClientsUsingSameConnectionToSameEntity()
         {
@@ -477,8 +468,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task TransactionalSendViaCommitTest()
         {

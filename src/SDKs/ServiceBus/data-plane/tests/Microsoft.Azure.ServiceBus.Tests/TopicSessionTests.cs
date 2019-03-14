@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 // TODO: Commenting the whole file. It will be updated once OnSession() is implemented.
+// TODO: (Pri 2) When uncommented, these tests need to be enhanced to take advantage of the ServiceBusScope and Live category designation.
 /*
 namespace Microsoft.Azure.ServiceBus.UnitTests
 {

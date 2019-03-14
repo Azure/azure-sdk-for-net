@@ -135,8 +135,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.Equal(token, csBuilder.SasToken);
         }
 
-        [Fact]
-        [LiveTest]
+        [LiveFact]
         [DisplayTestMethodName]
         public async Task NonAmqpUriSchemesShouldWorkAsExpected()
         {
