@@ -51,6 +51,11 @@ namespace Microsoft.Azure.Graph.RBAC
         string TenantID { get; set; }
 
         /// <summary>
+        /// The application ID.
+        /// </summary>
+        string ApplicationID { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -70,14 +75,19 @@ namespace Microsoft.Azure.Graph.RBAC
 
 
         /// <summary>
-        /// Gets the IObjectsOperations.
+        /// Gets the ISignedInUserOperations.
         /// </summary>
-        IObjectsOperations Objects { get; }
+        ISignedInUserOperations SignedInUser { get; }
 
         /// <summary>
         /// Gets the IApplicationsOperations.
         /// </summary>
         IApplicationsOperations Applications { get; }
+
+        /// <summary>
+        /// Gets the IDeletedApplicationsOperations.
+        /// </summary>
+        IDeletedApplicationsOperations DeletedApplications { get; }
 
         /// <summary>
         /// Gets the IGroupsOperations.
@@ -90,9 +100,19 @@ namespace Microsoft.Azure.Graph.RBAC
         IServicePrincipalsOperations ServicePrincipals { get; }
 
         /// <summary>
+        /// Gets the IServicePrincipalsByAppIdOperations.
+        /// </summary>
+        IServicePrincipalsByAppIdOperations ServicePrincipalsByAppId { get; }
+
+        /// <summary>
         /// Gets the IUsersOperations.
         /// </summary>
         IUsersOperations Users { get; }
+
+        /// <summary>
+        /// Gets the IObjectsOperations.
+        /// </summary>
+        IObjectsOperations Objects { get; }
 
         /// <summary>
         /// Gets the IDomainsOperations.
@@ -100,9 +120,9 @@ namespace Microsoft.Azure.Graph.RBAC
         IDomainsOperations Domains { get; }
 
         /// <summary>
-        /// Gets the IOAuth2Operations.
+        /// Gets the IOAuth2PermissionGrantOperations.
         /// </summary>
-        IOAuth2Operations OAuth2 { get; }
+        IOAuth2PermissionGrantOperations OAuth2PermissionGrant { get; }
 
     }
 }
