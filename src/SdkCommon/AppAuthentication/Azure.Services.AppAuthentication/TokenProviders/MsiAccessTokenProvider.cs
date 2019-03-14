@@ -3,6 +3,7 @@
 
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Services.AppAuthentication
@@ -22,8 +23,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // HttpClient is intended to be instantiated once and re-used throughout the life of an application. 
         private static readonly HttpClient DefaultHttpClient = new HttpClient();
 
-        // Azure Instance Metadata Service (IDMS) endpoint
-        private const string AzureVmIdmsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+        // Azure Instance Metadata Service (IMDS) endpoint
+        private const string AzureVmImdsEndpoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+
+        // Timeout for Azure IMDS
+        internal const int AzureVmImdsTimeoutInSecs = 2;
+        internal readonly TimeSpan AzureVmImdsTimeout = TimeSpan.FromSeconds(AzureVmImdsTimeoutInSecs);
 
         internal MsiAccessTokenProvider(string managedIdentityClientId = default(string))
         {
@@ -39,12 +44,38 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
         {
+            // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpClient. 
+            HttpClient httpClient = _httpClient ?? DefaultHttpClient;
+
             try
             {
                 // Check if App Services MSI is available. If both these environment variables are set, then it is. 
                 string msiEndpoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
                 string msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
                 var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiSecret);
+
+                // if App Service MSI is not available then Azure VM IMDS must be available, verify with a probe request
+                if (!isAppServicesMsiAvailable)
+                {
+                    HttpRequestMessage imdsProbeRequest = new HttpRequestMessage(HttpMethod.Get, AzureVmImdsEndpoint);
+                    var cancellationTokenSource = new CancellationTokenSource();
+
+                    try
+                    {
+                        cancellationTokenSource.CancelAfter(AzureVmImdsTimeout);
+                        await httpClient.SendAsync(imdsProbeRequest, cancellationTokenSource.Token).ConfigureAwait(false);
+                    }
+                    catch (TaskCanceledException)
+                    {
+                        // request to IMDS timed out, neither Azure VM IMDS nor App Services MSI are available
+                        if (cancellationTokenSource.Token.IsCancellationRequested)
+                        {
+                            throw new HttpRequestException();
+                        }
+
+                        throw;
+                    }
+                }
 
                 // If managed identity is specified, include client ID parameter in request
                 string clientIdParameterName = isAppServicesMsiAvailable ? "clientid" : "client_id";
@@ -55,10 +86,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
                     ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2017-09-01"
-                    : $"{AzureVmIdmsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
-
-                // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpclient. 
-                HttpClient httpClient = _httpClient ?? DefaultHttpClient;
+                    : $"{AzureVmImdsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
 
                 HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
 

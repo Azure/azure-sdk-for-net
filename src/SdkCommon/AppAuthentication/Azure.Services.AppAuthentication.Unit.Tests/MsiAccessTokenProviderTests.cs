@@ -229,6 +229,20 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
         }
+
+        [Fact]
+        private async Task AzureVmImdsTimeoutTest()
+        {
+            MockMsi mockMsi = new MockMsi(MockMsi.MsiTestType.MsiAzureVmTimeout);
+            HttpClient httpClient = new HttpClient(mockMsi);
+            MsiAccessTokenProvider msiAccessTokenProvider = new MsiAccessTokenProvider(httpClient);
+
+            DateTime start = DateTime.Now;
+            var exception = await Assert.ThrowsAsync<AzureServiceTokenProviderException>(() => Task.Run(() => msiAccessTokenProvider.GetAuthResultAsync(Constants.KeyVaultResourceId, Constants.TenantId)));
+            TimeSpan duration = DateTime.Now - start;
+
+            Assert.Contains(AzureServiceTokenProviderException.MsiEndpointNotListening, exception.Message);
+        }
     }
     
 }
