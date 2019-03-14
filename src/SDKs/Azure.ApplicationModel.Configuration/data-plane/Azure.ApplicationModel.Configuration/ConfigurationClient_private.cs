@@ -113,7 +113,7 @@ namespace Azure.ApplicationModel.Configuration
         Uri BuildUriForKvRoute(ConfigurationSetting keyValue)
             => BuildUriForKvRoute(keyValue.Key, new RequestOptions() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
 
-        Uri BuildUriForKvRoute(string key, RequestOptions options)
+        Uri BuildUriForKvRoute(string key, RequestOptions options = default)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute + key;
@@ -205,6 +205,18 @@ namespace Azure.ApplicationModel.Configuration
                 size *= 2;
             }
 
+            return content;
+        }
+
+        static ReadOnlyMemory<byte> Serialize(string value)
+        {
+            ReadOnlyMemory<byte> content = default;
+            int size = 256;
+            byte[] buffer = new byte[size];
+            if (ConfigurationServiceSerializer.TrySerialize(value, buffer, out int written))
+            {
+                content = buffer.AsMemory(0, written);
+            }
             return content;
         }
 

@@ -45,6 +45,26 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        public static bool TrySerialize(string value, byte[] buffer, out int written)
+        {
+            try
+            {
+                var writer = new FixedSizedBufferWriter(buffer);
+                var json = new Utf8JsonWriter(writer);
+                json.WriteStartObject();
+                json.WriteString("value", value);
+                json.WriteEndObject();
+                json.Flush();
+                written = (int)json.BytesWritten;
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                written = 0;
+                return false;
+            }
+        }
+
         private static ConfigurationSetting ReadSetting(JsonElement root)
         {
             // TODO (pri 2): make the deserializer version resilient
