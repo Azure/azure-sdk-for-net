@@ -165,6 +165,18 @@ namespace Microsoft.Azure.Management.Search.Tests
         }
 
         [Fact]
+        public void CanCreateStorageOptimizedL1Service()
+        {
+            Run(() => TestCreateServiceForSku(SkuName.StorageOptimizedL1));
+        }
+
+        [Fact]
+        public void CanCreateStorageOptimizedL2Service()
+        {
+            Run(() => TestCreateServiceForSku(SkuName.StorageOptimizedL2));
+        }
+
+        [Fact]
         public void CanScaleServiceUpAndDown()
         {
             Run(() =>
@@ -453,7 +465,7 @@ namespace Microsoft.Azure.Management.Search.Tests
         {
             return new SearchService()
             {
-                Location = Data.Location,
+                Location = "EastUS",
                 Sku = new Sku() { Name = sku },
                 ReplicaCount = 1,
                 PartitionCount = 1
