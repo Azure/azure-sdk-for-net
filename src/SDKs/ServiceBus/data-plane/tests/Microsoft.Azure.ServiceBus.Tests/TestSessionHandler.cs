@@ -23,7 +23,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         readonly SessionHandlerOptions sessionHandlerOptions;
         ConcurrentDictionary<string, int> sessionMessageMap;
         int totalMessageCount;
-        object syncLock = new object();
 
         public TestSessionHandler(
             ReceiveMode receiveMode,
@@ -61,17 +60,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 await session.CompleteAsync(message.SystemProperties.LockToken);
             }
 
-            lock (syncLock)
-            {
-                if (!this.sessionMessageMap.ContainsKey(session.SessionId))
-                {
-                    this.sessionMessageMap[session.SessionId] = 1;
-                }
-                else
-                {
-                    this.sessionMessageMap[session.SessionId]++;
-                } 
-            }
+            this.sessionMessageMap.AddOrUpdate(session.SessionId, 1, (_, current) => current + 1);
         }
 
         public async Task VerifyRun()
