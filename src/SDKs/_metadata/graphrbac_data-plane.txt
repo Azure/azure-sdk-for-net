@@ -1,14 +1,11 @@
-﻿Installing AutoRest version: latest
-AutoRest installed successfully.
-Commencing code generation
-Generating CSharp code
-Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/graphrbac/data-plane/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\Users\grlin\dev\azure-sdk-for-net\src\SDKs
-2018-09-28 17:43:53 UTC
-Azure-rest-api-specs repository information
-GitHub fork: Azure
+2019-03-14 20:51:52 UTC
+
+1) azure-rest-api-specs repository information
+GitHub user: Azure
 Branch:      master
-Commit:      cd84ac9a998b7d39721b8c2675762e3df9bea628
-AutoRest information
+Commit:      8aa15b5d44d5487f810a4b992d2e7569abd84341
+
+2) AutoRest information
 Requested version: latest
-Bootstrapper version:    autorest@2.0.4283
+Bootstrapper version:    C:\Users\ankushb\AppData\Roaming\npm `-- autorest@2.0.4283  
+Latest installed version:    
