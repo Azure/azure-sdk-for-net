@@ -365,7 +365,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        [Test]
+        //[Test]
         public async Task UpdateIfNoMatch()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
