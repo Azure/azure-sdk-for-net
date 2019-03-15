@@ -30,8 +30,20 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Initializes a new instance of the EndpointHealthData class.
         /// </summary>
         /// <param name="endpointId">Id of the endpoint</param>
-        /// <param name="healthStatus">Health status. Possible values include:
-        /// 'unknown', 'healthy', 'unhealthy', 'dead'</param>
+        /// <param name="healthStatus">Health statuses have following meanings.
+        /// The 'healthy' status shows that the endpoint is accepting messages
+        /// as expected. The 'unhealthy' status shows that the endpoint is not
+        /// accepting messages as expected and IoT Hub is retrying to send data
+        /// to this endpoint. The status of an unhealthy endpoint will be
+        /// updated to healthy when IoT Hub has established an eventually
+        /// consistent state of health. The 'dead' status shows that the
+        /// endpoint is not accepting messages, after IoT Hub retried sending
+        /// messages for the retrial period. See IoT Hub metrics to identify
+        /// errors and monitor issues with endpoints. The 'unknown' status
+        /// shows that the IoT Hub has not established a connection with the
+        /// endpoint. No messages have been delivered to or rejected from this
+        /// endpoint. Possible values include: 'unknown', 'healthy',
+        /// 'unhealthy', 'dead'</param>
         public EndpointHealthData(string endpointId = default(string), string healthStatus = default(string))
         {
             EndpointId = endpointId;
@@ -51,8 +63,19 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string EndpointId { get; set; }
 
         /// <summary>
-        /// Gets or sets health status. Possible values include: 'unknown',
-        /// 'healthy', 'unhealthy', 'dead'
+        /// Gets or sets health statuses have following meanings. The 'healthy'
+        /// status shows that the endpoint is accepting messages as expected.
+        /// The 'unhealthy' status shows that the endpoint is not accepting
+        /// messages as expected and IoT Hub is retrying to send data to this
+        /// endpoint. The status of an unhealthy endpoint will be updated to
+        /// healthy when IoT Hub has established an eventually consistent state
+        /// of health. The 'dead' status shows that the endpoint is not
+        /// accepting messages, after IoT Hub retried sending messages for the
+        /// retrial period. See IoT Hub metrics to identify errors and monitor
+        /// issues with endpoints. The 'unknown' status shows that the IoT Hub
+        /// has not established a connection with the endpoint. No messages
+        /// have been delivered to or rejected from this endpoint. Possible
+        /// values include: 'unknown', 'healthy', 'unhealthy', 'dead'
         /// </summary>
         [JsonProperty(PropertyName = "healthStatus")]
         public string HealthStatus { get; set; }
