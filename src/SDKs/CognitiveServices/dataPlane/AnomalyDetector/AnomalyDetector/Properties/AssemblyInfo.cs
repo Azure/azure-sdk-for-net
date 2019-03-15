@@ -4,12 +4,11 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure AnomalyDetector Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure AnomalyDetector management functions for managing the Microsoft Azure AnomalyDetector service.")]
+[assembly: AssemblyTitle("Microsoft Cognitive Services AnomalyDetector SDK")]
+[assembly: AssemblyDescription("Provides access to the Microsoft Cognitive Services AnomalyDetector APIs.")]
 
-[assembly: AssemblyVersion("0.9.0")]
-[assembly: AssemblyFileVersion("0.9.0")]
-
+[assembly: AssemblyVersion("0.8.0.0")]
+[assembly: AssemblyFileVersion("0.8.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
