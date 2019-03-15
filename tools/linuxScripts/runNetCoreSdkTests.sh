@@ -45,7 +45,7 @@ restoreBuildAzStack() {
                 testProj=($childDir/*.Tests/*.csproj)
                 if [ -f $testProj ]; then
                     printf "Test ------ $testProj for framework $netcore20\n"
-                    dotnet build $testProj -f $netcore20
+                    #dotnet build $testProj -f $netcore20
                     #dotnet test $testProj -f $netcore20
                 fi
             fi
@@ -76,7 +76,7 @@ restoreBuildRepo() {
                         printf "$skipRp\n"
                         if [ "$skipTest" == "false" ]; then
                             printf "Test ------ $tp for framework $netcore20\n"
-                            dotnet build $tp -f $netcore20
+                            #dotnet build $tp -f $netcore20
                             #dotnet test $tp -f $netcore20
                         fi
                     done
