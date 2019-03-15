@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.Reservations
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Capacity", "GetAppliedReservationList", "2018-06-01"),
-                new Tuple<string, string, string>("Capacity", "GetCatalog", "2018-06-01"),
-                new Tuple<string, string, string>("Capacity", "Operation", "2018-06-01"),
-                new Tuple<string, string, string>("Capacity", "Reservation", "2018-06-01"),
-                new Tuple<string, string, string>("Capacity", "ReservationOrder", "2018-06-01"),
+                new Tuple<string, string, string>("Capacity", "GetAppliedReservationList", "2019-04-01"),
+                new Tuple<string, string, string>("Capacity", "GetCatalog", "2019-04-01"),
+                new Tuple<string, string, string>("Capacity", "Operation", "2019-04-01"),
+                new Tuple<string, string, string>("Capacity", "Reservation", "2019-04-01"),
+                new Tuple<string, string, string>("Capacity", "ReservationOrder", "2019-04-01"),
               }.AsEnumerable();
           }
       }

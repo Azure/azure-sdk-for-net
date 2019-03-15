@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Reservations
             Reservation = new ReservationOperations(this);
             Operation = new OperationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-06-01";
+            ApiVersion = "2019-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
