@@ -226,7 +226,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async ResponseTask<ConfigurationSetting> GetAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
+        public ResponseTask<ConfigurationSetting> GetAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
@@ -234,7 +234,6 @@ namespace Azure.ApplicationModel.Configuration
 
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Get, uri);
-
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, message);
@@ -243,12 +242,19 @@ namespace Azure.ApplicationModel.Configuration
 
                 AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
 
+                ResponseTask<ConfigurationSetting> task = GetCoreAsync(message);
+                task.Response = message.Response;
+                return task;
+            }
+            
+            async ResponseTask<ConfigurationSetting> GetCoreAsync(HttpMessage message)
+            {
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
-
                 var response = message.Response;
+
                 if (response.Status == 200) {
                     var setting = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation);
-                    return await ResponseTask.FromResult(setting, response);
+                    return setting;
                 }
                 else throw new RequestFailedException(response);
             }

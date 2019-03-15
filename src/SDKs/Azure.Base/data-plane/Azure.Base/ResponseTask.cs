@@ -9,22 +9,21 @@ using System.Threading.Tasks;
 namespace Azure
 {
     [AsyncMethodBuilder(typeof(AsyncResponseTaskMethodBuilder<>))]
-    public readonly struct ResponseTask<T>
+    public struct ResponseTask<T>
     {
         private readonly Task<T> _parent;
-        private readonly Response _response;
 
         public ResponseTask(Task<T> parent, Response response)
         {
             _parent = parent;
-            _response = response;
+            Response = response;
         }
 
         public ResponseTask(Task<T> parent) : this(parent, default) { }
                
         public T Result => _parent.Result;
 
-        public Response Response => _response;
+        public Response Response { get; set; }
 
         public TaskAwaiter<T> GetAwaiter() => _parent.GetAwaiter();
 
@@ -34,10 +33,16 @@ namespace Azure
         public static implicit operator Task<T>(ResponseTask<T> t) => t._parent;
     }
 
-    public struct ResponseTask
+    public static class ResponseTask
     {
         public static ResponseTask<T> FromResult<T>(T result, Response response)
             => new ResponseTask<T>(Task.FromResult(result), response);
+
+        public static async ResponseTask<T> Await<T>(this ResponseTask<T> task)
+        {
+            var result = await task;
+            return await FromResult(result, task.Response);
+        }
     }
 }
 

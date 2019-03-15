@@ -440,6 +440,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
+        async ResponseTask<ConfigurationSetting> Foo(ConfigurationClient client)
+        {
+            await Task.Delay(100);
+            return await ResponseTask.Await(client.GetAsync(""));
+        }
+
         [Test]
         public async Task Get()
         {

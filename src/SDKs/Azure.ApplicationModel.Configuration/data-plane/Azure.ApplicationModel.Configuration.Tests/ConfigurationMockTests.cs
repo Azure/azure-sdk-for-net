@@ -71,6 +71,21 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
+        public async Task GetHeaders()
+        {
+            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
+            var (service, pool) = CreateTestService(transport);
+
+            ResponseTask<ConfigurationSetting> task = service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
+            ConfigurationSetting setting = await task;
+            Response response = task.Response;
+            Assert.True(task.Response.TryGetHeader("Content-Length", out string len));
+            Assert.AreEqual("207", len);
+            Assert.AreEqual(s_testSetting, setting);
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
         public void GetNotFound()
         {
             var transport = new GetMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
