@@ -86,5 +86,10 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </summary>
         IManagedClustersOperations ManagedClusters { get; }
 
+        /// <summary>
+        /// Gets the IAgentPoolsOperations.
+        /// </summary>
+        IAgentPoolsOperations AgentPools { get; }
+
     }
 }

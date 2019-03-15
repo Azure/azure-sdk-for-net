@@ -59,13 +59,15 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// containing agent pool nodes.</param>
         /// <param name="enableRBAC">Whether to enable Kubernetes Role-Based
         /// Access Control.</param>
+        /// <param name="enablePodSecurityPolicy">(PREVIEW) Whether to enable
+        /// Kubernetes Pod security policy.</param>
         /// <param name="networkProfile">Profile of network
         /// configuration.</param>
         /// <param name="aadProfile">Profile of Azure Active Directory
         /// configuration.</param>
-        /// <param name="apiServerAuthorizedIPRanges">Authorized IP Ranges to
-        /// kubernetes API server.</param>
-        public ManagedCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string kubernetesVersion = default(string), string dnsPrefix = default(string), string fqdn = default(string), IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<ManagedClusterAgentPoolProfile>), ContainerServiceLinuxProfile linuxProfile = default(ContainerServiceLinuxProfile), ManagedClusterServicePrincipalProfile servicePrincipalProfile = default(ManagedClusterServicePrincipalProfile), IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default(IDictionary<string, ManagedClusterAddonProfile>), string nodeResourceGroup = default(string), bool? enableRBAC = default(bool?), ContainerServiceNetworkProfile networkProfile = default(ContainerServiceNetworkProfile), ManagedClusterAADProfile aadProfile = default(ManagedClusterAADProfile), IList<string> apiServerAuthorizedIPRanges = default(IList<string>))
+        /// <param name="apiServerAuthorizedIPRanges">(PREVIEW) Authorized IP
+        /// Ranges to kubernetes API server.</param>
+        public ManagedCluster(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string kubernetesVersion = default(string), string dnsPrefix = default(string), string fqdn = default(string), IList<ManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<ManagedClusterAgentPoolProfile>), ContainerServiceLinuxProfile linuxProfile = default(ContainerServiceLinuxProfile), ManagedClusterServicePrincipalProfile servicePrincipalProfile = default(ManagedClusterServicePrincipalProfile), IDictionary<string, ManagedClusterAddonProfile> addonProfiles = default(IDictionary<string, ManagedClusterAddonProfile>), string nodeResourceGroup = default(string), bool? enableRBAC = default(bool?), bool? enablePodSecurityPolicy = default(bool?), ContainerServiceNetworkProfile networkProfile = default(ContainerServiceNetworkProfile), ManagedClusterAADProfile aadProfile = default(ManagedClusterAADProfile), IList<string> apiServerAuthorizedIPRanges = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -78,6 +80,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             AddonProfiles = addonProfiles;
             NodeResourceGroup = nodeResourceGroup;
             EnableRBAC = enableRBAC;
+            EnablePodSecurityPolicy = enablePodSecurityPolicy;
             NetworkProfile = networkProfile;
             AadProfile = aadProfile;
             ApiServerAuthorizedIPRanges = apiServerAuthorizedIPRanges;
@@ -156,6 +159,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public bool? EnableRBAC { get; set; }
 
         /// <summary>
+        /// Gets or sets (PREVIEW) Whether to enable Kubernetes Pod security
+        /// policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enablePodSecurityPolicy")]
+        public bool? EnablePodSecurityPolicy { get; set; }
+
+        /// <summary>
         /// Gets or sets profile of network configuration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkProfile")]
@@ -168,7 +178,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public ManagedClusterAADProfile AadProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets authorized IP Ranges to kubernetes API server.
+        /// Gets or sets (PREVIEW) Authorized IP Ranges to kubernetes API
+        /// server.
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiServerAuthorizedIPRanges")]
         public IList<string> ApiServerAuthorizedIPRanges { get; set; }

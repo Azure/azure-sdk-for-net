@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
     public static class NetworkPolicy
     {
         public const string Calico = "calico";
+        public const string Azure = "azure";
     }
 }
