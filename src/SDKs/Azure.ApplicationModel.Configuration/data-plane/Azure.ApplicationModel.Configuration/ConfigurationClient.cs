@@ -226,7 +226,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
+        public async ResponseTask<ConfigurationSetting> GetAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
@@ -247,7 +247,10 @@ namespace Azure.ApplicationModel.Configuration
 
                 var response = message.Response;
                 if (response.Status == 200) {
-                    return await CreateResponse(response, cancellation);
+                    var r = await CreateResponse(response, cancellation);
+                    var rt = new ResponseTask<ConfigurationSetting>(Task.FromResult(r.Result));
+                    rt.Response = response;
+                    return await rt;
                 }
                 else throw new RequestFailedException(response);
             }

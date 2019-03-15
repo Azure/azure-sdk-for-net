@@ -58,8 +58,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 var responseGet = await service.GetAsync(batchKey);
-                key = responseGet.Result.Value;
-                responseGet.Dispose();
+                key = responseGet.Value;
             }
             catch
             {
@@ -456,13 +455,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 await service.SetAsync(testSettingNoLabel);
                 // Test
-                Response<ConfigurationSetting> response = await service.GetAsync(key: testSettingNoLabel.Key, options: default, CancellationToken.None);
+                ResponseTask<ConfigurationSetting> task = service.GetAsync(key: testSettingNoLabel.Key, options: default, CancellationToken.None);
+                await task;
+                Assert.True(task.Response.TryGetHeader("ETag", out string etagHeader));
 
-                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
-
-                ConfigurationSetting setting = response.Result;
+                ConfigurationSetting setting = task.Result;
                 Assert.AreEqual(testSettingNoLabel, setting);
-                response.Dispose();
             }
             finally
             {
@@ -504,13 +502,13 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(s_testSetting);
 
                 // Test
-                Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, options: s_testSetting.Label, CancellationToken.None);
+                ResponseTask<ConfigurationSetting> task = service.GetAsync(key: s_testSetting.Key, options: s_testSetting.Label, CancellationToken.None);
+                await task;
 
-                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+                Assert.True(task.Response.TryGetHeader("ETag", out string etagHeader));
 
-                ConfigurationSetting responseSetting = response.Result;
+                ConfigurationSetting responseSetting = task.Result;
                 Assert.AreEqual(s_testSetting, responseSetting);
-                response.Dispose();
             }
             finally
             {

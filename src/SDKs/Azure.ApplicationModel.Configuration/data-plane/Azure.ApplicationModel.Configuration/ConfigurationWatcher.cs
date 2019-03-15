@@ -84,12 +84,8 @@ namespace Azure.ApplicationModel.Configuration
         {
             try {
                 for (int i = 0; i < _keysToWatch.Count; i++) {
-
-                    var response = await _client.GetAsync(_keysToWatch[i], null, cancellationToken).ConfigureAwait(false);
-                    if (response.Status == 200) {
-                        var setting = response.Result;
-                        _lastPolled[setting.Key] = setting;
-                    }
+                    var setting = await _client.GetAsync(_keysToWatch[i], null, cancellationToken).ConfigureAwait(false);
+                    _lastPolled[setting.Key] = setting;
                     // TODO (pri 2): what should we do when the request fails?
                 }
             }
@@ -104,24 +100,22 @@ namespace Azure.ApplicationModel.Configuration
             var callback = SettingChanged;
             if (callback == null) return;
 
-            var tasks = new Task<Response<ConfigurationSetting>>[_keysToWatch.Count];
+            var tasks = new Task<ConfigurationSetting>[_keysToWatch.Count];
             for (int i = 0; i < _keysToWatch.Count; i++) {
                 tasks[i] = _client.GetAsync(_keysToWatch[i], null, cancellationToken);
             }
             await Task.WhenAll(tasks);
 
             foreach(var task in tasks) {
-                var response = task.Result;
-                if (response.Status == 200) {
-                    ConfigurationSetting current = response.Result;
-                    _lastPolled.TryGetValue(current.Key, out var previous);
-                    if (HasChanged(current, previous)) {
-                        if (current == null) _lastPolled.Remove(current.Key);
-                        else _lastPolled[current.Key] = current;
-                        var e = new SettingChangedEventArgs(previous, current);
-                        callback(this, e); // TODO (pri 2): should this be synchronized to the UI thread?
-                    }
+                var current = task.Result;
+                _lastPolled.TryGetValue(current.Key, out var previous);
+                if (HasChanged(current, previous)) {
+                    if (current == null) _lastPolled.Remove(current.Key);
+                    else _lastPolled[current.Key] = current;
+                    var e = new SettingChangedEventArgs(previous, current);
+                    callback(this, e); // TODO (pri 2): should this be synchronized to the UI thread?
                 }
+
                 // TODO (pri 2): should we return for some error status codes?
             }
         }
