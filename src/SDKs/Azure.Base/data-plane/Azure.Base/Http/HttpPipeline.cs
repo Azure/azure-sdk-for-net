@@ -35,6 +35,9 @@ namespace Azure.Base.Http
             _pipeline = policies;
         }
 
+        public static string ApplicationId { get; set; }
+        public static bool DisableTelemetry { get; set; } = false;
+
         public HttpMessage CreateMessage(CancellationToken cancellation)
             => Transport.CreateMessage(_services, cancellation);
 

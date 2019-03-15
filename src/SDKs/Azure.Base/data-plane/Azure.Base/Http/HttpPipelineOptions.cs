@@ -28,10 +28,6 @@ namespace Azure.Base.Http
 
         public HttpPipelinePolicy RetryPolicy { get; set; }
 
-        public bool DisableTelemetry { get; set; } = false;
-
-        public string ApplicationId { get; set; }
-
         public HttpPipelineOptions(HttpPipelineTransport transport)
             => _transport = transport;
 
@@ -65,7 +61,7 @@ namespace Azure.Base.Http
         int PolicyCount {
             get {
                 int numberOfPolicies = 1; // HttpPipelineTransport
-                if (DisableTelemetry == false) numberOfPolicies++; // AddHeadersPolicy
+                if (HttpPipeline.DisableTelemetry == false) numberOfPolicies++; // AddHeadersPolicy
 
                 if (LoggingPolicy != null) numberOfPolicies++;
                 if (RetryPolicy != null) numberOfPolicies++;
@@ -82,11 +78,11 @@ namespace Azure.Base.Http
             HttpPipelinePolicy[] policies = new HttpPipelinePolicy[PolicyCount];
             int index = 0;
 
-            if (DisableTelemetry == false) {
+            if (HttpPipeline.DisableTelemetry == false) {
                 var addHeadersPolicy = new AddHeadersPolicy();
                 policies[index++] = addHeadersPolicy;
 
-                var ua = HttpHeader.Common.CreateUserAgent(componentName, componentVersion, ApplicationId);
+                var ua = HttpHeader.Common.CreateUserAgent(componentName, componentVersion, HttpPipeline.ApplicationId);
                 addHeadersPolicy.AddHeader(ua);
             }
             if (_perCallPolicies != null) {

@@ -211,8 +211,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void ConfiguringTheClient()
         {
+            HttpPipeline.ApplicationId = "test_application";
+
             var options = ConfigurationClient.CreateDefaultPipelineOptions();
-            options.ApplicationId = "test_application";
             options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
             options.RetryPolicy = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
