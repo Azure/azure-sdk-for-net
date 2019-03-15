@@ -53,9 +53,11 @@ namespace Microsoft.Azure.Management.Subscription
         /// <summary>
         /// Creates an Azure subscription
         /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will be
-        /// billed.
+        /// <param name='billingAccountName'>
+        /// The name of the commerce root billing account.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The name of the invoice section.
         /// </param>
         /// <param name='body'>
         /// The subscription creation parameters.
@@ -66,19 +68,21 @@ namespace Microsoft.Azure.Management.Subscription
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> CreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders> _response = await BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(enrollmentAccountName, body, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders> _response = await BeginCreateSubscriptionWithHttpMessagesAsync(billingAccountName, invoiceSectionName, body, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Creates an Azure subscription
         /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will be
-        /// billed.
+        /// <param name='billingAccountName'>
+        /// The name of the commerce root billing account.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The name of the invoice section.
         /// </param>
         /// <param name='body'>
         /// The subscription creation parameters.
@@ -104,17 +108,25 @@ namespace Microsoft.Azure.Management.Subscription
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> BeginCreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (enrollmentAccountName == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "enrollmentAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+            }
+            if (invoiceSectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
             }
             if (body == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
-            string apiVersion = "2018-03-01-preview";
+            if (body != null)
+            {
+                body.Validate();
+            }
+            string apiVersion = "2018-11-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -122,16 +134,18 @@ namespace Microsoft.Azure.Management.Subscription
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("enrollmentAccountName", enrollmentAccountName);
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateSubscriptionInEnrollmentAccount", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateSubscription", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountName}/providers/Microsoft.Subscription/createSubscription").ToString();
-            _url = _url.Replace("{enrollmentAccountName}", System.Uri.EscapeDataString(enrollmentAccountName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Subscription/createSubscription").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -231,7 +245,7 @@ namespace Microsoft.Azure.Management.Subscription
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>();
+            var _result = new AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -258,7 +272,7 @@ namespace Microsoft.Azure.Management.Subscription
             }
             try
             {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SubscriptionFactoryCreateSubscriptionHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
             }
             catch (JsonException ex)
             {
