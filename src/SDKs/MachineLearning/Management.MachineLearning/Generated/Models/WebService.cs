@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Instance of an Patched Azure ML web service resource.
+    /// Instance of an Azure ML web service resource.
     /// </summary>
     public partial class WebService : Resource
     {
