@@ -267,7 +267,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 string value = "my_value2";
-                ConfigurationSetting responseSetting = await service.UpdateAsync(key, value, CancellationToken.None);
+                ConfigurationSetting responseSetting = await service.UpdateAsync(key, value);
 
                 Assert.AreEqual(key, responseSetting.Key);
                 Assert.AreEqual(value, responseSetting.Value);
@@ -292,7 +292,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 string value = "my_value";
                 var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
-                    await service.UpdateAsync(key, value, CancellationToken.None);
+                    await service.UpdateAsync(key, value);
                 });
 
                 var response = exception.Response;

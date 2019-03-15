@@ -88,10 +88,10 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await AddAsync(new ConfigurationSetting(key, value));
+            return await AddAsync(new ConfigurationSetting(key, value, label));
         }
 
         public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
@@ -127,10 +127,10 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await SetAsync(new ConfigurationSetting(key, value));
+            return await SetAsync(new ConfigurationSetting(key, value, label));
         }
 
         public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
@@ -172,10 +172,10 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await UpdateAsync(new ConfigurationSetting(key, value));
+            return await UpdateAsync(new ConfigurationSetting(key, value, label));
         }
 
         public async Task<Response> DeleteAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
