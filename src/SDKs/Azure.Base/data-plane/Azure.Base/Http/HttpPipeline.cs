@@ -36,7 +36,7 @@ namespace Azure.Base.Http
         }
 
         public static string ApplicationId { get; set; }
-        public static bool DisableTelemetry { get; set; } = false;
+        public static bool IsTelemetryEnabled { get; set; } = true;
 
         public HttpMessage CreateMessage(CancellationToken cancellation)
             => Transport.CreateMessage(_services, cancellation);

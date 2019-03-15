@@ -16,7 +16,6 @@ namespace Azure.ApplicationModel.Configuration.Samples
         [Test]
         public async Task ConfiguringRetries()
         {
-
             var retry = RetryPolicy.CreateFixed(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
