@@ -44,6 +44,17 @@ jobs:
       vmImage: 'vs2017-win2016'
 
     steps:
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: '3.6'
+          
+      - script: |
+          pip install setuptools wheel 
+          pip install doc-warden
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
+        displayName: 'Verify Readmes'
+      
       - task: DownloadBuildArtifacts@0
         displayName: 'Download Build Artifacts'
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
