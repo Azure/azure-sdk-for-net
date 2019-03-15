@@ -11,6 +11,23 @@ namespace Azure.Base.Http.Pipeline
     public abstract class HttpPipelineOption
     {
         public abstract void Register(HttpPipelineOptions options);
+
+        public static HttpPipelineOption CreateService(object service, Type serviceType)
+            => new Service(service, serviceType);
+
+        sealed class Service : HttpPipelineOption
+        {
+            object _service;
+            Type _serviceType;
+
+            public Service(object service, Type serviceType)
+            {
+                _service = service;
+                _serviceType = serviceType;
+            }
+            public override void Register(HttpPipelineOptions options)
+                => options.AddService(_service, _serviceType);
+        }
     }
 
     public abstract class HttpPipelinePolicy : HttpPipelineOption

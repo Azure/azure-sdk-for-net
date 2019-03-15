@@ -35,13 +35,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            HttpPipelineOptions options = ConfigurationClient.CreateDefaultPipelineOptions();
             var testPool = new TestPool<byte>();
-            options.AddService(testPool, typeof(ArrayPool<byte>));
+            var pool = HttpPipelineOption.CreateService(testPool, typeof(ArrayPool<byte>));
 
-            options.Transport = transport;
-
-            var service = new ConfigurationClient(connectionString, options);
+            var service = new ConfigurationClient(connectionString, transport, pool);
 
             return (service, testPool);
         }
@@ -213,12 +210,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             HttpPipeline.ApplicationId = "test_application";
 
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
-            options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
-            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            options.RetryPolicy = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
+            var pool = HttpPipelineOption.CreateService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
+            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
+            var retry = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
 
-            var client = new ConfigurationClient(connectionString, options);
+            var client = new ConfigurationClient(connectionString, transport, retry, pool);
 
             var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {

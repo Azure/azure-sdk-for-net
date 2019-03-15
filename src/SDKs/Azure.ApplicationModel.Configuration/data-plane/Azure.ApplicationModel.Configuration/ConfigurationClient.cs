@@ -30,7 +30,7 @@ namespace Azure.ApplicationModel.Configuration
         readonly byte[] _secret;
         HttpPipeline _pipeline;
 
-        public static HttpPipelineOptions CreateDefaultPipelineOptions()
+        static HttpPipelineOptions CreateDefaultPipelineOptions()
         {
             var options = new HttpPipelineOptions(HttpClientTransport.Shared);
             options.LoggingPolicy = LoggingPolicy.Shared;
@@ -39,7 +39,7 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         public ConfigurationClient(string connectionString)
-            : this(connectionString, CreateDefaultPipelineOptions())
+            : this(connectionString, Array.Empty<HttpPipelineOption>())
         {
         }
 
@@ -54,15 +54,6 @@ namespace Azure.ApplicationModel.Configuration
             }
 
             _pipeline = builder.Build(ComponentName, ComponentVersion);
-            ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
-        }
-
-        public ConfigurationClient(string connectionString, HttpPipelineOptions options)
-        {
-            if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
-            if (options == null) throw new ArgumentNullException(nameof(options));
-
-            _pipeline = options.Build(ComponentName, ComponentVersion);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
