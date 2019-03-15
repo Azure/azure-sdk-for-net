@@ -42,8 +42,6 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// reservation was created.</param>
         /// <param name="expiryDate">This is the date when the Reservation will
         /// expire.</param>
-        /// <param name="originalQuantity">Total Quantity of the SKUs purchased
-        /// in the Reservation.</param>
         /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
         /// <param name="provisioningState">Current state of the
         /// reservation.</param>
@@ -116,8 +114,6 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public System.DateTime? ExpiryDate { get; set; }
 
         /// <summary>
-        /// Gets or sets total Quantity of the SKUs purchased in the
-        /// Reservation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.originalQuantity")]
         public int? OriginalQuantity { get; set; }
