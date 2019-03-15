@@ -8,11 +8,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure Managed Services Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Microsoft Azure Maanged Services.")]
 
-[assembly: AssemblyVersion("0.0.9.0")]
-[assembly: AssemblyFileVersion("0.0.9.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Azure .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
