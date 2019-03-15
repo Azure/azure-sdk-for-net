@@ -54,7 +54,7 @@ namespace Azure.ApplicationModel.Configuration
             if (root.TryGetProperty("label", out var labelValue)) setting.Label = labelValue.GetString();
             if (root.TryGetProperty("content_type", out var contentValue)) setting.ContentType = contentValue.GetString();
             if (root.TryGetProperty("locked", out var lockedValue)) setting.Locked = lockedValue.GetBoolean();
-            if (root.TryGetProperty("etag", out var eTagValue)) setting.ETag = eTagValue.GetString();
+            if (root.TryGetProperty("etag", out var eTagValue)) setting.ETag = new ETag(eTagValue.GetString());
             if (root.TryGetProperty("last_modified", out var lastModifiedValue)) setting.LastModified = DateTimeOffset.Parse(lastModifiedValue.GetString());
             if (root.TryGetProperty("tags", out var tagsValue))
             {
