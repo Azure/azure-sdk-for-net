@@ -14,9 +14,29 @@ namespace Microsoft.Azure.Services.AppAuthentication
     public class SqlAppAuthenticationProvider : SqlAuthenticationProvider
     {
         /// <summary>
+        /// The principal used to acquire token. This will be of type "User" for local development scenarios, and "App" when client credentials flow is used. 
+        /// </summary>
+        public Principal PrincipalUsed { get; private set; }
+
+        /// <summary>
+        /// If the userId parameter is a valid GUID, return an token provider connection string to use a user-assigned managed identity
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        internal static string GetConnectionStringByUserId(string userId)
+        {
+            if (Guid.TryParse(userId, out Guid unused))
+            {
+                return $"RunAs=App;AppId={userId}";
+            }
+
+            return default(string);
+        }
+
+        /// <summary>
         /// Acquires an access token for SQL using AzureServiceTokenProvider with the given SQL authentication parameters.
         /// </summary>
-        /// <param name="parameters"></param>
+        /// <param name="parameters">The parameters needed in order to obtain a SQL access token</param>
         /// <returns></returns>
         public override async Task<SqlAuthenticationToken> AcquireTokenAsync(SqlAuthenticationParameters parameters)
         {
@@ -29,9 +49,10 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// </summary>
         /// <param name="parameters">The parameters needed in order to obtain a SQL access token</param>
         /// <returns></returns>
-        public async Task<SqlAuthenticationToken> AcquireTokenAsync(SqlAppAuthenticationParameters parameters)
+        internal async Task<SqlAuthenticationToken> AcquireTokenAsync(SqlAppAuthenticationParameters parameters)
         {
             string azureAdInstance = UriHelper.GetAzureAdInstanceByAuthority(parameters.Authority);
+            string connectionString = GetConnectionStringByUserId(parameters.UserId);
             string tenantId = UriHelper.GetTenantByAuthority(parameters.Authority);
 
             if (string.IsNullOrEmpty(azureAdInstance))
@@ -43,10 +64,11 @@ namespace Microsoft.Azure.Services.AppAuthentication
             {
                 throw new ArgumentException("A resource must be specified in SqlAuthenticationParameters");
             }
-
-            AzureServiceTokenProvider tokenProvider = new AzureServiceTokenProvider(azureAdInstance: azureAdInstance);
+            
+            AzureServiceTokenProvider tokenProvider = new AzureServiceTokenProvider(connectionString, azureAdInstance);
 
             var authResult = await tokenProvider.GetAuthenticationResultAsync(parameters.Resource, tenantId).ConfigureAwait(false);
+            PrincipalUsed = tokenProvider.PrincipalUsed;
 
             return new SqlAuthenticationToken(authResult.AccessToken, authResult.ExpiresOn);
         }

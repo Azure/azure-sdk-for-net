@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
 
 #if net472
         /// <summary>
-        /// One must be logged in using Azure CLI and set AppAuthenticationTestSqlDbEndpoint to a SQL Azure database endpoint before running this test.
+        /// One must be logged in using Azure CLI and set AppAuthenticationTestSqlServerEndpoint to a SQL Azure database endpoint before running this test.
         /// The test validates that it can open a connection with the SQL database using SqlAzureAuthProvider, which implements the SqlAuthenticationProvider interface.
         /// </summary>
         /// <returns></returns>
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
         {
             // register SqlAzureAppAuthProvider and create the connection string
             SqlAuthenticationProvider.SetProvider(SqlAuthenticationMethod.ActiveDirectoryInteractive, new SqlAppAuthenticationProvider());
-            string connectionString = $"server={Environment.GetEnvironmentVariable(Constants.TestSqlDbEndpoint)};Authentication=Active Directory Interactive;UID=";
+            string connectionString = $"server={Environment.GetEnvironmentVariable(Constants.TestSqlServerEndpoint)};Authentication=Active Directory Interactive;UID=";
 
             // verify the connection can be successfully opened
             var sqlConnection = new SqlConnection(connectionString);

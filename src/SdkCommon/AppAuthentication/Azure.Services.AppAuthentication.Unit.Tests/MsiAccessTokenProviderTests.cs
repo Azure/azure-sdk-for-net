@@ -22,6 +22,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
         private async Task GetTokenUsingManagedIdentityAzureVm(bool specifyUserAssignedManagedIdentity)
         {
             string expectedAppId;
@@ -52,18 +55,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             // Check if the principalused and type are as expected. 
             Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, expectedAppId, expiresOn: authResult.ExpiresOn);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingMsiAzureVm()
-        {
-            await GetTokenUsingManagedIdentityAzureVm(specifyUserAssignedManagedIdentity: false);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingUserAssignedManagedIdentityAzureVm()
-        {
-            await GetTokenUsingManagedIdentityAzureVm(specifyUserAssignedManagedIdentity: true);
         }
 
         /// <summary>
@@ -104,6 +95,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Contains(Constants.CannotBeNullError, exception.ToString());
         }
 
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
         public async Task GetTokenUsingManagedIdentityAppServices(bool specifyUserAssignedManagedIdentity)
         {
             // Setup the environment variables that App Service MSI would setup. 
@@ -141,18 +135,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Environment.SetEnvironmentVariable(Constants.MsiAppServiceSecretEnv, null);
 
             Validator.ValidateToken(authResult.AccessToken, msiAccessTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, expectedAppId, expiresOn: authResult.ExpiresOn);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingMsiAppServices()
-        {
-            await GetTokenUsingManagedIdentityAppServices(specifyUserAssignedManagedIdentity: false);
-        }
-
-        [Fact]
-        public async Task GetTokenUsingUserAssignedManagedIdentityAppServices()
-        {
-            await GetTokenUsingManagedIdentityAppServices(specifyUserAssignedManagedIdentity: true);
         }
 
         /// <summary>
