@@ -46,7 +46,10 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// request time.</param>
         /// <param name="apply">OData apply expression for
         /// aggregations.</param>
-        public QueryOptions(int? top = default(int?), string filter = default(string), string orderBy = default(string), string select = default(string), System.DateTime? fromProperty = default(System.DateTime?), System.DateTime? to = default(System.DateTime?), string apply = default(string))
+        /// <param name="expand">The $expand query parameter. For example, to
+        /// expand policyEvaluationDetails, use
+        /// $expand=policyEvaluationDetails</param>
+        public QueryOptions(int? top = default(int?), string filter = default(string), string orderBy = default(string), string select = default(string), System.DateTime? fromProperty = default(System.DateTime?), System.DateTime? to = default(System.DateTime?), string apply = default(string), string expand = default(string))
         {
             Top = top;
             Filter = filter;
@@ -55,6 +58,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             FromProperty = fromProperty;
             To = to;
             Apply = apply;
+            Expand = expand;
             CustomInit();
         }
 
@@ -112,6 +116,13 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public string Apply { get; set; }
+
+        /// <summary>
+        /// Gets or sets the $expand query parameter. For example, to expand
+        /// policyEvaluationDetails, use $expand=policyEvaluationDetails
+        /// </summary>
+        [Newtonsoft.Json.JsonIgnore]
+        public string Expand { get; set; }
 
     }
 }
