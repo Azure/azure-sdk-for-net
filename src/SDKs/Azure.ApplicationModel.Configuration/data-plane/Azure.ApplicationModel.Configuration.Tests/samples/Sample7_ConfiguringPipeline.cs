@@ -59,6 +59,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
                 message.AddHeader("User-Agent", "ConfiguraingPipelineSample");
                 await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
+
+            public override void Register(HttpPipelineOptions options)
+                => options.AddPerCallPolicy(this);
         }
 
         class CustomLogPolicy : HttpPipelinePolicy
@@ -68,6 +71,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
                 Console.WriteLine(message.ToString());
                 await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
+
+            public override void Register(HttpPipelineOptions options)
+                => options.LoggingPolicy = this;
         }
     }
 }

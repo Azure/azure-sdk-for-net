@@ -8,7 +8,12 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public abstract class HttpPipelinePolicy
+    public abstract class HttpPipelineOption
+    {
+        public abstract void Register(HttpPipelineOptions options);
+    }
+
+    public abstract class HttpPipelinePolicy : HttpPipelineOption
     {
         public abstract Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 

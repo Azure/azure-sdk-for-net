@@ -19,5 +19,8 @@ namespace Azure.Base.Http.Pipeline
             foreach (var header in _headersToAdd) message.AddHeader(header);
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
+
+        public override void Register(HttpPipelineOptions options)
+            => options.AddPerCallPolicy(this);
     }
 }

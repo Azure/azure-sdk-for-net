@@ -42,5 +42,8 @@ namespace Azure.Base.Http.Pipeline
                 Log.ResponseDelay(message, elapsedMilliseconds);
             }
         }
+
+        public override void Register(HttpPipelineOptions options)
+            => options.LoggingPolicy = this;
     }
 }

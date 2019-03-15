@@ -23,5 +23,8 @@ namespace Azure.Base.Http.Pipeline
         }
 
         protected abstract bool ShouldRetry(HttpMessage message, int attempted, out TimeSpan delay);
+
+        public override void Register(HttpPipelineOptions options)
+            => options.RetryPolicy = this;
     }
 }

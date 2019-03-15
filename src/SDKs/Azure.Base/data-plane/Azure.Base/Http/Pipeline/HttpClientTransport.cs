@@ -41,6 +41,9 @@ namespace Azure.Base.Http.Pipeline
         protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
             => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
 
+        public override void Register(HttpPipelineOptions options)
+            => options.Transport = this;
+
         sealed class Message : HttpMessage
         {
             string _contentTypeHeaderValue;

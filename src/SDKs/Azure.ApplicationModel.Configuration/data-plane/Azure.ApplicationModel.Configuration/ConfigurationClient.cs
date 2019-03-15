@@ -43,6 +43,20 @@ namespace Azure.ApplicationModel.Configuration
         {
         }
 
+        public ConfigurationClient(string connectionString, params HttpPipelineOption[] options)
+        {
+            if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
+            if (options == null) throw new ArgumentNullException(nameof(options));
+
+            var builder = CreateDefaultPipelineOptions();
+            foreach(var option in options) {
+                option.Register(builder);
+            }
+
+            _pipeline = builder.Build(ComponentName, ComponentVersion);
+            ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
+        }
+
         public ConfigurationClient(string connectionString, HttpPipelineOptions options)
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));

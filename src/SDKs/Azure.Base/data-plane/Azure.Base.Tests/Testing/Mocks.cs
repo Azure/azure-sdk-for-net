@@ -73,6 +73,9 @@ namespace Azure.Base.Testing
             return Task.CompletedTask;
         }
 
+        public override void Register(HttpPipelineOptions options)
+            => options.Transport = this;
+
         class Message : HttpMessage
         {
             string _uri;
