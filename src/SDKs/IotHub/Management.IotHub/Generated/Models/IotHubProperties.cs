@@ -35,13 +35,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// can use to secure a connection to the IoT hub.</param>
         /// <param name="ipFilterRules">The IP filter rules.</param>
         /// <param name="provisioningState">The provisioning state.</param>
-        /// <param name="state">Thehub state state.</param>
+        /// <param name="state">The hub state.</param>
         /// <param name="hostName">The name of the host.</param>
         /// <param name="eventHubEndpoints">The Event Hub-compatible endpoint
-        /// properties. The possible keys to this dictionary are events and
-        /// operationsMonitoringEvents. Both of these keys have to be present
-        /// in the dictionary while making create or update calls for the IoT
-        /// hub.</param>
+        /// properties. The only possible keys to this dictionary is events.
+        /// This key has to be present in the dictionary while making create or
+        /// update calls for the IoT hub.</param>
         /// <param name="storageEndpoints">The list of Azure Storage endpoints
         /// where you can upload files. Currently you can configure only one
         /// Azure Storage account and that MUST have its key as $default.
@@ -54,12 +53,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="enableFileUploadNotifications">If True, file upload
         /// notifications are enabled.</param>
         /// <param name="comments">IoT hub comments.</param>
-        /// <param name="deviceStreams">The device streams properties of
-        /// iothub.</param>
         /// <param name="features">The capabilities and features enabled for
         /// the IoT hub. Possible values include: 'None',
         /// 'DeviceManagement'</param>
-        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), OperationsMonitoringProperties operationsMonitoringProperties = default(OperationsMonitoringProperties), IotHubPropertiesDeviceStreams deviceStreams = default(IotHubPropertiesDeviceStreams), string features = default(string))
+        public IotHubProperties(IList<SharedAccessSignatureAuthorizationRule> authorizationPolicies = default(IList<SharedAccessSignatureAuthorizationRule>), IList<IpFilterRule> ipFilterRules = default(IList<IpFilterRule>), string provisioningState = default(string), string state = default(string), string hostName = default(string), IDictionary<string, EventHubProperties> eventHubEndpoints = default(IDictionary<string, EventHubProperties>), RoutingProperties routing = default(RoutingProperties), IDictionary<string, StorageEndpointProperties> storageEndpoints = default(IDictionary<string, StorageEndpointProperties>), IDictionary<string, MessagingEndpointProperties> messagingEndpoints = default(IDictionary<string, MessagingEndpointProperties>), bool? enableFileUploadNotifications = default(bool?), CloudToDeviceProperties cloudToDevice = default(CloudToDeviceProperties), string comments = default(string), string features = default(string))
         {
             AuthorizationPolicies = authorizationPolicies;
             IpFilterRules = ipFilterRules;
@@ -73,8 +70,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
             EnableFileUploadNotifications = enableFileUploadNotifications;
             CloudToDevice = cloudToDevice;
             Comments = comments;
-            OperationsMonitoringProperties = operationsMonitoringProperties;
-            DeviceStreams = deviceStreams;
             Features = features;
             CustomInit();
         }
@@ -104,7 +99,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets thehub state state.
+        /// Gets the hub state.
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; private set; }
@@ -116,11 +111,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string HostName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Event Hub-compatible endpoint properties. The
-        /// possible keys to this dictionary are events and
-        /// operationsMonitoringEvents. Both of these keys have to be present
-        /// in the dictionary while making create or update calls for the IoT
-        /// hub.
+        /// Gets or sets the Event Hub-compatible endpoint properties. The only
+        /// possible keys to this dictionary is events. This key has to be
+        /// present in the dictionary while making create or update calls for
+        /// the IoT hub.
         /// </summary>
         [JsonProperty(PropertyName = "eventHubEndpoints")]
         public IDictionary<string, EventHubProperties> EventHubEndpoints { get; set; }
@@ -165,17 +159,6 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// </summary>
         [JsonProperty(PropertyName = "comments")]
         public string Comments { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "operationsMonitoringProperties")]
-        public OperationsMonitoringProperties OperationsMonitoringProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the device streams properties of iothub.
-        /// </summary>
-        [JsonProperty(PropertyName = "deviceStreams")]
-        public IotHubPropertiesDeviceStreams DeviceStreams { get; set; }
 
         /// <summary>
         /// Gets or sets the capabilities and features enabled for the IoT hub.

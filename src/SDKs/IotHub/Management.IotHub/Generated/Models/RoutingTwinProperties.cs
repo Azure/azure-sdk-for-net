@@ -26,12 +26,12 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Initializes a new instance of the RoutingTwinProperties class.
         /// </summary>
-        /// <param name="desired">Twin desired properties</param>
-        /// <param name="reported">Twin desired properties</param>
-        public RoutingTwinProperties(object desired = default(object), object reported = default(object))
+        /// <param name="desiredProperties">Twin desired properties</param>
+        /// <param name="reportedProperties">Twin desired properties</param>
+        public RoutingTwinProperties(object desiredProperties = default(object), object reportedProperties = default(object))
         {
-            Desired = desired;
-            Reported = reported;
+            DesiredProperties = desiredProperties;
+            ReportedProperties = reportedProperties;
             CustomInit();
         }
 
@@ -43,14 +43,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets or sets twin desired properties
         /// </summary>
-        [JsonProperty(PropertyName = "desired")]
-        public object Desired { get; set; }
+        [JsonProperty(PropertyName = "desiredProperties")]
+        public object DesiredProperties { get; set; }
 
         /// <summary>
         /// Gets or sets twin desired properties
         /// </summary>
-        [JsonProperty(PropertyName = "reported")]
-        public object Reported { get; set; }
+        [JsonProperty(PropertyName = "reportedProperties")]
+        public object ReportedProperties { get; set; }
 
     }
 }
