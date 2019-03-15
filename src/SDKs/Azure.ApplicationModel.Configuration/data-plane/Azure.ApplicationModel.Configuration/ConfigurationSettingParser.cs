@@ -44,7 +44,7 @@ namespace Azure.ApplicationModel.Configuration
                 return false;
             }
         }
-
+        
         private static ConfigurationSetting ReadSetting(JsonElement root)
         {
             // TODO (pri 2): make the deserializer version resilient

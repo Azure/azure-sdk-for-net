@@ -46,7 +46,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
         {
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N")); ;
+            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
             
             /*
              * The configuration store contains a KV with the Key
@@ -146,7 +146,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-        public async Task Set()
+        public async Task SetSetting()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
@@ -154,13 +154,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             try
             {
-                Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting);
+                ConfigurationSetting setting = await service.SetAsync(s_testSetting);
 
-                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
-
-                ConfigurationSetting setting = response.Result;
                 Assert.AreEqual(s_testSetting, setting);
-                response.Dispose();
             }
             finally
             {
@@ -169,7 +165,30 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-        public async Task Add()
+        public async Task SetKeyValue()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+
+            try
+            {
+                string value = "my_value";
+                ConfigurationSetting setting = await service.SetAsync(key, value);
+
+                Assert.AreEqual(key, setting.Key);
+                Assert.AreEqual(value, setting.Value);
+            }
+            finally
+            {
+                await service.DeleteAsync(key);
+            }
+        }
+
+        [Test]
+        public async Task AddExistingSetting()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
@@ -177,17 +196,111 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             try
             {
-                Response<ConfigurationSetting> response = await service.AddAsync(s_testSetting);
+                ConfigurationSetting setting = await service.AddAsync(s_testSetting);
 
-                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.AddAsync(setting);
+                });
 
-                ConfigurationSetting setting = response.Result;
-                Assert.AreEqual(s_testSetting, setting);
-                response.Dispose();
+                var response = exception.Response;
+                Assert.AreEqual(412, response.Status);
             }
             finally
             {
                 await service.DeleteAsync(key: s_testSetting.Key, options: s_testSetting.Label, CancellationToken.None);
+            }
+        }
+
+        [Test]
+        public async Task AddSetting()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            try
+            {
+                ConfigurationSetting setting = await service.AddAsync(s_testSetting);
+
+                Assert.AreEqual(s_testSetting, setting);
+            }
+            finally
+            {
+                await service.DeleteAsync(key: s_testSetting.Key, options: s_testSetting.Label, CancellationToken.None);
+            }
+        }
+
+        [Test]
+        public async Task AddKeyValue()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+
+            try
+            {
+                string value = "my_value";
+                ConfigurationSetting setting = await service.AddAsync(key, value);
+
+                Assert.AreEqual(key, setting.Key);
+                Assert.AreEqual(value, setting.Value);
+            }
+            finally
+            {
+                await service.DeleteAsync(key);
+            }
+        }
+
+        [Test]
+        public async Task UpdateKeyValue()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            await service.SetAsync(key, "my_value");
+
+            try
+            {
+                string value = "my_value2";
+                ConfigurationSetting responseSetting = await service.UpdateAsync(key, value);
+
+                Assert.AreEqual(key, responseSetting.Key);
+                Assert.AreEqual(value, responseSetting.Value);
+            }
+            finally
+            {
+                await service.DeleteAsync(key);
+            }
+        }
+
+        [Test]
+        public async Task UpdateNoExistingKeyValue()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            
+            try
+            {
+                string value = "my_value";
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                {
+                    await service.UpdateAsync(key, value);
+                });
+
+                var response = exception.Response;
+                Assert.AreEqual(412, response.Status);
+            }
+            finally
+            {
+                await service.DeleteAsync(key);
             }
         }
 
@@ -255,7 +368,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         }
 
-        [Test]
+        //[Test]
         public async Task UpdateIfNoMatch()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
