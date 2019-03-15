@@ -12,17 +12,11 @@ namespace Microsoft.Azure.Management.Media.Models
 {
 
     /// <summary>
-    /// Defines values for TrackPropertyType.
+    /// Defines values for AnalysisResolution.
     /// </summary>
-    public static class TrackPropertyType
+    public static class AnalysisResolution
     {
-        /// <summary>
-        /// Unknown track property
-        /// </summary>
-        public const string Unknown = "Unknown";
-        /// <summary>
-        /// Track FourCC
-        /// </summary>
-        public const string FourCC = "FourCC";
+        public const string SourceResolution = "SourceResolution";
+        public const string StandardDefinition = "StandardDefinition";
     }
 }

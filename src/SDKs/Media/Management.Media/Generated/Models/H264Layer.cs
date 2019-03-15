@@ -31,6 +31,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the H264Layer class.
         /// </summary>
+        /// <param name="bitrate">The average bitrate in bits per second at
+        /// which to encode the input video when generating this layer. This is
+        /// a required field.</param>
         /// <param name="width">The width of the output video for this layer.
         /// The value can be absolute (in pixels) or relative (in percentage).
         /// For example 50% means the output video has half as many pixels in
@@ -42,9 +45,6 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="label">The alphanumeric label for this layer, which
         /// can be used in multiplexing different video and audio layers, or in
         /// naming the output file.</param>
-        /// <param name="bitrate">The average bitrate in bits per second at
-        /// which to encode the input video when generating this layer. This is
-        /// a required field.</param>
         /// <param name="maxBitrate">The maximum bitrate (in bits per second),
         /// at which the VBV buffer should be assumed to refill. If not
         /// specified, defaults to the same value as bitrate.</param>
@@ -85,8 +85,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// layer. If not specified, the encoder chooses the mode that is
         /// appropriate for the profile and level. Possible values include:
         /// 'Cabac', 'Cavlc'</param>
-        public H264Layer(string width = default(string), string height = default(string), string label = default(string), int? bitrate = default(int?), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?), H264VideoProfile? profile = default(H264VideoProfile?), string level = default(string), System.TimeSpan? bufferWindow = default(System.TimeSpan?), int? referenceFrames = default(int?), EntropyMode? entropyMode = default(EntropyMode?))
-            : base(width, height, label, bitrate, maxBitrate, bFrames, frameRate, slices, adaptiveBFrame)
+        public H264Layer(int bitrate, string width = default(string), string height = default(string), string label = default(string), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?), string profile = default(string), string level = default(string), System.TimeSpan? bufferWindow = default(System.TimeSpan?), int? referenceFrames = default(int?), string entropyMode = default(string))
+            : base(bitrate, width, height, label, maxBitrate, bFrames, frameRate, slices, adaptiveBFrame)
         {
             Profile = profile;
             Level = level;
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Auto', 'Baseline', 'Main', 'High', 'High422', 'High444'
         /// </summary>
         [JsonProperty(PropertyName = "profile")]
-        public H264VideoProfile? Profile { get; set; }
+        public string Profile { get; set; }
 
         /// <summary>
         /// Gets or sets which level of the H.264 standard should be used when
@@ -141,7 +141,17 @@ namespace Microsoft.Azure.Management.Media.Models
         /// profile and level. Possible values include: 'Cabac', 'Cavlc'
         /// </summary>
         [JsonProperty(PropertyName = "entropyMode")]
-        public EntropyMode? EntropyMode { get; set; }
+        public string EntropyMode { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

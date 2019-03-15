@@ -61,7 +61,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Locator.</param>
         /// <param name="alternativeMediaId">Alternative Media ID of this
         /// Streaming Locator</param>
-        public StreamingLocator(string assetName, string streamingPolicyName, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.Guid? streamingLocatorId = default(System.Guid?), string defaultContentKeyPolicyName = default(string), IList<StreamingLocatorContentKey> contentKeys = default(IList<StreamingLocatorContentKey>), string alternativeMediaId = default(string))
+        /// <param name="filters">A list of asset or account filters which
+        /// apply to this streaming locator</param>
+        public StreamingLocator(string assetName, string streamingPolicyName, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), System.Guid? streamingLocatorId = default(System.Guid?), string defaultContentKeyPolicyName = default(string), IList<StreamingLocatorContentKey> contentKeys = default(IList<StreamingLocatorContentKey>), string alternativeMediaId = default(string), IList<string> filters = default(IList<string>))
             : base(id, name, type)
         {
             AssetName = assetName;
@@ -73,6 +75,7 @@ namespace Microsoft.Azure.Management.Media.Models
             DefaultContentKeyPolicyName = defaultContentKeyPolicyName;
             ContentKeys = contentKeys;
             AlternativeMediaId = alternativeMediaId;
+            Filters = filters;
             CustomInit();
         }
 
@@ -142,6 +145,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.alternativeMediaId")]
         public string AlternativeMediaId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of asset or account filters which apply to this
+        /// streaming locator
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.filters")]
+        public IList<string> Filters { get; set; }
 
         /// <summary>
         /// Validate the object.

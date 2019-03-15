@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="outputFiles">The list of output files to produce.
         /// Each entry in the list is a set of audio and video layer labels to
         /// be muxed together .</param>
-        public TransportStreamFormat(string filenamePattern = default(string), IList<OutputFile> outputFiles = default(IList<OutputFile>))
+        public TransportStreamFormat(string filenamePattern, IList<OutputFile> outputFiles = default(IList<OutputFile>))
             : base(filenamePattern, outputFiles)
         {
             CustomInit();
@@ -56,5 +56,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         partial void CustomInit();
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }
