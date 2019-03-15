@@ -247,10 +247,8 @@ namespace Azure.ApplicationModel.Configuration
 
                 var response = message.Response;
                 if (response.Status == 200) {
-                    var r = await CreateResponse(response, cancellation);
-                    var rt = new ResponseTask<ConfigurationSetting>(Task.FromResult(r.Result));
-                    rt.Response = response;
-                    return await rt;
+                    var setting = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation);
+                    return await ResponseTask.FromResult(setting, response);
                 }
                 else throw new RequestFailedException(response);
             }

@@ -12,17 +12,33 @@ namespace Azure
     public struct ResponseTask<T>
     {
         private readonly Task<T> _parent;
+
         public ResponseTask(Task<T> parent)
         {
             _parent = parent;
             Response = default;
         }
+
+        public ResponseTask(Task<T> parent, Response response)
+        {
+            _parent = parent;
+            Response = response;
+        }
+
         public T Result => _parent.Result;
         public Response Response { get; set; }
         public TaskAwaiter<T> GetAwaiter() => _parent.GetAwaiter();
         public ConfiguredTaskAwaitable<T> ConfigureAwait(bool continueOnCapturedContext) => _parent.ConfigureAwait(continueOnCapturedContext);
 
         public static implicit operator Task<T>(ResponseTask<T> t) => t._parent;
+
+
+    }
+
+    public struct ResponseTask
+    {
+        public static ResponseTask<T> FromResult<T>(T result, Response response)
+            => new ResponseTask<T>(Task.FromResult(result), response);
     }
 }
 
