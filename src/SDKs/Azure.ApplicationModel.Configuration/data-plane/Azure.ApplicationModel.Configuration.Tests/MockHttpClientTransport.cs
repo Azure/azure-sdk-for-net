@@ -213,11 +213,31 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             if (responseContent == null) return null;
 
-            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            string etagValue = JsonConvert.SerializeObject(responseContent.ETag.ToString());
-            json = json.Replace("etag\":{}", $"etag\":{etagValue}");
-            json = json.Replace("contenttype", "content_type");
-            return json.Replace("lastmodified", "last_modified");
+            StringBuilder requestContent = new StringBuilder();
+            requestContent.AppendFormat("{{\"key\":\"{0}\",", responseContent.Key);
+            requestContent.AppendFormat("\"label\":\"{0}\",", responseContent.Label);
+            requestContent.AppendFormat("\"value\":\"{0}\",", responseContent.Value);
+            requestContent.AppendFormat("\"content_type\":\"{0}\",", responseContent.ContentType);
+            requestContent.AppendFormat("\"etag\":\"{0}\",", responseContent.ETag.ToString());
+            requestContent.AppendFormat("\"last_modified\":\"{0}\",", responseContent.LastModified.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK"));
+            requestContent.AppendFormat("\"locked\":{0},", responseContent.Locked);
+            requestContent.AppendFormat("\"tags\":{{");
+
+            bool first = true;
+            foreach (var tag in responseContent.Tags)
+            {
+                if (first)
+                {
+                    requestContent.AppendFormat("\"{0}\":\"{1}\"", tag.Key, tag.Value);
+                    first = false;
+                }
+                else
+                {
+                    requestContent.AppendFormat(",\"{0}\":\"{1}\"", tag.Key, tag.Value);
+                }
+            }
+            requestContent.Append("}}");
+            return requestContent.ToString().ToLowerInvariant();
         }
 
         protected string GetExtraUriParameters(RequestOptions filter)
