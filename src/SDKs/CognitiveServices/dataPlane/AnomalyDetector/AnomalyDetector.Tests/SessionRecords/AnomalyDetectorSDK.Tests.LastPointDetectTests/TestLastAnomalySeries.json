@@ -24,7 +24,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Mon, 25 Feb 2019 08:29:55 GMT"
+          "Fri, 15 Mar 2019 16:42:35 GMT"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.AnomalyDetector.DataPoints=1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -33,16 +36,16 @@
           "nosniff"
         ],
         "apim-request-id": [
-          "52744e43-5495-4aba-8bcc-b279341eb615"
+          "b4251dbe-dc8a-44c5-a54e-c66f488713ef"
         ],
         "Content-Length": [
-          "221"
+          "205"
         ],
         "Content-Type": [
-          "application/json; charset=UTF-8"
+          "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"expectedValue\": 0.76570691656218981,\r\n  \"upperMargin\": 0.007657069165621898,\r\n  \"lowerMargin\": 0.007657069165621898,\r\n  \"isNegativeAnomaly\": true,\r\n  \"isPositiveAnomaly\": false,\r\n  \"isAnomaly\": true,\r\n  \"period\": 0,\r\n  \"suggestedWindow\": 13\r\n}",
+      "ResponseBody": "{\r\n  \"expectedValue\": 0.99999999999999989,\r\n  \"isAnomaly\": true,\r\n  \"isNegativeAnomaly\": true,\r\n  \"isPositiveAnomaly\": false,\r\n  \"lowerMargin\": 0.049999999999999989,\r\n  \"period\": 0,\r\n  \"suggestedWindow\": 13,\r\n  \"upperMargin\": 0.049999999999999989\r\n}",
       "StatusCode": 200
     },
     {
@@ -69,7 +72,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Mon, 25 Feb 2019 08:29:55 GMT"
+          "Fri, 15 Mar 2019 16:42:36 GMT"
+        ],
+        "CSP-Billing-Usage": [
+          "CognitiveServices.AnomalyDetector.DataPoints=1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -78,16 +84,16 @@
           "nosniff"
         ],
         "apim-request-id": [
-          "af8f4014-e54e-4d58-b945-fd21f5eefbc3"
+          "5979268b-8fbb-4be0-b216-caf387edc9d7"
         ],
         "Content-Length": [
-          "222"
+          "158"
         ],
         "Content-Type": [
-          "application/json; charset=UTF-8"
+          "application/json"
         ]
       },
-      "ResponseBody": "{\r\n  \"expectedValue\": 0.23429308343781038,\r\n  \"upperMargin\": 0.0023429308343781039,\r\n  \"lowerMargin\": 0.0023429308343781039,\r\n  \"isNegativeAnomaly\": false,\r\n  \"isPositiveAnomaly\": true,\r\n  \"isAnomaly\": true,\r\n  \"period\": 0,\r\n  \"suggestedWindow\": 13\r\n}",
+      "ResponseBody": "{\r\n  \"expectedValue\": 0.0,\r\n  \"isAnomaly\": true,\r\n  \"isNegativeAnomaly\": false,\r\n  \"isPositiveAnomaly\": true,\r\n  \"lowerMargin\": 0.0,\r\n  \"period\": 0,\r\n  \"suggestedWindow\": 13,\r\n  \"upperMargin\": 0.0\r\n}",
       "StatusCode": 200
     }
   ],
