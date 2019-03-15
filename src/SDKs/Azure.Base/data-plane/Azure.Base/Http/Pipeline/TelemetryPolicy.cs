@@ -2,21 +2,29 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public class AddHeadersPolicy : HttpPipelinePolicy
+    public class TelemetryPolicy : HttpPipelinePolicy
     {
-        List<HttpHeader> _headersToAdd = new List<HttpHeader>();
+        HttpHeader _header;
 
-        public void AddHeader(HttpHeader header)
-            => _headersToAdd.Add(header);
+        public TelemetryPolicy(string componentName, string componentVersion)
+            : this(componentName, componentVersion, ApplicationId)
+        { }
+
+        public TelemetryPolicy(string componentName, string componentVersion, string applicationId)
+            => _header = HttpHeader.Common.CreateUserAgent(componentName, componentVersion, applicationId);
+
+        public static string ApplicationId { get; set; }
+        public static bool IsTelemetryEnabled { get; set; } = true;
 
         public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            foreach (var header in _headersToAdd) message.AddHeader(header);
+            if (IsTelemetryEnabled) {
+                message.AddHeader(_header);
+            }
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
 

@@ -60,8 +60,7 @@ namespace Azure.Base.Http
 
         int PolicyCount {
             get {
-                int numberOfPolicies = 1; // HttpPipelineTransport
-                if (HttpPipeline.IsTelemetryEnabled == true) numberOfPolicies++; // AddHeadersPolicy
+                int numberOfPolicies = 2; // HttpPipelineTransport, TelemetryPolicy
 
                 if (LoggingPolicy != null) numberOfPolicies++;
                 if (RetryPolicy != null) numberOfPolicies++;
@@ -78,13 +77,8 @@ namespace Azure.Base.Http
             HttpPipelinePolicy[] policies = new HttpPipelinePolicy[PolicyCount];
             int index = 0;
 
-            if (HttpPipeline.IsTelemetryEnabled == true) {
-                var addHeadersPolicy = new AddHeadersPolicy();
-                policies[index++] = addHeadersPolicy;
-
-                var ua = HttpHeader.Common.CreateUserAgent(componentName, componentVersion, HttpPipeline.ApplicationId);
-                addHeadersPolicy.AddHeader(ua);
-            }
+            policies[index++] = new TelemetryPolicy(componentName, componentVersion);
+        
             if (_perCallPolicies != null) {
                 foreach (var policy in _perCallPolicies) {
                     policies[index++] = policy;

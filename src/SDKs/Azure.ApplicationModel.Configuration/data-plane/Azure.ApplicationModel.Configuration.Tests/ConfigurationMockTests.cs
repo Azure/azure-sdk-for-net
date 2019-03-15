@@ -208,7 +208,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void ConfiguringTheClient()
         {
-            HttpPipeline.ApplicationId = "test_application";
+            TelemetryPolicy.ApplicationId = "test_application";
 
             var pool = HttpPipelineOption.CreateService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
             var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
