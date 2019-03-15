@@ -46,7 +46,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
         {
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N")); ;
+            string value = string.Concat("key-", Guid.NewGuid().ToString("N")); ;
             
             /*
              * The configuration store contains a KV with the Key
@@ -57,19 +57,19 @@ namespace Azure.ApplicationModel.Configuration.Tests
             
             try
             {
-                var responseGet = await service.GetAsync(batchKey);
-                key = responseGet.Value;
+                ConfigurationSetting setting = await service.GetAsync(batchKey);
+                value = setting.Value;
             }
             catch
             {
                 for (int i = 0; i < expectedEvents; i++)
                 {
-                    await service.AddAsync(new ConfigurationSetting(key, "test_value", $"{i.ToString()}"));
+                    await service.AddAsync(new ConfigurationSetting(value, "test_value", $"{i.ToString()}"));
                 }
 
-                await service.SetAsync(new ConfigurationSetting(batchKey, key));
+                await service.SetAsync(new ConfigurationSetting(batchKey, value));
             }
-            return key;
+            return value;
         }
 
         [Test]
@@ -456,10 +456,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(testSettingNoLabel);
                 // Test
                 ResponseTask<ConfigurationSetting> task = service.GetAsync(key: testSettingNoLabel.Key, options: default, CancellationToken.None);
-                await task;
-                Assert.True(task.Response.TryGetHeader("ETag", out string etagHeader));
+                ConfigurationSetting setting= await task;
 
-                ConfigurationSetting setting = task.Result;
+                Assert.True(task.Response.TryGetHeader("ETag", out string etagHeader));
                 Assert.AreEqual(testSettingNoLabel, setting);
             }
             finally
