@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Initializes a new instance of the AzureManagedRuleSet class.
         /// </summary>
         /// <param name="priority">Describes priority of the rule</param>
-        /// <param name="version">defines version of the ruleset</param>
+        /// <param name="version">defines version of the rule set</param>
         /// <param name="ruleGroupOverrides">List of azure managed provider
         /// override configuration (optional)</param>
         public AzureManagedRuleSet(int? priority = default(int?), int? version = default(int?), IList<AzureManagedOverrideRuleGroup> ruleGroupOverrides = default(IList<AzureManagedOverrideRuleGroup>))

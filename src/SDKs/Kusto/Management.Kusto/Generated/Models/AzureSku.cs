@@ -14,6 +14,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Azure SKU definition.
+    /// </summary>
     public partial class AzureSku
     {
         /// <summary>
@@ -27,8 +30,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the AzureSku class.
         /// </summary>
-        /// <param name="name">SKU name. Possible values include: 'KC8',
-        /// 'KC16', 'KS8', 'KS16', 'D13_v2', 'D14_v2', 'L8', 'L16'</param>
+        /// <param name="name">SKU name. Possible values include: 'D13_v2',
+        /// 'D14_v2', 'L8', 'L16', 'D11_v2', 'D12_v2', 'L4'</param>
         /// <param name="capacity">SKU capacity.</param>
         public AzureSku(string name, int? capacity = default(int?))
         {
@@ -50,8 +53,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets SKU name. Possible values include: 'KC8', 'KC16',
-        /// 'KS8', 'KS16', 'D13_v2', 'D14_v2', 'L8', 'L16'
+        /// Gets or sets SKU name. Possible values include: 'D13_v2', 'D14_v2',
+        /// 'L8', 'L16', 'D11_v2', 'D12_v2', 'L4'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

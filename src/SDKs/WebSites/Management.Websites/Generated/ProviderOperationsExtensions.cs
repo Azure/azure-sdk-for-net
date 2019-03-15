@@ -31,7 +31,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
-            /// Possible values include: 'Windows', 'Linux'
+            /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
+            /// 'LinuxFunctions'
             /// </param>
             public static IPage<ApplicationStack> GetAvailableStacks(this IProviderOperations operations, string osTypeSelected = default(string))
             {
@@ -48,7 +49,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
-            /// Possible values include: 'Windows', 'Linux'
+            /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
+            /// 'LinuxFunctions'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -109,7 +111,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
-            /// Possible values include: 'Windows', 'Linux'
+            /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
+            /// 'LinuxFunctions'
             /// </param>
             public static IPage<ApplicationStack> GetAvailableStacksOnPrem(this IProviderOperations operations, string osTypeSelected = default(string))
             {
@@ -126,7 +129,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// The operations group for this extension method.
             /// </param>
             /// <param name='osTypeSelected'>
-            /// Possible values include: 'Windows', 'Linux'
+            /// Possible values include: 'Windows', 'Linux', 'WindowsFunctions',
+            /// 'LinuxFunctions'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

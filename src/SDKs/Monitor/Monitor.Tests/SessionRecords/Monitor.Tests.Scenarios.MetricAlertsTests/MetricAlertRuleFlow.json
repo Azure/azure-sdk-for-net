@@ -7,105 +7,93 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c29d9fb2-7f4c-433d-8356-b91755c4f8f6"
+          "0314a5f8-d67c-4857-8878-213d2b25292d"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
           "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Jun 2018 06:41:54 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "11991"
         ],
         "x-ms-request-id": [
-          "a9693c63-880a-4db1-bbda-2d245a78f35f"
+          "6ed16848-6270-41f4-893e-7b9a504e7101"
         ],
         "x-ms-correlation-request-id": [
-          "a9693c63-880a-4db1-bbda-2d245a78f35f"
+          "6ed16848-6270-41f4-893e-7b9a504e7101"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180605T064154Z:a9693c63-880a-4db1-bbda-2d245a78f35f"
+          "SOUTHINDIA:20190208T064301Z:6ed16848-6270-41f4-893e-7b9a504e7101"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Fri, 08 Feb 2019 06:43:00 GMT"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 204
     },
     {
       "RequestUri": "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Insights/metricAlerts/MetricAlertSDKTestRule1?api-version=2018-03-01",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODA0MzAwMTgtMjRlZS00YjI4LWE3YmQtZmIyM2I1YTIyMWQ2L3Jlc291cmNlR3JvdXBzL1NhbmpheWNoUmVzb3VyY2VHcm91cC9wcm92aWRlcnMvTWljcm9zb2Z0Lkluc2lnaHRzL21ldHJpY0FsZXJ0cy9NZXRyaWNBbGVydFNES1Rlc3RSdWxlMT9hcGktdmVyc2lvbj0yMDE4LTAzLTAx",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"criteria\": {\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\",\r\n      \"allOf\": [\r\n        {\r\n          \"name\": \"metric1\",\r\n          \"metricName\": \"Transactions\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"operator\": \"GreaterThan\",\r\n          \"timeAggregation\": \"Total\",\r\n          \"threshold\": 100.0,\r\n          \"dimensions\": []\r\n        }\r\n      ]\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"odata.type\": \"Action\",\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"global\"\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"criteria\": {\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\",\r\n      \"allOf\": [\r\n        {\r\n          \"name\": \"metric1\",\r\n          \"metricName\": \"Transactions\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"operator\": \"GreaterThan\",\r\n          \"timeAggregation\": \"Total\",\r\n          \"threshold\": 100.0,\r\n          \"dimensions\": []\r\n        }\r\n      ]\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  },\r\n  \"location\": \"global\"\r\n}",
       "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "a44f5952-ff10-482a-9732-bb9d2c0bcf12"
+        ],
+        "Accept-Language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.21.0.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1103"
-        ],
-        "x-ms-client-request-id": [
-          "521c4833-4830-4a13-b6c1-0825c00c4826"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.20.0.0"
+          "1070"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"global\",\r\n  \"type\": \"Microsoft.Insights/metricAlerts\",\r\n  \"name\": \"MetricAlertSDKTestRule1\",\r\n  \"id\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Insights/metricAlerts/MetricAlertSDKTestRule1\",\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"templateType\": 8,\r\n    \"criteria\": {\r\n      \"allOf\": [\r\n        {\r\n          \"name\": \"metric1\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"metricName\": \"Transactions\",\r\n          \"dimensions\": [],\r\n          \"operator\": \"GreaterThan\",\r\n          \"threshold\": 100.0,\r\n          \"timeAggregation\": \"Total\"\r\n        }\r\n      ],\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\"\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Jun 2018 06:42:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
+        "x-ms-request-id": [
+          "4f5fc82b-2e39-4149-bec0-eddaac173090"
         ],
         "Server": [
           "Microsoft-IIS/10.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "5f317981-dc22-46ee-a3d5-143bcaa5be5b"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -114,21 +102,34 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "5f317981-dc22-46ee-a3d5-143bcaa5be5b"
+          "4f5fc82b-2e39-4149-bec0-eddaac173090"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180605T064217Z:5f317981-dc22-46ee-a3d5-143bcaa5be5b"
+          "SOUTHINDIA:20190208T064313Z:4f5fc82b-2e39-4149-bec0-eddaac173090"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Fri, 08 Feb 2019 06:43:12 GMT"
+        ],
+        "Content-Length": [
+          "1345"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"location\": \"global\",\r\n  \"type\": \"Microsoft.Insights/metricAlerts\",\r\n  \"name\": \"MetricAlertSDKTestRule1\",\r\n  \"id\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Insights/metricAlerts/MetricAlertSDKTestRule1\",\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"templateType\": 8,\r\n    \"criteria\": {\r\n      \"allOf\": [\r\n        {\r\n          \"threshold\": 100.0,\r\n          \"name\": \"metric1\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"metricName\": \"Transactions\",\r\n          \"dimensions\": [],\r\n          \"operator\": \"GreaterThan\",\r\n          \"timeAggregation\": \"Total\"\r\n        }\r\n      ],\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\"\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -138,44 +139,30 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7ae49bd2-2dc4-4fbe-9f93-bcf97600d24b"
+          "a5cc88e9-a7d6-4a29-8002-96813f9e5a11"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.20.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.21.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"location\": \"global\",\r\n  \"type\": \"Microsoft.Insights/metricAlerts\",\r\n  \"name\": \"MetricAlertSDKTestRule1\",\r\n  \"id\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Insights/metricAlerts/MetricAlertSDKTestRule1\",\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"templateType\": 8,\r\n    \"criteria\": {\r\n      \"allOf\": [\r\n        {\r\n          \"name\": \"metric1\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"metricName\": \"Transactions\",\r\n          \"dimensions\": [],\r\n          \"operator\": \"GreaterThan\",\r\n          \"threshold\": 100.0,\r\n          \"timeAggregation\": \"Total\"\r\n        }\r\n      ],\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\"\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Jun 2018 06:42:37 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
+        "x-ms-request-id": [
+          "ec1c1abd-d8cc-41d5-acb7-0c558aff3661"
         ],
         "Server": [
           "Microsoft-IIS/10.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "x-ms-request-id": [
-          "ff301bcd-03c0-486f-acc9-6ef79977d856"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -184,21 +171,34 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "11990"
         ],
         "x-ms-correlation-request-id": [
-          "ff301bcd-03c0-486f-acc9-6ef79977d856"
+          "ec1c1abd-d8cc-41d5-acb7-0c558aff3661"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180605T064238Z:ff301bcd-03c0-486f-acc9-6ef79977d856"
+          "SOUTHINDIA:20190208T064313Z:ec1c1abd-d8cc-41d5-acb7-0c558aff3661"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Fri, 08 Feb 2019 06:43:12 GMT"
+        ],
+        "Content-Length": [
+          "1345"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"location\": \"global\",\r\n  \"type\": \"Microsoft.Insights/metricAlerts\",\r\n  \"name\": \"MetricAlertSDKTestRule1\",\r\n  \"id\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Insights/metricAlerts/MetricAlertSDKTestRule1\",\r\n  \"properties\": {\r\n    \"description\": \" This is for Metric Alert SDK Scenario Test\",\r\n    \"severity\": 3,\r\n    \"enabled\": true,\r\n    \"scopes\": [\r\n      \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Storage/storageAccounts/metricalertsdktestacc\"\r\n    ],\r\n    \"evaluationFrequency\": \"PT15M\",\r\n    \"windowSize\": \"PT15M\",\r\n    \"templateType\": 8,\r\n    \"criteria\": {\r\n      \"allOf\": [\r\n        {\r\n          \"threshold\": 100.0,\r\n          \"name\": \"metric1\",\r\n          \"metricNamespace\": \"Microsoft.Storage/storageAccounts\",\r\n          \"metricName\": \"Transactions\",\r\n          \"dimensions\": [],\r\n          \"operator\": \"GreaterThan\",\r\n          \"timeAggregation\": \"Total\"\r\n        }\r\n      ],\r\n      \"odata.type\": \"Microsoft.Azure.Monitor.SingleResourceMultipleMetricCriteria\"\r\n    },\r\n    \"actions\": [\r\n      {\r\n        \"actionGroupId\": \"/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/sanjaychresourcegroup/providers/microsoft.insights/actiongroups/scnewactiongroup\"\r\n      }\r\n    ]\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -208,38 +208,30 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "09afcd7e-a111-46ff-ad12-f246fb3ca0f4"
+          "7e043d84-a292-4619-a622-ec10e33f2246"
         ],
-        "accept-language": [
+        "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.20.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Monitor.MonitorManagementClient/0.21.0.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
-        ],
-        "Date": [
-          "Tue, 05 Jun 2018 06:42:43 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
+        "x-ms-request-id": [
+          "50654247-f521-416a-9651-c99bbc9f3c1c"
+        ],
         "Server": [
           "Microsoft-IIS/10.0"
-        ],
-        "x-ms-request-id": [
-          "f10cd352-9585-41a3-9f25-c241d7a4f4c0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -248,21 +240,31 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14999"
+          "14996"
         ],
         "x-ms-correlation-request-id": [
-          "f10cd352-9585-41a3-9f25-c241d7a4f4c0"
+          "50654247-f521-416a-9651-c99bbc9f3c1c"
         ],
         "x-ms-routing-request-id": [
-          "SOUTHINDIA:20180605T064244Z:f10cd352-9585-41a3-9f25-c241d7a4f4c0"
+          "SOUTHINDIA:20190208T064320Z:50654247-f521-416a-9651-c99bbc9f3c1c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Date": [
+          "Fri, 08 Feb 2019 06:43:19 GMT"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Content-Length": [
+          "0"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],

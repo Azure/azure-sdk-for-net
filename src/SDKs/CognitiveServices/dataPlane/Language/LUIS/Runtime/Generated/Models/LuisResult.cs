@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// <summary>
         /// Initializes a new instance of the LuisResult class.
         /// </summary>
-        /// <param name="query">The input utterance that was analized.</param>
+        /// <param name="query">The input utterance that was analyzed.</param>
         /// <param name="alteredQuery">The corrected utterance (when spell
         /// checking was enabled).</param>
         /// <param name="intents">All the intents (and their score) that were
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// utterance.</param>
         /// <param name="compositeEntities">The composite entities extracted
         /// from the utterance.</param>
-        public LuisResult(string query = default(string), string alteredQuery = default(string), IntentModel topScoringIntent = default(IntentModel), IList<IntentModel> intents = default(IList<IntentModel>), IList<EntityModel> entities = default(IList<EntityModel>), IList<CompositeEntityModel> compositeEntities = default(IList<CompositeEntityModel>), Sentiment sentimentAnalysis = default(Sentiment))
+        public LuisResult(string query = default(string), string alteredQuery = default(string), IntentModel topScoringIntent = default(IntentModel), IList<IntentModel> intents = default(IList<IntentModel>), IList<EntityModel> entities = default(IList<EntityModel>), IList<CompositeEntityModel> compositeEntities = default(IList<CompositeEntityModel>), Sentiment sentimentAnalysis = default(Sentiment), LuisResult connectedServiceResult = default(LuisResult))
         {
             Query = query;
             AlteredQuery = alteredQuery;
@@ -50,6 +50,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
             Entities = entities;
             CompositeEntities = compositeEntities;
             SentimentAnalysis = sentimentAnalysis;
+            ConnectedServiceResult = connectedServiceResult;
             CustomInit();
         }
 
@@ -59,7 +60,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the input utterance that was analized.
+        /// Gets or sets the input utterance that was analyzed.
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public string Query { get; set; }
@@ -99,6 +100,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// </summary>
         [JsonProperty(PropertyName = "sentimentAnalysis")]
         public Sentiment SentimentAnalysis { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "connectedServiceResult")]
+        public LuisResult ConnectedServiceResult { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -141,6 +147,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
                         element2.Validate();
                     }
                 }
+            }
+            if (ConnectedServiceResult != null)
+            {
+                ConnectedServiceResult.Validate();
             }
         }
     }

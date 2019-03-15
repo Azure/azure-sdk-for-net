@@ -2,6 +2,19 @@
 
 Below are the packages maintained in this repository.
 
+### Client Libraries
+
+| Azure Client Library | Package Name                            | NuGet Download |
+| ------------------------ | --------------------------------------- | -------------- |
+| Batch                    | `Microsoft.Azure.Batch`                 | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch) |
+| Graph.RBAC               | `Microsoft.Azure.Graph.RBAC`            | [![Graph.RBAC](https://img.shields.io/nuget/vpre/Microsoft.Azure.Graph.RBAC.svg)](https://www.nuget.org/packages/Microsoft.Azure.Graph.RBAC) |
+| KeyVault                 | `Microsoft.Azure.KeyVault`              | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault) |
+| KeyVault Core            | `Microsoft.Azure.KeyVault.Core`         | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Core.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Core) |
+| KeyVault Cryptography    | `Microsoft.Azure.KeyVault.Cryptography` | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Cryptography.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Cryptography) |
+| KeyVault Extensions      | `Microsoft.Azure.KeyVault.Extensions`   | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Extensions.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Extensions) |
+| KeyVault WebKey          | `Microsoft.Azure.KeyVault.WebKey`       | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.WebKey.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.WebKey) |
+| Search                   | `Microsoft.Azure.Search`                | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Search.svg)](https://www.nuget.org/packages/Microsoft.Azure.Search) |
+
 ### Management Libraries
 
 | Azure Management Library      | Package Name                                                | NuGet Download |
@@ -56,19 +69,6 @@ Below are the packages maintained in this repository.
 | Stream Analytics              | `Microsoft.Azure.Management.StreamAnalytics`                | [![Stream Analytics](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.StreamAnalytics.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.StreamAnalytics) |
 | Traffic Manager               | `Microsoft.Azure.Management.TrafficManager`                 | [![Traffic Manager](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.TrafficManager.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.TrafficManager) |
 | Websites                      | `Microsoft.Azure.Management.Websites`                       | [![Websites](https://img.shields.io/nuget/vpre/Microsoft.Azure.Management.Websites.svg)](https://www.nuget.org/packages/Microsoft.Azure.Management.Websites) |
-
-### Data Plane Libraries
-
-| Azure Data Plane Library | Package Name                            | NuGet Download |
-| ------------------------ | --------------------------------------- | -------------- |
-| Batch                    | `Microsoft.Azure.Batch`                 | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Batch.svg)](https://www.nuget.org/packages/Microsoft.Azure.Batch) |
-| Graph.RBAC               | `Microsoft.Azure.Graph.RBAC`            | [![Graph.RBAC](https://img.shields.io/nuget/vpre/Microsoft.Azure.Graph.RBAC.svg)](https://www.nuget.org/packages/Microsoft.Azure.Graph.RBAC) |
-| KeyVault                 | `Microsoft.Azure.KeyVault`              | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault) |
-| KeyVault Core            | `Microsoft.Azure.KeyVault.Core`         | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Core.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Core) |
-| KeyVault Cryptography    | `Microsoft.Azure.KeyVault.Cryptography` | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Cryptography.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Cryptography) |
-| KeyVault Extensions      | `Microsoft.Azure.KeyVault.Extensions`   | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.Extensions.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Extensions) |
-| KeyVault WebKey          | `Microsoft.Azure.KeyVault.WebKey`       | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.KeyVault.WebKey.svg)](https://www.nuget.org/packages/Microsoft.Azure.KeyVault.WebKey) |
-| Search                   | `Microsoft.Azure.Search`                | [![Search](https://img.shields.io/nuget/vpre/Microsoft.Azure.Search.svg)](https://www.nuget.org/packages/Microsoft.Azure.Search) |
 
 ### Common Libraries
 

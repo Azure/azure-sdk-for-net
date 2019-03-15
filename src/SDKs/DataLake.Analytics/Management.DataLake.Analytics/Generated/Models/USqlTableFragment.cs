@@ -40,7 +40,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// fragment.</param>
         /// <param name="createDate">the creation time of the table
         /// fragment.</param>
-        public USqlTableFragment(System.Guid? parentId = default(System.Guid?), System.Guid? fragmentId = default(System.Guid?), int? indexId = default(int?), long? size = default(long?), long? rowCount = default(long?), System.DateTimeOffset? createDate = default(System.DateTimeOffset?))
+        /// <param name="streamPath">the relative path for the table fragment
+        /// location.</param>
+        public USqlTableFragment(System.Guid? parentId = default(System.Guid?), System.Guid? fragmentId = default(System.Guid?), int? indexId = default(int?), long? size = default(long?), long? rowCount = default(long?), System.DateTimeOffset? createDate = default(System.DateTimeOffset?), string streamPath = default(string))
         {
             ParentId = parentId;
             FragmentId = fragmentId;
@@ -48,6 +50,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
             Size = size;
             RowCount = rowCount;
             CreateDate = createDate;
+            StreamPath = streamPath;
             CustomInit();
         }
 
@@ -93,6 +96,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "createDate")]
         public System.DateTimeOffset? CreateDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets the relative path for the table fragment location.
+        /// </summary>
+        [JsonProperty(PropertyName = "streamPath")]
+        public string StreamPath { get; set; }
 
     }
 }

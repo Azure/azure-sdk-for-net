@@ -38,17 +38,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// will be redirected to
         /// &lt;code&gt;ActionHostName&lt;/code&gt;.</param>
         /// <param name="changeStep">In auto ramp up scenario this is the step
-        /// to to add/remove from &lt;code&gt;ReroutePercentage&lt;/code&gt;
-        /// until it reaches
+        /// to add/remove from &lt;code&gt;ReroutePercentage&lt;/code&gt; until
+        /// it reaches
         /// &lt;code&gt;MinReroutePercentage&lt;/code&gt; or
         /// &lt;code&gt;MaxReroutePercentage&lt;/code&gt;. Site metrics are
-        /// checked every N minutes specificed in
+        /// checked every N minutes specified in
         /// &lt;code&gt;ChangeIntervalInMinutes&lt;/code&gt;.
         /// Custom decision algorithm can be provided in TiPCallback site
         /// extension which URL can be specified in
         /// &lt;code&gt;ChangeDecisionCallbackUrl&lt;/code&gt;.</param>
-        /// <param name="changeIntervalInMinutes">Specifies interval in
-        /// mimuntes to reevaluate ReroutePercentage.</param>
+        /// <param name="changeIntervalInMinutes">Specifies interval in minutes
+        /// to reevaluate ReroutePercentage.</param>
         /// <param name="minReroutePercentage">Specifies lower boundary above
         /// which ReroutePercentage will stay.</param>
         /// <param name="maxReroutePercentage">Specifies upper boundary below
@@ -94,13 +94,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public double? ReroutePercentage { get; set; }
 
         /// <summary>
-        /// Gets or sets in auto ramp up scenario this is the step to to
+        /// Gets or sets in auto ramp up scenario this is the step to
         /// add/remove from
         /// &amp;lt;code&amp;gt;ReroutePercentage&amp;lt;/code&amp;gt; until it
         /// reaches
         /// &amp;lt;code&amp;gt;MinReroutePercentage&amp;lt;/code&amp;gt; or
         /// &amp;lt;code&amp;gt;MaxReroutePercentage&amp;lt;/code&amp;gt;. Site
-        /// metrics are checked every N minutes specificed in
+        /// metrics are checked every N minutes specified in
         /// &amp;lt;code&amp;gt;ChangeIntervalInMinutes&amp;lt;/code&amp;gt;.
         /// Custom decision algorithm can be provided in TiPCallback site
         /// extension which URL can be specified in
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public double? ChangeStep { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies interval in mimuntes to reevaluate
+        /// Gets or sets specifies interval in minutes to reevaluate
         /// ReroutePercentage.
         /// </summary>
         [JsonProperty(PropertyName = "changeIntervalInMinutes")]

@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// <param name="configuration">Gets or sets the configuration of the
         /// node.</param>
         /// <param name="source">Source of node configuration.</param>
-        /// <param name="nodeCount">Number of nodes with this nodeconfiguration
-        /// assigned</param>
+        /// <param name="nodeCount">Number of nodes with this node
+        /// configuration assigned</param>
         /// <param name="incrementNodeConfigurationBuild">If a new build
         /// version of NodeConfiguration is required.</param>
         public DscNodeConfiguration(string id = default(string), string name = default(string), string type = default(string), System.DateTimeOffset lastModifiedTime = default(System.DateTimeOffset), System.DateTimeOffset creationTime = default(System.DateTimeOffset), DscConfigurationAssociationProperty configuration = default(DscConfigurationAssociationProperty), string source = default(string), long? nodeCount = default(long?), bool? incrementNodeConfigurationBuild = default(bool?))
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public string Source { get; set; }
 
         /// <summary>
-        /// Gets or sets number of nodes with this nodeconfiguration assigned
+        /// Gets or sets number of nodes with this node configuration assigned
         /// </summary>
         [JsonProperty(PropertyName = "properties.nodeCount")]
         public long? NodeCount { get; set; }

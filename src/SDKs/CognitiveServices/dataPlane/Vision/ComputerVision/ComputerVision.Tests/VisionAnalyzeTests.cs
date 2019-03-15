@@ -87,6 +87,36 @@ namespace ComputerVisionSDK.Tests
         }
 
         [Fact]
+        public void AnalyzeBrandsTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "AnalyzeBrandsTest");
+
+                using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
+                using (FileStream stream = new FileStream(GetTestImagePath("MicrosoftRealMadrid.jpg"), FileMode.Open))
+                {
+                    ImageAnalysis result = client.AnalyzeImageInStreamAsync(
+                        stream,
+                        new List<VisualFeatureTypes>()
+                        {
+                            VisualFeatureTypes.Brands
+                        })
+                        .Result;
+
+                    Assert.Equal("Microsoft", result.Brands[0].Name);
+                    Assert.True(result.Brands[0].Confidence > 0.5);
+                    Assert.True(result.Brands[0].Rectangle.X >= 0);
+                    Assert.True(result.Brands[0].Rectangle.W >= 0);
+                    Assert.True(result.Brands[0].Rectangle.X + result.Brands[0].Rectangle.W <= result.Metadata.Width);
+                    Assert.True(result.Brands[0].Rectangle.Y >= 0);
+                    Assert.True(result.Brands[0].Rectangle.H >= 0);
+                    Assert.True(result.Brands[0].Rectangle.Y + result.Brands[0].Rectangle.H <= result.Metadata.Height);
+                }
+            }
+        }
+
+        [Fact]
         public void AnalyzeImageNullImageTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))

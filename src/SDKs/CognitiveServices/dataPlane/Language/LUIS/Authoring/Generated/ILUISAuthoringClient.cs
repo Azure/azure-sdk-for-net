@@ -85,5 +85,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </summary>
         IPattern Pattern { get; }
 
+        /// <summary>
+        /// Gets the ISettings.
+        /// </summary>
+        ISettings Settings { get; }
+
+        /// <summary>
+        /// Gets the IAzureAccounts.
+        /// </summary>
+        IAzureAccounts AzureAccounts { get; }
+
     }
 }

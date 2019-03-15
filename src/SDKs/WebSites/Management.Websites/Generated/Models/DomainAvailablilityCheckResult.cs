@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Domain availablility check result.
+    /// Domain availability check result.
     /// </summary>
     public partial class DomainAvailablilityCheckResult
     {

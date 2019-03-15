@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureWorkloadSQLPointInTimeRecoveryPoint class.
         /// </summary>
-        /// <param name="recoveryPointTimeInUTC">UTC time at which
-        /// recoverypoint was created</param>
+        /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
+        /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
         /// 'Invalid', 'Full', 'Log', 'Differential'</param>
         /// <param name="extendedInfo">Extended Info that provides data

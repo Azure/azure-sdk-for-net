@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Azure resource SKU definition.
+    /// </summary>
     public partial class AzureResourceSku
     {
         /// <summary>

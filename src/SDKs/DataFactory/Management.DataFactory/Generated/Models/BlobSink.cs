@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sinkRetryWait">Sink retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the sink data store. Type: integer (or
+        /// Expression with resultType integer).</param>
         /// <param name="blobWriterOverwriteFiles">Blob writer overwrite files.
         /// Type: boolean (or Expression with resultType boolean).</param>
         /// <param name="blobWriterDateTimeFormat">Blob writer date time
@@ -53,8 +56,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="copyBehavior">The type of copy behavior for copy sink.
         /// Possible values include: 'PreserveHierarchy', 'FlattenHierarchy',
         /// 'MergeFiles'</param>
-        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), string copyBehavior = default(string))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait)
+        public BlobSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object blobWriterOverwriteFiles = default(object), object blobWriterDateTimeFormat = default(object), object blobWriterAddHeader = default(object), string copyBehavior = default(string))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             BlobWriterOverwriteFiles = blobWriterOverwriteFiles;
             BlobWriterDateTimeFormat = blobWriterDateTimeFormat;

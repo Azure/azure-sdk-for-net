@@ -241,13 +241,22 @@ namespace Microsoft.Azure.Management.DataFactory
             /// The pipeline run identifier. If run ID is specified the parameters of the
             /// specified run will be used to create a new run.
             /// </param>
+            /// <param name='isRecovery'>
+            /// Recovery mode flag. If recovery mode is set to true, the specified
+            /// referenced pipeline run and the new run will be grouped under the same
+            /// groupId.
+            /// </param>
+            /// <param name='startActivityName'>
+            /// In recovery mode, the rerun will start from this activity. If not
+            /// specified, all activities will run.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters of the pipeline run. These parameters will be used only if the
             /// runId is not specified.
             /// </param>
-            public static CreateRunResponse CreateRun(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>))
+            public static CreateRunResponse CreateRun(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), bool? isRecovery = default(bool?), string startActivityName = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>))
             {
-                return operations.CreateRunAsync(resourceGroupName, factoryName, pipelineName, referencePipelineRunId, parameters).GetAwaiter().GetResult();
+                return operations.CreateRunAsync(resourceGroupName, factoryName, pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -269,6 +278,15 @@ namespace Microsoft.Azure.Management.DataFactory
             /// The pipeline run identifier. If run ID is specified the parameters of the
             /// specified run will be used to create a new run.
             /// </param>
+            /// <param name='isRecovery'>
+            /// Recovery mode flag. If recovery mode is set to true, the specified
+            /// referenced pipeline run and the new run will be grouped under the same
+            /// groupId.
+            /// </param>
+            /// <param name='startActivityName'>
+            /// In recovery mode, the rerun will start from this activity. If not
+            /// specified, all activities will run.
+            /// </param>
             /// <param name='parameters'>
             /// Parameters of the pipeline run. These parameters will be used only if the
             /// runId is not specified.
@@ -276,9 +294,9 @@ namespace Microsoft.Azure.Management.DataFactory
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CreateRunResponse> CreateRunAsync(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CreateRunResponse> CreateRunAsync(this IPipelinesOperations operations, string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), bool? isRecovery = default(bool?), string startActivityName = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateRunWithHttpMessagesAsync(resourceGroupName, factoryName, pipelineName, referencePipelineRunId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateRunWithHttpMessagesAsync(resourceGroupName, factoryName, pipelineName, referencePipelineRunId, isRecovery, startActivityName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

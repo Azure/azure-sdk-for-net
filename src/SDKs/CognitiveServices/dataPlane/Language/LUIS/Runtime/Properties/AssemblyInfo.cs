@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Runtime API.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.1.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
