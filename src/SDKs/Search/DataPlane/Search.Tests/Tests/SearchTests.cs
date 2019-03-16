@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
             const string SynonymMapName = "names";
-            var synonymMap = new SynonymMap(name: SynonymMapName, format: SynonymMapFormat.Solr, synonyms: "luxury,fancy");
+            var synonymMap = new SynonymMap(name: SynonymMapName, synonyms: "luxury,fancy");
             searchClient.SynonymMaps.Create(synonymMap);
 
             SearchIndexClient client = GetClientForQuery();

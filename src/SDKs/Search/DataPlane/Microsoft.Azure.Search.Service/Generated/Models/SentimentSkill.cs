@@ -47,8 +47,10 @@ namespace Microsoft.Azure.Search.Models
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
         /// <param name="defaultLanguageCode">A value indicating which language
-        /// code to use. Default is en.</param>
-        public SentimentSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, SentimentSkillLanguage defaultLanguageCode = default(SentimentSkillLanguage))
+        /// code to use. Default is en. Possible values include: 'da', 'nl',
+        /// 'en', 'fi', 'fr', 'de', 'el', 'it', 'no', 'pl', 'pt-PT', 'ru',
+        /// 'es', 'sv', 'tr'</param>
+        public SentimentSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, SentimentSkillLanguage? defaultLanguageCode = default(SentimentSkillLanguage?))
             : base(description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
@@ -62,10 +64,11 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating which language code to use. Default
-        /// is en.
+        /// is en. Possible values include: 'da', 'nl', 'en', 'fi', 'fr', 'de',
+        /// 'el', 'it', 'no', 'pl', 'pt-PT', 'ru', 'es', 'sv', 'tr'
         /// </summary>
         [JsonProperty(PropertyName = "defaultLanguageCode")]
-        public SentimentSkillLanguage DefaultLanguageCode { get; set; }
+        public SentimentSkillLanguage? DefaultLanguageCode { get; set; }
 
         /// <summary>
         /// Validate the object.
