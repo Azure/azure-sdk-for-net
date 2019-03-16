@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="name">The name of the SKU.</param>
         /// <param name="tier">The tier of the SKU. Possible values are
-        /// 'Standard', 'Premium' or 'Basic'. Possible values include:
-        /// 'Standard', 'Premium', 'Basic'</param>
+        /// 'Standard', 'Premium' or 'Local'. Possible values include:
+        /// 'Standard', 'Premium', 'Basic', 'Local'</param>
         /// <param name="family">The family of the SKU. Possible values are:
         /// 'UnlimitedData' and 'MeteredData'. Possible values include:
         /// 'UnlimitedData', 'MeteredData'</param>
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the tier of the SKU. Possible values are 'Standard',
-        /// 'Premium' or 'Basic'. Possible values include: 'Standard',
-        /// 'Premium', 'Basic'
+        /// 'Premium' or 'Local'. Possible values include: 'Standard',
+        /// 'Premium', 'Basic', 'Local'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }

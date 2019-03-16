@@ -12,13 +12,15 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for ExpressRouteCircuitSkuTier.
+    /// Defines values for WebApplicationFirewallTransform.
     /// </summary>
-    public static class ExpressRouteCircuitSkuTier
+    public static class WebApplicationFirewallTransform
     {
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string Basic = "Basic";
-        public const string Local = "Local";
+        public const string Lowercase = "Lowercase";
+        public const string Trim = "Trim";
+        public const string UrlDecode = "UrlDecode";
+        public const string UrlEncode = "UrlEncode";
+        public const string RemoveNulls = "RemoveNulls";
+        public const string HtmlEntityDecode = "HtmlEntityDecode";
     }
 }
