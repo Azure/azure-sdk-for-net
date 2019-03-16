@@ -11,10 +11,9 @@
 		<PackageTags>Microsoft Azure Network management;Network;Network management;</PackageTags>    
 		<PackageReleaseNotes>
 		<![CDATA[
-        - Added support for PrepareNetworkPolicies in Subnet
-        - Added support for ApplicationGatewayRewriteRuleCondition in ApplicationGatewayRewriteRule
-        - Added support for ThreatIntelMode in AzureFirewall
-        - Fixed return type of ApplicationGateway's ListAvailableServerVariables, ListAvailableRequestHeaders and ListAvailableResponseHeaders
+        - Added support for PeerExpressRouteCircuitConnections and WebApplicationFirewallPolicies
+        - Added support for "Local" SKU and GlobalReachEnabled in ExpressRouteCircuit
+        - Added support for HealthProbeLog in ApplicationGatewayBackendHealthServer
 		]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
