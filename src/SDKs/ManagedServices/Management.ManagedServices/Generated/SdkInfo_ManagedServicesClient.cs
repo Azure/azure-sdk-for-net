@@ -28,10 +28,10 @@ namespace Microsoft.Azure.Management.ManagedServices
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/ajay-sainy/azure-rest-api-specs/blob/managedservices\\swagger\\2018-06-01-preview/specification/managedservices/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --tag=package-2018-06-preview --csharp-sdks-folder=C:\\Users\\ajsainy\\Desktop\\PSG\\SDK\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "ajay-sainy";
-      public static readonly String GithubBranchName = "managedservices\\swagger\\2018-06-01-preview";
-      public static readonly String GithubCommidId = "5a1f60502f85bdb2787653e2c5b713ef59c46881";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/managedservices/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\src\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "978c77a378a9c2e6724542b964c660a40f6b037e";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
