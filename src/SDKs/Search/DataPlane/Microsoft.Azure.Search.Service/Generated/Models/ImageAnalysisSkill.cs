@@ -47,11 +47,12 @@ namespace Microsoft.Azure.Search.Models
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
         /// <param name="defaultLanguageCode">A value indicating which language
-        /// code to use. Default is en.</param>
+        /// code to use. Default is en. Possible values include: 'en',
+        /// 'zh'</param>
         /// <param name="visualFeatures">A list of visual features.</param>
         /// <param name="details">A string indicating which domain-specific
         /// details to return.</param>
-        public ImageAnalysisSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, ImageAnalysisSkillLanguage defaultLanguageCode = default(ImageAnalysisSkillLanguage), IList<VisualFeature> visualFeatures = default(IList<VisualFeature>), IList<ImageDetail> details = default(IList<ImageDetail>))
+        public ImageAnalysisSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, ImageAnalysisSkillLanguage? defaultLanguageCode = default(ImageAnalysisSkillLanguage?), IList<VisualFeature> visualFeatures = default(IList<VisualFeature>), IList<ImageDetail> details = default(IList<ImageDetail>))
             : base(description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
@@ -67,10 +68,10 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets a value indicating which language code to use. Default
-        /// is en.
+        /// is en. Possible values include: 'en', 'zh'
         /// </summary>
         [JsonProperty(PropertyName = "defaultLanguageCode")]
-        public ImageAnalysisSkillLanguage DefaultLanguageCode { get; set; }
+        public ImageAnalysisSkillLanguage? DefaultLanguageCode { get; set; }
 
         /// <summary>
         /// Gets or sets a list of visual features.

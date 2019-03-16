@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Search.Tests
                 string synonymMapName = "names"; 
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                SynonymMap synonymMap = new SynonymMap(name: synonymMapName, format: SynonymMapFormat.Solr, synonyms: "hotel,motel");
+                var synonymMap = new SynonymMap(name: synonymMapName, synonyms: "hotel,motel");
                 searchClient.SynonymMaps.Create(synonymMap);
 
                 Index index = CreateTestIndex();
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Search.Tests
                 string synonymMapName = "names";
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                SynonymMap synonymMap = new SynonymMap(name: synonymMapName, format: SynonymMapFormat.Solr, synonyms: "hotel,motel");
+                var synonymMap = new SynonymMap(name: synonymMapName, synonyms: "hotel,motel");
                 searchClient.SynonymMaps.Create(synonymMap);
 
                 // create an index
