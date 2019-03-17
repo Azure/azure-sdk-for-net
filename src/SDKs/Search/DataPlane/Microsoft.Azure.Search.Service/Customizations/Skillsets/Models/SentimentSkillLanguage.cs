@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Newtonsoft.Json;
     using Serialization;
 
@@ -11,8 +13,10 @@ namespace Microsoft.Azure.Search.Models
     /// Defines the format of SentimentSkill supported language codes.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<SentimentSkillLanguage>))]
-    public sealed class SentimentSkillLanguage : ExtensibleEnum<SentimentSkillLanguage>
+    public struct SentimentSkillLanguage : IEquatable<SentimentSkillLanguage>
     {
+        private readonly string _value;
+
         /// <summary>
         /// Indicates language code "da" (for Danish)
         /// </summary>
@@ -88,23 +92,66 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly SentimentSkillLanguage Tr = new SentimentSkillLanguage("tr");
 
-        private SentimentSkillLanguage(string name) : base(name)
+        private SentimentSkillLanguage(string language)
         {
-            // Base class does all initialization.
+            Throw.IfArgumentNull(language, nameof(language));
+            _value = language;
         }
-
-        /// <summary>
-        /// Creates a new SentimentSkillLanguage instance, or returns an existing instance.
-        /// </summary>
-        /// <param name="name">Supported language code.</param>
-        /// <returns>A SentimentSkillLanguage instance with the given name.</returns>
-        public static SentimentSkillLanguage Create(string name) => Lookup(name) ?? new SentimentSkillLanguage(name);
 
         /// <summary>
         /// Defines implicit conversion from string to SentimentSkillLanguage.
         /// </summary>
-        /// <param name="name">string to convert.</param>
+        /// <param name="language">string to convert.</param>
         /// <returns>The string as a SentimentSkillLanguage.</returns>
-        public static implicit operator SentimentSkillLanguage(string name) => Create(name);
+        public static implicit operator SentimentSkillLanguage(string language) => new SentimentSkillLanguage(language);
+
+        /// <summary>
+        /// Defines explicit conversion from SentimentSkillLanguage to string.
+        /// </summary>
+        /// <param name="language">SentimentSkillLanguage to convert.</param>
+        /// <returns>The SentimentSkillLanguage as a string.</returns>
+        public static explicit operator string(SentimentSkillLanguage language) => language.ToString();
+
+        /// <summary>
+        /// Compares two SentimentSkillLanguage values for equality.
+        /// </summary>
+        /// <param name="lhs">The first SentimentSkillLanguage to compare.</param>
+        /// <param name="rhs">The second SentimentSkillLanguage to compare.</param>
+        /// <returns>true if the SentimentSkillLanguage objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(SentimentSkillLanguage lhs, SentimentSkillLanguage rhs) => Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two SentimentSkillLanguage values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first SentimentSkillLanguage to compare.</param>
+        /// <param name="rhs">The second SentimentSkillLanguage to compare.</param>
+        /// <returns>true if the SentimentSkillLanguage objects are not equal; false otherwise.</returns>
+        public static bool operator !=(SentimentSkillLanguage lhs, SentimentSkillLanguage rhs) => !Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares the SentimentSkillLanguage for equality with another SentimentSkillLanguage.
+        /// </summary>
+        /// <param name="other">The SentimentSkillLanguage with which to compare.</param>
+        /// <returns><c>true</c> if the SentimentSkillLanguage objects are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(SentimentSkillLanguage other) => _value == other._value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) => obj is SentimentSkillLanguage ? Equals((SentimentSkillLanguage)obj) : false;
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Returns a string representation of the SentimentSkillLanguage.
+        /// </summary>
+        /// <returns>The SentimentSkillLanguage as a string.</returns>
+        public override string ToString() => _value;
     }
 }

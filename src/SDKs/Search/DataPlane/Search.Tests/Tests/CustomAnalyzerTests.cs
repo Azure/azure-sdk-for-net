@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Tests
                     Fields = new[]
                     {
                         new Field("id", DataType.String) { IsKey = true },
-                        new Field("message", AnalyzerName.Create(CustomAnalyzerName)) { IsSearchable = true }
+                        new Field("message", (AnalyzerName)CustomAnalyzerName) { IsSearchable = true }
                     },
                     Analyzers = new[]
                     {
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Search.Tests
                         {
                             Name = CustomAnalyzerName,
                             Tokenizer = TokenizerName.Standard,
-                            CharFilters = new[] { CharFilterName.Create(CustomCharFilterName) }
+                            CharFilters = new[] { (CharFilterName)CustomCharFilterName }
                         }
                     },
                     CharFilters = new[] { new PatternReplaceCharFilter(CustomCharFilterName, "@", "_") }
@@ -737,7 +737,7 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private static T[] GetAllExtensibleEnumValues<T>() where T : ExtensibleEnum<T> =>
+        private static T[] GetAllExtensibleEnumValues<T>() =>
             (from field in typeof(T).GetFields()
              where field.FieldType == typeof(T) && field.IsStatic
              select field.GetValue(null)).Cast<T>().ToArray();   // Force eager evaluation.

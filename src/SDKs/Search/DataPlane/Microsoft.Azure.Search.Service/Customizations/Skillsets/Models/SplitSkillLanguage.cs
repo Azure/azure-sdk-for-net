@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Newtonsoft.Json;
     using Serialization;
 
@@ -11,8 +13,10 @@ namespace Microsoft.Azure.Search.Models
     /// Defines the format of SplitSkill supported language codes.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<SplitSkillLanguage>))]
-    public sealed class SplitSkillLanguage : ExtensibleEnum<SplitSkillLanguage>
+    public struct SplitSkillLanguage : IEquatable<SplitSkillLanguage>
     {
+        private readonly string _value;
+
         /// <summary>
         /// Indicates language code "da" (for Danish)
         /// </summary>
@@ -58,24 +62,67 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly SplitSkillLanguage Pt = new SplitSkillLanguage("pt");
 
-        private SplitSkillLanguage(string name) : base(name)
+        private SplitSkillLanguage(string language)
         {
-            // Base class does all initialization.
+            Throw.IfArgumentNull(language, nameof(language));
+            _value = language;
         }
-
-        /// <summary>
-        /// Creates a new SplitSkillLanguage instance, or returns an existing instance.
-        /// </summary>
-        /// <param name="name">Supported language code.</param>
-        /// <returns>A SplitSkillLanguage instance with the given name.</returns>
-        public static SplitSkillLanguage Create(string name) => Lookup(name) ?? new SplitSkillLanguage(name);
 
         /// <summary>
         /// Defines implicit conversion from string to SplitSkillLanguage.
         /// </summary>
-        /// <param name="name">string to convert.</param>
+        /// <param name="language">string to convert.</param>
         /// <returns>The string as a SplitSkillLanguage.</returns>
-        public static implicit operator SplitSkillLanguage(string name) => Create(name);
+        public static implicit operator SplitSkillLanguage(string language) => new SplitSkillLanguage(language);
+
+        /// <summary>
+        /// Defines explicit conversion from SplitSkillLanguage to string.
+        /// </summary>
+        /// <param name="language">SplitSkillLanguage to convert.</param>
+        /// <returns>The SplitSkillLanguage as a string.</returns>
+        public static explicit operator string(SplitSkillLanguage language) => language.ToString();
+
+        /// <summary>
+        /// Compares two SplitSkillLanguage values for equality.
+        /// </summary>
+        /// <param name="lhs">The first SplitSkillLanguage to compare.</param>
+        /// <param name="rhs">The second SplitSkillLanguage to compare.</param>
+        /// <returns>true if the SplitSkillLanguage objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(SplitSkillLanguage lhs, SplitSkillLanguage rhs) => Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two SplitSkillLanguage values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first SplitSkillLanguage to compare.</param>
+        /// <param name="rhs">The second SplitSkillLanguage to compare.</param>
+        /// <returns>true if the SplitSkillLanguage objects are not equal; false otherwise.</returns>
+        public static bool operator !=(SplitSkillLanguage lhs, SplitSkillLanguage rhs) => !Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares the SplitSkillLanguage for equality with another SplitSkillLanguage.
+        /// </summary>
+        /// <param name="other">The SplitSkillLanguage with which to compare.</param>
+        /// <returns><c>true</c> if the SplitSkillLanguage objects are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(SplitSkillLanguage other) => _value == other._value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) => obj is SplitSkillLanguage ? Equals((SplitSkillLanguage)obj) : false;
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Returns a string representation of the SplitSkillLanguage.
+        /// </summary>
+        /// <returns>The SplitSkillLanguage as a string.</returns>
+        public override string ToString() => _value;
     }
 }
 

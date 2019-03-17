@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Newtonsoft.Json;
     using Serialization;
 
@@ -12,8 +14,10 @@ namespace Microsoft.Azure.Search.Models
     /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<TokenFilterName>))]
-    public sealed class TokenFilterName : ExtensibleEnum<TokenFilterName>
+    public struct TokenFilterName : IEquatable<TokenFilterName>
     {
+        private readonly string _value;
+
         // MAINTENANCE NOTE: Keep these ordered the same as the table on this page:
         // https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search
 
@@ -233,24 +237,66 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly TokenFilterName WordDelimiter = new TokenFilterName("word_delimiter");
 
-        private TokenFilterName(string name) : base(name)
+        private TokenFilterName(string name)
         {
-            // Base class does all initialization.
+            Throw.IfArgumentNull(name, nameof(name));
+            _value = name;
         }
-
-        /// <summary>
-        /// Creates a new TokenFilterName instance, or returns an existing instance if the given name matches that of a
-        /// known token filter.
-        /// </summary>
-        /// <param name="name">Name of the token filter.</param>
-        /// <returns>A TokenFilterName instance with the given name.</returns>
-        public static TokenFilterName Create(string name) => Lookup(name) ?? new TokenFilterName(name);
 
         /// <summary>
         /// Defines implicit conversion from string to TokenFilterName.
         /// </summary>
         /// <param name="name">string to convert.</param>
         /// <returns>The string as a TokenFilterName.</returns>
-        public static implicit operator TokenFilterName(string name) => Create(name);
+        public static implicit operator TokenFilterName(string name) => new TokenFilterName(name);
+
+        /// <summary>
+        /// Defines explicit conversion from TokenFilterName to string.
+        /// </summary>
+        /// <param name="name">TokenFilterName to convert.</param>
+        /// <returns>The TokenFilterName as a string.</returns>
+        public static explicit operator string(TokenFilterName name) => name.ToString();
+
+        /// <summary>
+        /// Compares two TokenFilterName values for equality.
+        /// </summary>
+        /// <param name="lhs">The first TokenFilterName to compare.</param>
+        /// <param name="rhs">The second TokenFilterName to compare.</param>
+        /// <returns>true if the TokenFilterName objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(TokenFilterName lhs, TokenFilterName rhs) => Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two TokenFilterName values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first TokenFilterName to compare.</param>
+        /// <param name="rhs">The second TokenFilterName to compare.</param>
+        /// <returns>true if the TokenFilterName objects are not equal; false otherwise.</returns>
+        public static bool operator !=(TokenFilterName lhs, TokenFilterName rhs) => !Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares the TokenFilterName for equality with another TokenFilterName.
+        /// </summary>
+        /// <param name="other">The TokenFilterName with which to compare.</param>
+        /// <returns><c>true</c> if the TokenFilterName objects are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(TokenFilterName other) => _value == other._value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) => obj is TokenFilterName ? Equals((TokenFilterName)obj) : false;
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Returns a string representation of the TokenFilterName.
+        /// </summary>
+        /// <returns>The TokenFilterName as a string.</returns>
+        public override string ToString() => _value;
     }
 }

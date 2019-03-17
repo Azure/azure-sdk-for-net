@@ -96,15 +96,15 @@ namespace Microsoft.Azure.Search
                     }
                     else if ((analyzerAttribute = attribute as AnalyzerAttribute) != null)
                     {
-                        field.Analyzer = AnalyzerName.Create(analyzerAttribute.Name);
+                        field.Analyzer = analyzerAttribute.Name;
                     }
                     else if ((searchAnalyzerAttribute = attribute as SearchAnalyzerAttribute) != null)
                     {
-                        field.SearchAnalyzer = AnalyzerName.Create(searchAnalyzerAttribute.Name);
+                        field.SearchAnalyzer = searchAnalyzerAttribute.Name;
                     }
                     else if ((indexAnalyzerAttribute = attribute as IndexAnalyzerAttribute) != null)
                     {
-                        field.IndexAnalyzer = AnalyzerName.Create(indexAnalyzerAttribute.Name);
+                        field.IndexAnalyzer = indexAnalyzerAttribute.Name;
                     }
                     else
                     {
