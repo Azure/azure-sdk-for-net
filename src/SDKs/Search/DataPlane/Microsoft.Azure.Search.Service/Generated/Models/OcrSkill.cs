@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Search.Models
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
-        /// /document or /document/content).</param>
+        /// /document or /document/content). The default is /document.</param>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in an
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Search.Models
         /// 'ro', 'sr-Cyrl', 'sr-Latn', 'sk'</param>
         /// <param name="shouldDetectOrientation">A value indicating to turn
         /// orientation detection on or not. Default is false.</param>
-        public OcrSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, TextExtractionAlgorithm? textExtractionAlgorithm = default(TextExtractionAlgorithm?), OcrSkillLanguage? defaultLanguageCode = default(OcrSkillLanguage?), bool? shouldDetectOrientation = default(bool?))
+        public OcrSkill(string description = default(string), string context = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>), IList<OutputFieldMappingEntry> outputs = default(IList<OutputFieldMappingEntry>), TextExtractionAlgorithm? textExtractionAlgorithm = default(TextExtractionAlgorithm?), OcrSkillLanguage? defaultLanguageCode = default(OcrSkillLanguage?), bool? shouldDetectOrientation = default(bool?))
             : base(description, context, inputs, outputs)
         {
             TextExtractionAlgorithm = textExtractionAlgorithm;
@@ -94,15 +94,5 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "detectOrientation")]
         public bool? ShouldDetectOrientation { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

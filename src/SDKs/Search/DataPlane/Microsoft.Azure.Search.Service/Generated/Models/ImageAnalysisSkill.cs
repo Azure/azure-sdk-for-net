@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Search.Models
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
-        /// /document or /document/content).</param>
+        /// /document or /document/content). The default is /document.</param>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in an
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="visualFeatures">A list of visual features.</param>
         /// <param name="details">A string indicating which domain-specific
         /// details to return.</param>
-        public ImageAnalysisSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, ImageAnalysisSkillLanguage? defaultLanguageCode = default(ImageAnalysisSkillLanguage?), IList<VisualFeature> visualFeatures = default(IList<VisualFeature>), IList<ImageDetail> details = default(IList<ImageDetail>))
+        public ImageAnalysisSkill(string description = default(string), string context = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>), IList<OutputFieldMappingEntry> outputs = default(IList<OutputFieldMappingEntry>), ImageAnalysisSkillLanguage? defaultLanguageCode = default(ImageAnalysisSkillLanguage?), IList<VisualFeature> visualFeatures = default(IList<VisualFeature>), IList<ImageDetail> details = default(IList<ImageDetail>))
             : base(description, context, inputs, outputs)
         {
             DefaultLanguageCode = defaultLanguageCode;
@@ -86,15 +86,5 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "details")]
         public IList<ImageDetail> Details { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
