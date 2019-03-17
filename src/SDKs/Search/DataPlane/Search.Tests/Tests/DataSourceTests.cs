@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
                 DataSource dataSource = CreateTestDataSource();
-                dataSource.Type = DataSourceType.Create("thistypedoesnotexist");
+                dataSource.Type = "thistypedoesnotexist";
 
                 SearchAssert.ThrowsCloudException(
                     () => searchClient.DataSources.Create(dataSource),

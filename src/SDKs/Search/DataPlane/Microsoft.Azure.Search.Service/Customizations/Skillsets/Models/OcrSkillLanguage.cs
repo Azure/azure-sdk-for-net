@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Newtonsoft.Json;
     using Serialization;
 
@@ -11,8 +13,10 @@ namespace Microsoft.Azure.Search.Models
     /// Defines the format of OcrSkill supported language codes.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<OcrSkillLanguage>))]
-    public sealed class OcrSkillLanguage : ExtensibleEnum<OcrSkillLanguage>
+    public struct OcrSkillLanguage : IEquatable<OcrSkillLanguage>
     {
+        private readonly string _value;
+
         /// <summary>
         /// Indicates language code "zh-Hans" (for Chinese Simplified)
         /// </summary>
@@ -143,24 +147,67 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly OcrSkillLanguage Sk = new OcrSkillLanguage("sk");
 
-        private OcrSkillLanguage(string name) : base(name)
+        private OcrSkillLanguage(string language)
         {
-            // Base class does all initialization.
+            Throw.IfArgumentNull(language, nameof(language));
+            _value = language;
         }
-
-        /// <summary>
-        /// Creates a new OcrSkillLanguage instance, or returns an existing instance.
-        /// </summary>
-        /// <param name="name">Supported language code.</param>
-        /// <returns>A OcrSkillLanguage instance with the given name.</returns>
-        public static OcrSkillLanguage Create(string name) => Lookup(name) ?? new OcrSkillLanguage(name);
 
         /// <summary>
         /// Defines implicit conversion from string to OcrSkillLanguage.
         /// </summary>
-        /// <param name="name">string to convert.</param>
+        /// <param name="language">string to convert.</param>
         /// <returns>The string as a OcrSkillLanguage.</returns>
-        public static implicit operator OcrSkillLanguage(string name) => Create(name);
+        public static implicit operator OcrSkillLanguage(string language) => new OcrSkillLanguage(language);
+
+        /// <summary>
+        /// Defines explicit conversion from OcrSkillLanguage to string.
+        /// </summary>
+        /// <param name="language">OcrSkillLanguage to convert.</param>
+        /// <returns>The OcrSkillLanguage as a string.</returns>
+        public static explicit operator string(OcrSkillLanguage language) => language.ToString();
+
+        /// <summary>
+        /// Compares two OcrSkillLanguage values for equality.
+        /// </summary>
+        /// <param name="lhs">The first OcrSkillLanguage to compare.</param>
+        /// <param name="rhs">The second OcrSkillLanguage to compare.</param>
+        /// <returns>true if the OcrSkillLanguage objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(OcrSkillLanguage lhs, OcrSkillLanguage rhs) => Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two OcrSkillLanguage values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first OcrSkillLanguage to compare.</param>
+        /// <param name="rhs">The second OcrSkillLanguage to compare.</param>
+        /// <returns>true if the OcrSkillLanguage objects are not equal; false otherwise.</returns>
+        public static bool operator !=(OcrSkillLanguage lhs, OcrSkillLanguage rhs) => !Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares the OcrSkillLanguage for equality with another OcrSkillLanguage.
+        /// </summary>
+        /// <param name="other">The OcrSkillLanguage with which to compare.</param>
+        /// <returns><c>true</c> if the OcrSkillLanguage objects are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(OcrSkillLanguage other) => _value == other._value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) => obj is OcrSkillLanguage ? Equals((OcrSkillLanguage)obj) : false;
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Returns a string representation of the OcrSkillLanguage.
+        /// </summary>
+        /// <returns>The OcrSkillLanguage as a string.</returns>
+        public override string ToString() => _value;
     }
 }
 

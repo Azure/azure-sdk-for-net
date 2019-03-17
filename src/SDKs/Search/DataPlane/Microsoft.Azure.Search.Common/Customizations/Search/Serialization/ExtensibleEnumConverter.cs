@@ -5,56 +5,44 @@
 namespace Microsoft.Azure.Search.Serialization
 {
     using System;
+    using System.Linq;
     using System.Reflection;
     using Common;
-    using Models;
     using Newtonsoft.Json;
-
-    /// <summary>
-    /// Delegate type for a factory method that creates or looks up an ExtensibleEnum instance from a given string.
-    /// </summary>
-    /// <typeparam name="T">The type of ExtensibleEnum returned.</typeparam>
-    /// <param name="name">The enum value to look up or create.</param>
-    /// <returns>An instance of type T.</returns>
-    public delegate T ExtensibleEnumValueFactory<T>(string name) where T : ExtensibleEnum<T>;
 
     /// <summary>
     /// Serializes and deserializes "extensible enums" to and from JSON. Extensible enums are like enumerations in
     /// that they have well-known values, but they are extensible with new values and the values are based on strings
     /// instead of integers.
     /// </summary>
-    public class ExtensibleEnumConverter<T> : JsonConverter where T : ExtensibleEnum<T>
+    public class ExtensibleEnumConverter<T> : JsonConverter
     {
-        private ExtensibleEnumValueFactory<T> _enumValueFactory;
+        private readonly Func<string, T> _enumValueFactory;
 
         /// <summary>
         /// Initializes a new instance of the ExtensibleEnumConverter class.
         /// </summary>
-        public ExtensibleEnumConverter() : this("Create") { }
-
-        /// <summary>
-        /// Initializes a new instance of the ExtensibleEnumConverter class.
-        /// </summary>
-        /// <param name="factoryMethodName">
-        /// The name of a public static method that creates an instance of type T given a string value; Default is
-        /// "Create".
-        /// </param>
-        public ExtensibleEnumConverter(string factoryMethodName)
+        public ExtensibleEnumConverter()
         {
-            Throw.IfArgumentNull(factoryMethodName, "factoryMethodName");
+            bool TakesSingleStringParameter(ConstructorInfo ctor)
+            {
+                ParameterInfo[] parameters = ctor.GetParameters();
+                if (parameters.Length == 1)
+                {
+                    return parameters[0].ParameterType == typeof(string);
+                }
 
-            MethodInfo method = typeof(T).GetTypeInfo().GetDeclaredMethod(factoryMethodName);
+                return false;
+            }
 
-            const string MessageFormat =
-                "No method named '{0}' could be found that is convertible to ExtensibleEnumValueFactory<{1}>.";
+            ConstructorInfo fromStringCtor = typeof(T).GetTypeInfo().DeclaredConstructors.FirstOrDefault(TakesSingleStringParameter);
 
             Throw.IfArgument(
-                method == null, 
-                "factoryMethodName", 
-                String.Format(MessageFormat, factoryMethodName, typeof(T).Name));
+                fromStringCtor == null, 
+                typeof(T).Name,
+                $"No constructor taking a string parameter could be found for type '{typeof(T)}'.");
 
-            _enumValueFactory = 
-                (ExtensibleEnumValueFactory<T>)method.CreateDelegate(typeof(ExtensibleEnumValueFactory<T>));
+            _enumValueFactory = str => (T)fromStringCtor.Invoke(new[] { str });
         }
 
         /// <summary>

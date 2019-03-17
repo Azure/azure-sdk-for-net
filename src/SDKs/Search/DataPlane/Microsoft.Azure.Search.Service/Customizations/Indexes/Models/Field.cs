@@ -14,12 +14,9 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public class Field
     {
-        /// <summary>
-        /// Initializes a new instance of the Field class.
-        /// </summary>
-        public Field()
+        private Field()
         {
-            this.IsRetrievable = true;
+            IsRetrievable = true;
         }
 
         /// <summary>
@@ -55,8 +52,8 @@ namespace Microsoft.Azure.Search.Models
         public Field(string name, DataType dataType, AnalyzerName analyzerName)
             : this(name, dataType)
         {
-            this.Analyzer = analyzerName;
-            this.IsSearchable = true;
+            Analyzer = analyzerName;
+            IsSearchable = true;
         }
 
         /// <summary>
@@ -164,10 +161,6 @@ namespace Microsoft.Azure.Search.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
             }
         }
     }

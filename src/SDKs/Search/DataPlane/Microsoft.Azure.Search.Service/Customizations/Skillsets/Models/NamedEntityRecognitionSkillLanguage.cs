@@ -4,17 +4,20 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Newtonsoft.Json;
     using Serialization;
-    using System;
 
     /// <summary>
     /// Defines the format of NamedEntityRecognitionSkill supported language codes.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<NamedEntityRecognitionSkillLanguage>))]
     [Obsolete("Use EntityRecognitionSkillLanguage instead.")]
-    public sealed class NamedEntityRecognitionSkillLanguage : ExtensibleEnum<NamedEntityRecognitionSkillLanguage>
+    public struct NamedEntityRecognitionSkillLanguage : IEquatable<NamedEntityRecognitionSkillLanguage>
     {
+        private readonly string _value;
+
         /// <summary>
         /// Indicates language code "ar" (for Arabic)
         /// </summary>
@@ -85,23 +88,70 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly NamedEntityRecognitionSkillLanguage Pt = new NamedEntityRecognitionSkillLanguage("pt");
 
-        private NamedEntityRecognitionSkillLanguage(string name) : base(name)
+        private NamedEntityRecognitionSkillLanguage(string language)
         {
-            // Base class does all initialization.
+            Throw.IfArgumentNull(language, nameof(language));
+            _value = language;
         }
-
-        /// <summary>
-        /// Creates a new NamedEntityRecognitionSkillLanguage instance, or returns an existing instance.
-        /// </summary>
-        /// <param name="name">Supported language code.</param>
-        /// <returns>A NamedEntityRecognitionSkillLanguage instance with the given name.</returns>
-        public static NamedEntityRecognitionSkillLanguage Create(string name) => Lookup(name) ?? new NamedEntityRecognitionSkillLanguage(name);
 
         /// <summary>
         /// Defines implicit conversion from string to NamedEntityRecognitionSkillLanguage.
         /// </summary>
-        /// <param name="name">string to convert.</param>
+        /// <param name="language">string to convert.</param>
         /// <returns>The string as a NamedEntityRecognitionSkillLanguage.</returns>
-        public static implicit operator NamedEntityRecognitionSkillLanguage(string name) => Create(name);
+        public static implicit operator NamedEntityRecognitionSkillLanguage(string language) =>
+            new NamedEntityRecognitionSkillLanguage(language);
+
+        /// <summary>
+        /// Defines explicit conversion from NamedEntityRecognitionSkillLanguage to string.
+        /// </summary>
+        /// <param name="language">NamedEntityRecognitionSkillLanguage to convert.</param>
+        /// <returns>The NamedEntityRecognitionSkillLanguage as a string.</returns>
+        public static explicit operator string(NamedEntityRecognitionSkillLanguage language) => language.ToString();
+
+        /// <summary>
+        /// Compares two NamedEntityRecognitionSkillLanguage values for equality.
+        /// </summary>
+        /// <param name="lhs">The first NamedEntityRecognitionSkillLanguage to compare.</param>
+        /// <param name="rhs">The second NamedEntityRecognitionSkillLanguage to compare.</param>
+        /// <returns>true if the NamedEntityRecognitionSkillLanguage objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(NamedEntityRecognitionSkillLanguage lhs, NamedEntityRecognitionSkillLanguage rhs) =>
+            Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two NamedEntityRecognitionSkillLanguage values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first NamedEntityRecognitionSkillLanguage to compare.</param>
+        /// <param name="rhs">The second NamedEntityRecognitionSkillLanguage to compare.</param>
+        /// <returns>true if the NamedEntityRecognitionSkillLanguage objects are not equal; false otherwise.</returns>
+        public static bool operator !=(NamedEntityRecognitionSkillLanguage lhs, NamedEntityRecognitionSkillLanguage rhs) =>
+            !Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares the NamedEntityRecognitionSkillLanguage for equality with another NamedEntityRecognitionSkillLanguage.
+        /// </summary>
+        /// <param name="other">The NamedEntityRecognitionSkillLanguage with which to compare.</param>
+        /// <returns><c>true</c> if the NamedEntityRecognitionSkillLanguage objects are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(NamedEntityRecognitionSkillLanguage other) => _value == other._value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) =>
+            obj is NamedEntityRecognitionSkillLanguage ? Equals((NamedEntityRecognitionSkillLanguage)obj) : false;
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Returns a string representation of the NamedEntityRecognitionSkillLanguage.
+        /// </summary>
+        /// <returns>The NamedEntityRecognitionSkillLanguage as a string.</returns>
+        public override string ToString() => _value;
     }
 }

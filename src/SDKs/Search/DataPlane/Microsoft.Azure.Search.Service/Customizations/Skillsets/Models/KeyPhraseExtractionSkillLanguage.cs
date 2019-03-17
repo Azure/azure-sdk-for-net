@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Newtonsoft.Json;
     using Serialization;
 
@@ -11,8 +13,10 @@ namespace Microsoft.Azure.Search.Models
     /// Defines the format of KeyPhraseExtractionSkill supported language codes.
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<KeyPhraseExtractionSkillLanguage>))]
-    public sealed class KeyPhraseExtractionSkillLanguage : ExtensibleEnum<KeyPhraseExtractionSkillLanguage>
+    public struct KeyPhraseExtractionSkillLanguage : IEquatable<KeyPhraseExtractionSkillLanguage>
     {
+        private readonly string _value;
+
         /// <summary>
         /// Indicates language code "da" (for Danish)
         /// </summary>
@@ -93,23 +97,66 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         public static readonly KeyPhraseExtractionSkillLanguage Sv = new KeyPhraseExtractionSkillLanguage("sv");
 
-        private KeyPhraseExtractionSkillLanguage(string name) : base(name)
+        private KeyPhraseExtractionSkillLanguage(string language)
         {
-            // Base class does all initialization.
+            Throw.IfArgumentNull(language, nameof(language));
+            _value = language;
         }
-
-        /// <summary>
-        /// Creates a new KeyPhraseExtractionSkillLanguage instance, or returns an existing instance.
-        /// </summary>
-        /// <param name="name">Supported language code.</param>
-        /// <returns>A KeyPhraseExtractionSkillLanguage instance with the given name.</returns>
-        public static KeyPhraseExtractionSkillLanguage Create(string name) => Lookup(name) ?? new KeyPhraseExtractionSkillLanguage(name);
 
         /// <summary>
         /// Defines implicit conversion from string to KeyPhraseExtractionSkillLanguage.
         /// </summary>
-        /// <param name="name">string to convert.</param>
+        /// <param name="language">string to convert.</param>
         /// <returns>The string as a KeyPhraseExtractionSkillLanguage.</returns>
-        public static implicit operator KeyPhraseExtractionSkillLanguage(string name) => Create(name);
+        public static implicit operator KeyPhraseExtractionSkillLanguage(string language) => new KeyPhraseExtractionSkillLanguage(language);
+
+        /// <summary>
+        /// Defines explicit conversion from KeyPhraseExtractionSkillLanguage to string.
+        /// </summary>
+        /// <param name="language">KeyPhraseExtractionSkillLanguage to convert.</param>
+        /// <returns>The KeyPhraseExtractionSkillLanguage as a string.</returns>
+        public static explicit operator string(KeyPhraseExtractionSkillLanguage language) => language.ToString();
+
+        /// <summary>
+        /// Compares two KeyPhraseExtractionSkillLanguage values for equality.
+        /// </summary>
+        /// <param name="lhs">The first KeyPhraseExtractionSkillLanguage to compare.</param>
+        /// <param name="rhs">The second KeyPhraseExtractionSkillLanguage to compare.</param>
+        /// <returns>true if the KeyPhraseExtractionSkillLanguage objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(KeyPhraseExtractionSkillLanguage lhs, KeyPhraseExtractionSkillLanguage rhs) => Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two KeyPhraseExtractionSkillLanguage values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first KeyPhraseExtractionSkillLanguage to compare.</param>
+        /// <param name="rhs">The second KeyPhraseExtractionSkillLanguage to compare.</param>
+        /// <returns>true if the KeyPhraseExtractionSkillLanguage objects are not equal; false otherwise.</returns>
+        public static bool operator !=(KeyPhraseExtractionSkillLanguage lhs, KeyPhraseExtractionSkillLanguage rhs) => !Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares the KeyPhraseExtractionSkillLanguage for equality with another KeyPhraseExtractionSkillLanguage.
+        /// </summary>
+        /// <param name="other">The KeyPhraseExtractionSkillLanguage with which to compare.</param>
+        /// <returns><c>true</c> if the KeyPhraseExtractionSkillLanguage objects are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(KeyPhraseExtractionSkillLanguage other) => _value == other._value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) => obj is KeyPhraseExtractionSkillLanguage ? Equals((KeyPhraseExtractionSkillLanguage)obj) : false;
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Returns a string representation of the KeyPhraseExtractionSkillLanguage.
+        /// </summary>
+        /// <returns>The KeyPhraseExtractionSkillLanguage as a string.</returns>
+        public override string ToString() => _value;
     }
 }
