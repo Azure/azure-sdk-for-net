@@ -6,9 +6,7 @@ namespace Microsoft.Azure.Search.Models
 {
     using Newtonsoft.Json;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
-    using System.Linq;
 
     /// <summary>
     /// Text analytics named entity recognition. This skill is deprecated in favor of <see cref="EntityRecognitionSkill"/>
@@ -81,16 +79,5 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "minimumPrecision")]
         public double? MinimumPrecision { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }

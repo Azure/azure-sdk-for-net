@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Search.Models
         /// describes the inputs, outputs, and usage of the skill.</param>
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
-        /// /document or /document/content).</param>
+        /// /document or /document/content). The default is /document.</param>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in an
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Search.Models
         /// merged text. By default, the tag is an empty space.</param>
         /// <param name="insertPostTag">The tag indicates the end of the merged
         /// text. By default, the tag is an empty space.</param>
-        public MergeSkill(string description, string context, IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string insertPreTag = default(string), string insertPostTag = default(string))
+        public MergeSkill(string description = default(string), string context = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>), IList<OutputFieldMappingEntry> outputs = default(IList<OutputFieldMappingEntry>), string insertPreTag = default(string), string insertPostTag = default(string))
             : base(description, context, inputs, outputs)
         {
             InsertPreTag = insertPreTag;
@@ -77,15 +77,5 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "insertPostTag")]
         public string InsertPostTag { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-        }
     }
 }
