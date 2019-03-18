@@ -12,13 +12,11 @@ namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for ExpressRouteCircuitSkuTier.
+    /// Defines values for WebApplicationFirewallEnabledState.
     /// </summary>
-    public static class ExpressRouteCircuitSkuTier
+    public static class WebApplicationFirewallEnabledState
     {
-        public const string Standard = "Standard";
-        public const string Premium = "Premium";
-        public const string Basic = "Basic";
-        public const string Local = "Local";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }
