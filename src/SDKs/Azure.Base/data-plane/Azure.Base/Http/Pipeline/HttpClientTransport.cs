@@ -10,12 +10,15 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Base.Diagnostics;
 
 namespace Azure.Base.Http.Pipeline
 {
     public class HttpClientTransport : HttpPipelineTransport
     {
-        static readonly HttpClient s_defaultClient = new HttpClient();
+        private static readonly long s_delayWarningThreshold = 3000; // 3000ms
+        private static readonly HttpClient s_defaultClient = new HttpClient();
+        private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
 
         readonly HttpClient _client;
 
@@ -32,10 +35,26 @@ namespace Azure.Base.Http.Pipeline
             var httpTransportMessage = message as Message;
             if (httpTransportMessage == null) throw new InvalidOperationException("the message is not compatible with the transport");
 
+
+            s_eventSource.ProcessingRequest(message);
             HttpRequestMessage httpRequest = httpTransportMessage.BuildRequestMessage();
 
+            var before = Stopwatch.GetTimestamp();
             HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
+            var after = Stopwatch.GetTimestamp();
+
             httpTransportMessage.ProcessResponseMessage(responseMessage);
+
+            if (!responseMessage.IsSuccessStatusCode) {
+                s_eventSource.ErrorResponse(message);
+            }
+
+            var elapsedMilliseconds = (after - before) * 1000 / Stopwatch.Frequency;
+            if (elapsedMilliseconds > s_delayWarningThreshold) {
+                s_eventSource.ResponseDelay(message, elapsedMilliseconds);
+            }
+
+            s_eventSource.ProcessingResponse(message);
         }
 
         protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)

@@ -6,26 +6,18 @@ using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
-using System.Diagnostics.Tracing;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Tests
 {
-    // TODO (pri 2): Do use the EventRegister NuGet package or the standalone eventRegister.exe tool, to run build-time validation of the event source classes defined in your assemblies.
     public class PipelineTests
     {
-        string expected = @"ProcessingRequest : Get https://contoso.a.io/ # ErrorResponse : 500 # ProcessingResponse : Get https://contoso.a.io/ # ProcessingRequest : Get https://contoso.a.io/ # ProcessingResponse : Get https://contoso.a.io/";
-
         [Test]
-        public void Basics() {
-
+        public void Basics()
+        {
             var options = new HttpPipelineOptions(new MockTransport(500, 1));
             options.RetryPolicy = new CustomRetryPolicy();
-            options.LoggingPolicy = new LoggingPolicy();
-
-            var listener = new TestEventListener();
-            listener.EnableEvents(EventLevel.LogAlways);
 
             var pipeline = options.Build("test", "1.0.0");
 
@@ -35,8 +27,6 @@ namespace Azure.Base.Tests
                 pipeline.SendMessageAsync(message).Wait();
 
                 Assert.AreEqual(1, message.Response.Status);
-                var result = listener.ToString();
-                Assert.AreEqual(expected, result);
             }
         }
 
@@ -63,9 +53,9 @@ namespace Azure.Base.Tests
             public NullMessage() : base(default) { }
             public override HttpVerb Method => throw new NotImplementedException();
 
-            protected override int Status => throw new NotImplementedException();
+            protected internal override int Status => throw new NotImplementedException();
 
-            protected override Stream ResponseContentStream => throw new NotImplementedException();
+            protected internal override Stream ResponseContentStream => throw new NotImplementedException();
 
             public override void AddHeader(HttpHeader header)
             {
@@ -82,7 +72,7 @@ namespace Azure.Base.Tests
                 throw new NotImplementedException();
             }
 
-            protected override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            protected internal override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
             {
                 throw new NotImplementedException();
             }

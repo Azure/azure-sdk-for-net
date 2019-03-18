@@ -24,8 +24,6 @@ namespace Azure.Base.Http
             }
         }
 
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
-
         public HttpPipelinePolicy RetryPolicy { get; set; }
 
         public bool DisableTelemetry { get; set; } = false;
@@ -67,7 +65,6 @@ namespace Azure.Base.Http
                 int numberOfPolicies = 1; // HttpPipelineTransport
                 if (DisableTelemetry == false) numberOfPolicies++; // AddHeadersPolicy
 
-                if (LoggingPolicy != null) numberOfPolicies++;
                 if (RetryPolicy != null) numberOfPolicies++;
 
                 if (_perCallPolicies != null) numberOfPolicies += _perCallPolicies.Count;
@@ -101,9 +98,6 @@ namespace Azure.Base.Http
                 foreach (var policy in _perRetryPolicies) {
                     policies[index++] = policy;
                 }
-            }
-            if (LoggingPolicy != null) {
-                policies[index++] = LoggingPolicy;
             }
             policies[index++] = _transport;
 
