@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// can use to secure a connection to the IoT hub.</param>
         /// <param name="ipFilterRules">The IP filter rules.</param>
         /// <param name="provisioningState">The provisioning state.</param>
-        /// <param name="state">Thehub state state.</param>
+        /// <param name="state">The hub state.</param>
         /// <param name="hostName">The name of the host.</param>
         /// <param name="eventHubEndpoints">The Event Hub-compatible endpoint
         /// properties. The possible keys to this dictionary are events and
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets thehub state state.
+        /// Gets the hub state.
         /// </summary>
         [JsonProperty(PropertyName = "state")]
         public string State { get; private set; }
