@@ -92,11 +92,6 @@ namespace Microsoft.Azure.Management.ContainerService
         public virtual IManagedClustersOperations ManagedClusters { get; private set; }
 
         /// <summary>
-        /// Gets the IAgentPoolsOperations.
-        /// </summary>
-        public virtual IAgentPoolsOperations AgentPools { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the ContainerServiceClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -341,7 +336,6 @@ namespace Microsoft.Azure.Management.ContainerService
             ContainerServices = new ContainerServicesOperations(this);
             Operations = new Operations(this);
             ManagedClusters = new ManagedClustersOperations(this);
-            AgentPools = new AgentPoolsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
