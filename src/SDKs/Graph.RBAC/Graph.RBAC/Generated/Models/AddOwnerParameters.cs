@@ -19,20 +19,18 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     /// <summary>
     /// Request parameters for adding a owner to an application.
     /// </summary>
-    public partial class ApplicationAddOwnerParameters
+    public partial class AddOwnerParameters
     {
         /// <summary>
-        /// Initializes a new instance of the ApplicationAddOwnerParameters
-        /// class.
+        /// Initializes a new instance of the AddOwnerParameters class.
         /// </summary>
-        public ApplicationAddOwnerParameters()
+        public AddOwnerParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ApplicationAddOwnerParameters
-        /// class.
+        /// Initializes a new instance of the AddOwnerParameters class.
         /// </summary>
         /// <param name="url">A owner object URL, such as
         /// "https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd",
@@ -41,7 +39,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// (user, application, servicePrincipal, group) to be added.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
-        public ApplicationAddOwnerParameters(string url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
+        public AddOwnerParameters(string url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>))
         {
             AdditionalProperties = additionalProperties;
             Url = url;

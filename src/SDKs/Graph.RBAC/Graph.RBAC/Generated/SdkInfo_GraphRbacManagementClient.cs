@@ -20,11 +20,14 @@ namespace Microsoft.Azure.Graph.RBAC
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Applications", "1.6"),
+                new Tuple<string, string, string>("GraphRbacManagementClient", "DeletedApplications", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Domains", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Groups", "1.6"),
-                new Tuple<string, string, string>("GraphRbacManagementClient", "OAuth2", "1.6"),
+                new Tuple<string, string, string>("GraphRbacManagementClient", "OAuth2PermissionGrant", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Objects", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "ServicePrincipals", "1.6"),
+                new Tuple<string, string, string>("GraphRbacManagementClient", "ServicePrincipalsByAppId", "1.6"),
+                new Tuple<string, string, string>("GraphRbacManagementClient", "SignedInUser", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Users", "1.6"),
               }.AsEnumerable();
           }
@@ -32,10 +35,10 @@ namespace Microsoft.Azure.Graph.RBAC
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/graphrbac/data-plane/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\grlin\\dev\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd C:\\code\\azure-rest-api-specs\\specification\\graphrbac\\data-plane\\readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=c:\\graph\\azure-sdk-for-net\\src\\SDKs\\Graph.RBAC\\Graph.RBAC\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "cd84ac9a998b7d39721b8c2675762e3df9bea628";
+      public static readonly String GithubCommidId = "debb0982bcd88a89ab6bd0d0f68dd48c96dd3a28";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
