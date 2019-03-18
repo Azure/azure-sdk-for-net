@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHub.Tests", "EventHub.Tests\EventHub.Tests.csproj", "{90FE65CB-D848-4ED8-97F5-7C967102CEAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventHub.Tests", "EventHub.Tests\Management.EventHub.Tests.csproj", "{90FE65CB-D848-4ED8-97F5-7C967102CEAF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.EventHub", "Management.EventHub\Microsoft.Azure.Management.EventHub.csproj", "{7E47289A-E72B-4F7E-86D2-354E21FA25C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.Management.EventHub", "Management.EventHub\Management.EventHub.csproj", "{7E47289A-E72B-4F7E-86D2-354E21FA25C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
