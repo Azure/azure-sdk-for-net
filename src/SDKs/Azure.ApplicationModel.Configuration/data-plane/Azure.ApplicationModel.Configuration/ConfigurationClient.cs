@@ -57,6 +57,8 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
+        public HttpPipeline Pipeline => _pipeline;
+
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
         [HttpError(typeof(RequestFailedException), 412, Message = "matching item is already in the store")]
         [HttpError(typeof(RequestFailedException), 429, Message = "too many requests")]

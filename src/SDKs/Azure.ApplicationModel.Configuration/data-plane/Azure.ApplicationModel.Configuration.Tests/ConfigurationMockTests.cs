@@ -68,6 +68,21 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
+        public async Task Raw()
+        {
+            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
+            var service = new ConfigurationClient(connectionString, transport);
+
+            HttpPipeline pipeline = service.Pipeline;
+            using (var message = pipeline.CreateMessage(default)) {
+                message.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.azconfig.io/kv/test_key"));
+                await pipeline.SendMessageAsync(message);
+                Response response = message.Response;
+                Assert.AreEqual(200, response.Status);
+            }
+        }
+
+        [Test]
         public void GetNotFound()
         {
             var transport = new GetMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
