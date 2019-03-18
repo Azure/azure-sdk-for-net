@@ -33,9 +33,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         /// <param name="allowPersistentLicense">All license to be persistent
         /// or not</param>
-        /// <param name="customLicenseAcquisitionUrlTemplate">The template for
-        /// a customer service to deliver keys to end users.  Not needed when
-        /// using Azure Media Services for issuing keys.</param>
+        /// <param name="customLicenseAcquisitionUrlTemplate">Template for the
+        /// URL of the custom service delivering licenses to end user players.
+        /// Not required when using Azure Media Services for issuing licenses.
+        /// The template supports replaceable tokens that the service will
+        /// update at runtime with the value specific to the request.  The
+        /// currently supported token values are {AlternativeMediaId}, which is
+        /// replaced with the value of StreamingLocatorId.AlternativeMediaId,
+        /// and {ContentKeyId}, which is replaced with the value of identifier
+        /// of the key being requested.</param>
         public StreamingPolicyFairPlayConfiguration(bool allowPersistentLicense, string customLicenseAcquisitionUrlTemplate = default(string))
         {
             CustomLicenseAcquisitionUrlTemplate = customLicenseAcquisitionUrlTemplate;
@@ -49,9 +55,14 @@ namespace Microsoft.Azure.Management.Media.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the template for a customer service to deliver keys to
-        /// end users.  Not needed when using Azure Media Services for issuing
-        /// keys.
+        /// Gets or sets template for the URL of the custom service delivering
+        /// licenses to end user players.  Not required when using Azure Media
+        /// Services for issuing licenses.  The template supports replaceable
+        /// tokens that the service will update at runtime with the value
+        /// specific to the request.  The currently supported token values are
+        /// {AlternativeMediaId}, which is replaced with the value of
+        /// StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is
+        /// replaced with the value of identifier of the key being requested.
         /// </summary>
         [JsonProperty(PropertyName = "customLicenseAcquisitionUrlTemplate")]
         public string CustomLicenseAcquisitionUrlTemplate { get; set; }

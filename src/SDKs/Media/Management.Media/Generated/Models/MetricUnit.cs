@@ -10,107 +10,23 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for MetricUnit.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(MetricUnitConverter))]
-    public struct MetricUnit : System.IEquatable<MetricUnit>
+    public static class MetricUnit
     {
-        private MetricUnit(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// The number of bytes.
         /// </summary>
-        public static readonly MetricUnit Bytes = "Bytes";
-
+        public const string Bytes = "Bytes";
         /// <summary>
         /// The count.
         /// </summary>
-        public static readonly MetricUnit Count = "Count";
-
+        public const string Count = "Count";
         /// <summary>
         /// The number of milliseconds.
         /// </summary>
-        public static readonly MetricUnit Milliseconds = "Milliseconds";
-
-
-        /// <summary>
-        /// Underlying value of enum MetricUnit
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for MetricUnit
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type MetricUnit
-        /// </summary>
-        public bool Equals(MetricUnit e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to MetricUnit
-        /// </summary>
-        public static implicit operator MetricUnit(string value)
-        {
-            return new MetricUnit(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert MetricUnit to string
-        /// </summary>
-        public static implicit operator string(MetricUnit e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum MetricUnit
-        /// </summary>
-        public static bool operator == (MetricUnit e1, MetricUnit e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum MetricUnit
-        /// </summary>
-        public static bool operator != (MetricUnit e1, MetricUnit e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for MetricUnit
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is MetricUnit && Equals((MetricUnit)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode MetricUnit
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string Milliseconds = "Milliseconds";
     }
 }

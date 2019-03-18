@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// opaque.</param>
         /// <param name="cropRectangle">An optional rectangular window used to
         /// crop the overlay image or video.</param>
-        public VideoOverlay(string inputLabel = default(string), System.TimeSpan? start = default(System.TimeSpan?), System.TimeSpan? end = default(System.TimeSpan?), System.TimeSpan? fadeInDuration = default(System.TimeSpan?), System.TimeSpan? fadeOutDuration = default(System.TimeSpan?), double? audioGainLevel = default(double?), Rectangle position = default(Rectangle), double? opacity = default(double?), Rectangle cropRectangle = default(Rectangle))
+        public VideoOverlay(string inputLabel, System.TimeSpan? start = default(System.TimeSpan?), System.TimeSpan? end = default(System.TimeSpan?), System.TimeSpan? fadeInDuration = default(System.TimeSpan?), System.TimeSpan? fadeOutDuration = default(System.TimeSpan?), double? audioGainLevel = default(double?), Rectangle position = default(Rectangle), double? opacity = default(double?), Rectangle cropRectangle = default(Rectangle))
             : base(inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel)
         {
             Position = position;
@@ -101,5 +101,15 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "cropRectangle")]
         public Rectangle CropRectangle { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }
