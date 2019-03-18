@@ -96,6 +96,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
         public virtual ICheckSkuAvailabilityOperations CheckSkuAvailability { get; private set; }
 
         /// <summary>
+        /// Gets the ILocationsOperations.
+        /// </summary>
+        public virtual ILocationsOperations Locations { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the CognitiveServicesManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -340,6 +345,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             ResourceSkus = new ResourceSkusOperations(this);
             Operations = new Operations(this);
             CheckSkuAvailability = new CheckSkuAvailabilityOperations(this);
+            Locations = new LocationsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-04-18";
             AcceptLanguage = "en-US";

@@ -90,5 +90,10 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// </summary>
         ICheckSkuAvailabilityOperations CheckSkuAvailability { get; }
 
+        /// <summary>
+        /// Gets the ILocationsOperations.
+        /// </summary>
+        ILocationsOperations Locations { get; }
+
     }
 }
