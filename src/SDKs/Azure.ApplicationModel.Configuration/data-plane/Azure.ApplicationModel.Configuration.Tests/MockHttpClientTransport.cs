@@ -24,10 +24,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-
-            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            json = json.Replace("contenttype", "content_type");
-            _responseContent = json.Replace("lastmodified", "last_modified");
+            _responseContent = SerializeSetting(responseContent);
         }
     }
 
@@ -38,10 +35,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-
-            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            json = json.Replace("contenttype", "content_type");
-            _responseContent = json.Replace("lastmodified", "last_modified");
+            _responseContent = SerializeSetting(responseContent);
         }
     }
 
@@ -52,10 +46,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-
-            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            json = json.Replace("contenttype", "content_type");
-            _responseContent = json.Replace("lastmodified", "last_modified");
+            _responseContent = SerializeSetting(responseContent);
         }
 
         protected override void VerifyRequestCore(HttpRequestMessage request)
@@ -71,10 +62,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{key}{GetExtraUriParameters(filter)}";
             _expectedRequestContent = null;
             _expectedMethod = HttpMethod.Delete;
-
-            string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
-            json = json.Replace("contenttype", "content_type");
-            _responseContent = json.Replace("lastmodified", "last_modified");
+            _responseContent = SerializeSetting(result);
         }
 
         public DeleteMockTransport(string key, RequestOptions filter, HttpStatusCode statusCode)
@@ -93,10 +81,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedMethod = HttpMethod.Get;
             _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}{GetExtraUriParameters(filter)}";
             _expectedRequestContent = null;
-
-            string json = JsonConvert.SerializeObject(result).ToLowerInvariant();
-            json = json.Replace("contenttype", "content_type");
-            _responseContent = json.Replace("lastmodified", "last_modified");
+            _responseContent = SerializeSetting(result);
         }
 
         public GetMockTransport(string queryKey, RequestOptions filter, params HttpStatusCode[] statusCodes)
@@ -116,10 +101,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/locks/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedRequestContent = null;
             _expectedMethod = lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete;
-
-            string json = JsonConvert.SerializeObject(responseContent).ToLowerInvariant();
-            json = json.Replace("contenttype", "content_type");
-            _responseContent = json.Replace("lastmodified", "last_modified");
+            _responseContent = SerializeSetting(responseContent);
         }
     }
 
@@ -139,7 +121,7 @@ namespace Azure.ApplicationModel.Configuration.Test
                 var item = new ConfigurationSetting($"key{i}", "val")
                 {
                     Label = "label",
-                    ETag = "c3c231fd-39a0-4cb6-3237-4614474b92c1",
+                    ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"),
                     ContentType = "text"
                 };
                 KeyValues.Add(item);
@@ -162,6 +144,7 @@ namespace Azure.ApplicationModel.Configuration.Test
                 bathItems.Items.Add(KeyValues[itemIndex++]);
             }
             string json = JsonConvert.SerializeObject(bathItems).ToLowerInvariant();
+            json = json.Replace("etag\":{}", "etag\":\"c3c231fd-39a0-4cb6-3237-4614474b92c1\"");
             json = json.Replace("contenttype", "content_type");
             json = json.Replace("lastmodified", "last_modified");
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
@@ -224,6 +207,37 @@ namespace Azure.ApplicationModel.Configuration.Test
 
             response.Content.Headers.TryAddWithoutValidation("Last-Modified", "Tue, 05 Dec 2017 02:41:26 GMT");
             response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
+        }
+
+        protected string SerializeSetting(ConfigurationSetting responseContent)
+        {
+            if (responseContent == null) return null;
+
+            StringBuilder requestContent = new StringBuilder();
+            requestContent.AppendFormat("{{\"key\":\"{0}\",", responseContent.Key);
+            requestContent.AppendFormat("\"label\":\"{0}\",", responseContent.Label);
+            requestContent.AppendFormat("\"value\":\"{0}\",", responseContent.Value);
+            requestContent.AppendFormat("\"content_type\":\"{0}\",", responseContent.ContentType);
+            requestContent.AppendFormat("\"etag\":\"{0}\",", responseContent.ETag.ToString());
+            requestContent.AppendFormat("\"last_modified\":\"{0}\",", responseContent.LastModified.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK"));
+            requestContent.AppendFormat("\"locked\":{0},", responseContent.Locked);
+            requestContent.AppendFormat("\"tags\":{{");
+
+            bool first = true;
+            foreach (var tag in responseContent.Tags)
+            {
+                if (first)
+                {
+                    requestContent.AppendFormat("\"{0}\":\"{1}\"", tag.Key, tag.Value);
+                    first = false;
+                }
+                else
+                {
+                    requestContent.AppendFormat(",\"{0}\":\"{1}\"", tag.Key, tag.Value);
+                }
+            }
+            requestContent.Append("}}");
+            return requestContent.ToString().ToLowerInvariant();
         }
 
         protected string GetExtraUriParameters(RequestOptions filter)

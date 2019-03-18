@@ -138,7 +138,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             ConfigurationSetting settting = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
             RequestOptions options = new RequestOptions()
             {
-                ETag = new ETagFilter() { IfMatch = new ETag(settting.ETag) },
+                ETag = new ETagFilter() { IfMatch = settting.ETag },
                 Label = settting.Label
             };
 
@@ -355,7 +355,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 RequestOptions options = new RequestOptions()
                 {
-                    ETag = new ETagFilter() { IfMatch = new ETag(responseGet.ETag) }
+                    ETag = new ETagFilter() { IfMatch = responseGet.ETag }
                 };
 
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
@@ -382,7 +382,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 RequestOptions options = new RequestOptions()
                 {
-                    ETag = new ETagFilter() { IfNoneMatch = new ETag(setting.ETag) }
+                    ETag = new ETagFilter() { IfNoneMatch = setting.ETag }
                 };
 
                 var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -488,7 +488,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 RequestOptions options = new RequestOptions()
                 {
                     Label = setting.Label,
-                    ETag = new ETagFilter() { IfNoneMatch = new ETag(setting.ETag) }
+                    ETag = new ETagFilter() { IfNoneMatch = setting.ETag }
                 };
 
                 var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -794,8 +794,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             //Etag tests
             var testSettingEtagDiff = testSettingsameCase.Clone();
-            testSettingsameCase.ETag = Guid.NewGuid().ToString();
-            testSettingEtagDiff.ETag = Guid.NewGuid().ToString();
+            testSettingsameCase.ETag = new ETag(Guid.NewGuid().ToString());
+            testSettingEtagDiff.ETag = new ETag(Guid.NewGuid().ToString());
             Assert.AreNotEqual(testSettingsameCase, testSettingEtagDiff);
 
             // Different tags
@@ -821,7 +821,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 ContentType = setting.ContentType,
                 LastModified = setting.LastModified,
                 Locked = setting.Locked,
-                ETag = null,
+                ETag = default,
                 Tags = tags
             };
         }
