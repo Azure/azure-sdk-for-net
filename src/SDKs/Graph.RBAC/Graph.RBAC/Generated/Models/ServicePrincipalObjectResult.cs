@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Graph.RBAC.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -31,10 +33,10 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// Initializes a new instance of the ServicePrincipalObjectResult
         /// class.
         /// </summary>
-        /// <param name="value">Service Principal Application Object Id</param>
+        /// <param name="value">A collection of Application Objects.</param>
         /// <param name="odatametadata">The URL representing edm
         /// equivalent.</param>
-        public ServicePrincipalObjectResult(string value = default(string), string odatametadata = default(string))
+        public ServicePrincipalObjectResult(IList<string> value = default(IList<string>), string odatametadata = default(string))
         {
             Value = value;
             Odatametadata = odatametadata;
@@ -47,10 +49,10 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets service Principal Application Object Id
+        /// Gets or sets a collection of Application Objects.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        public IList<string> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL representing edm equivalent.
