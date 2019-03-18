@@ -61,12 +61,12 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='peerAsnName'>
             /// The peer ASN name.
             /// </param>
-            /// <param name='peerInfo'>
-            /// The peer info.
+            /// <param name='peerAsn'>
+            /// The peer ASN.
             /// </param>
-            public static PeerAsn CreateOrUpdate(this IPeerAsnsOperations operations, string peerAsnName, PeerAsnProperties peerInfo)
+            public static PeerAsn CreateOrUpdate(this IPeerAsnsOperations operations, string peerAsnName, PeerAsn peerAsn)
             {
-                return operations.CreateOrUpdateAsync(peerAsnName, peerInfo).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(peerAsnName, peerAsn).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -79,15 +79,15 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='peerAsnName'>
             /// The peer ASN name.
             /// </param>
-            /// <param name='peerInfo'>
-            /// The peer info.
+            /// <param name='peerAsn'>
+            /// The peer ASN.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PeerAsn> CreateOrUpdateAsync(this IPeerAsnsOperations operations, string peerAsnName, PeerAsnProperties peerInfo, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PeerAsn> CreateOrUpdateAsync(this IPeerAsnsOperations operations, string peerAsnName, PeerAsn peerAsn, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(peerAsnName, peerInfo, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(peerAsnName, peerAsn, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

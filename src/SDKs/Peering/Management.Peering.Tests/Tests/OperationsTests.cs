@@ -73,7 +73,7 @@ namespace Peering.Tests
                 string[] phone = { "9999999" };
                 string[] email = { "noc@microsoft.com" };
                 var contactInfo = new ContactInfo(email, phone);
-                var peerInfo = new PeerAsnProperties(peerAsn: 65000, peerContactInfo: contactInfo, peerName: "Contoso");
+                var peerInfo = new PeerAsn(peerAsnProperty: 65000, peerContactInfo: contactInfo, peerName: "Contoso");
 
                 this.client = context.GetServiceClient<PeeringManagementClient>();
                 var result = this.client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);

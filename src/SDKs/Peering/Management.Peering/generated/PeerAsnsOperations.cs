@@ -235,8 +235,8 @@ namespace Microsoft.Azure.Management.Peering
         /// <param name='peerAsnName'>
         /// The peer ASN name.
         /// </param>
-        /// <param name='peerInfo'>
-        /// The peer info.
+        /// <param name='peerAsn'>
+        /// The peer ASN.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -259,15 +259,15 @@ namespace Microsoft.Azure.Management.Peering
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PeerAsn>> CreateOrUpdateWithHttpMessagesAsync(string peerAsnName, PeerAsnProperties peerInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PeerAsn>> CreateOrUpdateWithHttpMessagesAsync(string peerAsnName, PeerAsn peerAsn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (peerAsnName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "peerAsnName");
             }
-            if (peerInfo == null)
+            if (peerAsn == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "peerInfo");
+                throw new ValidationException(ValidationRules.CannotBeNull, "peerAsn");
             }
             if (Client.SubscriptionId == null)
             {
@@ -285,7 +285,7 @@ namespace Microsoft.Azure.Management.Peering
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("peerAsnName", peerAsnName);
-                tracingParameters.Add("peerInfo", peerInfo);
+                tracingParameters.Add("peerAsn", peerAsn);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
@@ -337,9 +337,9 @@ namespace Microsoft.Azure.Management.Peering
 
             // Serialize Request
             string _requestContent = null;
-            if(peerInfo != null)
+            if(peerAsn != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(peerInfo, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(peerAsn, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }

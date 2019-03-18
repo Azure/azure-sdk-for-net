@@ -7,6 +7,7 @@
 namespace Microsoft.Azure.Management.Peering.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
@@ -15,7 +16,7 @@ namespace Microsoft.Azure.Management.Peering.Models
     /// The essential information related to the pee's ASN.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PeerAsn
+    public partial class PeerAsn : IResource
     {
         /// <summary>
         /// Initializes a new instance of the PeerAsn class.
