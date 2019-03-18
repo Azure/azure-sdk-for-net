@@ -35,16 +35,16 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the KeyPhraseExtractionSkill class.
         /// </summary>
-        /// <param name="description">The description of the skill which
-        /// describes the inputs, outputs, and usage of the skill.</param>
-        /// <param name="context">Represents the level at which operations take
-        /// place, such as the document root or document content (for example,
-        /// /document or /document/content). The default is /document.</param>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in an
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
+        /// <param name="description">The description of the skill which
+        /// describes the inputs, outputs, and usage of the skill.</param>
+        /// <param name="context">Represents the level at which operations take
+        /// place, such as the document root or document content (for example,
+        /// /document or /document/content). The default is /document.</param>
         /// <param name="defaultLanguageCode">A value indicating which language
         /// code to use. Default is en. Possible values include: 'da', 'nl',
         /// 'en', 'fi', 'fr', 'de', 'it', 'ja', 'ko', 'no', 'pl', 'pt-PT',
@@ -52,8 +52,8 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="maxKeyPhraseCount">A number indicating how many key
         /// phrases to return. If absent, all identified key phrases will be
         /// returned.</param>
-        public KeyPhraseExtractionSkill(string description = default(string), string context = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>), IList<OutputFieldMappingEntry> outputs = default(IList<OutputFieldMappingEntry>), KeyPhraseExtractionSkillLanguage? defaultLanguageCode = default(KeyPhraseExtractionSkillLanguage?), int? maxKeyPhraseCount = default(int?))
-            : base(description, context, inputs, outputs)
+        public KeyPhraseExtractionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), KeyPhraseExtractionSkillLanguage? defaultLanguageCode = default(KeyPhraseExtractionSkillLanguage?), int? maxKeyPhraseCount = default(int?))
+            : base(inputs, outputs, description, context)
         {
             DefaultLanguageCode = defaultLanguageCode;
             MaxKeyPhraseCount = maxKeyPhraseCount;
@@ -80,5 +80,15 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "maxKeyPhraseCount")]
         public int? MaxKeyPhraseCount { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

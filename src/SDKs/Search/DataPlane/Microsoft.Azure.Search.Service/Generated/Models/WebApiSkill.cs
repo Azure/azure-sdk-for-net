@@ -37,6 +37,11 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the WebApiSkill class.
         /// </summary>
+        /// <param name="inputs">Inputs of the skills could be a column in the
+        /// source data set, or the output of an upstream skill.</param>
+        /// <param name="outputs">The output of a skill is either a field in an
+        /// Azure Search index, or a value that can be consumed as an input by
+        /// another skill.</param>
         /// <param name="uri">The url for the Web API.</param>
         /// <param name="httpHeaders">The headers required to make the http
         /// request.</param>
@@ -46,17 +51,12 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
         /// /document or /document/content). The default is /document.</param>
-        /// <param name="inputs">Inputs of the skills could be a column in the
-        /// source data set, or the output of an upstream skill.</param>
-        /// <param name="outputs">The output of a skill is either a field in an
-        /// Azure Search index, or a value that can be consumed as an input by
-        /// another skill.</param>
         /// <param name="timeout">The desired timeout for the request. Default
         /// is 30 seconds.</param>
         /// <param name="batchSize">The desired batch size which indicates
         /// number of documents.</param>
-        public WebApiSkill(string uri, WebApiHttpHeaders httpHeaders, string httpMethod, string description = default(string), string context = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>), IList<OutputFieldMappingEntry> outputs = default(IList<OutputFieldMappingEntry>), System.TimeSpan? timeout = default(System.TimeSpan?), int? batchSize = default(int?))
-            : base(description, context, inputs, outputs)
+        public WebApiSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string uri, WebApiHttpHeaders httpHeaders, string httpMethod, string description = default(string), string context = default(string), System.TimeSpan? timeout = default(System.TimeSpan?), int? batchSize = default(int?))
+            : base(inputs, outputs, description, context)
         {
             Uri = uri;
             HttpHeaders = httpHeaders;
@@ -109,8 +109,9 @@ namespace Microsoft.Azure.Search.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
+            base.Validate();
             if (Uri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Uri");
