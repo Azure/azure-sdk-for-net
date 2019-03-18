@@ -14,10 +14,6 @@ namespace Microsoft.Azure.Management.Peering
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// APIs to manage Peering resources through the Azure Resource Manager.
@@ -84,6 +80,11 @@ namespace Microsoft.Azure.Management.Peering
         IOperations Operations { get; }
 
         /// <summary>
+        /// Gets the IPeerAsnsOperations.
+        /// </summary>
+        IPeerAsnsOperations PeerAsns { get; }
+
+        /// <summary>
         /// Gets the IPeeringLocationsOperations.
         /// </summary>
         IPeeringLocationsOperations PeeringLocations { get; }
@@ -92,31 +93,6 @@ namespace Microsoft.Azure.Management.Peering
         /// Gets the IPeeringsOperations.
         /// </summary>
         IPeeringsOperations Peerings { get; }
-
-        /// <summary>
-        /// Gets the peer info associated with the specified subscription.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IList<PeerInfo>>> GetPeerInfoWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Updates the peer info associated with the specified subscription.
-        /// </summary>
-        /// <param name='peerInfo'>
-        /// The peer info.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IList<PeerInfo>>> UpdatePeerInfoWithHttpMessagesAsync(IList<PeerInfo> peerInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

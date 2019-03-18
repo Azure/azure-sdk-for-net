@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Peering
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -33,7 +31,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
             /// </param>
-            public static IEnumerable<PeeringLocation> List(this IPeeringLocationsOperations operations, string kind)
+            public static IPage<PeeringLocation> List(this IPeeringLocationsOperations operations, string kind)
             {
                 return operations.ListAsync(kind).GetAwaiter().GetResult();
             }
@@ -51,9 +49,45 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<PeeringLocation>> ListAsync(this IPeeringLocationsOperations operations, string kind, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringLocation>> ListAsync(this IPeeringLocationsOperations operations, string kind, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(kind, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all of the available peering locations for the specified kind of
+            /// peering.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PeeringLocation> ListNext(this IPeeringLocationsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all of the available peering locations for the specified kind of
+            /// peering.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PeeringLocation>> ListNextAsync(this IPeeringLocationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

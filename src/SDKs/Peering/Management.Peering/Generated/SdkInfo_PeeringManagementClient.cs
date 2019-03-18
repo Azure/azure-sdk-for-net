@@ -19,12 +19,11 @@ namespace Microsoft.Azure.Management.Peering
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Peering", "GetPeerInfo", "2019-03-01-preview"),
                 new Tuple<string, string, string>("Peering", "LegacyPeerings", "2019-03-01-preview"),
                 new Tuple<string, string, string>("Peering", "Operations", "2019-03-01-preview"),
+                new Tuple<string, string, string>("Peering", "PeerAsns", "2019-03-01-preview"),
                 new Tuple<string, string, string>("Peering", "PeeringLocations", "2019-03-01-preview"),
                 new Tuple<string, string, string>("Peering", "Peerings", "2019-03-01-preview"),
-                new Tuple<string, string, string>("Peering", "UpdatePeerInfo", "2019-03-01-preview"),
               }.AsEnumerable();
           }
       }
