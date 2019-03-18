@@ -10,20 +10,20 @@ namespace Microsoft.Azure.Management.Peering.Models
     using System.Linq;
 
     /// <summary>
-    /// The essential information related to the peer.
+    /// The properties that define a peer's ASN.
     /// </summary>
-    public partial class PeerInfo
+    public partial class PeerAsnProperties
     {
         /// <summary>
-        /// Initializes a new instance of the PeerInfo class.
+        /// Initializes a new instance of the PeerAsnProperties class.
         /// </summary>
-        public PeerInfo()
+        public PeerAsnProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the PeerInfo class.
+        /// Initializes a new instance of the PeerAsnProperties class.
         /// </summary>
         /// <param name="peerAsn">The Autonomous System Number (ASN) of the
         /// peer.</param>
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <param name="validationState">The validation state of the ASN
         /// associated with the peer. Possible values include: 'None',
         /// 'Pending', 'Approved', 'Failed'</param>
-        public PeerInfo(int? peerAsn = default(int?), ContactInfo peerContactInfo = default(ContactInfo), string peerName = default(string), string validationState = default(string))
+        public PeerAsnProperties(int? peerAsn = default(int?), ContactInfo peerContactInfo = default(ContactInfo), string peerName = default(string), string validationState = default(string))
         {
             PeerAsn = peerAsn;
             PeerContactInfo = peerContactInfo;

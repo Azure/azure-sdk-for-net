@@ -9,8 +9,6 @@ namespace Microsoft.Azure.Management.Peering
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -32,7 +30,7 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='kind'>
             /// The kind of the peering. Possible values include: 'Direct', 'Exchange'
             /// </param>
-            public static IEnumerable<PeeringModel> List(this ILegacyPeeringsOperations operations, string peeringLocation, string kind)
+            public static IPage<PeeringModel> List(this ILegacyPeeringsOperations operations, string peeringLocation, string kind)
             {
                 return operations.ListAsync(peeringLocation, kind).GetAwaiter().GetResult();
             }
@@ -53,9 +51,45 @@ namespace Microsoft.Azure.Management.Peering
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<PeeringModel>> ListAsync(this ILegacyPeeringsOperations operations, string peeringLocation, string kind, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PeeringModel>> ListAsync(this ILegacyPeeringsOperations operations, string peeringLocation, string kind, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(peeringLocation, kind, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all of the legacy peerings under the given subscription matching the
+            /// specified kind and location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<PeeringModel> ListNext(this ILegacyPeeringsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all of the legacy peerings under the given subscription matching the
+            /// specified kind and location.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<PeeringModel>> ListNextAsync(this ILegacyPeeringsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

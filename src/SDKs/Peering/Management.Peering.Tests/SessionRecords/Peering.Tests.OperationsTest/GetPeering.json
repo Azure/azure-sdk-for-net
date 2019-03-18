@@ -1,0 +1,64 @@
+{
+  "parameters": {
+    "subscriptionId": "subId",
+    "resourceGroupName": "rgName",
+    "peeringName": "peeringName",
+    "api-version": "2019-03-01-preview"
+  },
+  "responses": {
+    "200": {
+      "body": {
+        "sku": {
+          "name": "Basic_Exchange_Free",
+          "tier": "Basic",
+          "family": "Exchange",
+          "size": "Free"
+        },
+        "kind": "Exchange",
+        "properties": {
+          "exchange": {
+            "connections": [
+              {
+                "peeringDBFacilityId": 99999,
+                "connectionState": "Active",
+                "bgpSession": {
+                  "microsoftSessionIPv4Address": "192.168.3.1",
+                  "microsoftSessionIPv6Address": "fd00::1:1",
+                  "peerSessionIPv4Address": "192.168.2.1",
+                  "peerSessionIPv6Address": "fd00::1",
+                  "sessionStateV4": "Established",
+                  "sessionStateV6": "Established",
+                  "maxPrefixesAdvertisedV4": 1000,
+                  "maxPrefixesAdvertisedV6": 100,
+                  "md5AuthenticationKey": "test-md5-auth-key"
+                }
+              },
+              {
+                "peeringDBFacilityId": 99999,
+                "connectionState": "Active",
+                "bgpSession": {
+                  "microsoftSessionIPv4Address": "192.168.3.2",
+                  "microsoftSessionIPv6Address": "fd00::1:2",
+                  "peerSessionIPv4Address": "192.168.2.2",
+                  "peerSessionIPv6Address": "fd00::2",
+                  "sessionStateV4": "Established",
+                  "sessionStateV6": "Established",
+                  "maxPrefixesAdvertisedV4": 1000,
+                  "maxPrefixesAdvertisedV6": 100,
+                  "md5AuthenticationKey": "test-md5-auth-key"
+                }
+              }
+            ],
+            "peerAsn": 65000
+          },
+          "peeringLocation": "peeringLocation0",
+          "provisioningState": "Succeeded"
+        },
+        "location": "eastus",
+        "name": "peeringName",
+        "id": "/subscriptions/subId/resourceGroups/rgName/providers/Microsoft.Peering/peerings/peeringName",
+        "type": "Microsoft.Peering/peerings"
+      }
+    }
+  }
+}

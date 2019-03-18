@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Peering.Models
          /// <summary>
          /// Gets the link to the next page.
          /// </summary>
-         [JsonProperty("")]
+         [JsonProperty("nextLink")]
          public string NextPageLink { get; private set; }
 
          [JsonProperty("value")]

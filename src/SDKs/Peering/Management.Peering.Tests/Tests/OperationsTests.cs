@@ -1,20 +1,29 @@
-using System;
-using System.Collections.Generic;
-using Xunit;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.Peering;
-using Microsoft.Azure.Test.HttpRecorder;
-using ContactInfo = Microsoft.Azure.Management.Peering.Models.ContactInfo;
-using PeerInfo = Microsoft.Azure.Management.Peering.Models.PeerInfo;
-using PeeringLocation = Microsoft.Azure.Management.Peering.Models.PeeringLocation;
-using DirectConnection = Microsoft.Azure.Management.Peering.Models.DirectConnection;
-using PeeringSku = Microsoft.Azure.Management.Peering.Models.PeeringSku;
-using Microsoft.Azure.Management.Peering.Models;
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="OperationsTests.cs" company="Microsoft">
+//   
+// </copyright>
+// <summary>
+//   Defines the OperationsTests type.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace Peering.Tests
 {
-    public class OperationsTest
+    using System;
+    using System.Collections.Generic;
+
+    using Microsoft.Azure.Management.Peering;
+    using Microsoft.Azure.Management.Peering.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+
+    using Xunit;
+
+    using ContactInfo = Microsoft.Azure.Management.Peering.Models.ContactInfo;
+    using DirectConnection = Microsoft.Azure.Management.Peering.Models.DirectConnection;
+    using PeeringSku = Microsoft.Azure.Management.Peering.Models.PeeringSku;
+
+    public class OperationsTests
     {
         private readonly Random random = new Random();
         public PeeringManagementClient client { get; set; }
@@ -34,6 +43,7 @@ namespace Peering.Tests
         [Fact]
         public void GetDirectLocations()
         {
+
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -45,7 +55,8 @@ namespace Peering.Tests
         [Fact]
         public void GetExchangeLocations()
         {
-           using (var context = MockContext.Start(this.GetType().FullName))
+
+            using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
                 var result = this.client.PeeringLocations.List("Exchange");
@@ -56,16 +67,17 @@ namespace Peering.Tests
         [Fact]
         public void UpdatePeerInfoTest()
         {
+
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 string[] phone = { "9999999" };
                 string[] email = { "noc@microsoft.com" };
                 var contactInfo = new ContactInfo(email, phone);
-                var peerInfo = new List<PeerInfo>() { new PeerInfo(65000, contactInfo) };
+                var peerInfo = new PeerAsnProperties(peerAsn: 65000, peerContactInfo: contactInfo, peerName: "Contoso");
 
                 this.client = context.GetServiceClient<PeeringManagementClient>();
-                var result = this.client.UpdatePeerInfo(peerInfo);
-                Assert.NotNull(peerInfo);
+                var result = this.client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);
+                Assert.NotNull(result);
             }
         }
 
@@ -75,7 +87,7 @@ namespace Peering.Tests
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
-                var result = this.client.GetPeerInfo();
+                var result = this.client.PeerAsns.Get("Contoso");
                 Assert.NotNull(result);
             }
         }
@@ -83,6 +95,7 @@ namespace Peering.Tests
         [Fact]
         public void CreateDirectPeering()
         {
+
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -108,7 +121,7 @@ namespace Peering.Tests
                         MaxPrefixesAdvertisedV4 = 20000
                     }
                 };
-                var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), 65000,false);
+                var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), 65000, false);
                 directPeeringProperties.Connections.Add(directConnection);
                 var peeringModel = new PeeringModel
                 {
@@ -127,6 +140,7 @@ namespace Peering.Tests
         [Fact]
         public void CreateExchangePeering()
         {
+
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();

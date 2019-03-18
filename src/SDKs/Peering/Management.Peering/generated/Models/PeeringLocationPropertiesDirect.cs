@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         /// <param name="peeringFacilities">The list of direct peering
         /// facilities at the peering location.</param>
-        /// <param name="bandwidthOffers">The list of bandwidth offers avaiable
-        /// at the peering location.</param>
+        /// <param name="bandwidthOffers">The list of bandwidth offers
+        /// available at the peering location.</param>
         public PeeringLocationPropertiesDirect(IList<DirectPeeringFacility> peeringFacilities = default(IList<DirectPeeringFacility>), IList<PeeringBandwidthOffer> bandwidthOffers = default(IList<PeeringBandwidthOffer>))
         {
             PeeringFacilities = peeringFacilities;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Peering.Models
         public IList<DirectPeeringFacility> PeeringFacilities { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of bandwidth offers avaiable at the peering
+        /// Gets or sets the list of bandwidth offers available at the peering
         /// location.
         /// </summary>
         [JsonProperty(PropertyName = "bandwidthOffers")]
