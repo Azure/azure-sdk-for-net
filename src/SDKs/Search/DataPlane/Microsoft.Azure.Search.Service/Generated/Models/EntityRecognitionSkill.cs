@@ -35,16 +35,16 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the EntityRecognitionSkill class.
         /// </summary>
-        /// <param name="description">The description of the skill which
-        /// describes the inputs, outputs, and usage of the skill.</param>
-        /// <param name="context">Represents the level at which operations take
-        /// place, such as the document root or document content (for example,
-        /// /document or /document/content). The default is /document.</param>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in an
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
+        /// <param name="description">The description of the skill which
+        /// describes the inputs, outputs, and usage of the skill.</param>
+        /// <param name="context">Represents the level at which operations take
+        /// place, such as the document root or document content (for example,
+        /// /document or /document/content). The default is /document.</param>
         /// <param name="categories">A list of entity categories that should be
         /// extracted.</param>
         /// <param name="defaultLanguageCode">A value indicating which language
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Search.Models
         /// If this configuration is not set (default), set to null or set to
         /// false, entities which don't have a type will not be
         /// surfaced.</param>
-        public EntityRecognitionSkill(string description = default(string), string context = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>), IList<OutputFieldMappingEntry> outputs = default(IList<OutputFieldMappingEntry>), IList<EntityCategory> categories = default(IList<EntityCategory>), EntityRecognitionSkillLanguage? defaultLanguageCode = default(EntityRecognitionSkillLanguage?), bool? includeTypelessEntities = default(bool?))
-            : base(description, context, inputs, outputs)
+        public EntityRecognitionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), IList<EntityCategory> categories = default(IList<EntityCategory>), EntityRecognitionSkillLanguage? defaultLanguageCode = default(EntityRecognitionSkillLanguage?), bool? includeTypelessEntities = default(bool?))
+            : base(inputs, outputs, description, context)
         {
             Categories = categories;
             DefaultLanguageCode = defaultLanguageCode;
@@ -91,5 +91,15 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "includeTypelessEntities")]
         public bool? IncludeTypelessEntities { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

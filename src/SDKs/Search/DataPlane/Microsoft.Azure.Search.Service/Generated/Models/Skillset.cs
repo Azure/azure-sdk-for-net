@@ -107,6 +107,16 @@ namespace Microsoft.Azure.Search.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Skills");
             }
+            if (Skills != null)
+            {
+                foreach (var element in Skills)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
         }
     }
 }

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -34,17 +35,17 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Skill class.
         /// </summary>
-        /// <param name="description">The description of the skill which
-        /// describes the inputs, outputs, and usage of the skill.</param>
-        /// <param name="context">Represents the level at which operations take
-        /// place, such as the document root or document content (for example,
-        /// /document or /document/content). The default is /document.</param>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
         /// <param name="outputs">The output of a skill is either a field in an
         /// Azure Search index, or a value that can be consumed as an input by
         /// another skill.</param>
-        public Skill(string description = default(string), string context = default(string), IList<InputFieldMappingEntry> inputs = default(IList<InputFieldMappingEntry>), IList<OutputFieldMappingEntry> outputs = default(IList<OutputFieldMappingEntry>))
+        /// <param name="description">The description of the skill which
+        /// describes the inputs, outputs, and usage of the skill.</param>
+        /// <param name="context">Represents the level at which operations take
+        /// place, such as the document root or document content (for example,
+        /// /document or /document/content). The default is /document.</param>
+        public Skill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string))
         {
             Description = description;
             Context = context;
@@ -88,5 +89,42 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "outputs")]
         public IList<OutputFieldMappingEntry> Outputs { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Inputs == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Inputs");
+            }
+            if (Outputs == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Outputs");
+            }
+            if (Inputs != null)
+            {
+                foreach (var element in Inputs)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (Outputs != null)
+            {
+                foreach (var element1 in Outputs)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
+            }
+        }
     }
 }
