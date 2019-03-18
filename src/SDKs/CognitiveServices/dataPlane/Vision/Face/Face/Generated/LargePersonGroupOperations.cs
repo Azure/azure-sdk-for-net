@@ -914,7 +914,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         }
 
         /// <summary>
-        /// List all existing large person groups’s largePesonGroupId, name, userData
+        /// List all existing large person groups’s largePersonGroupId, name, userData
         /// and recognitionModel.&lt;br /&gt;
         /// * Large person groups are stored in alphabetical order of
         /// largePersonGroupId.

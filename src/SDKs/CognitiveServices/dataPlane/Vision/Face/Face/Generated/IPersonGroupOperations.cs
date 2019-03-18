@@ -179,7 +179,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// </exception>
         Task<HttpOperationResponse<TrainingStatus>> GetTrainingStatusWithHttpMessagesAsync(string personGroupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List person groups’s pesonGroupId, name, userData and
+        /// List person groups’s personGroupId, name, userData and
         /// recognitionModel.&lt;br /&gt;
         /// * Person groups are stored in alphabetical order of personGroupId.
         /// * "start" parameter (string, optional) is a user-provided
