@@ -62,13 +62,13 @@ namespace Azure.ApplicationModel.Configuration
         /// <summary>
         /// The last time a modifying operation was performed on the given key-value.
         /// </summary>
-        public DateTimeOffset LastModified { get; set; }
+        public DateTimeOffset? LastModified { get; set; }
 
         /// <summary>
         /// A value indicating whether the key-value is locked.
         /// A locked key-value may not be modified until it is unlocked.
         /// </summary>
-        public bool Locked { get; set; }
+        public bool? Locked { get; set; }
 
         /// <summary>
         /// A dictionary of tags that can help identify what a key-value may be applicable for.
