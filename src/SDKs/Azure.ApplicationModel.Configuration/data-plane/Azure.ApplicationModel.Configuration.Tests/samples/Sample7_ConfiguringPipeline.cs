@@ -53,7 +53,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             }
 
             public override void Register(HttpPipelineOptions options)
-                => options.AddPerCallPolicy(this);
+                => options.AddPolicy(this, HttpPipelineOptions.PolicyRunner.RunsOncePerCall);
         }
 
         class ConsoleLog : HttpPipelinePolicy
@@ -65,7 +65,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             }
 
             public override void Register(HttpPipelineOptions options)
-                => options.AddPerRetryPolicy(this);
+                => options.AddPolicy(this, HttpPipelineOptions.PolicyRunner.RuncOncePerRetry);
         }
     }
 }

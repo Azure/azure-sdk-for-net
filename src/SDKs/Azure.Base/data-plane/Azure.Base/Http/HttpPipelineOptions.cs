@@ -24,7 +24,7 @@ namespace Azure.Base.Http
             }
         }
 
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
+        public HttpPipelinePolicy LoggingPolicy { get; set; } = Pipeline.LoggingPolicy.Shared;
 
         public HttpPipelinePolicy RetryPolicy { get; set; }
 
@@ -34,20 +34,23 @@ namespace Azure.Base.Http
         public HttpPipelineOptions() : this( HttpClientTransport.Shared)
         { }
 
-        public void AddPerCallPolicy(HttpPipelinePolicy policy)
+        public void AddPolicy(HttpPipelinePolicy policy, PolicyRunner runner)
         {
             if (policy == null) throw new ArgumentNullException(nameof(policy));
 
-            if (_perCallPolicies == null) _perCallPolicies = new List<HttpPipelinePolicy>();
-            _perCallPolicies.Add(policy);
-        }
-
-        public void AddPerRetryPolicy(HttpPipelinePolicy policy)
-        {
-            if (policy == null) throw new ArgumentNullException(nameof(policy));
-
-            if (_perRetryPolicies == null) _perRetryPolicies = new List<HttpPipelinePolicy>();
-            _perRetryPolicies.Add(policy);
+            switch (runner) {
+                case PolicyRunner.Auto:
+                    policy.Register(this);
+                    break;
+                case PolicyRunner.RuncOncePerRetry:
+                    if (_perRetryPolicies == null) _perRetryPolicies = new List<HttpPipelinePolicy>();
+                    _perRetryPolicies.Add(policy);
+                    break;
+                case PolicyRunner.RunsOncePerCall:
+                    if (_perCallPolicies == null) _perCallPolicies = new List<HttpPipelinePolicy>();
+                    _perCallPolicies.Add(policy);
+                    break;
+            }
         }
 
         public void AddService(object service, Type type = null)
@@ -133,6 +136,14 @@ namespace Azure.Base.Http
             private EmptyServiceProvider() { }
 
             public object GetService(Type serviceType) => null;
+        }
+
+        public enum PolicyRunner
+        {
+            Auto,
+            RunsRightBeforeTransport,
+            RunsOncePerCall,
+            RuncOncePerRetry
         }
     }
 }

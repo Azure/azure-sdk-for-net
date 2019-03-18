@@ -29,6 +29,6 @@ namespace Azure.Base.Http.Pipeline
         }
 
         public override void Register(HttpPipelineOptions options)
-            => options.AddPerCallPolicy(this);
+            => options.AddPolicy(this, HttpPipelineOptions.PolicyRunner.RunsOncePerCall);
     }
 }
