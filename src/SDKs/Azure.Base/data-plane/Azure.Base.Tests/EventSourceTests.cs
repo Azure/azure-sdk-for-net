@@ -40,7 +40,6 @@ namespace Azure.Base.Tests
             Assert.IsNotEmpty(EventSource.GenerateManifest(eventSourceType, "assemblyPathToIncludeInManifest"));
         }
 
-
         [Test]
         public async Task SendingRequestProducesEvents()
         {
