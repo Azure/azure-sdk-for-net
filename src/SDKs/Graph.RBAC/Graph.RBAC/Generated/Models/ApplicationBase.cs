@@ -16,27 +16,22 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     using System.Linq;
 
     /// <summary>
-    /// Active Directory application information.
+    /// Active Directive Application common properties shared among GET, POST
+    /// and PATCH
     /// </summary>
-    public partial class Application : DirectoryObject
+    public partial class ApplicationBase
     {
         /// <summary>
-        /// Initializes a new instance of the Application class.
+        /// Initializes a new instance of the ApplicationBase class.
         /// </summary>
-        public Application()
+        public ApplicationBase()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Application class.
+        /// Initializes a new instance of the ApplicationBase class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        /// <param name="objectId">The object ID.</param>
-        /// <param name="deletionTimestamp">The time at which the directory
-        /// object was deleted.</param>
-        /// <param name="appId">The application ID.</param>
         /// <param name="allowGuestsSignIn">A property on the application to
         /// indicate if the application accepts other IDPs or not or partially
         /// accepts.</param>
@@ -51,16 +46,12 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <param name="appPermissions">The application permissions.</param>
         /// <param name="availableToOtherTenants">Whether the application is
         /// available to other tenants.</param>
-        /// <param name="displayName">The display name of the
-        /// application.</param>
         /// <param name="errorUrl">A URL provided by the author of the
         /// application to report errors when using the application.</param>
         /// <param name="groupMembershipClaims">Configures the groups claim
         /// issued in a user or OAuth 2.0 access token that the app
         /// expects.</param>
         /// <param name="homepage">The home page of the application.</param>
-        /// <param name="identifierUris">A collection of URIs for the
-        /// application.</param>
         /// <param name="informationalUrls">urls with more informations of the
         /// application.</param>
         /// <param name="isDeviceOnlyAuthSupported">Specifies whether this
@@ -112,21 +103,17 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// application (AzureADMyOrganization, AzureADAllOrganizations,
         /// AzureADAndMicrosoftAccounts).</param>
         /// <param name="wwwHomepage">The primary Web page.</param>
-        public Application(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string objectId = default(string), System.DateTime? deletionTimestamp = default(System.DateTime?), string appId = default(string), bool? allowGuestsSignIn = default(bool?), bool? allowPassthroughUsers = default(bool?), string appLogoUrl = default(string), IList<AppRole> appRoles = default(IList<AppRole>), IList<string> appPermissions = default(IList<string>), bool? availableToOtherTenants = default(bool?), string displayName = default(string), string errorUrl = default(string), object groupMembershipClaims = default(object), string homepage = default(string), IList<string> identifierUris = default(IList<string>), InformationalUrl informationalUrls = default(InformationalUrl), bool? isDeviceOnlyAuthSupported = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<string> knownClientApplications = default(IList<string>), string logoutUrl = default(string), bool? oauth2AllowImplicitFlow = default(bool?), bool? oauth2AllowUrlPathMatching = default(bool?), IList<OAuth2Permission> oauth2Permissions = default(IList<OAuth2Permission>), bool? oauth2RequirePostResponse = default(bool?), IList<string> orgRestrictions = default(IList<string>), OptionalClaims optionalClaims = default(OptionalClaims), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), IList<PreAuthorizedApplication> preAuthorizedApplications = default(IList<PreAuthorizedApplication>), bool? publicClient = default(bool?), string publisherDomain = default(string), IList<string> replyUrls = default(IList<string>), IList<RequiredResourceAccess> requiredResourceAccess = default(IList<RequiredResourceAccess>), string samlMetadataUrl = default(string), string signInAudience = default(string), string wwwHomepage = default(string))
-            : base(additionalProperties, objectId, deletionTimestamp)
+        public ApplicationBase(bool? allowGuestsSignIn = default(bool?), bool? allowPassthroughUsers = default(bool?), string appLogoUrl = default(string), IList<AppRole> appRoles = default(IList<AppRole>), IList<string> appPermissions = default(IList<string>), bool? availableToOtherTenants = default(bool?), string errorUrl = default(string), object groupMembershipClaims = default(object), string homepage = default(string), InformationalUrl informationalUrls = default(InformationalUrl), bool? isDeviceOnlyAuthSupported = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<string> knownClientApplications = default(IList<string>), string logoutUrl = default(string), bool? oauth2AllowImplicitFlow = default(bool?), bool? oauth2AllowUrlPathMatching = default(bool?), IList<OAuth2Permission> oauth2Permissions = default(IList<OAuth2Permission>), bool? oauth2RequirePostResponse = default(bool?), IList<string> orgRestrictions = default(IList<string>), OptionalClaims optionalClaims = default(OptionalClaims), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), IList<PreAuthorizedApplication> preAuthorizedApplications = default(IList<PreAuthorizedApplication>), bool? publicClient = default(bool?), string publisherDomain = default(string), IList<string> replyUrls = default(IList<string>), IList<RequiredResourceAccess> requiredResourceAccess = default(IList<RequiredResourceAccess>), string samlMetadataUrl = default(string), string signInAudience = default(string), string wwwHomepage = default(string))
         {
-            AppId = appId;
             AllowGuestsSignIn = allowGuestsSignIn;
             AllowPassthroughUsers = allowPassthroughUsers;
             AppLogoUrl = appLogoUrl;
             AppRoles = appRoles;
             AppPermissions = appPermissions;
             AvailableToOtherTenants = availableToOtherTenants;
-            DisplayName = displayName;
             ErrorUrl = errorUrl;
             GroupMembershipClaims = groupMembershipClaims;
             Homepage = homepage;
-            IdentifierUris = identifierUris;
             InformationalUrls = informationalUrls;
             IsDeviceOnlyAuthSupported = isDeviceOnlyAuthSupported;
             KeyCredentials = keyCredentials;
@@ -154,12 +141,6 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the application ID.
-        /// </summary>
-        [JsonProperty(PropertyName = "appId")]
-        public string AppId { get; set; }
 
         /// <summary>
         /// Gets or sets a property on the application to indicate if the
@@ -203,12 +184,6 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         public bool? AvailableToOtherTenants { get; set; }
 
         /// <summary>
-        /// Gets or sets the display name of the application.
-        /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; set; }
-
-        /// <summary>
         /// Gets or sets a URL provided by the author of the application to
         /// report errors when using the application.
         /// </summary>
@@ -227,12 +202,6 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         [JsonProperty(PropertyName = "homepage")]
         public string Homepage { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of URIs for the application.
-        /// </summary>
-        [JsonProperty(PropertyName = "identifierUris")]
-        public IList<string> IdentifierUris { get; set; }
 
         /// <summary>
         /// Gets or sets urls with more informations of the application.
