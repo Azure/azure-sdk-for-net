@@ -18,8 +18,8 @@ namespace Microsoft.Azure.Management.PostgreSQL
     /// <summary>
     /// The Microsoft Azure management API provides create, read, update, and
     /// delete functionality for Azure PostgreSQL resources including servers,
-    /// databases, firewall rules, log files and configurations with new
-    /// business model.
+    /// databases, firewall rules, VNET rules, security alert policies, log
+    /// files and configurations with new business model.
     /// </summary>
     public partial interface IPostgreSQLManagementClient : System.IDisposable
     {
@@ -54,19 +54,20 @@ namespace Microsoft.Azure.Management.PostgreSQL
         string ApiVersion { get; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -77,9 +78,19 @@ namespace Microsoft.Azure.Management.PostgreSQL
         IServersOperations Servers { get; }
 
         /// <summary>
+        /// Gets the IReplicasOperations.
+        /// </summary>
+        IReplicasOperations Replicas { get; }
+
+        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         IFirewallRulesOperations FirewallRules { get; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        IVirtualNetworkRulesOperations VirtualNetworkRules { get; }
 
         /// <summary>
         /// Gets the IDatabasesOperations.
@@ -105,6 +116,11 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Gets the ICheckNameAvailabilityOperations.
         /// </summary>
         ICheckNameAvailabilityOperations CheckNameAvailability { get; }
+
+        /// <summary>
+        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// </summary>
+        IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
 
         /// <summary>
         /// Gets the IOperations.

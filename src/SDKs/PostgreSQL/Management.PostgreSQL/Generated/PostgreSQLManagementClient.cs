@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.PostgreSQL
     /// <summary>
     /// The Microsoft Azure management API provides create, read, update, and
     /// delete functionality for Azure PostgreSQL resources including servers,
-    /// databases, firewall rules, log files and configurations with new
-    /// business model.
+    /// databases, firewall rules, VNET rules, security alert policies, log
+    /// files and configurations with new business model.
     /// </summary>
     public partial class PostgreSQLManagementClient : ServiceClient<PostgreSQLManagementClient>, IPostgreSQLManagementClient, IAzureClient
     {
@@ -60,19 +60,20 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -82,9 +83,19 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
+        /// Gets the IReplicasOperations.
+        /// </summary>
+        public virtual IReplicasOperations Replicas { get; private set; }
+
+        /// <summary>
         /// Gets the IFirewallRulesOperations.
         /// </summary>
         public virtual IFirewallRulesOperations FirewallRules { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualNetworkRulesOperations.
+        /// </summary>
+        public virtual IVirtualNetworkRulesOperations VirtualNetworkRules { get; private set; }
 
         /// <summary>
         /// Gets the IDatabasesOperations.
@@ -112,9 +123,27 @@ namespace Microsoft.Azure.Management.PostgreSQL
         public virtual ICheckNameAvailabilityOperations CheckNameAvailability { get; private set; }
 
         /// <summary>
+        /// Gets the IServerSecurityAlertPoliciesOperations.
+        /// </summary>
+        public virtual IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the PostgreSQLManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling PostgreSQLManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected PostgreSQLManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the PostgreSQLManagementClient class.
@@ -199,6 +228,33 @@ namespace Microsoft.Azure.Management.PostgreSQL
         /// Thrown when a required parameter is null
         /// </exception>
         public PostgreSQLManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the PostgreSQLManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling PostgreSQLManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public PostgreSQLManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -318,12 +374,15 @@ namespace Microsoft.Azure.Management.PostgreSQL
         private void Initialize()
         {
             Servers = new ServersOperations(this);
+            Replicas = new ReplicasOperations(this);
             FirewallRules = new FirewallRulesOperations(this);
+            VirtualNetworkRules = new VirtualNetworkRulesOperations(this);
             Databases = new DatabasesOperations(this);
             Configurations = new ConfigurationsOperations(this);
             LogFiles = new LogFilesOperations(this);
             LocationBasedPerformanceTier = new LocationBasedPerformanceTierOperations(this);
             CheckNameAvailability = new CheckNameAvailabilityOperations(this);
+            ServerSecurityAlertPolicies = new ServerSecurityAlertPoliciesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2017-12-01";

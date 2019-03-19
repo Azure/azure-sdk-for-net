@@ -15,37 +15,34 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties used to create a new server by restoring from a backup.
+    /// The properties to create a new replica.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("PointInTimeRestore")]
-    public partial class ServerPropertiesForRestore : ServerPropertiesForCreate
+    [Newtonsoft.Json.JsonObject("Replica")]
+    public partial class ServerPropertiesForReplica : ServerPropertiesForCreate
     {
         /// <summary>
-        /// Initializes a new instance of the ServerPropertiesForRestore class.
+        /// Initializes a new instance of the ServerPropertiesForReplica class.
         /// </summary>
-        public ServerPropertiesForRestore()
+        public ServerPropertiesForReplica()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ServerPropertiesForRestore class.
+        /// Initializes a new instance of the ServerPropertiesForReplica class.
         /// </summary>
-        /// <param name="sourceServerId">The source server id to restore
+        /// <param name="sourceServerId">The master server id to create replica
         /// from.</param>
-        /// <param name="restorePointInTime">Restore point creation time
-        /// (ISO8601 format), specifying the time to restore from.</param>
         /// <param name="version">Server version. Possible values include:
         /// '9.5', '9.6', '10', '10.0', '10.2'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="storageProfile">Storage profile of a server.</param>
-        public ServerPropertiesForRestore(string sourceServerId, System.DateTime restorePointInTime, string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), StorageProfile storageProfile = default(StorageProfile))
+        public ServerPropertiesForReplica(string sourceServerId, string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), StorageProfile storageProfile = default(StorageProfile))
             : base(version, sslEnforcement, storageProfile)
         {
             SourceServerId = sourceServerId;
-            RestorePointInTime = restorePointInTime;
             CustomInit();
         }
 
@@ -55,17 +52,10 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the source server id to restore from.
+        /// Gets or sets the master server id to create replica from.
         /// </summary>
         [JsonProperty(PropertyName = "sourceServerId")]
         public string SourceServerId { get; set; }
-
-        /// <summary>
-        /// Gets or sets restore point creation time (ISO8601 format),
-        /// specifying the time to restore from.
-        /// </summary>
-        [JsonProperty(PropertyName = "restorePointInTime")]
-        public System.DateTime RestorePointInTime { get; set; }
 
         /// <summary>
         /// Validate the object.
