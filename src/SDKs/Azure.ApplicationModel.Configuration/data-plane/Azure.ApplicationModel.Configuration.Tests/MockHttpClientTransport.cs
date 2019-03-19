@@ -24,7 +24,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-            _responseContent = SerializeSetting(responseContent);
+            _responseContent = CreateResponse(responseContent);
         }
     }
 
@@ -35,7 +35,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-            _responseContent = SerializeSetting(responseContent);
+            _responseContent = CreateResponse(responseContent);
         }
     }
 
@@ -46,7 +46,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-            _responseContent = SerializeSetting(responseContent);
+            _responseContent = CreateResponse(responseContent);
         }
 
         protected override void VerifyRequestCore(HttpRequestMessage request)
@@ -62,7 +62,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{key}{GetExtraUriParameters(filter)}";
             _expectedRequestContent = null;
             _expectedMethod = HttpMethod.Delete;
-            _responseContent = SerializeSetting(result);
+            _responseContent = CreateResponse(result);
         }
 
         public DeleteMockTransport(string key, RequestOptions filter, HttpStatusCode statusCode)
@@ -81,7 +81,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedMethod = HttpMethod.Get;
             _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}{GetExtraUriParameters(filter)}";
             _expectedRequestContent = null;
-            _responseContent = SerializeSetting(result);
+            _responseContent = CreateResponse(result);
         }
 
         public GetMockTransport(string queryKey, RequestOptions filter, params HttpStatusCode[] statusCodes)
@@ -101,7 +101,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/locks/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedRequestContent = null;
             _expectedMethod = lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete;
-            _responseContent = SerializeSetting(responseContent);
+            _responseContent = CreateResponse(responseContent, lockOtherwiseUnlock);
         }
     }
 
@@ -209,7 +209,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
         }
 
-        protected string SerializeSetting(ConfigurationSetting responseContent)
+        protected string CreateResponse(ConfigurationSetting responseContent, bool? locked = null)
         {
             if (responseContent == null) return null;
 
@@ -219,8 +219,8 @@ namespace Azure.ApplicationModel.Configuration.Test
             requestContent.AppendFormat("\"value\":\"{0}\",", responseContent.Value);
             requestContent.AppendFormat("\"content_type\":\"{0}\",", responseContent.ContentType);
             requestContent.AppendFormat("\"etag\":\"{0}\",", responseContent.ETag.ToString());
-            requestContent.AppendFormat("\"last_modified\":\"{0}\",", responseContent.LastModified.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK"));
-            requestContent.AppendFormat("\"locked\":{0},", responseContent.Locked);
+            requestContent.AppendFormat("\"last_modified\":\"{0}\",", DateTimeOffset.Now.UtcDateTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK"));
+            if (locked.HasValue) requestContent.AppendFormat("\"locked\":{0},", locked);
             requestContent.AppendFormat("\"tags\":{{");
 
             bool first = true;
