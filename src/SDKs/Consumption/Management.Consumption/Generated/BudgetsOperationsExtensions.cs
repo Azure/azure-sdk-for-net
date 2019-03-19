@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Consumption
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -28,7 +30,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Budget> List(this IBudgetsOperations operations)
+            public static IEnumerable<Budget> List(this IBudgetsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -43,7 +45,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Budget>> ListAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Budget>> ListAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -52,39 +54,15 @@ namespace Microsoft.Azure.Management.Consumption
             }
 
             /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
+            /// Gets the budget for a subscription by budget name.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            public static IPage<Budget> ListByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName)
+            public static Budget Get(this IBudgetsOperations operations)
             {
-                return operations.ListByResourceGroupNameAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Budget>> ListByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.GetAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -94,30 +72,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            public static Budget Get(this IBudgetsOperations operations, string budgetName)
-            {
-                return operations.GetAsync(budgetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the budget for a subscription by budget name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Budget> GetAsync(this IBudgetsOperations operations, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> GetAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(budgetName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -132,15 +92,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Budget operation.
             /// </param>
-            public static Budget CreateOrUpdate(this IBudgetsOperations operations, string budgetName, Budget parameters)
+            public static Budget CreateOrUpdate(this IBudgetsOperations operations, Budget parameters)
             {
-                return operations.CreateOrUpdateAsync(budgetName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -152,18 +109,15 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Create Budget operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Budget> CreateOrUpdateAsync(this IBudgetsOperations operations, string budgetName, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Budget> CreateOrUpdateAsync(this IBudgetsOperations operations, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(budgetName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -176,12 +130,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            public static void Delete(this IBudgetsOperations operations, string budgetName)
+            public static void Delete(this IBudgetsOperations operations)
             {
-                operations.DeleteAsync(budgetName).GetAwaiter().GetResult();
+                operations.DeleteAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -191,220 +142,12 @@ namespace Microsoft.Azure.Management.Consumption
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IBudgetsOperations operations, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IBudgetsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Gets the budget for a resource group under a subscription by budget name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            public static Budget GetByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName)
-            {
-                return operations.GetByResourceGroupNameAsync(resourceGroupName, budgetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the budget for a resource group under a subscription by budget name.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Budget> GetByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to create or update a budget. Update operation requires
-            /// latest eTag to be set in the request mandatorily. You may obtain the latest
-            /// eTag by performing a get operation. Create operation does not require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Budget operation.
-            /// </param>
-            public static Budget CreateOrUpdateByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName, Budget parameters)
-            {
-                return operations.CreateOrUpdateByResourceGroupNameAsync(resourceGroupName, budgetName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to create or update a budget. Update operation requires
-            /// latest eTag to be set in the request mandatorily. You may obtain the latest
-            /// eTag by performing a get operation. Create operation does not require eTag.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Create Budget operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Budget> CreateOrUpdateByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, Budget parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The operation to delete a budget.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            public static void DeleteByResourceGroupName(this IBudgetsOperations operations, string resourceGroupName, string budgetName)
-            {
-                operations.DeleteByResourceGroupNameAsync(resourceGroupName, budgetName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The operation to delete a budget.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Azure Resource Group Name.
-            /// </param>
-            /// <param name='budgetName'>
-            /// Budget Name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteByResourceGroupNameAsync(this IBudgetsOperations operations, string resourceGroupName, string budgetName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteByResourceGroupNameWithHttpMessagesAsync(resourceGroupName, budgetName, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists all budgets for a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Budget> ListNext(this IBudgetsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all budgets for a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Budget>> ListNextAsync(this IBudgetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Budget> ListByResourceGroupNameNext(this IBudgetsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNameNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all budgets for a resource group under a subscription.
-            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Budget>> ListByResourceGroupNameNextAsync(this IBudgetsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }
