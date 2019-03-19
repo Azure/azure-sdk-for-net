@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// covered by the invoice.</param>
         /// <param name="invoicePeriodEndDate">The end of the date range
         /// covered by the invoice.</param>
-        /// <param name="billingPeriodIds">Array of billing perdiod ids that
-        /// the invoice is attributed to.</param>
+        /// <param name="billingPeriodIds">Array of billing period ids that the
+        /// invoice is attributed to.</param>
         public Invoice(string id = default(string), string name = default(string), string type = default(string), DownloadUrl downloadUrl = default(DownloadUrl), System.DateTime? invoicePeriodStartDate = default(System.DateTime?), System.DateTime? invoicePeriodEndDate = default(System.DateTime?), IList<string> billingPeriodIds = default(IList<string>))
             : base(id, name, type)
         {
@@ -84,8 +84,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public System.DateTime? InvoicePeriodEndDate { get; private set; }
 
         /// <summary>
-        /// Gets array of billing perdiod ids that the invoice is attributed
-        /// to.
+        /// Gets array of billing period ids that the invoice is attributed to.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingPeriodIds")]
         public IList<string> BillingPeriodIds { get; private set; }
