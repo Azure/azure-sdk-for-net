@@ -256,6 +256,12 @@ namespace Microsoft.Azure.Search.Tests
 
             searchClient.Indexes.CreateOrUpdate(index);
 
+            // When this test runs live, it runs against a free service that has 3 replicas.
+            // Sometimes the synonym map update doesn't make it to the replica that handles
+            // the query below, causing a test failure. We wait here to increase the odds of
+            // consistency and decrease the likelihood of spurious test failures.
+            SearchTestUtilities.WaitForSynonymMapUpdate();
+
             var searchParameters =
                 new SearchParameters()
                 {
