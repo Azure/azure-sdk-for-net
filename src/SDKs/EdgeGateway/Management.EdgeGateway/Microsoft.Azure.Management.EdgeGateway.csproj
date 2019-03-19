@@ -7,11 +7,11 @@
     <PackageId>Microsoft.Azure.Management.EdgeGateway</PackageId>
     <Description>Microsoft Azure Management EdgeGateway library</Description>
     <AssemblyName>Microsoft.Azure.Management.EdgeGateway</AssemblyName>
-    <Version>0.8.0-preview</Version>
+    <Version>0.8.1-preview</Version>
     <PackageTags>Microsoft Azure EdgeGateway management;EdgeGateway;EdgeGateway management;</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-        This is a public preview release of the Azure EdgeGateway SDK. 
+        This is preview release of the Azure EdgeGateway SDK.  Included with this release is correcting extended information API signature.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
