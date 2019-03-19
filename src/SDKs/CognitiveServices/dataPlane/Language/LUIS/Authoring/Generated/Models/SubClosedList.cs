@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Sublist of items for a Closed list.
+    /// Sublist of items for a list entity.
     /// </summary>
     public partial class SubClosedList
     {

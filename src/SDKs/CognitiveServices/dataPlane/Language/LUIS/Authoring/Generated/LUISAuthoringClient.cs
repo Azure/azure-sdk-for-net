@@ -37,12 +37,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
-        /// https://westus.api.cognitive.microsoft.com).
-        /// </summary>
-        public string Endpoint { get; set; }
-
-        /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
@@ -234,7 +228,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             Pattern = new Pattern(this);
             Settings = new Settings(this);
             AzureAccounts = new AzureAccounts(this);
-            BaseUri = "{Endpoint}/luis/api/v2.0";
+            BaseUri = "http://{AzureRegion}.api.cognitive.microsoft.{AzureCloud}/luis/api/v2.0";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,

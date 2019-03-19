@@ -23,8 +23,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public partial interface IModel
     {
         /// <summary>
-        /// Adds an intent classifier to the application.
+        /// Adds an intent to a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -32,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='intentCreateObject'>
-        /// A model object containing the name of the new intent classifier.
+        /// A model object containing the name of the new intent.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,10 +60,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddIntentWithHttpMessagesAsync(System.Guid appId, string versionId, ModelCreateObject intentCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddIntentWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, ModelCreateObject intentCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the intent models.
+        /// Gets information about the intent models in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -81,10 +104,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<IntentClassifier>>> ListIntentsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<IntentClassifier>>> ListIntentsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds an entity extractor to the application.
+        /// Adds a simple entity extractor to a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -92,7 +126,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='modelCreateObject'>
-        /// A model object containing the name for the new entity extractor.
+        /// A model object containing the name for the new simple entity
+        /// extractor.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -109,10 +144,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddEntityWithHttpMessagesAsync(System.Guid appId, string versionId, ModelCreateObject modelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, ModelCreateObject modelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the entity models.
+        /// Gets information about all the simple entity models in a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -141,10 +188,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityExtractor>>> ListEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityExtractor>>> ListEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a hierarchical entity extractor to the application version.
+        /// Adds a hierarchical entity extractor to a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -170,10 +229,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, HierarchicalEntityModel hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, HierarchicalEntityModel hierarchicalModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the hierarchical entity models.
+        /// Gets information about all the hierarchical entity models in a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -202,10 +273,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<HierarchicalEntityExtractor>>> ListHierarchicalEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<HierarchicalEntityExtractor>>> ListHierarchicalEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a composite entity extractor to the application.
+        /// Adds a composite entity extractor to a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -231,10 +313,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, CompositeEntityModel compositeModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddCompositeEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, CompositeEntityModel compositeModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the composite entity models.
+        /// Gets information about all the composite entity models in a version
+        /// of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -263,10 +357,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<CompositeEntityExtractor>>> ListCompositeEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<CompositeEntityExtractor>>> ListCompositeEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the closedlist models.
+        /// Gets information about all the list entity models in a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -295,10 +401,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<ClosedListEntityExtractor>>> ListClosedListsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ClosedListEntityExtractor>>> ListClosedListsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a closed list model to the application.
+        /// Adds a list entity model to a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -306,8 +423,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='closedListModelCreateObject'>
-        /// A model containing the name and words for the new closed list
-        /// entity extractor.
+        /// A model containing the name and words for the new list entity
+        /// extractor.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -324,10 +441,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, ClosedListModelCreateObject closedListModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddClosedListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, ClosedListModelCreateObject closedListModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a list of prebuilt entity extractors to the application.
+        /// Adds a list of prebuilt entities to a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -352,10 +480,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> AddPrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, IList<string> prebuiltExtractorNames, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> AddPrebuiltWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, IList<string> prebuiltExtractorNames, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the prebuilt entity models.
+        /// Gets information about all the prebuilt entities in a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -384,11 +524,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> ListPrebuiltsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PrebuiltEntityExtractor>>> ListPrebuiltsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the available prebuilt entity extractors for the
+        /// Gets all the available prebuilt entities in a version of the
         /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -410,10 +561,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<AvailablePrebuiltEntityModel>>> ListPrebuiltEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<AvailablePrebuiltEntityModel>>> ListPrebuiltEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the application version models.
+        /// Gets information about all the intent and entity models in a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -442,10 +605,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<ModelInfoResponse>>> ListModelsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ModelInfoResponse>>> ListModelsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the utterances for the given model in the given app version.
+        /// Gets the example utterances for the given intent or entity model in
+        /// a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -477,10 +652,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<LabelTextObject>>> ExamplesMethodWithHttpMessagesAsync(System.Guid appId, string versionId, string modelId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<LabelTextObject>>> ExamplesMethodWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, string modelId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the intent model.
+        /// Gets information about the intent model in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -505,10 +692,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IntentClassifier>> GetIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IntentClassifier>> GetIntentWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid intentId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the name of an intent classifier.
+        /// Updates the name of an intent in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -519,7 +717,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The intent classifier ID.
         /// </param>
         /// <param name='modelUpdateObject'>
-        /// A model object containing the new intent classifier name.
+        /// A model object containing the new intent name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -536,10 +734,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateIntentWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid intentId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an intent classifier from the application.
+        /// Deletes an intent from a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -550,8 +759,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The intent classifier ID.
         /// </param>
         /// <param name='deleteUtterances'>
-        /// Also delete the intent's utterances (true). Or move the utterances
-        /// to the None intent (false - the default value).
+        /// If true, deletes the intent's example utterances. If false, moves
+        /// the example utterances to the None intent. The default value is
+        /// false.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -568,10 +778,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteIntentWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, bool? deleteUtterances = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteIntentWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid intentId, bool? deleteUtterances = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the entity model.
+        /// Gets information about an entity model in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -596,10 +818,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityExtractor>> GetEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityExtractor>> GetEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the name of an entity extractor.
+        /// Updates the name of an entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -627,10 +860,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, ModelUpdateObject modelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an entity extractor from the application.
+        /// Deletes an entity from a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -655,10 +899,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the hierarchical entity model.
+        /// Gets information about a hierarchical entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -683,10 +939,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<HierarchicalEntityExtractor>> GetHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<HierarchicalEntityExtractor>> GetHierarchicalEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the name and children of a hierarchical entity model.
+        /// Updates the name and children of a hierarchical entity model in a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -714,11 +982,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalEntityModel hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalEntityModel hierarchicalModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a hierarchical entity extractor from the application
-        /// version.
+        /// Deletes a hierarchical entity from a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -743,10 +1021,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the composite entity model.
+        /// Gets information about a composite entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -771,10 +1061,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<CompositeEntityExtractor>> GetCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<CompositeEntityExtractor>> GetCompositeEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the composite entity extractor.
+        /// Updates a composite entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -803,10 +1104,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, CompositeEntityModel compositeModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateCompositeEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, CompositeEntityModel compositeModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a composite entity extractor from the application.
+        /// Deletes a composite entity from a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -831,10 +1143,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information of a closed list model.
+        /// Gets information about a list entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -842,7 +1166,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// The closed list model ID.
+        /// The list model ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -859,10 +1183,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<ClosedListEntityExtractor>> GetClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ClosedListEntityExtractor>> GetClosedListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the closed list model.
+        /// Updates the list entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -870,10 +1205,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// The closed list model ID.
+        /// The list model ID.
         /// </param>
         /// <param name='closedListModelUpdateObject'>
-        /// The new entity name and words list.
+        /// The new list entity name and words list.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -890,10 +1225,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateClosedListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelUpdateObject closedListModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a batch of sublists to an existing closedlist.
+        /// Adds a batch of sublists to an existing list entity in a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -901,7 +1248,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// The closed list model ID.
+        /// The list entity model ID.
         /// </param>
         /// <param name='closedListModelPatchObject'>
         /// A words list batch.
@@ -921,10 +1268,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> PatchClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> PatchClosedListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid clEntityId, ClosedListModelPatchObject closedListModelPatchObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a closed list model from the application.
+        /// Deletes a list entity model from a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -932,7 +1290,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// The closed list model ID.
+        /// The list entity model ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -949,10 +1307,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteClosedListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteClosedListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid clEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the prebuilt entity model.
+        /// Gets information about a prebuilt entity model in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -977,10 +1347,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PrebuiltEntityExtractor>> GetPrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PrebuiltEntityExtractor>> GetPrebuiltWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a prebuilt entity extractor from the application.
+        /// Deletes a prebuilt entity extractor from a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1005,10 +1387,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeletePrebuiltWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeletePrebuiltWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid prebuiltId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a sublist of a specific closed list model.
+        /// Deletes a sublist of a specific list entity model from a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1016,7 +1410,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// The closed list entity extractor ID.
+        /// The list entity extractor ID.
         /// </param>
         /// <param name='subListId'>
         /// The sublist ID.
@@ -1036,10 +1430,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteSubListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid clEntityId, long subListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates one of the closed list's sublists.
+        /// Updates one of the list entity's sublists in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1047,7 +1453,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// The closed list entity extractor ID.
+        /// The list entity extractor ID.
         /// </param>
         /// <param name='subListId'>
         /// The sublist ID.
@@ -1071,11 +1477,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateSubListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid clEntityId, long subListId, WordListBaseUpdateObject wordListBaseUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Suggests examples that would improve the accuracy of the intent
-        /// model.
+        /// Suggests example utterances that would improve the accuracy of the
+        /// intent model in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1104,11 +1521,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<IntentsSuggestionExample>>> GetIntentSuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<IntentsSuggestionExample>>> ListIntentSuggestionsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid intentId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get suggestion examples that would improve the accuracy of the
-        /// entity model.
+        /// Get suggested example utterances that would improve the accuracy of
+        /// the entity model in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1137,10 +1565,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntitiesSuggestionExample>>> GetEntitySuggestionsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntitiesSuggestionExample>>> ListEntitySuggestionsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a list to an existing closed list.
+        /// Adds a sublist to an existing list entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1148,7 +1588,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='clEntityId'>
-        /// The closed list entity extractor ID.
+        /// The list entity extractor ID.
         /// </param>
         /// <param name='wordListCreateObject'>
         /// Words list.
@@ -1168,11 +1608,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<int?>> AddSubListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid clEntityId, WordListObject wordListCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<long?>> AddSubListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid clEntityId, WordListObject wordListCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a customizable prebuilt domain along with all of its models to
-        /// this application.
+        /// Adds a customizable prebuilt domain along with all of its intent
+        /// and entity models in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1197,10 +1648,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<System.Guid?>>> AddCustomPrebuiltDomainWithHttpMessagesAsync(System.Guid appId, string versionId, PrebuiltDomainCreateBaseObject prebuiltDomainObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<System.Guid?>>> AddCustomPrebuiltDomainWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, PrebuiltDomainCreateBaseObject prebuiltDomainObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a custom prebuilt intent model to the application.
+        /// Adds a customizable prebuilt intent model to a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1208,8 +1671,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='prebuiltDomainModelCreateObject'>
-        /// A model object containing the name of the custom prebuilt intent
-        /// and the name of the domain to which this model belongs.
+        /// A model object containing the name of the customizable prebuilt
+        /// intent and the name of the domain to which this model belongs.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1226,10 +1689,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltIntentWithHttpMessagesAsync(System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltIntentWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets custom prebuilt intents information of this application.
+        /// Gets information about customizable prebuilt intents added to a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1251,10 +1726,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<IntentClassifier>>> ListCustomPrebuiltIntentsWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<IntentClassifier>>> ListCustomPrebuiltIntentsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a custom prebuilt entity model to the application.
+        /// Adds a prebuilt entity model to a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1262,8 +1748,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='prebuiltDomainModelCreateObject'>
-        /// A model object containing the name of the custom prebuilt entity
-        /// and the name of the domain to which this model belongs.
+        /// A model object containing the name of the prebuilt entity and the
+        /// name of the domain to which this model belongs.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1280,10 +1766,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltEntityWithHttpMessagesAsync(System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltEntityWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, PrebuiltDomainModelCreateObject prebuiltDomainModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all custom prebuilt entities information of this application.
+        /// Gets all prebuilt entities used in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1305,10 +1802,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityExtractor>>> ListCustomPrebuiltEntitiesWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityExtractor>>> ListCustomPrebuiltEntitiesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all custom prebuilt models information of this application.
+        /// Gets all prebuilt intent and entity model information used in a
+        /// version of this application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1330,10 +1839,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<CustomPrebuiltModel>>> ListCustomPrebuiltModelsWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<CustomPrebuiltModel>>> ListCustomPrebuiltModelsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a prebuilt domain's models from the application.
+        /// Deletes a prebuilt domain's models in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1358,10 +1878,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteCustomPrebuiltDomainWithHttpMessagesAsync(System.Guid appId, string versionId, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCustomPrebuiltDomainWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, string domainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the hierarchical entity child model.
+        /// Gets information about the child's model contained in an
+        /// hierarchical entity child model in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1389,10 +1921,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<HierarchicalChildEntity>> GetHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<HierarchicalChildEntity>> GetHierarchicalEntityChildWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Renames a single child in an existing hierarchical entity model.
+        /// Renames a single child in an existing hierarchical entity model in
+        /// a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1423,10 +1967,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityChildWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, HierarchicalChildModelUpdateObject hierarchicalChildModelUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a hierarchical entity extractor child from the application.
+        /// Deletes a hierarchical entity extractor child in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1454,10 +2010,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityChildWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid hChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a single child in an existing hierarchical entity model.
+        /// Creates a single child in an existing hierarchical entity model in
+        /// a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1486,10 +2054,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalChildModelCreateObject hierarchicalChildModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddHierarchicalEntityChildWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, HierarchicalChildModelCreateObject hierarchicalChildModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a single child in an existing composite entity model.
+        /// Creates a single child in an existing composite entity model in a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1518,10 +2098,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> AddCompositeEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, CompositeChildModelCreateObject compositeChildModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> AddCompositeEntityChildWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, CompositeChildModelCreateObject compositeChildModelCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a composite entity extractor child from the application.
+        /// Deletes a composite entity extractor child from a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1549,10 +2141,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityChildWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityChildWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, System.Guid cChildId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the regex entity models.
+        /// Gets information about the regular expression entity models in a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1581,10 +2185,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<RegexEntityExtractor>>> GetRegexEntityInfosWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<RegexEntityExtractor>>> ListRegexEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a regex entity model to the application version.
+        /// Adds a regular expression entity model to a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1593,7 +2209,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </param>
         /// <param name='regexEntityExtractorCreateObj'>
         /// A model object containing the name and regex pattern for the new
-        /// regex entity extractor.
+        /// regular expression entity extractor.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -1610,10 +2226,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreateRegexEntityModelWithHttpMessagesAsync(System.Guid appId, string versionId, RegexModelCreateObject regexEntityExtractorCreateObj, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreateRegexEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, RegexModelCreateObject regexEntityExtractorCreateObj, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get information about the Pattern.Any entity models.
+        /// Get information about the Pattern.Any entity models in a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1642,10 +2270,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<PatternAnyEntityExtractor>>> GetPatternAnyEntityInfosWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PatternAnyEntityExtractor>>> ListPatternAnyEntityInfosWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a pattern.any entity extractor to the application.
+        /// Adds a pattern.any entity extractor to a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1671,10 +2311,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreatePatternAnyEntityModelWithHttpMessagesAsync(System.Guid appId, string versionId, PatternAnyModelCreateObject extractorCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreatePatternAnyEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, PatternAnyModelCreateObject extractorCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get all roles for an entity in a version of the application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1699,10 +2350,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create an entity role in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1730,10 +2392,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreateEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreateEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get a prebuilt entity's roles in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1758,10 +2431,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetPrebuiltEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListPrebuiltEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create a role for a prebuilt entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1789,10 +2474,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreatePrebuiltEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreatePrebuiltEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get all roles for a list entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1817,10 +2513,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetClosedListEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListClosedListEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create a role for a list entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1848,10 +2555,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreateClosedListEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreateClosedListEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get all roles for a regular expression entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1876,10 +2595,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetRegexEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListRegexEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create a role for an regular expression entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1907,10 +2638,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreateRegexEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreateRegexEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get all roles for a composite entity in a version of the
+        /// application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1935,10 +2678,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetCompositeEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListCompositeEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create a role for a composite entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1966,10 +2721,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreateCompositeEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreateCompositeEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get all roles for a Pattern.any entity in a version of the
+        /// application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -1994,10 +2761,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetPatternAnyEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListPatternAnyEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create a role for an Pattern.any entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2025,10 +2804,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreatePatternAnyEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreatePatternAnyEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get all roles for a hierarchical entity in a version of the
+        /// application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2053,10 +2844,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetHierarchicalEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListHierarchicalEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create a role for an hierarchical entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2084,10 +2887,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreateHierarchicalEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreateHierarchicalEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get All Entity Roles for a given entity
+        /// Get all roles for a prebuilt entity in a version of the application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2112,10 +2926,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<EntityRole>>> GetCustomPrebuiltEntityRolesWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<EntityRole>>> ListCustomPrebuiltEntityRolesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create an entity role for an entity in the application.
+        /// Create a role for a prebuilt entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2143,10 +2969,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<System.Guid>> CreateCustomPrebuiltEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<System.Guid>> CreateCustomPrebuiltEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, EntityRoleCreateObject entityRoleCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the explicit list of the pattern.any entity.
+        /// Get the explicit (exception) list of the pattern.any entity in a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2171,10 +3009,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<ExplicitListItem>>> GetExplicitListWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ExplicitListItem>>> GetExplicitListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Add a new item to the explicit list for the Pattern.Any entity.
+        /// Add a new exception to the explicit list for the Pattern.Any entity
+        /// in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2202,10 +3052,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<int?>> AddExplicitListItemWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, ExplicitListItemCreateObject item, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<int?>> AddExplicitListItemWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, ExplicitListItemCreateObject item, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information of a regex entity model.
+        /// Gets information about a regular expression entity in a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2213,7 +3075,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='regexEntityId'>
-        /// The regex entity model ID.
+        /// The regular expression entity model ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2230,10 +3092,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<RegexEntityExtractor>> GetRegexEntityEntityInfoWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid regexEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<RegexEntityExtractor>> GetRegexEntityEntityInfoWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid regexEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the regex entity model .
+        /// Updates the regular expression entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2241,7 +3115,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='regexEntityId'>
-        /// The regex entity extractor ID.
+        /// The regular expression entity extractor ID.
         /// </param>
         /// <param name='regexEntityUpdateObject'>
         /// An object containing the new entity name and regex pattern.
@@ -2261,10 +3135,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateRegexEntityModelWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid regexEntityId, RegexModelUpdateObject regexEntityUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateRegexEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid regexEntityId, RegexModelUpdateObject regexEntityUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a regex entity model from the application.
+        /// Deletes a regular expression entity from a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2272,7 +3158,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='regexEntityId'>
-        /// The regex entity extractor ID.
+        /// The regular expression entity extractor ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -2289,10 +3175,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteRegexEntityModelWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid regexEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteRegexEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid regexEntityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets information about the application version's Pattern.Any model.
+        /// Gets information about the Pattern.Any model in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2317,10 +3215,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PatternAnyEntityExtractor>> GetPatternAnyEntityInfoWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PatternAnyEntityExtractor>> GetPatternAnyEntityInfoWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the name and explicit list of a Pattern.Any entity model.
+        /// Updates the name and explicit (exception) list of a Pattern.Any
+        /// entity model in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2348,10 +3258,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdatePatternAnyEntityModelWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, PatternAnyModelUpdateObject patternAnyUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdatePatternAnyEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, PatternAnyModelUpdateObject patternAnyUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a Pattern.Any entity extractor from the application.
+        /// Deletes a Pattern.Any entity extractor from a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2376,10 +3298,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeletePatternAnyEntityModelWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeletePatternAnyEntityModelWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given entity in a version of the application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2407,10 +3340,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2441,10 +3385,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete an entity role in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2472,10 +3427,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given prebuilt entity in a version of the
+        /// application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2503,10 +3470,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetPrebuiltEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetPrebuiltEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given prebuilt entity in a version of the
+        /// application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2537,10 +3516,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdatePrebuiltEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdatePrebuiltEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete a role in a prebuilt entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2568,10 +3558,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeletePrebuiltEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeletePrebuiltEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given list entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2599,10 +3601,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetClosedListEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetClosedListEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given list entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2633,10 +3647,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateClosedListEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateClosedListEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete a role for a given list entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2664,10 +3690,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteClosedListEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteClosedListEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given regular expression entity in a version of
+        /// the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2695,10 +3733,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetRegexEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetRegexEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given regular expression entity in a version of
+        /// the application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2729,10 +3779,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateRegexEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateRegexEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete a role for a given regular expression in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2760,10 +3822,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteRegexEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteRegexEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given composite entity in a version of the
+        /// application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2791,10 +3865,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetCompositeEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetCompositeEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given composite entity in a version of the
+        /// application
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2825,10 +3911,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateCompositeEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateCompositeEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete a role for a given composite entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2856,10 +3954,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid cEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCompositeEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid cEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given Pattern.any entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2887,10 +3997,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetPatternAnyEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetPatternAnyEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given Pattern.any entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2921,10 +4043,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdatePatternAnyEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdatePatternAnyEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete a role for a given Pattern.any entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2952,10 +4086,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeletePatternAnyEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeletePatternAnyEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given hierarchical entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -2983,10 +4129,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetHierarchicalEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetHierarchicalEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given hierarchical entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3017,10 +4175,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateHierarchicalEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete a role for a given hierarchical role in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3048,10 +4218,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid hEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteHierarchicalEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid hEntityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get one entity role for a given entity
+        /// Get one role for a given prebuilt entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3079,10 +4261,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<EntityRole>> GetCustomEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<EntityRole>> GetCustomEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an entity role for a given entity
+        /// Update a role for a given prebuilt entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3113,10 +4307,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateCustomPrebuiltEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateCustomPrebuiltEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, EntityRoleUpdateObject entityRoleUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an entity role.
+        /// Delete a role for a given prebuilt entity in a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3144,10 +4350,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteCustomEntityRoleWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteCustomEntityRoleWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, System.Guid roleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the explicit list of the pattern.any entity.
+        /// Get the explicit (exception) list of the pattern.any entity in a
+        /// version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3175,10 +4393,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<ExplicitListItem>> GetExplicitListItemWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, long itemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ExplicitListItem>> GetExplicitListItemWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, long itemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates an explicit list item for a Pattern.Any entity.
+        /// Updates an explicit (exception) list item for a Pattern.Any entity
+        /// in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3209,10 +4439,22 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateExplicitListItemWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, long itemId, ExplicitListItemUpdateObject item, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateExplicitListItemWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, long itemId, ExplicitListItemUpdateObject item, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete the explicit list item from the Pattern.any explicit list.
+        /// Delete an item from the explicit (exception) list for a Pattern.any
+        /// entity in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -3240,6 +4482,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteExplicitListItemWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid entityId, long itemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteExplicitListItemWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid entityId, long itemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

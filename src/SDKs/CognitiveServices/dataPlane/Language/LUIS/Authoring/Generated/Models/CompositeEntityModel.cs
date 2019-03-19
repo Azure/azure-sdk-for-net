@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// A composite entity.
+    /// A composite entity extractor.
     /// </summary>
     public partial class CompositeEntityModel
     {
