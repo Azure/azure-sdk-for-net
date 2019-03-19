@@ -71,7 +71,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void GetNotFound()
         {
-            var transport = new GetMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
+            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -208,16 +208,31 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var options = ConfigurationClient.CreateDefaultPipelineOptions();
             options.ApplicationId = "test_application";
             options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
-            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            options.RetryPolicy = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
+            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.RequestTimeout, HttpStatusCode.OK);
+            options.RetryPolicy = RetryPolicy.CreateFixed(2, TimeSpan.FromMilliseconds(100), 408 /* RequestTimeout */);
+
+            var testPolicy = new TestPolicy();
+            options.AddPerRetryPolicy(testPolicy);
 
             var client = new ConfigurationClient(connectionString, options);
 
-            try {
-                ConfigurationSetting setting = await client.GetAsync(key: s_testSetting.Key, options: null, CancellationToken.None);
-            }
-            catch(RequestFailedException e) {
-                Assert.AreEqual(504, e.Status);
+            ConfigurationSetting setting = await client.GetAsync(key: s_testSetting.Key, options: null, CancellationToken.None);
+            Assert.AreEqual(s_testSetting, setting);
+            Assert.AreEqual(2, testPolicy.Retries);
+        }
+
+        // TODO (pri 2): this should check the UA header, but this in turn requires the ability to read headers.
+        // TODO (pri 2): this should try to retrieve the service, but currently services are not passed to the pipeline.
+        class TestPolicy : HttpPipelinePolicy
+        {
+            int _retries = 0;
+
+            public int Retries => _retries;
+
+            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                _retries++;
+                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
         }
     }
