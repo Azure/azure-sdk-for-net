@@ -657,7 +657,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of the resource group to which the resource belongs.
         /// </param>
         /// <param name='name'>
-        /// Unique name of the app to create or update. To create or update a
+        /// Unique name of the APP to create or update. To create or update a
         /// deployment slot, use the {slot} parameter.
         /// </param>
         /// <param name='siteEnvelope'>
@@ -71251,7 +71251,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of the resource group to which the resource belongs.
         /// </param>
         /// <param name='name'>
-        /// Unique name of the app to create or update. To create or update a
+        /// Unique name of the APP to create or update. To create or update a
         /// deployment slot, use the {slot} parameter.
         /// </param>
         /// <param name='siteEnvelope'>
