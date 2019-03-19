@@ -69,6 +69,28 @@ namespace Microsoft.Azure.Graph.RBAC
         /// </exception>
         Task<AzureOperationResponse<IPage<ServicePrincipal>>> ListWithHttpMessagesAsync(ODataQuery<ServicePrincipal> odataQuery = default(ODataQuery<ServicePrincipal>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates a service principal in the directory.
+        /// </summary>
+        /// <param name='objectId'>
+        /// The object ID of the service principal to delete.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters to update a service principal.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="GraphErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string objectId, ServicePrincipalUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes a service principal from the directory.
         /// </summary>
         /// <param name='objectId'>
@@ -135,7 +157,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<DirectoryObject>>> ListOwnersWithHttpMessagesAsync(string objectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<DirectoryObject>>> ListOwnersWithHttpMessagesAsync(string objectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get the keyCredentials associated with the specified service
         /// principal.
@@ -251,5 +273,31 @@ namespace Microsoft.Azure.Graph.RBAC
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<ServicePrincipal>>> ListNextWithHttpMessagesAsync(string nextLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Directory objects that are owners of this service principal.
+        /// </summary>
+        /// <remarks>
+        /// The owners are a set of non-admin users who are allowed to modify
+        /// this object.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="GraphErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<DirectoryObject>>> ListOwnersNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

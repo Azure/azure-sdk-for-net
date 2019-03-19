@@ -75,14 +75,19 @@ namespace Microsoft.Azure.Graph.RBAC
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IObjectsOperations.
+        /// Gets the ISignedInUserOperations.
         /// </summary>
-        public virtual IObjectsOperations Objects { get; private set; }
+        public virtual ISignedInUserOperations SignedInUser { get; private set; }
 
         /// <summary>
         /// Gets the IApplicationsOperations.
         /// </summary>
         public virtual IApplicationsOperations Applications { get; private set; }
+
+        /// <summary>
+        /// Gets the IDeletedApplicationsOperations.
+        /// </summary>
+        public virtual IDeletedApplicationsOperations DeletedApplications { get; private set; }
 
         /// <summary>
         /// Gets the IGroupsOperations.
@@ -100,14 +105,19 @@ namespace Microsoft.Azure.Graph.RBAC
         public virtual IUsersOperations Users { get; private set; }
 
         /// <summary>
+        /// Gets the IObjectsOperations.
+        /// </summary>
+        public virtual IObjectsOperations Objects { get; private set; }
+
+        /// <summary>
         /// Gets the IDomainsOperations.
         /// </summary>
         public virtual IDomainsOperations Domains { get; private set; }
 
         /// <summary>
-        /// Gets the IOAuth2Operations.
+        /// Gets the IOAuth2PermissionGrantOperations.
         /// </summary>
-        public virtual IOAuth2Operations OAuth2 { get; private set; }
+        public virtual IOAuth2PermissionGrantOperations OAuth2PermissionGrant { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the GraphRbacManagementClient class.
@@ -350,13 +360,15 @@ namespace Microsoft.Azure.Graph.RBAC
         /// </summary>
         private void Initialize()
         {
-            Objects = new ObjectsOperations(this);
+            SignedInUser = new SignedInUserOperations(this);
             Applications = new ApplicationsOperations(this);
+            DeletedApplications = new DeletedApplicationsOperations(this);
             Groups = new GroupsOperations(this);
             ServicePrincipals = new ServicePrincipalsOperations(this);
             Users = new UsersOperations(this);
+            Objects = new ObjectsOperations(this);
             Domains = new DomainsOperations(this);
-            OAuth2 = new OAuth2Operations(this);
+            OAuth2PermissionGrant = new OAuth2PermissionGrantOperations(this);
             BaseUri = new System.Uri("https://graph.windows.net");
             ApiVersion = "1.6";
             AcceptLanguage = "en-US";
