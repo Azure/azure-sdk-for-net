@@ -105,11 +105,6 @@ namespace Microsoft.Azure.Graph.RBAC
         public virtual IServicePrincipalsOperations ServicePrincipals { get; private set; }
 
         /// <summary>
-        /// Gets the IServicePrincipalsByAppIdOperations.
-        /// </summary>
-        public virtual IServicePrincipalsByAppIdOperations ServicePrincipalsByAppId { get; private set; }
-
-        /// <summary>
         /// Gets the IUsersOperations.
         /// </summary>
         public virtual IUsersOperations Users { get; private set; }
@@ -375,7 +370,6 @@ namespace Microsoft.Azure.Graph.RBAC
             DeletedApplications = new DeletedApplicationsOperations(this);
             Groups = new GroupsOperations(this);
             ServicePrincipals = new ServicePrincipalsOperations(this);
-            ServicePrincipalsByAppId = new ServicePrincipalsByAppIdOperations(this);
             Users = new UsersOperations(this);
             Objects = new ObjectsOperations(this);
             Domains = new DomainsOperations(this);

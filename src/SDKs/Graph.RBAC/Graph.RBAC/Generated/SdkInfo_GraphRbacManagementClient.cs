@@ -26,7 +26,6 @@ namespace Microsoft.Azure.Graph.RBAC
                 new Tuple<string, string, string>("GraphRbacManagementClient", "OAuth2PermissionGrant", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Objects", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "ServicePrincipals", "1.6"),
-                new Tuple<string, string, string>("GraphRbacManagementClient", "ServicePrincipalsByAppId", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "SignedInUser", "1.6"),
                 new Tuple<string, string, string>("GraphRbacManagementClient", "Users", "1.6"),
               }.AsEnumerable();

@@ -100,11 +100,6 @@ namespace Microsoft.Azure.Graph.RBAC
         IServicePrincipalsOperations ServicePrincipals { get; }
 
         /// <summary>
-        /// Gets the IServicePrincipalsByAppIdOperations.
-        /// </summary>
-        IServicePrincipalsByAppIdOperations ServicePrincipalsByAppId { get; }
-
-        /// <summary>
         /// Gets the IUsersOperations.
         /// </summary>
         IUsersOperations Users { get; }
