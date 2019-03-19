@@ -381,13 +381,13 @@ namespace Cdn.Tests.ScenarioTests
                 // Create clients
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
                 var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
-
-                // List profiles should return none
-                var profiles = cdnMgmtClient.Profiles.List();
-                Assert.Empty(profiles);
-
+                
                 // Create resource group
                 var resourceGroupName1 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // List profiles should return all profiles in the subscription
+                var profiles = cdnMgmtClient.Profiles.List();
+                var existingProfileCount = profiles.Count();
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
@@ -409,10 +409,6 @@ namespace Cdn.Tests.ScenarioTests
                 var existingProfile = cdnMgmtClient.Profiles.Get(resourceGroupName1, profileName);
                 VerifyProfilesEqual(profile, existingProfile);
 
-                // List profiles should return one profile
-                profiles = cdnMgmtClient.Profiles.List();
-                Assert.Single(profiles);
-
                 // Create another resource group
                 var resourceGroupName2 = CdnTestUtilities.CreateResourceGroup(resourcesClient);
 
@@ -432,23 +428,23 @@ namespace Cdn.Tests.ScenarioTests
                 profile = cdnMgmtClient.Profiles.Create(resourceGroupName2, profileName2, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
-                // List profiles should return two profiles
+                // List profiles should return the new profiles
                 profiles = cdnMgmtClient.Profiles.List();
-                Assert.Equal(2, profiles.Count());
-
+                Assert.Equal(existingProfileCount + 2, profiles.Count());
+             
                 // Delete first profile
                 cdnMgmtClient.Profiles.Delete(resourceGroupName1, profileName);
 
-                // List profiles should return only one profile
+                // List profiles should return initial profile count + 1
                 profiles = cdnMgmtClient.Profiles.List();
-                Assert.Single(profiles);
+                Assert.Equal(existingProfileCount + 1, profiles.Count());
 
                 // Delete second profile
                 cdnMgmtClient.Profiles.Delete(resourceGroupName2, profileName2);
 
-                // List profiles should none
+                // List profiles should return initial profile count
                 profiles = cdnMgmtClient.Profiles.List();
-                Assert.Empty(profiles);
+                Assert.Equal(existingProfileCount, profiles.Count());
 
                 // Delete resource groups
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName1);
@@ -573,13 +569,13 @@ namespace Cdn.Tests.ScenarioTests
                 var cdnMgmtClient = CdnTestUtilities.GetCdnManagementClient(context, handler1);
                 var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
 
-                // CheckUsage on subscription should return zero profiles
+                // CheckUsage on subscription to get existing usage for profiles
                 var subscriptionLevelUsages = cdnMgmtClient.ResourceUsage.List();
                 Assert.Single(subscriptionLevelUsages);
 
-                var defaultUsage = subscriptionLevelUsages.First();
-                Assert.Equal(25, defaultUsage.Limit);
-                Assert.Equal(0, defaultUsage.CurrentValue);
+                var defaultSubscriptionUsage = subscriptionLevelUsages.First();
+                var existingSubscriptionUsageLimit = defaultSubscriptionUsage.Limit;
+                var existingSubscriptionUsageCurrentValue = defaultSubscriptionUsage.CurrentValue;
 
                 // Create resource group
                 var resourceGroupName = CdnTestUtilities.CreateResourceGroup(resourcesClient);
@@ -604,15 +600,15 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Single(subscriptionLevelUsages);
 
                 var usageAfterCreation = subscriptionLevelUsages.First();
-                Assert.Equal(25, usageAfterCreation.Limit);
-                Assert.Equal(1, usageAfterCreation.CurrentValue);
+                Assert.Equal(existingSubscriptionUsageLimit, usageAfterCreation.Limit);
+                Assert.Equal(existingSubscriptionUsageCurrentValue + 1, usageAfterCreation.CurrentValue);
 
-                // test Profile level usage
+                // test Profile level usage - usage for endpoints under the profile
                 var profileLevelUsages = cdnMgmtClient.Profiles.ListResourceUsage(resourceGroupName, profileName);
                 Assert.Single(profileLevelUsages);
 
                 var profileLevelUsage = profileLevelUsages.First();
-                Assert.Equal(10, profileLevelUsage.Limit);
+                Assert.Equal(25, profileLevelUsage.Limit);
                 Assert.Equal(0, profileLevelUsage.CurrentValue);
 
                 //Create an endpoint under this profile
@@ -638,7 +634,7 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Single(profileLevelUsages);
 
                 var profileLevelUsageAfterEndpointCreation = profileLevelUsages.First();
-                Assert.Equal(10, profileLevelUsageAfterEndpointCreation.Limit);
+                Assert.Equal(25, profileLevelUsageAfterEndpointCreation.Limit);
                 Assert.Equal(1, profileLevelUsageAfterEndpointCreation.CurrentValue);
 
                 // Delete resource group
