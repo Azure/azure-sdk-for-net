@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Search.Models
         /// delete specific documents. Default is false.
         /// </summary>
         [JsonIgnore]
-        public bool IsKey
+        public bool? IsKey
         {
-            get => Key.GetValueOrDefault(false);
+            get => Key;
             set => Key = value;
         }
 
@@ -70,9 +70,9 @@ namespace Microsoft.Azure.Search.Models
         /// by default.
         /// </summary>
         [JsonIgnore]
-        public bool IsRetrievable
+        public bool? IsRetrievable
         {
-            get => Retrievable.GetValueOrDefault(true);
+            get => Retrievable;
             set => Retrievable = value;
         }
 
@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Search.Models
         /// don't need a field to be included in searches, set searchable to false.
         /// </summary>
         [JsonIgnore]
-        public bool IsSearchable
+        public bool? IsSearchable
         {
-            get => Searchable.GetValueOrDefault(false);
+            get => Searchable;
             set => Searchable = value;
         }
 
@@ -107,9 +107,9 @@ namespace Microsoft.Azure.Search.Models
         /// Fields of any data type can be filterable. Default is false.
         /// </summary>
         [JsonIgnore]
-        public bool IsFilterable
+        public bool? IsFilterable
         {
-            get => Filterable.GetValueOrDefault(false);
+            get => Filterable;
             set => Filterable = value;
         }
 
@@ -121,9 +121,9 @@ namespace Microsoft.Azure.Search.Models
         /// cannot be sortable. Default is false.
         /// </summary>
         [JsonIgnore]
-        public bool IsSortable
+        public bool? IsSortable
         {
-            get => Sortable.GetValueOrDefault(false);
+            get => Sortable;
             set => Sortable = value;
         }
 
@@ -136,9 +136,9 @@ namespace Microsoft.Azure.Search.Models
         /// Edm.GeographyPoint. Default is false.
         /// </summary>
         [JsonIgnore]
-        public bool IsFacetable
+        public bool? IsFacetable
         {
-            get => Facetable.GetValueOrDefault(false);
+            get => Facetable;
             set => Facetable = value;
         }
 

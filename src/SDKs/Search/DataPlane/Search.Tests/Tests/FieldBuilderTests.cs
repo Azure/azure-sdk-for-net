@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        private void OnlyTrueFor(Func<Field, bool> check, params string[] ids)
+        private void OnlyTrueFor(Func<Field, bool?> check, params string[] ids)
         {
             Run(fields =>
             {
@@ -163,20 +163,22 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     string id = kv.Key;
                     Field field = kv.Value;
-                    bool result = check(field);
+                    bool? result = check(field);
+                    Assert.True(result.HasValue);
+
                     if (ids.Contains(id))
                     {
-                        Assert.True(result);
+                        Assert.True(result.Value);
                     }
                     else
                     {
-                        Assert.False(result);
+                        Assert.False(result.Value);
                     }
                 }
             });
         }
 
-        private void OnlyFalseFor(Func<Field, bool> check, params string[] ids) =>
+        private void OnlyFalseFor(Func<Field, bool?> check, params string[] ids) =>
             OnlyTrueFor(f => !check(f), ids);
 
         private void Run(Action<Dictionary<string, Field>> run)
