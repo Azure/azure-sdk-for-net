@@ -334,6 +334,7 @@ namespace Compute.Tests.DiskRPTests
 
             switch (diskCreateOption)
             {
+                case "Upload":
                 case "Empty":
                     disk = GenerateBaseDisk(diskCreateOption);
                     disk.DiskSizeGB = diskSizeGB;

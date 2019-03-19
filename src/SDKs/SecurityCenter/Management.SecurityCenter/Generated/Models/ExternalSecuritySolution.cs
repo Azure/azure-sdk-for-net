@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Security.Models
 
     /// <summary>
     /// Represents a security solution external to Azure Security Center which
-    /// sends information to an OMS workspace and whos data is displayed by
+    /// sends information to an OMS workspace and whose data is displayed by
     /// Azure Security Center.
     /// </summary>
     public partial class ExternalSecuritySolution

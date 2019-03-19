@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// Initializes a new instance of the ManagedRuleSet class.
         /// </summary>
         /// <param name="priority">Describes priority of the rule</param>
-        /// <param name="version">defines version of the ruleset</param>
+        /// <param name="version">defines version of the rule set</param>
         public ManagedRuleSet(int? priority = default(int?), int? version = default(int?))
         {
             Priority = priority;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public int? Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets defines version of the ruleset
+        /// Gets or sets defines version of the rule set
         /// </summary>
         [JsonProperty(PropertyName = "version")]
         public int? Version { get; set; }

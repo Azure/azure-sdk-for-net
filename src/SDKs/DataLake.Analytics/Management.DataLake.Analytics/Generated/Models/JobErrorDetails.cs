@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="description">The error message description.</param>
         /// <param name="details">The details of the error message.</param>
         /// <param name="lineNumber">The specific line number in the job where
-        /// the error occured.</param>
+        /// the error occurred.</param>
         /// <param name="startOffset">The start offset in the job where the
         /// error was found</param>
         /// <param name="endOffset">The end offset in the job where the error
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public string Details { get; private set; }
 
         /// <summary>
-        /// Gets the specific line number in the job where the error occured.
+        /// Gets the specific line number in the job where the error occurred.
         /// </summary>
         [JsonProperty(PropertyName = "lineNumber")]
         public int? LineNumber { get; private set; }

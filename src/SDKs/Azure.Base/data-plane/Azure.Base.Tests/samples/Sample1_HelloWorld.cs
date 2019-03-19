@@ -3,10 +3,10 @@
 // license information.
 
 using Azure.Base.Http;
+using Azure.Base.Http.Pipeline;
 using NUnit.Framework;
 using System;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Samples
@@ -17,14 +17,12 @@ namespace Azure.Base.Samples
         [Test]
         public async Task HelloWorld()
         {
-            var cancellation = new CancellationTokenSource();
-            var options = new HttpPipeline.Options();
-            HttpPipeline pipeline = HttpPipeline.Create(options, sdkName: "test", sdkVersion: "1.0");
+            var pipeline = new HttpPipeline(new HttpClientTransport());
 
-            using (HttpMessage message = pipeline.CreateMessage(options, cancellation: default)) {
-                var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/src/SDKs/Azure.Base/data-plane/Azure.Base.sln");
+            using (HttpMessage message = pipeline.CreateMessage(cancellation: default)) {
+
+                var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/src/SDKs/Azure.Base/data-plane/README.md");
                 message.SetRequestLine(HttpVerb.Get, uri);
-
                 message.AddHeader("Host", uri.Host);
 
                 await pipeline.SendMessageAsync(message).ConfigureAwait(false);

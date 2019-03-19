@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="rateLimitDurationInMinutes">Defines rate limit
         /// duration. Default - 1 minute</param>
         /// <param name="rateLimitThreshold">Defines rate limit
-        /// thresold</param>
+        /// threshold</param>
         /// <param name="transforms">List of transforms</param>
         public CustomRule(int priority, string ruleType, IList<MatchCondition1> matchConditions, string action, string name = default(string), string etag = default(string), int? rateLimitDurationInMinutes = default(int?), int? rateLimitThreshold = default(int?), IList<string> transforms = default(IList<string>))
         {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public int? RateLimitDurationInMinutes { get; set; }
 
         /// <summary>
-        /// Gets or sets defines rate limit thresold
+        /// Gets or sets defines rate limit threshold
         /// </summary>
         [JsonProperty(PropertyName = "rateLimitThreshold")]
         public int? RateLimitThreshold { get; set; }
