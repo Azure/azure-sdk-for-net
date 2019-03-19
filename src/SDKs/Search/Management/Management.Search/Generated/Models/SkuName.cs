@@ -30,7 +30,11 @@ namespace Microsoft.Azure.Management.Search.Models
         [EnumMember(Value = "standard2")]
         Standard2,
         [EnumMember(Value = "standard3")]
-        Standard3
+        Standard3,
+        [EnumMember(Value = "storage_optimized_l1")]
+        StorageOptimizedL1,
+        [EnumMember(Value = "storage_optimized_l2")]
+        StorageOptimizedL2
     }
     internal static class SkuNameEnumExtension
     {
@@ -53,6 +57,10 @@ namespace Microsoft.Azure.Management.Search.Models
                     return "standard2";
                 case SkuName.Standard3:
                     return "standard3";
+                case SkuName.StorageOptimizedL1:
+                    return "storage_optimized_l1";
+                case SkuName.StorageOptimizedL2:
+                    return "storage_optimized_l2";
             }
             return null;
         }
@@ -71,6 +79,10 @@ namespace Microsoft.Azure.Management.Search.Models
                     return SkuName.Standard2;
                 case "standard3":
                     return SkuName.Standard3;
+                case "storage_optimized_l1":
+                    return SkuName.StorageOptimizedL1;
+                case "storage_optimized_l2":
+                    return SkuName.StorageOptimizedL2;
             }
             return null;
         }
