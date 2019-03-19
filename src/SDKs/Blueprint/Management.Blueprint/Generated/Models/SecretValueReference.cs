@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Reference to a KeyVault secret.
+    /// Reference to a Key Vault secret.
     /// </summary>
     public partial class SecretValueReference
     {
@@ -30,11 +30,11 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the SecretValueReference class.
         /// </summary>
-        /// <param name="keyVault">Specifies the reference to a given Azure
-        /// KeyVault.</param>
+        /// <param name="keyVault">Specifies the reference to a given Azure Key
+        /// Vault.</param>
         /// <param name="secretName">Name of the secret.</param>
-        /// <param name="secretVersion">Version of the secret, (if there are
-        /// multiple versions)</param>
+        /// <param name="secretVersion">The version of the secret to use. If
+        /// left blank, the latest version of the secret is used.</param>
         public SecretValueReference(KeyVaultReference keyVault, string secretName, string secretVersion = default(string))
         {
             KeyVault = keyVault;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets specifies the reference to a given Azure KeyVault.
+        /// Gets or sets specifies the reference to a given Azure Key Vault.
         /// </summary>
         [JsonProperty(PropertyName = "keyVault")]
         public KeyVaultReference KeyVault { get; set; }
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public string SecretName { get; set; }
 
         /// <summary>
-        /// Gets or sets version of the secret, (if there are multiple
-        /// versions)
+        /// Gets or sets the version of the secret to use. If left blank, the
+        /// latest version of the secret is used.
         /// </summary>
         [JsonProperty(PropertyName = "secretVersion")]
         public string SecretVersion { get; set; }

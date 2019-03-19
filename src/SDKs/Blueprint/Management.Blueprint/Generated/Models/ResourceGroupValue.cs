@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the ResourceGroupValue class.
         /// </summary>
-        /// <param name="name">Name of the resource group</param>
-        /// <param name="location">Location of the resource group</param>
+        /// <param name="name">Name of the resource group.</param>
+        /// <param name="location">Location of the resource group.</param>
         public ResourceGroupValue(string name = default(string), string location = default(string))
         {
             Name = name;
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the resource group
+        /// Gets or sets name of the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets location of the resource group
+        /// Gets or sets location of the resource group.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }

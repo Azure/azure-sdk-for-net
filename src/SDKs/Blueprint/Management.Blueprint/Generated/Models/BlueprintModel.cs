@@ -41,18 +41,18 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="displayName">One-liner string explain this
         /// resource.</param>
         /// <param name="description">Multi-line explain this resource.</param>
-        /// <param name="status">Status of the Blueprint. This field is
+        /// <param name="status">Status of the blueprint. This field is
         /// readonly.</param>
-        /// <param name="targetScope">The scope where this Blueprint can be
-        /// applied. Possible values include: 'subscription',
+        /// <param name="targetScope">The scope where this blueprint definition
+        /// can be assigned. Possible values include: 'subscription',
         /// 'managementGroup'</param>
-        /// <param name="parameters">Parameters required by this Blueprint
+        /// <param name="parameters">Parameters required by this blueprint
         /// definition.</param>
         /// <param name="resourceGroups">Resource group placeholders defined by
-        /// this Blueprint definition.</param>
-        /// <param name="versions">Published versions of this
-        /// blueprint.</param>
-        /// <param name="layout">Layout view of the blueprint, for UI
+        /// this blueprint definition.</param>
+        /// <param name="versions">Published versions of this blueprint
+        /// definition.</param>
+        /// <param name="layout">Layout view of the blueprint definition for UI
         /// reference.</param>
         public BlueprintModel(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), BlueprintStatus status = default(BlueprintStatus), string targetScope = default(string), IDictionary<string, ParameterDefinition> parameters = default(IDictionary<string, ParameterDefinition>), IDictionary<string, ResourceGroupDefinition> resourceGroups = default(IDictionary<string, ResourceGroupDefinition>), object versions = default(object), object layout = default(object))
             : base(id, type, name)
@@ -86,39 +86,41 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets status of the Blueprint. This field is readonly.
+        /// Gets status of the blueprint. This field is readonly.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public BlueprintStatus Status { get; private set; }
 
         /// <summary>
-        /// Gets or sets the scope where this Blueprint can be applied.
-        /// Possible values include: 'subscription', 'managementGroup'
+        /// Gets or sets the scope where this blueprint definition can be
+        /// assigned. Possible values include: 'subscription',
+        /// 'managementGroup'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetScope")]
         public string TargetScope { get; set; }
 
         /// <summary>
-        /// Gets or sets parameters required by this Blueprint definition.
+        /// Gets or sets parameters required by this blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, ParameterDefinition> Parameters { get; set; }
 
         /// <summary>
-        /// Gets or sets resource group placeholders defined by this Blueprint
+        /// Gets or sets resource group placeholders defined by this blueprint
         /// definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroups")]
         public IDictionary<string, ResourceGroupDefinition> ResourceGroups { get; set; }
 
         /// <summary>
-        /// Gets or sets published versions of this blueprint.
+        /// Gets or sets published versions of this blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.versions")]
         public object Versions { get; set; }
 
         /// <summary>
-        /// Gets or sets layout view of the blueprint, for UI reference.
+        /// Gets or sets layout view of the blueprint definition for UI
+        /// reference.
         /// </summary>
         [JsonProperty(PropertyName = "properties.layout")]
         public object Layout { get; set; }

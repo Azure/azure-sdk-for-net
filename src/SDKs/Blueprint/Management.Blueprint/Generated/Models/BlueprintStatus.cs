@@ -28,9 +28,10 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the BlueprintStatus class.
         /// </summary>
-        /// <param name="timeCreated">Creation time of this blueprint.</param>
-        /// <param name="lastModified">Last modified time of this
-        /// blueprint.</param>
+        /// <param name="timeCreated">Creation time of this blueprint
+        /// definition.</param>
+        /// <param name="lastModified">Last modified time of this blueprint
+        /// definition.</param>
         public BlueprintStatus(string timeCreated = default(string), string lastModified = default(string))
             : base(timeCreated, lastModified)
         {

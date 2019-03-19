@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Blueprint
     public partial interface IAssignmentsOperations
     {
         /// <summary>
-        /// Create or update a Blueprint assignment.
+        /// Create or update a blueprint assignment.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='assignment'>
-        /// assignment object to save.
+        /// Blueprint assignment object to save.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// </exception>
         Task<AzureOperationResponse<Assignment>> CreateOrUpdateWithHttpMessagesAsync(string scope, string assignmentName, Assignment assignment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a Blueprint assignment.
+        /// Get a blueprint assignment.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// </exception>
         Task<AzureOperationResponse<Assignment>> GetWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete a Blueprint assignment.
+        /// Delete a blueprint assignment.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// </exception>
         Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List Blueprint assignments within a subscription.
+        /// List blueprint assignments within a subscription.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// </exception>
         Task<AzureOperationResponse<IPage<Assignment>>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List Blueprint assignments within a subscription.
+        /// List blueprint assignments within a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

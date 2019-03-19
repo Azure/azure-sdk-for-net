@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the TrackedResource class.
         /// </summary>
-        /// <param name="location">The location of this Blueprint
+        /// <param name="location">The location of this blueprint
         /// assignment.</param>
         /// <param name="id">String Id used to locate any resource on
         /// Azure.</param>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the location of this Blueprint assignment.
+        /// Gets or sets the location of this blueprint assignment.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
