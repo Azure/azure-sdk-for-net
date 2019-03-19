@@ -68,18 +68,6 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString()
-        {
-            var responseStream = _message.ResponseContentStream;
-            if (responseStream.CanSeek) {
-                var position = responseStream.Position;
-                var reader = new StreamReader(responseStream);
-                var result = $"{Status} {reader.ReadToEnd()}";
-                responseStream.Seek(position, SeekOrigin.Begin);
-                return result;
-            }
-
-            return $"Status : {Status.ToString()}";
-        }
+        public override string ToString() => _message.ToString();
     }
 }

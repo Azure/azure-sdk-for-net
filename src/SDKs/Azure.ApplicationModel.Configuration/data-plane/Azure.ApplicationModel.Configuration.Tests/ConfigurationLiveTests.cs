@@ -203,8 +203,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.AddAsync(setting);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -295,8 +294,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(key, value);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -390,8 +388,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(setting, options, CancellationToken.None);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -424,8 +421,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -496,8 +492,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.GetAsync(setting.Key, options, CancellationToken.None);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(304, response.Status);
+                Assert.AreEqual(304, exception.Status);
             }
             finally
             {
@@ -590,14 +585,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
             
-            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
 
-            var response = e.Response;
-            Assert.AreEqual(404, response.Status);
-            response.Dispose();
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
@@ -733,13 +726,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 var testSettingUpdate = s_testSetting.Clone();
                 testSettingUpdate.Value = "test_value_update";
 
-                var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.UpdateAsync(testSettingUpdate);
                 });
-                var response = e.Response;
-                Assert.AreEqual(409, response.Status);
-                response.Dispose();
+                Assert.AreEqual(409, exception.Status);
                 
                 // Test Unlock
                 ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
