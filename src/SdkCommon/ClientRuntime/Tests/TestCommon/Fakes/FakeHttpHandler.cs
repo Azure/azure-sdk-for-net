@@ -28,17 +28,11 @@ namespace ClientRuntime.Tests.Common.Fakes
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(String.Empty)
-            };
+            var response = new HttpResponseMessage(HttpStatusCode.OK);
 
             if (NumberOfTimesToFail > NumberOfTimesFailedSoFar)
             {
-                response = new HttpResponseMessage(StatusCodeToReturn)
-                {
-                    Content = new StringContent(String.Empty)
-                };
+                response = new HttpResponseMessage(StatusCodeToReturn);
 
                 if (TweakResponse != null)
                 {

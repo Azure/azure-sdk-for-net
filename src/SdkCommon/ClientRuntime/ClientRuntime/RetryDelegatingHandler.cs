@@ -138,14 +138,9 @@ namespace Microsoft.Rest
 
                 return responseMessage;
             }
-            catch (Exception)
+            catch (Exception) when (responseMessage != null || lastErrorResponseMessage != null)
             {
-                if (responseMessage != null || lastErrorResponseMessage != null)
-                {
-                    return responseMessage ?? lastErrorResponseMessage;
-                }
-                
-                throw;
+                return responseMessage ?? lastErrorResponseMessage;
             }
         }
     }

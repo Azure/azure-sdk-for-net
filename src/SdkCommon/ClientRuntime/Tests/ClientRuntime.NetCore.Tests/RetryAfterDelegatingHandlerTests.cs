@@ -14,15 +14,20 @@ namespace ClientRuntime.NetCore.Tests
         /// Ensure that when the request is canceled due to a timeout from the HttpClient, the last error response is returned
         /// and a TaskCanceledException is not surfaced to the caller.
         /// </summary>
-        [Fact]
-        public void HttpClientTimeoutReturnsErrorResponse()
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void HttpClientTimeoutReturnsErrorResponse(string content)
         {
             // Setup to always return 429.
-            var fakeHttpHandler = new FakeHttpHandler();
-            fakeHttpHandler.StatusCodeToReturn = (HttpStatusCode) 429;
-            fakeHttpHandler.TweakResponse = (response) =>
+            var fakeHttpHandler = new FakeHttpHandler
             {
-                response.Headers.Add("Retry-After", "1");
+                StatusCodeToReturn = (HttpStatusCode)429,
+                TweakResponse = (response) =>
+                {
+                    response.Content = content == null ? null : new StringContent(String.Empty);
+                    response.Headers.Add("Retry-After", "1");
+                }
             };
 
             var retryHandler = new RetryAfterDelegatingHandler(fakeHttpHandler);
@@ -62,6 +67,7 @@ namespace ClientRuntime.NetCore.Tests
                     throw new TaskCanceledException();
                 }
 
+                response.Content = new StringContent(String.Empty);
                 response.Headers.Add("Retry-After", "1");
             };
 
