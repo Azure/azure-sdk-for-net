@@ -397,6 +397,8 @@ namespace Microsoft.Azure.Management.Cdn
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeliveryRuleAction>("name"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DeliveryRuleCondition>("name"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DeliveryRuleCondition>("name"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CustomDomainHttpsParameters>("certificateSource"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CustomDomainHttpsParameters>("certificateSource"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
