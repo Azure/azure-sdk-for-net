@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Billing
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Billing", "AvailableBalanceByBillingProfile", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingAccounts", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingAccountsWithCreateInvoiceSectionPermission", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingProfiles", "2018-11-01-preview"),

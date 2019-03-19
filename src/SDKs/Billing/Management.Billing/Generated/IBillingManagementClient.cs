@@ -86,6 +86,11 @@ namespace Microsoft.Azure.Management.Billing
         IBillingAccountsWithCreateInvoiceSectionPermissionOperations BillingAccountsWithCreateInvoiceSectionPermission { get; }
 
         /// <summary>
+        /// Gets the IAvailableBalanceByBillingProfileOperations.
+        /// </summary>
+        IAvailableBalanceByBillingProfileOperations AvailableBalanceByBillingProfile { get; }
+
+        /// <summary>
         /// Gets the IPaymentMethodsByBillingProfileOperations.
         /// </summary>
         IPaymentMethodsByBillingProfileOperations PaymentMethodsByBillingProfile { get; }
