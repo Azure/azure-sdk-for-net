@@ -24,8 +24,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             Label = "test_label",
             ContentType = "test_content_type",
-            LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-            Locked = false,
             Tags = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
@@ -162,7 +160,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(setting.Locked);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -173,7 +171,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.False(setting.Locked);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 

@@ -23,8 +23,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             Label = "test_label",
             ContentType = "test_content_type",
-            LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-            Locked = false,
             Tags = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
@@ -726,9 +724,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 // Test Lock
                 ConfigurationSetting responseLockSetting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
 
-                s_testSetting.Locked = true;
-                Assert.AreEqual(s_testSetting, responseLockSetting);
-                
                 //Test update
                 var testSettingUpdate = s_testSetting.Clone();
                 testSettingUpdate.Value = "test_value_update";
@@ -743,9 +738,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 
                 // Test Unlock
                 ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-
-                s_testSetting.Locked = false;
-                Assert.AreEqual(s_testSetting, responseUnlockSetting);
+                await service.UpdateAsync(testSettingUpdate);
             }
             finally
             {
@@ -819,9 +812,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 Label = setting.Label,
                 ContentType = setting.ContentType,
-                LastModified = setting.LastModified,
-                Locked = setting.Locked,
-                ETag = default,
                 Tags = tags
             };
         }
