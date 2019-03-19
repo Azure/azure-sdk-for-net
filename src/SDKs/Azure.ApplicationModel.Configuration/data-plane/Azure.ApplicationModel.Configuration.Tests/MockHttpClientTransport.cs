@@ -99,8 +99,8 @@ namespace Azure.ApplicationModel.Configuration.Test
             _responseContent = json.Replace("lastmodified", "last_modified");
         }
 
-        public GetMockTransport(string queryKey, RequestOptions filter, params HttpStatusCode[] statusCodes)
-            : this(queryKey, filter, result: null)
+        public GetMockTransport(string queryKey, RequestOptions filter, ConfigurationSetting result, params HttpStatusCode[] statusCodes)
+            : this(queryKey, filter, result)
         {
             Responses.Clear();
             foreach (var statusCode in statusCodes) {
