@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.Billing
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Billing client provides access to billing resources for Azure
@@ -43,7 +47,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2018-03-01-preview.
+        /// version is 2018-11-01-preview.
         /// </summary>
         string ApiVersion { get; }
 
@@ -72,24 +76,212 @@ namespace Microsoft.Azure.Management.Billing
 
 
         /// <summary>
+        /// Gets the IBillingAccountsOperations.
+        /// </summary>
+        IBillingAccountsOperations BillingAccounts { get; }
+
+        /// <summary>
+        /// Gets the IBillingAccountsWithCreateInvoiceSectionPermissionOperations.
+        /// </summary>
+        IBillingAccountsWithCreateInvoiceSectionPermissionOperations BillingAccountsWithCreateInvoiceSectionPermission { get; }
+
+        /// <summary>
+        /// Gets the IPaymentMethodsByBillingProfileOperations.
+        /// </summary>
+        IPaymentMethodsByBillingProfileOperations PaymentMethodsByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the IBillingProfilesByBillingAccountIdOperations.
+        /// </summary>
+        IBillingProfilesByBillingAccountIdOperations BillingProfilesByBillingAccountId { get; }
+
+        /// <summary>
+        /// Gets the IBillingProfilesOperations.
+        /// </summary>
+        IBillingProfilesOperations BillingProfiles { get; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsByBillingAccountIdOperations.
+        /// </summary>
+        IInvoiceSectionsByBillingAccountIdOperations InvoiceSectionsByBillingAccountId { get; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsOperations.
+        /// </summary>
+        IInvoiceSectionsOperations InvoiceSections { get; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsWithCreateSubscriptionPermissionOperations.
+        /// </summary>
+        IInvoiceSectionsWithCreateSubscriptionPermissionOperations InvoiceSectionsWithCreateSubscriptionPermission { get; }
+
+        /// <summary>
+        /// Gets the IDepartmentsByBillingAccountIdOperations.
+        /// </summary>
+        IDepartmentsByBillingAccountIdOperations DepartmentsByBillingAccountId { get; }
+
+        /// <summary>
+        /// Gets the IDepartmentsOperations.
+        /// </summary>
+        IDepartmentsOperations Departments { get; }
+
+        /// <summary>
+        /// Gets the IEnrollmentAccountsByBillingAccountIdOperations.
+        /// </summary>
+        IEnrollmentAccountsByBillingAccountIdOperations EnrollmentAccountsByBillingAccountId { get; }
+
+        /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
         /// </summary>
         IEnrollmentAccountsOperations EnrollmentAccounts { get; }
 
         /// <summary>
-        /// Gets the IBillingPeriodsOperations.
+        /// Gets the IInvoicesByBillingAccountOperations.
         /// </summary>
-        IBillingPeriodsOperations BillingPeriods { get; }
+        IInvoicesByBillingAccountOperations InvoicesByBillingAccount { get; }
 
         /// <summary>
-        /// Gets the IInvoicesOperations.
+        /// Gets the IInvoicePricesheetOperations.
         /// </summary>
-        IInvoicesOperations Invoices { get; }
+        IInvoicePricesheetOperations InvoicePricesheet { get; }
+
+        /// <summary>
+        /// Gets the IInvoicesByBillingProfileOperations.
+        /// </summary>
+        IInvoicesByBillingProfileOperations InvoicesByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the IInvoiceOperations.
+        /// </summary>
+        IInvoiceOperations Invoice { get; }
+
+        /// <summary>
+        /// Gets the IProductsByBillingSubscriptionsOperations.
+        /// </summary>
+        IProductsByBillingSubscriptionsOperations ProductsByBillingSubscriptions { get; }
+
+        /// <summary>
+        /// Gets the IBillingSubscriptionsByBillingProfileOperations.
+        /// </summary>
+        IBillingSubscriptionsByBillingProfileOperations BillingSubscriptionsByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the IBillingSubscriptionsByInvoiceSectionOperations.
+        /// </summary>
+        IBillingSubscriptionsByInvoiceSectionOperations BillingSubscriptionsByInvoiceSection { get; }
+
+        /// <summary>
+        /// Gets the IBillingSubscriptionOperations.
+        /// </summary>
+        IBillingSubscriptionOperations BillingSubscription { get; }
+
+        /// <summary>
+        /// Gets the IProductsByBillingAccountOperations.
+        /// </summary>
+        IProductsByBillingAccountOperations ProductsByBillingAccount { get; }
+
+        /// <summary>
+        /// Gets the IProductsByInvoiceSectionOperations.
+        /// </summary>
+        IProductsByInvoiceSectionOperations ProductsByInvoiceSection { get; }
+
+        /// <summary>
+        /// Gets the IProductsOperations.
+        /// </summary>
+        IProductsOperations Products { get; }
+
+        /// <summary>
+        /// Gets the ITransactionsByBillingAccountOperations.
+        /// </summary>
+        ITransactionsByBillingAccountOperations TransactionsByBillingAccount { get; }
+
+        /// <summary>
+        /// Gets the IPolicyOperations.
+        /// </summary>
+        IPolicyOperations Policy { get; }
+
+        /// <summary>
+        /// Gets the IBillingPropertyOperations.
+        /// </summary>
+        IBillingPropertyOperations BillingProperty { get; }
 
         /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }
+
+        /// <summary>
+        /// Lists the transactions by billingProfileId for given start date and
+        /// end date.
+        /// </summary>
+        /// <param name='billingAccountId'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='billingProfileId'>
+        /// Billing Profile Id.
+        /// </param>
+        /// <param name='startDate'>
+        /// Start date
+        /// </param>
+        /// <param name='endDate'>
+        /// End date
+        /// </param>
+        /// <param name='filter'>
+        /// May be used to filter by transaction kind. The filter supports
+        /// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
+        /// support 'ne', 'or', or 'not'. Tag filter is a key value pair string
+        /// where key and value is separated by a colon (:).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<TransactionsListResult>> TransactionsByBillingProfileWithHttpMessagesAsync(string billingAccountId, string billingProfileId, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Cancel product by product id
+        /// </summary>
+        /// <param name='billingAccountId'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='productName'>
+        /// Invoide Id.
+        /// </param>
+        /// <param name='body'>
+        /// Update auto renew request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(string billingAccountId, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Cancel auto renew for product by product id
+        /// </summary>
+        /// <param name='billingAccountId'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='invoiceSectionId'>
+        /// InvoiceSection Id.
+        /// </param>
+        /// <param name='productName'>
+        /// Invoide Id.
+        /// </param>
+        /// <param name='body'>
+        /// Update auto renew request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

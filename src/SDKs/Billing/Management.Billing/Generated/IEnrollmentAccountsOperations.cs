@@ -24,51 +24,22 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IEnrollmentAccountsOperations
     {
         /// <summary>
-        /// Lists the enrollment accounts the caller has access to.
+        /// Get the enrollment account by id.
         /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
+        /// <param name='billingAccountId'>
+        /// billing Account Id.
         /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
+        /// <param name='enrollmentAccountId'>
+        /// Enrollment Account Id.
         /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<EnrollmentAccount>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Gets a enrollment account by name.
-        /// </summary>
-        /// <param name='name'>
-        /// Enrollment Account name.
+        /// <param name='expand'>
+        /// May be used to expand the Department.
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<EnrollmentAccount>> GetWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the enrollment accounts the caller has access to.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
+        /// <param name='filter'>
+        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
+        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
+        /// key value pair string where key and value is separated by a colon
+        /// (:).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -85,6 +56,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EnrollmentAccount>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EnrollmentAccount>> GetByEnrollmentAccountAccountIdWithHttpMessagesAsync(string billingAccountId, string enrollmentAccountId, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
