@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Blueprint
         public BlueprintManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List Operations for given blueprint assignment within a subscription.
+        /// List operations for given blueprint assignment within a subscription.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// Get a Blueprint assignment operation.
+        /// Get a blueprint assignment operation.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -252,10 +252,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='assignmentOperationName'>
-        /// Name of the assignment operation.
+        /// Name of the blueprint assignment operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -446,7 +446,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// List Operations for given blueprint assignment within a subscription.
+        /// List operations for given blueprint assignment within a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

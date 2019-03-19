@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Blueprint
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client API Version.
         /// </summary>
         public string ApiVersion { get; private set; }
 
