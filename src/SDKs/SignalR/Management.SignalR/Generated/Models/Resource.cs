@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
-        /// <param name="name">The name of the resouce.</param>
+        /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the service - e.g.
         /// "Microsoft.SignalRService/SignalR"</param>
         public Resource(string id = default(string), string name = default(string), string type = default(string))
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the name of the resouce.
+        /// Gets the name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }

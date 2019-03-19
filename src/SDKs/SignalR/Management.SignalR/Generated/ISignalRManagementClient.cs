@@ -41,7 +41,8 @@ namespace Microsoft.Azure.Management.SignalR
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client Api Version. Possible values include: '2018-03-01-preview',
+        /// '2018-10-01'
         /// </summary>
         string ApiVersion { get; }
 

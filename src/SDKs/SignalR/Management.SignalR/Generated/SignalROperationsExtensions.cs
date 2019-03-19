@@ -395,6 +395,45 @@ namespace Microsoft.Azure.Management.SignalR
             }
 
             /// <summary>
+            /// Operation to restart a SignalR service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the SignalR resource.
+            /// </param>
+            public static void Restart(this ISignalROperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.RestartAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to restart a SignalR service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the SignalR resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RestartAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RestartWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Regenerate SignalR service access key. PrimaryKey and SecondaryKey cannot
             /// be regenerated at the same time.
             /// </summary>
@@ -577,6 +616,45 @@ namespace Microsoft.Azure.Management.SignalR
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Operation to restart a SignalR service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the SignalR resource.
+            /// </param>
+            public static void BeginRestart(this ISignalROperations operations, string resourceGroupName, string resourceName)
+            {
+                operations.BeginRestartAsync(resourceGroupName, resourceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Operation to restart a SignalR service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the SignalR resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRestartAsync(this ISignalROperations operations, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, resourceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

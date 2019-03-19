@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
-        /// <param name="name">The name of the resouce.</param>
+        /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the service - e.g.
         /// "Microsoft.SignalRService/SignalR"</param>
         /// <param name="location">The GEO location of the SignalR service.
@@ -57,10 +57,10 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// service.</param>
         /// <param name="hostName">FQDN of the SignalR service instance.
         /// Format: xxx.service.signalr.net</param>
-        /// <param name="publicPort">The publicly accessibly port of the
+        /// <param name="publicPort">The publicly accessible port of the
         /// SignalR service which is designed for browser/client side
         /// usage.</param>
-        /// <param name="serverPort">The publicly accessibly port of the
+        /// <param name="serverPort">The publicly accessible port of the
         /// SignalR service which is designed for customer server side
         /// usage.</param>
         /// <param name="version">Version of the SignalR resource. Probably you
@@ -121,14 +121,14 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string HostName { get; private set; }
 
         /// <summary>
-        /// Gets the publicly accessibly port of the SignalR service which is
+        /// Gets the publicly accessible port of the SignalR service which is
         /// designed for browser/client side usage.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicPort")]
         public int? PublicPort { get; private set; }
 
         /// <summary>
-        /// Gets the publicly accessibly port of the SignalR service which is
+        /// Gets the publicly accessible port of the SignalR service which is
         /// designed for customer server side usage.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverPort")]

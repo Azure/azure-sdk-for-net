@@ -47,7 +47,8 @@ namespace Microsoft.Azure.Management.SignalR
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client Api Version. Possible values include: '2018-03-01-preview',
+        /// '2018-10-01'
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -336,7 +337,7 @@ namespace Microsoft.Azure.Management.SignalR
             SignalR = new SignalROperations(this);
             Usages = new UsagesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01-preview";
+            ApiVersion = 2018-10-01;
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
