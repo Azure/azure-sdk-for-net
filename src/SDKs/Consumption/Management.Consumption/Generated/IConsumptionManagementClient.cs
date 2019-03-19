@@ -48,16 +48,6 @@ namespace Microsoft.Azure.Management.Consumption
         string ApiVersion { get; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Budget name.
-        /// </summary>
-        string Name { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -75,11 +65,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
-        /// <summary>
-        /// Gets the IBudgetsOperations.
-        /// </summary>
-        IBudgetsOperations Budgets { get; }
 
         /// <summary>
         /// Gets the IOperations.

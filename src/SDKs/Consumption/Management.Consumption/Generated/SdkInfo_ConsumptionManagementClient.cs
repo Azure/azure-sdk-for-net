@@ -26,7 +26,6 @@ namespace Microsoft.Azure.Management.Consumption
                 new Tuple<string, string, string>("Billing", "EventsByBillingProfile", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "LotsByBillingProfile", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Consumption", "BillingProfilePricesheet", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Consumption", "Budgets", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Consumption", "InvoicePricesheet", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Consumption", "Operations", "2018-11-01-preview"),
               }.AsEnumerable();

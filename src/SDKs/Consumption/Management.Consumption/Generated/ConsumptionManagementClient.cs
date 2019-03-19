@@ -54,16 +54,6 @@ namespace Microsoft.Azure.Management.Consumption
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Budget name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -80,11 +70,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IBudgetsOperations.
-        /// </summary>
-        public virtual IBudgetsOperations Budgets { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -372,7 +357,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// </summary>
         private void Initialize()
         {
-            Budgets = new BudgetsOperations(this);
             Operations = new Operations(this);
             CreditSummaryByBillingProfile = new CreditSummaryByBillingProfileOperations(this);
             EventsByBillingProfile = new EventsByBillingProfileOperations(this);
