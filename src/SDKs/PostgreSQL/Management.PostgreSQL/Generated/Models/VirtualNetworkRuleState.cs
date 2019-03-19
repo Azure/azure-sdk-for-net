@@ -12,14 +12,14 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 {
 
     /// <summary>
-    /// Defines values for ServerVersion.
+    /// Defines values for VirtualNetworkRuleState.
     /// </summary>
-    public static class ServerVersion
+    public static class VirtualNetworkRuleState
     {
-        public const string NineFullStopFive = "9.5";
-        public const string NineFullStopSix = "9.6";
-        public const string OneZero = "10";
-        public const string OneZeroFullStopZero = "10.0";
-        public const string OneZeroFullStopTwo = "10.2";
+        public const string Initializing = "Initializing";
+        public const string InProgress = "InProgress";
+        public const string Ready = "Ready";
+        public const string Deleting = "Deleting";
+        public const string Unknown = "Unknown";
     }
 }

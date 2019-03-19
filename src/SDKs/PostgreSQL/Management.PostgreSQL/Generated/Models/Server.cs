@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// a server. Can only be specified when the server is being created
         /// (and is required for creation).</param>
         /// <param name="version">Server version. Possible values include:
-        /// '9.5', '9.6'</param>
+        /// '9.5', '9.6', '10', '10.0', '10.2'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
@@ -58,7 +58,13 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="earliestRestoreDate">Earliest restore point creation
         /// time (ISO8601 format)</param>
         /// <param name="storageProfile">Storage profile of a server.</param>
-        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string administratorLogin = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string userVisibleState = default(string), string fullyQualifiedDomainName = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), StorageProfile storageProfile = default(StorageProfile))
+        /// <param name="replicationRole">The replication role of the
+        /// server.</param>
+        /// <param name="masterServerId">The master server id of a replica
+        /// server.</param>
+        /// <param name="replicaCapacity">The maximum number of replicas that a
+        /// master server can have.</param>
+        public Server(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string administratorLogin = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string userVisibleState = default(string), string fullyQualifiedDomainName = default(string), System.DateTime? earliestRestoreDate = default(System.DateTime?), StorageProfile storageProfile = default(StorageProfile), string replicationRole = default(string), string masterServerId = default(string), int? replicaCapacity = default(int?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -69,6 +75,9 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
             FullyQualifiedDomainName = fullyQualifiedDomainName;
             EarliestRestoreDate = earliestRestoreDate;
             StorageProfile = storageProfile;
+            ReplicationRole = replicationRole;
+            MasterServerId = masterServerId;
+            ReplicaCapacity = replicaCapacity;
             CustomInit();
         }
 
@@ -92,7 +101,8 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public string AdministratorLogin { get; set; }
 
         /// <summary>
-        /// Gets or sets server version. Possible values include: '9.5', '9.6'
+        /// Gets or sets server version. Possible values include: '9.5', '9.6',
+        /// '10', '10.0', '10.2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }
@@ -130,6 +140,25 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         public StorageProfile StorageProfile { get; set; }
 
         /// <summary>
+        /// Gets or sets the replication role of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicationRole")]
+        public string ReplicationRole { get; set; }
+
+        /// <summary>
+        /// Gets or sets the master server id of a replica server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.masterServerId")]
+        public string MasterServerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of replicas that a master server
+        /// can have.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicaCapacity")]
+        public int? ReplicaCapacity { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -141,6 +170,10 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (ReplicaCapacity < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ReplicaCapacity", 0);
             }
         }
     }
