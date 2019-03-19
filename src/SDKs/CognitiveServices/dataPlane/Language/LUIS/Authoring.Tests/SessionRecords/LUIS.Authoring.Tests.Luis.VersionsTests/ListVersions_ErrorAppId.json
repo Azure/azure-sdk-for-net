@@ -7,35 +7,33 @@
       "RequestBody": "",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          "eceb0cb667234559aac66496e66aac3f"
+          "00000000000000000000000000000000"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25815.04",
-          "Microsoft.Azure.CognitiveServices.Language.LUIS.Programmatic.LuisProgrammaticAPI/0.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.LUISAuthoringClient/3.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"BadArgument\",\r\n    \"message\": \"Cannot find an application with the specified ID\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "118"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
         "Cache-Control": [
           "no-store, proxy-revalidate, no-cache, max-age=0, private"
         ],
         "Date": [
-          "Thu, 14 Dec 2017 21:36:35 GMT"
+          "Wed, 13 Feb 2019 01:31:23 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Apim-Request-Id": [
-          "c93b0059-5ea5-4316-a8fe-039e2b874a73"
+          "12bc766c-ade8-4690-859c-e6c05e8bfe2e"
         ],
         "Request-Id": [
-          "c93b0059-5ea5-4316-a8fe-039e2b874a73"
+          "12bc766c-ade8-4690-859c-e6c05e8bfe2e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
         ],
         "Request-Context": [
           "appId=cid-v1:26a3540d-a02a-4998-a060-715488fd769b"
@@ -46,13 +44,14 @@
         "X-Frame-Options": [
           "SAMEORIGIN"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "Content-Length": [
+          "146"
         ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
+        "Content-Type": [
+          "application/json; charset=utf-8"
         ]
       },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"BadArgument\",\r\n    \"message\": \"Cannot find an application with the ID 86226c53-b7a6-416f-876b-226b2b5ab07d.\"\r\n  }\r\n}",
       "StatusCode": 400
     }
   ],

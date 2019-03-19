@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.Blueprint
     public static partial class PublishedBlueprintsOperationsExtensions
     {
             /// <summary>
-            /// Publish a new version of the Blueprint with the latest artifacts. Published
-            /// Blueprints are immutable.
+            /// Publish a new version of the blueprint definition with the latest
+            /// artifacts. Published blueprint definitions are immutable.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,10 +34,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// Version of the published blueprint definition.
             /// </param>
             public static PublishedBlueprint Create(this IPublishedBlueprintsOperations operations, string scope, string blueprintName, string versionId)
             {
@@ -45,8 +45,8 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Publish a new version of the Blueprint with the latest artifacts. Published
-            /// Blueprints are immutable.
+            /// Publish a new version of the blueprint definition with the latest
+            /// artifacts. Published blueprint definitions are immutable.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,10 +57,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// Version of the published blueprint definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Get a published Blueprint.
+            /// Get a published version of a blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -85,10 +85,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// Version of the published blueprint definition.
             /// </param>
             public static PublishedBlueprint Get(this IPublishedBlueprintsOperations operations, string scope, string blueprintName, string versionId)
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Get a published Blueprint.
+            /// Get a published version of a blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -107,10 +107,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// Version of the published blueprint definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Delete a published Blueprint.
+            /// Delete a published version of a blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,10 +135,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// Version of the published blueprint definition.
             /// </param>
             public static PublishedBlueprint Delete(this IPublishedBlueprintsOperations operations, string scope, string blueprintName, string versionId)
             {
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Delete a published Blueprint.
+            /// Delete a published version of a blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -157,10 +157,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='versionId'>
-            /// version of the published blueprint.
+            /// Version of the published blueprint definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List published versions of given Blueprint.
+            /// List published versions of given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             public static IPage<PublishedBlueprint> List(this IPublishedBlueprintsOperations operations, string scope, string blueprintName)
             {
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List published versions of given Blueprint.
+            /// List published versions of given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List published versions of given Blueprint.
+            /// List published versions of given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List published versions of given Blueprint.
+            /// List published versions of given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

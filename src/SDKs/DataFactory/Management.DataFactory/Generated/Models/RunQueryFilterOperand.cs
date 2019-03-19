@@ -26,5 +26,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public const string ActivityType = "ActivityType";
         public const string TriggerName = "TriggerName";
         public const string TriggerRunTimestamp = "TriggerRunTimestamp";
+        public const string RunGroupId = "RunGroupId";
+        public const string LatestOnly = "LatestOnly";
     }
 }

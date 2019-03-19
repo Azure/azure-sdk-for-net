@@ -333,11 +333,6 @@ namespace Microsoft.Azure.Management.Sql
         IManagedDatabasesOperations ManagedDatabases { get; }
 
         /// <summary>
-        /// Gets the IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations.
-        /// </summary>
-        IManagedRestorableDroppedDatabaseBackupShortTermRetentionPoliciesOperations ManagedRestorableDroppedDatabaseBackupShortTermRetentionPolicies { get; }
-
-        /// <summary>
         /// Gets the IServerAutomaticTuningOperations.
         /// </summary>
         IServerAutomaticTuningOperations ServerAutomaticTuning { get; }
@@ -353,11 +348,6 @@ namespace Microsoft.Azure.Management.Sql
         IServerSecurityAlertPoliciesOperations ServerSecurityAlertPolicies { get; }
 
         /// <summary>
-        /// Gets the IRestorableDroppedManagedDatabasesOperations.
-        /// </summary>
-        IRestorableDroppedManagedDatabasesOperations RestorableDroppedManagedDatabases { get; }
-
-        /// <summary>
         /// Gets the IRestorePointsOperations.
         /// </summary>
         IRestorePointsOperations RestorePoints { get; }
@@ -371,11 +361,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IManagedServerSecurityAlertPoliciesOperations.
         /// </summary>
         IManagedServerSecurityAlertPoliciesOperations ManagedServerSecurityAlertPolicies { get; }
-
-        /// <summary>
-        /// Gets the ISensitivityLabelsOperations.
-        /// </summary>
-        ISensitivityLabelsOperations SensitivityLabels { get; }
 
         /// <summary>
         /// Gets the IDatabaseOperations.
@@ -443,11 +428,6 @@ namespace Microsoft.Azure.Management.Sql
         IManagedInstanceEncryptionProtectorsOperations ManagedInstanceEncryptionProtectors { get; }
 
         /// <summary>
-        /// Gets the IRecoverableManagedDatabasesOperations.
-        /// </summary>
-        IRecoverableManagedDatabasesOperations RecoverableManagedDatabases { get; }
-
-        /// <summary>
         /// Gets the IManagedInstanceVulnerabilityAssessmentsOperations.
         /// </summary>
         IManagedInstanceVulnerabilityAssessmentsOperations ManagedInstanceVulnerabilityAssessments { get; }
@@ -456,11 +436,6 @@ namespace Microsoft.Azure.Management.Sql
         /// Gets the IServerVulnerabilityAssessmentsOperations.
         /// </summary>
         IServerVulnerabilityAssessmentsOperations ServerVulnerabilityAssessments { get; }
-
-        /// <summary>
-        /// Gets the IManagedDatabaseSensitivityLabelsOperations.
-        /// </summary>
-        IManagedDatabaseSensitivityLabelsOperations ManagedDatabaseSensitivityLabels { get; }
 
     }
 }

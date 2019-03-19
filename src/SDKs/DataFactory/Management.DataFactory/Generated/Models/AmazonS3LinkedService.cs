@@ -47,15 +47,21 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string).</param>
         /// <param name="secretAccessKey">The secret access key of the Amazon
         /// S3 Identity and Access Management (IAM) user.</param>
+        /// <param name="serviceUrl">This value specifies the endpoint to
+        /// access with the S3 Connector. This is an optional property; change
+        /// it only if you want to try a different service endpoint or want to
+        /// switch between https and http. Type: string (or Expression with
+        /// resultType string).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AmazonS3LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object accessKeyId = default(object), SecretBase secretAccessKey = default(SecretBase), object encryptedCredential = default(object))
+        public AmazonS3LinkedService(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object accessKeyId = default(object), SecretBase secretAccessKey = default(SecretBase), object serviceUrl = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
+            ServiceUrl = serviceUrl;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -79,6 +85,16 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.secretAccessKey")]
         public SecretBase SecretAccessKey { get; set; }
+
+        /// <summary>
+        /// Gets or sets this value specifies the endpoint to access with the
+        /// S3 Connector. This is an optional property; change it only if you
+        /// want to try a different service endpoint or want to switch between
+        /// https and http. Type: string (or Expression with resultType
+        /// string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.serviceUrl")]
+        public object ServiceUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.

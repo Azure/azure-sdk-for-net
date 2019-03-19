@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             }
 
             /// <summary>
-            /// Creates or update policy with specified ruleset name within a resource
+            /// Creates or update policy with specified rule set name within a resource
             /// group.
             /// </summary>
             /// <param name='operations'>
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             }
 
             /// <summary>
-            /// Creates or update policy with specified ruleset name within a resource
+            /// Creates or update policy with specified rule set name within a resource
             /// group.
             /// </summary>
             /// <param name='operations'>

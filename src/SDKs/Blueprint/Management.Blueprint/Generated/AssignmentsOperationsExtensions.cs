@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Blueprint
     public static partial class AssignmentsOperationsExtensions
     {
             /// <summary>
-            /// Create or update a Blueprint assignment.
+            /// Create or update a blueprint assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
-            /// name of the assignment.
+            /// Name of the blueprint assignment.
             /// </param>
             /// <param name='assignment'>
-            /// assignment object to save.
+            /// Blueprint assignment object to save.
             /// </param>
             public static Assignment CreateOrUpdate(this IAssignmentsOperations operations, string scope, string assignmentName, Assignment assignment)
             {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Create or update a Blueprint assignment.
+            /// Create or update a blueprint assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,10 +55,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
-            /// name of the assignment.
+            /// Name of the blueprint assignment.
             /// </param>
             /// <param name='assignment'>
-            /// assignment object to save.
+            /// Blueprint assignment object to save.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Get a Blueprint assignment.
+            /// Get a blueprint assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
-            /// name of the assignment.
+            /// Name of the blueprint assignment.
             /// </param>
             public static Assignment Get(this IAssignmentsOperations operations, string scope, string assignmentName)
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Get a Blueprint assignment.
+            /// Get a blueprint assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
-            /// name of the assignment.
+            /// Name of the blueprint assignment.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Delete a Blueprint assignment.
+            /// Delete a blueprint assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
-            /// name of the assignment.
+            /// Name of the blueprint assignment.
             /// </param>
             public static Assignment Delete(this IAssignmentsOperations operations, string scope, string assignmentName)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Delete a Blueprint assignment.
+            /// Delete a blueprint assignment.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='assignmentName'>
-            /// name of the assignment.
+            /// Name of the blueprint assignment.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List Blueprint assignments within a subscription.
+            /// List blueprint assignments within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List Blueprint assignments within a subscription.
+            /// List blueprint assignments within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List Blueprint assignments within a subscription.
+            /// List blueprint assignments within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List Blueprint assignments within a subscription.
+            /// List blueprint assignments within a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

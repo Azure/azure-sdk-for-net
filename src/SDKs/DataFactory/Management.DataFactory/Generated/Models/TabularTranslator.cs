@@ -41,11 +41,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// "$.Column1", "Column2": "$.Column2.Property1", "Column3":
         /// "$.Column2.Property2"}. Type: object (or Expression with resultType
         /// object).</param>
-        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object))
+        /// <param name="collectionReference">The JSON Path of the Nested Array
+        /// that is going to do cross-apply. Type: object (or Expression with
+        /// resultType object).</param>
+        public TabularTranslator(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object columnMappings = default(object), object schemaMapping = default(object), object collectionReference = default(object))
             : base(additionalProperties)
         {
             ColumnMappings = columnMappings;
             SchemaMapping = schemaMapping;
+            CollectionReference = collectionReference;
             CustomInit();
         }
 
@@ -70,6 +74,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "schemaMapping")]
         public object SchemaMapping { get; set; }
+
+        /// <summary>
+        /// Gets or sets the JSON Path of the Nested Array that is going to do
+        /// cross-apply. Type: object (or Expression with resultType object).
+        /// </summary>
+        [JsonProperty(PropertyName = "collectionReference")]
+        public object CollectionReference { get; set; }
 
     }
 }

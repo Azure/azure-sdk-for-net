@@ -449,8 +449,6 @@ namespace Microsoft.Azure.Management.Security
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Setting>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Setting>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
             CustomInitialize();

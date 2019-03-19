@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Blueprint
     public static partial class ArtifactsOperationsExtensions
     {
             /// <summary>
-            /// Create or update Blueprint artifact.
+            /// Create or update blueprint artifact.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,13 +33,13 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='artifactName'>
-            /// name of the artifact.
+            /// Name of the blueprint artifact.
             /// </param>
             /// <param name='artifact'>
-            /// Blueprint artifact to save.
+            /// Blueprint artifact to create or update.
             /// </param>
             public static Artifact CreateOrUpdate(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName, Artifact artifact)
             {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Create or update Blueprint artifact.
+            /// Create or update blueprint artifact.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='artifactName'>
-            /// name of the artifact.
+            /// Name of the blueprint artifact.
             /// </param>
             /// <param name='artifact'>
-            /// Blueprint artifact to save.
+            /// Blueprint artifact to create or update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Get a Blueprint artifact.
+            /// Get a blueprint artifact.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -89,10 +89,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='artifactName'>
-            /// name of the artifact.
+            /// Name of the blueprint artifact.
             /// </param>
             public static Artifact Get(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName)
             {
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Get a Blueprint artifact.
+            /// Get a blueprint artifact.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -111,10 +111,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='artifactName'>
-            /// name of the artifact.
+            /// Name of the blueprint artifact.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Delete a Blueprint artifact.
+            /// Delete a blueprint artifact.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -139,10 +139,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='artifactName'>
-            /// name of the artifact.
+            /// Name of the blueprint artifact.
             /// </param>
             public static Artifact Delete(this IArtifactsOperations operations, string scope, string blueprintName, string artifactName)
             {
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// Delete a Blueprint artifact.
+            /// Delete a blueprint artifact.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -161,10 +161,10 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='artifactName'>
-            /// name of the artifact.
+            /// Name of the blueprint artifact.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List artifacts for a given Blueprint.
+            /// List artifacts for a given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             public static IPage<Artifact> List(this IArtifactsOperations operations, string scope, string blueprintName)
             {
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List artifacts for a given Blueprint.
+            /// List artifacts for a given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.Blueprint
             /// subscription (format: '/subscriptions/{subscriptionId}').
             /// </param>
             /// <param name='blueprintName'>
-            /// name of the blueprint.
+            /// Name of the blueprint definition.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List artifacts for a given Blueprint.
+            /// List artifacts for a given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
-            /// List artifacts for a given Blueprint.
+            /// List artifacts for a given blueprint definition.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

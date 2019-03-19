@@ -3,7 +3,9 @@
     <RepoRoot>$(MSBuildThisFileDirectory)</RepoRoot>
     <RepoEngPath>$(MSBuildThisFileDirectory)eng</RepoEngPath>
     <RepoSrcPath>$(RepoRoot)src/SDKs</RepoSrcPath>
-    <IsDataPlaneProject Condition="$(MSBuildProjectDirectory.Contains('data-plane'))">true</IsDataPlaneProject>
+    <IsClientLibrary Condition="'$(IsClientLibrary)' == '' and $(MSBuildProjectName.StartsWith('Azure.'))">true</IsClientLibrary>
+    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and '$(IsClientLibrary)' == 'true'">true</IsDataPlaneProject>
+    <IsDataPlaneProject Condition="'$(IsDataPlaneProject)' == '' and $(MSBuildProjectDirectory.Contains('data-plane'))">true</IsDataPlaneProject>
   </PropertyGroup>
 
   <Import Project="$(RepoEngPath)\Directory.Build.Mgmt.props" Condition="'$(IsDataPlaneProject)' != 'true'" />

@@ -40,3 +40,5 @@ Using Log4Net for AutoRest Generated Clients:
 	ServiceClientTracing.AddTracingInterceptor(new Log4NetTracingInterceptor());
 	ServiceClientTracing.IsEnabled = true;
 ```
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSdkCommon%2FClientRuntime.Log4Net%2FREADME.png)

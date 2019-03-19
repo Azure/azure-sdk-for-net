@@ -13,10 +13,10 @@ namespace EventGrid.Tests.ScenarioTests
 {
     public partial class ScenarioTests
     {
-        const string AzureFunctionEndpointUrl = "https://eventgridrunnerfunction.azurewebsites.net/api/HttpTriggerCSharp1?code=<HIDDEN>";
+        const string AzureFunctionEndpointUrl = "https://devexpfuncappdestination.azurewebsites.net/runtime/webhooks/EventGrid?functionName=EventGridTrigger1&code=<HIDDEN>";
 
         [Fact]
-        public void EventSubscriptionCreateGetUpdateDelete()
+        public void EventSubscriptionToCustomTopicCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -63,7 +63,7 @@ namespace EventGrid.Tests.ScenarioTests
 
                 // Create an event subscription to this topic
                 var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
-                string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/topics/{topicName}";
+                string scope = $"/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/topics/{topicName}";
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
@@ -73,7 +73,7 @@ namespace EventGrid.Tests.ScenarioTests
                     },
                     Filter = new EventSubscriptionFilter()
                     {
-                        IncludedEventTypes = new List<string>() { "All" },
+                        IncludedEventTypes = null,
                         IsSubjectCaseSensitive = true,
                         SubjectBeginsWith = "TestPrefix",
                         SubjectEndsWith = "TestSuffix"
@@ -133,7 +133,22 @@ namespace EventGrid.Tests.ScenarioTests
                 Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
 
                 // List event subscriptions
-                var eventSubscriptionsList = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;
+                var eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;
+                List<EventSubscription> eventSubscriptionsList = new List<EventSubscription>();
+                string nextLink = null;
+
+                if (eventSubscriptionsPage != null)
+                {
+                    eventSubscriptionsList.AddRange(eventSubscriptionsPage);
+                    nextLink = eventSubscriptionsPage.NextPageLink;
+                    while (nextLink != null)
+                    {
+                        eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupNextAsync(nextLink).Result;
+                        eventSubscriptionsList.AddRange(eventSubscriptionsPage);
+                        nextLink = eventSubscriptionsPage.NextPageLink;
+                    }
+                }
+
                 Assert.Contains(eventSubscriptionsList, es => es.Name == eventSubscriptionName);
 
                 // Delete the event subscription
@@ -145,16 +160,55 @@ namespace EventGrid.Tests.ScenarioTests
         }
 
         [Fact]
-        public void EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete()
+        public void EventSubscriptionToDomainCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                InitializeClients(context);
+                this.InitializeClients(context);
 
-                // Create an event subscription to an Azure subscription
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
+
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(EventGridManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                var domainName = TestUtilities.GenerateName(EventGridManagementHelper.DomainPrefix);
+                var domainTopicName = TestUtilities.GenerateName(EventGridManagementHelper.DomainTopicPrefix);
+
+                var createDomainResponse = this.EventGridManagementClient.Domains.CreateOrUpdateAsync(resourceGroup, domainName,
+                    new Domain()
+                    {
+                        Location = location,
+                        Tags = new Dictionary<string, string>()
+                        {
+                            {"tag1", "value1"},
+                            {"tag2", "value2"}
+                        }
+                    }).Result;
+
+                Assert.NotNull(createDomainResponse);
+                Assert.Equal(createDomainResponse.Name, domainName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created domain
+                var getDomainResponse = EventGridManagementClient.Domains.Get(resourceGroup, domainName);
+                if (string.Compare(getDomainResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                getDomainResponse = EventGridManagementClient.Domains.Get(resourceGroup, domainName);
+                Assert.NotNull(getDomainResponse);
+                Assert.Equal("Succeeded", getDomainResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal(location, getDomainResponse.Location, StringComparer.CurrentCultureIgnoreCase);
+
+                // Create an event subscription to this domain
                 var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
-
-                string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2";
+                string scope = $"/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/domains/{domainName}";
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
@@ -164,7 +218,154 @@ namespace EventGrid.Tests.ScenarioTests
                     },
                     Filter = new EventSubscriptionFilter()
                     {
-                        IncludedEventTypes = new List<string>() { "All" },
+                        IncludedEventTypes = null,
+                        IsSubjectCaseSensitive = true,
+                        SubjectBeginsWith = "TestPrefix",
+                        SubjectEndsWith = "TestSuffix"
+                    },
+                    Labels = new List<string>()
+                    {
+                        "TestLabel1",
+                        "TestLabel2"
+                    }
+                };
+
+                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscription).Result;
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal(eventSubscriptionResponse.Name, eventSubscriptionName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created event subscription
+                eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
+                if (string.Compare(eventSubscriptionResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+
+                // Update the event subscription
+                var eventSubscriptionUpdateParameters = new EventSubscriptionUpdateParameters()
+                {
+                    Destination = new WebHookEventSubscriptionDestination()
+                    {
+                        EndpointUrl = AzureFunctionEndpointUrl,
+                    },
+                    Filter = new EventSubscriptionFilter()
+                    {
+                        IncludedEventTypes = new List<string>()
+                        {
+                            "Event1",
+                            "Event2"
+                        },
+                        SubjectEndsWith = ".jpg",
+                        SubjectBeginsWith = "TestPrefix"
+                    },
+                    Labels = new List<string>()
+                    {
+                        "UpdatedLabel1",
+                        "UpdatedLabel2",
+                    }
+                };
+
+                eventSubscriptionResponse = this.eventGridManagementClient.EventSubscriptions.UpdateAsync(scope, eventSubscriptionName, eventSubscriptionUpdateParameters).Result;
+                Assert.Equal(".jpg", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Contains(eventSubscriptionResponse.Labels, label => label == "UpdatedLabel1");
+
+                // Create an event subscription to a domain topic scope
+                eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
+                scope = $"/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/domains/{domainName}/topics/{domainTopicName}";
+
+                eventSubscription = new EventSubscription()
+                {
+                    Destination = new WebHookEventSubscriptionDestination()
+                    {
+                        EndpointUrl = AzureFunctionEndpointUrl
+                    },
+                    Filter = new EventSubscriptionFilter()
+                    {
+                        IncludedEventTypes = null,
+                        IsSubjectCaseSensitive = true,
+                        SubjectBeginsWith = "TestPrefix",
+                        SubjectEndsWith = "TestSuffix"
+                    },
+                    Labels = new List<string>()
+                    {
+                        "TestLabel1",
+                        "TestLabel2"
+                    }
+                };
+
+                eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscription).Result;
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal(eventSubscriptionResponse.Name, eventSubscriptionName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created event subscription
+                eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
+                if (string.Compare(eventSubscriptionResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+
+                // List event subscriptions
+                var eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupAsync(resourceGroup, location).Result;
+                List<EventSubscription> eventSubscriptionsList = new List<EventSubscription>();
+                string nextLink = null;
+
+                if (eventSubscriptionsPage != null)
+                {
+                    eventSubscriptionsList.AddRange(eventSubscriptionsPage);
+                    nextLink = eventSubscriptionsPage.NextPageLink;
+                    while (nextLink != null)
+                    {
+                        eventSubscriptionsPage = this.EventGridManagementClient.EventSubscriptions.ListRegionalByResourceGroupNextAsync(nextLink).Result;
+                        eventSubscriptionsList.AddRange(eventSubscriptionsPage);
+                        nextLink = eventSubscriptionsPage.NextPageLink;
+                    }
+                }
+
+                // Delete the event subscription
+                EventGridManagementClient.EventSubscriptions.DeleteAsync(scope, eventSubscriptionName).Wait();
+
+                // Delete the Domain
+                EventGridManagementClient.Domains.DeleteAsync(resourceGroup, domainName).Wait();
+            }
+        }
+
+        [Fact(Skip = "This is not yet enabled for the new API version, will re-record once it is enabled")]
+        public void EventSubscriptionToAzureSubscriptionCreateGetUpdateDelete()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                InitializeClients(context);
+
+                // Create an event subscription to an Azure subscription
+                var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
+
+                string scope = $"/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4";
+
+                EventSubscription eventSubscription = new EventSubscription()
+                {
+                    Destination = new WebHookEventSubscriptionDestination()
+                    {
+                        EndpointUrl = AzureFunctionEndpointUrl
+                    },
+                    Filter = new EventSubscriptionFilter()
+                    {
+                        IncludedEventTypes = null,
                         IsSubjectCaseSensitive = false,
                         SubjectBeginsWith = "TestPrefix",
                         SubjectEndsWith = "TestSuffix"
@@ -202,7 +403,7 @@ namespace EventGrid.Tests.ScenarioTests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "This is not yet enabled for the new API version, will re-record once it is enabled")]
         public void EventSubscriptionToResourceGroupCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -221,7 +422,7 @@ namespace EventGrid.Tests.ScenarioTests
                 // Create an event subscription to a resource group
                 var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
 
-                string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/{resourceGroup}";
+                string scope = $"/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/{resourceGroup}";
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
@@ -231,7 +432,7 @@ namespace EventGrid.Tests.ScenarioTests
                     },
                     Filter = new EventSubscriptionFilter()
                     {
-                        IncludedEventTypes = new List<string>() { "All" },
+                        IncludedEventTypes = null,
                         IsSubjectCaseSensitive = false,
                         SubjectBeginsWith = "TestPrefix",
                         SubjectEndsWith = "TestSuffix"
@@ -312,7 +513,7 @@ namespace EventGrid.Tests.ScenarioTests
 
                 // Create an event subscription to this topic
                 var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
-                string scope = $"/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/topics/{topicName}";
+                string scope = $"/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/topics/{topicName}";
 
                 EventSubscription eventSubscription = new EventSubscription()
                 {
@@ -322,7 +523,7 @@ namespace EventGrid.Tests.ScenarioTests
                     },
                     Filter = new EventSubscriptionFilter()
                     {
-                        IncludedEventTypes = new List<string>() { "All" },
+                        IncludedEventTypes = null,
                         IsSubjectCaseSensitive = true,
                         SubjectBeginsWith = "TestPrefix",
                         SubjectEndsWith = "TestSuffix"
@@ -334,7 +535,116 @@ namespace EventGrid.Tests.ScenarioTests
                     },
                     DeadLetterDestination = new StorageBlobDeadLetterDestination()
                     {
-                        ResourceId = "/subscriptions/55f3dcd4-cac7-43b4-990b-a139d62a1eb2/resourceGroups/kalstest/providers/Microsoft.Storage/storageAccounts/kalsdemo",
+                        ResourceId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Storage/storageAccounts/devexpstg",
+                        BlobContainerName = "dlq"
+                    },
+                    RetryPolicy = new RetryPolicy()
+                    {
+                        EventTimeToLiveInMinutes = 20,
+                        MaxDeliveryAttempts = 10
+                    }
+                };
+
+                var eventSubscriptionResponse = this.EventGridManagementClient.EventSubscriptions.CreateOrUpdateAsync(scope, eventSubscriptionName, eventSubscription).Result;
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal(eventSubscriptionResponse.Name, eventSubscriptionName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created event subscription
+                eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
+                if (string.Compare(eventSubscriptionResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                eventSubscriptionResponse = EventGridManagementClient.EventSubscriptions.Get(scope, eventSubscriptionName);
+                Assert.NotNull(eventSubscriptionResponse);
+                Assert.Equal("Succeeded", eventSubscriptionResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestPrefix", eventSubscriptionResponse.Filter.SubjectBeginsWith, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("TestSuffix", eventSubscriptionResponse.Filter.SubjectEndsWith, StringComparer.CurrentCultureIgnoreCase);
+
+                // Delete the event subscription
+                EventGridManagementClient.EventSubscriptions.DeleteAsync(scope, eventSubscriptionName).Wait();
+
+                // Delete the topic
+                EventGridManagementClient.Topics.DeleteAsync(resourceGroup, topicName).Wait();
+            }
+        }
+
+        [Fact]
+        public void EventSubscriptionCreateGetUpdateDeleteWithDlqAdvancedFilterServiceBusAsDestination()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                this.InitializeClients(context);
+
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
+
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(EventGridManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                var topicName = TestUtilities.GenerateName(EventGridManagementHelper.TopicPrefix);
+
+                var createTopicResponse = this.EventGridManagementClient.Topics.CreateOrUpdateAsync(resourceGroup, topicName,
+                    new Topic()
+                    {
+                        Location = location
+                    }).Result;
+
+                Assert.NotNull(createTopicResponse);
+                Assert.Equal(createTopicResponse.Name, topicName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
+                // Get the created topic
+                var getTopicResponse = EventGridManagementClient.Topics.Get(resourceGroup, topicName);
+                if (string.Compare(getTopicResponse.ProvisioningState, "Succeeded", true) != 0)
+                {
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                }
+
+                getTopicResponse = EventGridManagementClient.Topics.Get(resourceGroup, topicName);
+                Assert.NotNull(getTopicResponse);
+                Assert.Equal("Succeeded", getTopicResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal(location, getTopicResponse.Location, StringComparer.CurrentCultureIgnoreCase);
+
+                // Create an event subscription to this topic
+                var eventSubscriptionName = TestUtilities.GenerateName(EventGridManagementHelper.EventSubscriptionPrefix);
+                string scope = $"/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/{resourceGroup}/providers/Microsoft.EventGrid/topics/{topicName}";
+
+                EventSubscription eventSubscription = new EventSubscription()
+                {
+                    Destination = new ServiceBusQueueEventSubscriptionDestination()
+                    {
+                        ResourceId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.ServiceBus/namespaces/devexpservicebus/queues/devexpdestination",
+                    },
+                    Filter = new EventSubscriptionFilter()
+                    {
+                        IncludedEventTypes = null,
+                        IsSubjectCaseSensitive = true,
+                        SubjectBeginsWith = "TestPrefix",
+                        SubjectEndsWith = "TestSuffix",
+                        AdvancedFilters =new AdvancedFilter[]
+                        {
+                            new StringContainsAdvancedFilter("topic", new[] { "sdk" }),
+                            new NumberInAdvancedFilter("data.key1", new List<double?> {1.0, 2.0, 3.0}),
+                            new BoolEqualsAdvancedFilter("data.key2", true),
+                            new StringContainsAdvancedFilter("dataversion", new[] { "3.0" }),
+                        }
+                    },
+                    Labels = new List<string>()
+                    {
+                        "TestLabel1",
+                        "TestLabel2"
+                    },
+                    DeadLetterDestination = new StorageBlobDeadLetterDestination()
+                    {
+                        ResourceId = "/subscriptions/5b4b650e-28b9-4790-b3ab-ddbd88d727c4/resourceGroups/DevExpRg/providers/Microsoft.Storage/storageAccounts/devexpstg",
                         BlobContainerName = "dlq"
                     },
                     RetryPolicy = new RetryPolicy()

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="id">The application ID.</param>
         /// <param name="isSentimentAnalysisEnabled">Setting sentiment analysis
         /// as true returns the Sentiment of the input utterance along with the
-        /// resopnse</param>
+        /// response</param>
         /// <param name="isSpeechEnabled">Setting speech as public enables
         /// speech priming in your app</param>
         /// <param name="isSpellCheckerEnabled">Setting spell checker as public
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 
         /// <summary>
         /// Gets or sets setting sentiment analysis as true returns the
-        /// Sentiment of the input utterance along with the resopnse
+        /// Sentiment of the input utterance along with the response
         /// </summary>
         [JsonProperty(PropertyName = "sentimentAnalysis")]
         public bool IsSentimentAnalysisEnabled { get; set; }

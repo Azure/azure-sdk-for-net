@@ -39,18 +39,21 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// for an event subscription based on a resource path suffix.
         /// Wildcard characters are not supported in this path.</param>
         /// <param name="includedEventTypes">A list of applicable event types
-        /// that need to be part of the event subscription.
-        /// If it is desired to subscribe to all event types, the string "all"
-        /// needs to be specified as an element in this list.</param>
+        /// that need to be part of the event subscription. If it is desired to
+        /// subscribe to all default event types, set the IncludedEventTypes to
+        /// null.</param>
         /// <param name="isSubjectCaseSensitive">Specifies if the
         /// SubjectBeginsWith and SubjectEndsWith properties of the filter
         /// should be compared in a case sensitive manner.</param>
-        public EventSubscriptionFilter(string subjectBeginsWith = default(string), string subjectEndsWith = default(string), IList<string> includedEventTypes = default(IList<string>), bool? isSubjectCaseSensitive = default(bool?))
+        /// <param name="advancedFilters">An array of advanced filters that are
+        /// used for filtering event subscriptions.</param>
+        public EventSubscriptionFilter(string subjectBeginsWith = default(string), string subjectEndsWith = default(string), IList<string> includedEventTypes = default(IList<string>), bool? isSubjectCaseSensitive = default(bool?), IList<AdvancedFilter> advancedFilters = default(IList<AdvancedFilter>))
         {
             SubjectBeginsWith = subjectBeginsWith;
             SubjectEndsWith = subjectEndsWith;
             IncludedEventTypes = includedEventTypes;
             IsSubjectCaseSensitive = isSubjectCaseSensitive;
+            AdvancedFilters = advancedFilters;
             CustomInit();
         }
 
@@ -78,9 +81,8 @@ namespace Microsoft.Azure.Management.EventGrid.Models
 
         /// <summary>
         /// Gets or sets a list of applicable event types that need to be part
-        /// of the event subscription.
-        /// If it is desired to subscribe to all event types, the string "all"
-        /// needs to be specified as an element in this list.
+        /// of the event subscription. If it is desired to subscribe to all
+        /// default event types, set the IncludedEventTypes to null.
         /// </summary>
         [JsonProperty(PropertyName = "includedEventTypes")]
         public IList<string> IncludedEventTypes { get; set; }
@@ -92,6 +94,13 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "isSubjectCaseSensitive")]
         public bool? IsSubjectCaseSensitive { get; set; }
+
+        /// <summary>
+        /// Gets or sets an array of advanced filters that are used for
+        /// filtering event subscriptions.
+        /// </summary>
+        [JsonProperty(PropertyName = "advancedFilters")]
+        public IList<AdvancedFilter> AdvancedFilters { get; set; }
 
     }
 }

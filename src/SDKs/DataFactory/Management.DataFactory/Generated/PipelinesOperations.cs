@@ -1066,6 +1066,15 @@ namespace Microsoft.Azure.Management.DataFactory
         /// The pipeline run identifier. If run ID is specified the parameters of the
         /// specified run will be used to create a new run.
         /// </param>
+        /// <param name='isRecovery'>
+        /// Recovery mode flag. If recovery mode is set to true, the specified
+        /// referenced pipeline run and the new run will be grouped under the same
+        /// groupId.
+        /// </param>
+        /// <param name='startActivityName'>
+        /// In recovery mode, the rerun will start from this activity. If not
+        /// specified, all activities will run.
+        /// </param>
         /// <param name='parameters'>
         /// Parameters of the pipeline run. These parameters will be used only if the
         /// runId is not specified.
@@ -1091,7 +1100,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CreateRunResponse>> CreateRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CreateRunResponse>> CreateRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), bool? isRecovery = default(bool?), string startActivityName = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -1169,6 +1178,8 @@ namespace Microsoft.Azure.Management.DataFactory
                 tracingParameters.Add("factoryName", factoryName);
                 tracingParameters.Add("pipelineName", pipelineName);
                 tracingParameters.Add("referencePipelineRunId", referencePipelineRunId);
+                tracingParameters.Add("isRecovery", isRecovery);
+                tracingParameters.Add("startActivityName", startActivityName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateRun", tracingParameters);
@@ -1188,6 +1199,14 @@ namespace Microsoft.Azure.Management.DataFactory
             if (referencePipelineRunId != null)
             {
                 _queryParameters.Add(string.Format("referencePipelineRunId={0}", System.Uri.EscapeDataString(referencePipelineRunId)));
+            }
+            if (isRecovery != null)
+            {
+                _queryParameters.Add(string.Format("isRecovery={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(isRecovery, Client.SerializationSettings).Trim('"'))));
+            }
+            if (startActivityName != null)
+            {
+                _queryParameters.Add(string.Format("startActivityName={0}", System.Uri.EscapeDataString(startActivityName)));
             }
             if (_queryParameters.Count > 0)
             {

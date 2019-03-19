@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates Front Door service is not able to process the
+    /// Error response indicates Front Door service is not able to process the
     /// incoming request. The reason is provided in the error message.
     /// </summary>
     public partial class ErrorResponse
