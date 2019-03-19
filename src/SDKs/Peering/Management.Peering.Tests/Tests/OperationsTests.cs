@@ -121,15 +121,14 @@ namespace Peering.Tests
                         MaxPrefixesAdvertisedV4 = 20000
                     }
                 };
-                var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), 65000, false);
+                var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(),false, new SubResource("65000"));
                 directPeeringProperties.Connections.Add(directConnection);
                 var peeringModel = new PeeringModel
                 {
                     PeeringLocation = "Amsterdam",
                     Sku = new PeeringSku("Basic_Direct_Free"),
-                    Kind = "Direct",
+                    Direct = directPeeringProperties,
                     Location = "centralus",
-                    Direct = directPeeringProperties
                 };
 
                 var result = this.client.Peerings.CreateOrUpdate(rgname, "xyz", peeringModel);
@@ -165,13 +164,12 @@ namespace Peering.Tests
                         MaxPrefixesAdvertisedV4 = 20000
                     }
                 };
-                var exchangePeeringProperties = new PeeringPropertiesExchange(new List<ExchangeConnection>(), 65000);
+                var exchangePeeringProperties = new PeeringPropertiesExchange(new List<ExchangeConnection>(), new SubResource("65000"));
                 exchangePeeringProperties.Connections.Add(exchangeConnection);
                 var peeringModel = new PeeringModel
                 {
                     PeeringLocation = "Amsterdam",
                     Sku = new PeeringSku("Basic_Exchange_Free"),
-                    Kind = "Exchange",
                     Location = "centralus",
                     Exchange = exchangePeeringProperties
                 };
