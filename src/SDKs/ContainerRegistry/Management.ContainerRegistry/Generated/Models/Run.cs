@@ -66,7 +66,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// were used to login to the source registry during this run.</param>
         /// <param name="customRegistries">The list of custom registries that
         /// were logged in during this run.</param>
-        /// <param name="runErrorMessage">The run error message.</param>
+        /// <param name="runErrorMessage">The error message received from
+        /// backend systems after the run is scheduled.</param>
         /// <param name="provisioningState">The provisioning state of a run.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed', 'Canceled'</param>
@@ -201,7 +202,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public IList<string> CustomRegistries { get; set; }
 
         /// <summary>
-        /// Gets or sets the run error message.
+        /// Gets or sets the error message received from backend systems after
+        /// the run is scheduled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.runErrorMessage")]
         public string RunErrorMessage { get; set; }
