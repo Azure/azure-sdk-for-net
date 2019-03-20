@@ -99,6 +99,7 @@ namespace Azure.Base.Http
                     policies[index++] = policy;
                 }
             }
+            policies[index++] = new LoggingPolicy();
             policies[index++] = _transport;
 
             var container = _container == null ? EmptyServiceProvider.Singleton : _container;
