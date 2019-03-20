@@ -94,7 +94,7 @@ jobs:
         displayName: 'Download verifyagentos package'
         inputs:
           command: download
-          vstsFeed: 'azure-sdk-tools'
+          vstsFeed: 'azure-sdk-tools-public'
           vstsFeedPackage: 'verifyagentos'
           vstsPackageVersion: 1.0.0
 
