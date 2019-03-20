@@ -25,15 +25,12 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // specify custon HttpClient
             options.Transport = new HttpClientTransport(s_client);
 
-            // remove logging policy
-            options.LoggingPolicy = null; 
-
             // specify custom retry policy options
             options.RetryPolicy = RetryPolicy.CreateFixed(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
                 retriableCodes: new int[] {
-                    500, // Internal Server Error 
+                    500, // Internal Server Error
                     504  // Gateway Timeout
                 }
             );

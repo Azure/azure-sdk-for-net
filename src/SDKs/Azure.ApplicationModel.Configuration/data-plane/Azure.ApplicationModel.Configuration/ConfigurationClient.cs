@@ -19,8 +19,8 @@ namespace Azure.ApplicationModel.Configuration
         const string ComponentVersion = "1.0.0";
 
         static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
-            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
-            500, // Internal Server Error 
+            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
+            500, // Internal Server Error
             503, // Service Unavailable
             504  // Gateway Timeout
         );
@@ -33,7 +33,6 @@ namespace Azure.ApplicationModel.Configuration
         public static HttpPipelineOptions CreateDefaultPipelineOptions()
         {
             var options = new HttpPipelineOptions(HttpClientTransport.Shared);
-            options.LoggingPolicy = LoggingPolicy.Shared;
             options.RetryPolicy = s_defaultRetryPolicy;
             return options;
         }
