@@ -10,13 +10,12 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Diagnostics;
 
 namespace Azure.Base.Http.Pipeline
 {
     public class HttpClientTransport : HttpPipelineTransport
     {
-        private static readonly HttpClient s_defaultClient = new HttpClient();
+        static readonly HttpClient s_defaultClient = new HttpClient();
 
         readonly HttpClient _client;
 
@@ -34,8 +33,8 @@ namespace Azure.Base.Http.Pipeline
             if (httpTransportMessage == null) throw new InvalidOperationException("the message is not compatible with the transport");
 
             HttpRequestMessage httpRequest = httpTransportMessage.BuildRequestMessage();
-            HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
 
+            HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
             httpTransportMessage.ProcessResponseMessage(responseMessage);
         }
 
