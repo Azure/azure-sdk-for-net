@@ -307,12 +307,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// please explicitly specify the model you need. Possible values include:
             /// 'recognition_01', 'recognition_02'
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// Whether to return the 'RecognitionModel' required for the current
+            /// operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<DetectedFace>> DetectWithUrlAsync(this IFaceOperations operations, string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<DetectedFace>> DetectWithUrlAsync(this IFaceOperations operations, string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DetectWithUrlWithHttpMessagesAsync(url, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DetectWithUrlWithHttpMessagesAsync(url, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -390,12 +394,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// please explicitly specify the model you need. Possible values include:
             /// 'recognition_01', 'recognition_02'
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// Whether to return the 'RecognitionModel' required for the current
+            /// operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<DetectedFace>> DetectWithStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<DetectedFace>> DetectWithStreamAsync(this IFaceOperations operations, Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DetectWithStreamWithHttpMessagesAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DetectWithStreamWithHttpMessagesAsync(image, returnFaceId, returnFaceLandmarks, returnFaceAttributes, recognitionModel, returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

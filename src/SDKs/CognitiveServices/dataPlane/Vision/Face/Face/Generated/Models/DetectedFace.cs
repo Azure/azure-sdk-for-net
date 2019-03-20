@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         /// <param name="recognitionModel">Possible values include:
         /// 'recognition_01', 'recognition_02'</param>
-        public DetectedFace(string recognitionModel, FaceRectangle faceRectangle, System.Guid? faceId = default(System.Guid?), FaceLandmarks faceLandmarks = default(FaceLandmarks), FaceAttributes faceAttributes = default(FaceAttributes))
+        public DetectedFace(FaceRectangle faceRectangle, System.Guid? faceId = default(System.Guid?), string recognitionModel = default(string), FaceLandmarks faceLandmarks = default(FaceLandmarks), FaceAttributes faceAttributes = default(FaceAttributes))
         {
             FaceId = faceId;
             RecognitionModel = recognitionModel;
@@ -82,10 +82,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (RecognitionModel == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RecognitionModel");
-            }
             if (FaceRectangle == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FaceRectangle");

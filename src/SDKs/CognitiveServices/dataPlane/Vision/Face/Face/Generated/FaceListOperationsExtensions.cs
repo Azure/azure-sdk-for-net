@@ -88,12 +88,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='faceListId'>
             /// Id referencing a particular face list.
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// Whether to return the 'RecognitionModel' required for the current
+            /// operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FaceList> GetAsync(this IFaceListOperations operations, string faceListId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FaceList> GetAsync(this IFaceListOperations operations, string faceListId, bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(faceListId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(faceListId, returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -150,12 +154,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// Whether to return the 'RecognitionModel' required for the current
+            /// operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<FaceList>> ListAsync(this IFaceListOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<FaceList>> ListAsync(this IFaceListOperations operations, bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -90,6 +90,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='faceListId'>
         /// Id referencing a particular face list.
         /// </param>
+        /// <param name='returnRecognitionModel'>
+        /// Whether to return the 'RecognitionModel' required for the current
+        /// operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -105,7 +109,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<FaceList>> GetWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<FaceList>> GetWithHttpMessagesAsync(string faceListId, bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update information of a face list.
         /// </summary>
@@ -158,6 +162,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Get](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039524c)
         ///
         /// </summary>
+        /// <param name='returnRecognitionModel'>
+        /// Whether to return the 'RecognitionModel' required for the current
+        /// operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -173,7 +181,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete an existing face from a face list (given by a
         /// persistedFaceId and a faceListId). Persisted image related to the

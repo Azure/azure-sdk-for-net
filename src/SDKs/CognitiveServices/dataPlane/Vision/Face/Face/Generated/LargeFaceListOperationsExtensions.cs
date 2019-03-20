@@ -91,12 +91,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='largeFaceListId'>
             /// Id referencing a particular large face list.
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// Whether to return the 'RecognitionModel' required for the current
+            /// operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LargeFaceList> GetAsync(this ILargeFaceListOperations operations, string largeFaceListId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LargeFaceList> GetAsync(this ILargeFaceListOperations operations, string largeFaceListId, bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(largeFaceListId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(largeFaceListId, returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -187,12 +191,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// Whether to return the 'RecognitionModel' required for the current
+            /// operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LargeFaceList>> ListAsync(this ILargeFaceListOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LargeFaceList>> ListAsync(this ILargeFaceListOperations operations, bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

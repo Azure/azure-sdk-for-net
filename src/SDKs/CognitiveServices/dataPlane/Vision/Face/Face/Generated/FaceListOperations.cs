@@ -267,6 +267,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <param name='faceListId'>
         /// Id referencing a particular face list.
         /// </param>
+        /// <param name='returnRecognitionModel'>
+        /// Whether to return the 'RecognitionModel' required for the current
+        /// operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -288,7 +292,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<FaceList>> GetWithHttpMessagesAsync(string faceListId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<FaceList>> GetWithHttpMessagesAsync(string faceListId, bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -317,6 +321,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("faceListId", faceListId);
+                tracingParameters.Add("returnRecognitionModel", returnRecognitionModel);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -325,6 +330,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists/{faceListId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{faceListId}", System.Uri.EscapeDataString(faceListId));
+            List<string> _queryParameters = new List<string>();
+            _queryParameters.Add(string.Format("returnRecognitionModel={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(returnRecognitionModel, Client.SerializationSettings).Trim('"'))));
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -752,6 +763,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Get](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039524c)
         ///
         /// </summary>
+        /// <param name='returnRecognitionModel'>
+        /// Whether to return the 'RecognitionModel' required for the current
+        /// operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -773,7 +788,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<FaceList>>> ListWithHttpMessagesAsync(bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -786,6 +801,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("returnRecognitionModel", returnRecognitionModel);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -793,6 +809,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "facelists";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            List<string> _queryParameters = new List<string>();
+            _queryParameters.Add(string.Format("returnRecognitionModel={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(returnRecognitionModel, Client.SerializationSettings).Trim('"'))));
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

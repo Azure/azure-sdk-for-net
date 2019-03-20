@@ -984,6 +984,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// please explicitly specify the model you need. Possible values include:
         /// 'recognition_01', 'recognition_02'
         /// </param>
+        /// <param name='returnRecognitionModel'>
+        /// Whether to return the 'RecognitionModel' required for the current
+        /// operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1005,7 +1009,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1031,6 +1035,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("returnFaceLandmarks", returnFaceLandmarks);
                 tracingParameters.Add("returnFaceAttributes", returnFaceAttributes);
                 tracingParameters.Add("recognitionModel", recognitionModel);
+                tracingParameters.Add("returnRecognitionModel", returnRecognitionModel);
                 tracingParameters.Add("imageUrl", imageUrl);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DetectWithUrl", tracingParameters);
@@ -1056,6 +1061,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _queryParameters.Add(string.Format("recognitionModel={0}", System.Uri.EscapeDataString(recognitionModel)));
             }
+            _queryParameters.Add(string.Format("returnRecognitionModel={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(returnRecognitionModel, Client.SerializationSettings).Trim('"'))));
             if (_queryParameters.Count > 0)
             {
                 _url += "?" + string.Join("&", _queryParameters);
@@ -1399,6 +1405,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// please explicitly specify the model you need. Possible values include:
         /// 'recognition_01', 'recognition_02'
         /// </param>
+        /// <param name='returnRecognitionModel'>
+        /// Whether to return the 'RecognitionModel' required for the current
+        /// operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1420,7 +1430,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1442,6 +1452,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 tracingParameters.Add("returnFaceAttributes", returnFaceAttributes);
                 tracingParameters.Add("image", image);
                 tracingParameters.Add("recognitionModel", recognitionModel);
+                tracingParameters.Add("returnRecognitionModel", returnRecognitionModel);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DetectWithStream", tracingParameters);
             }
@@ -1466,6 +1477,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             {
                 _queryParameters.Add(string.Format("recognitionModel={0}", System.Uri.EscapeDataString(recognitionModel)));
             }
+            _queryParameters.Add(string.Format("returnRecognitionModel={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(returnRecognitionModel, Client.SerializationSettings).Trim('"'))));
             if (_queryParameters.Count > 0)
             {
                 _url += "?" + string.Join("&", _queryParameters);
