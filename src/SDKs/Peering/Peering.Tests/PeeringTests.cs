@@ -131,10 +131,13 @@ namespace Peering.Tests
                     Sku = new PeeringSku("Basic_Direct_Free"),
                     Direct = directPeeringProperties,
                     Location = "centralus",
+                    Kind = "Direct"
                 };
 
-                var result = this.client.Peerings.CreateOrUpdate(rgname, "xyz", peeringModel);
-                Assert.NotNull(result);
+                var result = this.client.Peerings.CreateOrUpdate(rgname, "abc", peeringModel);
+                var peering = this.client.Peerings.Get(rgname, "abc");
+                Assert.NotNull(peering);
+                Assert.Equal("abc", peering.Name);
             }
         }
 
@@ -173,11 +176,14 @@ namespace Peering.Tests
                     PeeringLocation = "Amsterdam",
                     Sku = new PeeringSku("Basic_Exchange_Free"),
                     Location = "centralus",
-                    Exchange = exchangePeeringProperties
+                    Exchange = exchangePeeringProperties,
+                    Kind = "Exchange"
                 };
 
                 var result = this.client.Peerings.CreateOrUpdate(rgname, "xyz", peeringModel);
-                Assert.NotNull(result);
+                var peering = this.client.Peerings.Get(rgname, "xyz");
+                Assert.NotNull(peering);
+                Assert.Equal("xyz", peering.Name);
             }
         }
 
