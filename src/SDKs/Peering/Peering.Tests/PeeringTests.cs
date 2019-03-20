@@ -69,23 +69,34 @@ namespace Peering.Tests
         [Fact]
         public void UpdatePeerInfoTest()
         {
-
+            this.Init();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 string[] phone = { "9999999" };
-                string[] email = { "noc@microsoft.com" };
+                string[] email = { "noc@contoso.com" };
                 var contactInfo = new ContactInfo(email, phone);
                 var peerInfo = new PeerAsn(peerAsnProperty: 65000, peerContactInfo: contactInfo, peerName: "Contoso");
 
                 this.client = context.GetServiceClient<PeeringManagementClient>();
-                var result = this.client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);
-                Assert.NotNull(result);
+                try
+                {
+                    var result = this.client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);
+                    var peerAsn = this.client.PeerAsns.Get(peerInfo.PeerName);
+                    Assert.NotNull(peerAsn);
+                }
+                catch (Exception exception)
+                {
+                    var peerAsn = this.client.PeerAsns.ListBySubscription();
+                    Assert.NotNull(peerAsn);
+                    Assert.NotNull(exception);
+                }
             }
         }
 
         [Fact]
-        public void GetPeerInfoTest()
+        public void GetPeerAsnTest()
         {
+            this.Init();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -192,6 +203,16 @@ namespace Peering.Tests
             return useMaxSubNet
                 ? $"{this.random.Next(1, 255)}.{this.random.Next(0, 255)}.{this.random.Next(0, 255)}.0/30"
                 : $"{this.random.Next(1, 255)}.{this.random.Next(0, 255)}.{this.random.Next(0, 255)}.0/31";
+        }
+
+        private void Init()
+        {
+            var mode = System.Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+            var connectionstring = System.Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
+            if (mode == null)
+                Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            if (connectionstring == null)
+                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=4445bf11-61c4-436f-a940-60194f8aca57;ServicePrincipal=a66ad4b3-4c1b-43bf-a0bd-91c8c2c9a6d8;ServicePrincipalSecret=EO84mEYKj9hbJfn/GfkgFCsZmEjDpUqm4ys7CEQpAuY=;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;HttpRecorderMode=Record;");
         }
     }
 }
