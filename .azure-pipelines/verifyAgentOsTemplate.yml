@@ -1,0 +1,16 @@
+# Template step for verifying the agent operating system for a vmpool
+
+parameters:
+  osname: ''
+
+steps:
+  - task: PythonScript@0
+    inputs:
+      scriptSource: inline
+      script: |
+        import platform
+        osparameter = '${{ parameters.osname }}'
+        print ("Parameter passed by matrix print -", osparameter)
+        osinfo = 'Job ran on Linux OS' if(platform.system().startswith(osparameter[:3])) else 'Job ran on the Wrong OS'
+        print (osinfo)
+    displayName: 'Verify Agent OS'
