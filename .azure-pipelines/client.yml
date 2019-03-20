@@ -76,22 +76,33 @@ jobs:
         Linux:
           OSName: 'Linux'
           OSVmImage: 'ubuntu-16.04'
-          OSTestCommand: 'lsb_release'
+          VerifyOSScript: 'IsLinux.py'
         Windows:
           OSName: 'Windows'
           OSVmImage: 'vs2017-win2016'
-          OSTestCommand: 'ver'
+          VerifyOSScript: 'IsWindows.py'
         MacOs:
           OSName: 'MacOS'
           OSVmImage: 'macOS-10.13'
-          OSTestCommand: 'sw_vers'
+          VerifyOSScript: 'IsMacOs.py'
 
     pool:
       vmImage: '$(OSVmImage)'
 
     steps:
-      - script: '$(OSTestCommand)'
-        displayName: Verify Agent OS
+      - task: UniversalPackages@0
+        displayName: 'Download verifyagentos package'
+        inputs:
+          command: download
+          vstsFeed: 'azure-sdk-tools'
+          vstsFeedPackage: 'verifyagentos'
+          vstsPackageVersion: 1.0.0
+
+      - task: PythonScript@0
+        displayName: 'Run platform specific Verify Agent OS Script'
+        inputs:
+          scriptSource: 'filePath'
+          scriptPath: '$(Build.SourcesDirectory)/$(VerifyOSScript)'
 
       - task: DotNetCoreInstaller@0
         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
