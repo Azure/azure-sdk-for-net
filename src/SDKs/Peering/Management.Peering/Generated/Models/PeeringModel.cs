@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.Peering.Models
     /// Peering is a logical representation of a set of connections to the
     /// Microsoft Cloud Edge at a location.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Peering")]
     [Rest.Serialization.JsonTransformation]
     public partial class PeeringModel : IResource
     {
@@ -35,6 +34,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         /// <param name="sku">The SKU that defines the tier and kind of the
         /// peering.</param>
+        /// <param name="kind">The kind of the peering. Possible values
+        /// include: 'Direct', 'Exchange'</param>
         /// <param name="location">The location of the resource.</param>
         /// <param name="direct">The properties that define a direct
         /// peering.</param>
@@ -48,9 +49,10 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="id">The ID of the resource.</param>
         /// <param name="type">The type of the resource.</param>
-        public PeeringModel(PeeringSku sku, string location, PeeringPropertiesDirect direct = default(PeeringPropertiesDirect), PeeringPropertiesExchange exchange = default(PeeringPropertiesExchange), string peeringLocation = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string name = default(string), string id = default(string), string type = default(string))
+        public PeeringModel(PeeringSku sku, string kind, string location, PeeringPropertiesDirect direct = default(PeeringPropertiesDirect), PeeringPropertiesExchange exchange = default(PeeringPropertiesExchange), string peeringLocation = default(string), string provisioningState = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string name = default(string), string id = default(string), string type = default(string))
         {
             Sku = sku;
+            Kind = kind;
             Direct = direct;
             Exchange = exchange;
             PeeringLocation = peeringLocation;
@@ -73,6 +75,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public PeeringSku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets the kind of the peering. Possible values include:
+        /// 'Direct', 'Exchange'
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
 
         /// <summary>
         /// Gets or sets the properties that define a direct peering.
@@ -140,6 +149,10 @@ namespace Microsoft.Azure.Management.Peering.Models
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (Kind == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Kind");
             }
             if (Location == null)
             {
