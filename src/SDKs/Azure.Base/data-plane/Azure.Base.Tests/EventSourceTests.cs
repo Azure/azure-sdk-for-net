@@ -44,6 +44,7 @@ namespace Azure.Base.Tests
         public async Task SendingRequestProducesEvents()
         {
             var options = new HttpPipelineOptions(new HttpClientTransport(new HttpClient(new MockHttpMessageHandler())));
+            options.LoggingPolicy = LoggingPolicy.Shared;
 
             var pipeline = options.Build("test", "1.0.0");
 
