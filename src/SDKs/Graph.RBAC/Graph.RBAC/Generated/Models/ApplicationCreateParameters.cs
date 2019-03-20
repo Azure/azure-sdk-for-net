@@ -36,8 +36,6 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         /// <param name="displayName">The display name of the
         /// application.</param>
-        /// <param name="identifierUris">A collection of URIs for the
-        /// application.</param>
         /// <param name="allowGuestsSignIn">A property on the application to
         /// indicate if the application accepts other IDPs or not or partially
         /// accepts.</param>
@@ -109,7 +107,9 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// application (AzureADMyOrganization, AzureADAllOrganizations,
         /// AzureADAndMicrosoftAccounts).</param>
         /// <param name="wwwHomepage">The primary Web page.</param>
-        public ApplicationCreateParameters(string displayName, IList<string> identifierUris, bool? allowGuestsSignIn = default(bool?), bool? allowPassthroughUsers = default(bool?), string appLogoUrl = default(string), IList<AppRole> appRoles = default(IList<AppRole>), IList<string> appPermissions = default(IList<string>), bool? availableToOtherTenants = default(bool?), string errorUrl = default(string), object groupMembershipClaims = default(object), string homepage = default(string), InformationalUrl informationalUrls = default(InformationalUrl), bool? isDeviceOnlyAuthSupported = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<string> knownClientApplications = default(IList<string>), string logoutUrl = default(string), bool? oauth2AllowImplicitFlow = default(bool?), bool? oauth2AllowUrlPathMatching = default(bool?), IList<OAuth2Permission> oauth2Permissions = default(IList<OAuth2Permission>), bool? oauth2RequirePostResponse = default(bool?), IList<string> orgRestrictions = default(IList<string>), OptionalClaims optionalClaims = default(OptionalClaims), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), IList<PreAuthorizedApplication> preAuthorizedApplications = default(IList<PreAuthorizedApplication>), bool? publicClient = default(bool?), string publisherDomain = default(string), IList<string> replyUrls = default(IList<string>), IList<RequiredResourceAccess> requiredResourceAccess = default(IList<RequiredResourceAccess>), string samlMetadataUrl = default(string), string signInAudience = default(string), string wwwHomepage = default(string))
+        /// <param name="identifierUris">A collection of URIs for the
+        /// application.</param>
+        public ApplicationCreateParameters(string displayName, bool? allowGuestsSignIn = default(bool?), bool? allowPassthroughUsers = default(bool?), string appLogoUrl = default(string), IList<AppRole> appRoles = default(IList<AppRole>), IList<string> appPermissions = default(IList<string>), bool? availableToOtherTenants = default(bool?), string errorUrl = default(string), object groupMembershipClaims = default(object), string homepage = default(string), InformationalUrl informationalUrls = default(InformationalUrl), bool? isDeviceOnlyAuthSupported = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<string> knownClientApplications = default(IList<string>), string logoutUrl = default(string), bool? oauth2AllowImplicitFlow = default(bool?), bool? oauth2AllowUrlPathMatching = default(bool?), IList<OAuth2Permission> oauth2Permissions = default(IList<OAuth2Permission>), bool? oauth2RequirePostResponse = default(bool?), IList<string> orgRestrictions = default(IList<string>), OptionalClaims optionalClaims = default(OptionalClaims), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), IList<PreAuthorizedApplication> preAuthorizedApplications = default(IList<PreAuthorizedApplication>), bool? publicClient = default(bool?), string publisherDomain = default(string), IList<string> replyUrls = default(IList<string>), IList<RequiredResourceAccess> requiredResourceAccess = default(IList<RequiredResourceAccess>), string samlMetadataUrl = default(string), string signInAudience = default(string), string wwwHomepage = default(string), IList<string> identifierUris = default(IList<string>))
             : base(allowGuestsSignIn, allowPassthroughUsers, appLogoUrl, appRoles, appPermissions, availableToOtherTenants, errorUrl, groupMembershipClaims, homepage, informationalUrls, isDeviceOnlyAuthSupported, keyCredentials, knownClientApplications, logoutUrl, oauth2AllowImplicitFlow, oauth2AllowUrlPathMatching, oauth2Permissions, oauth2RequirePostResponse, orgRestrictions, optionalClaims, passwordCredentials, preAuthorizedApplications, publicClient, publisherDomain, replyUrls, requiredResourceAccess, samlMetadataUrl, signInAudience, wwwHomepage)
         {
             DisplayName = displayName;
@@ -145,10 +145,6 @@ namespace Microsoft.Azure.Graph.RBAC.Models
             if (DisplayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DisplayName");
-            }
-            if (IdentifierUris == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IdentifierUris");
             }
         }
     }

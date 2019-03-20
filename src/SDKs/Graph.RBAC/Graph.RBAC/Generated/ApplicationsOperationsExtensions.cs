@@ -455,6 +455,40 @@ namespace Microsoft.Azure.Graph.RBAC
             }
 
             /// <summary>
+            /// Gets an object id for a given application id from the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationID'>
+            /// The application ID.
+            /// </param>
+            public static ServicePrincipalObjectResult GetServicePrincipalsIdByAppId(this IApplicationsOperations operations, string applicationID)
+            {
+                return operations.GetServicePrincipalsIdByAppIdAsync(applicationID).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an object id for a given application id from the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationID'>
+            /// The application ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServicePrincipalObjectResult> GetServicePrincipalsIdByAppIdAsync(this IApplicationsOperations operations, string applicationID, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(applicationID, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of applications from the current tenant.
             /// </summary>
             /// <param name='operations'>
