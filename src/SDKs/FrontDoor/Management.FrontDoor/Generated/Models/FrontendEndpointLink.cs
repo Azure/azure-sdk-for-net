@@ -11,30 +11,28 @@
 namespace Microsoft.Azure.Management.FrontDoor.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Defines ManagedRuleSets - array of managedRuleSet
+    /// Defines the Resource ID for a Frontend Endpoint.
     /// </summary>
-    public partial class ManagedRuleSets
+    public partial class FrontendEndpointLink
     {
         /// <summary>
-        /// Initializes a new instance of the ManagedRuleSets class.
+        /// Initializes a new instance of the FrontendEndpointLink class.
         /// </summary>
-        public ManagedRuleSets()
+        public FrontendEndpointLink()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ManagedRuleSets class.
+        /// Initializes a new instance of the FrontendEndpointLink class.
         /// </summary>
-        /// <param name="ruleSets">List of rules</param>
-        public ManagedRuleSets(IList<ManagedRuleSet> ruleSets = default(IList<ManagedRuleSet>))
+        /// <param name="id">Resource ID.</param>
+        public FrontendEndpointLink(string id = default(string))
         {
-            RuleSets = ruleSets;
+            Id = id;
             CustomInit();
         }
 
@@ -44,10 +42,10 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets list of rules
+        /// Gets or sets resource ID.
         /// </summary>
-        [JsonProperty(PropertyName = "ruleSets")]
-        public IList<ManagedRuleSet> RuleSets { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

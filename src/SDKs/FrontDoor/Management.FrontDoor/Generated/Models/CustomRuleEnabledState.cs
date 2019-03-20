@@ -12,16 +12,11 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for Transform.
+    /// Defines values for CustomRuleEnabledState.
     /// </summary>
-    public static class Transform
+    public static class CustomRuleEnabledState
     {
-        public const string Lowercase = "Lowercase";
-        public const string Uppercase = "Uppercase";
-        public const string Trim = "Trim";
-        public const string UrlDecode = "UrlDecode";
-        public const string UrlEncode = "UrlEncode";
-        public const string RemoveNulls = "RemoveNulls";
-        public const string HtmlEntityDecode = "HtmlEntityDecode";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }

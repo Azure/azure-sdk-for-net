@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             public static IPage<WebApplicationFirewallPolicy1> List(this IPoliciesOperations operations, string resourceGroupName)
             {
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -61,15 +61,15 @@ namespace Microsoft.Azure.Management.FrontDoor
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
             /// </param>
-            public static WebApplicationFirewallPolicy1 Get(this IPoliciesOperations operations, string resourceGroupName, string policyName)
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            public static WebApplicationFirewallPolicy1 Get(this IPoliciesOperations operations, string policyName, string resourceGroupName)
             {
-                return operations.GetAsync(resourceGroupName, policyName).GetAwaiter().GetResult();
+                return operations.GetAsync(policyName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -78,56 +78,56 @@ namespace Microsoft.Azure.Management.FrontDoor
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WebApplicationFirewallPolicy1> GetAsync(this IPoliciesOperations operations, string resourceGroupName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WebApplicationFirewallPolicy1> GetAsync(this IPoliciesOperations operations, string policyName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, policyName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(policyName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates or update policy with specified rule set name within a resource
+            /// Create or update policy with specified ruleset name within a resource
             /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='parameters'>
             /// Policy to be created.
             /// </param>
-            public static WebApplicationFirewallPolicy1 CreateOrUpdate(this IPoliciesOperations operations, string resourceGroupName, string policyName, WebApplicationFirewallPolicy1 parameters)
+            public static WebApplicationFirewallPolicy1 CreateOrUpdate(this IPoliciesOperations operations, string policyName, string resourceGroupName, WebApplicationFirewallPolicy1 parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, policyName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(policyName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or update policy with specified rule set name within a resource
+            /// Create or update policy with specified ruleset name within a resource
             /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='parameters'>
             /// Policy to be created.
@@ -135,9 +135,9 @@ namespace Microsoft.Azure.Management.FrontDoor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WebApplicationFirewallPolicy1> CreateOrUpdateAsync(this IPoliciesOperations operations, string resourceGroupName, string policyName, WebApplicationFirewallPolicy1 parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WebApplicationFirewallPolicy1> CreateOrUpdateAsync(this IPoliciesOperations operations, string policyName, string resourceGroupName, WebApplicationFirewallPolicy1 parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, policyName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(policyName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -149,15 +149,15 @@ namespace Microsoft.Azure.Management.FrontDoor
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
             /// </param>
-            public static void Delete(this IPoliciesOperations operations, string resourceGroupName, string policyName)
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            public static void Delete(this IPoliciesOperations operations, string policyName, string resourceGroupName)
             {
-                operations.DeleteAsync(resourceGroupName, policyName).GetAwaiter().GetResult();
+                operations.DeleteAsync(policyName, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -166,55 +166,103 @@ namespace Microsoft.Azure.Management.FrontDoor
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IPoliciesOperations operations, string resourceGroupName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IPoliciesOperations operations, string policyName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, policyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(policyName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Create or update policy with specified ruleset name within a resource
+            /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
             /// </param>
-            public static void BeginDelete(this IPoliciesOperations operations, string resourceGroupName, string policyName)
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='parameters'>
+            /// Policy to be created.
+            /// </param>
+            public static WebApplicationFirewallPolicy1 BeginCreateOrUpdate(this IPoliciesOperations operations, string policyName, string resourceGroupName, WebApplicationFirewallPolicy1 parameters)
             {
-                operations.BeginDeleteAsync(resourceGroupName, policyName).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(policyName, resourceGroupName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Create or update policy with specified ruleset name within a resource
+            /// group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
             /// <param name='policyName'>
-            /// The name of the resource group.
+            /// The name of the Web Application Firewall Policy.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='parameters'>
+            /// Policy to be created.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IPoliciesOperations operations, string resourceGroupName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WebApplicationFirewallPolicy1> BeginCreateOrUpdateAsync(this IPoliciesOperations operations, string policyName, string resourceGroupName, WebApplicationFirewallPolicy1 parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, policyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(policyName, resourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes Policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyName'>
+            /// The name of the Web Application Firewall Policy.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            public static void BeginDelete(this IPoliciesOperations operations, string policyName, string resourceGroupName)
+            {
+                operations.BeginDeleteAsync(policyName, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes Policy
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='policyName'>
+            /// The name of the Web Application Firewall Policy.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IPoliciesOperations operations, string policyName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginDeleteWithHttpMessagesAsync(policyName, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

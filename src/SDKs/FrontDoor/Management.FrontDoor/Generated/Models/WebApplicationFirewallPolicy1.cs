@@ -41,23 +41,26 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <param name="type">Resource type.</param>
         /// <param name="location">Resource location.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="policySettings">Describes  policySettings for
-        /// policy</param>
+        /// <param name="policySettings">Describes settings for the
+        /// policy.</param>
         /// <param name="customRules">Describes custom rules inside the
-        /// policy</param>
+        /// policy.</param>
         /// <param name="managedRules">Describes managed rules inside the
-        /// policy</param>
+        /// policy.</param>
+        /// <param name="frontendEndpointLinks">Describes Frontend Endpoints
+        /// associated with this Web Application Firewall policy.</param>
         /// <param name="provisioningState">Provisioning state of the
-        /// WebApplicationFirewallPolicy.</param>
+        /// policy.</param>
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public WebApplicationFirewallPolicy1(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), CustomRules customRules = default(CustomRules), ManagedRuleSets managedRules = default(ManagedRuleSets), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
+        public WebApplicationFirewallPolicy1(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PolicySettings policySettings = default(PolicySettings), CustomRuleList customRules = default(CustomRuleList), ManagedRuleSetList managedRules = default(ManagedRuleSetList), IList<FrontendEndpointLink> frontendEndpointLinks = default(IList<FrontendEndpointLink>), string provisioningState = default(string), string resourceState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             PolicySettings = policySettings;
             CustomRules = customRules;
             ManagedRules = managedRules;
+            FrontendEndpointLinks = frontendEndpointLinks;
             ProvisioningState = provisioningState;
             ResourceState = resourceState;
             Etag = etag;
@@ -70,25 +73,32 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes  policySettings for policy
+        /// Gets or sets describes settings for the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.policySettings")]
         public PolicySettings PolicySettings { get; set; }
 
         /// <summary>
-        /// Gets or sets describes custom rules inside the policy
+        /// Gets or sets describes custom rules inside the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.customRules")]
-        public CustomRules CustomRules { get; set; }
+        public CustomRuleList CustomRules { get; set; }
 
         /// <summary>
-        /// Gets or sets describes managed rules inside the policy
+        /// Gets or sets describes managed rules inside the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.managedRules")]
-        public ManagedRuleSets ManagedRules { get; set; }
+        public ManagedRuleSetList ManagedRules { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the WebApplicationFirewallPolicy.
+        /// Gets describes Frontend Endpoints associated with this Web
+        /// Application Firewall policy.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.frontendEndpointLinks")]
+        public IList<FrontendEndpointLink> FrontendEndpointLinks { get; private set; }
+
+        /// <summary>
+        /// Gets provisioning state of the policy.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -110,5 +120,18 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (PolicySettings != null)
+            {
+                PolicySettings.Validate();
+            }
+        }
     }
 }

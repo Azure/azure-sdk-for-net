@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for Action.
+    /// Defines values for ManagedRuleEnabledState.
     /// </summary>
-    public static class Action
+    public static class ManagedRuleEnabledState
     {
-        public const string Allow = "Allow";
-        public const string Block = "Block";
-        public const string Log = "Log";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }
