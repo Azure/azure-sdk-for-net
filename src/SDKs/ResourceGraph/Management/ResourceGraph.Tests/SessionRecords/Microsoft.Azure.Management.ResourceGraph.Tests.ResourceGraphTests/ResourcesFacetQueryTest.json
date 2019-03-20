@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2018-09-01-preview",
+      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2019-04-01",
       "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
       "RequestMethod": "POST",
       "RequestBody": "{\"subscriptions\": [\"00000000-0000-0000-0000-000000000000\"], \"query\": \"project id, location | limit 10\", \"facets\": [{\"expression\": \"location\", \"options\": {\"sortOrder\": \"desc\", \"$top\": 4}}, {\"expression\": \"nonExistingColumn\", \"options\": {\"sortOrder\": \"desc\", \"$top\": 4}}]}",
