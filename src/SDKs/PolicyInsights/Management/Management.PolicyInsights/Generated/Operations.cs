@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
         /// </return>
         public async Task<AzureOperationResponse<OperationsListResults>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

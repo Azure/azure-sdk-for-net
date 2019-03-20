@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Result of the request to list operations.
+    /// Results of the request to list operations.
     /// </summary>
     public partial class ResourceProviderOperationList
     {

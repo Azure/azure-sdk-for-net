@@ -23,8 +23,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             Label = "test_label",
             ContentType = "test_content_type",
-            LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-            Locked = false,
             Tags = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
@@ -138,7 +136,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             ConfigurationSetting settting = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
             RequestOptions options = new RequestOptions()
             {
-                ETag = new ETagFilter() { IfMatch = new ETag(settting.ETag) },
+                ETag = new ETagFilter() { IfMatch = settting.ETag },
                 Label = settting.Label
             };
 
@@ -203,8 +201,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.AddAsync(setting);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -295,8 +292,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(key, value);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -355,7 +351,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 RequestOptions options = new RequestOptions()
                 {
-                    ETag = new ETagFilter() { IfMatch = new ETag(responseGet.ETag) }
+                    ETag = new ETagFilter() { IfMatch = responseGet.ETag }
                 };
 
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
@@ -382,7 +378,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 RequestOptions options = new RequestOptions()
                 {
-                    ETag = new ETagFilter() { IfNoneMatch = new ETag(setting.ETag) }
+                    ETag = new ETagFilter() { IfNoneMatch = setting.ETag }
                 };
 
                 var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -390,8 +386,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(setting, options, CancellationToken.None);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -424,8 +419,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(412, response.Status);
+                Assert.AreEqual(412, exception.Status);
             }
             finally
             {
@@ -488,7 +482,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 RequestOptions options = new RequestOptions()
                 {
                     Label = setting.Label,
-                    ETag = new ETagFilter() { IfNoneMatch = new ETag(setting.ETag) }
+                    ETag = new ETagFilter() { IfNoneMatch = setting.ETag }
                 };
 
                 var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -496,8 +490,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.GetAsync(setting.Key, options, CancellationToken.None);
                 });
 
-                var response = exception.Response;
-                Assert.AreEqual(304, response.Status);
+                Assert.AreEqual(304, exception.Status);
             }
             finally
             {
@@ -590,14 +583,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
             
-            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
 
-            var response = e.Response;
-            Assert.AreEqual(404, response.Status);
-            response.Dispose();
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
@@ -726,26 +717,19 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 // Test Lock
                 ConfigurationSetting responseLockSetting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
 
-                s_testSetting.Locked = true;
-                Assert.AreEqual(s_testSetting, responseLockSetting);
-                
                 //Test update
                 var testSettingUpdate = s_testSetting.Clone();
                 testSettingUpdate.Value = "test_value_update";
 
-                var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
                 {
                     await service.UpdateAsync(testSettingUpdate);
                 });
-                var response = e.Response;
-                Assert.AreEqual(409, response.Status);
-                response.Dispose();
+                Assert.AreEqual(409, exception.Status);
                 
                 // Test Unlock
                 ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-
-                s_testSetting.Locked = false;
-                Assert.AreEqual(s_testSetting, responseUnlockSetting);
+                await service.UpdateAsync(testSettingUpdate);
             }
             finally
             {
@@ -794,8 +778,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             //Etag tests
             var testSettingEtagDiff = testSettingsameCase.Clone();
-            testSettingsameCase.ETag = Guid.NewGuid().ToString();
-            testSettingEtagDiff.ETag = Guid.NewGuid().ToString();
+            testSettingsameCase.ETag = new ETag(Guid.NewGuid().ToString());
+            testSettingEtagDiff.ETag = new ETag(Guid.NewGuid().ToString());
             Assert.AreNotEqual(testSettingsameCase, testSettingEtagDiff);
 
             // Different tags
@@ -819,9 +803,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 Label = setting.Label,
                 ContentType = setting.ContentType,
-                LastModified = setting.LastModified,
-                Locked = setting.Locked,
-                ETag = null,
                 Tags = tags
             };
         }

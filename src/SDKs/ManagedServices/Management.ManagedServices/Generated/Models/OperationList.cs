@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Microsoft.Azure.Management.ManagedServices.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
@@ -16,30 +16,26 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using System.Linq;
 
     /// <summary>
-    /// The operations monitoring properties for the IoT hub. The possible keys
-    /// to the dictionary are Connections, DeviceTelemetry, C2DCommands,
-    /// DeviceIdentityOperations, FileUploadOperations, Routes,
-    /// D2CTwinOperations, C2DTwinOperations, TwinQueries, JobsOperations,
-    /// DirectMethods.
+    /// List of the operations.
     /// </summary>
-    public partial class OperationsMonitoringProperties
+    public partial class OperationList
     {
         /// <summary>
-        /// Initializes a new instance of the OperationsMonitoringProperties
-        /// class.
+        /// Initializes a new instance of the OperationList class.
         /// </summary>
-        public OperationsMonitoringProperties()
+        public OperationList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the OperationsMonitoringProperties
-        /// class.
+        /// Initializes a new instance of the OperationList class.
         /// </summary>
-        public OperationsMonitoringProperties(IDictionary<string, string> events = default(IDictionary<string, string>))
+        /// <param name="value">List of Microsoft.ManagedServices
+        /// operations.</param>
+        public OperationList(IList<Operation> value = default(IList<Operation>))
         {
-            Events = events;
+            Value = value;
             CustomInit();
         }
 
@@ -49,9 +45,10 @@ namespace Microsoft.Azure.Management.IotHub.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets list of Microsoft.ManagedServices operations.
         /// </summary>
-        [JsonProperty(PropertyName = "events")]
-        public IDictionary<string, string> Events { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<Operation> Value { get; private set; }
 
     }
 }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Supported operation of this resource provider.
+    /// Supported operations of this resource provider.
     /// </summary>
     public partial class ResourceProviderOperation
     {

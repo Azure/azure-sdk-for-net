@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
     /// <summary>
     /// Friendly domain name mapping to the endpoint hostname that the customer
-    /// provides for branding purposes, e.g. www.consoto.com.
+    /// provides for branding purposes, e.g. www.contoso.com.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class CustomDomain : ProxyResource

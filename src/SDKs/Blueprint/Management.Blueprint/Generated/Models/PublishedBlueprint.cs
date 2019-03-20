@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a published Blueprint.
+    /// Represents a published blueprint.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class PublishedBlueprint : AzureResourceBase
@@ -41,18 +41,18 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="displayName">One-liner string explain this
         /// resource.</param>
         /// <param name="description">Multi-line explain this resource.</param>
-        /// <param name="status">Status of the Blueprint. This field is
+        /// <param name="status">Status of the blueprint. This field is
         /// readonly.</param>
-        /// <param name="targetScope">The scope where this Blueprint can be
-        /// applied. Possible values include: 'subscription',
+        /// <param name="targetScope">The scope where this blueprint definition
+        /// can be assigned. Possible values include: 'subscription',
         /// 'managementGroup'</param>
-        /// <param name="parameters">Parameters required by this Blueprint
+        /// <param name="parameters">Parameters required by this blueprint
         /// definition.</param>
         /// <param name="resourceGroups">Resource group placeholders defined by
-        /// this Blueprint definition.</param>
-        /// <param name="blueprintName">Name of the Blueprint
+        /// this blueprint definition.</param>
+        /// <param name="blueprintName">Name of the published blueprint
         /// definition.</param>
-        /// <param name="changeNotes">Version-specific change notes</param>
+        /// <param name="changeNotes">Version-specific change notes.</param>
         public PublishedBlueprint(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), BlueprintStatus status = default(BlueprintStatus), string targetScope = default(string), IDictionary<string, ParameterDefinition> parameters = default(IDictionary<string, ParameterDefinition>), IDictionary<string, ResourceGroupDefinition> resourceGroups = default(IDictionary<string, ResourceGroupDefinition>), string blueprintName = default(string), string changeNotes = default(string))
             : base(id, type, name)
         {
@@ -85,39 +85,40 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets status of the Blueprint. This field is readonly.
+        /// Gets status of the blueprint. This field is readonly.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public BlueprintStatus Status { get; private set; }
 
         /// <summary>
-        /// Gets or sets the scope where this Blueprint can be applied.
-        /// Possible values include: 'subscription', 'managementGroup'
+        /// Gets or sets the scope where this blueprint definition can be
+        /// assigned. Possible values include: 'subscription',
+        /// 'managementGroup'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetScope")]
         public string TargetScope { get; set; }
 
         /// <summary>
-        /// Gets or sets parameters required by this Blueprint definition.
+        /// Gets or sets parameters required by this blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, ParameterDefinition> Parameters { get; set; }
 
         /// <summary>
-        /// Gets or sets resource group placeholders defined by this Blueprint
+        /// Gets or sets resource group placeholders defined by this blueprint
         /// definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroups")]
         public IDictionary<string, ResourceGroupDefinition> ResourceGroups { get; set; }
 
         /// <summary>
-        /// Gets or sets name of the Blueprint definition.
+        /// Gets or sets name of the published blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.blueprintName")]
         public string BlueprintName { get; set; }
 
         /// <summary>
-        /// Gets or sets version-specific change notes
+        /// Gets or sets version-specific change notes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.changeNotes")]
         public string ChangeNotes { get; set; }

@@ -8,17 +8,15 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.IotHub.Models
+namespace Microsoft.Azure.Management.Network.Models
 {
 
     /// <summary>
-    /// Defines values for OperationMonitoringLevel.
+    /// Defines values for WebApplicationFirewallEnabledState.
     /// </summary>
-    public static class OperationMonitoringLevel
+    public static class WebApplicationFirewallEnabledState
     {
-        public const string None = "None";
-        public const string Error = "Error";
-        public const string Information = "Information";
-        public const string ErrorInformation = "Error, Information";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }

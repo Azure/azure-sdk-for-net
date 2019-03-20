@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="interval">The probing interval in seconds. This is the
         /// time interval between two consecutive probes. Acceptable values are
         /// from 1 second to 86400 seconds.</param>
-        /// <param name="timeout">the probe timeout in seconds. Probe marked as
+        /// <param name="timeout">The probe timeout in seconds. Probe marked as
         /// failed if valid response is not received with this timeout period.
         /// Acceptable values are from 1 second to 86400 seconds.</param>
         /// <param name="unhealthyThreshold">The probe retry count. Backend

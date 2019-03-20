@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Blueprint artifact deploys Azure resource manager template.
+    /// Blueprint artifact that deploys a Resource Manager template.
     /// </summary>
     [Newtonsoft.Json.JsonObject("template")]
     [Rest.Serialization.JsonTransformation]
@@ -35,9 +35,10 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the TemplateArtifact class.
         /// </summary>
-        /// <param name="template">The Azure Resource Manager template
-        /// body.</param>
-        /// <param name="parameters">Template parameter values.</param>
+        /// <param name="template">The Resource Manager template blueprint
+        /// artifact body.</param>
+        /// <param name="parameters">Resource Manager template blueprint
+        /// artifact parameter values.</param>
         /// <param name="id">String Id used to locate any resource on
         /// Azure.</param>
         /// <param name="type">Type of this resource.</param>
@@ -48,7 +49,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="dependsOn">Artifacts which need to be deployed before
         /// the specified artifact.</param>
         /// <param name="resourceGroup">If applicable, the name of the resource
-        /// group placeholder to which the template will be deployed.</param>
+        /// group placeholder to which the Resource Manager template blueprint
+        /// artifact will be deployed.</param>
         public TemplateArtifact(object template, IDictionary<string, ParameterValueBase> parameters, string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), IList<string> dependsOn = default(IList<string>), string resourceGroup = default(string))
             : base(id, type, name)
         {
@@ -86,20 +88,22 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public IList<string> DependsOn { get; set; }
 
         /// <summary>
-        /// Gets or sets the Azure Resource Manager template body.
+        /// Gets or sets the Resource Manager template blueprint artifact body.
         /// </summary>
         [JsonProperty(PropertyName = "properties.template")]
         public object Template { get; set; }
 
         /// <summary>
         /// Gets or sets if applicable, the name of the resource group
-        /// placeholder to which the template will be deployed.
+        /// placeholder to which the Resource Manager template blueprint
+        /// artifact will be deployed.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroup")]
         public string ResourceGroup { get; set; }
 
         /// <summary>
-        /// Gets or sets template parameter values.
+        /// Gets or sets resource Manager template blueprint artifact parameter
+        /// values.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, ParameterValueBase> Parameters { get; set; }

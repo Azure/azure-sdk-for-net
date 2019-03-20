@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// category, if the policy assignment is for a policy set.</param>
         /// <param name="policySetDefinitionParameters">Policy set definition
         /// parameters, if the policy assignment is for a policy set.</param>
-        /// <param name="managementGroupIds">Comma seperated list of management
+        /// <param name="managementGroupIds">Comma separated list of management
         /// group IDs, which represent the hierarchy of the management groups
         /// the resource is under.</param>
         /// <param name="policyDefinitionReferenceId">Reference ID for the
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string PolicySetDefinitionParameters { get; set; }
 
         /// <summary>
-        /// Gets or sets comma seperated list of management group IDs, which
+        /// Gets or sets comma separated list of management group IDs, which
         /// represent the hierarchy of the management groups the resource is
         /// under.
         /// </summary>

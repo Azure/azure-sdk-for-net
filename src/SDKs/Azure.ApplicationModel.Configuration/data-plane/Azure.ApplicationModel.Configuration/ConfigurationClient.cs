@@ -149,7 +149,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
-                if(!string.IsNullOrEmpty(setting.ETag))
+                if(setting.ETag != default)
                 {
                     message.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 } else if(options == null)
