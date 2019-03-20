@@ -33,10 +33,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/areddish/azure-rest-api-specs/blob/cv-add-3.0/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/areddish/azure-rest-api-specs/blob/cv-add-3.0/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net2\\src\\SDKs";
       public static readonly String GithubForkName = "areddish";
       public static readonly String GithubBranchName = "cv-add-3.0";
-      public static readonly String GithubCommidId = "36a22093d4037ff1f8aa4325da8146be1d45d6ee";
+      public static readonly String GithubCommidId = "79d1c5ef4f2f3e560fb15ffe3f439e8a8fbf13bd";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

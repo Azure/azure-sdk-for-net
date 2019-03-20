@@ -2576,9 +2576,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='iterationId'>
             /// The iteration id.
             /// </param>
-            public static bool? UnpublishIteration(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId)
+            public static void UnpublishIteration(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId)
             {
-                return operations.UnpublishIterationAsync(projectId, iterationId).GetAwaiter().GetResult();
+                operations.UnpublishIterationAsync(projectId, iterationId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2596,12 +2596,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool?> UnpublishIterationAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UnpublishIterationAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UnpublishIterationWithHttpMessagesAsync(projectId, iterationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.UnpublishIterationWithHttpMessagesAsync(projectId, iterationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -2619,7 +2616,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<bool?> UnpublishIterationWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse UnpublishIterationWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.UnpublishIterationWithHttpMessagesAsync(projectId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }

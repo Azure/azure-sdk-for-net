@@ -828,7 +828,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<bool?>> UnpublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> UnpublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get the list of exports for a specific iteration.
