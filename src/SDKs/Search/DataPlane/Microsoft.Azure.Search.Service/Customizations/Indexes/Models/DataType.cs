@@ -20,37 +20,42 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Indicates that a field contains a string.
         /// </summary>
-        public static readonly DataType String = new DataType("Edm.String");
+        public static readonly DataType String = new DataType(AsString.String);
 
         /// <summary>
         /// Indicates that a field contains a 32-bit signed integer.
         /// </summary>
-        public static readonly DataType Int32 = new DataType("Edm.Int32");
+        public static readonly DataType Int32 = new DataType(AsString.Int32);
 
         /// <summary>
         /// Indicates that a field contains a 64-bit signed integer.
         /// </summary>
-        public static readonly DataType Int64 = new DataType("Edm.Int64");
+        public static readonly DataType Int64 = new DataType(AsString.Int64);
 
         /// <summary>
         /// Indicates that a field contains an IEEE double-precision floating point number.
         /// </summary>
-        public static readonly DataType Double = new DataType("Edm.Double");
+        public static readonly DataType Double = new DataType(AsString.Double);
 
         /// <summary>
         /// Indicates that a field contains a Boolean value (true or false).
         /// </summary>
-        public static readonly DataType Boolean = new DataType("Edm.Boolean");
+        public static readonly DataType Boolean = new DataType(AsString.Boolean);
 
         /// <summary>
         /// Indicates that a field contains a date/time value, including timezone information.
         /// </summary>
-        public static readonly DataType DateTimeOffset = new DataType("Edm.DateTimeOffset");
+        public static readonly DataType DateTimeOffset = new DataType(AsString.DateTimeOffset);
 
         /// <summary>
         /// Indicates that a field contains a geo-location in terms of longitude and latitude.
         /// </summary>
-        public static readonly DataType GeographyPoint = new DataType("Edm.GeographyPoint");
+        public static readonly DataType GeographyPoint = new DataType(AsString.GeographyPoint);
+
+        /// <summary>
+        /// Indicates that a field contains one or more complex objects that in turn have sub-fields of other types.
+        /// </summary>
+        public static readonly DataType Complex = new DataType(AsString.Complex);
 
         private DataType(string typeName)
         {
@@ -120,5 +125,51 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <returns>The DataType as a string.</returns>
         public override string ToString() => _value;
+
+        /// <summary>
+        /// The names of all of the data types as plain strings.
+        /// </summary>
+        public static class AsString
+        {
+            /// <summary>
+            /// Indicates that a field contains a string.
+            /// </summary>
+            public const string String = "Edm.String";
+
+            /// <summary>
+            /// Indicates that a field contains a 32-bit signed integer.
+            /// </summary>
+            public const string Int32 = "Edm.Int32";
+
+            /// <summary>
+            /// Indicates that a field contains a 64-bit signed integer.
+            /// </summary>
+            public const string Int64 = "Edm.Int64";
+
+            /// <summary>
+            /// Indicates that a field contains an IEEE double-precision floating point number.
+            /// </summary>
+            public const string Double = "Edm.Double";
+
+            /// <summary>
+            /// Indicates that a field contains a Boolean value (true or false).
+            /// </summary>
+            public const string Boolean = "Edm.Boolean";
+
+            /// <summary>
+            /// Indicates that a field contains a date/time value, including timezone information.
+            /// </summary>
+            public const string DateTimeOffset = "Edm.DateTimeOffset";
+
+            /// <summary>
+            /// Indicates that a field contains a geo-location in terms of longitude and latitude.
+            /// </summary>
+            public const string GeographyPoint = "Edm.GeographyPoint";
+
+            /// <summary>
+            /// Indicates that a field contains one or more complex objects that in turn have sub-fields of other types.
+            /// </summary>
+            public const string Complex = "Edm.ComplexType";
+        }
     }
 }
