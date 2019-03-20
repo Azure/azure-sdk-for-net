@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists products by invoiceSectionId.
+        /// Lists products by invoiceSectionName.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionId'>
+        /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
         /// <param name='filter'>
@@ -87,15 +87,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ProductsListResult>> ListWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ProductsListResult>> ListWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (invoiceSectionId == null)
+            if (invoiceSectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
             }
             if (Client.ApiVersion == null)
             {
@@ -108,17 +108,17 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
-                tracingParameters.Add("invoiceSectionId", invoiceSectionId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}/products").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
-            _url = _url.Replace("{invoiceSectionId}", System.Uri.EscapeDataString(invoiceSectionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/products").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

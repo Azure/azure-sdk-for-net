@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The policy for a given billingAccountId and billingProfileId.
+        /// The policy for a given billingAccountName and billingProfileName.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileId'>
+        /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
         /// <param name='customHeaders'>
@@ -81,15 +81,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Policy>> GetByBillingProfileWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Policy>> GetByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (billingProfileId == null)
+            if (billingProfileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
             }
             if (Client.ApiVersion == null)
             {
@@ -102,16 +102,16 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
-                tracingParameters.Add("billingProfileId", billingProfileId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetByBillingProfile", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/policies/default").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
-            _url = _url.Replace("{billingProfileId}", System.Uri.EscapeDataString(billingProfileId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -240,10 +240,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// The operation to update a policy.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileId'>
+        /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
         /// <param name='parameters'>
@@ -270,19 +270,19 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Policy>> UpdateWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Policy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Policy>> UpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Policy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (billingProfileId == null)
+            if (billingProfileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
             }
             if (parameters == null)
             {
@@ -295,17 +295,17 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
-                tracingParameters.Add("billingProfileId", billingProfileId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/policies/default").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
-            _url = _url.Replace("{billingProfileId}", System.Uri.EscapeDataString(billingProfileId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/policies/default").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

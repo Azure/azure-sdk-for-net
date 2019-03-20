@@ -53,10 +53,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Get the department by id.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='departmentId'>
+        /// <param name='departmentName'>
         /// Department Id.
         /// </param>
         /// <param name='expand'>
@@ -88,19 +88,19 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Department>> GetWithHttpMessagesAsync(string billingAccountId, string departmentId, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Department>> GetWithHttpMessagesAsync(string billingAccountName, string departmentName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (departmentId == null)
+            if (departmentName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "departmentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "departmentName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
-                tracingParameters.Add("departmentId", departmentId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("departmentName", departmentName);
                 tracingParameters.Add("expand", expand);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -118,9 +118,9 @@ namespace Microsoft.Azure.Management.Billing
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/departments/{departmentId}").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
-            _url = _url.Replace("{departmentId}", System.Uri.EscapeDataString(departmentId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments/{departmentName}").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{departmentName}", System.Uri.EscapeDataString(departmentName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

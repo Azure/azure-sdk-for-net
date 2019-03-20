@@ -22,16 +22,16 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class ProductsByInvoiceSectionOperationsExtensions
     {
             /// <summary>
-            /// Lists products by invoiceSectionId.
+            /// Lists products by invoiceSectionName.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='filter'>
@@ -40,22 +40,22 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static ProductsListResult List(this IProductsByInvoiceSectionOperations operations, string billingAccountId, string invoiceSectionId, string filter = default(string))
+            public static ProductsListResult List(this IProductsByInvoiceSectionOperations operations, string billingAccountName, string invoiceSectionName, string filter = default(string))
             {
-                return operations.ListAsync(billingAccountId, invoiceSectionId, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(billingAccountName, invoiceSectionName, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists products by invoiceSectionId.
+            /// Lists products by invoiceSectionName.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='filter'>
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProductsListResult> ListAsync(this IProductsByInvoiceSectionOperations operations, string billingAccountId, string invoiceSectionId, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProductsListResult> ListAsync(this IProductsByInvoiceSectionOperations operations, string billingAccountName, string invoiceSectionName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountId, invoiceSectionId, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, invoiceSectionName, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

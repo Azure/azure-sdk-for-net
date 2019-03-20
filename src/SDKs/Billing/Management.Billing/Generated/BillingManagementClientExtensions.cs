@@ -22,17 +22,17 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingManagementClientExtensions
     {
             /// <summary>
-            /// Lists the transactions by billingProfileId for given start date and end
+            /// Lists the transactions by billingProfileName for given start date and end
             /// date.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='startDate'>
@@ -47,23 +47,23 @@ namespace Microsoft.Azure.Management.Billing
             /// 'not'. Tag filter is a key value pair string where key and value is
             /// separated by a colon (:).
             /// </param>
-            public static TransactionsListResult TransactionsByBillingProfile(this IBillingManagementClient operations, string billingAccountId, string billingProfileId, string startDate, string endDate, string filter = default(string))
+            public static TransactionsListResult TransactionsByBillingProfile(this IBillingManagementClient operations, string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string))
             {
-                return operations.TransactionsByBillingProfileAsync(billingAccountId, billingProfileId, startDate, endDate, filter).GetAwaiter().GetResult();
+                return operations.TransactionsByBillingProfileAsync(billingAccountName, billingProfileName, startDate, endDate, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the transactions by billingProfileId for given start date and end
+            /// Lists the transactions by billingProfileName for given start date and end
             /// date.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='startDate'>
@@ -81,9 +81,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransactionsListResult> TransactionsByBillingProfileAsync(this IBillingManagementClient operations, string billingAccountId, string billingProfileId, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransactionsListResult> TransactionsByBillingProfileAsync(this IBillingManagementClient operations, string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TransactionsByBillingProfileWithHttpMessagesAsync(billingAccountId, billingProfileId, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TransactionsByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, startDate, endDate, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
             /// <param name='productName'>
@@ -104,9 +104,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='body'>
             /// Update auto renew request parameters.
             /// </param>
-            public static UpdateAutoRenewOperationSummary UpdateAutoRenewForBillingAccount(this IBillingManagementClient operations, string billingAccountId, string productName, UpdateAutoRenewRequest body)
+            public static UpdateAutoRenewOperationSummary UpdateAutoRenewForBillingAccount(this IBillingManagementClient operations, string billingAccountName, string productName, UpdateAutoRenewRequest body)
             {
-                return operations.UpdateAutoRenewForBillingAccountAsync(billingAccountId, productName, body).GetAwaiter().GetResult();
+                return operations.UpdateAutoRenewForBillingAccountAsync(billingAccountName, productName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
             /// <param name='productName'>
@@ -127,9 +127,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UpdateAutoRenewOperationSummary> UpdateAutoRenewForBillingAccountAsync(this IBillingManagementClient operations, string billingAccountId, string productName, UpdateAutoRenewRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UpdateAutoRenewOperationSummary> UpdateAutoRenewForBillingAccountAsync(this IBillingManagementClient operations, string billingAccountName, string productName, UpdateAutoRenewRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(billingAccountId, productName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(billingAccountName, productName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -141,10 +141,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
@@ -153,9 +153,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='body'>
             /// Update auto renew request parameters.
             /// </param>
-            public static UpdateAutoRenewOperationSummary UpdateAutoRenewForInvoiceSection(this IBillingManagementClient operations, string billingAccountId, string invoiceSectionId, string productName, UpdateAutoRenewRequest body)
+            public static UpdateAutoRenewOperationSummary UpdateAutoRenewForInvoiceSection(this IBillingManagementClient operations, string billingAccountName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body)
             {
-                return operations.UpdateAutoRenewForInvoiceSectionAsync(billingAccountId, invoiceSectionId, productName, body).GetAwaiter().GetResult();
+                return operations.UpdateAutoRenewForInvoiceSectionAsync(billingAccountName, invoiceSectionName, productName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -164,10 +164,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
@@ -179,9 +179,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UpdateAutoRenewOperationSummary> UpdateAutoRenewForInvoiceSectionAsync(this IBillingManagementClient operations, string billingAccountId, string invoiceSectionId, string productName, UpdateAutoRenewRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UpdateAutoRenewOperationSummary> UpdateAutoRenewForInvoiceSectionAsync(this IBillingManagementClient operations, string billingAccountName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(billingAccountId, invoiceSectionId, productName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(billingAccountName, invoiceSectionName, productName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

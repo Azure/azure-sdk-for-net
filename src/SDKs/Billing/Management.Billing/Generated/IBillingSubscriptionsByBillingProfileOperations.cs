@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IBillingSubscriptionsByBillingProfileOperations
     {
         /// <summary>
-        /// Lists billing subscriptions by billingProfileId.
+        /// Lists billing subscriptions by billingProfileName.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileId'>
+        /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
         /// <param name='customHeaders'>
@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingSubscriptionsListResult>> ListWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingSubscriptionsListResult>> ListWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

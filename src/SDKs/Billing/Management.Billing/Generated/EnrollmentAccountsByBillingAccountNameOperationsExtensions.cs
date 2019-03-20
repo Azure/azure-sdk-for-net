@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for EnrollmentAccountsByBillingAccountIdOperations.
+    /// Extension methods for EnrollmentAccountsByBillingAccountNameOperations.
     /// </summary>
-    public static partial class EnrollmentAccountsByBillingAccountIdOperationsExtensions
+    public static partial class EnrollmentAccountsByBillingAccountNameOperationsExtensions
     {
             /// <summary>
             /// Lists all Enrollment Accounts for a user which he has access to.
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
             /// <param name='expand'>
@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Management.Billing
             /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
             /// string where key and value is separated by a colon (:).
             /// </param>
-            public static EnrollmentAccountListResult List(this IEnrollmentAccountsByBillingAccountIdOperations operations, string billingAccountId, string expand = default(string), string filter = default(string))
+            public static EnrollmentAccountListResult List(this IEnrollmentAccountsByBillingAccountNameOperations operations, string billingAccountName, string expand = default(string), string filter = default(string))
             {
-                return operations.ListAsync(billingAccountId, expand, filter).GetAwaiter().GetResult();
+                return operations.ListAsync(billingAccountName, expand, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
             /// <param name='expand'>
@@ -63,9 +63,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EnrollmentAccountListResult> ListAsync(this IEnrollmentAccountsByBillingAccountIdOperations operations, string billingAccountId, string expand = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EnrollmentAccountListResult> ListAsync(this IEnrollmentAccountsByBillingAccountNameOperations operations, string billingAccountName, string expand = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountId, expand, filter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, expand, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

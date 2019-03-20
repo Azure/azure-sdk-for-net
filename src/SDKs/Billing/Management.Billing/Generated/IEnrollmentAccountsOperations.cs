@@ -26,10 +26,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Get the enrollment account by id.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='enrollmentAccountId'>
+        /// <param name='enrollmentAccountName'>
         /// Enrollment Account Id.
         /// </param>
         /// <param name='expand'>
@@ -56,6 +56,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EnrollmentAccount>> GetByEnrollmentAccountAccountIdWithHttpMessagesAsync(string billingAccountId, string enrollmentAccountId, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EnrollmentAccount>> GetByEnrollmentAccountAccountIdWithHttpMessagesAsync(string billingAccountName, string enrollmentAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

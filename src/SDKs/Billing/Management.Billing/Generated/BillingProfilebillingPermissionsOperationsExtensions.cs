@@ -17,45 +17,45 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for InvoiceSectionsByBillingAccountIdOperations.
+    /// Extension methods for BillingProfilebillingPermissionsOperations.
     /// </summary>
-    public static partial class InvoiceSectionsByBillingAccountIdOperationsExtensions
+    public static partial class BillingProfilebillingPermissionsOperationsExtensions
     {
             /// <summary>
-            /// Lists all invoice sections for a user which he has access to.
+            /// Lists all billingPermissions for the caller has for a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='expand'>
-            /// May be used to expand the billingProfiles.
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
-            public static InvoiceSectionListResult List(this IInvoiceSectionsByBillingAccountIdOperations operations, string billingAccountId, string expand = default(string))
+            public static BillingPermissionsListResult List(this IBillingProfilebillingPermissionsOperations operations, string billingAccountName, string billingProfileName)
             {
-                return operations.ListAsync(billingAccountId, expand).GetAwaiter().GetResult();
+                return operations.ListAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all invoice sections for a user which he has access to.
+            /// Lists all billingPermissions for the caller has for a billing account.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='expand'>
-            /// May be used to expand the billingProfiles.
+            /// <param name='billingProfileName'>
+            /// Billing Profile Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<InvoiceSectionListResult> ListAsync(this IInvoiceSectionsByBillingAccountIdOperations operations, string billingAccountId, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingPermissionsListResult> ListAsync(this IBillingProfilebillingPermissionsOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountId, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -27,10 +27,10 @@ namespace Microsoft.Azure.Management.Billing
         /// Lists the Payment Methods by billing profile Id.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileId'>
+        /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
         /// <param name='customHeaders'>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<PaymentMethod>>> ListWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PaymentMethod>>> ListWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the Payment Methods by billing profile Id.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />

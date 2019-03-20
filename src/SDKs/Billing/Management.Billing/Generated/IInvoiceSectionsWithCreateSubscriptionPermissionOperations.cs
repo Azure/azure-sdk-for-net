@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Billing
         /// Lists all invoiceSections with create subscription permission for a
         /// user.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
         /// <param name='expand'>
@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InvoiceSectionListResult,InvoiceSectionsWithCreateSubscriptionPermissionListHeaders>> ListWithHttpMessagesAsync(string billingAccountId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceSectionListResult,InvoiceSectionsWithCreateSubscriptionPermissionListHeaders>> ListWithHttpMessagesAsync(string billingAccountName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// InvoiceSectionsByBillingAccountIdOperations operations.
+    /// DepartmentsByBillingAccountNameOperations operations.
     /// </summary>
-    internal partial class InvoiceSectionsByBillingAccountIdOperations : IServiceOperations<BillingManagementClient>, IInvoiceSectionsByBillingAccountIdOperations
+    internal partial class DepartmentsByBillingAccountNameOperations : IServiceOperations<BillingManagementClient>, IDepartmentsByBillingAccountNameOperations
     {
         /// <summary>
-        /// Initializes a new instance of the InvoiceSectionsByBillingAccountIdOperations class.
+        /// Initializes a new instance of the DepartmentsByBillingAccountNameOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal InvoiceSectionsByBillingAccountIdOperations(BillingManagementClient client)
+        internal DepartmentsByBillingAccountNameOperations(BillingManagementClient client)
         {
             if (client == null)
             {
@@ -51,13 +51,18 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all invoice sections for a user which he has access to.
+        /// Lists all departments for a user which he has access to.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
         /// <param name='expand'>
-        /// May be used to expand the billingProfiles.
+        /// May be used to expand the enrollmentAccounts.
+        /// </param>
+        /// <param name='filter'>
+        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
+        /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
+        /// string where key and value is separated by a colon (:).
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -80,15 +85,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<InvoiceSectionListResult,InvoiceSectionsByBillingAccountIdListHeaders>> ListWithHttpMessagesAsync(string billingAccountId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DepartmentListResult>> ListWithHttpMessagesAsync(string billingAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -97,15 +102,16 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("expand", expand);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/departments").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -114,6 +120,10 @@ namespace Microsoft.Azure.Management.Billing
             if (expand != null)
             {
                 _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+            }
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -173,7 +183,7 @@ namespace Microsoft.Azure.Management.Billing
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 202)
+            if ((int)_statusCode != 200)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -203,7 +213,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<InvoiceSectionListResult,InvoiceSectionsByBillingAccountIdListHeaders>();
+            var _result = new AzureOperationResponse<DepartmentListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -216,7 +226,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<InvoiceSectionListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DepartmentListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -227,19 +237,6 @@ namespace Microsoft.Azure.Management.Billing
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<InvoiceSectionsByBillingAccountIdListHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {

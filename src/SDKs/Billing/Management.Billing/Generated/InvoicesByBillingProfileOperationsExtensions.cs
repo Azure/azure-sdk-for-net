@@ -27,10 +27,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='periodStartDate'>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='periodEndDate'>
             /// Invoice period end date.
             /// </param>
-            public static InvoiceListResult List(this IInvoicesByBillingProfileOperations operations, string billingAccountId, string billingProfileId, string periodStartDate, string periodEndDate)
+            public static InvoiceListResult List(this IInvoicesByBillingProfileOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate)
             {
-                return operations.ListAsync(billingAccountId, billingProfileId, periodStartDate, periodEndDate).GetAwaiter().GetResult();
+                return operations.ListAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -50,10 +50,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='periodStartDate'>
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<InvoiceListResult> ListAsync(this IInvoicesByBillingProfileOperations operations, string billingAccountId, string billingProfileId, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<InvoiceListResult> ListAsync(this IInvoicesByBillingProfileOperations operations, string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountId, billingProfileId, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, billingProfileName, periodStartDate, periodEndDate, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

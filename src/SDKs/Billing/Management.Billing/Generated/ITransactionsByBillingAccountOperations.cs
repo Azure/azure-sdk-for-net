@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface ITransactionsByBillingAccountOperations
     {
         /// <summary>
-        /// Lists the transactions by billingAccountId for given start and end
-        /// date.
+        /// Lists the transactions by billingAccountName for given start and
+        /// end date.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
         /// <param name='startDate'>
@@ -58,10 +58,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<TransactionsSummary>>> ListWithHttpMessagesAsync(string billingAccountId, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TransactionsSummary>>> ListWithHttpMessagesAsync(string billingAccountName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the transactions by billingAccountId for given start and end
-        /// date.
+        /// Lists the transactions by billingAccountName for given start and
+        /// end date.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='nextPageLink'>

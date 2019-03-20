@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IAvailableBalanceByBillingProfileOperations
     {
         /// <summary>
-        /// The latest available credit balance for a given billingAccountId
-        /// and billingProfileId.
+        /// The latest available credit balance for a given billingAccountName
+        /// and billingProfileName.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileId'>
+        /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
         /// <param name='customHeaders'>
@@ -48,6 +48,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AvailableBalance>> GetWithHttpMessagesAsync(string billingAccountId, string billingProfileId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AvailableBalance>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

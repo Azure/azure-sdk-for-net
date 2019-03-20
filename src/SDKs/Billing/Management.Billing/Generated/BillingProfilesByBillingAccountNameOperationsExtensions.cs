@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for BillingProfilesByBillingAccountIdOperations.
+    /// Extension methods for BillingProfilesByBillingAccountNameOperations.
     /// </summary>
-    public static partial class BillingProfilesByBillingAccountIdOperationsExtensions
+    public static partial class BillingProfilesByBillingAccountNameOperationsExtensions
     {
             /// <summary>
             /// Lists all billing profiles for a user which that user has access to.
@@ -27,15 +27,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
             /// <param name='expand'>
             /// May be used to expand the invoiceSections.
             /// </param>
-            public static BillingProfileListResult List(this IBillingProfilesByBillingAccountIdOperations operations, string billingAccountId, string expand = default(string))
+            public static BillingProfileListResult List(this IBillingProfilesByBillingAccountNameOperations operations, string billingAccountName, string expand = default(string))
             {
-                return operations.ListAsync(billingAccountId, expand).GetAwaiter().GetResult();
+                return operations.ListAsync(billingAccountName, expand).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
             /// <param name='expand'>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingProfileListResult> ListAsync(this IBillingProfilesByBillingAccountIdOperations operations, string billingAccountId, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingProfileListResult> ListAsync(this IBillingProfilesByBillingAccountNameOperations operations, string billingAccountName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountId, expand, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

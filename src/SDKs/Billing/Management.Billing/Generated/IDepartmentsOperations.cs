@@ -26,10 +26,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Get the department by id.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='departmentId'>
+        /// <param name='departmentName'>
         /// Department Id.
         /// </param>
         /// <param name='expand'>
@@ -56,6 +56,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Department>> GetWithHttpMessagesAsync(string billingAccountId, string departmentId, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Department>> GetWithHttpMessagesAsync(string billingAccountName, string departmentName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

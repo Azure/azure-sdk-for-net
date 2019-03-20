@@ -19,19 +19,18 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingProfilesByBillingAccountIdOperations operations.
+    /// InvoiceSectionsByBillingAccountNameOperations operations.
     /// </summary>
-    public partial interface IBillingProfilesByBillingAccountIdOperations
+    public partial interface IInvoiceSectionsByBillingAccountNameOperations
     {
         /// <summary>
-        /// Lists all billing profiles for a user which that user has access
-        /// to.
+        /// Lists all invoice sections for a user which he has access to.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
         /// <param name='expand'>
-        /// May be used to expand the invoiceSections.
+        /// May be used to expand the billingProfiles.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -48,6 +47,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfileListResult>> ListWithHttpMessagesAsync(string billingAccountId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceSectionListResult,InvoiceSectionsByBillingAccountNameListHeaders>> ListWithHttpMessagesAsync(string billingAccountName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

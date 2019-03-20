@@ -19,18 +19,16 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// InvoiceSectionsByBillingAccountIdOperations operations.
+    /// BillingAccountbillingPermissionsOperations operations.
     /// </summary>
-    public partial interface IInvoiceSectionsByBillingAccountIdOperations
+    public partial interface IBillingAccountbillingPermissionsOperations
     {
         /// <summary>
-        /// Lists all invoice sections for a user which he has access to.
+        /// Lists all billingPermissions for the caller has for a billing
+        /// account.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
-        /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the billingProfiles.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,6 +45,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InvoiceSectionListResult,InvoiceSectionsByBillingAccountIdListHeaders>> ListWithHttpMessagesAsync(string billingAccountId, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingPermissionsListResult>> ListWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

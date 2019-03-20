@@ -24,13 +24,13 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IProductsByInvoiceSectionOperations
     {
         /// <summary>
-        /// Lists products by invoiceSectionId.
+        /// Lists products by invoiceSectionName.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionId'>
+        /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
         /// <param name='filter'>
@@ -54,6 +54,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProductsListResult>> ListWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ProductsListResult>> ListWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

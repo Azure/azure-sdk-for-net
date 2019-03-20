@@ -27,18 +27,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
             /// Invoide Id.
             /// </param>
-            public static InvoiceSummary Get(this IInvoiceOperations operations, string billingAccountId, string billingProfileId, string invoiceName)
+            public static InvoiceSummary Get(this IInvoiceOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
-                return operations.GetAsync(billingAccountId, billingProfileId, invoiceName).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, billingProfileName, invoiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -47,10 +47,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<InvoiceSummary> GetAsync(this IInvoiceOperations operations, string billingAccountId, string billingProfileId, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<InvoiceSummary> GetAsync(this IInvoiceOperations operations, string billingAccountName, string billingProfileName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountId, billingProfileId, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, invoiceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

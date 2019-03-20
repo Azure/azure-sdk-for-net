@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Get pricesheet data for invoice id (invoiceName).
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// Azure Billing Account ID.
         /// </param>
         /// <param name='invoiceName'>
@@ -47,11 +47,11 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountId, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get pricesheet data for invoice id (invoiceName).
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// Azure Billing Account ID.
         /// </param>
         /// <param name='invoiceName'>
@@ -72,6 +72,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string billingAccountId, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

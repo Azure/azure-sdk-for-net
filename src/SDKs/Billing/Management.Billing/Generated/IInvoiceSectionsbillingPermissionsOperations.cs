@@ -19,24 +19,19 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EnrollmentAccountsByBillingAccountIdOperations operations.
+    /// InvoiceSectionsbillingPermissionsOperations operations.
     /// </summary>
-    public partial interface IEnrollmentAccountsByBillingAccountIdOperations
+    public partial interface IInvoiceSectionsbillingPermissionsOperations
     {
         /// <summary>
-        /// Lists all Enrollment Accounts for a user which he has access to.
+        /// Lists all billingPermissions for the caller has for a Invoice
+        /// Section.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the department.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
-        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
-        /// key value pair string where key and value is separated by a colon
-        /// (:).
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,6 +48,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EnrollmentAccountListResult>> ListWithHttpMessagesAsync(string billingAccountId, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingPermissionsListResult>> ListWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

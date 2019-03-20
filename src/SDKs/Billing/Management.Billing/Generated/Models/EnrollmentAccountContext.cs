@@ -32,14 +32,14 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="costCenter">The cost center name.</param>
         /// <param name="startDate">Account Start Date</param>
         /// <param name="endDate">Account End Date</param>
-        /// <param name="enrollmentAccountId">The enrollment account
+        /// <param name="enrollmentAccountName">The enrollment account
         /// id.</param>
-        public EnrollmentAccountContext(string costCenter = default(string), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string enrollmentAccountId = default(string))
+        public EnrollmentAccountContext(string costCenter = default(string), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string enrollmentAccountName = default(string))
         {
             CostCenter = costCenter;
             StartDate = startDate;
             EndDate = endDate;
-            EnrollmentAccountId = enrollmentAccountId;
+            EnrollmentAccountName = enrollmentAccountName;
             CustomInit();
         }
 
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Gets or sets the enrollment account id.
         /// </summary>
-        [JsonProperty(PropertyName = "enrollmentAccountId")]
-        public string EnrollmentAccountId { get; set; }
+        [JsonProperty(PropertyName = "enrollmentAccountName")]
+        public string EnrollmentAccountName { get; set; }
 
     }
 }

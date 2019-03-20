@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the TransferBillingSubscriptionResult
         /// class.
         /// </summary>
-        /// <param name="billingSubscriptionId">The destination billing
+        /// <param name="billingSubscriptionName">The destination billing
         /// subscription id.</param>
-        public TransferBillingSubscriptionResult(string billingSubscriptionId = default(string))
+        public TransferBillingSubscriptionResult(string billingSubscriptionName = default(string))
         {
-            BillingSubscriptionId = billingSubscriptionId;
+            BillingSubscriptionName = billingSubscriptionName;
             CustomInit();
         }
 
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Gets or sets the destination billing subscription id.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.billingSubscriptionId")]
-        public string BillingSubscriptionId { get; set; }
+        [JsonProperty(PropertyName = "properties.billingSubscriptionName")]
+        public string BillingSubscriptionName { get; set; }
 
     }
 }

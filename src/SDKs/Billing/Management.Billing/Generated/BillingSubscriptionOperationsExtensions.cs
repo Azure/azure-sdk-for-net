@@ -28,18 +28,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='billingSubscriptionId'>
+            /// <param name='billingSubscriptionName'>
             /// Billing Subscription Id.
             /// </param>
-            public static BillingSubscriptionSummary Get(this IBillingSubscriptionOperations operations, string billingAccountId, string invoiceSectionId, string billingSubscriptionId)
+            public static BillingSubscriptionSummary Get(this IBillingSubscriptionOperations operations, string billingAccountName, string invoiceSectionName, string billingSubscriptionName)
             {
-                return operations.GetAsync(billingAccountId, invoiceSectionId, billingSubscriptionId).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, invoiceSectionName, billingSubscriptionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,21 +49,21 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            /// <param name='billingSubscriptionId'>
+            /// <param name='billingSubscriptionName'>
             /// Billing Subscription Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingSubscriptionSummary> GetAsync(this IBillingSubscriptionOperations operations, string billingAccountId, string invoiceSectionId, string billingSubscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingSubscriptionSummary> GetAsync(this IBillingSubscriptionOperations operations, string billingAccountName, string invoiceSectionName, string billingSubscriptionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountId, invoiceSectionId, billingSubscriptionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, invoiceSectionName, billingSubscriptionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -76,18 +76,21 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Transfer Billing Subscription operation.
             /// </param>
-            public static TransferBillingSubscriptionResult Transfer(this IBillingSubscriptionOperations operations, string billingAccountId, string invoiceSectionId, TransferBillingSubscriptionRequestProperties parameters)
+            public static TransferBillingSubscriptionResult Transfer(this IBillingSubscriptionOperations operations, string billingAccountName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters)
             {
-                return operations.TransferAsync(billingAccountId, invoiceSectionId, parameters).GetAwaiter().GetResult();
+                return operations.TransferAsync(billingAccountName, invoiceSectionName, billingSubscriptionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -97,11 +100,14 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Transfer Billing Subscription operation.
@@ -109,9 +115,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransferBillingSubscriptionResult> TransferAsync(this IBillingSubscriptionOperations operations, string billingAccountId, string invoiceSectionId, TransferBillingSubscriptionRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransferBillingSubscriptionResult> TransferAsync(this IBillingSubscriptionOperations operations, string billingAccountName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TransferWithHttpMessagesAsync(billingAccountId, invoiceSectionId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TransferWithHttpMessagesAsync(billingAccountName, invoiceSectionName, billingSubscriptionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -124,18 +130,21 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Transfer Billing Subscription operation.
             /// </param>
-            public static TransferBillingSubscriptionResult BeginTransfer(this IBillingSubscriptionOperations operations, string billingAccountId, string invoiceSectionId, TransferBillingSubscriptionRequestProperties parameters)
+            public static TransferBillingSubscriptionResult BeginTransfer(this IBillingSubscriptionOperations operations, string billingAccountName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters)
             {
-                return operations.BeginTransferAsync(billingAccountId, invoiceSectionId, parameters).GetAwaiter().GetResult();
+                return operations.BeginTransferAsync(billingAccountName, invoiceSectionName, billingSubscriptionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -145,11 +154,14 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
+            /// </param>
+            /// <param name='billingSubscriptionName'>
+            /// Billing Subscription Id.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Transfer Billing Subscription operation.
@@ -157,9 +169,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TransferBillingSubscriptionResult> BeginTransferAsync(this IBillingSubscriptionOperations operations, string billingAccountId, string invoiceSectionId, TransferBillingSubscriptionRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TransferBillingSubscriptionResult> BeginTransferAsync(this IBillingSubscriptionOperations operations, string billingAccountName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginTransferWithHttpMessagesAsync(billingAccountId, invoiceSectionId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginTransferWithHttpMessagesAsync(billingAccountName, invoiceSectionName, billingSubscriptionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

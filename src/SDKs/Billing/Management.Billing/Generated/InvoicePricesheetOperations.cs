@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Get pricesheet data for invoice id (invoiceName).
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// Azure Billing Account ID.
         /// </param>
         /// <param name='invoiceName'>
@@ -65,17 +65,17 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountId, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders> _response = await BeginDownloadWithHttpMessagesAsync(billingAccountId, invoiceName, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders> _response = await BeginDownloadWithHttpMessagesAsync(billingAccountName, invoiceName, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get pricesheet data for invoice id (invoiceName).
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// Azure Billing Account ID.
         /// </param>
         /// <param name='invoiceName'>
@@ -102,15 +102,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string billingAccountId, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DownloadUrl,InvoicePricesheetDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
             if (invoiceName == null)
             {
@@ -123,15 +123,15 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("invoiceName", invoiceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDownload", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoices/{invoiceName}/pricesheet/default/download").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices/{invoiceName}/pricesheet/default/download").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{invoiceName}", System.Uri.EscapeDataString(invoiceName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

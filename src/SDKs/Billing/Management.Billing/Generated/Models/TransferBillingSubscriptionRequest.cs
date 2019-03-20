@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Initializes a new instance of the
         /// TransferBillingSubscriptionRequest class.
         /// </summary>
-        /// <param name="destinationInvoiceSectionId">The destination
-        /// invoiceSectionId.</param>
-        public TransferBillingSubscriptionRequest(string destinationInvoiceSectionId = default(string))
+        /// <param name="destinationInvoiceSectionName">The destination
+        /// invoiceSectionName.</param>
+        public TransferBillingSubscriptionRequest(string destinationInvoiceSectionName = default(string))
         {
-            DestinationInvoiceSectionId = destinationInvoiceSectionId;
+            DestinationInvoiceSectionName = destinationInvoiceSectionName;
             CustomInit();
         }
 
@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the destination invoiceSectionId.
+        /// Gets or sets the destination invoiceSectionName.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.destinationInvoiceSectionId")]
-        public string DestinationInvoiceSectionId { get; set; }
+        [JsonProperty(PropertyName = "properties.destinationInvoiceSectionName")]
+        public string DestinationInvoiceSectionName { get; set; }
 
     }
 }

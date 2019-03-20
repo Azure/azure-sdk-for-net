@@ -99,9 +99,9 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IPaymentMethodsByBillingProfileOperations PaymentMethodsByBillingProfile { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingProfilesByBillingAccountIdOperations.
+        /// Gets the IBillingProfilesByBillingAccountNameOperations.
         /// </summary>
-        public virtual IBillingProfilesByBillingAccountIdOperations BillingProfilesByBillingAccountId { get; private set; }
+        public virtual IBillingProfilesByBillingAccountNameOperations BillingProfilesByBillingAccountName { get; private set; }
 
         /// <summary>
         /// Gets the IBillingProfilesOperations.
@@ -109,9 +109,9 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingProfilesOperations BillingProfiles { get; private set; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionsByBillingAccountIdOperations.
+        /// Gets the IInvoiceSectionsByBillingAccountNameOperations.
         /// </summary>
-        public virtual IInvoiceSectionsByBillingAccountIdOperations InvoiceSectionsByBillingAccountId { get; private set; }
+        public virtual IInvoiceSectionsByBillingAccountNameOperations InvoiceSectionsByBillingAccountName { get; private set; }
 
         /// <summary>
         /// Gets the IInvoiceSectionsOperations.
@@ -124,9 +124,9 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IInvoiceSectionsWithCreateSubscriptionPermissionOperations InvoiceSectionsWithCreateSubscriptionPermission { get; private set; }
 
         /// <summary>
-        /// Gets the IDepartmentsByBillingAccountIdOperations.
+        /// Gets the IDepartmentsByBillingAccountNameOperations.
         /// </summary>
-        public virtual IDepartmentsByBillingAccountIdOperations DepartmentsByBillingAccountId { get; private set; }
+        public virtual IDepartmentsByBillingAccountNameOperations DepartmentsByBillingAccountName { get; private set; }
 
         /// <summary>
         /// Gets the IDepartmentsOperations.
@@ -134,9 +134,9 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IDepartmentsOperations Departments { get; private set; }
 
         /// <summary>
-        /// Gets the IEnrollmentAccountsByBillingAccountIdOperations.
+        /// Gets the IEnrollmentAccountsByBillingAccountNameOperations.
         /// </summary>
-        public virtual IEnrollmentAccountsByBillingAccountIdOperations EnrollmentAccountsByBillingAccountId { get; private set; }
+        public virtual IEnrollmentAccountsByBillingAccountNameOperations EnrollmentAccountsByBillingAccountName { get; private set; }
 
         /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
@@ -217,6 +217,51 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountbillingPermissionsOperations.
+        /// </summary>
+        public virtual IBillingAccountbillingPermissionsOperations BillingAccountbillingPermissions { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsbillingPermissionsOperations.
+        /// </summary>
+        public virtual IInvoiceSectionsbillingPermissionsOperations InvoiceSectionsbillingPermissions { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfilebillingPermissionsOperations.
+        /// </summary>
+        public virtual IBillingProfilebillingPermissionsOperations BillingProfilebillingPermissions { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountbillingRoleDefinitionOperations.
+        /// </summary>
+        public virtual IBillingAccountbillingRoleDefinitionOperations BillingAccountbillingRoleDefinition { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionbillingRoleDefinitionOperations.
+        /// </summary>
+        public virtual IInvoiceSectionbillingRoleDefinitionOperations InvoiceSectionbillingRoleDefinition { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfilebillingRoleDefinitionOperations.
+        /// </summary>
+        public virtual IBillingProfilebillingRoleDefinitionOperations BillingProfilebillingRoleDefinition { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountbillingRoleAssignmentOperations.
+        /// </summary>
+        public virtual IBillingAccountbillingRoleAssignmentOperations BillingAccountbillingRoleAssignment { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionbillingRoleAssignmentOperations.
+        /// </summary>
+        public virtual IInvoiceSectionbillingRoleAssignmentOperations InvoiceSectionbillingRoleAssignment { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfilebillingRoleAssignmentOperations.
+        /// </summary>
+        public virtual IBillingProfilebillingRoleAssignmentOperations BillingProfilebillingRoleAssignment { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
@@ -463,14 +508,14 @@ namespace Microsoft.Azure.Management.Billing
             BillingAccountsWithCreateInvoiceSectionPermission = new BillingAccountsWithCreateInvoiceSectionPermissionOperations(this);
             AvailableBalanceByBillingProfile = new AvailableBalanceByBillingProfileOperations(this);
             PaymentMethodsByBillingProfile = new PaymentMethodsByBillingProfileOperations(this);
-            BillingProfilesByBillingAccountId = new BillingProfilesByBillingAccountIdOperations(this);
+            BillingProfilesByBillingAccountName = new BillingProfilesByBillingAccountNameOperations(this);
             BillingProfiles = new BillingProfilesOperations(this);
-            InvoiceSectionsByBillingAccountId = new InvoiceSectionsByBillingAccountIdOperations(this);
+            InvoiceSectionsByBillingAccountName = new InvoiceSectionsByBillingAccountNameOperations(this);
             InvoiceSections = new InvoiceSectionsOperations(this);
             InvoiceSectionsWithCreateSubscriptionPermission = new InvoiceSectionsWithCreateSubscriptionPermissionOperations(this);
-            DepartmentsByBillingAccountId = new DepartmentsByBillingAccountIdOperations(this);
+            DepartmentsByBillingAccountName = new DepartmentsByBillingAccountNameOperations(this);
             Departments = new DepartmentsOperations(this);
-            EnrollmentAccountsByBillingAccountId = new EnrollmentAccountsByBillingAccountIdOperations(this);
+            EnrollmentAccountsByBillingAccountName = new EnrollmentAccountsByBillingAccountNameOperations(this);
             EnrollmentAccounts = new EnrollmentAccountsOperations(this);
             InvoicesByBillingAccount = new InvoicesByBillingAccountOperations(this);
             InvoicePricesheet = new InvoicePricesheetOperations(this);
@@ -487,6 +532,15 @@ namespace Microsoft.Azure.Management.Billing
             Policy = new PolicyOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
             Operations = new Operations(this);
+            BillingAccountbillingPermissions = new BillingAccountbillingPermissionsOperations(this);
+            InvoiceSectionsbillingPermissions = new InvoiceSectionsbillingPermissionsOperations(this);
+            BillingProfilebillingPermissions = new BillingProfilebillingPermissionsOperations(this);
+            BillingAccountbillingRoleDefinition = new BillingAccountbillingRoleDefinitionOperations(this);
+            InvoiceSectionbillingRoleDefinition = new InvoiceSectionbillingRoleDefinitionOperations(this);
+            BillingProfilebillingRoleDefinition = new BillingProfilebillingRoleDefinitionOperations(this);
+            BillingAccountbillingRoleAssignment = new BillingAccountbillingRoleAssignmentOperations(this);
+            InvoiceSectionbillingRoleAssignment = new InvoiceSectionbillingRoleAssignmentOperations(this);
+            BillingProfilebillingRoleAssignment = new BillingProfilebillingRoleAssignmentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-11-01-preview";
             AcceptLanguage = "en-US";
@@ -523,14 +577,14 @@ namespace Microsoft.Azure.Management.Billing
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
         /// <summary>
-        /// Lists the transactions by billingProfileId for given start date and end
+        /// Lists the transactions by billingProfileName for given start date and end
         /// date.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileId'>
+        /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
         /// <param name='startDate'>
@@ -566,15 +620,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TransactionsListResult>> TransactionsByBillingProfileWithHttpMessagesAsync(string billingAccountId, string billingProfileId, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TransactionsListResult>> TransactionsByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (billingProfileId == null)
+            if (billingProfileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
             }
             if (ApiVersion == null)
             {
@@ -595,8 +649,8 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
-                tracingParameters.Add("billingProfileId", billingProfileId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("billingProfileName", billingProfileName);
                 tracingParameters.Add("startDate", startDate);
                 tracingParameters.Add("endDate", endDate);
                 tracingParameters.Add("filter", filter);
@@ -605,9 +659,9 @@ namespace Microsoft.Azure.Management.Billing
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/transactions").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
-            _url = _url.Replace("{billingProfileId}", System.Uri.EscapeDataString(billingProfileId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/transactions").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             List<string> _queryParameters = new List<string>();
             if (ApiVersion != null)
             {
@@ -748,7 +802,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Cancel product by product id
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
         /// <param name='productName'>
@@ -778,11 +832,11 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(string billingAccountId, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(string billingAccountName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
             if (productName == null)
             {
@@ -803,7 +857,7 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("productName", productName);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -811,8 +865,8 @@ namespace Microsoft.Azure.Management.Billing
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/products/{productName}/updateAutoRenew").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/updateAutoRenew").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             _url = _url.Replace("{productName}", System.Uri.EscapeDataString(productName));
             List<string> _queryParameters = new List<string>();
             if (ApiVersion != null)
@@ -948,10 +1002,10 @@ namespace Microsoft.Azure.Management.Billing
         /// <summary>
         /// Cancel auto renew for product by product id
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionId'>
+        /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
         /// <param name='productName'>
@@ -981,15 +1035,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (billingAccountId == null)
+            if (billingAccountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (invoiceSectionId == null)
+            if (invoiceSectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
             }
             if (productName == null)
             {
@@ -1010,8 +1064,8 @@ namespace Microsoft.Azure.Management.Billing
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingAccountId", billingAccountId);
-                tracingParameters.Add("invoiceSectionId", invoiceSectionId);
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
                 tracingParameters.Add("productName", productName);
                 tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1019,9 +1073,9 @@ namespace Microsoft.Azure.Management.Billing
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountId}/invoiceSections/{invoiceSectionId}/products/{productName}/updateAutoRenew").ToString();
-            _url = _url.Replace("{billingAccountId}", System.Uri.EscapeDataString(billingAccountId));
-            _url = _url.Replace("{invoiceSectionId}", System.Uri.EscapeDataString(invoiceSectionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/products/{productName}/updateAutoRenew").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             _url = _url.Replace("{productName}", System.Uri.EscapeDataString(productName));
             List<string> _queryParameters = new List<string>();
             if (ApiVersion != null)

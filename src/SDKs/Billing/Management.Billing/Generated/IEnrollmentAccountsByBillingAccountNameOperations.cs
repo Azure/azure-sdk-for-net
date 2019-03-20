@@ -19,18 +19,18 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DepartmentsByBillingAccountIdOperations operations.
+    /// EnrollmentAccountsByBillingAccountNameOperations operations.
     /// </summary>
-    public partial interface IDepartmentsByBillingAccountIdOperations
+    public partial interface IEnrollmentAccountsByBillingAccountNameOperations
     {
         /// <summary>
-        /// Lists all departments for a user which he has access to.
+        /// Lists all Enrollment Accounts for a user which he has access to.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
         /// <param name='expand'>
-        /// May be used to expand the enrollmentAccounts.
+        /// May be used to expand the department.
         /// </param>
         /// <param name='filter'>
         /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
@@ -53,6 +53,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DepartmentListResult>> ListWithHttpMessagesAsync(string billingAccountId, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EnrollmentAccountListResult>> ListWithHttpMessagesAsync(string billingAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

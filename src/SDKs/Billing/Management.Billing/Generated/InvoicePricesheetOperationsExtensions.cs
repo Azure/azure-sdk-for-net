@@ -27,15 +27,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// Azure Billing Account ID.
             /// </param>
             /// <param name='invoiceName'>
             /// The name of an invoice resource.
             /// </param>
-            public static DownloadUrl Download(this IInvoicePricesheetOperations operations, string billingAccountId, string invoiceName)
+            public static DownloadUrl Download(this IInvoicePricesheetOperations operations, string billingAccountName, string invoiceName)
             {
-                return operations.DownloadAsync(billingAccountId, invoiceName).GetAwaiter().GetResult();
+                return operations.DownloadAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// Azure Billing Account ID.
             /// </param>
             /// <param name='invoiceName'>
@@ -53,9 +53,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DownloadUrl> DownloadAsync(this IInvoicePricesheetOperations operations, string billingAccountId, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadUrl> DownloadAsync(this IInvoicePricesheetOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DownloadWithHttpMessagesAsync(billingAccountId, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DownloadWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,15 +67,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// Azure Billing Account ID.
             /// </param>
             /// <param name='invoiceName'>
             /// The name of an invoice resource.
             /// </param>
-            public static DownloadUrl BeginDownload(this IInvoicePricesheetOperations operations, string billingAccountId, string invoiceName)
+            public static DownloadUrl BeginDownload(this IInvoicePricesheetOperations operations, string billingAccountName, string invoiceName)
             {
-                return operations.BeginDownloadAsync(billingAccountId, invoiceName).GetAwaiter().GetResult();
+                return operations.BeginDownloadAsync(billingAccountName, invoiceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// Azure Billing Account ID.
             /// </param>
             /// <param name='invoiceName'>
@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DownloadUrl> BeginDownloadAsync(this IInvoicePricesheetOperations operations, string billingAccountId, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DownloadUrl> BeginDownloadAsync(this IInvoicePricesheetOperations operations, string billingAccountName, string invoiceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDownloadWithHttpMessagesAsync(billingAccountId, invoiceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDownloadWithHttpMessagesAsync(billingAccountName, invoiceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

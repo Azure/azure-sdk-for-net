@@ -28,18 +28,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
             /// Invoide Id.
             /// </param>
-            public static ProductSummary Get(this IProductsOperations operations, string billingAccountId, string invoiceSectionId, string productName)
+            public static ProductSummary Get(this IProductsOperations operations, string billingAccountName, string invoiceSectionName, string productName)
             {
-                return operations.GetAsync(billingAccountId, invoiceSectionId, productName).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, invoiceSectionName, productName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -49,10 +49,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
@@ -61,9 +61,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProductSummary> GetAsync(this IProductsOperations operations, string billingAccountId, string invoiceSectionId, string productName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProductSummary> GetAsync(this IProductsOperations operations, string billingAccountName, string invoiceSectionName, string productName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountId, invoiceSectionId, productName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, invoiceSectionName, productName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -75,10 +75,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
@@ -87,9 +87,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='parameters'>
             /// Parameters supplied to the Transfer Product operation.
             /// </param>
-            public static ProductSummary Transfer(this IProductsOperations operations, string billingAccountId, string invoiceSectionId, string productName, TransferProductRequestProperties parameters)
+            public static ProductSummary Transfer(this IProductsOperations operations, string billingAccountName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters)
             {
-                return operations.TransferAsync(billingAccountId, invoiceSectionId, productName, parameters).GetAwaiter().GetResult();
+                return operations.TransferAsync(billingAccountName, invoiceSectionName, productName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,10 +98,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProductSummary> TransferAsync(this IProductsOperations operations, string billingAccountId, string invoiceSectionId, string productName, TransferProductRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProductSummary> TransferAsync(this IProductsOperations operations, string billingAccountName, string invoiceSectionName, string productName, TransferProductRequestProperties parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TransferWithHttpMessagesAsync(billingAccountId, invoiceSectionId, productName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TransferWithHttpMessagesAsync(billingAccountName, invoiceSectionName, productName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

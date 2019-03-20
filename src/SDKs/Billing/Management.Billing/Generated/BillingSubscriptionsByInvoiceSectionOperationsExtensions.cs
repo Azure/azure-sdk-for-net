@@ -22,42 +22,42 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class BillingSubscriptionsByInvoiceSectionOperationsExtensions
     {
             /// <summary>
-            /// Lists billing subscription by invoiceSectionId.
+            /// Lists billing subscription by invoiceSectionName.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            public static BillingSubscriptionsListResult List(this IBillingSubscriptionsByInvoiceSectionOperations operations, string billingAccountId, string invoiceSectionId)
+            public static BillingSubscriptionsListResult List(this IBillingSubscriptionsByInvoiceSectionOperations operations, string billingAccountName, string invoiceSectionName)
             {
-                return operations.ListAsync(billingAccountId, invoiceSectionId).GetAwaiter().GetResult();
+                return operations.ListAsync(billingAccountName, invoiceSectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists billing subscription by invoiceSectionId.
+            /// Lists billing subscription by invoiceSectionName.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='invoiceSectionId'>
+            /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingSubscriptionsListResult> ListAsync(this IBillingSubscriptionsByInvoiceSectionOperations operations, string billingAccountId, string invoiceSectionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingSubscriptionsListResult> ListAsync(this IBillingSubscriptionsByInvoiceSectionOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountId, invoiceSectionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -27,13 +27,13 @@ namespace Microsoft.Azure.Management.Billing
         /// Get a single billing subscription by name.
         /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionId'>
+        /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
-        /// <param name='billingSubscriptionId'>
+        /// <param name='billingSubscriptionName'>
         /// Billing Subscription Id.
         /// </param>
         /// <param name='customHeaders'>
@@ -51,16 +51,19 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingSubscriptionSummary>> GetWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, string billingSubscriptionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingSubscriptionSummary>> GetWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string billingSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Transfers the GTM subscription from one invoice section to another
         /// within a billing account.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionId'>
+        /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
+        /// </param>
+        /// <param name='billingSubscriptionName'>
+        /// Billing Subscription Id.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Transfer Billing Subscription operation.
@@ -80,16 +83,19 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferBillingSubscriptionResult,BillingSubscriptionTransferHeaders>> TransferWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TransferBillingSubscriptionResult,BillingSubscriptionTransferHeaders>> TransferWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Transfers the GTM subscription from one invoice section to another
         /// within a billing account.
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionId'>
+        /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
+        /// </param>
+        /// <param name='billingSubscriptionName'>
+        /// Billing Subscription Id.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Transfer Billing Subscription operation.
@@ -109,6 +115,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferBillingSubscriptionResult,BillingSubscriptionTransferHeaders>> BeginTransferWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TransferBillingSubscriptionResult,BillingSubscriptionTransferHeaders>> BeginTransferWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

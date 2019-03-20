@@ -22,42 +22,42 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class AvailableBalanceByBillingProfileOperationsExtensions
     {
             /// <summary>
-            /// The latest available credit balance for a given billingAccountId and
-            /// billingProfileId.
+            /// The latest available credit balance for a given billingAccountName and
+            /// billingProfileName.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            public static AvailableBalance Get(this IAvailableBalanceByBillingProfileOperations operations, string billingAccountId, string billingProfileId)
+            public static AvailableBalance Get(this IAvailableBalanceByBillingProfileOperations operations, string billingAccountName, string billingProfileName)
             {
-                return operations.GetAsync(billingAccountId, billingProfileId).GetAwaiter().GetResult();
+                return operations.GetAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The latest available credit balance for a given billingAccountId and
-            /// billingProfileId.
+            /// The latest available credit balance for a given billingAccountName and
+            /// billingProfileName.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AvailableBalance> GetAsync(this IAvailableBalanceByBillingProfileOperations operations, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AvailableBalance> GetAsync(this IAvailableBalanceByBillingProfileOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountId, billingProfileId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

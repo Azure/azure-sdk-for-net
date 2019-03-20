@@ -96,9 +96,9 @@ namespace Microsoft.Azure.Management.Billing
         IPaymentMethodsByBillingProfileOperations PaymentMethodsByBillingProfile { get; }
 
         /// <summary>
-        /// Gets the IBillingProfilesByBillingAccountIdOperations.
+        /// Gets the IBillingProfilesByBillingAccountNameOperations.
         /// </summary>
-        IBillingProfilesByBillingAccountIdOperations BillingProfilesByBillingAccountId { get; }
+        IBillingProfilesByBillingAccountNameOperations BillingProfilesByBillingAccountName { get; }
 
         /// <summary>
         /// Gets the IBillingProfilesOperations.
@@ -106,9 +106,9 @@ namespace Microsoft.Azure.Management.Billing
         IBillingProfilesOperations BillingProfiles { get; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionsByBillingAccountIdOperations.
+        /// Gets the IInvoiceSectionsByBillingAccountNameOperations.
         /// </summary>
-        IInvoiceSectionsByBillingAccountIdOperations InvoiceSectionsByBillingAccountId { get; }
+        IInvoiceSectionsByBillingAccountNameOperations InvoiceSectionsByBillingAccountName { get; }
 
         /// <summary>
         /// Gets the IInvoiceSectionsOperations.
@@ -121,9 +121,9 @@ namespace Microsoft.Azure.Management.Billing
         IInvoiceSectionsWithCreateSubscriptionPermissionOperations InvoiceSectionsWithCreateSubscriptionPermission { get; }
 
         /// <summary>
-        /// Gets the IDepartmentsByBillingAccountIdOperations.
+        /// Gets the IDepartmentsByBillingAccountNameOperations.
         /// </summary>
-        IDepartmentsByBillingAccountIdOperations DepartmentsByBillingAccountId { get; }
+        IDepartmentsByBillingAccountNameOperations DepartmentsByBillingAccountName { get; }
 
         /// <summary>
         /// Gets the IDepartmentsOperations.
@@ -131,9 +131,9 @@ namespace Microsoft.Azure.Management.Billing
         IDepartmentsOperations Departments { get; }
 
         /// <summary>
-        /// Gets the IEnrollmentAccountsByBillingAccountIdOperations.
+        /// Gets the IEnrollmentAccountsByBillingAccountNameOperations.
         /// </summary>
-        IEnrollmentAccountsByBillingAccountIdOperations EnrollmentAccountsByBillingAccountId { get; }
+        IEnrollmentAccountsByBillingAccountNameOperations EnrollmentAccountsByBillingAccountName { get; }
 
         /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
@@ -216,13 +216,58 @@ namespace Microsoft.Azure.Management.Billing
         IOperations Operations { get; }
 
         /// <summary>
-        /// Lists the transactions by billingProfileId for given start date and
-        /// end date.
+        /// Gets the IBillingAccountbillingPermissionsOperations.
         /// </summary>
-        /// <param name='billingAccountId'>
+        IBillingAccountbillingPermissionsOperations BillingAccountbillingPermissions { get; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsbillingPermissionsOperations.
+        /// </summary>
+        IInvoiceSectionsbillingPermissionsOperations InvoiceSectionsbillingPermissions { get; }
+
+        /// <summary>
+        /// Gets the IBillingProfilebillingPermissionsOperations.
+        /// </summary>
+        IBillingProfilebillingPermissionsOperations BillingProfilebillingPermissions { get; }
+
+        /// <summary>
+        /// Gets the IBillingAccountbillingRoleDefinitionOperations.
+        /// </summary>
+        IBillingAccountbillingRoleDefinitionOperations BillingAccountbillingRoleDefinition { get; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionbillingRoleDefinitionOperations.
+        /// </summary>
+        IInvoiceSectionbillingRoleDefinitionOperations InvoiceSectionbillingRoleDefinition { get; }
+
+        /// <summary>
+        /// Gets the IBillingProfilebillingRoleDefinitionOperations.
+        /// </summary>
+        IBillingProfilebillingRoleDefinitionOperations BillingProfilebillingRoleDefinition { get; }
+
+        /// <summary>
+        /// Gets the IBillingAccountbillingRoleAssignmentOperations.
+        /// </summary>
+        IBillingAccountbillingRoleAssignmentOperations BillingAccountbillingRoleAssignment { get; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionbillingRoleAssignmentOperations.
+        /// </summary>
+        IInvoiceSectionbillingRoleAssignmentOperations InvoiceSectionbillingRoleAssignment { get; }
+
+        /// <summary>
+        /// Gets the IBillingProfilebillingRoleAssignmentOperations.
+        /// </summary>
+        IBillingProfilebillingRoleAssignmentOperations BillingProfilebillingRoleAssignment { get; }
+
+        /// <summary>
+        /// Lists the transactions by billingProfileName for given start date
+        /// and end date.
+        /// </summary>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileId'>
+        /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
         /// <param name='startDate'>
@@ -243,12 +288,12 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<TransactionsListResult>> TransactionsByBillingProfileWithHttpMessagesAsync(string billingAccountId, string billingProfileId, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TransactionsListResult>> TransactionsByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Cancel product by product id
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
         /// <param name='productName'>
@@ -263,15 +308,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(string billingAccountId, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(string billingAccountName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Cancel auto renew for product by product id
         /// </summary>
-        /// <param name='billingAccountId'>
+        /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionId'>
+        /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
         /// <param name='productName'>
@@ -286,7 +331,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(string billingAccountId, string invoiceSectionId, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

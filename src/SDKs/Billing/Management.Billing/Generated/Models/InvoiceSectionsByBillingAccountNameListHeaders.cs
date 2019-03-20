@@ -16,27 +16,27 @@ namespace Microsoft.Azure.Management.Billing.Models
     /// <summary>
     /// Defines headers for List operation.
     /// </summary>
-    public partial class InvoiceSectionsByBillingAccountIdListHeaders
+    public partial class InvoiceSectionsByBillingAccountNameListHeaders
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// InvoiceSectionsByBillingAccountIdListHeaders class.
+        /// InvoiceSectionsByBillingAccountNameListHeaders class.
         /// </summary>
-        public InvoiceSectionsByBillingAccountIdListHeaders()
+        public InvoiceSectionsByBillingAccountNameListHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// InvoiceSectionsByBillingAccountIdListHeaders class.
+        /// InvoiceSectionsByBillingAccountNameListHeaders class.
         /// </summary>
         /// <param name="location">GET this URL to retrieve the status of the
         /// asynchronous operation.</param>
         /// <param name="retryAfter">The amount of delay to use while the
         /// status of the operation is checked. The value is expressed in
         /// seconds.</param>
-        public InvoiceSectionsByBillingAccountIdListHeaders(string location = default(string), string retryAfter = default(string))
+        public InvoiceSectionsByBillingAccountNameListHeaders(string location = default(string), string retryAfter = default(string))
         {
             Location = location;
             RetryAfter = retryAfter;

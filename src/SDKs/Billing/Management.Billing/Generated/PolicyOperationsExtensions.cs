@@ -22,42 +22,42 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class PolicyOperationsExtensions
     {
             /// <summary>
-            /// The policy for a given billingAccountId and billingProfileId.
+            /// The policy for a given billingAccountName and billingProfileName.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            public static Policy GetByBillingProfile(this IPolicyOperations operations, string billingAccountId, string billingProfileId)
+            public static Policy GetByBillingProfile(this IPolicyOperations operations, string billingAccountName, string billingProfileName)
             {
-                return operations.GetByBillingProfileAsync(billingAccountId, billingProfileId).GetAwaiter().GetResult();
+                return operations.GetByBillingProfileAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The policy for a given billingAccountId and billingProfileId.
+            /// The policy for a given billingAccountName and billingProfileName.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Policy> GetByBillingProfileAsync(this IPolicyOperations operations, string billingAccountId, string billingProfileId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Policy> GetByBillingProfileAsync(this IPolicyOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByBillingProfileWithHttpMessagesAsync(billingAccountId, billingProfileId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -69,18 +69,18 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the update policy operation.
             /// </param>
-            public static Policy Update(this IPolicyOperations operations, string billingAccountId, string billingProfileId, Policy parameters)
+            public static Policy Update(this IPolicyOperations operations, string billingAccountName, string billingProfileName, Policy parameters)
             {
-                return operations.UpdateAsync(billingAccountId, billingProfileId, parameters).GetAwaiter().GetResult();
+                return operations.UpdateAsync(billingAccountName, billingProfileName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -89,10 +89,10 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountId'>
+            /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileId'>
+            /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
             /// <param name='parameters'>
@@ -101,9 +101,9 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Policy> UpdateAsync(this IPolicyOperations operations, string billingAccountId, string billingProfileId, Policy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Policy> UpdateAsync(this IPolicyOperations operations, string billingAccountName, string billingProfileName, Policy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountId, billingProfileId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountName, billingProfileName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
