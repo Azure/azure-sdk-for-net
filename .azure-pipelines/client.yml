@@ -94,9 +94,11 @@ jobs:
         displayName: 'Download verifyagentos package'
         inputs:
           command: download
-          vstsFeed: 'azure-sdk-tools-public'
-          vstsFeedPackage: 'verifyagentos'
-          vstsPackageVersion: 1.0.0
+          feedsToUse: external
+          externalFeedCredentials: Azure
+          feedDownloadExternal: 'azure-sdk-tools-public'
+          packageDownloadExternal: 'verifyagentos'
+          versionDownloadExternal: 1.0.0
 
       - task: PythonScript@0
         displayName: 'Run platform specific Verify Agent OS Script'
