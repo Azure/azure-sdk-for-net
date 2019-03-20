@@ -13,25 +13,27 @@ namespace Azure.Base.Http.Pipeline
         static readonly long s_delayWarningThreshold = 3000; // 3000ms
         static readonly long s_frequency = Stopwatch.Frequency;
 
-        int[] _excludeErrors = Array.Empty<int>();
+        private readonly HttpPipelinePolicy _next;
+        private readonly int[] _excludeCodes;
 
-        public readonly static LoggingPolicy Shared = new LoggingPolicy();
-
-        public LoggingPolicy(params int[] excludeErrors)
-            => _excludeErrors = excludeErrors;
+        public LoggingPolicy(HttpPipelinePolicy next, int[] excludeCodes)
+        {
+            _next = next;
+            _excludeCodes = excludeCodes;
+        }
 
         // TODO (pri 1): we should remove sensitive information, e.g. keys
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpMessage message)
         {
             Log.ProcessingRequest(message);
 
             var before = Stopwatch.GetTimestamp();
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            await _next.ProcessAsync(message).ConfigureAwait(false);
             var after = Stopwatch.GetTimestamp();
 
             var status = message.Response.Status;
             // if error status
-            if (status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1)) {
+            if (status >= 400 && status <= 599 && (Array.IndexOf(_excludeCodes, status) == -1)) {
                 Log.ErrorResponse(message);
             }
 

@@ -18,11 +18,11 @@ namespace Azure.Base.Tests
         string expected = @"ProcessingRequest : Get https://contoso.a.io/ # ErrorResponse : 500 # ProcessingResponse : Get https://contoso.a.io/ # ProcessingRequest : Get https://contoso.a.io/ # ProcessingResponse : Get https://contoso.a.io/";
 
         [Test]
-        public void Basics() {
-
-            var options = new HttpPipelineOptions(new MockTransport(500, 1));
-            options.RetryPolicy = new CustomRetryPolicy();
-            options.LoggingPolicy = new LoggingPolicy();
+        public void Basics()
+        {
+            var options = new HttpPipelineOptions()
+                .AddLogging()
+                .Append(HttpPipelineSection.Retry, next => new CustomRetryPolicy(next));
 
             var listener = new TestEventListener();
             listener.EnableEvents(EventLevel.LogAlways);
@@ -49,6 +49,10 @@ namespace Azure.Base.Tests
 
         class CustomRetryPolicy : RetryPolicy
         {
+            public CustomRetryPolicy(HttpPipelinePolicy next) : base(next)
+            {
+            }
+
             protected override bool ShouldRetry(HttpMessage message, int retry, out TimeSpan delay)
             {
                 delay = TimeSpan.Zero;

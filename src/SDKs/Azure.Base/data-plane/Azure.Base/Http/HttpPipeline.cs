@@ -2,51 +2,39 @@
 // Licensed under the MIT License.
 
 using Azure.Base.Http.Pipeline;
-using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Http
 {
-    public readonly struct HttpPipeline
+    public struct HttpPipeline
     {
-        readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
-        readonly IServiceProvider _services;
+        private readonly HttpPipelinePolicy _entryPolicy;
+        private readonly HttpPipelineTransport _transportPolicy;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, IServiceProvider services = null)
+        public HttpPipeline(HttpPipelineTransport transportPolicy) : this()
         {
-            if (transport == null) throw new ArgumentNullException(nameof(transport));
-            if (policies == null) policies = Array.Empty<HttpPipelinePolicy>();
-
-            var all = new HttpPipelinePolicy[policies.Length + 1];
-            all[policies.Length] = transport;
-            policies.CopyTo(all, 0);
-            _pipeline = all;
-            _services = services != null ? services: HttpPipelineOptions.EmptyServiceProvider.Singleton;
+            _transportPolicy = transportPolicy;
+            _entryPolicy = transportPolicy;
         }
 
-        internal HttpPipeline(HttpPipelinePolicy[] policies, IServiceProvider services = default)
+        public HttpPipeline(HttpPipelineTransport transportPolicy, HttpPipelinePolicy entryPolicy)
         {
-            Debug.Assert(policies[policies.Length-1] is HttpPipelineTransport);
-
-            _services = services != null ? services : HttpPipelineOptions.EmptyServiceProvider.Singleton;
-            _pipeline = policies;
+            _transportPolicy = transportPolicy;
+            _entryPolicy = entryPolicy;
         }
 
         public HttpMessage CreateMessage(CancellationToken cancellation)
-            => Transport.CreateMessage(_services, cancellation);
+            => _transportPolicy.CreateMessage(cancellation);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task SendMessageAsync(HttpMessage message)
         {
-            if (_pipeline.IsEmpty) return;
-            await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
-        }
-
-        HttpPipelineTransport Transport {
-            get => (HttpPipelineTransport)_pipeline.Span[_pipeline.Length - 1];
+            if (_entryPolicy != null)
+            {
+                await _entryPolicy.ProcessAsync(message).ConfigureAwait(false);
+            }
         }
     }
 }

@@ -15,16 +15,10 @@ namespace Azure.Base.Http.Pipeline
 {
     public class HttpClientTransport : HttpPipelineTransport
     {
-        static readonly HttpClient s_defaultClient = new HttpClient();
+        public Action<HttpMessageHandler> ConfigureHandler { get; set; }
+        public HttpClient Client { get; set; }
 
-        readonly HttpClient _client;
-
-        public HttpClientTransport(HttpClient client = null)
-            => _client = client == null ? s_defaultClient : client;
-
-        public readonly static HttpClientTransport Shared = new HttpClientTransport();
-
-        public sealed override HttpMessage CreateMessage(IServiceProvider services, CancellationToken cancellation)
+        public sealed override HttpMessage CreateMessage(CancellationToken cancellation)
             => new Message(cancellation);
 
         public sealed override async Task ProcessAsync(HttpMessage message)
@@ -39,7 +33,7 @@ namespace Azure.Base.Http.Pipeline
         }
 
         protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
-            => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
+            => await Client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
 
         sealed class Message : HttpMessage
         {

@@ -5,19 +5,17 @@ using System;
 
 namespace Azure.Base.Http.Pipeline
 {
-    class FixedPolicy : RetryPolicy {
-        int _maxRetries;
-        TimeSpan _delay;
-        int[] _retriableCodes;
+    public class FixedPolicy : RetryPolicy {
+        private readonly int[] _retriableCodes;
+        private readonly int _maxRetries;
+        private readonly TimeSpan _delay;
 
-        public FixedPolicy(int[] retriableCodes, int maxRetries, TimeSpan delay)
+        public FixedPolicy(HttpPipelinePolicy next, int maxRetries, TimeSpan delay, params int[] retriableCodes): base(next)
         {
-            if (retriableCodes == null) throw new ArgumentNullException(nameof(retriableCodes));
-
-            _maxRetries = maxRetries;
-            _delay = delay;
             _retriableCodes = retriableCodes;
             Array.Sort(_retriableCodes);
+            _maxRetries = maxRetries;
+            _delay = delay;
         }
 
         protected override bool ShouldRetry(HttpMessage message, int attempted, out TimeSpan delay)

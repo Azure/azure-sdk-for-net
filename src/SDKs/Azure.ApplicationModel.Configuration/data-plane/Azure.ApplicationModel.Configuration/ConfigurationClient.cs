@@ -18,28 +18,13 @@ namespace Azure.ApplicationModel.Configuration
         const string ComponentName = "Azure.Configuration";
         const string ComponentVersion = "1.0.0";
 
-        static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
-            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
-            500, // Internal Server Error 
-            503, // Service Unavailable
-            504  // Gateway Timeout
-        );
-
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;
         HttpPipeline _pipeline;
 
-        public static HttpPipelineOptions CreateDefaultPipelineOptions()
-        {
-            var options = new HttpPipelineOptions(HttpClientTransport.Shared);
-            options.LoggingPolicy = LoggingPolicy.Shared;
-            options.RetryPolicy = s_defaultRetryPolicy;
-            return options;
-        }
-
         public ConfigurationClient(string connectionString)
-            : this(connectionString, CreateDefaultPipelineOptions())
+            : this(connectionString, new HttpPipelineOptions())
         {
         }
 
@@ -47,6 +32,15 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
+
+            options = options.Clone();
+            options.TryAppend(HttpPipelineSection.Retry, next => new FixedPolicy(
+                    next, 3, TimeSpan.Zero,
+                    //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
+                    500, // Internal Server Error
+                    503, // Service Unavailable
+                    504 // Gateway Timeout
+                ));
 
             _pipeline = options.Build(ComponentName, ComponentVersion);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);

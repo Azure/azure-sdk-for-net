@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using NUnit.Framework;
 using System;
@@ -17,15 +16,15 @@ namespace Azure.ApplicationModel.Configuration.Samples
         public async Task ConfiguringRetries()
         {
             // specify retry policy options
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
-            options.RetryPolicy = RetryPolicy.CreateFixed(
+            var options = new HttpPipelineOptions();
+            options.AddFixedRetry(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
-                retriableCodes: new int[] {
-                    500, // Internal Server Error 
-                    504  // Gateway Timeout
-                }
-            );
+                retriableCodes: new int[]
+                {
+                    500, // Internal Server Error
+                    504 // Gateway Timeout
+                });
 
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
 

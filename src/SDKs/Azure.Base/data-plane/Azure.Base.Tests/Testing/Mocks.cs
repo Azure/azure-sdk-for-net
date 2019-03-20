@@ -44,7 +44,7 @@ namespace Azure.Base.Testing
         {
             base.OnEventWritten(eventData);
             if(eventData.EventSource.Name == SOURCE_NAME) {
-                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString()); 
+                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString());
             }
         }
 
@@ -60,7 +60,7 @@ namespace Azure.Base.Testing
         public MockTransport(params int[] statusCodes)
             => _statusCodes = statusCodes;
 
-        public override HttpMessage CreateMessage(IServiceProvider services, CancellationToken cancellation)
+        public override HttpMessage CreateMessage(CancellationToken cancellation)
             => new Message(cancellation);
 
         public override Task ProcessAsync(HttpMessage message)

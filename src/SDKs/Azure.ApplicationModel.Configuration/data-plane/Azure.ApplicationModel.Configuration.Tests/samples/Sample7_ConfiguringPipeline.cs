@@ -20,29 +20,26 @@ namespace Azure.ApplicationModel.Configuration.Samples
         public async Task ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new HttpPipelineOptions();
 
             // specify custon HttpClient
-            options.Transport = new HttpClientTransport(s_client);
-
-            // remove logging policy
-            options.LoggingPolicy = null; 
+            options.UseHttpClient(s_client);
 
             // specify custom retry policy options
-            options.RetryPolicy = RetryPolicy.CreateFixed(
+            options.AddFixedRetry(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
                 retriableCodes: new int[] {
-                    500, // Internal Server Error 
+                    500, // Internal Server Error
                     504  // Gateway Timeout
                 }
             );
 
             // add a policy (custom behavior) that executes once per client call
-            options.AddPerCallPolicy(new AddHeaderPolicy());
+            options.Append(HttpPipelineSection.PreRetry, next => new AddHeaderPolicy(next));
 
             // add a policy that executes once per retry
-            options.AddPerRetryPolicy(new CustomLogPolicy());
+            options.Append(HttpPipelineSection.PreRetry, next => new CustomLogPolicy(next));
 
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             // pass the policy options to the client
@@ -52,21 +49,35 @@ namespace Azure.ApplicationModel.Configuration.Samples
             await client.DeleteAsync("some_key");
         }
 
-        class AddHeaderPolicy : HttpPipelinePolicy
+        class AddHeaderPolicy: HttpPipelinePolicy
         {
-            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            private readonly HttpPipelinePolicy _next;
+
+            public AddHeaderPolicy(HttpPipelinePolicy next)
+            {
+                _next = next;
+            }
+
+            public override async Task ProcessAsync(HttpMessage message)
             {
                 message.AddHeader("User-Agent", "ConfiguraingPipelineSample");
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                await _next.ProcessAsync(message).ConfigureAwait(false);
             }
         }
 
-        class CustomLogPolicy : HttpPipelinePolicy
+        class CustomLogPolicy: HttpPipelinePolicy
         {
-            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            private readonly HttpPipelinePolicy _next;
+
+            public CustomLogPolicy(HttpPipelinePolicy next)
+            {
+                _next = next;
+            }
+
+            public override async Task ProcessAsync(HttpMessage message)
             {
                 Console.WriteLine(message.ToString());
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                await _next.ProcessAsync(message).ConfigureAwait(false);
             }
         }
     }

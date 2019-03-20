@@ -11,12 +11,19 @@ namespace Azure.Base.Testing
 {
     public class TestLoggingPolicy : HttpPipelinePolicy
     {
+        private readonly HttpPipelinePolicy _next;
+
+        public TestLoggingPolicy(HttpPipelinePolicy next)
+        {
+            _next = next;
+        }
+
         StringBuilder _logged = new StringBuilder();
 
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpMessage message)
         {
             _logged.Append($"REQUEST: {message.ToString()}\n");
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            await _next.ProcessAsync(message).ConfigureAwait(false);
             _logged.Append($"RESPONSE: {message.Response.Status}\n");
         }
 

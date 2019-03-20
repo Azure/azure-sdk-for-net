@@ -7,17 +7,22 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Http.Pipeline
 {
-    public class AddHeadersPolicy : HttpPipelinePolicy
+    internal class AddHeadersPolicy : HttpPipelinePolicy
     {
-        List<HttpHeader> _headersToAdd = new List<HttpHeader>();
+        private readonly HttpPipelinePolicy _next;
 
-        public void AddHeader(HttpHeader header)
-            => _headersToAdd.Add(header);
+        private readonly HttpHeader[] _headersToAdd;
 
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public AddHeadersPolicy(HttpPipelinePolicy next, params HttpHeader[] headersToAdd)
+        {
+            _next = next;
+            _headersToAdd = headersToAdd;
+        }
+
+        public override async Task ProcessAsync(HttpMessage message)
         {
             foreach (var header in _headersToAdd) message.AddHeader(header);
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            await _next.ProcessAsync(message).ConfigureAwait(false);
         }
     }
 }

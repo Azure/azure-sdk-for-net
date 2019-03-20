@@ -35,11 +35,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            HttpPipelineOptions options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new HttpPipelineOptions();
             var testPool = new TestPool<byte>();
-            options.AddService(testPool, typeof(ArrayPool<byte>));
 
-            options.Transport = transport;
+            options.TransportPolicy = () => transport;
 
             var service = new ConfigurationClient(connectionString, options);
 
@@ -127,7 +126,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
-        
+
         [Test]
         public async Task Delete()
         {
@@ -211,11 +210,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void ConfiguringTheClient()
         {
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new HttpPipelineOptions();
             options.ApplicationId = "test_application";
-            options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
-            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            options.RetryPolicy = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
+            options.TransportPolicy = () => new GetMockTransport(s_testSetting.Key, default, s_testSetting);
+            options.AddFixedRetry(5, TimeSpan.FromMilliseconds(100), 404);
 
             var client = new ConfigurationClient(connectionString, options);
 
