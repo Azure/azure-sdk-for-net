@@ -332,10 +332,6 @@ namespace Microsoft.Azure.Management.Peering
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PeeringModel>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PeeringModel>("kind"));
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<PeeringLocation>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<PeeringLocation>("kind"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
