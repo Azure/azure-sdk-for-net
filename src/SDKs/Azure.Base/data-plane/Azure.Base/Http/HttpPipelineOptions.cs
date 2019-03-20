@@ -62,7 +62,7 @@ namespace Azure.Base.Http
 
         int PolicyCount {
             get {
-                int numberOfPolicies = 1; // HttpPipelineTransport
+                int numberOfPolicies = 2; // HttpPipelineTransport nad Logging
                 if (DisableTelemetry == false) numberOfPolicies++; // AddHeadersPolicy
 
                 if (RetryPolicy != null) numberOfPolicies++;
