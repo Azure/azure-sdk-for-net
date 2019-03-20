@@ -57,11 +57,6 @@ namespace Microsoft.Azure.Graph.RBAC
         public string TenantID { get; set; }
 
         /// <summary>
-        /// The application ID.
-        /// </summary>
-        public string ApplicationID { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }

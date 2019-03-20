@@ -2198,6 +2198,9 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <summary>
         /// Gets an object id for a given application id from the current tenant.
         /// </summary>
+        /// <param name='applicationID'>
+        /// The application ID.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2219,7 +2222,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ServicePrincipalObjectResult>> GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ServicePrincipalObjectResult>> GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(string applicationID, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -2229,9 +2232,9 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.TenantID");
             }
-            if (Client.ApplicationID == null)
+            if (applicationID == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApplicationID");
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationID");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2240,6 +2243,7 @@ namespace Microsoft.Azure.Graph.RBAC
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("applicationID", applicationID);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetServicePrincipalsIdByAppId", tracingParameters);
             }
@@ -2247,7 +2251,7 @@ namespace Microsoft.Azure.Graph.RBAC
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{tenantID}/servicePrincipalsByAppId/{applicationID}/objectId").ToString();
             _url = _url.Replace("{tenantID}", System.Uri.EscapeDataString(Client.TenantID));
-            _url = _url.Replace("{applicationID}", System.Uri.EscapeDataString(Client.ApplicationID));
+            _url = _url.Replace("{applicationID}", System.Uri.EscapeDataString(applicationID));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {

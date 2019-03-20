@@ -295,6 +295,9 @@ namespace Microsoft.Azure.Graph.RBAC
         /// Gets an object id for a given application id from the current
         /// tenant.
         /// </summary>
+        /// <param name='applicationID'>
+        /// The application ID.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -310,7 +313,7 @@ namespace Microsoft.Azure.Graph.RBAC
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServicePrincipalObjectResult>> GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServicePrincipalObjectResult>> GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(string applicationID, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of applications from the current tenant.
         /// </summary>

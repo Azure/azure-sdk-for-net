@@ -460,9 +460,12 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static ServicePrincipalObjectResult GetServicePrincipalsIdByAppId(this IApplicationsOperations operations)
+            /// <param name='applicationID'>
+            /// The application ID.
+            /// </param>
+            public static ServicePrincipalObjectResult GetServicePrincipalsIdByAppId(this IApplicationsOperations operations, string applicationID)
             {
-                return operations.GetServicePrincipalsIdByAppIdAsync().GetAwaiter().GetResult();
+                return operations.GetServicePrincipalsIdByAppIdAsync(applicationID).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -471,12 +474,15 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='applicationID'>
+            /// The application ID.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServicePrincipalObjectResult> GetServicePrincipalsIdByAppIdAsync(this IApplicationsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ServicePrincipalObjectResult> GetServicePrincipalsIdByAppIdAsync(this IApplicationsOperations operations, string applicationID, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(applicationID, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
