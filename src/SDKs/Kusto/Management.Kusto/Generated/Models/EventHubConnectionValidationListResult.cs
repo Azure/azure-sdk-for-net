@@ -16,26 +16,26 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// The list Kusto data connection validation result.
+    /// The list Kusto event hub connection validation result.
     /// </summary>
-    public partial class DataConnectionValidationListResult
+    public partial class EventHubConnectionValidationListResult
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// DataConnectionValidationListResult class.
+        /// EventHubConnectionValidationListResult class.
         /// </summary>
-        public DataConnectionValidationListResult()
+        public EventHubConnectionValidationListResult()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// DataConnectionValidationListResult class.
+        /// EventHubConnectionValidationListResult class.
         /// </summary>
-        /// <param name="value">The list of Kusto data connection validation
-        /// errors.</param>
-        public DataConnectionValidationListResult(IList<DataConnectionValidationResult> value = default(IList<DataConnectionValidationResult>))
+        /// <param name="value">The list of Kusto event hub connection
+        /// validation errors.</param>
+        public EventHubConnectionValidationListResult(IList<EventHubConnectionValidationResult> value = default(IList<EventHubConnectionValidationResult>))
         {
             Value = value;
             CustomInit();
@@ -47,10 +47,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of Kusto data connection validation errors.
+        /// Gets or sets the list of Kusto event hub connection validation
+        /// errors.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<DataConnectionValidationResult> Value { get; set; }
+        public IList<EventHubConnectionValidationResult> Value { get; set; }
 
     }
 }

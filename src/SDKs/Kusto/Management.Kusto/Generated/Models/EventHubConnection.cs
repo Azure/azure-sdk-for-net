@@ -16,35 +16,25 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// Class representing an Event Grid data connection.
+    /// Class representing an event hub connection.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("EventGrid")]
     [Rest.Serialization.JsonTransformation]
-    public partial class EventGridDataConnection : DataConnection
+    public partial class EventHubConnection : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the EventGridDataConnection class.
+        /// Initializes a new instance of the EventHubConnection class.
         /// </summary>
-        public EventGridDataConnection()
+        public EventHubConnection()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventGridDataConnection class.
+        /// Initializes a new instance of the EventHubConnection class.
         /// </summary>
-        /// <param name="storageAccountResourceId">The resource ID of the
-        /// storage account where the data resides.</param>
-        /// <param name="eventHubResourceId">The resource ID where the event
-        /// grid is configured to send events.</param>
+        /// <param name="eventHubResourceId">The resource ID of the event hub
+        /// to be used to create a data connection.</param>
         /// <param name="consumerGroup">The event hub consumer group.</param>
-        /// <param name="tableName">The table where the data should be
-        /// ingested. Optionally the table information can be added to each
-        /// message.</param>
-        /// <param name="dataFormat">The data format of the message. Optionally
-        /// the data format can be added to each message. Possible values
-        /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO'</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -52,13 +42,19 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="location">Resource location.</param>
+        /// <param name="tableName">The table where the data should be
+        /// ingested. Optionally the table information can be added to each
+        /// message.</param>
         /// <param name="mappingRuleName">The mapping rule to be used to ingest
         /// the data. Optionally the mapping information can be added to each
         /// message.</param>
-        public EventGridDataConnection(string storageAccountResourceId, string eventHubResourceId, string consumerGroup, string tableName, string dataFormat, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string mappingRuleName = default(string))
-            : base(id, name, type, location)
+        /// <param name="dataFormat">The data format of the message. Optionally
+        /// the data format can be added to each message. Possible values
+        /// include: 'MULTIJSON', 'JSON', 'CSV'</param>
+        public EventHubConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string))
+            : base(id, name, type)
         {
-            StorageAccountResourceId = storageAccountResourceId;
+            Location = location;
             EventHubResourceId = eventHubResourceId;
             ConsumerGroup = consumerGroup;
             TableName = tableName;
@@ -73,15 +69,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource ID of the storage account where the data
-        /// resides.
+        /// Gets or sets resource location.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageAccountResourceId")]
-        public string StorageAccountResourceId { get; set; }
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource ID where the event grid is configured to
-        /// send events.
+        /// Gets or sets the resource ID of the event hub to be used to create
+        /// a data connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.eventHubResourceId")]
         public string EventHubResourceId { get; set; }
@@ -109,8 +104,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
-        /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO'
+        /// 'MULTIJSON', 'JSON', 'CSV'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }
@@ -123,10 +117,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (StorageAccountResourceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StorageAccountResourceId");
-            }
             if (EventHubResourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "EventHubResourceId");
@@ -134,14 +124,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (ConsumerGroup == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ConsumerGroup");
-            }
-            if (TableName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TableName");
-            }
-            if (DataFormat == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DataFormat");
             }
         }
     }

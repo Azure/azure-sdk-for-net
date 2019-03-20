@@ -14,9 +14,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// A class representing database principal entity.
-    /// </summary>
     public partial class DatabasePrincipal
     {
         /// <summary>

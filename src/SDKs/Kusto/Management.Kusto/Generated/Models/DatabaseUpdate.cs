@@ -32,6 +32,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the DatabaseUpdate class.
         /// </summary>
+        /// <param name="softDeletePeriodInDays">The number of days data should
+        /// be kept before it stops being accessible to queries.</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -39,21 +41,21 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="location">Resource location.</param>
+        /// <param name="etag">An ETag of the resource updated.</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed'</param>
-        /// <param name="softDeletePeriod">The time the data should be kept
-        /// before it stops being accessible to queries in TimeSpan.</param>
-        /// <param name="hotCachePeriod">The time the data that should be kept
-        /// in cache for fast queries in TimeSpan.</param>
+        /// <param name="hotCachePeriodInDays">The number of days of data that
+        /// should be kept in cache for fast queries.</param>
         /// <param name="statistics">The statistics of the database.</param>
-        public DatabaseUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string provisioningState = default(string), System.TimeSpan? softDeletePeriod = default(System.TimeSpan?), System.TimeSpan? hotCachePeriod = default(System.TimeSpan?), DatabaseStatistics statistics = default(DatabaseStatistics))
+        public DatabaseUpdate(int softDeletePeriodInDays, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string etag = default(string), string provisioningState = default(string), int? hotCachePeriodInDays = default(int?), DatabaseStatistics statistics = default(DatabaseStatistics))
             : base(id, name, type)
         {
             Location = location;
+            Etag = etag;
             ProvisioningState = provisioningState;
-            SoftDeletePeriod = softDeletePeriod;
-            HotCachePeriod = hotCachePeriod;
+            SoftDeletePeriodInDays = softDeletePeriodInDays;
+            HotCachePeriodInDays = hotCachePeriodInDays;
             Statistics = statistics;
             CustomInit();
         }
@@ -70,6 +72,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string Location { get; set; }
 
         /// <summary>
+        /// Gets an ETag of the resource updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
+
+        /// <summary>
         /// Gets the provisioned state of the resource. Possible values
         /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed'
         /// </summary>
@@ -77,18 +85,18 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
-        /// Gets or sets the time the data should be kept before it stops being
-        /// accessible to queries in TimeSpan.
+        /// Gets or sets the number of days data should be kept before it stops
+        /// being accessible to queries.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.softDeletePeriod")]
-        public System.TimeSpan? SoftDeletePeriod { get; set; }
+        [JsonProperty(PropertyName = "properties.softDeletePeriodInDays")]
+        public int SoftDeletePeriodInDays { get; set; }
 
         /// <summary>
-        /// Gets or sets the time the data that should be kept in cache for
-        /// fast queries in TimeSpan.
+        /// Gets or sets the number of days of data that should be kept in
+        /// cache for fast queries.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.hotCachePeriod")]
-        public System.TimeSpan? HotCachePeriod { get; set; }
+        [JsonProperty(PropertyName = "properties.hotCachePeriodInDays")]
+        public int? HotCachePeriodInDays { get; set; }
 
         /// <summary>
         /// Gets or sets the statistics of the database.
@@ -96,5 +104,14 @@ namespace Microsoft.Azure.Management.Kusto.Models
         [JsonProperty(PropertyName = "properties.statistics")]
         public DatabaseStatistics Statistics { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+        }
     }
 }

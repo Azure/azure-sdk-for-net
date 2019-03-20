@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.Kusto
         public virtual IDatabasesOperations Databases { get; private set; }
 
         /// <summary>
-        /// Gets the IDataConnectionsOperations.
+        /// Gets the IEventHubConnectionsOperations.
         /// </summary>
-        public virtual IDataConnectionsOperations DataConnections { get; private set; }
+        public virtual IEventHubConnectionsOperations EventHubConnections { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -342,10 +342,10 @@ namespace Microsoft.Azure.Management.Kusto
         {
             Clusters = new ClustersOperations(this);
             Databases = new DatabasesOperations(this);
-            DataConnections = new DataConnectionsOperations(this);
+            EventHubConnections = new EventHubConnectionsOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-01-21";
+            ApiVersion = "2019-03-20";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -375,8 +375,6 @@ namespace Microsoft.Azure.Management.Kusto
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataConnection>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataConnection>("kind"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

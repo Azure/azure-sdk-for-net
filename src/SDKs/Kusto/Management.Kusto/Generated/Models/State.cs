@@ -24,6 +24,5 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string Stopping = "Stopping";
         public const string Stopped = "Stopped";
         public const string Starting = "Starting";
-        public const string Updating = "Updating";
     }
 }

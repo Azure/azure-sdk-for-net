@@ -19,12 +19,13 @@ namespace Microsoft.Azure.Management.Kusto
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DataConnectionsOperations operations.
+    /// EventHubConnectionsOperations operations.
     /// </summary>
-    public partial interface IDataConnectionsOperations
+    public partial interface IEventHubConnectionsOperations
     {
         /// <summary>
-        /// Returns the list of data connections of the given Kusto database.
+        /// Returns the list of Event Hub connections of the given Kusto
+        /// database.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -50,9 +51,9 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<DataConnection>>> ListByDatabaseWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<EventHubConnection>>> ListByDatabaseWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Checks that the data connection parameters are valid.
+        /// Checks that the Event Hub data connection parameters are valid.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -64,7 +65,7 @@ namespace Microsoft.Azure.Management.Kusto
         /// The name of the database in the Kusto cluster.
         /// </param>
         /// <param name='parameters'>
-        /// The data connection parameters supplied to the CreateOrUpdate
+        /// The Event Hub connection parameters supplied to the CreateOrUpdate
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -82,9 +83,9 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataConnectionValidationListResult>> DataConnectionValidationMethodWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, DataConnectionValidation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventHubConnectionValidationListResult>> EventhubConnectionValidationWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, EventHubConnectionValidation parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a data connection.
+        /// Returns an Event Hub connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -95,8 +96,8 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='dataConnectionName'>
-        /// The name of the data connection.
+        /// <param name='eventHubConnectionName'>
+        /// The name of the event hub connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,9 +114,9 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventHubConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates a data connection.
+        /// Creates or updates a Event Hub connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -126,11 +127,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='dataConnectionName'>
-        /// The name of the data connection.
+        /// <param name='eventHubConnectionName'>
+        /// The name of the event hub connection.
         /// </param>
         /// <param name='parameters'>
-        /// The data connection parameters supplied to the CreateOrUpdate
+        /// The Event Hub connection parameters supplied to the CreateOrUpdate
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -148,9 +149,9 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventHubConnection>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a data connection.
+        /// Updates a Event Hub connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -161,73 +162,11 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='dataConnectionName'>
-        /// The name of the data connection.
+        /// <param name='eventHubConnectionName'>
+        /// The name of the event hub connection.
         /// </param>
         /// <param name='parameters'>
-        /// The data connection parameters supplied to the Update operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<DataConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Deletes the data connection with the given name.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the Kusto cluster.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the Kusto cluster.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database in the Kusto cluster.
-        /// </param>
-        /// <param name='dataConnectionName'>
-        /// The name of the data connection.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates or updates a data connection.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group containing the Kusto cluster.
-        /// </param>
-        /// <param name='clusterName'>
-        /// The name of the Kusto cluster.
-        /// </param>
-        /// <param name='databaseName'>
-        /// The name of the database in the Kusto cluster.
-        /// </param>
-        /// <param name='dataConnectionName'>
-        /// The name of the data connection.
-        /// </param>
-        /// <param name='parameters'>
-        /// The data connection parameters supplied to the CreateOrUpdate
+        /// The Event Hub connection parameters supplied to the Update
         /// operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -245,9 +184,9 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventHubConnection>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates a data connection.
+        /// Deletes the Event Hub connection with the given name.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -258,11 +197,40 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='dataConnectionName'>
-        /// The name of the data connection.
+        /// <param name='eventHubConnectionName'>
+        /// The name of the event hub connection.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates or updates a Event Hub connection.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Kusto cluster.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kusto cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database in the Kusto cluster.
+        /// </param>
+        /// <param name='eventHubConnectionName'>
+        /// The name of the event hub connection.
         /// </param>
         /// <param name='parameters'>
-        /// The data connection parameters supplied to the Update operation.
+        /// The Event Hub connection parameters supplied to the CreateOrUpdate
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -279,9 +247,9 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DataConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, DataConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<EventHubConnection>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the data connection with the given name.
+        /// Updates a Event Hub connection.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group containing the Kusto cluster.
@@ -292,8 +260,43 @@ namespace Microsoft.Azure.Management.Kusto
         /// <param name='databaseName'>
         /// The name of the database in the Kusto cluster.
         /// </param>
-        /// <param name='dataConnectionName'>
-        /// The name of the data connection.
+        /// <param name='eventHubConnectionName'>
+        /// The name of the event hub connection.
+        /// </param>
+        /// <param name='parameters'>
+        /// The Event Hub connection parameters supplied to the Update
+        /// operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<EventHubConnection>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, EventHubConnectionUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes the Event Hub connection with the given name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group containing the Kusto cluster.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the Kusto cluster.
+        /// </param>
+        /// <param name='databaseName'>
+        /// The name of the database in the Kusto cluster.
+        /// </param>
+        /// <param name='eventHubConnectionName'>
+        /// The name of the event hub connection.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -307,6 +310,6 @@ namespace Microsoft.Azure.Management.Kusto
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string dataConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string clusterName, string databaseName, string eventHubConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

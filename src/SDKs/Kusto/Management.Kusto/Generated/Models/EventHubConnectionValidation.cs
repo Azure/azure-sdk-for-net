@@ -16,33 +16,29 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// Class representing an event hub data connection.
+    /// Class representing an event hub connection validation.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("EventHub")]
     [Rest.Serialization.JsonTransformation]
-    public partial class EventHubDataConnection : DataConnection
+    public partial class EventHubConnectionValidation
     {
         /// <summary>
-        /// Initializes a new instance of the EventHubDataConnection class.
+        /// Initializes a new instance of the EventHubConnectionValidation
+        /// class.
         /// </summary>
-        public EventHubDataConnection()
+        public EventHubConnectionValidation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the EventHubDataConnection class.
+        /// Initializes a new instance of the EventHubConnectionValidation
+        /// class.
         /// </summary>
         /// <param name="eventHubResourceId">The resource ID of the event hub
         /// to be used to create a data connection.</param>
         /// <param name="consumerGroup">The event hub consumer group.</param>
-        /// <param name="id">Fully qualified resource Id for the resource. Ex -
-        /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
-        /// <param name="name">The name of the resource</param>
-        /// <param name="type">The type of the resource. Ex-
-        /// Microsoft.Compute/virtualMachines or
-        /// Microsoft.Storage/storageAccounts.</param>
-        /// <param name="location">Resource location.</param>
+        /// <param name="eventhubConnectionName">The name of the event hub
+        /// connection.</param>
         /// <param name="tableName">The table where the data should be
         /// ingested. Optionally the table information can be added to each
         /// message.</param>
@@ -51,11 +47,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// message.</param>
         /// <param name="dataFormat">The data format of the message. Optionally
         /// the data format can be added to each message. Possible values
-        /// include: 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV',
-        /// 'TXT', 'RAW', 'SINGLEJSON', 'AVRO'</param>
-        public EventHubDataConnection(string eventHubResourceId, string consumerGroup, string id = default(string), string name = default(string), string type = default(string), string location = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string))
-            : base(id, name, type, location)
+        /// include: 'MULTIJSON', 'JSON', 'CSV'</param>
+        public EventHubConnectionValidation(string eventHubResourceId, string consumerGroup, string eventhubConnectionName = default(string), string tableName = default(string), string mappingRuleName = default(string), string dataFormat = default(string))
         {
+            EventhubConnectionName = eventhubConnectionName;
             EventHubResourceId = eventHubResourceId;
             ConsumerGroup = consumerGroup;
             TableName = tableName;
@@ -68,6 +63,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the name of the event hub connection.
+        /// </summary>
+        [JsonProperty(PropertyName = "eventhubConnectionName")]
+        public string EventhubConnectionName { get; set; }
 
         /// <summary>
         /// Gets or sets the resource ID of the event hub to be used to create
@@ -99,8 +100,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Gets or sets the data format of the message. Optionally the data
         /// format can be added to each message. Possible values include:
-        /// 'MULTIJSON', 'JSON', 'CSV', 'TSV', 'SCSV', 'SOHSV', 'PSV', 'TXT',
-        /// 'RAW', 'SINGLEJSON', 'AVRO'
+        /// 'MULTIJSON', 'JSON', 'CSV'
         /// </summary>
         [JsonProperty(PropertyName = "properties.dataFormat")]
         public string DataFormat { get; set; }

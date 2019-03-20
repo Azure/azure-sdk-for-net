@@ -13,27 +13,24 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// The result returned from a data connection validation request.
-    /// </summary>
-    public partial class DataConnectionValidationResult
+    public partial class EventHubConnectionValidationResult
     {
         /// <summary>
-        /// Initializes a new instance of the DataConnectionValidationResult
-        /// class.
+        /// Initializes a new instance of the
+        /// EventHubConnectionValidationResult class.
         /// </summary>
-        public DataConnectionValidationResult()
+        public EventHubConnectionValidationResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DataConnectionValidationResult
-        /// class.
+        /// Initializes a new instance of the
+        /// EventHubConnectionValidationResult class.
         /// </summary>
         /// <param name="errorMessage">A message which indicates a problem in
-        /// data connection validation.</param>
-        public DataConnectionValidationResult(string errorMessage = default(string))
+        /// event hub connection validation.</param>
+        public EventHubConnectionValidationResult(string errorMessage = default(string))
         {
             ErrorMessage = errorMessage;
             CustomInit();
@@ -45,8 +42,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a message which indicates a problem in data connection
-        /// validation.
+        /// Gets or sets a message which indicates a problem in event hub
+        /// connection validation.
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public string ErrorMessage { get; set; }
