@@ -35,9 +35,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="id">The ID of the Entity Model.</param>
         /// <param name="readableType">Possible values include: 'Entity
         /// Extractor', 'Hierarchical Entity Extractor', 'Hierarchical Child
-        /// Entity Extractor', 'Composite Entity Extractor', 'Closed List
-        /// Entity Extractor', 'Prebuilt Entity Extractor', 'Intent
-        /// Classifier', 'Pattern.Any Entity Extractor', 'Regex Entity
+        /// Entity Extractor', 'Composite Entity Extractor', 'List Entity
+        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
+        /// 'Pattern.Any Entity Extractor', 'Regular Expression Entity
         /// Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Gets or sets possible values include: 'Entity Extractor',
         /// 'Hierarchical Entity Extractor', 'Hierarchical Child Entity
-        /// Extractor', 'Composite Entity Extractor', 'Closed List Entity
-        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
-        /// 'Pattern.Any Entity Extractor', 'Regex Entity Extractor'
+        /// Extractor', 'Composite Entity Extractor', 'List Entity Extractor',
+        /// 'Prebuilt Entity Extractor', 'Intent Classifier', 'Pattern.Any
+        /// Entity Extractor', 'Regular Expression Entity Extractor'
         /// </summary>
         [JsonProperty(PropertyName = "readableType")]
         public string ReadableType { get; set; }

@@ -33,12 +33,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="name">The name of the application.</param>
         /// <param name="description">The description of the
         /// application.</param>
-        /// <param name="culture">The culture of the application. E.g.:
-        /// en-us.</param>
+        /// <param name="culture">The culture of the application. For example,
+        /// "en-us".</param>
         /// <param name="usageScenario">Defines the scenario for the new
-        /// application. Optional. E.g.: IoT.</param>
+        /// application. Optional. For example, IoT.</param>
         /// <param name="domain">The domain for the new application. Optional.
-        /// E.g.: Comics.</param>
+        /// For example, Comics.</param>
         /// <param name="versionsCount">Amount of model versions within the
         /// application.</param>
         /// <param name="createdDateTime">The version's creation
@@ -89,21 +89,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the culture of the application. E.g.: en-us.
+        /// Gets or sets the culture of the application. For example, "en-us".
         /// </summary>
         [JsonProperty(PropertyName = "culture")]
         public string Culture { get; set; }
 
         /// <summary>
         /// Gets or sets defines the scenario for the new application.
-        /// Optional. E.g.: IoT.
+        /// Optional. For example, IoT.
         /// </summary>
         [JsonProperty(PropertyName = "usageScenario")]
         public string UsageScenario { get; set; }
 
         /// <summary>
-        /// Gets or sets the domain for the new application. Optional. E.g.:
-        /// Comics.
+        /// Gets or sets the domain for the new application. Optional. For
+        /// example, Comics.
         /// </summary>
         [JsonProperty(PropertyName = "domain")]
         public string Domain { get; set; }
