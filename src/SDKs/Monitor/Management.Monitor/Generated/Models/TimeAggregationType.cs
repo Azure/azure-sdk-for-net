@@ -30,7 +30,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
         [EnumMember(Value = "Total")]
         Total,
         [EnumMember(Value = "Count")]
-        Count
+        Count,
+        [EnumMember(Value = "Last")]
+        Last
     }
     internal static class TimeAggregationTypeEnumExtension
     {
@@ -53,6 +55,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return "Total";
                 case TimeAggregationType.Count:
                     return "Count";
+                case TimeAggregationType.Last:
+                    return "Last";
             }
             return null;
         }
@@ -71,6 +75,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
                     return TimeAggregationType.Total;
                 case "Count":
                     return TimeAggregationType.Count;
+                case "Last":
+                    return TimeAggregationType.Last;
             }
             return null;
         }
