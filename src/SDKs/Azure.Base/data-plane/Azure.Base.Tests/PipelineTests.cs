@@ -72,6 +72,10 @@ namespace Azure.Base.Tests
             }
 
             public override HttpVerb Method { get; }
+
+            public override void Dispose()
+            {
+            }
         }
     }
 }

@@ -109,6 +109,13 @@ namespace Azure.Base.Http.Pipeline
 
                 return message;
             }
+
+            public override void Dispose()
+            {
+                _requestContent.Dispose();
+                _requestMessage.Dispose();
+            }
+
             #endregion
 
 

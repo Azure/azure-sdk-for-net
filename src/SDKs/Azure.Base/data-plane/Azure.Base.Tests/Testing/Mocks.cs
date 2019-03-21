@@ -82,8 +82,8 @@ namespace Azure.Base.Testing
             private HttpVerb _method;
 
             public override HttpVerb Method => _method;
-            public Uri Uri { get; private set; }
 
+            public Uri Uri { get; private set; }
 
             public override void SetRequestLine(HttpVerb method, Uri uri)
             {
@@ -99,6 +99,9 @@ namespace Azure.Base.Testing
             }
 
             public override void SetContent(HttpMessageContent content)
+            {
+            }
+            public override void Dispose()
             {
             }
         }

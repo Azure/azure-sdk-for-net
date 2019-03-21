@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Base.Http
 {
-    public abstract class HttpPipelineRequest
+    public abstract class HttpPipelineRequest: IDisposable
     {
         public abstract void SetRequestLine(HttpVerb method, Uri uri);
 
@@ -17,5 +17,7 @@ namespace Azure.Base.Http
         public abstract void SetContent(HttpMessageContent content);
 
         public abstract HttpVerb Method { get; }
+
+        public abstract void Dispose();
     }
 }
