@@ -52,4 +52,9 @@
     <Folder Include="SessionRecords\Sql.Tests.ManagedInstanceVulnerabilityAssessmentScenarioTests\" />
     <Folder Include="SessionRecords\Sql.Tests.ServerVulnerabilityAssessmentScenarioTests\" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="VirtualClusterCrudScenarioTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>
