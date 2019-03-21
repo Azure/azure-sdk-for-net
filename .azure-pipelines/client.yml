@@ -10,6 +10,14 @@ trigger:
 variables:
   DotNetCoreVersion: '2.1.503'
 
+resources:
+  repositories:
+    - repository: templates
+      type: github
+      name: chidozieononiwu/azure-sdk-tools
+      ref: 'refs/heads/AzureSDKToolsConsumption'
+      endpoint: chidozieononiwu
+
 jobs:
   - job: 'Build'
 
@@ -87,7 +95,7 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
-      - template: verifyAgentOsTemplate.yml
+      - template: .azure-pipelines/templates/verify_agent_os.yml@templates
         parameters:
           osname: $(OSName)
 
