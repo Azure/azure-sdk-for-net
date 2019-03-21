@@ -57,18 +57,18 @@ namespace Azure.ApplicationModel.Configuration
         /// <summary>
         /// An ETag indicating the state of a key-value within a configuration store.
         /// </summary>
-        public string ETag { get; set; }
+        public ETag ETag { get; set; }
 
         /// <summary>
         /// The last time a modifying operation was performed on the given key-value.
         /// </summary>
-        public DateTimeOffset LastModified { get; set; }
+        public DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
         /// A value indicating whether the key-value is locked.
         /// A locked key-value may not be modified until it is unlocked.
         /// </summary>
-        public bool Locked { get; set; }
+        public bool? Locked { get; internal set; }
 
         /// <summary>
         /// A dictionary of tags that can help identify what a key-value may be applicable for.
@@ -93,16 +93,16 @@ namespace Azure.ApplicationModel.Configuration
         public bool Equals(ConfigurationSetting other)
         {
             if (other == null) return false;
-            if (ETag != null && other.ETag != null)
+            if (ETag != default && other.ETag != default)
             {
-                if (!string.Equals(ETag, other.ETag, StringComparison.Ordinal)) return false;
+                if (ETag != other.ETag) return false;
                 if (LastModified != other.LastModified) return false;
+                if (Locked != other.Locked) return false;
             }
             if (!string.Equals(Key, other.Key, StringComparison.Ordinal)) return false;
             if (!string.Equals(Value, other.Value, StringComparison.Ordinal)) return false;
             if (!string.Equals(Label, other.Label, StringComparison.Ordinal)) return false;
             if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal)) return false;
-            if (Locked != other.Locked) return false;
             if (!TagsEquals(other.Tags)) return false;
             
             return true;

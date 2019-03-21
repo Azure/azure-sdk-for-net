@@ -127,5 +127,89 @@ namespace Microsoft.Azure.Management.Sql
                 }
             }
 
+            /// <summary>
+            /// Gets a list of managed database's security alert policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the managed database for which the security alert policies are
+            /// defined.
+            /// </param>
+            public static IPage<ManagedDatabaseSecurityAlertPolicy> ListByDatabase(this IManagedDatabaseSecurityAlertPoliciesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName)
+            {
+                return operations.ListByDatabaseAsync(resourceGroupName, managedInstanceName, databaseName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of managed database's security alert policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group that contains the resource. You can obtain
+            /// this value from the Azure Resource Manager API or the portal.
+            /// </param>
+            /// <param name='managedInstanceName'>
+            /// The name of the managed instance.
+            /// </param>
+            /// <param name='databaseName'>
+            /// The name of the managed database for which the security alert policies are
+            /// defined.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ManagedDatabaseSecurityAlertPolicy>> ListByDatabaseAsync(this IManagedDatabaseSecurityAlertPoliciesOperations operations, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseWithHttpMessagesAsync(resourceGroupName, managedInstanceName, databaseName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of managed database's security alert policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ManagedDatabaseSecurityAlertPolicy> ListByDatabaseNext(this IManagedDatabaseSecurityAlertPoliciesOperations operations, string nextPageLink)
+            {
+                return operations.ListByDatabaseNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of managed database's security alert policies.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ManagedDatabaseSecurityAlertPolicy>> ListByDatabaseNextAsync(this IManagedDatabaseSecurityAlertPoliciesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByDatabaseNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

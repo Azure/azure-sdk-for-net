@@ -134,6 +134,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IExpressRouteCircuitConnectionsOperations ExpressRouteCircuitConnections { get; private set; }
 
         /// <summary>
+        /// Gets the IPeerExpressRouteCircuitConnectionsOperations.
+        /// </summary>
+        public virtual IPeerExpressRouteCircuitConnectionsOperations PeerExpressRouteCircuitConnections { get; private set; }
+
+        /// <summary>
         /// Gets the IExpressRouteCircuitsOperations.
         /// </summary>
         public virtual IExpressRouteCircuitsOperations ExpressRouteCircuits { get; private set; }
@@ -414,6 +419,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual IP2sVpnGatewaysOperations P2sVpnGateways { get; private set; }
 
         /// <summary>
+        /// Gets the IWebApplicationFirewallPoliciesOperations.
+        /// </summary>
+        public virtual IWebApplicationFirewallPoliciesOperations WebApplicationFirewallPolicies { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the NetworkManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -666,6 +676,7 @@ namespace Microsoft.Azure.Management.Network
             ExpressRouteCircuitAuthorizations = new ExpressRouteCircuitAuthorizationsOperations(this);
             ExpressRouteCircuitPeerings = new ExpressRouteCircuitPeeringsOperations(this);
             ExpressRouteCircuitConnections = new ExpressRouteCircuitConnectionsOperations(this);
+            PeerExpressRouteCircuitConnections = new PeerExpressRouteCircuitConnectionsOperations(this);
             ExpressRouteCircuits = new ExpressRouteCircuitsOperations(this);
             ExpressRouteServiceProviders = new ExpressRouteServiceProvidersOperations(this);
             ExpressRouteCrossConnections = new ExpressRouteCrossConnectionsOperations(this);
@@ -722,6 +733,7 @@ namespace Microsoft.Azure.Management.Network
             VpnConnections = new VpnConnectionsOperations(this);
             P2sVpnServerConfigurations = new P2sVpnServerConfigurationsOperations(this);
             P2sVpnGateways = new P2sVpnGatewaysOperations(this);
+            WebApplicationFirewallPolicies = new WebApplicationFirewallPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
     using System.Linq;
 
     /// <summary>
-    /// The deployment status summary for all deplyoments created by the
+    /// The deployment status summary for all deployments created by the
     /// remediation.
     /// </summary>
     public partial class RemediationDeploymentSummary

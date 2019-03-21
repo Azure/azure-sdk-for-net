@@ -53,14 +53,13 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
-        [HttpError(typeof(RequestFailedException), 412, Message = "matching item is already in the store")]
-        [HttpError(typeof(RequestFailedException), 429, Message = "too many requests")]
+        [HttpError(typeof(RequestFailedException), 412, Message = "Matching item is already in the store")]
+        [HttpError(typeof(RequestFailedException), 429, Message = "Too many requests")]
         [UsageErrors(typeof(RequestFailedException), 401, 409, 408, 500, 502, 503, 504)]
         public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-            if (!string.IsNullOrEmpty(setting.ETag)) throw new ArgumentException($"{nameof(setting)}.{nameof(setting.ETag)} has to be null");
 
             Uri uri = BuildUriForKvRoute(setting);
 
@@ -82,11 +81,17 @@ namespace Azure.ApplicationModel.Configuration
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
 
                 var response = message.Response;
-                if (response.Status == 200) {
+                if (response.Status == 200 || response.Status == 201) {
                     return await CreateResponse(response, cancellation);
                 }
                 else throw new RequestFailedException(response);
             }
+        }
+
+        public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        {
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            return await AddAsync(new ConfigurationSetting(key, value, label));
         }
 
         public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
@@ -122,6 +127,12 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        {
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            return await SetAsync(new ConfigurationSetting(key, value, label));
+        }
+
         public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
@@ -138,6 +149,13 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
+                if(setting.ETag != default)
+                {
+                    message.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                } else if(options == null)
+                {
+                    message.AddHeader(IfMatchName, "*");
+                }
                 AddOptionsHeaders(options, message);
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
@@ -152,6 +170,12 @@ namespace Azure.ApplicationModel.Configuration
                 }
                 else throw new RequestFailedException(response);
             }
+        }
+
+        public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        {
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            return await UpdateAsync(new ConfigurationSetting(key, value, label));
         }
 
         public async Task<Response> DeleteAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)

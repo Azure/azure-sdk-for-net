@@ -16,7 +16,7 @@ namespace Cdn.Tests.ScenarioTests
 {
     public class CustomDomainTests
     {
-        [Fact(Skip = "ReRecord due to CR change")]
+        [Fact]
         public void CustomDomainCRUDTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -36,7 +36,7 @@ namespace Cdn.Tests.ScenarioTests
                 Profile createParameters = new Profile
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.StandardVerizon },
+                    Sku = new Sku { Name = SkuName.StandardMicrosoft },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -70,13 +70,13 @@ namespace Cdn.Tests.ScenarioTests
                 Assert.Empty(customDomains);
 
                 // NOTE: There is a CName mapping already created for this custom domain and endpoint hostname
-                // "sdk-1-f3757d2a3e10.azureedge-test.net" maps to "endpoint-f3757d2a3e10.azureedge.net"
-                // "sdk-2-f3757d2a3e10.azureedge-test.net" maps to "endpoint-f3757d2a3e10.azureedge.net"
+                // "sdk-1-f3757d2a3e10.DUSTYDOGPETCARE.US" maps to "endpoint-f3757d2a3e10.azureedge.net"
+                // "sdk-2-f3757d2a3e10.DUSTYDOGPETCARE.US" maps to "endpoint-f3757d2a3e10.azureedge.net"
 
                 // Create custom domain on running endpoint should succeed
                 string customDomainName1 = TestUtilities.GenerateName("customDomain");
 
-                cdnMgmtClient.CustomDomains.Create(resourceGroupName, profileName, endpointName, customDomainName1, "sdk-1-f3757d2a3e10.azureedge-test.net");
+                cdnMgmtClient.CustomDomains.Create(resourceGroupName, profileName, endpointName, customDomainName1, "sdk-1-f3757d2a3e10.DUSTYDOGPETCARE.US");
 
                 // List custom domains one this endpoint should return one
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
@@ -87,13 +87,13 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create another custom domain on stopped endpoint should succeed
                 string customDomainName2 = TestUtilities.GenerateName("customDomain");
-                cdnMgmtClient.CustomDomains.Create(resourceGroupName, profileName, endpointName, customDomainName2, "sdk-2-f3757d2a3e10.azureedge-test.net");
+                cdnMgmtClient.CustomDomains.Create(resourceGroupName, profileName, endpointName, customDomainName2, "sdk-2-f3757d2a3e10.DUSTYDOGPETCARE.US");
 
                 // List custom domains one this endpoint should return two
                 customDomains = cdnMgmtClient.CustomDomains.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(2, customDomains.Count());
 
-                // Enable custom https on custom domain that is already enabled should fail
+                // Disable custom https on custom domain that is not enabled should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
                     cdnMgmtClient.CustomDomains.DisableCustomHttps(resourceGroupName, profileName, endpointName, customDomainName2);
                 });
@@ -112,15 +112,38 @@ namespace Cdn.Tests.ScenarioTests
                 // Start endpoint
                 cdnMgmtClient.Endpoints.Start(resourceGroupName, profileName, endpointName);
 
-                // Enable custom https on custom domain that is already enabled should fail
+                // Enable custom https using CDN managed certificate on custom domain 
                 cdnMgmtClient.CustomDomains.EnableCustomHttps(resourceGroupName, profileName, endpointName, customDomainName1);
 
-                // Delete first custom domain on stopped endpoint should succeed
+                // add the same deleted custom domain again
+                cdnMgmtClient.CustomDomains.Create(resourceGroupName, profileName, endpointName, customDomainName2, "sdk-2-f3757d2a3e10.DUSTYDOGPETCARE.US");
+
+                // Enable custom https using BYOC on custom domain 
+                var byocParameters = new KeyVaultCertificateSourceParameters()
+                {
+                    ResourceGroupName = "byoc",
+                    SecretName = "CdnSDKE2EBYOCTest",
+                    SecretVersion = "526c5d25cc1a46a5bb85ce85ee2b89cc",
+                    SubscriptionId = "3c0124f9-e564-4c42-86f7-fa79457aedc3",
+                    VaultName = "Azure-CDN-BYOC"
+                };
+
+                cdnMgmtClient.CustomDomains.EnableCustomHttps(resourceGroupName, profileName, endpointName, customDomainName2, new UserManagedHttpsParameters(ProtocolType.ServerNameIndication, byocParameters));
+                
+                // Delete first custom domain should succeed
                 cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName1);
 
                 // Get deleted custom domain should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
                     cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName1);
+                });
+
+                // Delete second custom domain should succeed
+                cdnMgmtClient.CustomDomains.Delete(resourceGroupName, profileName, endpointName, customDomainName2);
+
+                // Get deleted custom domain should fail
+                Assert.ThrowsAny<ErrorResponseException>(() => {
+                    cdnMgmtClient.CustomDomains.Get(resourceGroupName, profileName, endpointName, customDomainName2);
                 });
 
                 // List custom domains on endpoint should return none

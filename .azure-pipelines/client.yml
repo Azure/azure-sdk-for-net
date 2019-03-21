@@ -1,6 +1,8 @@
 # External variables:
 # ProjectFile - The project to build and test. This variable is defined in pipeline web ui because we want to be able to provide it at queue time and that isn't supported in yaml yet.
+# MaxParallelTestJobs - Maximum number of parallel test jobs
 # AzConfigConnectionString - The connection string used for testing the AzConfig service. This is set in the pipeline web ui as it needs different values for public vs internal.
+# ServiceBusConnectionString - The connection string used for testing the Service Bus service. This is set in the pipeline web ui as it needs different values for public vs internal.
 
 trigger:
   - master
@@ -42,6 +44,17 @@ jobs:
       vmImage: 'vs2017-win2016'
 
     steps:
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.6'
+        inputs:
+          versionSpec: '3.6'
+          
+      - script: |
+          pip install setuptools wheel 
+          pip install doc-warden
+          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
+        displayName: 'Verify Readmes'
+      
       - task: DownloadBuildArtifacts@0
         displayName: 'Download Build Artifacts'
         condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
@@ -58,6 +71,7 @@ jobs:
   - job: 'Test'
 
     strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:
         Linux:
           OSName: 'Linux'
@@ -99,6 +113,7 @@ jobs:
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
           AZ_CONFIG_CONNECTION: $(AzConfigConnectionString)
+          azure-service-bus-dotnet/connectionstring: $(ServiceBusConnectionString)
         inputs:
           command: test
           projects: '$(ProjectFile)'

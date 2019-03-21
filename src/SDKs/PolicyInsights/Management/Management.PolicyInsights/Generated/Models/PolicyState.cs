@@ -74,13 +74,17 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// category, if the policy assignment is for a policy set.</param>
         /// <param name="policySetDefinitionParameters">Policy set definition
         /// parameters, if the policy assignment is for a policy set.</param>
-        /// <param name="managementGroupIds">Comma seperated list of management
+        /// <param name="managementGroupIds">Comma separated list of management
         /// group IDs, which represent the hierarchy of the management groups
         /// the resource is under.</param>
         /// <param name="policyDefinitionReferenceId">Reference ID for the
         /// policy definition inside the policy set, if the policy assignment
         /// is for a policy set.</param>
-        public PolicyState(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string))
+        /// <param name="complianceState">Compliance state of the
+        /// resource.</param>
+        /// <param name="policyEvaluationDetails">Policy evaluation
+        /// details.</param>
+        public PolicyState(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string odataid = default(string), string odatacontext = default(string), System.DateTime? timestamp = default(System.DateTime?), string resourceId = default(string), string policyAssignmentId = default(string), string policyDefinitionId = default(string), string effectiveParameters = default(string), bool? isCompliant = default(bool?), string subscriptionId = default(string), string resourceType = default(string), string resourceLocation = default(string), string resourceGroup = default(string), string resourceTags = default(string), string policyAssignmentName = default(string), string policyAssignmentOwner = default(string), string policyAssignmentParameters = default(string), string policyAssignmentScope = default(string), string policyDefinitionName = default(string), string policyDefinitionAction = default(string), string policyDefinitionCategory = default(string), string policySetDefinitionId = default(string), string policySetDefinitionName = default(string), string policySetDefinitionOwner = default(string), string policySetDefinitionCategory = default(string), string policySetDefinitionParameters = default(string), string managementGroupIds = default(string), string policyDefinitionReferenceId = default(string), string complianceState = default(string), PolicyEvaluationDetails policyEvaluationDetails = default(PolicyEvaluationDetails))
         {
             AdditionalProperties = additionalProperties;
             Odataid = odataid;
@@ -110,6 +114,8 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
             PolicySetDefinitionParameters = policySetDefinitionParameters;
             ManagementGroupIds = managementGroupIds;
             PolicyDefinitionReferenceId = policyDefinitionReferenceId;
+            ComplianceState = complianceState;
+            PolicyEvaluationDetails = policyEvaluationDetails;
             CustomInit();
         }
 
@@ -284,7 +290,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         public string PolicySetDefinitionParameters { get; set; }
 
         /// <summary>
-        /// Gets or sets comma seperated list of management group IDs, which
+        /// Gets or sets comma separated list of management group IDs, which
         /// represent the hierarchy of the management groups the resource is
         /// under.
         /// </summary>
@@ -297,6 +303,18 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "policyDefinitionReferenceId")]
         public string PolicyDefinitionReferenceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets compliance state of the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "complianceState")]
+        public string ComplianceState { get; set; }
+
+        /// <summary>
+        /// Gets or sets policy evaluation details.
+        /// </summary>
+        [JsonProperty(PropertyName = "policyEvaluationDetails")]
+        public PolicyEvaluationDetails PolicyEvaluationDetails { get; set; }
 
     }
 }

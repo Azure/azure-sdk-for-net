@@ -277,7 +277,8 @@ namespace Management.HDInsight.Tests
                 adlsV2AccountName,
                 CommonData.Location,
                 out string storageAccountSuffix,
-                Kind.StorageV2);
+                Kind.StorageV2,
+                true);
             string storageResourceId = HDInsightManagementHelper.GetStorageAccountId(CommonData.ResourceGroupName, adlsV2AccountName);
 
             // Create a user assigned managed identity.

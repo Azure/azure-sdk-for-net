@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Blueprint
     public partial interface IBlueprintsOperations
     {
         /// <summary>
-        /// Create or update Blueprint definition.
+        /// Create or update a blueprint definition.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='blueprint'>
         /// Blueprint definition.
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// </exception>
         Task<AzureOperationResponse<BlueprintModel>> DeleteWithHttpMessagesAsync(string scope, string blueprintName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update blueprint definition.
+        /// List blueprint definitions.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// </exception>
         Task<AzureOperationResponse<IPage<BlueprintModel>>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update blueprint definition.
+        /// List blueprint definitions.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

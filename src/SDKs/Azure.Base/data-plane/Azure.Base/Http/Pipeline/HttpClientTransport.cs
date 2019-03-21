@@ -132,8 +132,9 @@ namespace Azure.Base.Http.Pipeline
                 return true;
             }
 
-            // TODO (pri 1): is it ok to just call .Result here?
-            protected internal override Stream ResponseContentStream => _responseMessage.Content.ReadAsStreamAsync().Result;
+            // TODO (pri 1): is it ok to just call GetResult here?
+            protected internal override Stream ResponseContentStream
+                => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             #endregion
 
             public override void Dispose()

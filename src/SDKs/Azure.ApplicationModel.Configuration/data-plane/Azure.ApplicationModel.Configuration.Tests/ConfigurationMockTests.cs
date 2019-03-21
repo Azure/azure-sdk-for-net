@@ -24,8 +24,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             Label = "test_label",
             ContentType = "test_content_type",
-            LastModified = new DateTimeOffset(2018, 11, 28, 9, 55, 0, 0, default),
-            Locked = false,
             Tags = new Dictionary<string, string>
             {
                 { "tag1", "value1" },
@@ -73,17 +71,15 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void GetNotFound()
         {
-            var transport = new GetMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
+            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
-            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
-            var response = e.Response;
-            Assert.AreEqual(404, response.Status);
+            Assert.AreEqual(404, exception.Status);
 
-            response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -144,14 +140,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new DeleteMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
             var (service, pool) = CreateTestService(transport);
 
-            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.DeleteAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
             });
-            var response = e.Response;
-            Assert.AreEqual(404, response.Status);
+            Assert.AreEqual(404, exception.Status);
 
-            response.Dispose();
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -162,7 +156,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.True(setting.Locked);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -173,7 +167,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             ConfigurationSetting setting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
 
-            Assert.AreEqual(s_testSetting, setting);
+            Assert.False(setting.Locked);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -209,22 +203,37 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-        public void ConfiguringTheClient()
+        public async Task ConfiguringTheClient()
         {
             var options = ConfigurationClient.CreateDefaultPipelineOptions();
             options.ApplicationId = "test_application";
             options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
-            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            options.RetryPolicy = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
+            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.RequestTimeout, HttpStatusCode.OK);
+            options.RetryPolicy = RetryPolicy.CreateFixed(2, TimeSpan.FromMilliseconds(100), 408 /* RequestTimeout */);
+
+            var testPolicy = new TestPolicy();
+            options.AddPerRetryPolicy(testPolicy);
 
             var client = new ConfigurationClient(connectionString, options);
 
-            var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
+            ConfigurationSetting setting = await client.GetAsync(key: s_testSetting.Key, options: null, CancellationToken.None);
+            Assert.AreEqual(s_testSetting, setting);
+            Assert.AreEqual(2, testPolicy.Retries);
+        }
+
+        // TODO (pri 2): this should check the UA header, but this in turn requires the ability to read headers.
+        // TODO (pri 2): this should try to retrieve the service, but currently services are not passed to the pipeline.
+        class TestPolicy : HttpPipelinePolicy
+        {
+            int _retries = 0;
+
+            public int Retries => _retries;
+
+            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
-                await client.GetAsync(key: s_testSetting.Key, options: null, CancellationToken.None);
-            });
-            var response = e.Response;
-            response.Dispose();
+                _retries++;
+                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            }
         }
     }
 }
