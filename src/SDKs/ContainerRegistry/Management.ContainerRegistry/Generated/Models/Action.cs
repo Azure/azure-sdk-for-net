@@ -12,14 +12,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 {
 
     /// <summary>
-    /// Defines values for WebhookAction.
+    /// Defines values for Action.
     /// </summary>
-    public static class WebhookAction
+    public static class Action
     {
-        public const string Push = "push";
-        public const string Delete = "delete";
-        public const string Quarantine = "quarantine";
-        public const string ChartPush = "chart_push";
-        public const string ChartDelete = "chart_delete";
+        public const string Allow = "Allow";
     }
 }
