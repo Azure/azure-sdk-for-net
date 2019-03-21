@@ -46,7 +46,6 @@ namespace Peering.Tests
         [Fact]
         public void GetDirectLocations()
         {
-
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -58,7 +57,6 @@ namespace Peering.Tests
         [Fact]
         public void GetExchangeLocations()
         {
-
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -70,8 +68,7 @@ namespace Peering.Tests
         [Fact]
         public void UpdatePeerInfoTest()
         {
-            this.Init();
-            int asn = random.Next(64512, 65535);
+            int asn = 65000;
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.updatePeerAsn(context, asn);
@@ -82,11 +79,10 @@ namespace Peering.Tests
         [Fact]
         public void GetPeerAsnTest()
         {
-            this.Init();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
-                var result = this.client.PeerAsns.Get("Contoso");
+                var result = this.client.PeerAsns.Get("Contoso65000");
                 Assert.NotNull(result);
             }
         }
@@ -94,7 +90,6 @@ namespace Peering.Tests
         [Fact]
         public void CreateDirectPeering()
         {
-            this.Init();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -108,10 +103,6 @@ namespace Peering.Tests
                     {
                         Location = "centralus"
                     });
-
-                // Create random PeerAsn
-                int asn = random.Next(64512, 65535);
-                this.updatePeerAsn(context, asn);
 
                 //Create Direct Peering
                 var directConnection = new DirectConnection
@@ -125,7 +116,7 @@ namespace Peering.Tests
                     }
                 };
 
-                SubResource asnReference = new SubResource(this.client.PeerAsns.Get($"Contoso{asn}").Id);
+                SubResource asnReference = new SubResource(this.client.PeerAsns.Get($"Contoso{65000}").Id);
                 var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), false, asnReference);
                 directPeeringProperties.Connections.Add(directConnection);
                 var peeringModel = new PeeringModel
@@ -136,7 +127,7 @@ namespace Peering.Tests
                     Location = "centralus",
                     Kind = "Direct"
                 };
-                var name = $"directpeering{this.random.Next(1, 9999)}";
+                var name = $"directpeering3103";
                 var result = this.client.Peerings.CreateOrUpdate(rgname, name, peeringModel);
                 var peering = this.client.Peerings.Get(rgname, name);
                 Assert.NotNull(peering);
@@ -145,9 +136,19 @@ namespace Peering.Tests
         }
 
         [Fact]
+        public void GetDirectPeering()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                this.client = context.GetServiceClient<PeeringManagementClient>();
+                var peering = this.client.Peerings.Get("res5527", "directpeering3103");
+                Assert.NotNull(peering);
+            }
+        }
+
+        [Fact]
         public void CreateExchangePeering()
         {
-            this.Init();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -163,9 +164,8 @@ namespace Peering.Tests
                     });
 
 
-                int asn = random.Next(64512, 65535);
-                this.updatePeerAsn(context, asn);
-                string asnString = asn.ToString();
+                int asn = 65000;
+
                 //Create Exchange Peering
                 var exchangeConnection = new ExchangeConnection
                 {
@@ -176,7 +176,7 @@ namespace Peering.Tests
                         MaxPrefixesAdvertisedV4 = 20000
                     }
                 };
-                SubResource asnReference = new SubResource(this.client.PeerAsns.Get($"Contoso{asnString}").Id);
+                SubResource asnReference = new SubResource(this.client.PeerAsns.Get($"Contoso{asn}").Id);
                 var exchangePeeringProperties = new PeeringPropertiesExchange(new List<ExchangeConnection>(), asnReference);
                 exchangePeeringProperties.Connections.Add(exchangeConnection);
                 var peeringModel = new PeeringModel
@@ -187,7 +187,7 @@ namespace Peering.Tests
                     Exchange = exchangePeeringProperties,
                     Kind = "Exchange"
                 };
-                var name = $"exchangepeering{this.random.Next(1, 9999)}";
+                var name = $"exchangepeering1022";
                 var result = this.client.Peerings.CreateOrUpdate(rgname, name, peeringModel);
                 var peering = this.client.Peerings.Get(rgname, name);
                 Assert.NotNull(peering);
@@ -208,6 +208,8 @@ namespace Peering.Tests
             var connectionstring = System.Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
             if (mode == null)
                 Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            if (connectionstring == null)
+                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=4445bf11-61c4-436f-a940-60194f8aca57;ServicePrincipal=a66ad4b3-4c1b-43bf-a0bd-91c8c2c9a6d8;ServicePrincipalSecret=EO84mEYKj9hbJfn/GfkgFCsZmEjDpUqm4ys7CEQpAuY=;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;HttpRecorderMode=Record;");
         }
 
         private void updatePeerAsn(MockContext context, int asn)
