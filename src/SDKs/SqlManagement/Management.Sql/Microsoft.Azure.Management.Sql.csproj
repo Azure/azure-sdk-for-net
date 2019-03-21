@@ -13,6 +13,8 @@
 			<![CDATA[
 New features:
 - Added support for Virtual cluster operations.
+- Support database sensitivity labels.
+- Added two new properties (PublicDataEndpointEnabled and ProxyOverride) to managed instance.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
