@@ -22,26 +22,26 @@ namespace Azure.Base.Diagnostics
         const int LOG_RESPONSE = 4;
         const int LOG_DELAY = 5;
         const int LOG_ERROR_RESPONSE = 6;
-               
+
         private HttpPipelineEventSource() : base(SOURCE_NAME) { }
 
         internal static readonly HttpPipelineEventSource Singleton = new HttpPipelineEventSource();
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
-        public void ProcessingRequest(HttpMessage request)
+        public void ProcessingRequest(HttpPipelineRequest request)
             => ProcessingRequest(request.ToString());
 
         [NonEvent]
-        public void ProcessingResponse(HttpMessage response)
+        public void ProcessingResponse(HttpPipelineResponse response)
             => ProcessingResponse(response.ToString());
 
         [NonEvent]
-        public void ErrorResponse(HttpMessage response)
+        public void ErrorResponse(HttpPipelineResponse response)
             => ErrorResponse(response.Status);
 
         [NonEvent]
-        public void ResponseDelay(HttpMessage message, long delayMilliseconds)
+        public void ResponseDelay(HttpPipelineResponse response, long delayMilliseconds)
             => ResponseDelayCore(delayMilliseconds);
 
         // TODO (pri 2): there are more attribute properties we might want to set

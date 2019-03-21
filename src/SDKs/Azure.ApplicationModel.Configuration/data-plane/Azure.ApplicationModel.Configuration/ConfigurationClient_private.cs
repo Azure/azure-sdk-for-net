@@ -36,31 +36,31 @@ namespace Azure.ApplicationModel.Configuration
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddOptionsHeaders(RequestOptions options, HttpMessage message)
+        static void AddOptionsHeaders(RequestOptions options, HttpPipelineRequest pipelineContext)
         {
             if (options == null) return;
 
             if (options.ETag.IfMatch != default)
             {
-                message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
+                pipelineContext.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
             }
 
             if (options.ETag.IfNoneMatch != default)
             {
-                message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
+                pipelineContext.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
             }
 
             if (options.Revision.HasValue)
             {
                 var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                message.AddHeader(AcceptDatetimeHeader, dateTime);
+                pipelineContext.AddHeader(AcceptDatetimeHeader, dateTime);
             }
         }
 
-        static void AddClientRequestID(HttpMessage message)
+        static void AddClientRequestID(HttpPipelineRequest pipelineContext)
         {
-            message.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
-            message.AddHeader(EchoClientRequestId, "true");
+            pipelineContext.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
+            pipelineContext.AddHeader(EchoClientRequestId, "true");
         }
 
         static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)
@@ -119,7 +119,7 @@ namespace Azure.ApplicationModel.Configuration
             builder.Path = KvRoute + key;
 
             if (options != null && options.Label != null) {
-                builder.AppendQuery(LabelQueryFilter, options.Label);                 
+                builder.AppendQuery(LabelQueryFilter, options.Label);
             }
 
             return builder.Uri;
@@ -148,7 +148,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 builder.AppendQuery("after", options.BatchLink);
             }
-            
+
             if (options.Label != null)
             {
                 if (options.Label == string.Empty)
@@ -207,13 +207,13 @@ namespace Azure.ApplicationModel.Configuration
 
             return content;
         }
-        
-        internal static void AddAuthenticationHeaders(HttpMessage message, Uri uri, HttpVerb method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
+
+        internal static void AddAuthenticationHeaders(HttpPipelineRequest pipelineContext, Uri uri, HttpVerb method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())
             {
-                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly 
+                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly
                 contentHash = Convert.ToBase64String(alg.ComputeHash(content.ToArray()));
             }
 
@@ -230,9 +230,9 @@ namespace Azure.ApplicationModel.Configuration
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
                 // TODO (pri 3): should date header writing be moved out from here?
-                message.AddHeader("Date", utcNowString);
-                message.AddHeader("x-ms-content-sha256", contentHash);
-                message.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                pipelineContext.AddHeader("Date", utcNowString);
+                pipelineContext.AddHeader("x-ms-content-sha256", contentHash);
+                pipelineContext.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
 

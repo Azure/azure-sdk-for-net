@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Testing
@@ -44,7 +43,7 @@ namespace Azure.Base.Testing
         {
             base.OnEventWritten(eventData);
             if(eventData.EventSource.Name == SOURCE_NAME) {
-                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString()); 
+                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString());
             }
         }
 
@@ -60,51 +59,40 @@ namespace Azure.Base.Testing
         public MockTransport(params int[] statusCodes)
             => _statusCodes = statusCodes;
 
-        public override HttpMessage CreateMessage(IServiceProvider services, CancellationToken cancellation)
-            => new Message(cancellation);
+        public override HttpPipelineRequest CreateRequest(IServiceProvider services)
+            => new PipelineRequest();
 
-        public override Task ProcessAsync(HttpMessage message)
+        public override Task ProcessAsync(HttpPipelineContext pipelineContext)
         {
-            var mockMessage = message as Message;
+            var mockMessage = pipelineContext.Request as PipelineRequest;
             if (mockMessage == null) throw new InvalidOperationException("the message is not compatible with the transport");
 
-            mockMessage.SetStatus(_statusCodes[_index++]);
             if (_index >= _statusCodes.Length) _index = 0;
+
+            var response = new PipelineResponse(mockMessage.Method, mockMessage.Uri);
+
+            response.SetStatus(_statusCodes[_index++]);
+
+            pipelineContext.Response = response;
             return Task.CompletedTask;
         }
 
-        class Message : HttpMessage
+        class PipelineRequest : HttpPipelineRequest
         {
-            string _uri;
-            int _status;
-            HttpVerb _method;
+            private HttpVerb _method;
 
-            protected override int Status => _status;
+            public override HttpVerb Method => _method;
+            public Uri Uri { get; private set; }
 
-            protected override Stream ResponseContentStream => throw new NotImplementedException();
-
-            public override HttpVerb Method => throw new NotImplementedException();
-
-            public Message(CancellationToken cancellation)
-                : base(cancellation)
-            { }
-
-            public void SetStatus(int status) => _status = status;
 
             public override void SetRequestLine(HttpVerb method, Uri uri)
             {
-                _uri = uri.ToString();
+                Uri = uri;
                 _method = method;
             }
 
-            public override string ToString()
-                => $"{_method} {_uri}";
+            public override string ToString() => $"{_method} {Uri}";
 
-            protected override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
-            {
-                value = default;
-                return false;
-            }
 
             public override void AddHeader(HttpHeader header)
             {
@@ -112,7 +100,39 @@ namespace Azure.Base.Testing
 
             public override void SetContent(HttpMessageContent content)
             {
-                throw new NotImplementedException();
+            }
+        }
+
+        class PipelineResponse : HttpPipelineResponse
+        {
+            private readonly HttpVerb _method;
+
+            private readonly Uri _uri;
+
+            private int _status;
+
+            public PipelineResponse(HttpVerb method, Uri uri)
+            {
+                _method = method;
+                _uri = uri;
+            }
+
+            public override int Status => _status;
+
+            public override Stream ResponseContentStream => throw new NotImplementedException();
+
+            public void SetStatus(int status) => _status = status;
+
+            public override string ToString() => $"{_method} {_uri}";
+
+            public override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            {
+                value = default;
+                return false;
+            }
+
+            public override void Dispose()
+            {
             }
         }
     }

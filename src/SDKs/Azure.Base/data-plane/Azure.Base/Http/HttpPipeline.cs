@@ -35,14 +35,20 @@ namespace Azure.Base.Http
             _pipeline = policies;
         }
 
-        public HttpMessage CreateMessage(CancellationToken cancellation)
-            => Transport.CreateMessage(_services, cancellation);
+        public HttpPipelineRequest CreateRequest()
+            => Transport.CreateRequest(_services);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task SendMessageAsync(HttpMessage message)
+        public async Task<Response> SendMessageAsync(HttpPipelineRequest pipelineContext, CancellationToken cancellationToken)
         {
-            if (_pipeline.IsEmpty) return;
-            await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
+            if (_pipeline.IsEmpty) return default;
+
+            using (var context = new HttpPipelineContext(cancellationToken))
+            {
+                context.Request = pipelineContext;
+                await _pipeline.Span[0].ProcessAsync(context, _pipeline.Slice(1)).ConfigureAwait(false);
+                return new Response(context.Response);
+            }
         }
 
         HttpPipelineTransport Transport {

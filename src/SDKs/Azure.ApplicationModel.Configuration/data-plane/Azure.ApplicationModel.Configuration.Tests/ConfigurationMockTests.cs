@@ -229,10 +229,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             public int Retries => _retries;
 
-            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override async Task ProcessAsync(HttpPipelineContext pipelineContext, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
                 _retries++;
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                await ProcessNextAsync(pipeline, pipelineContext).ConfigureAwait(false);
             }
         }
     }

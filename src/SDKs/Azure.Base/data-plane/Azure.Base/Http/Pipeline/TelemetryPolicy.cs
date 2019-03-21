@@ -14,10 +14,10 @@ namespace Azure.Base.Http.Pipeline
         public void AddHeader(HttpHeader header)
             => _headersToAdd.Add(header);
 
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpPipelineContext pipelineContext, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            foreach (var header in _headersToAdd) message.AddHeader(header);
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            foreach (var header in _headersToAdd) pipelineContext.Request.AddHeader(header);
+            await ProcessNextAsync(pipeline, pipelineContext).ConfigureAwait(false);
         }
     }
 }

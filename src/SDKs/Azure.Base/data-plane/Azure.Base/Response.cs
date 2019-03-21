@@ -11,16 +11,18 @@ using System.Text;
 
 namespace Azure
 {
-    public readonly struct Response
+    public readonly struct Response: IDisposable
     {
-        readonly HttpMessage _message;
+        private readonly HttpPipelineResponse _httpResponse;
 
-        public Response(HttpMessage message)
-            => _message = message;
+        public Response(HttpPipelineResponse httpResponse)
+        {
+            _httpResponse = httpResponse;
+        }
 
-        public int Status => _message.Status;
+        public int Status => _httpResponse.Status;
 
-        public Stream ContentStream => _message.ResponseContentStream;
+        public Stream ContentStream => _httpResponse.ResponseContentStream;
 
         public bool TryGetHeader(ReadOnlySpan<byte> name, out long value)
         {
@@ -32,7 +34,7 @@ namespace Azure
         }
 
         public bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
-            => _message.TryGetHeader(name, out value);
+            => _httpResponse.TryGetHeader(name, out value);
 
         public bool TryGetHeader(ReadOnlySpan<byte> name, out string value)
         {
@@ -59,15 +61,18 @@ namespace Azure
             return TryGetHeader(utf8Name, out value);
         }
 
-        public void Dispose() => _message.Dispose();
-
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
 
+        public void Dispose()
+        {
+            _httpResponse.Dispose();
+        }
+
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => _message.ToString();
+        public override string ToString() => _httpResponse.ToString();
     }
 }
