@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Fabric name.
             /// </param>
             /// <param name='storageClassificationName'>
-            /// Storage classfication name.
+            /// Storage classification name.
             /// </param>
             public static IPage<StorageClassificationMapping> ListByReplicationStorageClassifications(this IReplicationStorageClassificationMappingsOperations operations, string fabricName, string storageClassificationName)
             {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// Fabric name.
             /// </param>
             /// <param name='storageClassificationName'>
-            /// Storage classfication name.
+            /// Storage classification name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

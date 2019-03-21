@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,9 +35,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="recoveryPointSyncType">A value indicating whether the
         /// recovery point is multi VM consistent. Possible values include:
         /// 'MultiVmSyncRecoveryPoint', 'PerVmRecoveryPoint'</param>
-        public A2ARecoveryPointDetails(string recoveryPointSyncType = default(string))
+        /// <param name="disks">List of disk ids representing a recovery
+        /// point.</param>
+        public A2ARecoveryPointDetails(string recoveryPointSyncType = default(string), IList<string> disks = default(IList<string>))
         {
             RecoveryPointSyncType = recoveryPointSyncType;
+            Disks = disks;
             CustomInit();
         }
 
@@ -51,6 +56,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointSyncType")]
         public string RecoveryPointSyncType { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of disk ids representing a recovery point.
+        /// </summary>
+        [JsonProperty(PropertyName = "disks")]
+        public IList<string> Disks { get; set; }
 
     }
 }

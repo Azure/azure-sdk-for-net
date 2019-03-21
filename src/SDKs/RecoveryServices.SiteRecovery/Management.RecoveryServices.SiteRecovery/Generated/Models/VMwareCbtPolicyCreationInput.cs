@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMware Cbt Policy creation input.
+    /// VMware Cbt policy creation input.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VMwareCbt")]
     public partial class VMwareCbtPolicyCreationInput : PolicyProviderSpecificInput
@@ -32,15 +32,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the VMwareCbtPolicyCreationInput
         /// class.
         /// </summary>
-        /// <param name="recoveryPointHistory">The duration in minutes until
-        /// which the recovery points need to be stored.</param>
+        /// <param name="recoveryPointHistoryInMinutes">The duration in minutes
+        /// until which the recovery points need to be stored.</param>
         /// <param name="crashConsistentFrequencyInMinutes">The crash
         /// consistent snapshot frequency (in minutes).</param>
         /// <param name="appConsistentFrequencyInMinutes">The app consistent
         /// snapshot frequency (in minutes).</param>
-        public VMwareCbtPolicyCreationInput(int? recoveryPointHistory = default(int?), int? crashConsistentFrequencyInMinutes = default(int?), int? appConsistentFrequencyInMinutes = default(int?))
+        public VMwareCbtPolicyCreationInput(int? recoveryPointHistoryInMinutes = default(int?), int? crashConsistentFrequencyInMinutes = default(int?), int? appConsistentFrequencyInMinutes = default(int?))
         {
-            RecoveryPointHistory = recoveryPointHistory;
+            RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
             CustomInit();
@@ -55,8 +55,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Gets or sets the duration in minutes until which the recovery
         /// points need to be stored.
         /// </summary>
-        [JsonProperty(PropertyName = "recoveryPointHistory")]
-        public int? RecoveryPointHistory { get; set; }
+        [JsonProperty(PropertyName = "recoveryPointHistoryInMinutes")]
+        public int? RecoveryPointHistoryInMinutes { get; set; }
 
         /// <summary>
         /// Gets or sets the crash consistent snapshot frequency (in minutes).

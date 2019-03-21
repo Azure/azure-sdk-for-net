@@ -12,10 +12,14 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
 
     /// <summary>
-    /// Defines values for IdentityProviderType.
+    /// Defines values for TestMigrationState.
     /// </summary>
-    public static class IdentityProviderType
+    public static class TestMigrationState
     {
-        public const string RecoveryServicesActiveDirectory = "RecoveryServicesActiveDirectory";
+        public const string None = "None";
+        public const string TestMigrationInProgress = "TestMigrationInProgress";
+        public const string TestMigrationSucceeded = "TestMigrationSucceeded";
+        public const string TestMigrationFailed = "TestMigrationFailed";
+        public const string TestMigrationCleanupInProgress = "TestMigrationCleanupInProgress";
     }
 }

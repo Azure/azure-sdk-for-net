@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Fabric name.
         /// </param>
         /// <param name='storageClassificationName'>
-        /// Storage classfication name.
+        /// Storage classification name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
