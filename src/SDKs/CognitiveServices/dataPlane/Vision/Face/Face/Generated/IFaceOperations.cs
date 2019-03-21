@@ -327,8 +327,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// 'recognition_02'
         /// </param>
         /// <param name='returnRecognitionModel'>
-        /// Whether to return the 'RecognitionModel' required for the current
-        /// operation.
+        /// A value indicating whether the operation should return
+        /// 'recognitionModel' in response.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithUrlWithHttpMessagesAsync(string url, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Verify whether two faces belong to a same person. Compares a face
         /// Id with a Person Id
@@ -419,8 +419,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// 'recognition_02'
         /// </param>
         /// <param name='returnRecognitionModel'>
-        /// Whether to return the 'RecognitionModel' required for the current
-        /// operation.
+        /// A value indicating whether the operation should return
+        /// 'recognitionModel' in response.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -437,6 +437,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<DetectedFace>>> DetectWithStreamWithHttpMessagesAsync(Stream image, bool? returnFaceId = true, bool? returnFaceLandmarks = false, IList<FaceAttributeType> returnFaceAttributes = default(IList<FaceAttributeType>), string recognitionModel = default(string), bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -113,8 +113,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Id referencing a particular large person group.
         /// </param>
         /// <param name='returnRecognitionModel'>
-        /// Whether to return the 'RecognitionModel' required for the current
-        /// operation.
+        /// A value indicating whether the operation should return
+        /// 'recognitionModel' in response.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LargePersonGroup>> GetWithHttpMessagesAsync(string largePersonGroupId, bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LargePersonGroup>> GetWithHttpMessagesAsync(string largePersonGroupId, bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update an existing large person group's display name and userData.
         /// The properties which does not appear in request body will not be
@@ -211,8 +211,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// The number of large person groups to list.
         /// </param>
         /// <param name='returnRecognitionModel'>
-        /// Whether to return the 'RecognitionModel' required for the current
-        /// operation.
+        /// A value indicating whether the operation should return
+        /// 'recognitionModel' in response.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<LargePersonGroup>>> ListWithHttpMessagesAsync(string start = default(string), int? top = 1000, bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<LargePersonGroup>>> ListWithHttpMessagesAsync(string start = default(string), int? top = 1000, bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Queue a large person group training task, the training task may not
         /// be started immediately.

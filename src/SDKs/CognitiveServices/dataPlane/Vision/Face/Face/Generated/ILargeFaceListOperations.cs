@@ -94,8 +94,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// Id referencing a particular large face list.
         /// </param>
         /// <param name='returnRecognitionModel'>
-        /// Whether to return the 'RecognitionModel' required for the current
-        /// operation.
+        /// A value indicating whether the operation should return
+        /// 'recognitionModel' in response.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LargeFaceList>> GetWithHttpMessagesAsync(string largeFaceListId, bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LargeFaceList>> GetWithHttpMessagesAsync(string largeFaceListId, bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Update information of a large face list.
         /// </summary>
@@ -207,8 +207,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         ///
         /// </summary>
         /// <param name='returnRecognitionModel'>
-        /// Whether to return the 'RecognitionModel' required for the current
-        /// operation.
+        /// A value indicating whether the operation should return
+        /// 'recognitionModel' in response.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<LargeFaceList>>> ListWithHttpMessagesAsync(bool returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<LargeFaceList>>> ListWithHttpMessagesAsync(bool? returnRecognitionModel = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Queue a large face list training task, the training task may not be
         /// started immediately.

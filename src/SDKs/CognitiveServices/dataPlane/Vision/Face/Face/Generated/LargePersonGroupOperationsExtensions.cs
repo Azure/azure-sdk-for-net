@@ -108,13 +108,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// Id referencing a particular large person group.
             /// </param>
             /// <param name='returnRecognitionModel'>
-            /// Whether to return the 'RecognitionModel' required for the current
-            /// operation.
+            /// A value indicating whether the operation should return 'recognitionModel'
+            /// in response.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LargePersonGroup> GetAsync(this ILargePersonGroupOperations operations, string largePersonGroupId, bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LargePersonGroup> GetAsync(this ILargePersonGroupOperations operations, string largePersonGroupId, bool? returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(largePersonGroupId, returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -198,13 +198,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// The number of large person groups to list.
             /// </param>
             /// <param name='returnRecognitionModel'>
-            /// Whether to return the 'RecognitionModel' required for the current
-            /// operation.
+            /// A value indicating whether the operation should return 'recognitionModel'
+            /// in response.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<LargePersonGroup>> ListAsync(this ILargePersonGroupOperations operations, string start = default(string), int? top = 1000, bool returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<LargePersonGroup>> ListAsync(this ILargePersonGroupOperations operations, string start = default(string), int? top = 1000, bool? returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(start, top, returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
