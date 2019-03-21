@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -63,22 +64,20 @@ namespace Azure.Base.Http.Pipeline
 
             public override void AddHeader(HttpHeader header)
             {
-                var valueString = header.Values.ToString();
-                var nameString = header.Name;
-                AddHeader(nameString, valueString);
+                AddHeader(header.Name, header.Values);
             }
 
-            public override void AddHeader(string name, string value)
+            public override void AddHeader(string name, HeaderValues values)
             {
                 // TODO (pri 1): any other headers must be added to content?
                 if (name.Equals("Content-Type", StringComparison.InvariantCulture)) {
-                    _contentTypeHeaderValue = value;
+                    _contentTypeHeaderValue = values;
                 }
                 else if (name.Equals("Content-Length", StringComparison.InvariantCulture)) {
-                    _contentLengthHeaderValue = value;
+                    _contentLengthHeaderValue = values;
                 }
                 else {
-                    if (!_requestMessage.Headers.TryAddWithoutValidation(name, value)) {
+                    if (!_requestMessage.Headers.TryAddWithoutValidation(name, values.ToArray())) {
                         throw new InvalidOperationException();
                     }
                 }

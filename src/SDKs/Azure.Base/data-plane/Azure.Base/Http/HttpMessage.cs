@@ -23,8 +23,8 @@ namespace Azure.Base.Http
 
         public abstract void AddHeader(HttpHeader header);
 
-        public virtual void AddHeader(string name, string value)
-            => AddHeader(new HttpHeader(name, value));
+        public virtual void AddHeader(string name, HeaderValues values)
+            => AddHeader(new HttpHeader(name, values));
 
         public abstract void SetContent(HttpMessageContent content);
 

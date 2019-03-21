@@ -291,7 +291,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-
         public async Task UpdateSetting()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -390,7 +389,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             finally
             {
                 await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
-
             }
         }
 
@@ -560,8 +558,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
             finally
             {
-
-
                 await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
             }
         }
