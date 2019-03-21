@@ -28,17 +28,17 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
-            /// <param name='registratonDefinitionId'>
+            /// <param name='registrationDefinitionId'>
             /// Guid of the registration definition.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
-            public static RegistrationDefinition Get(this IRegistrationDefinitionsOperations operations, string scope, string registratonDefinitionId, string apiVersion)
+            public static RegistrationDefinition Get(this IRegistrationDefinitionsOperations operations, string scope, string registrationDefinitionId, string apiVersion)
             {
-                return operations.GetAsync(scope, registratonDefinitionId, apiVersion).GetAwaiter().GetResult();
+                return operations.GetAsync(scope, registrationDefinitionId, apiVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
-            /// <param name='registratonDefinitionId'>
+            /// <param name='registrationDefinitionId'>
             /// Guid of the registration definition.
             /// </param>
             /// <param name='apiVersion'>
@@ -59,9 +59,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationDefinition> GetAsync(this IRegistrationDefinitionsOperations operations, string scope, string registratonDefinitionId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistrationDefinition> GetAsync(this IRegistrationDefinitionsOperations operations, string scope, string registrationDefinitionId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, registratonDefinitionId, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, registrationDefinitionId, apiVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -73,18 +73,18 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='registratonDefinitionId'>
+            /// <param name='registrationDefinitionId'>
             /// Guid of the registration definition.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
-            public static RegistrationDefinition Delete(this IRegistrationDefinitionsOperations operations, string registratonDefinitionId, string apiVersion, string scope)
+            public static RegistrationDefinition Delete(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope)
             {
-                return operations.DeleteAsync(registratonDefinitionId, apiVersion, scope).GetAwaiter().GetResult();
+                return operations.DeleteAsync(registrationDefinitionId, apiVersion, scope).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -93,21 +93,21 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='registratonDefinitionId'>
+            /// <param name='registrationDefinitionId'>
             /// Guid of the registration definition.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationDefinition> DeleteAsync(this IRegistrationDefinitionsOperations operations, string registratonDefinitionId, string apiVersion, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistrationDefinition> DeleteAsync(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(registratonDefinitionId, apiVersion, scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(registrationDefinitionId, apiVersion, scope, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -119,21 +119,21 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='registratonDefinitionId'>
+            /// <param name='registrationDefinitionId'>
             /// Guid of the registration definition.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='requestBody'>
             /// The parameters required to create new registration definition.
             /// </param>
-            public static RegistrationDefinition CreateOrUpdate(this IRegistrationDefinitionsOperations operations, string registratonDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody)
+            public static RegistrationDefinition CreateOrUpdate(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody)
             {
-                return operations.CreateOrUpdateAsync(registratonDefinitionId, apiVersion, scope, requestBody).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(registrationDefinitionId, apiVersion, scope, requestBody).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,14 +142,14 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='registratonDefinitionId'>
+            /// <param name='registrationDefinitionId'>
             /// Guid of the registration definition.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='requestBody'>
             /// The parameters required to create new registration definition.
@@ -157,9 +157,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationDefinition> CreateOrUpdateAsync(this IRegistrationDefinitionsOperations operations, string registratonDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistrationDefinition> CreateOrUpdateAsync(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(registratonDefinitionId, apiVersion, scope, requestBody, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(registrationDefinitionId, apiVersion, scope, requestBody, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
@@ -189,7 +189,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
