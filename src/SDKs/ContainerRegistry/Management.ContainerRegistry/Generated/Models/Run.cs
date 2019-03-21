@@ -202,11 +202,11 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public IList<string> CustomRegistries { get; set; }
 
         /// <summary>
-        /// Gets or sets the error message received from backend systems after
-        /// the run is scheduled.
+        /// Gets the error message received from backend systems after the run
+        /// is scheduled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.runErrorMessage")]
-        public string RunErrorMessage { get; set; }
+        public string RunErrorMessage { get; private set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of a run. Possible values
