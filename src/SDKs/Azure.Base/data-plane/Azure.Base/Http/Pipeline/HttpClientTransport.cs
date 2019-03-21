@@ -112,7 +112,7 @@ namespace Azure.Base.Http.Pipeline
 
             public override void Dispose()
             {
-                _requestContent.Dispose();
+                _requestContent?.Dispose();
                 _requestMessage.Dispose();
             }
 
