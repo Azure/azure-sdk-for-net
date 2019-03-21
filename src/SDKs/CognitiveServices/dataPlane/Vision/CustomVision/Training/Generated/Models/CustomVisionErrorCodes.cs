@@ -47,6 +47,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public const string BadRequestInvalidPublishName = "BadRequestInvalidPublishName";
         public const string BadRequestInvalidPublishTarget = "BadRequestInvalidPublishTarget";
         public const string BadRequestUnpublishFailed = "BadRequestUnpublishFailed";
+        public const string BadRequestIterationNotPublished = "BadRequestIterationNotPublished";
         public const string BadRequestSubscriptionApi = "BadRequestSubscriptionApi";
         public const string BadRequestExceedProjectLimit = "BadRequestExceedProjectLimit";
         public const string BadRequestExceedIterationPerProjectLimit = "BadRequestExceedIterationPerProjectLimit";
