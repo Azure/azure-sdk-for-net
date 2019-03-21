@@ -36,31 +36,31 @@ namespace Azure.ApplicationModel.Configuration
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddOptionsHeaders(RequestOptions options, HttpPipelineRequest pipelineContext)
+        static void AddOptionsHeaders(RequestOptions options, HttpPipelineRequest request)
         {
             if (options == null) return;
 
             if (options.ETag.IfMatch != default)
             {
-                pipelineContext.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
+                request.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
             }
 
             if (options.ETag.IfNoneMatch != default)
             {
-                pipelineContext.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
+                request.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
             }
 
             if (options.Revision.HasValue)
             {
                 var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                pipelineContext.AddHeader(AcceptDatetimeHeader, dateTime);
+                request.AddHeader(AcceptDatetimeHeader, dateTime);
             }
         }
 
-        static void AddClientRequestID(HttpPipelineRequest pipelineContext)
+        static void AddClientRequestID(HttpPipelineRequest request)
         {
-            pipelineContext.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
-            pipelineContext.AddHeader(EchoClientRequestId, "true");
+            request.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
+            request.AddHeader(EchoClientRequestId, "true");
         }
 
         static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)

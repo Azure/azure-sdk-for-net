@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Azure
 {
-    public struct Response<T>: IDisposable
+    public struct Response<T> : IDisposable
     {
         Response _response;
         Func<Response, T> _contentParser;

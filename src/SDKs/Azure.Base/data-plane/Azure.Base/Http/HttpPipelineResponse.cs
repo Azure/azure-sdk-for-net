@@ -13,6 +13,7 @@ namespace Azure.Base.Http
         public abstract bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value);
 
         public abstract Stream ResponseContentStream { get; }
+
         public abstract void Dispose();
     }
 }

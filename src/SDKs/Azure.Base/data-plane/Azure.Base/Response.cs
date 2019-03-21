@@ -61,16 +61,13 @@ namespace Azure
             return TryGetHeader(utf8Name, out value);
         }
 
+        public void Dispose() => _httpResponse.Dispose();
+
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
-
-        public void Dispose()
-        {
-            _httpResponse.Dispose();
-        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString() => _httpResponse.ToString();
