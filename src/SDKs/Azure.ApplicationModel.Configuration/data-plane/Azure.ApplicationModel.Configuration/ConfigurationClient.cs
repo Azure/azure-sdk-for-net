@@ -63,26 +63,30 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(setting);
 
-            var request = _pipeline.CreateRequest();
-            ReadOnlyMemory<byte> content = Serialize(setting);
+            using (var request = _pipeline.CreateRequest())
+            {
+                ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpVerb.Put, uri);
 
-            request.AddHeader("Host", uri.Host);
-            request.AddHeader(IfNoneMatch, "*");
-            request.AddHeader(MediaTypeKeyValueApplicationHeader);
-            request.AddHeader(HttpHeader.Common.JsonContentType);
-            request.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
-            AddClientRequestID(request);
-            AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
+                request.AddHeader("Host", uri.Host);
+                request.AddHeader(IfNoneMatch, "*");
+                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-            request.SetContent(HttpMessageContent.Create(content));
+                request.SetContent(HttpMessageContent.Create(content));
 
-            var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);;
-            if (response.Status == 200 || response.Status == 201) {
-                return await CreateResponse(response, cancellation);
+                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                ;
+                if (response.Status == 200 || response.Status == 201)
+                {
+                    return await CreateResponse(response, cancellation);
+                }
+                else throw new RequestFailedException(response);
             }
-            else throw new RequestFailedException(response);
         }
 
         public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
@@ -307,7 +311,6 @@ namespace Azure.ApplicationModel.Configuration
         public async Task<Response<SettingBatch>> GetRevisionsAsync(BatchRequestOptions options, CancellationToken cancellation = default)
         {
             var uri = BuildUriForRevisions(options);
-
 
             using (var request = _pipeline.CreateRequest())
             {
