@@ -70,8 +70,13 @@ namespace Peering.Tests
         [Fact]
         public void UpdatePeerInfoTest()
         {
+            this.Init();
             int asn = random.Next(64512, 65535);
-            this.updatePeerAsn(asn);
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                this.updatePeerAsn(context, asn);
+                context.Dispose();
+            }
         }
 
         [Fact]
@@ -89,7 +94,7 @@ namespace Peering.Tests
         [Fact]
         public void CreateDirectPeering()
         {
-
+            this.Init();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -104,6 +109,10 @@ namespace Peering.Tests
                         Location = "centralus"
                     });
 
+                // Create random PeerAsn
+                int asn = random.Next(64512, 65535);
+                this.updatePeerAsn(context, asn);
+
                 //Create Direct Peering
                 var directConnection = new DirectConnection
                 {
@@ -116,7 +125,7 @@ namespace Peering.Tests
                     }
                 };
 
-                SubResource asnReference = new SubResource(this.client.PeerAsns.Get("65000").Id);
+                SubResource asnReference = new SubResource(this.client.PeerAsns.Get($"Contoso{asn}").Id);
                 var directPeeringProperties = new PeeringPropertiesDirect(new List<DirectConnection>(), false, asnReference);
                 directPeeringProperties.Connections.Add(directConnection);
                 var peeringModel = new PeeringModel
@@ -138,7 +147,7 @@ namespace Peering.Tests
         [Fact]
         public void CreateExchangePeering()
         {
-
+            this.Init();
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 this.client = context.GetServiceClient<PeeringManagementClient>();
@@ -155,19 +164,19 @@ namespace Peering.Tests
 
 
                 int asn = random.Next(64512, 65535);
-                updatePeerAsn(asn);
-
+                this.updatePeerAsn(context, asn);
+                string asnString = asn.ToString();
                 //Create Exchange Peering
                 var exchangeConnection = new ExchangeConnection
                 {
                     PeeringDBFacilityId = 26,
                     BgpSession = new Microsoft.Azure.Management.Peering.Models.BgpSession()
                     {
-                        PeerSessionIPv4Address = $"80.249.208.{this.random.Next(1,254)}",
+                        PeerSessionIPv4Address = $"80.249.208.{this.random.Next(1, 254)}",
                         MaxPrefixesAdvertisedV4 = 20000
                     }
                 };
-                SubResource asnReference = new SubResource(this.client.PeerAsns.Get(asn.ToString()).Id);
+                SubResource asnReference = new SubResource(this.client.PeerAsns.Get($"Contoso{asnString}").Id);
                 var exchangePeeringProperties = new PeeringPropertiesExchange(new List<ExchangeConnection>(), asnReference);
                 exchangePeeringProperties.Connections.Add(exchangeConnection);
                 var peeringModel = new PeeringModel
@@ -199,31 +208,29 @@ namespace Peering.Tests
             var connectionstring = System.Environment.GetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION");
             if (mode == null)
                 Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
+            if (connectionstring == null)
+                Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "SubscriptionId=4445bf11-61c4-436f-a940-60194f8aca57;ServicePrincipal=a66ad4b3-4c1b-43bf-a0bd-91c8c2c9a6d8;ServicePrincipalSecret=EO84mEYKj9hbJfn/GfkgFCsZmEjDpUqm4ys7CEQpAuY=;AADTenant=f686d426-8d16-42db-81b7-ab578e110ccd;Environment=Dogfood;HttpRecorderMode=Record;");
         }
 
-        private void updatePeerAsn(int asn)
+        private void updatePeerAsn(MockContext context, int asn)
         {
-            this.Init();
-            using (var context = MockContext.Start(this.GetType().FullName))
-            {
-                string[] phone = { "9999999" };
-                string[] email = { "noc@contoso.com" };
-                var contactInfo = new ContactInfo(email, phone);
-                var peerInfo = new PeerAsn(peerAsnProperty: asn, peerContactInfo: contactInfo, peerName: "Contoso");
+            string[] phone = { "9999999" };
+            string[] email = { $"noc{asn}@contoso.com" };
+            var contactInfo = new ContactInfo(email, phone);
+            var peerInfo = new PeerAsn(peerAsnProperty: asn, peerContactInfo: contactInfo, peerName: $"Contoso{asn}", validationState:"Approved");
 
-                this.client = context.GetServiceClient<PeeringManagementClient>();
-                try
-                {
-                    var result = this.client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);
-                    var peerAsn = this.client.PeerAsns.Get(peerInfo.PeerName);
-                    Assert.NotNull(peerAsn);
-                }
-                catch (Exception exception)
-                {
-                    var peerAsn = this.client.PeerAsns.ListBySubscription();
-                    Assert.NotNull(peerAsn);
-                    Assert.NotNull(exception);
-                }
+            this.client = context.GetServiceClient<PeeringManagementClient>();
+            try
+            {
+                var result = this.client.PeerAsns.CreateOrUpdate(peerInfo.PeerName, peerInfo);
+                var peerAsn = this.client.PeerAsns.Get(peerInfo.PeerName);
+                Assert.NotNull(peerAsn);
+            }
+            catch (Exception exception)
+            {
+                var peerAsn = this.client.PeerAsns.ListBySubscription();
+                Assert.NotNull(peerAsn);
+                Assert.NotNull(exception);
             }
         }
     }
