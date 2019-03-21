@@ -11,30 +11,31 @@
 namespace Microsoft.NetApp.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Dimension of blobs, possibly be blob type or access tier.
+    /// Export policy rule
     /// </summary>
-    public partial class Dimension
+    public partial class VolumePropertiesExportPolicy
     {
         /// <summary>
-        /// Initializes a new instance of the Dimension class.
+        /// Initializes a new instance of the VolumePropertiesExportPolicy
+        /// class.
         /// </summary>
-        public Dimension()
+        public VolumePropertiesExportPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Dimension class.
+        /// Initializes a new instance of the VolumePropertiesExportPolicy
+        /// class.
         /// </summary>
-        /// <param name="name">Display name of dimension.</param>
-        /// <param name="displayName">Display name of dimension.</param>
-        public Dimension(string name = default(string), string displayName = default(string))
+        public VolumePropertiesExportPolicy(IList<ExportPolicyRule> rules = default(IList<ExportPolicyRule>))
         {
-            Name = name;
-            DisplayName = displayName;
+            Rules = rules;
             CustomInit();
         }
 
@@ -44,16 +45,9 @@ namespace Microsoft.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets display name of dimension.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets display name of dimension.
-        /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; set; }
+        [JsonProperty(PropertyName = "rules")]
+        public IList<ExportPolicyRule> Rules { get; set; }
 
     }
 }
