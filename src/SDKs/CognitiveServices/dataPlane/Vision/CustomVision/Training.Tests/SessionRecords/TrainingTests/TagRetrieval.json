@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/projects?name=TagRetrievalTest&description=This%20is%20a%20test%20project&domainId=ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzP25hbWU9VGFnUmV0cmlldmFsVGVzdCZkZXNjcmlwdGlvbj1UaGlzJTIwaXMlMjBhJTIwdGVzdCUyMHByb2plY3QmZG9tYWluSWQ9ZWU4NWE3NGMtNDA1ZS00YWRjLWJiNDctZmZhOGNhMGM5ZjMx",
+      "RequestUri": "//customvision/v3.0/training/projects?name=TagRetrievalTest&description=This%20is%20a%20test%20project&domainId=ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cz9uYW1lPVRhZ1JldHJpZXZhbFRlc3QmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjBwcm9qZWN0JmRvbWFpbklkPWVlODVhNzRjLTQwNWUtNGFkYy1iYjQ3LWZmYThjYTBjOWYzMQ==",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:41 GMT"
+          "Thu, 21 Mar 2019 01:34:13 GMT"
         ],
         "apim-request-id": [
-          "fe865840-1c11-43db-96c4-224dd56f7e1f"
+          "1d551f16-c237-48eb-bd27-988ab2bc7169"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -30,18 +30,18 @@
           "nosniff"
         ],
         "Content-Length": [
-          "410"
+          "404"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"f0bb8399-cbb5-46f6-8bf1-fd5a9b9deebb\",\r\n  \"name\": \"TagRetrievalTest\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"targetExportPlatforms\": []\r\n  },\r\n  \"created\": \"2019-03-15T04:37:42.0133333\",\r\n  \"lastModified\": \"2019-03-15T04:37:42.0133333\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"205767cf-98c0-41b5-aeed-31301c3d0155\",\r\n  \"name\": \"TagRetrievalTest\",\r\n  \"description\": \"This is a test project\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"targetExportPlatforms\": []\r\n  },\r\n  \"created\": \"2019-03-21T01:34:14.43Z\",\r\n  \"lastModified\": \"2019-03-21T01:34:14.43Z\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/f0bb8399-cbb5-46f6-8bf1-fd5a9b9deebb/tags?name=Tag%20%230&description=",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2YwYmI4Mzk5LWNiYjUtNDZmNi04YmYxLWZkNWE5YjlkZWViYi90YWdzP25hbWU9VGFnJTIwJTIzMCZkZXNjcmlwdGlvbj0=",
+      "RequestUri": "//customvision/v3.0/training/projects/205767cf-98c0-41b5-aeed-31301c3d0155/tags?name=Tag%20%230&description=",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yMDU3NjdjZi05OGMwLTQxYjUtYWVlZC0zMTMwMWMzZDAxNTUvdGFncz9uYW1lPVRhZyUyMCUyMzAmZGVzY3JpcHRpb249",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -57,49 +57,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:42 GMT"
+          "Thu, 21 Mar 2019 01:34:13 GMT"
         ],
         "apim-request-id": [
-          "2d54e3b5-d55a-49be-a84a-e90d05e02ad1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "Content-Length": [
-          "112"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"7c4e611a-f7cf-4d52-bb71-4df67639e5fd\",\r\n  \"name\": \"Tag #0\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/customvision/v3.0/training/projects/f0bb8399-cbb5-46f6-8bf1-fd5a9b9deebb/tags?name=Tag%20%231&description=",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2YwYmI4Mzk5LWNiYjUtNDZmNi04YmYxLWZkNWE5YjlkZWViYi90YWdzP25hbWU9VGFnJTIwJTIzMSZkZXNjcmlwdGlvbj0=",
-      "RequestMethod": "POST",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Training-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17134.",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Date": [
-          "Fri, 15 Mar 2019 04:37:42 GMT"
-        ],
-        "apim-request-id": [
-          "bc080a2d-80b3-4be1-8852-14bd7c7a064b"
+          "be199c27-13a6-402e-9e02-82a3718ca9c2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -114,12 +75,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"8a2b8e93-b89b-4bc9-affa-462782bf5145\",\r\n  \"name\": \"Tag #1\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"861c4dc2-4e0c-4adf-a823-225d67b3cc85\",\r\n  \"name\": \"Tag #0\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/f0bb8399-cbb5-46f6-8bf1-fd5a9b9deebb/tags?name=Tag%20%232&description=",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2YwYmI4Mzk5LWNiYjUtNDZmNi04YmYxLWZkNWE5YjlkZWViYi90YWdzP25hbWU9VGFnJTIwJTIzMiZkZXNjcmlwdGlvbj0=",
+      "RequestUri": "//customvision/v3.0/training/projects/205767cf-98c0-41b5-aeed-31301c3d0155/tags?name=Tag%20%231&description=",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yMDU3NjdjZi05OGMwLTQxYjUtYWVlZC0zMTMwMWMzZDAxNTUvdGFncz9uYW1lPVRhZyUyMCUyMzEmZGVzY3JpcHRpb249",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -135,10 +96,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:42 GMT"
+          "Thu, 21 Mar 2019 01:34:13 GMT"
         ],
         "apim-request-id": [
-          "885dc026-f834-41e1-9023-798bf13ac509"
+          "57826e72-6b5c-4a42-acbb-d5665f2c3209"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -153,12 +114,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"8e1e17c4-d3a4-4d24-a07f-a1e493291307\",\r\n  \"name\": \"Tag #2\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"c38bb1e6-9d43-4923-82ab-9ed9ebf48aa6\",\r\n  \"name\": \"Tag #1\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/f0bb8399-cbb5-46f6-8bf1-fd5a9b9deebb/tags?name=Tag%20%233&description=",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2YwYmI4Mzk5LWNiYjUtNDZmNi04YmYxLWZkNWE5YjlkZWViYi90YWdzP25hbWU9VGFnJTIwJTIzMyZkZXNjcmlwdGlvbj0=",
+      "RequestUri": "//customvision/v3.0/training/projects/205767cf-98c0-41b5-aeed-31301c3d0155/tags?name=Tag%20%232&description=",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yMDU3NjdjZi05OGMwLTQxYjUtYWVlZC0zMTMwMWMzZDAxNTUvdGFncz9uYW1lPVRhZyUyMCUyMzImZGVzY3JpcHRpb249",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -174,10 +135,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:42 GMT"
+          "Thu, 21 Mar 2019 01:34:13 GMT"
         ],
         "apim-request-id": [
-          "2caaf58d-f7e1-4268-add4-9a0cb186bf4f"
+          "0ff70c08-f334-4bca-b2c4-64116fc4f0b7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -192,12 +153,51 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"79d0f08b-fb3a-4fd1-8998-e3422198af58\",\r\n  \"name\": \"Tag #3\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"17db0be0-af11-40e8-a7e9-17e253391fb3\",\r\n  \"name\": \"Tag #2\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/f0bb8399-cbb5-46f6-8bf1-fd5a9b9deebb/tags",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2YwYmI4Mzk5LWNiYjUtNDZmNi04YmYxLWZkNWE5YjlkZWViYi90YWdz",
+      "RequestUri": "//customvision/v3.0/training/projects/205767cf-98c0-41b5-aeed-31301c3d0155/tags?name=Tag%20%233&description=",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yMDU3NjdjZi05OGMwLTQxYjUtYWVlZC0zMTMwMWMzZDAxNTUvdGFncz9uYW1lPVRhZyUyMCUyMzMmZGVzY3JpcHRpb249",
+      "RequestMethod": "POST",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:34:14 GMT"
+        ],
+        "apim-request-id": [
+          "03f2cd82-6c29-4a61-81f6-2034d9971ca9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "112"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"2f8abcbd-b924-4ff1-ad00-71eb2fac860f\",\r\n  \"name\": \"Tag #3\",\r\n  \"description\": null,\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/205767cf-98c0-41b5-aeed-31301c3d0155/tags",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yMDU3NjdjZi05OGMwLTQxYjUtYWVlZC0zMTMwMWMzZDAxNTUvdGFncw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -213,10 +213,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:42 GMT"
+          "Thu, 21 Mar 2019 01:34:14 GMT"
         ],
         "apim-request-id": [
-          "4c44a7e0-5199-4bba-ad77-f724bbd56dc4"
+          "d7b065cf-ff52-448a-9a73-dd8b09ee767b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -231,12 +231,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"8a2b8e93-b89b-4bc9-affa-462782bf5145\",\r\n    \"name\": \"Tag #1\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  },\r\n  {\r\n    \"id\": \"7c4e611a-f7cf-4d52-bb71-4df67639e5fd\",\r\n    \"name\": \"Tag #0\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  },\r\n  {\r\n    \"id\": \"8e1e17c4-d3a4-4d24-a07f-a1e493291307\",\r\n    \"name\": \"Tag #2\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  },\r\n  {\r\n    \"id\": \"79d0f08b-fb3a-4fd1-8998-e3422198af58\",\r\n    \"name\": \"Tag #3\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"17db0be0-af11-40e8-a7e9-17e253391fb3\",\r\n    \"name\": \"Tag #2\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  },\r\n  {\r\n    \"id\": \"861c4dc2-4e0c-4adf-a823-225d67b3cc85\",\r\n    \"name\": \"Tag #0\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  },\r\n  {\r\n    \"id\": \"2f8abcbd-b924-4ff1-ad00-71eb2fac860f\",\r\n    \"name\": \"Tag #3\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  },\r\n  {\r\n    \"id\": \"c38bb1e6-9d43-4923-82ab-9ed9ebf48aa6\",\r\n    \"name\": \"Tag #1\",\r\n    \"description\": null,\r\n    \"type\": \"Regular\",\r\n    \"imageCount\": 0\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/f0bb8399-cbb5-46f6-8bf1-fd5a9b9deebb",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2YwYmI4Mzk5LWNiYjUtNDZmNi04YmYxLWZkNWE5YjlkZWViYg==",
+      "RequestUri": "//customvision/v3.0/training/projects/205767cf-98c0-41b5-aeed-31301c3d0155",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yMDU3NjdjZi05OGMwLTQxYjUtYWVlZC0zMTMwMWMzZDAxNTU=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -252,10 +252,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:42 GMT"
+          "Thu, 21 Mar 2019 01:34:14 GMT"
         ],
         "apim-request-id": [
-          "e026bcda-073b-41fb-b5ec-a3158a40d69d"
+          "9b08eebf-78a9-45e8-a991-7570f985b5b3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

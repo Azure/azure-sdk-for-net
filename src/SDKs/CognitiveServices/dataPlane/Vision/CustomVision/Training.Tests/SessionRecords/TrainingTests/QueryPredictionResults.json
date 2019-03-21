@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/projects/326f4cc7-1a20-44c0-8f46-32ea1de5d004/predictions/query",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzMyNmY0Y2M3LTFhMjAtNDRjMC04ZjQ2LTMyZWExZGU1ZDAwNC9wcmVkaWN0aW9ucy9xdWVyeQ==",
+      "RequestUri": "//customvision/v3.0/training/projects/9a02eb8a-8c66-428f-92a9-f7c49425bb04/predictions/query",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy85YTAyZWI4YS04YzY2LTQyOGYtOTJhOS1mN2M0OTQyNWJiMDQvcHJlZGljdGlvbnMvcXVlcnk=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"maxCount\": 0,\r\n  \"orderBy\": \"Newest\"\r\n}",
       "RequestHeaders": {
@@ -24,10 +24,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:35:50 GMT"
+          "Thu, 21 Mar 2019 01:32:24 GMT"
         ],
         "apim-request-id": [
-          "8c7cc28c-d310-4d30-be46-fbd3cba27596"
+          "4d883081-c1b0-4204-8b1b-bc03e65ae172"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -36,13 +36,13 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1339"
+          "1354"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"token\": {\r\n    \"session\": \"0:10364\",\r\n    \"continuation\": null,\r\n    \"maxCount\": 0,\r\n    \"orderBy\": \"Newest\",\r\n    \"tags\": null,\r\n    \"iterationId\": null,\r\n    \"startTime\": null,\r\n    \"endTime\": null,\r\n    \"application\": null\r\n  },\r\n  \"results\": [\r\n    {\r\n      \"resizedImageUri\": \"https://irisppewu2predictions.blob.core.windows.net/e-326f4cc71a2044c08f4632ea1de5d004/o-29e493e1986e45ecbc0795e1df50cb2d?sv=2017-04-17&sr=b&sig=jnsHQw0xtAGxphACWxnASXq9lHrBxotop4yxYkgNcvU%3D&se=2019-03-16T04%3A35%3A50Z&sp=r\",\r\n      \"thumbnailUri\": \"https://irisppewu2predictions.blob.core.windows.net/e-326f4cc71a2044c08f4632ea1de5d004/t-29e493e1986e45ecbc0795e1df50cb2d?sv=2017-04-17&sr=b&sig=pBtp8zLNR62WAGAzvpsKOB1q5E0TbqC924kRfhqHfBM%3D&se=2019-03-16T04%3A35%3A50Z&sp=r\",\r\n      \"originalImageUri\": \"https://irisppewu2predictions.blob.core.windows.net/e-326f4cc71a2044c08f4632ea1de5d004/o-29e493e1986e45ecbc0795e1df50cb2d?sv=2017-04-17&sr=b&sig=jnsHQw0xtAGxphACWxnASXq9lHrBxotop4yxYkgNcvU%3D&se=2019-03-16T04%3A35%3A50Z&sp=r\",\r\n      \"domain\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"id\": \"29e493e1-986e-45ec-bc07-95e1df50cb2d\",\r\n      \"project\": \"326f4cc7-1a20-44c0-8f46-32ea1de5d004\",\r\n      \"iteration\": \"b040c266-9671-4d4d-8700-b99085425a1e\",\r\n      \"created\": \"2019-03-15T04:35:49.7194752\",\r\n      \"predictions\": [\r\n        {\r\n          \"probability\": 1.0,\r\n          \"tagId\": \"74a7cca7-d3eb-4542-94fe-fcd8bbd602fb\",\r\n          \"tagName\": \"Tag1\"\r\n        },\r\n        {\r\n          \"probability\": 2.39972671E-15,\r\n          \"tagId\": \"9362d3c5-3076-47af-9498-30c736122fb1\",\r\n          \"tagName\": \"Tag2\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"token\": {\r\n    \"session\": \"6:194563\",\r\n    \"continuation\": null,\r\n    \"maxCount\": 0,\r\n    \"orderBy\": \"Newest\",\r\n    \"tags\": null,\r\n    \"iterationId\": null,\r\n    \"startTime\": null,\r\n    \"endTime\": null,\r\n    \"application\": null\r\n  },\r\n  \"results\": [\r\n    {\r\n      \"resizedImageUri\": \"https://irisusscppestorepredict1.blob.core.windows.net/e-9a02eb8a8c66428f92a9f7c49425bb04/o-a685a35af68444ef971ca97179201159?sv=2017-04-17&sr=b&sig=HLtXuGFHqCRV8oMx55GTcdQ0lO4GbtTz8QbK0TwnCqM%3D&se=2019-03-22T01%3A32%3A24Z&sp=r\",\r\n      \"thumbnailUri\": \"https://irisusscppestorepredict1.blob.core.windows.net/e-9a02eb8a8c66428f92a9f7c49425bb04/t-a685a35af68444ef971ca97179201159?sv=2017-04-17&sr=b&sig=u3S0lyw5dJwaaa0%2BeYT0iYtHqxaiEhIoA1pS72FzGvs%3D&se=2019-03-22T01%3A32%3A24Z&sp=r\",\r\n      \"originalImageUri\": \"https://irisusscppestorepredict1.blob.core.windows.net/e-9a02eb8a8c66428f92a9f7c49425bb04/o-a685a35af68444ef971ca97179201159?sv=2017-04-17&sr=b&sig=HLtXuGFHqCRV8oMx55GTcdQ0lO4GbtTz8QbK0TwnCqM%3D&se=2019-03-22T01%3A32%3A24Z&sp=r\",\r\n      \"domain\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"id\": \"a685a35a-f684-44ef-971c-a97179201159\",\r\n      \"project\": \"9a02eb8a-8c66-428f-92a9-f7c49425bb04\",\r\n      \"iteration\": \"b5035f9a-8d02-493d-8403-7a4a6e48401b\",\r\n      \"created\": \"2019-03-21T01:32:24.314Z\",\r\n      \"predictions\": [\r\n        {\r\n          \"probability\": 0.9999984,\r\n          \"tagId\": \"c3a2335e-57cd-4a45-b219-a61af1fb6e2d\",\r\n          \"tagName\": \"Tag1\"\r\n        },\r\n        {\r\n          \"probability\": 3.54070966E-13,\r\n          \"tagId\": \"60e39f24-cdc6-4817-a6c6-5991c2ef7b9e\",\r\n          \"tagName\": \"Tag2\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],

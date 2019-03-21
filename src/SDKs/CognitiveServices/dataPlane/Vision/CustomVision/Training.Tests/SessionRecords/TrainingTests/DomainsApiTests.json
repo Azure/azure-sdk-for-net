@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/domains",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL2RvbWFpbnM=",
+      "RequestUri": "//customvision/v3.0/training/domains",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9kb21haW5z",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:35:50 GMT"
+          "Thu, 21 Mar 2019 01:32:24 GMT"
         ],
         "apim-request-id": [
-          "7dfde42b-c1fe-4bf1-aa86-1d19c987176e"
+          "bb9c6a31-5aff-4b97-93f4-9aad9cb19048"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -40,8 +40,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL2RvbWFpbnMvZWU4NWE3NGMtNDA1ZS00YWRjLWJiNDctZmZhOGNhMGM5ZjMx",
+      "RequestUri": "//customvision/v3.0/training/domains/ee85a74c-405e-4adc-bb47-ffa8ca0c9f31",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9kb21haW5zL2VlODVhNzRjLTQwNWUtNGFkYy1iYjQ3LWZmYThjYTBjOWYzMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -57,10 +57,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:35:51 GMT"
+          "Thu, 21 Mar 2019 01:32:24 GMT"
         ],
         "apim-request-id": [
-          "8f0b9025-9885-493e-9949-9dd13231ed96"
+          "475a03f9-49cd-47cb-9727-ab32d33ad979"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

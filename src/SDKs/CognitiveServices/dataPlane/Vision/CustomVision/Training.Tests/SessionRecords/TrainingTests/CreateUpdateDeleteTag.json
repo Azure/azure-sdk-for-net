@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/projects?name=Test%20Project",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzP25hbWU9VGVzdCUyMFByb2plY3Q=",
+      "RequestUri": "//customvision/v3.0/training/projects?name=Test%20Project",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cz9uYW1lPVRlc3QlMjBQcm9qZWN0",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:24 GMT"
+          "Thu, 21 Mar 2019 01:34:01 GMT"
         ],
         "apim-request-id": [
-          "0ae95f76-f0f0-4858-83d6-70011899d1c0"
+          "fbe00abf-2f10-485d-ac6d-300aaaf92b73"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -30,18 +30,18 @@
           "nosniff"
         ],
         "Content-Length": [
-          "374"
+          "378"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"bb3ff9fa-2e5f-47c2-9697-c4a726bd5c32\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"targetExportPlatforms\": []\r\n  },\r\n  \"created\": \"2019-03-15T04:37:24.64\",\r\n  \"lastModified\": \"2019-03-15T04:37:24.64\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"ecefe572-fb85-4088-a2b9-8527ea7ec8c2\",\r\n  \"name\": \"Test Project\",\r\n  \"description\": \"\",\r\n  \"settings\": {\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"useNegativeSet\": true,\r\n    \"detectionParameters\": null,\r\n    \"targetExportPlatforms\": []\r\n  },\r\n  \"created\": \"2019-03-21T01:34:01.433Z\",\r\n  \"lastModified\": \"2019-03-21T01:34:01.433Z\",\r\n  \"thumbnailUri\": null,\r\n  \"drModeEnabled\": false\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/bb3ff9fa-2e5f-47c2-9697-c4a726bd5c32/tags?name=Test%20Tag%201&description=This%20is%20a%20test%20tag",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2JiM2ZmOWZhLTJlNWYtNDdjMi05Njk3LWM0YTcyNmJkNWMzMi90YWdzP25hbWU9VGVzdCUyMFRhZyUyMDEmZGVzY3JpcHRpb249VGhpcyUyMGlzJTIwYSUyMHRlc3QlMjB0YWc=",
+      "RequestUri": "//customvision/v3.0/training/projects/ecefe572-fb85-4088-a2b9-8527ea7ec8c2/tags?name=Test%20Tag%201&description=This%20is%20a%20test%20tag",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9lY2VmZTU3Mi1mYjg1LTQwODgtYTJiOS04NTI3ZWE3ZWM4YzIvdGFncz9uYW1lPVRlc3QlMjBUYWclMjAxJmRlc2NyaXB0aW9uPVRoaXMlMjBpcyUyMGElMjB0ZXN0JTIwdGFn",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -57,10 +57,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:24 GMT"
+          "Thu, 21 Mar 2019 01:34:01 GMT"
         ],
         "apim-request-id": [
-          "6295923a-c089-4fd9-b88e-f15b6b4a765a"
+          "3156d4e6-0b3c-4957-b92a-015cde093243"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -75,12 +75,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"570979ed-30d2-4847-ac27-16175ac8486f\",\r\n  \"name\": \"Test Tag 1\",\r\n  \"description\": \"This is a test tag\",\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"e6bf5366-cd04-4d59-80e2-c7a85fd0ab10\",\r\n  \"name\": \"Test Tag 1\",\r\n  \"description\": \"This is a test tag\",\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/bb3ff9fa-2e5f-47c2-9697-c4a726bd5c32/tags/570979ed-30d2-4847-ac27-16175ac8486f",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2JiM2ZmOWZhLTJlNWYtNDdjMi05Njk3LWM0YTcyNmJkNWMzMi90YWdzLzU3MDk3OWVkLTMwZDItNDg0Ny1hYzI3LTE2MTc1YWM4NDg2Zg==",
+      "RequestUri": "//customvision/v3.0/training/projects/ecefe572-fb85-4088-a2b9-8527ea7ec8c2/tags/e6bf5366-cd04-4d59-80e2-c7a85fd0ab10",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9lY2VmZTU3Mi1mYjg1LTQwODgtYTJiOS04NTI3ZWE3ZWM4YzIvdGFncy9lNmJmNTM2Ni1jZDA0LTRkNTktODBlMi1jN2E4NWZkMGFiMTA=",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"name\": \"New Tag Name\",\r\n  \"description\": \"Updated Description\"\r\n}",
       "RequestHeaders": {
@@ -102,10 +102,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:24 GMT"
+          "Thu, 21 Mar 2019 01:34:01 GMT"
         ],
         "apim-request-id": [
-          "bf2a8615-372c-48a7-ae6e-381f36f53854"
+          "717b508a-3786-4617-bc9a-d1ef95bec88e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -120,12 +120,12 @@
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"570979ed-30d2-4847-ac27-16175ac8486f\",\r\n  \"name\": \"New Tag Name\",\r\n  \"description\": \"Updated Description\",\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"e6bf5366-cd04-4d59-80e2-c7a85fd0ab10\",\r\n  \"name\": \"New Tag Name\",\r\n  \"description\": \"Updated Description\",\r\n  \"type\": \"Regular\",\r\n  \"imageCount\": 0\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/bb3ff9fa-2e5f-47c2-9697-c4a726bd5c32/tags/570979ed-30d2-4847-ac27-16175ac8486f",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2JiM2ZmOWZhLTJlNWYtNDdjMi05Njk3LWM0YTcyNmJkNWMzMi90YWdzLzU3MDk3OWVkLTMwZDItNDg0Ny1hYzI3LTE2MTc1YWM4NDg2Zg==",
+      "RequestUri": "//customvision/v3.0/training/projects/ecefe572-fb85-4088-a2b9-8527ea7ec8c2/tags/e6bf5366-cd04-4d59-80e2-c7a85fd0ab10",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9lY2VmZTU3Mi1mYjg1LTQwODgtYTJiOS04NTI3ZWE3ZWM4YzIvdGFncy9lNmJmNTM2Ni1jZDA0LTRkNTktODBlMi1jN2E4NWZkMGFiMTA=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -141,10 +141,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:24 GMT"
+          "Thu, 21 Mar 2019 01:34:01 GMT"
         ],
         "apim-request-id": [
-          "3cfdb4df-8e8f-4041-a417-a8f81c9a1891"
+          "7b317f8a-8a08-4531-9283-e1141ef2cf80"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -160,8 +160,8 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/bb3ff9fa-2e5f-47c2-9697-c4a726bd5c32",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2JiM2ZmOWZhLTJlNWYtNDdjMi05Njk3LWM0YTcyNmJkNWMzMg==",
+      "RequestUri": "//customvision/v3.0/training/projects/ecefe572-fb85-4088-a2b9-8527ea7ec8c2",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9lY2VmZTU3Mi1mYjg1LTQwODgtYTJiOS04NTI3ZWE3ZWM4YzI=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -177,10 +177,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:25 GMT"
+          "Thu, 21 Mar 2019 01:34:01 GMT"
         ],
         "apim-request-id": [
-          "19409b14-7b8a-4df4-8ee4-32eeaf29616c"
+          "911cf620-5569-4718-b79b-0bbcdf08ffe3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

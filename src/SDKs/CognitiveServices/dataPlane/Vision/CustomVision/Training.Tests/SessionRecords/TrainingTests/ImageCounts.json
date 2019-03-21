@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/projects/49fc224f-f4de-4fc8-bed2-8afdc2f0c9c4/images/tagged/count",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzQ5ZmMyMjRmLWY0ZGUtNGZjOC1iZWQyLThhZmRjMmYwYzljNC9pbWFnZXMvdGFnZ2VkL2NvdW50",
+      "RequestUri": "//customvision/v3.0/training/projects/faa72c77-cde2-4c21-be46-a23a58f6a994/images/tagged/count",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9mYWE3MmM3Ny1jZGUyLTRjMjEtYmU0Ni1hMjNhNThmNmE5OTQvaW1hZ2VzL3RhZ2dlZC9jb3VudA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:34:17 GMT"
+          "Thu, 21 Mar 2019 01:30:56 GMT"
         ],
         "apim-request-id": [
-          "de61b58a-77dd-4177-92c4-f930054c3dd9"
+          "c9629555-f0a2-4b56-b5fa-57df6cccc8db"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -40,8 +40,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/49fc224f-f4de-4fc8-bed2-8afdc2f0c9c4/images/untagged/count",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzQ5ZmMyMjRmLWY0ZGUtNGZjOC1iZWQyLThhZmRjMmYwYzljNC9pbWFnZXMvdW50YWdnZWQvY291bnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/faa72c77-cde2-4c21-be46-a23a58f6a994/images/untagged/count",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9mYWE3MmM3Ny1jZGUyLTRjMjEtYmU0Ni1hMjNhNThmNmE5OTQvaW1hZ2VzL3VudGFnZ2VkL2NvdW50",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -57,10 +57,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:34:17 GMT"
+          "Thu, 21 Mar 2019 01:30:56 GMT"
         ],
         "apim-request-id": [
-          "ad9eae84-c898-4934-a5ff-63b642232b35"
+          "50229d34-b707-46bc-96a2-26fce560d993"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -79,8 +79,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/49fc224f-f4de-4fc8-bed2-8afdc2f0c9c4/iterations",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzQ5ZmMyMjRmLWY0ZGUtNGZjOC1iZWQyLThhZmRjMmYwYzljNC9pdGVyYXRpb25z",
+      "RequestUri": "//customvision/v3.0/training/projects/faa72c77-cde2-4c21-be46-a23a58f6a994/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9mYWE3MmM3Ny1jZGUyLTRjMjEtYmU0Ni1hMjNhNThmNmE5OTQvaXRlcmF0aW9ucw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -96,10 +96,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:34:17 GMT"
+          "Thu, 21 Mar 2019 01:30:56 GMT"
         ],
         "apim-request-id": [
-          "bdcf4ce7-ae6d-49fe-9768-a88f0156835c"
+          "3981fc1c-f6f9-42cf-b047-eb68e6710777"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -108,18 +108,18 @@
           "nosniff"
         ],
         "Content-Length": [
-          "482"
+          "668"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"c097311c-9b0a-44b4-90f8-541d1e66f5f7\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-03-15T04:34:01.5833333\",\r\n    \"lastModified\": \"2019-03-15T04:34:16.4275247\",\r\n    \"trainedAt\": \"2019-03-15T04:34:16.052397\",\r\n    \"projectId\": \"49fc224f-f4de-4fc8-bed2-8afdc2f0c9c4\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"publishName\": \"Training UnitTest Iteration\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"fbdd90e8-a4e6-44c4-9063-61ed97598b12\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-03-21T01:30:33.38Z\",\r\n    \"lastModified\": \"2019-03-21T01:30:54.172Z\",\r\n    \"trainedAt\": \"2019-03-21T01:30:53.294Z\",\r\n    \"projectId\": \"faa72c77-cde2-4c21-be46-a23a58f6a994\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/49fc224f-f4de-4fc8-bed2-8afdc2f0c9c4/iterations/c097311c-9b0a-44b4-90f8-541d1e66f5f7/performance/images/count",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzQ5ZmMyMjRmLWY0ZGUtNGZjOC1iZWQyLThhZmRjMmYwYzljNC9pdGVyYXRpb25zL2MwOTczMTFjLTliMGEtNDRiNC05MGY4LTU0MWQxZTY2ZjVmNy9wZXJmb3JtYW5jZS9pbWFnZXMvY291bnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/faa72c77-cde2-4c21-be46-a23a58f6a994/iterations/fbdd90e8-a4e6-44c4-9063-61ed97598b12/performance/images/count",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9mYWE3MmM3Ny1jZGUyLTRjMjEtYmU0Ni1hMjNhNThmNmE5OTQvaXRlcmF0aW9ucy9mYmRkOTBlOC1hNGU2LTQ0YzQtOTA2My02MWVkOTc1OThiMTIvcGVyZm9ybWFuY2UvaW1hZ2VzL2NvdW50",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -135,10 +135,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:34:17 GMT"
+          "Thu, 21 Mar 2019 01:30:56 GMT"
         ],
         "apim-request-id": [
-          "e09bd3e0-0c9c-4497-9865-49c07330aea3"
+          "09f4185f-c057-44f7-864b-c4392a232f92"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

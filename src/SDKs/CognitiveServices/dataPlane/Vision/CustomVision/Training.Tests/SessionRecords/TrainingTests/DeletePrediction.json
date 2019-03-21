@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/projects/0b19d326-f236-4167-855e-a3abba30e85c/predictions/query",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzBiMTlkMzI2LWYyMzYtNDE2Ny04NTVlLWEzYWJiYTMwZTg1Yy9wcmVkaWN0aW9ucy9xdWVyeQ==",
+      "RequestUri": "//customvision/v3.0/training/projects/5aafc648-e855-4a66-9652-a7e27fa90316/predictions/query",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy81YWFmYzY0OC1lODU1LTRhNjYtOTY1Mi1hN2UyN2ZhOTAzMTYvcHJlZGljdGlvbnMvcXVlcnk=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"maxCount\": 0,\r\n  \"orderBy\": \"Newest\"\r\n}",
       "RequestHeaders": {
@@ -24,10 +24,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:40:22 GMT"
+          "Thu, 21 Mar 2019 01:35:59 GMT"
         ],
         "apim-request-id": [
-          "ed2cba64-e109-43ff-b84e-eabbd4d7cdd1"
+          "2245ee56-cb63-4dda-8532-b2df34d1f919"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -36,18 +36,18 @@
           "nosniff"
         ],
         "Content-Length": [
-          "1345"
+          "1366"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "{\r\n  \"token\": {\r\n    \"session\": \"0:10367\",\r\n    \"continuation\": null,\r\n    \"maxCount\": 0,\r\n    \"orderBy\": \"Newest\",\r\n    \"tags\": null,\r\n    \"iterationId\": null,\r\n    \"startTime\": null,\r\n    \"endTime\": null,\r\n    \"application\": null\r\n  },\r\n  \"results\": [\r\n    {\r\n      \"resizedImageUri\": \"https://irisppewu2predictions.blob.core.windows.net/e-0b19d326f2364167855ea3abba30e85c/o-4145c188d91a4e05a0dd51ff213cbb3f?sv=2017-04-17&sr=b&sig=EvUrdRSyF%2Btcu6nB1KhnbZg4uNd0B4DdhlwAmwVOIDw%3D&se=2019-03-16T04%3A40%3A22Z&sp=r\",\r\n      \"thumbnailUri\": \"https://irisppewu2predictions.blob.core.windows.net/e-0b19d326f2364167855ea3abba30e85c/t-4145c188d91a4e05a0dd51ff213cbb3f?sv=2017-04-17&sr=b&sig=w%2BYPhDicSMHYDqqfLm8CbzD9DDK266nHuncO3VvjNxE%3D&se=2019-03-16T04%3A40%3A22Z&sp=r\",\r\n      \"originalImageUri\": \"https://irisppewu2predictions.blob.core.windows.net/e-0b19d326f2364167855ea3abba30e85c/o-4145c188d91a4e05a0dd51ff213cbb3f?sv=2017-04-17&sr=b&sig=EvUrdRSyF%2Btcu6nB1KhnbZg4uNd0B4DdhlwAmwVOIDw%3D&se=2019-03-16T04%3A40%3A22Z&sp=r\",\r\n      \"domain\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"id\": \"4145c188-d91a-4e05-a0dd-51ff213cbb3f\",\r\n      \"project\": \"0b19d326-f236-4167-855e-a3abba30e85c\",\r\n      \"iteration\": \"2aeb0b5d-3a36-4c24-8df3-98f0e7dacb52\",\r\n      \"created\": \"2019-03-15T04:40:22.1433088\",\r\n      \"predictions\": [\r\n        {\r\n          \"probability\": 1.0,\r\n          \"tagId\": \"0b06d43b-bbfc-48e7-b887-43cfb3b4d3a8\",\r\n          \"tagName\": \"Tag1\"\r\n        },\r\n        {\r\n          \"probability\": 2.39972671E-15,\r\n          \"tagId\": \"76b9c1e2-4d02-4c94-af0f-8b2e0427af79\",\r\n          \"tagName\": \"Tag2\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"token\": {\r\n    \"session\": \"5:181682\",\r\n    \"continuation\": null,\r\n    \"maxCount\": 0,\r\n    \"orderBy\": \"Newest\",\r\n    \"tags\": null,\r\n    \"iterationId\": null,\r\n    \"startTime\": null,\r\n    \"endTime\": null,\r\n    \"application\": null\r\n  },\r\n  \"results\": [\r\n    {\r\n      \"resizedImageUri\": \"https://irisusscppestorepredict1.blob.core.windows.net/e-5aafc648e8554a669652a7e27fa90316/o-92f9f695229c45c087bed28aad526546?sv=2017-04-17&sr=b&sig=Za2j%2BQJtzqEGIgDbSkiiMJwn0%2BE7mjv5vH1w2Rs7fbo%3D&se=2019-03-22T01%3A35%3A59Z&sp=r\",\r\n      \"thumbnailUri\": \"https://irisusscppestorepredict1.blob.core.windows.net/e-5aafc648e8554a669652a7e27fa90316/t-92f9f695229c45c087bed28aad526546?sv=2017-04-17&sr=b&sig=QseYVXjxo8UJY%2F4yn7k7vAUVlQ%2FiweHQ3%2B7J6UKTBZU%3D&se=2019-03-22T01%3A35%3A59Z&sp=r\",\r\n      \"originalImageUri\": \"https://irisusscppestorepredict1.blob.core.windows.net/e-5aafc648e8554a669652a7e27fa90316/o-92f9f695229c45c087bed28aad526546?sv=2017-04-17&sr=b&sig=Za2j%2BQJtzqEGIgDbSkiiMJwn0%2BE7mjv5vH1w2Rs7fbo%3D&se=2019-03-22T01%3A35%3A59Z&sp=r\",\r\n      \"domain\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n      \"id\": \"92f9f695-229c-45c0-87be-d28aad526546\",\r\n      \"project\": \"5aafc648-e855-4a66-9652-a7e27fa90316\",\r\n      \"iteration\": \"62de1385-e28a-4bde-8e8d-7361150c914b\",\r\n      \"created\": \"2019-03-21T01:35:59.337Z\",\r\n      \"predictions\": [\r\n        {\r\n          \"probability\": 0.9999984,\r\n          \"tagId\": \"5a243bb5-ee47-4c9b-a76c-7f8eb4e2167a\",\r\n          \"tagName\": \"Tag1\"\r\n        },\r\n        {\r\n          \"probability\": 3.54070966E-13,\r\n          \"tagId\": \"bde579e4-00b1-4f91-8cb1-369a72a0597e\",\r\n          \"tagName\": \"Tag2\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/0b19d326-f236-4167-855e-a3abba30e85c/predictions?ids=4145c188-d91a-4e05-a0dd-51ff213cbb3f",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzBiMTlkMzI2LWYyMzYtNDE2Ny04NTVlLWEzYWJiYTMwZTg1Yy9wcmVkaWN0aW9ucz9pZHM9NDE0NWMxODgtZDkxYS00ZTA1LWEwZGQtNTFmZjIxM2NiYjNm",
+      "RequestUri": "//customvision/v3.0/training/projects/5aafc648-e855-4a66-9652-a7e27fa90316/predictions?ids=92f9f695-229c-45c0-87be-d28aad526546",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy81YWFmYzY0OC1lODU1LTRhNjYtOTY1Mi1hN2UyN2ZhOTAzMTYvcHJlZGljdGlvbnM/aWRzPTkyZjlmNjk1LTIyOWMtNDVjMC04N2JlLWQyOGFhZDUyNjU0Ng==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -63,10 +63,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:40:22 GMT"
+          "Thu, 21 Mar 2019 01:35:59 GMT"
         ],
         "apim-request-id": [
-          "2a45d586-5dcd-407c-99ee-9c00ad697bd8"
+          "737d0b5a-5321-4e5b-a726-6730f38521d6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

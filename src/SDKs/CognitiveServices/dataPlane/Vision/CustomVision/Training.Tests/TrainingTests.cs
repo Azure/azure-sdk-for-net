@@ -198,6 +198,8 @@
                     Assert.Equal(projects[0].Name, firstProject.Name);
                     Assert.Equal(projects[0].Description, firstProject.Description);
                     Assert.Equal(projects[0].Settings.DomainId, firstProject.Settings.DomainId);
+                    Assert.Equal(projects[0].Settings.TargetExportPlatforms.Count, firstProject.Settings.TargetExportPlatforms.Count);
+                    Assert.Equal(projects[0].DrModeEnabled, firstProject.DrModeEnabled);
 
                     await client.DeleteProjectAsync(newProject.Id);
                 }
@@ -328,6 +330,10 @@
                     var iteration = await client.GetIterationAsync(project.ProjectId, iterations[0].Id);
                     Assert.Equal(iteration.Name, iterations[0].Name);
                     Assert.Equal(iteration.Id, iterations[0].Id);
+                    Assert.Equal(TrainingType.Regular, iteration.TrainingType);
+                    Assert.Equal(0, iteration.ReservedBudgetInHours);
+                    Assert.NotEmpty(iteration.PublishName);
+                    Assert.Equal(BaseTests.PredictionResourceId, iteration.OriginalPublishResourceId);
 
                     var updatedIteration = await client.UpdateIterationAsync(project.ProjectId, iteration.Id, new Iteration()
                     {

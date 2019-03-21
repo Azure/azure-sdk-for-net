@@ -1,13 +1,13 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25z",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:04 GMT"
+          "Thu, 21 Mar 2019 01:34:52 GMT"
         ],
         "apim-request-id": [
-          "cc89b0d3-bdfb-4252-a38d-cc3c9ceb48fc"
+          "545e4379-f69e-4ca8-89e2-21c00f36e662"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -30,23 +30,23 @@
           "nosniff"
         ],
         "Content-Length": [
-          "523"
+          "708"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"id\": \"3e3dd6e4-8397-41f6-8af8-9696c30593c4\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-03-15T14:56:12.6533333\",\r\n    \"lastModified\": \"2019-03-15T14:57:03.4308192\",\r\n    \"trainedAt\": \"2019-03-15T14:57:02.3865933\",\r\n    \"projectId\": \"754d889e-7f88-48d1-a7a5-358e48e2358b\",\r\n    \"exportable\": true,\r\n    \"exportableTo\": [\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"domainId\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"publishName\": \"Training UnitTest Iteration\"\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"883cb2d5-803a-4492-aa80-48d91d186070\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-03-21T01:34:36.803Z\",\r\n    \"lastModified\": \"2019-03-21T01:34:51.928Z\",\r\n    \"trainedAt\": \"2019-03-21T01:34:51.228Z\",\r\n    \"projectId\": \"2e190c06-6720-4c6f-880e-ef9febea9495\",\r\n    \"exportable\": true,\r\n    \"exportableTo\": [\r\n      \"CoreML\",\r\n      \"DockerFile\",\r\n      \"ONNX\",\r\n      \"TensorFlow\"\r\n    ],\r\n    \"domainId\": \"0732100f-1a38-4e49-a514-c9b44c697ab5\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n  }\r\n]",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export?platform=TensorFlow",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ/cGxhdGZvcm09VGVuc29yRmxvdw==",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export?platform=TensorFlow",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0P3BsYXRmb3JtPVRlbnNvckZsb3c=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -57,10 +57,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:04 GMT"
+          "Thu, 21 Mar 2019 01:34:52 GMT"
         ],
         "apim-request-id": [
-          "831b1553-e688-4c56-a103-e62d797c78f4"
+          "fcfe1513-ad98-40fa-9ddf-e82b59ff9b88"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -79,13 +79,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -96,10 +96,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:04 GMT"
+          "Thu, 21 Mar 2019 01:34:52 GMT"
         ],
         "apim-request-id": [
-          "4972d9be-5d79-43b0-99f3-df431eb9a228"
+          "917ddff1-5b3b-44bd-bbbf-bcf6f1537e5f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -118,13 +118,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -135,10 +135,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:05 GMT"
+          "Thu, 21 Mar 2019 01:34:54 GMT"
         ],
         "apim-request-id": [
-          "e2eccaa6-953d-425d-bd32-4e6bebd6a68d"
+          "a5ee4771-b1bb-48f8-985a-fb04786387e0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -157,13 +157,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -174,10 +174,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:07 GMT"
+          "Thu, 21 Mar 2019 01:34:55 GMT"
         ],
         "apim-request-id": [
-          "6eadf019-dc36-4299-a298-5370590fe3e2"
+          "70048ef0-1f72-4127-998b-b7f681a7dcc6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -196,13 +196,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -213,10 +213,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:08 GMT"
+          "Thu, 21 Mar 2019 01:34:56 GMT"
         ],
         "apim-request-id": [
-          "2e3cfc2d-0c85-4d43-ba87-367b881d8bab"
+          "3c674c23-af66-47f5-aeb2-78e54e17aeaf"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -235,13 +235,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -252,10 +252,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:09 GMT"
+          "Thu, 21 Mar 2019 01:34:57 GMT"
         ],
         "apim-request-id": [
-          "ea9e75a5-094e-40ba-8e63-a421a8f0c91b"
+          "33caf54f-a7fe-4c78-9b6f-b33100ff4f22"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -274,13 +274,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -291,10 +291,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:10 GMT"
+          "Thu, 21 Mar 2019 01:34:58 GMT"
         ],
         "apim-request-id": [
-          "24e6b91a-5f05-4ead-adaf-df791ddd9ee5"
+          "7a7c2595-bf00-4cbb-960d-2069b7db511a"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -313,13 +313,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -330,10 +330,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:11 GMT"
+          "Thu, 21 Mar 2019 01:34:59 GMT"
         ],
         "apim-request-id": [
-          "f43a2ad7-0882-4bd4-b68a-d1cc407964c6"
+          "94e8b8fc-12fc-4c26-b427-4750fe498f08"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -352,13 +352,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -369,10 +369,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:12 GMT"
+          "Thu, 21 Mar 2019 01:35:00 GMT"
         ],
         "apim-request-id": [
-          "825434c8-e984-40b6-911d-ab3ce4f35521"
+          "c168f1e5-d03f-476d-8caf-41779fd0e3c9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -391,13 +391,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -408,10 +408,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:13 GMT"
+          "Thu, 21 Mar 2019 01:35:01 GMT"
         ],
         "apim-request-id": [
-          "f004a23b-670a-4aac-a084-c16b36993af7"
+          "423eaef9-91c1-4c13-b5b0-890f6627772f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -430,13 +430,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -447,10 +447,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:14 GMT"
+          "Thu, 21 Mar 2019 01:35:02 GMT"
         ],
         "apim-request-id": [
-          "ea34d1a4-fc43-4299-b5fe-44a275a84cc0"
+          "98c92387-14ad-4e1c-a70e-8d2b79a9642e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -469,13 +469,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -486,10 +486,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:15 GMT"
+          "Thu, 21 Mar 2019 01:35:03 GMT"
         ],
         "apim-request-id": [
-          "f5322950-6dc2-47f0-ae1f-8684175e04d9"
+          "2f78f8c5-920b-4e3d-b4a9-d3f181f93325"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -508,13 +508,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -525,10 +525,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:16 GMT"
+          "Thu, 21 Mar 2019 01:35:04 GMT"
         ],
         "apim-request-id": [
-          "5b7c9f05-f284-4ad1-8a91-a27654940f2d"
+          "2067f33b-db75-40b6-ac9b-edb5d47d598b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -547,13 +547,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -564,10 +564,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:17 GMT"
+          "Thu, 21 Mar 2019 01:35:05 GMT"
         ],
         "apim-request-id": [
-          "55f0fb5e-c0ab-4d00-bb65-e4c905f1335c"
+          "0fe4fefa-b01f-488e-aeb6-1ebf30c43f02"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -586,13 +586,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -603,10 +603,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:19 GMT"
+          "Thu, 21 Mar 2019 01:35:06 GMT"
         ],
         "apim-request-id": [
-          "41c89aeb-32f0-4138-b572-ca5a890ac5e2"
+          "7da591f8-1282-467a-9c28-0541861d2c8b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -625,13 +625,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -642,10 +642,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:20 GMT"
+          "Thu, 21 Mar 2019 01:35:07 GMT"
         ],
         "apim-request-id": [
-          "98a1b108-fe2f-4956-be15-a1e1d1c4cc93"
+          "42e4436e-0d3e-44d2-b623-d99f8b0d7b28"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -664,13 +664,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -681,10 +681,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:21 GMT"
+          "Thu, 21 Mar 2019 01:35:08 GMT"
         ],
         "apim-request-id": [
-          "641de928-adc4-44cb-9822-035596b07247"
+          "014b639c-3c25-411b-a9d4-47b31c767653"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -703,13 +703,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -720,10 +720,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:22 GMT"
+          "Thu, 21 Mar 2019 01:35:09 GMT"
         ],
         "apim-request-id": [
-          "aa512fce-0bf8-4785-a8a9-8ff99064176b"
+          "ecc5eef9-3125-4db0-9ea4-b797f1d2f57b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -742,13 +742,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -759,10 +759,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:23 GMT"
+          "Thu, 21 Mar 2019 01:35:11 GMT"
         ],
         "apim-request-id": [
-          "4219273b-6579-401f-bda7-d360aea95aea"
+          "ded3fe8b-c7ec-423e-ad62-2370adb929cd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -781,13 +781,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -798,10 +798,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:24 GMT"
+          "Thu, 21 Mar 2019 01:35:12 GMT"
         ],
         "apim-request-id": [
-          "f0f132c0-2f3e-414d-a44f-f967e2fbbb99"
+          "a0f50526-c682-4fdb-8a57-31dd6a9c8323"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -820,13 +820,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -837,10 +837,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:25 GMT"
+          "Thu, 21 Mar 2019 01:35:13 GMT"
         ],
         "apim-request-id": [
-          "523a43d4-75aa-4eab-8364-aa4c517cc848"
+          "0a8ac7fc-b054-4ac7-8e98-cf403e05323f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -859,13 +859,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -876,10 +876,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:26 GMT"
+          "Thu, 21 Mar 2019 01:35:14 GMT"
         ],
         "apim-request-id": [
-          "09007465-4304-4231-bf2a-9b8d9731207b"
+          "79c8c07d-99ca-4324-b342-53c49bddf8c6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -898,13 +898,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -915,10 +915,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:27 GMT"
+          "Thu, 21 Mar 2019 01:35:15 GMT"
         ],
         "apim-request-id": [
-          "4617fd96-c5a9-4a0c-90b8-9daf26ab3004"
+          "1a5534a0-b978-4525-8e8a-4e2bfb83f293"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -937,13 +937,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -954,10 +954,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:28 GMT"
+          "Thu, 21 Mar 2019 01:35:16 GMT"
         ],
         "apim-request-id": [
-          "d8a989cf-5c24-46fa-ba01-43ed81971519"
+          "df8508f2-83ef-47f6-941d-6a1d8ba6f6fd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -976,13 +976,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -993,10 +993,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:29 GMT"
+          "Thu, 21 Mar 2019 01:35:17 GMT"
         ],
         "apim-request-id": [
-          "11148c0a-929b-4d47-a99b-6bad72d54fd2"
+          "068df6b8-793b-44ae-b97f-71077d99acb0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -1015,13 +1015,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1032,10 +1032,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:31 GMT"
+          "Thu, 21 Mar 2019 01:35:18 GMT"
         ],
         "apim-request-id": [
-          "70933b33-c6c4-43bb-85a3-f6cd3d80140c"
+          "16da8f93-b694-479c-ad8c-13cbc5fde572"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -1054,13 +1054,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/customvision/v3.0/training/projects/754d889e-7f88-48d1-a7a5-358e48e2358b/iterations/3e3dd6e4-8397-41f6-8af8-9696c30593c4/export",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzLzc1NGQ4ODllLTdmODgtNDhkMS1hN2E1LTM1OGU0OGUyMzU4Yi9pdGVyYXRpb25zLzNlM2RkNmU0LTgzOTctNDFmNi04YWY4LTk2OTZjMzA1OTNjNC9leHBvcnQ=",
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "Training-Key": [
-          "fc3d389bfdb54cb39cfbe8ea365be684"
+          ""
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1071,10 +1071,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 14:57:32 GMT"
+          "Thu, 21 Mar 2019 01:35:19 GMT"
         ],
         "apim-request-id": [
-          "5d3bf94e-c013-410b-ab0d-1d03cf6f81d8"
+          "822fbe35-f325-4dda-a39e-8b24322ea479"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -1083,13 +1083,559 @@
           "nosniff"
         ],
         "Content-Length": [
-          "344"
+          "111"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ]
       },
-      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Done\",\r\n    \"downloadUri\": \"https://irisppewu2training.blob.core.windows.net/m-754d889e7f8848d1a7a5358e48e2358b/3e3dd6e4839741f68af89696c30593c4.TensorFlow.zip?sv=2017-04-17&sr=b&sig=%2BKVXDIuN4cIF6zqYUGPnmf%2Bm3yhjAe5%2BONU2kOPwDxU%3D&se=2019-03-16T14%3A57%3A32Z&sp=r\",\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:20 GMT"
+        ],
+        "apim-request-id": [
+          "abc6f602-469e-4d3b-b998-a1a24dd3d438"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:21 GMT"
+        ],
+        "apim-request-id": [
+          "25b2c02e-d214-497f-b909-5d0aa820cdce"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:22 GMT"
+        ],
+        "apim-request-id": [
+          "d11756c8-8ef9-415e-b211-0046f3e2f6e3"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:23 GMT"
+        ],
+        "apim-request-id": [
+          "4a1ae962-1097-48a9-bcde-d4190f72adaa"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:24 GMT"
+        ],
+        "apim-request-id": [
+          "4e800012-4058-4fbe-a976-4406e9e21827"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:25 GMT"
+        ],
+        "apim-request-id": [
+          "99f3f2c1-2122-45ab-979a-5ae7b401c041"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:26 GMT"
+        ],
+        "apim-request-id": [
+          "8207b39f-1a0d-49ac-92a6-abc04fff33e0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:28 GMT"
+        ],
+        "apim-request-id": [
+          "eb2cf4f8-8806-41d0-8935-736c2652fc77"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:29 GMT"
+        ],
+        "apim-request-id": [
+          "6a06622b-645a-42c9-9cda-8195932c38ff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:30 GMT"
+        ],
+        "apim-request-id": [
+          "184d81c1-a0a1-47da-a6a6-e7605e57378e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:31 GMT"
+        ],
+        "apim-request-id": [
+          "31347266-0233-4f8e-aed3-56afca8aa3c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:32 GMT"
+        ],
+        "apim-request-id": [
+          "b11789c1-21ca-4506-9081-57d6047879bf"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:33 GMT"
+        ],
+        "apim-request-id": [
+          "4b17e7d5-fb6c-4bc9-a31f-ee7cdf145b98"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "111"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Exporting\",\r\n    \"downloadUri\": null,\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/2e190c06-6720-4c6f-880e-ef9febea9495/iterations/883cb2d5-803a-4492-aa80-48d91d186070/export",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8yZTE5MGMwNi02NzIwLTRjNmYtODgwZS1lZjlmZWJlYTk0OTUvaXRlcmF0aW9ucy84ODNjYjJkNS04MDNhLTQ0OTItYWE4MC00OGQ5MWQxODYwNzAvZXhwb3J0",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:35:34 GMT"
+        ],
+        "apim-request-id": [
+          "a035cd2a-01f4-4747-af7f-a6cc5d7e8353"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "340"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"platform\": \"TensorFlow\",\r\n    \"status\": \"Done\",\r\n    \"downloadUri\": \"https://irisusscppestore.blob.core.windows.net/m-2e190c0667204c6f880eef9febea9495/883cb2d5803a4492aa8048d91d186070.TensorFlow.zip?sv=2017-04-17&sr=b&sig=rHwggM9isgvJT7wH2%2FbvLsNIYZJ5%2BN7MraByaoPIhBY%3D&se=2019-03-22T01%3A35%3A34Z&sp=r\",\r\n    \"flavor\": null,\r\n    \"newerVersionAvailable\": false\r\n  }\r\n]",
       "StatusCode": 200
     }
   ],

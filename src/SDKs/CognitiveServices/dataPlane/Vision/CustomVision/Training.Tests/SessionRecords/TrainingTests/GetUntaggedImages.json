@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v3.0/training/projects/a95e2da8-7368-4c40-911d-562080c12b5e/images/untagged?take=50&skip=0",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92My4wL3RyYWluaW5nL3Byb2plY3RzL2E5NWUyZGE4LTczNjgtNGM0MC05MTFkLTU2MjA4MGMxMmI1ZS9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
+      "RequestUri": "//customvision/v3.0/training/projects/f8d625c9-f253-49f4-a6fd-1fc930f9caca/images/untagged?take=50&skip=0",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9mOGQ2MjVjOS1mMjUzLTQ5ZjQtYTZmZC0xZmM5MzBmOWNhY2EvaW1hZ2VzL3VudGFnZ2VkP3Rha2U9NTAmc2tpcD0w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -18,10 +18,10 @@
       },
       "ResponseHeaders": {
         "Date": [
-          "Fri, 15 Mar 2019 04:37:41 GMT"
+          "Thu, 21 Mar 2019 01:34:13 GMT"
         ],
         "apim-request-id": [
-          "53f18696-1efd-4646-9f87-eafff87f49da"
+          "fb4463cf-30d2-48f7-b233-e4473e6d5a34"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"

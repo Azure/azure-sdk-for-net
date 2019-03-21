@@ -1,6 +1,7 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests
 {
     using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
     using System;
     using System.Collections.Generic;
     using System.IO;
