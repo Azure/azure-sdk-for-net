@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Base.Buffers;
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -64,8 +63,8 @@ namespace Azure.Base.Http.Pipeline
 
             public override void AddHeader(HttpHeader header)
             {
-                var valueString = header.Value.AsciiToString();
-                var nameString = header.Name.AsciiToString();
+                var valueString = header.Values.ToString();
+                var nameString = header.Name;
                 AddHeader(nameString, valueString);
             }
 
@@ -117,18 +116,16 @@ namespace Azure.Base.Http.Pipeline
 
             protected internal override int Status => (int)_responseMessage.StatusCode;
 
-            protected internal override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            protected internal override bool TryGetHeader(string name, out HeaderValues values)
             {
-                string nameString = name.AsciiToString();
-                if (!_responseMessage.Headers.TryGetValues(nameString, out var values)) {
-                    if (!_responseMessage.Content.Headers.TryGetValues(nameString, out values)) {
-                        value = default;
+                if (!_responseMessage.Headers.TryGetValues(name, out var headerValues)) {
+                    if (!_responseMessage.Content.Headers.TryGetValues(name, out headerValues)) {
+                        values = default;
                         return false;
                     }
                 }
 
-                var all = string.Join(",", values);
-                value = Encoding.ASCII.GetBytes(all);
+                values = headerValues as string[] ?? headerValues.ToArray();
                 return true;
             }
 

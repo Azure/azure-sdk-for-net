@@ -22,41 +22,9 @@ namespace Azure
 
         public Stream ContentStream => _message.ResponseContentStream;
 
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out long value)
+        public bool TryGetHeader(string name, out HeaderValues values)
         {
-            value = default;
-            if (!TryGetHeader(name, out ReadOnlySpan<byte> bytes)) return false;
-            if (!Utf8Parser.TryParse(bytes, out value, out int consumed) || consumed != bytes.Length)
-                throw new Exception("bad content-length value");
-            return true;
-        }
-
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
-            => _message.TryGetHeader(name, out value);
-
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out string value)
-        {
-            if (TryGetHeader(name, out ReadOnlySpan<byte> span)) {
-                value = span.AsciiToString();
-                return true;
-            }
-            value = default;
-            return false;
-        }
-
-        public bool TryGetHeader(string name, out long value)
-        {
-            value = default;
-            if (!TryGetHeader(name, out string valueString)) return false;
-            if (!long.TryParse(valueString, out value))
-                throw new Exception("bad content-length value");
-            return true;
-        }
-
-        public bool TryGetHeader(string name, out string value)
-        {
-            var utf8Name = Encoding.ASCII.GetBytes(name);
-            return TryGetHeader(utf8Name, out value);
+            return _message.TryGetHeader(name, out values);
         }
 
         public void Dispose() => _message.Dispose();

@@ -45,14 +45,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
         {
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
-            
+
             /*
              * The configuration store contains a KV with the Key
              * that represents {expectedEvents} data points.
              * If not set, create the {expectedEvents} data points and the "BatchKey"
             */
             const string batchKey = "BatchKey";
-            
+
             try
             {
                 var responseGet = await service.GetAsync(batchKey);
@@ -283,7 +283,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var service = new ConfigurationClient(connectionString);
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
-            
+
             try
             {
                 string value = "my_value";
@@ -441,7 +441,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 ETag = new ETagFilter() { IfMatch = new ETag("*") }
             };
-            
+
             try
             {
                 // Different tags
@@ -450,7 +450,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 if (settingTags.ContainsKey("tag1")) settingTags["tag1"] = "value-updated";
                 settingTags.Add("tag3", "test_value3");
                 testSettingDiff.Tags = settingTags;
-                
+
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, options, CancellationToken.None);
                 Assert.AreEqual(testSettingDiff, responseSetting);
 
@@ -476,7 +476,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             await service.SetAsync(s_testSetting);
             ConfigurationSetting setting = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-            
+
             try
             {
                 RequestOptions options = new RequestOptions()
@@ -516,7 +516,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 await service.SetAsync(setting);
                 await service.SetAsync(testSettingUpdate);
-                
+
                 // Test
                 var filter = new BatchRequestOptions();
                 filter.Key = setting.Key;
@@ -557,14 +557,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
             // Prepare environment
             var testSettingNoLabel = s_testSetting.Clone();
             testSettingNoLabel.Label = null;
-            
+
             try
             {
                 await service.SetAsync(testSettingNoLabel);
                 // Test
                 Response<ConfigurationSetting> response = await service.GetAsync(key: testSettingNoLabel.Key, options: default, CancellationToken.None);
 
-                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+                Assert.True(response.TryGetHeader("ETag", out var etagHeader));
 
                 ConfigurationSetting setting = response.Result;
                 Assert.AreEqual(testSettingNoLabel, setting);
@@ -582,7 +582,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
-            
+
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
@@ -601,7 +601,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             // Prepare environment
             var testSettingNoLabel = s_testSetting.Clone();
             testSettingNoLabel.Label = null;
-            
+
             try
             {
                 await service.SetAsync(testSettingNoLabel);
@@ -610,7 +610,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 // Test
                 Response<ConfigurationSetting> response = await service.GetAsync(key: s_testSetting.Key, options: s_testSetting.Label, CancellationToken.None);
 
-                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
+                Assert.True(response.TryGetHeader("ETag", out var etagHeader));
 
                 ConfigurationSetting responseSetting = response.Result;
                 Assert.AreEqual(s_testSetting, responseSetting);
@@ -687,13 +687,13 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var testSettingNoLabel = s_testSetting.Clone();
             testSettingNoLabel.Label = null;
-            
+
             try
             {
                 await service.SetAsync(testSettingNoLabel);
 
                 ConfigurationSetting setting = await service.GetAsync(testSettingNoLabel.Key, LabelFilters.Null, CancellationToken.None);
-                
+
                 Assert.AreEqual(testSettingNoLabel, setting);
             }
             finally
@@ -726,7 +726,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(testSettingUpdate);
                 });
                 Assert.AreEqual(409, exception.Status);
-                
+
                 // Test Unlock
                 ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
                 await service.UpdateAsync(testSettingUpdate);
@@ -748,12 +748,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting);
 
-                Assert.True(response.TryGetHeader("ETag", out string etagHeader));
-                response.TryGetHeader("x-ms-client-request-id", out string requestId);
+                Assert.True(response.TryGetHeader("ETag", out var etagHeader));
+                response.TryGetHeader("x-ms-client-request-id", out var requestId);
 
                 ConfigurationSetting setting = response.Result;
                 Assert.AreEqual(s_testSetting, setting);
-                Assert.IsNotEmpty(requestId);
+                Assert.IsNotEmpty(requestId.ToString());
                 response.Dispose();
             }
             finally

@@ -11,29 +11,22 @@ namespace Azure.Base.Tests
     public class HeadersTests
     {
         [Test]
-        public void Basics()
+        public void ConstructorWorks()
         {
-            var utf16Name = "XnameX";
-            var utf16Value = "YvalueY";
-            var utf16Text = $"{utf16Name}:{utf16Value}";
+            var header = new HttpHeader("Header", "Value");
 
-            byte[] utf8Name = Encoding.ASCII.GetBytes(utf16Name);
-            byte[] utf8Value = Encoding.ASCII.GetBytes(utf16Value);
+            Assert.AreEqual("Header", header.Name);
+            Assert.AreEqual("Value", header.Values[0]);
+            Assert.AreEqual(1, header.Values.Count);
+        }
 
-            var mixedHeader = new HttpHeader(utf8Name, utf16Value);
-            Assert.AreEqual(utf16Text, mixedHeader.ToString());
-            Assert.AreEqual(utf16Name, Utf8.ToString(mixedHeader.Name));
-            Assert.AreEqual(utf16Value, Utf8.ToString(mixedHeader.Value));
+        [Test]
+        public void ComparisonWorks()
+        {
+            var header = new HttpHeader("Header", "Value");
+            var header2 = new HttpHeader("Header", "Value");
 
-            var utf16Header = new HttpHeader(utf16Name, utf16Value);
-            Assert.AreEqual(utf16Text, utf16Header.ToString());
-            Assert.AreEqual(utf16Name, Utf8.ToString(utf16Header.Name));
-            Assert.AreEqual(utf16Value, Utf8.ToString(utf16Header.Value));
-
-            var utf8Header = new HttpHeader(utf8Name, utf8Value);
-            Assert.AreEqual(utf16Text, utf8Header.ToString());       
-            Assert.AreEqual(utf16Name, Utf8.ToString(utf8Header.Name));
-            Assert.AreEqual(utf16Value, Utf8.ToString(utf8Header.Value));
+            Assert.AreEqual(header, header2);
         }
 
         [Test]

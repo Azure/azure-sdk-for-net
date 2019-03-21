@@ -36,7 +36,7 @@ namespace Azure.Base.Http
         // make many of these protected internal
         protected internal abstract int Status { get; }
 
-        protected internal abstract bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value);
+        protected internal abstract bool TryGetHeader(string name, out HeaderValues values);
 
         protected internal abstract Stream ResponseContentStream { get; }
 

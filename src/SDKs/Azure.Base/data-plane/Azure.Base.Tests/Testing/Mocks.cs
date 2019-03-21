@@ -44,7 +44,7 @@ namespace Azure.Base.Testing
         {
             base.OnEventWritten(eventData);
             if(eventData.EventSource.Name == SOURCE_NAME) {
-                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString()); 
+                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString());
             }
         }
 
@@ -100,9 +100,9 @@ namespace Azure.Base.Testing
             public override string ToString()
                 => $"{_method} {_uri}";
 
-            protected override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            protected override bool TryGetHeader(string name, out HeaderValues values)
             {
-                value = default;
+                values = default;
                 return false;
             }
 

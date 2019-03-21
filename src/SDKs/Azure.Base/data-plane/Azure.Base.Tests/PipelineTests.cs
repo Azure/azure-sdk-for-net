@@ -82,7 +82,7 @@ namespace Azure.Base.Tests
                 throw new NotImplementedException();
             }
 
-            protected override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            protected override bool TryGetHeader(string name, out HeaderValues values)
             {
                 throw new NotImplementedException();
             }

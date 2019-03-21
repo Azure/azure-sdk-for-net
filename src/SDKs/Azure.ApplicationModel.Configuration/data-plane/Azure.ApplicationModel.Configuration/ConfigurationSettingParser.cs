@@ -44,7 +44,7 @@ namespace Azure.ApplicationModel.Configuration
                 return false;
             }
         }
-        
+
         private static ConfigurationSetting ReadSetting(JsonElement root)
         {
             // TODO (pri 2): make the deserializer version resilient
@@ -123,9 +123,9 @@ namespace Azure.ApplicationModel.Configuration
         static bool TryGetNextAfterValue(ref Response response, out string afterValue)
         {
             afterValue = default;
-            string headerValue = string.Empty;
-            if (!response.TryGetHeader(s_link, out headerValue)) return false;
+            if (!response.TryGetHeader(s_link, out var headerValues)) return false;
 
+            var headerValue = headerValues.ToString();
             // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
             var afterIndex = headerValue.IndexOf(s_after);
             if (afterIndex < 0) return false;
