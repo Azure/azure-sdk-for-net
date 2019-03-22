@@ -25,7 +25,10 @@ namespace Azure.Base.Http
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Name, Values);
+            var hashCode = new HashCodeCombiner();
+            hashCode.Add(Name, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(Values);
+            return hashCode.ToHashCode();
         }
 
         public override bool Equals(object obj)
@@ -39,7 +42,7 @@ namespace Azure.Base.Http
 
         public bool Equals(HttpHeader other)
         {
-            return string.Equals(Name, other.Name) && Values.Equals(other.Values);
+            return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) && Values.Equals(other.Values);
         }
 
         public static class Names

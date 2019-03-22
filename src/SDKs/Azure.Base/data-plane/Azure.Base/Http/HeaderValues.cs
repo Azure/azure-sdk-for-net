@@ -446,7 +446,7 @@ namespace Azure.Base.Http
                 return 0;
             }
 
-            var hashcode = new HashCode();
+            var hashcode = new HashCodeCombiner();
 
             foreach (var value in _values)
             {

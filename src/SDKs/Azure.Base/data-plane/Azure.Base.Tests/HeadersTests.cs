@@ -24,9 +24,10 @@ namespace Azure.Base.Tests
         public void ComparisonWorks()
         {
             var header = new HttpHeader("Header", "Value");
-            var header2 = new HttpHeader("Header", "Value");
+            var header2 = new HttpHeader("header", "Value");
 
             Assert.AreEqual(header, header2);
+            Assert.AreEqual(header.GetHashCode(), header2.GetHashCode());
         }
 
         [Test]
