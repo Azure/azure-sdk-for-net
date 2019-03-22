@@ -19,15 +19,13 @@ namespace Azure.ApplicationModel.Configuration
         const string ComponentVersion = "1.0.0";
 
         static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
-            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
-            500, // Internal Server Error 
+            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
+            500, // Internal Server Error
             503, // Service Unavailable
             504  // Gateway Timeout
         );
 
         readonly Uri _baseUri;
-        readonly string _credential;
-        readonly byte[] _secret;
         HttpPipeline _pipeline;
 
         public static HttpPipelineOptions CreateDefaultPipelineOptions()
@@ -48,8 +46,13 @@ namespace Azure.ApplicationModel.Configuration
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
 
+            ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
+
+            options.AddPerCallPolicy(new ClientRequestIdPolicy());
+            options.AddPerCallPolicy(new AuthenticationPolicy(credential, secret));
+
             _pipeline = options.Build(ComponentName, ComponentVersion);
-            ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
+
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
@@ -73,8 +76,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
                 message.SetContent(HttpMessageContent.Create(content));
 
@@ -114,9 +115,6 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     message.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
                 }
-
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
                 message.SetContent(HttpMessageContent.Create(content));
 
@@ -162,9 +160,6 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     message.AddHeader(IfMatchName, "*");
                 }
-                
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
                 message.SetContent(HttpMessageContent.Create(content));
 
@@ -199,9 +194,6 @@ namespace Azure.ApplicationModel.Configuration
                     message.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
                 }
 
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Delete, content: default, _secret, _credential);
-
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
 
                 var response = message.Response;
@@ -211,7 +203,7 @@ namespace Azure.ApplicationModel.Configuration
                 else throw new RequestFailedException(response);
             }
         }
-        
+
         public async Task<Response<ConfigurationSetting>> LockAsync(string key, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
@@ -222,8 +214,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.SetRequestLine(HttpVerb.Put, uri);
 
                 message.AddHeader("Host", uri.Host);
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content: default, _secret, _credential);
 
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
 
@@ -245,8 +235,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.SetRequestLine(HttpVerb.Delete, uri);
 
                 message.AddHeader("Host", uri.Host);
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
 
@@ -270,9 +258,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                AddClientRequestID(message);
-
-                AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
 
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
 
@@ -294,8 +279,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(batchOptions, message);
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
 
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
 
@@ -318,8 +301,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, message);
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
 
                 await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
 
