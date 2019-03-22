@@ -17,7 +17,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Closed List Entity Extractor.
+    /// List Entity Extractor.
     /// </summary>
     public partial class ClosedListEntityExtractor
     {
@@ -35,13 +35,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="id">The ID of the Entity Model.</param>
         /// <param name="readableType">Possible values include: 'Entity
         /// Extractor', 'Hierarchical Entity Extractor', 'Hierarchical Child
-        /// Entity Extractor', 'Composite Entity Extractor', 'Closed List
-        /// Entity Extractor', 'Prebuilt Entity Extractor', 'Intent
-        /// Classifier', 'Pattern.Any Entity Extractor', 'Regex Entity
+        /// Entity Extractor', 'Composite Entity Extractor', 'List Entity
+        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
+        /// 'Pattern.Any Entity Extractor', 'Regular Expression Entity
         /// Extractor'</param>
         /// <param name="name">Name of the Entity Model.</param>
         /// <param name="typeId">The type ID of the Entity Model.</param>
-        /// <param name="subLists">List of sub-lists.</param>
+        /// <param name="subLists">List of sublists.</param>
         public ClosedListEntityExtractor(System.Guid id, string readableType, string name = default(string), int? typeId = default(int?), IList<EntityRole> roles = default(IList<EntityRole>), IList<SubClosedListResponse> subLists = default(IList<SubClosedListResponse>))
         {
             Id = id;
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Gets or sets possible values include: 'Entity Extractor',
         /// 'Hierarchical Entity Extractor', 'Hierarchical Child Entity
-        /// Extractor', 'Composite Entity Extractor', 'Closed List Entity
-        /// Extractor', 'Prebuilt Entity Extractor', 'Intent Classifier',
-        /// 'Pattern.Any Entity Extractor', 'Regex Entity Extractor'
+        /// Extractor', 'Composite Entity Extractor', 'List Entity Extractor',
+        /// 'Prebuilt Entity Extractor', 'Intent Classifier', 'Pattern.Any
+        /// Entity Extractor', 'Regular Expression Entity Extractor'
         /// </summary>
         [JsonProperty(PropertyName = "readableType")]
         public string ReadableType { get; set; }
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public IList<EntityRole> Roles { get; set; }
 
         /// <summary>
-        /// Gets or sets list of sub-lists.
+        /// Gets or sets list of sublists.
         /// </summary>
         [JsonProperty(PropertyName = "subLists")]
         public IList<SubClosedListResponse> SubLists { get; set; }

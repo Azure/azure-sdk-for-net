@@ -19,5 +19,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public const string Push = "push";
         public const string Delete = "delete";
         public const string Quarantine = "quarantine";
+        public const string ChartPush = "chart_push";
+        public const string ChartDelete = "chart_delete";
     }
 }
