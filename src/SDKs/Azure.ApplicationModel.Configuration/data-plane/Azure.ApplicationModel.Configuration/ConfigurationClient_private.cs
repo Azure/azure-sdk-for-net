@@ -32,7 +32,7 @@ namespace Azure.ApplicationModel.Configuration
 
         static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
-            Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
+            "application/vnd.microsoft.appconfig.kv+json"
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?
@@ -149,7 +149,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 builder.AppendQuery("after", options.BatchLink);
             }
-            
+
             if (options.Label != null)
             {
                 if (options.Label == string.Empty)
@@ -208,13 +208,13 @@ namespace Azure.ApplicationModel.Configuration
 
             return content;
         }
-        
+
         internal static void AddAuthenticationHeaders(HttpMessage message, Uri uri, HttpVerb method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())
             {
-                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly 
+                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly
                 contentHash = Convert.ToBase64String(alg.ComputeHash(content.ToArray()));
             }
 
