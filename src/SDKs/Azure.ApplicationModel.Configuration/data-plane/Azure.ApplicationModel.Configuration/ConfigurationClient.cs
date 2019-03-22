@@ -114,9 +114,9 @@ namespace Azure.ApplicationModel.Configuration
                 request.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 if (setting.ETag != default)
                 {
-                    message.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
+                    request.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
                 }
-                AddOptionsHeaders(options, message);
+
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
@@ -160,13 +160,7 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     request.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 }
-                } else if(options == null)
-                else
-                {
-                    request.AddHeader(IfMatchName, "*");
-                }
 
-                AddOptionsHeaders(options, message);
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
@@ -201,9 +195,9 @@ namespace Azure.ApplicationModel.Configuration
                 request.AddHeader("Host", uri.Host);
                 if (etag != default)
                 {
-                    message.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
+                    request.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
                 }
-                AddOptionsHeaders(options, message);
+
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
@@ -216,7 +210,7 @@ namespace Azure.ApplicationModel.Configuration
                 else throw new RequestFailedException(response);
             }
         }
-        
+
         public async Task<Response<ConfigurationSetting>> LockAsync(string key, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
@@ -228,7 +222,7 @@ namespace Azure.ApplicationModel.Configuration
                 request.SetRequestLine(HttpVerb.Put, uri);
 
                 request.AddHeader("Host", uri.Host);
-                AddOptionsHeaders(options, message);
+
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content: default, _secret, _credential);
 
@@ -253,7 +247,7 @@ namespace Azure.ApplicationModel.Configuration
                 request.SetRequestLine(HttpVerb.Delete, uri);
 
                 request.AddHeader("Host", uri.Host);
-                AddOptionsHeaders(options, message);
+
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
@@ -278,9 +272,9 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                AddOptionsHeaders(options, message);
+
                 AddClientRequestID(request);
-                message.AddHeader(HttpHeader.Common.JsonContentType);
+                request.AddHeader(HttpHeader.Common.JsonContentType);
 
                 AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
