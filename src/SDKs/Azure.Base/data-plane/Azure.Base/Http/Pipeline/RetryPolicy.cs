@@ -11,14 +11,14 @@ namespace Azure.Base.Http.Pipeline
         public static RetryPolicy CreateFixed(int maxRetries, TimeSpan delay, params int[] retriableCodes)
             => new FixedPolicy(retriableCodes, maxRetries, delay);
 
-        public override async Task ProcessAsync(HttpPipelineMessage pipelineMessage, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             int attempt = 1;
             while (true)
             {
-                await ProcessNextAsync(pipeline, pipelineMessage).ConfigureAwait(false);
-                if (!ShouldRetry(pipelineMessage, attempt++, out var delay)) return;
-                if (delay > TimeSpan.Zero) await Task.Delay(delay, pipelineMessage.Cancellation).ConfigureAwait(false);
+                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                if (!ShouldRetry(message, attempt++, out var delay)) return;
+                if (delay > TimeSpan.Zero) await Task.Delay(delay, message.Cancellation).ConfigureAwait(false);
             }
         }
 
