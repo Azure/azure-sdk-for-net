@@ -5,49 +5,49 @@ using System.ComponentModel;
 
 namespace Azure.Base.Http
 {
-    public partial class HttpPipelineContext
+    public partial class HttpPipelineMessage
     {
         public readonly struct HttpMessageOptions
         {
-            readonly HttpPipelineContext _pipelineContext;
+            readonly HttpPipelineMessage _pipelineMessage;
 
-            internal HttpMessageOptions(HttpPipelineContext pipelineContext)
-                => _pipelineContext = pipelineContext;
+            internal HttpMessageOptions(HttpPipelineMessage pipelineMessage)
+                => _pipelineMessage = pipelineMessage;
 
             public T Add<T>(T option) where T : class
             {
-                _pipelineContext._options.SetOption(typeof(T), option);
+                _pipelineMessage._options.SetOption(typeof(T), option);
                 return option;
             }
 
             public void Add(object option)
-                => _pipelineContext._options.SetOption(option.GetType(), option);
+                => _pipelineMessage._options.SetOption(option.GetType(), option);
 
             public T GetOrDefault<T>() where T : class
             {
-                if (_pipelineContext._options.TryGetOption(typeof(T), out object value)) {
+                if (_pipelineMessage._options.TryGetOption(typeof(T), out object value)) {
                     return (T)value;
                 }
                 return default;
             }
 
             public void SetOption(object key, long value)
-                => _pipelineContext._options.SetOption(key, value);
+                => _pipelineMessage._options.SetOption(key, value);
 
             void SetOption(object key, object value)
-                => _pipelineContext.Options.SetOption(key, value);
+                => _pipelineMessage.Options.SetOption(key, value);
 
             public bool TryGetOption(object key, out object value)
-                => _pipelineContext._options.TryGetOption(key, out value);
+                => _pipelineMessage._options.TryGetOption(key, out value);
 
             public bool TryGetOption(object key, out long value)
-                => _pipelineContext._options.TryGetOption(key, out value);
+                => _pipelineMessage._options.TryGetOption(key, out value);
 
             public long GetInt64(object key)
-                => _pipelineContext._options.GetInt64(key);
+                => _pipelineMessage._options.GetInt64(key);
 
             public object GetObject(object key)
-                => _pipelineContext._options.GetInt64(key);
+                => _pipelineMessage._options.GetInt64(key);
 
             [EditorBrowsable(EditorBrowsableState.Never)]
             public override bool Equals(object obj) => base.Equals(obj);

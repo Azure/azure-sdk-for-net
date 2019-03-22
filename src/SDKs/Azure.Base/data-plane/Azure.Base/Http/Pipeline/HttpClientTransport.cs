@@ -27,15 +27,15 @@ namespace Azure.Base.Http.Pipeline
         public sealed override HttpPipelineRequest CreateRequest(IServiceProvider services)
             => new PipelineRequest();
 
-        public sealed override async Task ProcessAsync(HttpPipelineContext pipelineContext)
+        public sealed override async Task ProcessAsync(HttpPipelineMessage message)
         {
-            var pipelineRequest = pipelineContext.Request as PipelineRequest;
+            var pipelineRequest = message.Request as PipelineRequest;
             if (pipelineRequest == null) throw new InvalidOperationException("the request is not compatible with the transport");
 
-            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(pipelineContext.Cancellation))
+            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
             {
-                HttpResponseMessage responseMessage = await ProcessCoreAsync(pipelineContext.Cancellation, httpRequest).ConfigureAwait(false);
-                pipelineContext.Response = new PipelineResponse(responseMessage);
+                HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
+                message.Response = new PipelineResponse(responseMessage);
             }
         }
 
