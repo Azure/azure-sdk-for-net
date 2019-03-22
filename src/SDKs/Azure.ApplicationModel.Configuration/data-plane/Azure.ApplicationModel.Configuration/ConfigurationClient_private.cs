@@ -208,7 +208,7 @@ namespace Azure.ApplicationModel.Configuration
             return content;
         }
 
-        internal static void AddAuthenticationHeaders(HttpPipelineRequest pipelineContext, Uri uri, HttpVerb method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
+        internal static void AddAuthenticationHeaders(HttpPipelineRequest request, Uri uri, HttpVerb method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
         {
             string contentHash = null;
             using (var alg = SHA256.Create())
@@ -230,9 +230,9 @@ namespace Azure.ApplicationModel.Configuration
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
                 // TODO (pri 3): should date header writing be moved out from here?
-                pipelineContext.AddHeader("Date", utcNowString);
-                pipelineContext.AddHeader("x-ms-content-sha256", contentHash);
-                pipelineContext.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                request.AddHeader("Date", utcNowString);
+                request.AddHeader("x-ms-content-sha256", contentHash);
+                request.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
 

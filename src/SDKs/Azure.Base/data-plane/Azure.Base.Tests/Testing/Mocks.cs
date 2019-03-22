@@ -64,12 +64,12 @@ namespace Azure.Base.Testing
 
         public override Task ProcessAsync(HttpPipelineContext pipelineContext)
         {
-            var mockMessage = pipelineContext.Request as PipelineRequest;
-            if (mockMessage == null) throw new InvalidOperationException("the message is not compatible with the transport");
+            var request = pipelineContext.Request as PipelineRequest;
+            if (request == null) throw new InvalidOperationException("the request is not compatible with the transport");
 
             if (_index >= _statusCodes.Length) _index = 0;
 
-            var response = new PipelineResponse(mockMessage.Method, mockMessage.Uri);
+            var response = new PipelineResponse(request.Method, request.Uri);
 
             response.SetStatus(_statusCodes[_index++]);
 
@@ -98,7 +98,7 @@ namespace Azure.Base.Testing
             {
             }
 
-            public override void SetContent(HttpMessageContent content)
+            public override void SetContent(HttpRequestContent content)
             {
             }
             public override void Dispose()

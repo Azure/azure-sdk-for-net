@@ -10,16 +10,16 @@ using System.Buffers;
 
 namespace Azure.Base.Http
 {
-    public abstract class HttpMessageContent : IDisposable
+    public abstract class HttpRequestContent : IDisposable
     {
-        public static HttpMessageContent Create(Stream stream) => new StreamContent(stream);
-        public static HttpMessageContent Create(byte[] bytes) => new ArrayContent(bytes, 0, bytes.Length);
+        public static HttpRequestContent Create(Stream stream) => new StreamContent(stream);
+        public static HttpRequestContent Create(byte[] bytes) => new ArrayContent(bytes, 0, bytes.Length);
 
-        public static HttpMessageContent Create(byte[] bytes, int index, int length) => new ArrayContent(bytes, index, length);
+        public static HttpRequestContent Create(byte[] bytes, int index, int length) => new ArrayContent(bytes, index, length);
 
-        public static HttpMessageContent Create(ReadOnlyMemory<byte> bytes) => new MemoryContent(bytes);
+        public static HttpRequestContent Create(ReadOnlyMemory<byte> bytes) => new MemoryContent(bytes);
 
-        public static HttpMessageContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
+        public static HttpRequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
 
         public abstract Task WriteTo(Stream stream, CancellationToken cancellation);
 
@@ -27,7 +27,7 @@ namespace Azure.Base.Http
 
         public abstract void Dispose();
 
-        sealed class StreamContent : HttpMessageContent
+        sealed class StreamContent : HttpRequestContent
         {
             Stream _stream;
             readonly long _origin;
@@ -64,7 +64,7 @@ namespace Azure.Base.Http
             }
         }
 
-        sealed class ArrayContent : HttpMessageContent
+        sealed class ArrayContent : HttpRequestContent
         {
             readonly byte[] _bytes;
             readonly int _contentStart;
@@ -91,7 +91,7 @@ namespace Azure.Base.Http
                 => await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
         }
 
-        sealed class MemoryContent : HttpMessageContent
+        sealed class MemoryContent : HttpRequestContent
         {
             readonly ReadOnlyMemory<byte> _bytes;
 
@@ -112,7 +112,7 @@ namespace Azure.Base.Http
                 => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
         }
 
-        sealed class ReadOnlySequenceContent : HttpMessageContent
+        sealed class ReadOnlySequenceContent : HttpRequestContent
         {
             readonly ReadOnlySequence<byte> _bytes;
 

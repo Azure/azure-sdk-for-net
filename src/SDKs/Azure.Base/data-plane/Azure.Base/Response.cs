@@ -17,6 +17,11 @@ namespace Azure
 
         public Response(HttpPipelineResponse httpResponse)
         {
+            if (httpResponse == null)
+            {
+                throw new ArgumentNullException(nameof(httpResponse));
+            }
+
             _httpResponse = httpResponse;
         }
 

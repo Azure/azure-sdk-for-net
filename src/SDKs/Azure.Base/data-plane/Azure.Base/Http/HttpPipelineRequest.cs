@@ -14,7 +14,7 @@ namespace Azure.Base.Http
         public virtual void AddHeader(string name, string value)
             => AddHeader(new HttpHeader(name, value));
 
-        public abstract void SetContent(HttpMessageContent content);
+        public abstract void SetContent(HttpRequestContent content);
 
         public abstract HttpVerb Method { get; }
 

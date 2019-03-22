@@ -32,7 +32,7 @@ namespace Azure.Base.Tests
 
             var message = pipeline.CreateRequest();
             message.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
-            var response = await pipeline.SendMessageAsync(message, CancellationToken.None);
+            var response = await pipeline.SendRequestAsync(message, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
             var result = listener.ToString();
@@ -43,7 +43,7 @@ namespace Azure.Base.Tests
         public async Task EmptyPipeline()
         {
             var pipeline = new HttpPipeline();
-            await pipeline.SendMessageAsync(new NullPipelineContext(), CancellationToken.None);
+            await pipeline.SendRequestAsync(new NullPipelineContext(), CancellationToken.None);
         }
 
         class CustomRetryPolicy : RetryPolicy
@@ -67,7 +67,7 @@ namespace Azure.Base.Tests
             {
             }
 
-            public override void SetContent(HttpMessageContent content)
+            public override void SetContent(HttpRequestContent content)
             {
             }
 

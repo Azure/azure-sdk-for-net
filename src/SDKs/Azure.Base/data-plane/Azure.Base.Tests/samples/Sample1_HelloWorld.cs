@@ -25,7 +25,7 @@ namespace Azure.Base.Samples
             pipelineContext.SetRequestLine(HttpVerb.Get, uri);
             pipelineContext.AddHeader("Host", uri.Host);
 
-            Response response = await pipeline.SendMessageAsync(pipelineContext, cancellationToken: default).ConfigureAwait(false);
+            Response response = await pipeline.SendRequestAsync(pipelineContext, cancellationToken: default).ConfigureAwait(false);
 
             if (response.Status == 200) {
                 var reader = new StreamReader(response.ContentStream);

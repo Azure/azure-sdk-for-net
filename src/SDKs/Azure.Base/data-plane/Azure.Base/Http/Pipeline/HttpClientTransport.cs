@@ -30,7 +30,7 @@ namespace Azure.Base.Http.Pipeline
         public sealed override async Task ProcessAsync(HttpPipelineContext pipelineContext)
         {
             var pipelineRequest = pipelineContext.Request as PipelineRequest;
-            if (pipelineRequest == null) throw new InvalidOperationException("the message is not compatible with the transport");
+            if (pipelineRequest == null) throw new InvalidOperationException("the request is not compatible with the transport");
 
             using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(pipelineContext.Cancellation))
             {
@@ -46,7 +46,7 @@ namespace Azure.Base.Http.Pipeline
         {
             string _contentTypeHeaderValue;
             string _contentLengthHeaderValue;
-            HttpMessageContent _requestContent;
+            HttpRequestContent _requestContent;
             readonly HttpRequestMessage _requestMessage;
 
             public PipelineRequest()
@@ -87,7 +87,7 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
-            public override void SetContent(HttpMessageContent content)
+            public override void SetContent(HttpRequestContent content)
                 => _requestContent = content;
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
@@ -151,10 +151,10 @@ namespace Azure.Base.Http.Pipeline
 
             sealed class PipelineContentAdapter : HttpContent
             {
-                HttpMessageContent _content;
+                HttpRequestContent _content;
                 CancellationToken _cancellation;
 
-                public PipelineContentAdapter(HttpMessageContent content, CancellationToken cancellation)
+                public PipelineContentAdapter(HttpRequestContent content, CancellationToken cancellation)
                 {
                     Debug.Assert(content != null);
 

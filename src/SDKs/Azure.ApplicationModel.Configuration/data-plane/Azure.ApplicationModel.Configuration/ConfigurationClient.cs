@@ -77,10 +77,10 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpMessageContent.Create(content));
+                request.SetContent(HttpRequestContent.Create(content));
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
-                ;
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+
                 if (response.Status == 200 || response.Status == 201)
                 {
                     return await CreateResponse(response, cancellation);
@@ -116,9 +116,9 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpMessageContent.Create(content));
+                request.SetContent(HttpRequestContent.Create(content));
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200) {
                     return await CreateResponse(response, cancellation);
@@ -164,9 +164,9 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpMessageContent.Create(content));
+                request.SetContent(HttpRequestContent.Create(content));
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200)
                 {
@@ -197,7 +197,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 204)
                 {
@@ -222,7 +222,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content: default, _secret, _credential);
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200)
                 {
@@ -247,7 +247,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
                 if (response.Status == 200)
                 {
                     return await CreateResponse(response, cancellation);
@@ -274,7 +274,7 @@ namespace Azure.ApplicationModel.Configuration
 
                 AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200) {
                     return await CreateResponse(response, cancellation);
@@ -297,7 +297,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 206 /* partial */)
                 {
@@ -322,7 +322,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
-                var response = await _pipeline.SendMessageAsync(request, cancellation).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 206 /* partial */)
                 {

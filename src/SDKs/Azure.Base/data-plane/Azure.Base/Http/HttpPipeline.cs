@@ -39,13 +39,13 @@ namespace Azure.Base.Http
             => Transport.CreateRequest(_services);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task<Response> SendMessageAsync(HttpPipelineRequest pipelineContext, CancellationToken cancellationToken)
+        public async Task<Response> SendRequestAsync(HttpPipelineRequest request, CancellationToken cancellationToken)
         {
             if (_pipeline.IsEmpty) return default;
 
             using (var context = new HttpPipelineContext(cancellationToken))
             {
-                context.Request = pipelineContext;
+                context.Request = request;
                 await _pipeline.Span[0].ProcessAsync(context, _pipeline.Slice(1)).ConfigureAwait(false);
                 return new Response(context.Response);
             }
