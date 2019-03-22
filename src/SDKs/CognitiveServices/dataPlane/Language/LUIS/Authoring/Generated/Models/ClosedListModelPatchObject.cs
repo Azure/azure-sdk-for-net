@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Object model for adding a batch of sublists to an existing closedlist.
+    /// Object model for adding a batch of sublists to an existing list entity.
     /// </summary>
     public partial class ClosedListModelPatchObject
     {

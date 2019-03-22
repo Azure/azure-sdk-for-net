@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Response when adding a labeled example.
+    /// Response when adding a labeled example utterance.
     /// </summary>
     public partial class LabelExampleResponse
     {
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Initializes a new instance of the LabelExampleResponse class.
         /// </summary>
-        /// <param name="utteranceText">The sample's utterance.</param>
+        /// <param name="utteranceText">The example utterance.</param>
         /// <param name="exampleId">The newly created sample ID.</param>
         public LabelExampleResponse(string utteranceText = default(string), int? exampleId = default(int?))
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sample's utterance.
+        /// Gets or sets the example utterance.
         /// </summary>
         [JsonProperty(PropertyName = "UtteranceText")]
         public string UtteranceText { get; set; }

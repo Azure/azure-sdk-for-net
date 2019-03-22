@@ -32,14 +32,15 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Initializes a new instance of the Source class.
         /// </summary>
-        /// <param name="query">Log search query.</param>
         /// <param name="dataSourceId">The resource uri over which log search
         /// query is to be run.</param>
+        /// <param name="query">Log search query. Required for action type -
+        /// AlertingAction</param>
         /// <param name="authorizedResources">List of  Resource referred into
         /// query</param>
         /// <param name="queryType">Set value to 'ResultCount'. Possible values
         /// include: 'ResultCount'</param>
-        public Source(string query, string dataSourceId, IList<string> authorizedResources = default(IList<string>), string queryType = default(string))
+        public Source(string dataSourceId, string query = default(string), IList<string> authorizedResources = default(IList<string>), string queryType = default(string))
         {
             Query = query;
             AuthorizedResources = authorizedResources;
@@ -54,7 +55,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets log search query.
+        /// Gets or sets log search query. Required for action type -
+        /// AlertingAction
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public string Query { get; set; }
@@ -87,10 +89,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Query == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Query");
-            }
             if (DataSourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "DataSourceId");

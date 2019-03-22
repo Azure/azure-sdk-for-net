@@ -111,27 +111,28 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         Uri BuildUriForKvRoute(ConfigurationSetting keyValue)
-            => BuildUriForKvRoute(keyValue.Key, new RequestOptions() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
+            => BuildUriForKvRoute(keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        Uri BuildUriForKvRoute(string key, RequestOptions options)
+        Uri BuildUriForKvRoute(string key, string label)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute + key;
 
-            if (options != null && options.Label != null) {
-                builder.AppendQuery(LabelQueryFilter, options.Label);
+            if (label != null)
+            {
+                builder.AppendQuery(LabelQueryFilter, label);
             }
 
             return builder.Uri;
         }
 
-        Uri BuildUriForLocksRoute(string key, RequestOptions options)
+        Uri BuildUriForLocksRoute(string key, string label)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = LocksRoute + key;
 
-            if (options != null && options.Label != null) {
-                builder.AppendQuery(LabelQueryFilter, options.Label);
+            if (label != null) {
+                builder.AppendQuery(LabelQueryFilter, label);
             }
 
             return builder.Uri;

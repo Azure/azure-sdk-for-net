@@ -45,27 +45,33 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// not.</param>
         /// <param name="noCache">The value of this property indicates whether
         /// the image cache is enabled or not.</param>
+        /// <param name="target">The name of the target build stage for the
+        /// docker build.</param>
         /// <param name="arguments">The collection of override arguments to be
         /// used when executing the run.</param>
         /// <param name="timeout">Run timeout in seconds.</param>
         /// <param name="agentConfiguration">The machine configuration of the
         /// run agent.</param>
         /// <param name="sourceLocation">The URL(absolute or relative) of the
-        /// source context. It can be an URL to a tar or git repoistory.
+        /// source context. It can be an URL to a tar or git repository.
         /// If it is relative URL, the relative path should be obtained from
         /// calling listBuildSourceUploadUrl API.</param>
-        public DockerBuildRequest(string dockerFilePath, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), IList<Argument> arguments = default(IList<Argument>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string))
+        /// <param name="credentials">The properties that describes a set of
+        /// credentials that will be used when this run is invoked.</param>
+        public DockerBuildRequest(string dockerFilePath, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string target = default(string), IList<Argument> arguments = default(IList<Argument>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string), Credentials credentials = default(Credentials))
             : base(isArchiveEnabled)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;
             NoCache = noCache;
             DockerFilePath = dockerFilePath;
+            Target = target;
             Arguments = arguments;
             Timeout = timeout;
             Platform = platform;
             AgentConfiguration = agentConfiguration;
             SourceLocation = sourceLocation;
+            Credentials = credentials;
             CustomInit();
         }
 
@@ -102,6 +108,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public string DockerFilePath { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the target build stage for the docker
+        /// build.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; set; }
+
+        /// <summary>
         /// Gets or sets the collection of override arguments to be used when
         /// executing the run.
         /// </summary>
@@ -129,12 +142,19 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
         /// <summary>
         /// Gets or sets the URL(absolute or relative) of the source context.
-        /// It can be an URL to a tar or git repoistory.
+        /// It can be an URL to a tar or git repository.
         /// If it is relative URL, the relative path should be obtained from
         /// calling listBuildSourceUploadUrl API.
         /// </summary>
         [JsonProperty(PropertyName = "sourceLocation")]
         public string SourceLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the properties that describes a set of credentials
+        /// that will be used when this run is invoked.
+        /// </summary>
+        [JsonProperty(PropertyName = "credentials")]
+        public Credentials Credentials { get; set; }
 
         /// <summary>
         /// Validate the object.
