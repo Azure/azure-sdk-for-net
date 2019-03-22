@@ -166,7 +166,10 @@ namespace FrontDoor.Tests.ScenarioTests
                     PolicySettings = new PolicySettings
                     {
                         EnabledState = "Enabled",
-                        Mode = "Prevention"
+                        Mode = "Prevention",
+                        CustomBlockResponseBody = "PGh0bWw+SGVsbG88L2h0bWw+",
+                        CustomBlockResponseStatusCode = 403,
+                        RedirectUrl = "http://www.bing.com"
                     },
                     CustomRules = new CustomRuleList(
                         new List<CustomRule>
@@ -174,6 +177,7 @@ namespace FrontDoor.Tests.ScenarioTests
                             new CustomRule
                             {
                                 Name = "rule1",
+                                EnabledState = "Enabled",
                                 Priority = 1,
                                 RuleType = "RateLimitRule",
                                 RateLimitThreshold = 1000,
@@ -281,6 +285,9 @@ namespace FrontDoor.Tests.ScenarioTests
             Assert.True(policy.Tags.SequenceEqual(parameters.Tags));
             Assert.Equal(policy.PolicySettings.EnabledState, parameters.PolicySettings.EnabledState);
             Assert.Equal(policy.PolicySettings.Mode, parameters.PolicySettings.Mode);
+            Assert.Equal(policy.PolicySettings.CustomBlockResponseBody, parameters.PolicySettings.CustomBlockResponseBody);
+            Assert.Equal(policy.PolicySettings.CustomBlockResponseStatusCode, parameters.PolicySettings.CustomBlockResponseStatusCode);
+            Assert.Equal(policy.PolicySettings.RedirectUrl, parameters.PolicySettings.RedirectUrl);
             Assert.Equal(policy.CustomRules.Rules.Count, parameters.CustomRules.Rules.Count);
             Assert.Equal(policy.ManagedRules.ManagedRuleSets.Count, parameters.ManagedRules.ManagedRuleSets.Count);
         }
