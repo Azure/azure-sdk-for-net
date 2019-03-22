@@ -7,16 +7,15 @@
 namespace Microsoft.Azure.Management.Peering.Models
 {
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The essential information related to the pee's ASN.
+    /// The essential information related to the peer's ASN.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class PeerAsn : IResource
+    public partial class PeerAsn : Resource
     {
         /// <summary>
         /// Initializes a new instance of the PeerAsn class.
@@ -29,6 +28,9 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <summary>
         /// Initializes a new instance of the PeerAsn class.
         /// </summary>
+        /// <param name="name">The name of the resource.</param>
+        /// <param name="id">The ID of the resource.</param>
+        /// <param name="type">The type of the resource.</param>
         /// <param name="peerAsnProperty">The Autonomous System Number (ASN) of
         /// the peer.</param>
         /// <param name="peerContactInfo">The contact information of the
@@ -37,18 +39,13 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// <param name="validationState">The validation state of the ASN
         /// associated with the peer. Possible values include: 'None',
         /// 'Pending', 'Approved', 'Failed'</param>
-        /// <param name="name">The name of the resource.</param>
-        /// <param name="id">The ID of the resource.</param>
-        /// <param name="type">The type of the resource.</param>
-        public PeerAsn(int? peerAsnProperty = default(int?), ContactInfo peerContactInfo = default(ContactInfo), string peerName = default(string), string validationState = default(string), string name = default(string), string id = default(string), string type = default(string))
+        public PeerAsn(string name = default(string), string id = default(string), string type = default(string), int? peerAsnProperty = default(int?), ContactInfo peerContactInfo = default(ContactInfo), string peerName = default(string), string validationState = default(string))
+            : base(name, id, type)
         {
             PeerAsnProperty = peerAsnProperty;
             PeerContactInfo = peerContactInfo;
             PeerName = peerName;
             ValidationState = validationState;
-            Name = name;
-            Id = id;
-            Type = type;
             CustomInit();
         }
 
@@ -82,24 +79,6 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.validationState")]
         public string ValidationState { get; set; }
-
-        /// <summary>
-        /// Gets the name of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; private set; }
-
-        /// <summary>
-        /// Gets the ID of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
-
-        /// <summary>
-        /// Gets the type of the resource.
-        /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
 
     }
 }
