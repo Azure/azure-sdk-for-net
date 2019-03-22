@@ -26,16 +26,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='appId'>
             /// The LUIS application ID (Guid).
             /// </param>
@@ -63,9 +53,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LuisResult> ResolveAsync(this IPrediction operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LuisResult> ResolveAsync(this IPrediction operations, System.Guid appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ResolveWithHttpMessagesAsync(azureRegion, azureCloud, appId, query, timezoneOffset, verbose, staging, spellCheck, bingSpellCheckSubscriptionKey, log, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ResolveWithHttpMessagesAsync(appId, query, timezoneOffset, verbose, staging, spellCheck, bingSpellCheckSubscriptionKey, log, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
