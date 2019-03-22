@@ -1,9 +1,9 @@
 ﻿// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="OperationsTests.cs" company="Microsoft">
+// <copyright file="PeeringTests.cs" company="Microsoft">
 //   
 // </copyright>
 // <summary>
-//   Defines the OperationsTests type.
+//   Defines the  PeeringTests type.
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
