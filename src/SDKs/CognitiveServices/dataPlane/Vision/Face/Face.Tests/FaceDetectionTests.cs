@@ -4,6 +4,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Xunit;
 
 namespace FaceSDK.Tests
@@ -68,6 +69,7 @@ namespace FaceSDK.Tests
                     Assert.False(face.FaceAttributes.Makeup.EyeMakeup);
                     Assert.False(face.FaceAttributes.Makeup.LipMakeup);
                     Assert.True(face.FaceAttributes.Emotion.Neutral > 0.5);
+                    Assert.Equal("Neutral", face.FaceAttributes.Emotion.ToRankedList().First().Key);
                     Assert.True(face.FaceAttributes.Occlusion.ForeheadOccluded);
                     Assert.False(face.FaceAttributes.Occlusion.EyeOccluded);
                     Assert.False(face.FaceAttributes.Occlusion.MouthOccluded);
