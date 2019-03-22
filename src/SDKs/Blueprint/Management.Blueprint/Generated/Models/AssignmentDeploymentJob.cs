@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents individual job in given assignment operation.
+    /// Represents individual job in given blueprint assignment operation.
     /// </summary>
     public partial class AssignmentDeploymentJob
     {
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the AssignmentDeploymentJob class.
         /// </summary>
-        /// <param name="kind">Kind of the job.</param>
+        /// <param name="kind">Kind of job.</param>
         /// <param name="action">Name of the action performed in this
         /// job.</param>
         /// <param name="jobId">Id of this job.</param>
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets kind of the job.
+        /// Gets or sets kind of job.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }

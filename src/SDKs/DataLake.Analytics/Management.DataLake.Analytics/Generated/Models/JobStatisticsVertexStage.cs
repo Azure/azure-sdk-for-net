@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// bytes.</param>
         /// <param name="duplicateDiscardCount">The number of duplicates that
         /// were discarded.</param>
-        /// <param name="failedCount">The number of failures that occured in
+        /// <param name="failedCount">The number of failures that occurred in
         /// this stage.</param>
         /// <param name="maxVertexDataRead">The maximum amount of data read in
         /// a single vertex, in bytes.</param>
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public int? DuplicateDiscardCount { get; private set; }
 
         /// <summary>
-        /// Gets the number of failures that occured in this stage.
+        /// Gets the number of failures that occurred in this stage.
         /// </summary>
         [JsonProperty(PropertyName = "failedCount")]
         public int? FailedCount { get; private set; }

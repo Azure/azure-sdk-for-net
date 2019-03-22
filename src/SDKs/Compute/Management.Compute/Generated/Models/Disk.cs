@@ -49,14 +49,18 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// created.</param>
         /// <param name="osType">The Operating System type. Possible values
         /// include: 'Windows', 'Linux'</param>
+        /// <param name="hyperVGeneration">The hypervisor generation of the
+        /// Virtual Machine. Applicable to OS disks only. Possible values
+        /// include: 'V1', 'V2'</param>
         /// <param name="diskSizeGB">If creationData.createOption is Empty,
         /// this field is mandatory and it indicates the size of the VHD to
         /// create. If this field is present for updates or creation with other
         /// options, it indicates a resize. Resizes are only allowed if the
         /// disk is not attached to a running VM, and can only increase the
         /// disk's size.</param>
-        /// <param name="encryptionSettings">Encryption settings for disk or
-        /// snapshot</param>
+        /// <param name="encryptionSettingsCollection">Encryption settings
+        /// collection used for Azure Disk Encryption, can contain multiple
+        /// encryption settings per disk or snapshot.</param>
         /// <param name="provisioningState">The disk provisioning
         /// state.</param>
         /// <param name="diskIOPSReadWrite">The number of IOPS allowed for this
@@ -66,7 +70,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk; only settable for UltraSSD disks. MBps means millions of
         /// bytes per second - MB here uses the ISO notation, of powers of
         /// 10.</param>
-        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?))
+        /// <param name="diskState">The state of the disk. Possible values
+        /// include: 'Unattached', 'Attached', 'Reserved', 'ActiveSAS',
+        /// 'ReadyToUpload', 'ActiveUpload'</param>
+        public Disk(string location, CreationData creationData, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedBy = default(string), DiskSku sku = default(DiskSku), IList<string> zones = default(IList<string>), System.DateTime? timeCreated = default(System.DateTime?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), string hyperVGeneration = default(string), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), string provisioningState = default(string), long? diskIOPSReadWrite = default(long?), int? diskMBpsReadWrite = default(int?), string diskState = default(string))
             : base(location, id, name, type, tags)
         {
             ManagedBy = managedBy;
@@ -74,12 +81,14 @@ namespace Microsoft.Azure.Management.Compute.Models
             Zones = zones;
             TimeCreated = timeCreated;
             OsType = osType;
+            HyperVGeneration = hyperVGeneration;
             CreationData = creationData;
             DiskSizeGB = diskSizeGB;
-            EncryptionSettings = encryptionSettings;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
             ProvisioningState = provisioningState;
             DiskIOPSReadWrite = diskIOPSReadWrite;
             DiskMBpsReadWrite = diskMBpsReadWrite;
+            DiskState = diskState;
             CustomInit();
         }
 
@@ -120,6 +129,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         public OperatingSystemTypes? OsType { get; set; }
 
         /// <summary>
+        /// Gets or sets the hypervisor generation of the Virtual Machine.
+        /// Applicable to OS disks only. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hyperVGeneration")]
+        public string HyperVGeneration { get; set; }
+
+        /// <summary>
         /// Gets or sets disk source information. CreationData information
         /// cannot be changed after the disk has been created.
         /// </summary>
@@ -137,10 +153,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary>
-        /// Gets or sets encryption settings for disk or snapshot
+        /// Gets or sets encryption settings collection used for Azure Disk
+        /// Encryption, can contain multiple encryption settings per disk or
+        /// snapshot.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.encryptionSettings")]
-        public EncryptionSettings EncryptionSettings { get; set; }
+        [JsonProperty(PropertyName = "properties.encryptionSettingsCollection")]
+        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
 
         /// <summary>
         /// Gets the disk provisioning state.
@@ -165,6 +183,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? DiskMBpsReadWrite { get; set; }
 
         /// <summary>
+        /// Gets the state of the disk. Possible values include: 'Unattached',
+        /// 'Attached', 'Reserved', 'ActiveSAS', 'ReadyToUpload',
+        /// 'ActiveUpload'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.diskState")]
+        public string DiskState { get; private set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -181,9 +207,9 @@ namespace Microsoft.Azure.Management.Compute.Models
             {
                 CreationData.Validate();
             }
-            if (EncryptionSettings != null)
+            if (EncryptionSettingsCollection != null)
             {
-                EncryptionSettings.Validate();
+                EncryptionSettingsCollection.Validate();
             }
         }
     }

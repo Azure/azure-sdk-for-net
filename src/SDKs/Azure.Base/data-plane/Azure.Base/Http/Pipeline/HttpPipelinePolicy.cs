@@ -12,13 +12,14 @@ namespace Azure.Base.Http.Pipeline
     {
         public abstract Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
+        protected HttpPipelineEventSource Log = HttpPipelineEventSource.Singleton;
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        protected internal static async Task ProcessNextAsync(ReadOnlyMemory<HttpPipelinePolicy> pipeline, HttpMessage message)
+        protected static async Task ProcessNextAsync(ReadOnlyMemory<HttpPipelinePolicy> pipeline, HttpMessage message)
         {
+            if (pipeline.IsEmpty) throw new InvalidOperationException("last policy in the pipeline must be a transport"); 
             var next = pipeline.Span[0];
             await next.ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
         }
-
-        protected HttpPipelineEventSource Log = HttpPipelineEventSource.Singleton;
     }
 }

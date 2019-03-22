@@ -21,6 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
                 HttpMockServer.Initialize(this.GetType().FullName, "Sentiment");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
                 SentimentBatchResult result = await client.SentimentAsync(
+                    null,
                     new MultiLanguageBatchInput(
                         new List<MultiLanguageInput>()
                         {

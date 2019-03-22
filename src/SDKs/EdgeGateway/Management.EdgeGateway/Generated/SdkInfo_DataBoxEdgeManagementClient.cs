@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.EdgeGateway
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/edgegateway/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\Code\\azure-sdk-for-net\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "3f2dbe787b062de8bf8a261b4bff66aff61065d3";
+      public static readonly String GithubCommidId = "81d676d35a219b8a7753eecdcdfbe7643d4feb33";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
 
     /// <summary>
     /// The task that has the ARM resource and task properties.
-    /// The  task will have all information to schedule a run against it.
+    /// The task will have all information to schedule a run against it.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Task : Resource
@@ -55,7 +55,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="timeout">Run timeout in seconds.</param>
         /// <param name="trigger">The properties that describe all triggers for
         /// the task.</param>
-        public Task(string location, PlatformProperties platform, TaskStepProperties step, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TriggerProperties trigger = default(TriggerProperties))
+        /// <param name="credentials">The properties that describes a set of
+        /// credentials that will be used when this run is invoked.</param>
+        public Task(string location, PlatformProperties platform, TaskStepProperties step, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TriggerProperties trigger = default(TriggerProperties), Credentials credentials = default(Credentials))
             : base(location, id, name, type, tags)
         {
             ProvisioningState = provisioningState;
@@ -66,6 +68,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Timeout = timeout;
             Step = step;
             Trigger = trigger;
+            Credentials = credentials;
             CustomInit();
         }
 
@@ -126,6 +129,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.trigger")]
         public TriggerProperties Trigger { get; set; }
+
+        /// <summary>
+        /// Gets or sets the properties that describes a set of credentials
+        /// that will be used when this run is invoked.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.credentials")]
+        public Credentials Credentials { get; set; }
 
         /// <summary>
         /// Validate the object.

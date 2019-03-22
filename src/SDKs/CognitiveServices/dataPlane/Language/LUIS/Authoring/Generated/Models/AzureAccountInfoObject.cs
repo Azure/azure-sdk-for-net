@@ -15,7 +15,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the azure account information object.
+    /// Defines the Azure account information object.
     /// </summary>
     public partial class AzureAccountInfoObject
     {
@@ -30,10 +30,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Initializes a new instance of the AzureAccountInfoObject class.
         /// </summary>
-        /// <param name="azureSubscriptionId">The id for the azure
+        /// <param name="azureSubscriptionId">The id for the Azure
         /// subscription.</param>
-        /// <param name="resourceGroup">The azure resource group name.</param>
-        /// <param name="accountName">The azure account name.</param>
+        /// <param name="resourceGroup">The Azure resource group name.</param>
+        /// <param name="accountName">The Azure account name.</param>
         public AzureAccountInfoObject(string azureSubscriptionId, string resourceGroup, string accountName)
         {
             AzureSubscriptionId = azureSubscriptionId;
@@ -48,19 +48,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the id for the azure subscription.
+        /// Gets or sets the id for the Azure subscription.
         /// </summary>
         [JsonProperty(PropertyName = "azureSubscriptionId")]
         public string AzureSubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the azure resource group name.
+        /// Gets or sets the Azure resource group name.
         /// </summary>
         [JsonProperty(PropertyName = "resourceGroup")]
         public string ResourceGroup { get; set; }
 
         /// <summary>
-        /// Gets or sets the azure account name.
+        /// Gets or sets the Azure account name.
         /// </summary>
         [JsonProperty(PropertyName = "accountName")]
         public string AccountName { get; set; }

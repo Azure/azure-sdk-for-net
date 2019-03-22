@@ -1,0 +1,19 @@
+omitted_paths:
+  - archive/*
+  - eng/*
+  - tools/*
+  - src/*
+  - Documentation/*
+language: net
+root_check_enabled: True
+required_readme_sections:
+  - "Azure .+ client library for .NET"
+  - ^Getting started$
+  - ^Key concepts$
+  - ^Examples$
+  - ^Troubleshooting$
+  - ^Next steps$
+  - ^Contributing$
+known_presence_issues:
+known_content_issues:
+  - ['README.md','Root readme']

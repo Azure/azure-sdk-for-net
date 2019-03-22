@@ -34,21 +34,18 @@ namespace Microsoft.Azure.Management.EdgeGateway.Models
         /// Initializes a new instance of the DataBoxEdgeDeviceExtendedInfo
         /// class.
         /// </summary>
-        /// <param name="integrityKey">The Channel Integrity Key (CIK) of the
-        /// device.</param>
         /// <param name="id">The path ID that uniquely identifies the
         /// object.</param>
         /// <param name="name">The object name.</param>
         /// <param name="type">The hierarchical type of the object.</param>
-        /// <param name="encryptionKeyThumbprint">The certificate thumbprint
-        /// that was used to encrypt the Channel Integrity Key (CIK).</param>
-        /// <param name="encryptionKey">The Channel Integrity Key (CIK) of the
-        /// device.</param>
+        /// <param name="encryptionKeyThumbprint">The digital signature of
+        /// encrypted certificate.</param>
+        /// <param name="encryptionKey">The public part of the encryption
+        /// certificate. Client uses this to encrypt any secret.</param>
         /// <param name="resourceKey">The Resource ID of the Resource.</param>
-        public DataBoxEdgeDeviceExtendedInfo(string integrityKey, string id = default(string), string name = default(string), string type = default(string), string encryptionKeyThumbprint = default(string), string encryptionKey = default(string), string resourceKey = default(string))
+        public DataBoxEdgeDeviceExtendedInfo(string id = default(string), string name = default(string), string type = default(string), string encryptionKeyThumbprint = default(string), string encryptionKey = default(string), string resourceKey = default(string))
             : base(id, name, type)
         {
-            IntegrityKey = integrityKey;
             EncryptionKeyThumbprint = encryptionKeyThumbprint;
             EncryptionKey = encryptionKey;
             ResourceKey = resourceKey;
@@ -61,20 +58,14 @@ namespace Microsoft.Azure.Management.EdgeGateway.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the Channel Integrity Key (CIK) of the device.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.integrityKey")]
-        public string IntegrityKey { get; set; }
-
-        /// <summary>
-        /// Gets or sets the certificate thumbprint that was used to encrypt
-        /// the Channel Integrity Key (CIK).
+        /// Gets or sets the digital signature of encrypted certificate.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionKeyThumbprint")]
         public string EncryptionKeyThumbprint { get; set; }
 
         /// <summary>
-        /// Gets or sets the Channel Integrity Key (CIK) of the device.
+        /// Gets or sets the public part of the encryption certificate. Client
+        /// uses this to encrypt any secret.
         /// </summary>
         [JsonProperty(PropertyName = "properties.encryptionKey")]
         public string EncryptionKey { get; set; }
@@ -85,18 +76,5 @@ namespace Microsoft.Azure.Management.EdgeGateway.Models
         [JsonProperty(PropertyName = "properties.resourceKey")]
         public string ResourceKey { get; private set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (IntegrityKey == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IntegrityKey");
-            }
-        }
     }
 }

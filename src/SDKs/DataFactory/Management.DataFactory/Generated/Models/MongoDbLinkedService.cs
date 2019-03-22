@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="authenticationType">The authentication type to be used
         /// to connect to the MongoDB database. Possible values include:
         /// 'Basic', 'Anonymous'</param>

@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// </exception>
         Task<AzureOperationResponse<WebApplicationFirewallPolicy1>> GetWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or update policy with specified ruleset name within a
+        /// Creates or update policy with specified rule set name within a
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>

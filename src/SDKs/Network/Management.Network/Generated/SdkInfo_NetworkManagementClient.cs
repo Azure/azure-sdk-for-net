@@ -68,6 +68,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "P2sVpnGateways", "2018-12-01"),
                 new Tuple<string, string, string>("Network", "P2sVpnServerConfigurations", "2018-12-01"),
                 new Tuple<string, string, string>("Network", "PacketCaptures", "2018-12-01"),
+                new Tuple<string, string, string>("Network", "PeerExpressRouteCircuitConnections", "2018-12-01"),
                 new Tuple<string, string, string>("Network", "PublicIPAddresses", "2018-12-01"),
                 new Tuple<string, string, string>("Network", "PublicIPPrefixes", "2018-12-01"),
                 new Tuple<string, string, string>("Network", "RouteFilterRules", "2018-12-01"),
@@ -91,6 +92,7 @@ namespace Microsoft.Azure.Management.Network
                 new Tuple<string, string, string>("Network", "VpnGateways", "2018-12-01"),
                 new Tuple<string, string, string>("Network", "VpnSites", "2018-12-01"),
                 new Tuple<string, string, string>("Network", "VpnSitesConfiguration", "2018-12-01"),
+                new Tuple<string, string, string>("Network", "WebApplicationFirewallPolicies", "2018-12-01"),
               }.AsEnumerable();
           }
       }
@@ -100,7 +102,7 @@ namespace Microsoft.Azure.Management.Network
       public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/network/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\Projects\\azure-sdk-for-net\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "ee4c2430123161a232d3a75cea368471cbd79f50";
+      public static readonly String GithubCommidId = "b005d51a9eeb72d62a648056f5fc48ba85226e0d";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

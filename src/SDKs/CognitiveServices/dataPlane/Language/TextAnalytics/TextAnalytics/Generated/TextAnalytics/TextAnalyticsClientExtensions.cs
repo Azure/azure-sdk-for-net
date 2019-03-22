@@ -20,6 +20,66 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
     public static partial class TextAnalyticsClientExtensions
     {
             /// <summary>
+            /// The API returns the detected language and a numeric score between 0 and 1.
+            /// </summary>
+            /// <remarks>
+            /// Scores close to 1 indicate 100% certainty that the identified language is
+            /// true. A total of 120 languages are supported.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='showStats'>
+            /// (optional) if set to true, response will contain input and document level
+            /// statistics.
+            /// </param>
+            /// <param name='languageBatchInput'>
+            /// Collection of documents to analyze.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<LanguageBatchResult> DetectLanguageAsync(this ITextAnalyticsClient operations, bool? showStats = default(bool?), LanguageBatchInput languageBatchInput = default(LanguageBatchInput), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DetectLanguageWithHttpMessagesAsync(showStats, languageBatchInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The API returns a list of recognized entities in a given document.
+            /// </summary>
+            /// <remarks>
+            /// To get even more information on each recognized entity we recommend using
+            /// the Bing Entity Search API by querying for the recognized entities names.
+            /// See the &lt;a
+            /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
+            /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
+            /// languages.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='showStats'>
+            /// (optional) if set to true, response will contain input and document level
+            /// statistics.
+            /// </param>
+            /// <param name='multiLanguageBatchInput'>
+            /// Collection of documents to analyze.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<EntitiesBatchResult> EntitiesAsync(this ITextAnalyticsClient operations, bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.EntitiesWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// The API returns a list of strings denoting the key talking points in the
             /// input text.
             /// </summary>
@@ -32,40 +92,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='input'>
+            /// <param name='showStats'>
+            /// (optional) if set to true, response will contain input and document level
+            /// statistics.
+            /// </param>
+            /// <param name='multiLanguageBatchInput'>
             /// Collection of documents to analyze. Documents can now contain a language
             /// field to indicate the text language
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<KeyPhraseBatchResult> KeyPhrasesAsync(this ITextAnalyticsClient operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<KeyPhraseBatchResult> KeyPhrasesAsync(this ITextAnalyticsClient operations, bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.KeyPhrasesWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The API returns the detected language and a numeric score between 0 and 1.
-            /// </summary>
-            /// <remarks>
-            /// Scores close to 1 indicate 100% certainty that the identified language is
-            /// true. A total of 120 languages are supported.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='input'>
-            /// Collection of documents to analyze.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<LanguageBatchResult> DetectLanguageAsync(this ITextAnalyticsClient operations, BatchInput input, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.DetectLanguageWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.KeyPhrasesWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -85,56 +125,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='input'>
+            /// <param name='showStats'>
+            /// (optional) if set to true, response will contain input and document level
+            /// statistics.
+            /// </param>
+            /// <param name='multiLanguageBatchInput'>
             /// Collection of documents to analyze.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SentimentBatchResult> SentimentAsync(this ITextAnalyticsClient operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SentimentBatchResult> SentimentAsync(this ITextAnalyticsClient operations, bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SentimentWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The API returns a list of recognized entities in a given document.
-            /// </summary>
-            /// <remarks>
-            /// The API returns a list of recognized entities in a given document. To get
-            /// even more information on each recognized entity we recommend using the Bing
-            /// Entity Search API by querying for the recognized entities names. See the
-            /// &lt;a
-            /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
-            /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
-            /// languages.The API returns a list of known entities and general named
-            /// entities ("Person", "Location", "Organization" etc) in a given document.
-            /// Known entities are returned with Wikipedia Id and Wikipedia link, and also
-            /// Bing Id which can be used in Bing Entity Search API. General named entities
-            /// are returned with entity types. If a general named entity is also a known
-            /// entity, then all information regarding it (Wikipedia Id, Bing Id, entity
-            /// type etc) will be returned. See the &lt;a
-            /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-entity-linking#supported-types-for-named-entity-recognition"&gt;Supported
-            /// Entity Types in Text Analytics API&lt;/a&gt; for the list of supported
-            /// Entity Types. See the &lt;a
-            /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
-            /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
-            /// languages.
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='input'>
-            /// Collection of documents to analyze.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<EntitiesBatchResultV2dot1> EntitiesAsync(this ITextAnalyticsClient operations, MultiLanguageBatchInput input, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.EntitiesWithHttpMessagesAsync(input, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.SentimentWithHttpMessagesAsync(showStats, multiLanguageBatchInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

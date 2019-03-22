@@ -28,14 +28,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// Initializes a new instance of the KeyPhraseBatchResultItem class.
         /// </summary>
+        /// <param name="id">Unique, non-empty document identifier.</param>
         /// <param name="keyPhrases">A list of representative words or phrases.
         /// The number of key phrases returned is proportional to the number of
         /// words in the input document.</param>
-        /// <param name="id">Unique document identifier.</param>
-        public KeyPhraseBatchResultItem(IList<string> keyPhrases = default(IList<string>), string id = default(string))
+        /// <param name="statistics">(Optional) if showStats=true was specified
+        /// in the request this field will contain information about the
+        /// document payload.</param>
+        public KeyPhraseBatchResultItem(string id = default(string), IList<string> keyPhrases = default(IList<string>), DocumentStatistics statistics = default(DocumentStatistics))
         {
-            KeyPhrases = keyPhrases;
             Id = id;
+            KeyPhrases = keyPhrases;
+            Statistics = statistics;
             CustomInit();
         }
 
@@ -43,6 +47,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets unique, non-empty document identifier.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets a list of representative words or phrases. The number of key
@@ -53,10 +63,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         public IList<string> KeyPhrases { get; private set; }
 
         /// <summary>
-        /// Gets unique document identifier.
+        /// Gets or sets (Optional) if showStats=true was specified in the
+        /// request this field will contain information about the document
+        /// payload.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        [JsonProperty(PropertyName = "statistics")]
+        public DocumentStatistics Statistics { get; set; }
 
     }
 }

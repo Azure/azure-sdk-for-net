@@ -22,7 +22,9 @@ namespace Azure.Base.Http.Pipeline
         public HttpClientTransport(HttpClient client = null)
             => _client = client == null ? s_defaultClient : client;
 
-        public sealed override HttpMessage CreateMessage(HttpPipeline.Options options, CancellationToken cancellation)
+        public readonly static HttpClientTransport Shared = new HttpClientTransport();
+
+        public sealed override HttpMessage CreateMessage(IServiceProvider services, CancellationToken cancellation)
             => new Message(cancellation);
 
         public sealed override async Task ProcessAsync(HttpMessage message)
@@ -55,6 +57,7 @@ namespace Azure.Base.Http.Pipeline
             {
                 _requestMessage.Method = ToHttpClientMethod(method);
                 _requestMessage.RequestUri = uri;
+                _requestMessage.Version = new Version(1, 1);
             }
 
             public override HttpVerb Method => ToPipelineMethod(_requestMessage.Method);
@@ -129,8 +132,9 @@ namespace Azure.Base.Http.Pipeline
                 return true;
             }
 
-            // TODO (pri 1): is it ok to just call .Result here?
-            protected internal override Stream ResponseContentStream => _responseMessage.Content.ReadAsStreamAsync().Result;
+            // TODO (pri 1): is it ok to just call GetResult here?
+            protected internal override Stream ResponseContentStream
+                => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             #endregion
 
             public override void Dispose()

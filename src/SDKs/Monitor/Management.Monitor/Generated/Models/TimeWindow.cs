@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="end">the end time for the profile in ISO 8601
         /// format.</param>
         /// <param name="timeZone">the timezone of the start and end times for
-        /// the profile. Some examples of valid timezones are: Dateline
+        /// the profile. Some examples of valid time zones are: Dateline
         /// Standard Time, UTC-11, Hawaiian Standard Time, Alaskan Standard
         /// Time, Pacific Standard Time (Mexico), Pacific Standard Time, US
         /// Mountain Standard Time, Mountain Standard Time (Mexico), Mountain
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
 
         /// <summary>
         /// Gets or sets the timezone of the start and end times for the
-        /// profile. Some examples of valid timezones are: Dateline Standard
+        /// profile. Some examples of valid time zones are: Dateline Standard
         /// Time, UTC-11, Hawaiian Standard Time, Alaskan Standard Time,
         /// Pacific Standard Time (Mexico), Pacific Standard Time, US Mountain
         /// Standard Time, Mountain Standard Time (Mexico), Mountain Standard

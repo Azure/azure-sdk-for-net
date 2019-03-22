@@ -28,13 +28,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// Initializes a new instance of the LanguageBatchResultItem class.
         /// </summary>
-        /// <param name="id">Unique document identifier.</param>
+        /// <param name="id">Unique, non-empty document identifier.</param>
         /// <param name="detectedLanguages">A list of extracted
         /// languages.</param>
-        public LanguageBatchResultItem(string id = default(string), IList<DetectedLanguage> detectedLanguages = default(IList<DetectedLanguage>))
+        /// <param name="statistics">(Optional) if showStats=true was specified
+        /// in the request this field will contain information about the
+        /// document payload.</param>
+        public LanguageBatchResultItem(string id = default(string), IList<DetectedLanguage> detectedLanguages = default(IList<DetectedLanguage>), DocumentStatistics statistics = default(DocumentStatistics))
         {
             Id = id;
             DetectedLanguages = detectedLanguages;
+            Statistics = statistics;
             CustomInit();
         }
 
@@ -44,16 +48,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets unique document identifier.
+        /// Gets or sets unique, non-empty document identifier.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
-        /// Gets a list of extracted languages.
+        /// Gets or sets a list of extracted languages.
         /// </summary>
         [JsonProperty(PropertyName = "detectedLanguages")]
-        public IList<DetectedLanguage> DetectedLanguages { get; private set; }
+        public IList<DetectedLanguage> DetectedLanguages { get; set; }
+
+        /// <summary>
+        /// Gets or sets (Optional) if showStats=true was specified in the
+        /// request this field will contain information about the document
+        /// payload.
+        /// </summary>
+        [JsonProperty(PropertyName = "statistics")]
+        public DocumentStatistics Statistics { get; set; }
 
     }
 }

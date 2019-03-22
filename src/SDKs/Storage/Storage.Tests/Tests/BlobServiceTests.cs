@@ -379,7 +379,7 @@ namespace Storage.Tests
                     Assert.NotNull(immutabilityPolicy.Type);
                     Assert.NotNull(immutabilityPolicy.Name);
                     Assert.Equal(0, immutabilityPolicy.ImmutabilityPeriodSinceCreationInDays);
-                    Assert.Equal(ImmutabilityPolicyState.Unlocked, immutabilityPolicy.State);
+                    Assert.Equal("Deleted", immutabilityPolicy.State);
                 }
                 finally
                 {

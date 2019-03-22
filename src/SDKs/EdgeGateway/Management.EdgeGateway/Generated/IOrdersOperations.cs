@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.EdgeGateway
         /// Creates or updates an order.
         /// </summary>
         /// <param name='deviceName'>
-        /// The order details of a device.
+        /// The device name.
         /// </param>
         /// <param name='order'>
         /// The order to be created or updated.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.EdgeGateway
         /// Creates or updates an order.
         /// </summary>
         /// <param name='deviceName'>
-        /// The order details of a device.
+        /// The device name.
         /// </param>
         /// <param name='order'>
         /// The order to be created or updated.

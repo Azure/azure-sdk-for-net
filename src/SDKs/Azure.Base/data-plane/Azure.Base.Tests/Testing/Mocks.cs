@@ -60,8 +60,8 @@ namespace Azure.Base.Testing
         public MockTransport(params int[] statusCodes)
             => _statusCodes = statusCodes;
 
-        public override HttpMessage CreateMessage(HttpPipeline.Options options, CancellationToken cancellation)
-            => new Message(ref options, cancellation);
+        public override HttpMessage CreateMessage(IServiceProvider services, CancellationToken cancellation)
+            => new Message(cancellation);
 
         public override Task ProcessAsync(HttpMessage message)
         {
@@ -85,7 +85,7 @@ namespace Azure.Base.Testing
 
             public override HttpVerb Method => throw new NotImplementedException();
 
-            public Message(ref HttpPipeline.Options options, CancellationToken cancellation)
+            public Message(CancellationToken cancellation)
                 : base(cancellation)
             { }
 

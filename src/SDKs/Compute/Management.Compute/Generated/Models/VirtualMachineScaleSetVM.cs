@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="sku">The virtual machine SKU.</param>
         /// <param name="latestModelApplied">Specifies whether the latest model
         /// has been applied to the virtual machine.</param>
+        /// <param name="protectFromScaleIn">Specifies whether the virtual
+        /// machine instance shouldn't be considered for deletion during a
+        /// scale-in operation</param>
         /// <param name="vmId">Azure VM unique ID.</param>
         /// <param name="instanceView">The virtual machine instance
         /// view.</param>
@@ -98,12 +101,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="resources">The virtual machine child extension
         /// resources.</param>
         /// <param name="zones">The virtual machine zones.</param>
-        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSetVM(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), bool? protectFromScaleIn = default(bool?), string vmId = default(string), VirtualMachineScaleSetVMInstanceView instanceView = default(VirtualMachineScaleSetVMInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtension> resources = default(IList<VirtualMachineExtension>), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
             Sku = sku;
             LatestModelApplied = latestModelApplied;
+            ProtectFromScaleIn = protectFromScaleIn;
             VmId = vmId;
             InstanceView = instanceView;
             HardwareProfile = hardwareProfile;
@@ -144,6 +148,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.latestModelApplied")]
         public bool? LatestModelApplied { get; private set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the virtual machine instance
+        /// shouldn't be considered for deletion during a scale-in operation
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.protectFromScaleIn")]
+        public bool? ProtectFromScaleIn { get; set; }
 
         /// <summary>
         /// Gets azure VM unique ID.
