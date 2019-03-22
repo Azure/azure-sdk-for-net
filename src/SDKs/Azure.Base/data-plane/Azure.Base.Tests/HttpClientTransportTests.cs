@@ -72,10 +72,10 @@ namespace Azure.Configuration.Tests
                 _onSend = onSend;
             }
 
-            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
             {
                 _onSend(request);
-                return new HttpResponseMessage((HttpStatusCode)200);
+                return Task.FromResult(new HttpResponseMessage((HttpStatusCode)200));
             }
         }
     }
