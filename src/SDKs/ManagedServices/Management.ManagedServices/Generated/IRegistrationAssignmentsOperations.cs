@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets the details of specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='registratonAssignmentId'>
         /// Guid of the registration assignment.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// </param>
         /// <param name='expandRegistrationDefinition'>
         /// Tells whether to return registration definition details also along
-        /// with registration assingmnet details.
+        /// with registration assignment details.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Deletes the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='registratonAssignmentId'>
         /// Guid of the registration assignment.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Creates or updates a registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='registratonAssignmentId'>
         /// Guid of the registration assignment.
@@ -118,14 +118,14 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets a list of the registration assignments.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
         /// </param>
         /// <param name='expandRegistrationDefinition'>
         /// Tells whether to return registration definition details also along
-        /// with registration assingmnet details.
+        /// with registration assignment details.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

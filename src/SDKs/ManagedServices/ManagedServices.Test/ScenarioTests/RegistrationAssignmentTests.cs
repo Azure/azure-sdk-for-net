@@ -26,7 +26,7 @@ namespace ManagedServices.Tests.ScenarioTests
                     //1. Create registration assignment
                     var registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
                         .CreateOrUpdate(
-                            registratonDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
+                            registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
                             apiVersion: ManagedServicesTestUtilities.apiVersion,
                             scope: ManagedServicesTestUtilities.scope,
                             requestBody: registrationDefinition);

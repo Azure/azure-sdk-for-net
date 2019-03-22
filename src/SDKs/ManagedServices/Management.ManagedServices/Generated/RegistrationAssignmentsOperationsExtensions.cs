@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='registratonAssignmentId'>
             /// Guid of the registration assignment.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// </param>
             /// <param name='expandRegistrationDefinition'>
             /// Tells whether to return registration definition details also along with
-            /// registration assingmnet details.
+            /// registration assignment details.
             /// </param>
             public static RegistrationAssignment Get(this IRegistrationAssignmentsOperations operations, string scope, string registratonAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?))
             {
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='registratonAssignmentId'>
             /// Guid of the registration assignment.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// </param>
             /// <param name='expandRegistrationDefinition'>
             /// Tells whether to return registration definition details also along with
-            /// registration assingmnet details.
+            /// registration assignment details.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='registratonAssignmentId'>
             /// Guid of the registration assignment.
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='registratonAssignmentId'>
             /// Guid of the registration assignment.
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='registratonAssignmentId'>
             /// Guid of the registration assignment.
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='registratonAssignmentId'>
             /// Guid of the registration assignment.
@@ -180,14 +180,14 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
             /// <param name='expandRegistrationDefinition'>
             /// Tells whether to return registration definition details also along with
-            /// registration assingmnet details.
+            /// registration assignment details.
             /// </param>
             public static IPage<RegistrationAssignment> List(this IRegistrationAssignmentsOperations operations, string scope, string apiVersion, bool? expandRegistrationDefinition = default(bool?))
             {
@@ -201,14 +201,14 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// The operations group for this extension method.
             /// </param>
             /// <param name='scope'>
-            /// Id of the source subscription.
+            /// Scope of the resource.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
             /// <param name='expandRegistrationDefinition'>
             /// Tells whether to return registration definition details also along with
-            /// registration assingmnet details.
+            /// registration assignment details.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
