@@ -32,7 +32,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="imageId">Id of the image.</param>
         /// <param name="tagId">Id of the tag associated with this
         /// region.</param>
-        public ImageRegionCreateEntry(System.Guid imageId = default(System.Guid), System.Guid tagId = default(System.Guid), double left = default(double), double top = default(double), double width = default(double), double height = default(double))
+        /// <param name="left">Coordinate of the left boundary.</param>
+        /// <param name="top">Coordinate of the top boundary.</param>
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
+        public ImageRegionCreateEntry(System.Guid imageId, System.Guid tagId, double left, double top, double width, double height)
         {
             ImageId = imageId;
             TagId = tagId;
@@ -61,24 +65,38 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public System.Guid TagId { get; set; }
 
         /// <summary>
+        /// Gets or sets coordinate of the left boundary.
         /// </summary>
         [JsonProperty(PropertyName = "left")]
         public double Left { get; set; }
 
         /// <summary>
+        /// Gets or sets coordinate of the top boundary.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public double Top { get; set; }
 
         /// <summary>
+        /// Gets or sets width.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
         public double Width { get; set; }
 
         /// <summary>
+        /// Gets or sets height.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
         public double Height { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

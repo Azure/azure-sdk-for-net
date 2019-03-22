@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Bounding box that defines a region of an image.
+    /// </summary>
     public partial class BoundingBox
     {
         /// <summary>
@@ -26,7 +29,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the BoundingBox class.
         /// </summary>
-        public BoundingBox(double left = default(double), double top = default(double), double width = default(double), double height = default(double))
+        /// <param name="left">Coordinate of the left boundary.</param>
+        /// <param name="top">Coordinate of the top boundary.</param>
+        /// <param name="width">Width.</param>
+        /// <param name="height">Height.</param>
+        public BoundingBox(double left, double top, double width, double height)
         {
             Left = left;
             Top = top;
@@ -41,24 +48,38 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets coordinate of the left boundary.
         /// </summary>
         [JsonProperty(PropertyName = "left")]
         public double Left { get; set; }
 
         /// <summary>
+        /// Gets or sets coordinate of the top boundary.
         /// </summary>
         [JsonProperty(PropertyName = "top")]
         public double Top { get; set; }
 
         /// <summary>
+        /// Gets or sets width.
         /// </summary>
         [JsonProperty(PropertyName = "width")]
         public double Width { get; set; }
 
         /// <summary>
+        /// Gets or sets height.
         /// </summary>
         [JsonProperty(PropertyName = "height")]
         public double Height { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

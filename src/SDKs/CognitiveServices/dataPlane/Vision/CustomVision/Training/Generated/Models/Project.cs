@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -29,18 +30,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Project class.
         /// </summary>
-        /// <param name="id">Gets The project id.</param>
         /// <param name="name">Gets or sets the name of the project.</param>
         /// <param name="description">Gets or sets the description of the
         /// project.</param>
         /// <param name="settings">Gets or sets the project settings.</param>
+        /// <param name="id">Gets the project id.</param>
         /// <param name="created">Gets the date this project was
         /// created.</param>
         /// <param name="lastModified">Gets the date this project was last
-        /// modifed.</param>
+        /// modified.</param>
         /// <param name="thumbnailUri">Gets the thumbnail url representing the
-        /// project.</param>
-        public Project(System.Guid id = default(System.Guid), string name = default(string), string description = default(string), ProjectSettings settings = default(ProjectSettings), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string thumbnailUri = default(string))
+        /// image.</param>
+        /// <param name="drModeEnabled">Gets if the DR mode is on.</param>
+        public Project(string name, string description, ProjectSettings settings, System.Guid id = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string thumbnailUri = default(string), bool? drModeEnabled = default(bool?))
         {
             Id = id;
             Name = name;
@@ -49,6 +51,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
             Created = created;
             LastModified = lastModified;
             ThumbnailUri = thumbnailUri;
+            DrModeEnabled = drModeEnabled;
             CustomInit();
         }
 
@@ -58,7 +61,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets The project id.
+        /// Gets the project id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
@@ -88,16 +91,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public System.DateTime Created { get; private set; }
 
         /// <summary>
-        /// Gets the date this project was last modifed.
+        /// Gets the date this project was last modified.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
         public System.DateTime LastModified { get; private set; }
 
         /// <summary>
-        /// Gets the thumbnail url representing the project.
+        /// Gets the thumbnail url representing the image.
         /// </summary>
         [JsonProperty(PropertyName = "thumbnailUri")]
         public string ThumbnailUri { get; private set; }
 
+        /// <summary>
+        /// Gets if the DR mode is on.
+        /// </summary>
+        [JsonProperty(PropertyName = "drModeEnabled")]
+        public bool? DrModeEnabled { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Description == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
+            }
+            if (Settings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Settings");
+            }
+        }
     }
 }

@@ -38,11 +38,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// API key.
         /// </summary>
         string ApiKey { get; set; }
 
         /// <summary>
-        /// Supported Cognitive Services endpoints
+        /// Supported Cognitive Services endpoints.
         /// </summary>
         string Endpoint { get; set; }
 
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<int?>> GetTaggedImageCountWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<int?>> GetTaggedImageCountWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the number of untagged images.
@@ -148,7 +149,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// Image ids. Limited to 64 images.
         /// </param>
         /// <param name='tagIds'>
-        /// Tags to be deleted from the specified images. Limted to 20 tags.
+        /// Tags to be deleted from the specified images. Limited to 20 tags.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -156,7 +157,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> DeleteImageTagsWithHttpMessagesAsync(System.Guid projectId, IList<string> imageIds, IList<string> tagIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteImageTagsWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> imageIds, IList<System.Guid> tagIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Create a set of image regions.
@@ -196,7 +197,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> DeleteImageRegionsWithHttpMessagesAsync(System.Guid projectId, IList<string> regionIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteImageRegionsWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> regionIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get tagged images for a given project iteration.
@@ -238,7 +239,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<Image>>> GetTaggedImagesWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<Image>>> GetTaggedImagesWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get untagged images for a given project iteration.
@@ -297,7 +298,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<Image>>> GetImagesByIdsWithHttpMessagesAsync(System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<Image>>> GetImagesByIdsWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> imageIds = default(IList<System.Guid>), System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Add the provided images to the set of training images.
@@ -312,7 +313,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='imageData'>
-        /// Binary image data.
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP.
+        /// Supports images up to 6MB.
         /// </param>
         /// <param name='tagIds'>
         /// The tags ids with which to tag each image. Limited to 20.
@@ -323,7 +325,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImageCreateSummary>> CreateImagesFromDataWithHttpMessagesAsync(System.Guid projectId, Stream imageData, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImageCreateSummary>> CreateImagesFromDataWithHttpMessagesAsync(System.Guid projectId, Stream imageData, IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Delete images from the set of training images.
@@ -332,7 +334,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='imageIds'>
-        /// Ids of the images to be deleted. Limted to 256 images per batch.
+        /// Ids of the images to be deleted. Limited to 256 images per batch.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -340,7 +342,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> DeleteImagesWithHttpMessagesAsync(System.Guid projectId, IList<string> imageIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeleteImagesWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> imageIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Add the provided batch of images to the set of training images.
@@ -396,7 +398,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='batch'>
-        /// Image and tag ids. Limted to 64 images and 20 tags per batch.
+        /// Image and tag ids. Limited to 64 images and 20 tags per batch.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -445,7 +447,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse> DeletePredictionWithHttpMessagesAsync(System.Guid projectId, IList<string> ids, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse> DeletePredictionWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> ids, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Quick test an image url.
@@ -454,8 +456,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project to evaluate against.
         /// </param>
         /// <param name='imageUrl'>
-        /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the
-        /// image to be evaluated.
+        /// An ImageUrl that contains the url of the image to be evaluated.
         /// </param>
         /// <param name='iterationId'>
         /// Optional. Specifies the id of a particular iteration to evaluate
@@ -478,7 +479,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='imageData'>
-        /// Binary image data.
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP.
+        /// Supports images up to 6MB.
         /// </param>
         /// <param name='iterationId'>
         /// Optional. Specifies the id of a particular iteration to evaluate
@@ -576,7 +578,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<ImagePerformance>>> GetImagePerformancesWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<ImagePerformance>>> GetImagePerformancesWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the number of images tagged with the provided {tagIds} that
@@ -605,7 +607,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<int?>> GetImagePerformanceCountWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<int?>> GetImagePerformanceCountWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get your projects.
@@ -634,13 +636,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The type of classifier to create for this project. Possible values
         /// include: 'Multiclass', 'Multilabel'
         /// </param>
+        /// <param name='targetExportPlatforms'>
+        /// List of platforms the trained model is intending exporting to.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get a specific project.
@@ -686,6 +691,36 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<Project>> UpdateProjectWithHttpMessagesAsync(System.Guid projectId, Project updatedProject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Queues project for training.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='trainingType'>
+        /// The type of training to use to train the project (default:
+        /// Regular). Possible values include: 'Regular', 'Advanced'
+        /// </param>
+        /// <param name='reservedBudgetInHours'>
+        /// The number of hours reserved as budget for training (if
+        /// applicable).
+        /// </param>
+        /// <param name='forceTrain'>
+        /// Whether to force train even if dataset and configuration does not
+        /// change (default: false).
+        /// </param>
+        /// <param name='notificationEmailAddress'>
+        /// The email address to send notification to when training finishes
+        /// (default: null).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get iterations for the project.
@@ -756,10 +791,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         Task<HttpOperationResponse<Iteration>> UpdateIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, Iteration updatedIteration, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Queues project for training.
+        /// Publish a specific iteration.
         /// </summary>
         /// <param name='projectId'>
         /// The project id.
+        /// </param>
+        /// <param name='iterationId'>
+        /// The iteration id.
+        /// </param>
+        /// <param name='publishName'>
+        /// The name to give the published iteration.
+        /// </param>
+        /// <param name='predictionId'>
+        /// The id of the prediction resource to publish to.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -767,7 +811,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<bool?>> PublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Unpublish a specific iteration.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='iterationId'>
+        /// The iteration id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse> UnpublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Get the list of exports for a specific iteration.
@@ -797,11 +858,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </param>
         /// <param name='platform'>
         /// The target platform. Possible values include: 'CoreML',
-        /// 'TensorFlow', 'DockerFile', 'ONNX'
+        /// 'TensorFlow', 'DockerFile', 'ONNX', 'VAIDK'
         /// </param>
         /// <param name='flavor'>
         /// The flavor of the target platform. Possible values include:
-        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12'
+        /// 'Linux', 'Windows', 'ONNX10', 'ONNX12', 'ARM'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
