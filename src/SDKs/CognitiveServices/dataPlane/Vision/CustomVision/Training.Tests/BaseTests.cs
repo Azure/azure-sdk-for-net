@@ -16,7 +16,7 @@
     {
         public static readonly string TrainingKey = string.Empty;
 
-        public const string Endpoint = "https://southcentralus.api.cognitive.microsoft.com";
+        public const string Endpoint = "https://southcentralus.api.cognitive.microsoft.com/";
 
         public static HttpRecorderMode RecorderMode = HttpRecorderMode.Playback;
 
