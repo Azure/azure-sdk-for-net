@@ -75,7 +75,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(IfNoneMatch, "*");
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
 
                 message.SetContent(HttpMessageContent.Create(content));
 
@@ -110,7 +109,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 if (setting.ETag != default)
                 {
                     message.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
@@ -150,7 +148,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
 
                 if(setting.ETag != default)
                 {
@@ -160,6 +157,7 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     message.AddHeader(IfMatchName, "*");
                 }
+                
 
                 message.SetContent(HttpMessageContent.Create(content));
 

@@ -77,10 +77,7 @@ namespace Azure.Base.Http
                 return new HttpHeader(Names.UserAgent, $"{componentName}/{componentVersion} {PlatformInformation}");
             }
 
-            public static HttpHeader CreateContentLength(long length)
-            {
-                return new HttpHeader(Names.ContentLength, length.ToString());
-            }
+
 
             public static HttpHeader CreateHost(string hostName)
             {
