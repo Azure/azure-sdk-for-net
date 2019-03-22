@@ -82,7 +82,7 @@ namespace Azure.Base.Tests
                 throw new NotImplementedException();
             }
 
-            protected override bool TryGetHeader(string name, out HeaderValues values)
+            protected override bool TryGetHeader(string name, out string values)
             {
                 throw new NotImplementedException();
             }

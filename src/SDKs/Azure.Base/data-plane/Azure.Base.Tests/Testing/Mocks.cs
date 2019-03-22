@@ -100,7 +100,7 @@ namespace Azure.Base.Testing
             public override string ToString()
                 => $"{_method} {_uri}";
 
-            protected override bool TryGetHeader(string name, out HeaderValues values)
+            protected override bool TryGetHeader(string name, out string values)
             {
                 values = default;
                 return false;

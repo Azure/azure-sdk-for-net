@@ -64,7 +64,7 @@ namespace Azure
             _contentParser = default;
         }
 
-        public bool TryGetHeader(string name, out HeaderValues values)
+        public bool TryGetHeader(string name, out string values)
         {
             return _response.TryGetHeader(name, out values);
         }

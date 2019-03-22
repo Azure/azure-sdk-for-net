@@ -190,7 +190,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 Response<ConfigurationSetting> response = await service.SetAsync(s_testSetting);
-                response.TryGetHeader("x-ms-client-request-id", out HeaderValues requestId);
+                response.TryGetHeader("x-ms-client-request-id", out string requestId);
                 Assert.IsNotEmpty(requestId);
                 response.Dispose();
             }

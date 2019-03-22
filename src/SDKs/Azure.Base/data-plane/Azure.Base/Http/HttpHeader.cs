@@ -8,7 +8,7 @@ namespace Azure.Base.Http
 {
     public readonly struct HttpHeader : IEquatable<HttpHeader>
     {
-        public HttpHeader(string name, HeaderValues values)
+        public HttpHeader(string name, string value)
         {
             if (string.IsNullOrEmpty(name))
             {
@@ -16,18 +16,18 @@ namespace Azure.Base.Http
             }
 
             Name = name;
-            Values = values;
+            Value = value;
         }
 
         public string Name { get; }
 
-        public HeaderValues Values { get; }
+        public string Value { get; }
 
         public override int GetHashCode()
         {
             var hashCode = new HashCodeCombiner();
             hashCode.Add(Name, StringComparer.InvariantCultureIgnoreCase);
-            hashCode.Add(Values);
+            hashCode.Add(Value);
             return hashCode.ToHashCode();
         }
 
@@ -42,7 +42,7 @@ namespace Azure.Base.Http
 
         public bool Equals(HttpHeader other)
         {
-            return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) && Values.Equals(other.Values);
+            return string.Equals(Name, other.Name, StringComparison.InvariantCultureIgnoreCase) && Value.Equals(other.Value);
         }
 
         public static class Names

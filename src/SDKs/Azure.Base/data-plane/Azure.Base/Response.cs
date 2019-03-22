@@ -22,7 +22,7 @@ namespace Azure
 
         public Stream ContentStream => _message.ResponseContentStream;
 
-        public bool TryGetHeader(string name, out HeaderValues values)
+        public bool TryGetHeader(string name, out string values)
         {
             return _message.TryGetHeader(name, out values);
         }

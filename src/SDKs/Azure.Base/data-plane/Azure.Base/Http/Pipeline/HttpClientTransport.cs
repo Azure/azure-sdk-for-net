@@ -64,20 +64,20 @@ namespace Azure.Base.Http.Pipeline
 
             public override void AddHeader(HttpHeader header)
             {
-                AddHeader(header.Name, header.Values);
+                AddHeader(header.Name, header.Value);
             }
 
-            public override void AddHeader(string name, HeaderValues values)
+            public override void AddHeader(string name, string value)
             {
                 // TODO (pri 1): any other headers must be added to content?
                 if (name.Equals("Content-Type", StringComparison.InvariantCulture)) {
-                    _contentTypeHeaderValue = values;
+                    _contentTypeHeaderValue = value;
                 }
                 else if (name.Equals("Content-Length", StringComparison.InvariantCulture)) {
-                    _contentLengthHeaderValue = values;
+                    _contentLengthHeaderValue = value;
                 }
                 else {
-                    if (!_requestMessage.Headers.TryAddWithoutValidation(name, values.ToArray())) {
+                    if (!_requestMessage.Headers.TryAddWithoutValidation(name, value)) {
                         throw new InvalidOperationException();
                     }
                 }
@@ -115,16 +115,16 @@ namespace Azure.Base.Http.Pipeline
 
             protected internal override int Status => (int)_responseMessage.StatusCode;
 
-            protected internal override bool TryGetHeader(string name, out HeaderValues values)
+            protected internal override bool TryGetHeader(string name, out string value)
             {
                 if (!_responseMessage.Headers.TryGetValues(name, out var headerValues)) {
                     if (!_responseMessage.Content.Headers.TryGetValues(name, out headerValues)) {
-                        values = default;
+                        value = default;
                         return false;
                     }
                 }
 
-                values = headerValues as string[] ?? headerValues.ToArray();
+                value = string.Join(",", headerValues);
                 return true;
             }
 

@@ -16,8 +16,7 @@ namespace Azure.Base.Tests
             var header = new HttpHeader("Header", "Value");
 
             Assert.AreEqual("Header", header.Name);
-            Assert.AreEqual("Value", header.Values[0]);
-            Assert.AreEqual(1, header.Values.Count);
+            Assert.AreEqual("Value", header.Value);
         }
 
         [Test]
