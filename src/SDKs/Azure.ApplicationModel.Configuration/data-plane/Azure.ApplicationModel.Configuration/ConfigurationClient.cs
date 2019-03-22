@@ -160,6 +160,10 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     request.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 }
+                else
+                {
+                    request.AddHeader(IfMatchName, "*");
+                }
 
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
