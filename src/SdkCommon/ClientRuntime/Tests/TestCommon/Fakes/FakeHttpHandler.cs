@@ -3,7 +3,6 @@
 
 namespace ClientRuntime.Tests.Common.Fakes
 {
-    using System;
     using System.Net;
     using System.Net.Http;
     using System.Threading;
@@ -29,11 +28,9 @@ namespace ClientRuntime.Tests.Common.Fakes
             CancellationToken cancellationToken)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
-
             if (NumberOfTimesToFail > NumberOfTimesFailedSoFar)
             {
                 response = new HttpResponseMessage(StatusCodeToReturn);
-
                 if (TweakResponse != null)
                 {
                     TweakResponse(response);
