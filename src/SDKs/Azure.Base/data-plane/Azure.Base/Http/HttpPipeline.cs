@@ -43,11 +43,11 @@ namespace Azure.Base.Http
         {
             if (_pipeline.IsEmpty) return default;
 
-            using (var context = new HttpPipelineContext(cancellationToken))
+            using (var message = new HttpPipelineMessage(cancellationToken))
             {
-                context.Request = request;
-                await _pipeline.Span[0].ProcessAsync(context, _pipeline.Slice(1)).ConfigureAwait(false);
-                return new Response(context.Response);
+                message.Request = request;
+                await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
+                return new Response(message.Response);
             }
         }
 

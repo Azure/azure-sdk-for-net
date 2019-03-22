@@ -19,13 +19,13 @@ namespace Azure.Base.Samples
         {
             var pipeline = new HttpPipeline(new HttpClientTransport());
 
-            var pipelineContext = pipeline.CreateRequest();
+            var request = pipeline.CreateRequest();
 
             var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/src/SDKs/Azure.Base/data-plane/README.md");
-            pipelineContext.SetRequestLine(HttpVerb.Get, uri);
-            pipelineContext.AddHeader("Host", uri.Host);
+            request.SetRequestLine(HttpVerb.Get, uri);
+            request.AddHeader("Host", uri.Host);
 
-            Response response = await pipeline.SendRequestAsync(pipelineContext, cancellationToken: default).ConfigureAwait(false);
+            Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);
 
             if (response.Status == 200) {
                 var reader = new StreamReader(response.ContentStream);

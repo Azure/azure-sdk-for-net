@@ -54,19 +54,19 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
         class AddHeaderPolicy : HttpPipelinePolicy
         {
-            public override async Task ProcessAsync(HttpPipelineContext pipelineContext, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override async Task ProcessAsync(HttpPipelineMessage pipelineMessage, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
-                pipelineContext.Request.AddHeader("User-Agent", "ConfiguraingPipelineSample");
-                await ProcessNextAsync(pipeline, pipelineContext).ConfigureAwait(false);
+                pipelineMessage.Request.AddHeader("User-Agent", "ConfiguraingPipelineSample");
+                await ProcessNextAsync(pipeline, pipelineMessage).ConfigureAwait(false);
             }
         }
 
         class CustomLogPolicy : HttpPipelinePolicy
         {
-            public override async Task ProcessAsync(HttpPipelineContext pipelineContext, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override async Task ProcessAsync(HttpPipelineMessage pipelineMessage, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
-                Console.WriteLine(pipelineContext.ToString());
-                await ProcessNextAsync(pipeline, pipelineContext).ConfigureAwait(false);
+                Console.WriteLine(pipelineMessage.ToString());
+                await ProcessNextAsync(pipeline, pipelineMessage).ConfigureAwait(false);
             }
         }
     }

@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace Azure.Base.Http
 {
-    public partial class HttpPipelineContext  : IDisposable
+    public partial class HttpPipelineMessage  : IDisposable
     {
         internal OptionsStore _options = new OptionsStore();
 
@@ -16,7 +16,7 @@ namespace Azure.Base.Http
 
         public HttpMessageOptions Options => new HttpMessageOptions(this);
 
-        public HttpPipelineContext(CancellationToken cancellation)
+        public HttpPipelineMessage(CancellationToken cancellation)
         {
             Cancellation = cancellation;
         }

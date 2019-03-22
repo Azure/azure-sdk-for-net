@@ -13,11 +13,11 @@ namespace Azure.Base.Testing
     {
         StringBuilder _logged = new StringBuilder();
 
-        public override async Task ProcessAsync(HttpPipelineContext pipelineContext, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpPipelineMessage pipelineMessage, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            _logged.Append($"REQUEST: {pipelineContext.ToString()}\n");
-            await ProcessNextAsync(pipeline, pipelineContext).ConfigureAwait(false);
-            _logged.Append($"RESPONSE: {pipelineContext.Response.Status}\n");
+            _logged.Append($"REQUEST: {pipelineMessage.ToString()}\n");
+            await ProcessNextAsync(pipeline, pipelineMessage).ConfigureAwait(false);
+            _logged.Append($"RESPONSE: {pipelineMessage.Response.Status}\n");
         }
 
         public override string ToString()
