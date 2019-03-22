@@ -25,7 +25,7 @@ namespace Azure.Base.Http
 
         public override int GetHashCode()
         {
-            var hashCode = new HashCodeCombiner();
+            var hashCode = new HashCodeBuilder();
             hashCode.Add(Name, StringComparer.InvariantCultureIgnoreCase);
             hashCode.Add(Value);
             return hashCode.ToHashCode();
@@ -39,6 +39,8 @@ namespace Azure.Base.Http
             }
             return false;
         }
+
+        public override string ToString() => $"{Name}:{Value}";
 
         public bool Equals(HttpHeader other)
         {
@@ -67,7 +69,12 @@ namespace Azure.Base.Http
 
             public static HttpHeader CreateUserAgent(string componentName, string componentVersion, string applicationId = default)
             {
-                return new HttpHeader(Names.UserAgent, $"{applicationId} {componentName}/{componentVersion} {PlatformInformation}\r\n");
+                if (applicationId != null)
+                {
+                    return new HttpHeader(Names.UserAgent, $"{applicationId} {componentName}/{componentVersion} {PlatformInformation}\r\n");
+                }
+
+                return new HttpHeader(Names.UserAgent, $"{componentName}/{componentVersion} {PlatformInformation}\r\n");
             }
 
             public static HttpHeader CreateContentLength(long length)
