@@ -48,11 +48,11 @@ namespace Azure.Base.Tests
 
         class CustomRetryPolicy : RetryPolicy
         {
-            protected override bool ShouldRetry(HttpPipelineMessage pipelineMessage, int retry, out TimeSpan delay)
+            protected override bool ShouldRetry(HttpPipelineMessage message, int retry, out TimeSpan delay)
             {
                 delay = TimeSpan.Zero;
                 if (retry > 5) return false;
-                if (pipelineMessage.Response.Status == 1) return false;
+                if (message.Response.Status == 1) return false;
                 return true;
             }
         }

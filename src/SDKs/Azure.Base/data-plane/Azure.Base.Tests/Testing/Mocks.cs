@@ -62,9 +62,9 @@ namespace Azure.Base.Testing
         public override HttpPipelineRequest CreateRequest(IServiceProvider services)
             => new PipelineRequest();
 
-        public override Task ProcessAsync(HttpPipelineMessage pipelineMessage)
+        public override Task ProcessAsync(HttpPipelineMessage message)
         {
-            var request = pipelineMessage.Request as PipelineRequest;
+            var request = message.Request as PipelineRequest;
             if (request == null) throw new InvalidOperationException("the request is not compatible with the transport");
 
             if (_index >= _statusCodes.Length) _index = 0;
@@ -73,7 +73,7 @@ namespace Azure.Base.Testing
 
             response.SetStatus(_statusCodes[_index++]);
 
-            pipelineMessage.Response = response;
+            message.Response = response;
             return Task.CompletedTask;
         }
 

@@ -22,6 +22,6 @@ namespace Azure.Base.Http.Pipeline
             }
         }
 
-        protected abstract bool ShouldRetry(HttpPipelineMessage pipelineMessage, int attempted, out TimeSpan delay);
+        protected abstract bool ShouldRetry(HttpPipelineMessage message, int attempted, out TimeSpan delay);
     }
 }

@@ -20,11 +20,11 @@ namespace Azure.Base.Http.Pipeline
             Array.Sort(_retriableCodes);
         }
 
-        protected override bool ShouldRetry(HttpPipelineMessage pipelineMessage, int attempted, out TimeSpan delay)
+        protected override bool ShouldRetry(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
             delay = _delay;
             if (attempted > _maxRetries) return false;
-            if(Array.BinarySearch(_retriableCodes, pipelineMessage.Response.Status) < 0) return false;
+            if(Array.BinarySearch(_retriableCodes, message.Response.Status) < 0) return false;
             return true;
         }
     }
