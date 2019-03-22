@@ -67,7 +67,7 @@ namespace Azure.Base.Tests
             {
             }
 
-            public override void SetContent(HttpRequestContent content)
+            public override void SetContent(HttpPipelineRequestContent content)
             {
             }
 

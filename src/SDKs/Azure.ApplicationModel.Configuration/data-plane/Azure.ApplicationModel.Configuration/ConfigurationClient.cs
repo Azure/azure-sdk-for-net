@@ -73,11 +73,11 @@ namespace Azure.ApplicationModel.Configuration
                 request.AddHeader(IfNoneMatch, "*");
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
-                request.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
+
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpRequestContent.Create(content));
+                request.SetContent(HttpPipelineRequestContent.Create(content));
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -111,7 +111,7 @@ namespace Azure.ApplicationModel.Configuration
                 request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
-                request.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
+
                 if (setting.ETag != default)
                 {
                     request.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
@@ -120,7 +120,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpRequestContent.Create(content));
+                request.SetContent(HttpPipelineRequestContent.Create(content));
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -154,7 +154,6 @@ namespace Azure.ApplicationModel.Configuration
                 request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
-                request.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
 
                 if (setting.ETag != default)
                 {
@@ -168,7 +167,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpRequestContent.Create(content));
+                request.SetContent(HttpPipelineRequestContent.Create(content));
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 

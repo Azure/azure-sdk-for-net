@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Base.Buffers;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -46,7 +46,7 @@ namespace Azure.Base.Http.Pipeline
         {
             string _contentTypeHeaderValue;
             string _contentLengthHeaderValue;
-            HttpRequestContent _requestContent;
+            HttpPipelineRequestContent _requestContent;
             readonly HttpRequestMessage _requestMessage;
 
             public PipelineRequest()
@@ -66,9 +66,7 @@ namespace Azure.Base.Http.Pipeline
 
             public override void AddHeader(HttpHeader header)
             {
-                var valueString = header.Value.AsciiToString();
-                var nameString = header.Name.AsciiToString();
-                AddHeader(nameString, valueString);
+                AddHeader(header.Name, header.Value);
             }
 
             public override void AddHeader(string name, string value)
@@ -87,7 +85,7 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
-            public override void SetContent(HttpRequestContent content)
+            public override void SetContent(HttpPipelineRequestContent content)
                 => _requestContent = content;
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
@@ -106,6 +104,7 @@ namespace Azure.Base.Http.Pipeline
                     if (_contentTypeHeaderValue != null) request.Content.Headers.Add("Content-Type", _contentTypeHeaderValue);
                     if (_contentLengthHeaderValue != null) request.Content.Headers.Add("Content-Length", _contentLengthHeaderValue);
                 }
+
 
                 return request;
             }
@@ -151,10 +150,10 @@ namespace Azure.Base.Http.Pipeline
 
             sealed class PipelineContentAdapter : HttpContent
             {
-                HttpRequestContent _content;
+                HttpPipelineRequestContent _content;
                 CancellationToken _cancellation;
 
-                public PipelineContentAdapter(HttpRequestContent content, CancellationToken cancellation)
+                public PipelineContentAdapter(HttpPipelineRequestContent content, CancellationToken cancellation)
                 {
                     Debug.Assert(content != null);
 
@@ -189,18 +188,16 @@ namespace Azure.Base.Http.Pipeline
 
             public override int Status => (int)_responseMessage.StatusCode;
 
-            public override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            public override bool TryGetHeader(string name, out string value)
             {
-                string nameString = name.AsciiToString();
-                if (!_responseMessage.Headers.TryGetValues(nameString, out var values)) {
-                    if (!_responseMessage.Content.Headers.TryGetValues(nameString, out values)) {
+                if (!_responseMessage.Headers.TryGetValues(name, out var values)) {
+                    if (!_responseMessage.Content.Headers.TryGetValues(name, out values)) {
                         value = default;
                         return false;
                     }
                 }
 
-                var all = string.Join(",", values);
-                value = Encoding.ASCII.GetBytes(all);
+                value = string.Join(",", values);
                 return true;
             }
 

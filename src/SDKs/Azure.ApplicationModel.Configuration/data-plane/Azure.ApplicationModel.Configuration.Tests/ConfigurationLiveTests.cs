@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Base.Http;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
@@ -45,14 +46,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
         {
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
-            
+
             /*
              * The configuration store contains a KV with the Key
              * that represents {expectedEvents} data points.
              * If not set, create the {expectedEvents} data points and the "BatchKey"
             */
             const string batchKey = "BatchKey";
-            
+
             try
             {
                 var responseGet = await service.GetAsync(batchKey);
@@ -365,6 +366,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             await service.SetAsync(s_testSetting);
             ConfigurationSetting responseGet = await service.GetAsync(s_testSetting.Key, s_testSetting.Label);
 
+
             try
             {
                 // Different tags
@@ -373,7 +375,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 if (settingTags.ContainsKey("tag1")) settingTags["tag1"] = "value-updated";
                 settingTags.Add("tag3", "test_value3");
                 testSettingDiff.Tags = settingTags;
-                
+
                 ConfigurationSetting responseSetting = await service.UpdateAsync(testSettingDiff, CancellationToken.None);
                 Assert.AreEqual(testSettingDiff, responseSetting);
 
@@ -408,7 +410,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 await service.SetAsync(setting);
                 await service.SetAsync(testSettingUpdate);
-                
+
                 // Test
                 var filter = new BatchRequestOptions();
                 filter.Key = setting.Key;
@@ -449,7 +451,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             // Prepare environment
             var testSettingNoLabel = s_testSetting.Clone();
             testSettingNoLabel.Label = null;
-            
+
             try
             {
                 await service.SetAsync(testSettingNoLabel);
@@ -469,7 +471,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
             var service = new ConfigurationClient(connectionString);
-            
+
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(s_testSetting.Key);
@@ -488,7 +490,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             // Prepare environment
             var testSettingNoLabel = s_testSetting.Clone();
             testSettingNoLabel.Label = null;
-            
+
             try
             {
                 await service.SetAsync(testSettingNoLabel);
@@ -584,7 +586,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     await service.UpdateAsync(testSettingUpdate);
                 });
                 Assert.AreEqual(409, exception.Status);
-                
+
                 // Test Unlock
                 ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
                 await service.UpdateAsync(testSettingUpdate);

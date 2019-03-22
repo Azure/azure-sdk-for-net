@@ -32,7 +32,7 @@ namespace Azure.ApplicationModel.Configuration
 
         static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
-            Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
+            "application/vnd.microsoft.appconfig.kv+json"
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?

@@ -33,15 +33,14 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         /// <param name="connections">The set of connections that constitute a
         /// direct peering.</param>
-        /// <param name="peerAsn">The Autonomous System Number (ASN) associated
-        /// with the peering.</param>
         /// <param name="useForPeeringService">The flag that indicates whether
         /// or not the peering is used for peering service.</param>
-        public PeeringPropertiesDirect(IList<DirectConnection> connections = default(IList<DirectConnection>), int? peerAsn = default(int?), bool? useForPeeringService = default(bool?))
+        /// <param name="peerAsn">The reference of the peer ASN.</param>
+        public PeeringPropertiesDirect(IList<DirectConnection> connections = default(IList<DirectConnection>), bool? useForPeeringService = default(bool?), SubResource peerAsn = default(SubResource))
         {
             Connections = connections;
-            PeerAsn = peerAsn;
             UseForPeeringService = useForPeeringService;
+            PeerAsn = peerAsn;
             CustomInit();
         }
 
@@ -58,18 +57,17 @@ namespace Microsoft.Azure.Management.Peering.Models
         public IList<DirectConnection> Connections { get; set; }
 
         /// <summary>
-        /// Gets or sets the Autonomous System Number (ASN) associated with the
-        /// peering.
-        /// </summary>
-        [JsonProperty(PropertyName = "peerAsn")]
-        public int? PeerAsn { get; set; }
-
-        /// <summary>
         /// Gets or sets the flag that indicates whether or not the peering is
         /// used for peering service.
         /// </summary>
         [JsonProperty(PropertyName = "useForPeeringService")]
         public bool? UseForPeeringService { get; set; }
+
+        /// <summary>
+        /// Gets or sets the reference of the peer ASN.
+        /// </summary>
+        [JsonProperty(PropertyName = "peerAsn")]
+        public SubResource PeerAsn { get; set; }
 
     }
 }

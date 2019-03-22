@@ -157,7 +157,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             }
         }
     }
-    
+
     abstract class MockHttpClientTransport : HttpClientTransport
     {
         protected string _responseContent;
@@ -197,7 +197,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         }
 
         protected virtual void VerifyRequestCore(HttpRequestMessage request) { }
-        
+
         protected virtual void WriteResponseCore(HttpResponseMessage response)
         {
             response.Content = new StringContent(_responseContent, Encoding.UTF8, "application/json");
@@ -257,7 +257,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             }
             return string.Empty;
         }
-      
+
         void VerifyRequestLine(HttpRequestMessage request)
         {
             Assert.AreEqual(_expectedMethod, request.Method);
@@ -281,7 +281,7 @@ namespace Azure.ApplicationModel.Configuration.Test
 
         void VerifyUserAgentHeader(HttpRequestMessage request)
         {
-            var expected = Encoding.UTF8.GetString(HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value.ToArray());
+            var expected = HttpHeader.Common.CreateUserAgent("Azure.Configuration", "1.0.0").Value;
 
             Assert.True(request.Headers.Contains("User-Agent"));
             var userAgentValues = request.Headers.GetValues("User-Agent");

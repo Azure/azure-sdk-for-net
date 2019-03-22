@@ -10,7 +10,7 @@ namespace Azure.Base.Http
     {
         public abstract int Status { get; }
 
-        public abstract bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value);
+        public abstract bool TryGetHeader(string name, out string value);
 
         public abstract Stream ResponseContentStream { get; }
 

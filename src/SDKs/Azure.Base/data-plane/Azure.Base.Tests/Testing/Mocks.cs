@@ -91,14 +91,15 @@ namespace Azure.Base.Testing
                 _method = method;
             }
 
-            public override string ToString() => $"{_method} {Uri}";
-
-
             public override void AddHeader(HttpHeader header)
             {
             }
 
-            public override void SetContent(HttpRequestContent content)
+            public override string ToString() => $"{_method} {Uri}";
+
+
+
+            public override void SetContent(HttpPipelineRequestContent content)
             {
             }
             public override void Dispose()
@@ -128,7 +129,7 @@ namespace Azure.Base.Testing
 
             public override string ToString() => $"{_method} {_uri}";
 
-            public override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            public override bool TryGetHeader(string name, out string value)
             {
                 value = default;
                 return false;
