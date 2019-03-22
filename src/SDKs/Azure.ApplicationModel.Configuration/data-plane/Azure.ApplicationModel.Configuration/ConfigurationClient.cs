@@ -19,8 +19,8 @@ namespace Azure.ApplicationModel.Configuration
         const string ComponentVersion = "1.0.0";
 
         static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
-            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
-            500, // Internal Server Error 
+            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
+            500, // Internal Server Error
             503, // Service Unavailable
             504  // Gateway Timeout
         );
@@ -72,7 +72,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader(IfNoneMatch, "*");
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
@@ -109,7 +108,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 if (setting.ETag != default)
                 {
                     message.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
@@ -152,7 +150,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
 
                 if(setting.ETag != default)
                 {
@@ -162,7 +159,7 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     message.AddHeader(IfMatchName, "*");
                 }
-                
+
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
@@ -211,7 +208,7 @@ namespace Azure.ApplicationModel.Configuration
                 else throw new RequestFailedException(response);
             }
         }
-        
+
         public async Task<Response<ConfigurationSetting>> LockAsync(string key, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));

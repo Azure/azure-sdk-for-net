@@ -157,12 +157,6 @@ namespace Azure.Base.Http
                 return new HttpHeader(utf8);
             }
 
-            public static HttpHeader CreateContentLength(long length)
-            {
-                byte[] utf8 = Encoding.ASCII.GetBytes($"Content-Length:{length}\r\n");
-                return new HttpHeader(utf8);
-            }
-
             public static HttpHeader CreateHost(ReadOnlySpan<byte> hostName)
             {
                 var buffer = new byte[Names.Host.Length + hostName.Length + 3];
