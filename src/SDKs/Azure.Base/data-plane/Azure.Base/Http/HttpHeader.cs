@@ -71,10 +71,10 @@ namespace Azure.Base.Http
             {
                 if (applicationId != null)
                 {
-                    return new HttpHeader(Names.UserAgent, $"{applicationId} {componentName}/{componentVersion} {PlatformInformation}\r\n");
+                    return new HttpHeader(Names.UserAgent, $"{applicationId} {componentName}/{componentVersion} {PlatformInformation}");
                 }
 
-                return new HttpHeader(Names.UserAgent, $"{componentName}/{componentVersion} {PlatformInformation}\r\n");
+                return new HttpHeader(Names.UserAgent, $"{componentName}/{componentVersion} {PlatformInformation}");
             }
 
             public static HttpHeader CreateContentLength(long length)
