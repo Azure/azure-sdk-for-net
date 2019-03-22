@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="poNumber">Purchase order number.</param>
         /// <param name="billingAddress">Billing address.</param>
         /// <param name="invoiceEmailOptIn">If the billing profile is opted in
-        /// to recieve invoices via email.</param>
+        /// to receive invoices via email.</param>
         /// <param name="isClassic">Is OMS bootstrapped billing
         /// profile.</param>
         /// <param name="invoiceDay">Invoice day.</param>
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public Address BillingAddress { get; set; }
 
         /// <summary>
-        /// Gets if the billing profile is opted in to recieve invoices via
+        /// Gets if the billing profile is opted in to receive invoices via
         /// email.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceEmailOptIn")]

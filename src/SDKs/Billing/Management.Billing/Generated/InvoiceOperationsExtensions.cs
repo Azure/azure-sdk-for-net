@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Billing
             /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             public static InvoiceSummary Get(this IInvoiceOperations operations, string billingAccountName, string billingProfileName, string invoiceName)
             {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Billing
             /// Billing Profile Id.
             /// </param>
             /// <param name='invoiceName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

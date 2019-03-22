@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// assignment</param>
         /// <param name="principalId">The user's principal id that the role
         /// gets assigned to</param>
-        /// <param name="roleDefinitionName">The role defintion id</param>
+        /// <param name="roleDefinitionName">The role definition id</param>
         /// <param name="scope">The scope the role get assigned to</param>
         public BillingRoleAssignment(string id = default(string), string name = default(string), string type = default(string), string createdOn = default(string), string createdByPrincipalTenantId = default(string), string createdByPrincipalId = default(string), string billingRoleAssignmentName = default(string), string principalId = default(string), string roleDefinitionName = default(string), string scope = default(string))
             : base(id, name, type)
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string PrincipalId { get; private set; }
 
         /// <summary>
-        /// Gets the role defintion id
+        /// Gets the role definition id
         /// </summary>
         [JsonProperty(PropertyName = "properties.roleDefinitionName")]
         public string RoleDefinitionName { get; private set; }

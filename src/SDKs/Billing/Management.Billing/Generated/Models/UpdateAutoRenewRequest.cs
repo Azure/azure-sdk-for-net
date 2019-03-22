@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Request parameters to update auto renew for support prouct.
+    /// Request parameters to update auto renew for support product.
     /// </summary>
     public partial class UpdateAutoRenewRequest
     {

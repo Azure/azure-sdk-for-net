@@ -34,19 +34,19 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="billingAccountId">Billing account Id.</param>
         /// <param name="billingAccountName">Billing account name.</param>
         /// <param name="billingProfileId">Billing profile Id.</param>
-        /// <param name="billingProflieName">Billing profile name.</param>
+        /// <param name="billingProfileName">Billing profile name.</param>
         /// <param name="invoiceSectionId">Invoice Section Id.</param>
         /// <param name="invoiceSectionName">Invoice Section name.</param>
         /// <param name="skuId">SKU Id.</param>
         /// <param name="skuDescription">SKU description.</param>
-        public BillingProperty(string productId = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountName = default(string), string billingProfileId = default(string), string billingProflieName = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string skuId = default(string), string skuDescription = default(string))
+        public BillingProperty(string productId = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountName = default(string), string billingProfileId = default(string), string billingProfileName = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string skuId = default(string), string skuDescription = default(string))
         {
             ProductId = productId;
             BillingTenantId = billingTenantId;
             BillingAccountId = billingAccountId;
             BillingAccountName = billingAccountName;
             BillingProfileId = billingProfileId;
-            BillingProflieName = billingProflieName;
+            BillingProfileName = billingProfileName;
             InvoiceSectionId = invoiceSectionId;
             InvoiceSectionName = invoiceSectionName;
             SkuId = skuId;
@@ -92,8 +92,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Gets billing profile name.
         /// </summary>
-        [JsonProperty(PropertyName = "billingProflieName")]
-        public string BillingProflieName { get; private set; }
+        [JsonProperty(PropertyName = "billingProfileName")]
+        public string BillingProfileName { get; private set; }
 
         /// <summary>
         /// Gets invoice Section Id.

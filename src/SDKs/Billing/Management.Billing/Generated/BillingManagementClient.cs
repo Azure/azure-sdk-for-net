@@ -219,49 +219,49 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingAccountbillingPermissionsOperations.
+        /// Gets the IBillingAccountBillingPermissionsOperations.
         /// </summary>
-        public virtual IBillingAccountbillingPermissionsOperations BillingAccountbillingPermissions { get; private set; }
+        public virtual IBillingAccountBillingPermissionsOperations BillingAccountBillingPermissions { get; private set; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionsbillingPermissionsOperations.
+        /// Gets the IInvoiceSectionsBillingPermissionsOperations.
         /// </summary>
-        public virtual IInvoiceSectionsbillingPermissionsOperations InvoiceSectionsbillingPermissions { get; private set; }
+        public virtual IInvoiceSectionsBillingPermissionsOperations InvoiceSectionsBillingPermissions { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingProfilebillingPermissionsOperations.
+        /// Gets the IBillingProfileBillingPermissionsOperations.
         /// </summary>
-        public virtual IBillingProfilebillingPermissionsOperations BillingProfilebillingPermissions { get; private set; }
+        public virtual IBillingProfileBillingPermissionsOperations BillingProfileBillingPermissions { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingAccountbillingRoleDefinitionOperations.
+        /// Gets the IBillingAccountBillingRoleDefinitionOperations.
         /// </summary>
-        public virtual IBillingAccountbillingRoleDefinitionOperations BillingAccountbillingRoleDefinition { get; private set; }
+        public virtual IBillingAccountBillingRoleDefinitionOperations BillingAccountBillingRoleDefinition { get; private set; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionbillingRoleDefinitionOperations.
+        /// Gets the IInvoiceSectionBillingRoleDefinitionOperations.
         /// </summary>
-        public virtual IInvoiceSectionbillingRoleDefinitionOperations InvoiceSectionbillingRoleDefinition { get; private set; }
+        public virtual IInvoiceSectionBillingRoleDefinitionOperations InvoiceSectionBillingRoleDefinition { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingProfilebillingRoleDefinitionOperations.
+        /// Gets the IBillingProfileBillingRoleDefinitionOperations.
         /// </summary>
-        public virtual IBillingProfilebillingRoleDefinitionOperations BillingProfilebillingRoleDefinition { get; private set; }
+        public virtual IBillingProfileBillingRoleDefinitionOperations BillingProfileBillingRoleDefinition { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingAccountbillingRoleAssignmentOperations.
+        /// Gets the IBillingAccountBillingRoleAssignmentOperations.
         /// </summary>
-        public virtual IBillingAccountbillingRoleAssignmentOperations BillingAccountbillingRoleAssignment { get; private set; }
+        public virtual IBillingAccountBillingRoleAssignmentOperations BillingAccountBillingRoleAssignment { get; private set; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionbillingRoleAssignmentOperations.
+        /// Gets the IInvoiceSectionBillingRoleAssignmentOperations.
         /// </summary>
-        public virtual IInvoiceSectionbillingRoleAssignmentOperations InvoiceSectionbillingRoleAssignment { get; private set; }
+        public virtual IInvoiceSectionBillingRoleAssignmentOperations InvoiceSectionBillingRoleAssignment { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingProfilebillingRoleAssignmentOperations.
+        /// Gets the IBillingProfileBillingRoleAssignmentOperations.
         /// </summary>
-        public virtual IBillingProfilebillingRoleAssignmentOperations BillingProfilebillingRoleAssignment { get; private set; }
+        public virtual IBillingProfileBillingRoleAssignmentOperations BillingProfileBillingRoleAssignment { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
@@ -532,15 +532,15 @@ namespace Microsoft.Azure.Management.Billing
             Policy = new PolicyOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
             Operations = new Operations(this);
-            BillingAccountbillingPermissions = new BillingAccountbillingPermissionsOperations(this);
-            InvoiceSectionsbillingPermissions = new InvoiceSectionsbillingPermissionsOperations(this);
-            BillingProfilebillingPermissions = new BillingProfilebillingPermissionsOperations(this);
-            BillingAccountbillingRoleDefinition = new BillingAccountbillingRoleDefinitionOperations(this);
-            InvoiceSectionbillingRoleDefinition = new InvoiceSectionbillingRoleDefinitionOperations(this);
-            BillingProfilebillingRoleDefinition = new BillingProfilebillingRoleDefinitionOperations(this);
-            BillingAccountbillingRoleAssignment = new BillingAccountbillingRoleAssignmentOperations(this);
-            InvoiceSectionbillingRoleAssignment = new InvoiceSectionbillingRoleAssignmentOperations(this);
-            BillingProfilebillingRoleAssignment = new BillingProfilebillingRoleAssignmentOperations(this);
+            BillingAccountBillingPermissions = new BillingAccountBillingPermissionsOperations(this);
+            InvoiceSectionsBillingPermissions = new InvoiceSectionsBillingPermissionsOperations(this);
+            BillingProfileBillingPermissions = new BillingProfileBillingPermissionsOperations(this);
+            BillingAccountBillingRoleDefinition = new BillingAccountBillingRoleDefinitionOperations(this);
+            InvoiceSectionBillingRoleDefinition = new InvoiceSectionBillingRoleDefinitionOperations(this);
+            BillingProfileBillingRoleDefinition = new BillingProfileBillingRoleDefinitionOperations(this);
+            BillingAccountBillingRoleAssignment = new BillingAccountBillingRoleAssignmentOperations(this);
+            InvoiceSectionBillingRoleAssignment = new InvoiceSectionBillingRoleAssignmentOperations(this);
+            BillingProfileBillingRoleAssignment = new BillingProfileBillingRoleAssignmentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-11-01-preview";
             AcceptLanguage = "en-US";
@@ -806,7 +806,7 @@ namespace Microsoft.Azure.Management.Billing
         /// billing Account Id.
         /// </param>
         /// <param name='productName'>
-        /// Invoide Id.
+        /// Invoice Id.
         /// </param>
         /// <param name='body'>
         /// Update auto renew request parameters.
@@ -1009,7 +1009,7 @@ namespace Microsoft.Azure.Management.Billing
         /// InvoiceSection Id.
         /// </param>
         /// <param name='productName'>
-        /// Invoide Id.
+        /// Invoice Id.
         /// </param>
         /// <param name='body'>
         /// Update auto renew request parameters.

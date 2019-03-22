@@ -216,49 +216,49 @@ namespace Microsoft.Azure.Management.Billing
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IBillingAccountbillingPermissionsOperations.
+        /// Gets the IBillingAccountBillingPermissionsOperations.
         /// </summary>
-        IBillingAccountbillingPermissionsOperations BillingAccountbillingPermissions { get; }
+        IBillingAccountBillingPermissionsOperations BillingAccountBillingPermissions { get; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionsbillingPermissionsOperations.
+        /// Gets the IInvoiceSectionsBillingPermissionsOperations.
         /// </summary>
-        IInvoiceSectionsbillingPermissionsOperations InvoiceSectionsbillingPermissions { get; }
+        IInvoiceSectionsBillingPermissionsOperations InvoiceSectionsBillingPermissions { get; }
 
         /// <summary>
-        /// Gets the IBillingProfilebillingPermissionsOperations.
+        /// Gets the IBillingProfileBillingPermissionsOperations.
         /// </summary>
-        IBillingProfilebillingPermissionsOperations BillingProfilebillingPermissions { get; }
+        IBillingProfileBillingPermissionsOperations BillingProfileBillingPermissions { get; }
 
         /// <summary>
-        /// Gets the IBillingAccountbillingRoleDefinitionOperations.
+        /// Gets the IBillingAccountBillingRoleDefinitionOperations.
         /// </summary>
-        IBillingAccountbillingRoleDefinitionOperations BillingAccountbillingRoleDefinition { get; }
+        IBillingAccountBillingRoleDefinitionOperations BillingAccountBillingRoleDefinition { get; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionbillingRoleDefinitionOperations.
+        /// Gets the IInvoiceSectionBillingRoleDefinitionOperations.
         /// </summary>
-        IInvoiceSectionbillingRoleDefinitionOperations InvoiceSectionbillingRoleDefinition { get; }
+        IInvoiceSectionBillingRoleDefinitionOperations InvoiceSectionBillingRoleDefinition { get; }
 
         /// <summary>
-        /// Gets the IBillingProfilebillingRoleDefinitionOperations.
+        /// Gets the IBillingProfileBillingRoleDefinitionOperations.
         /// </summary>
-        IBillingProfilebillingRoleDefinitionOperations BillingProfilebillingRoleDefinition { get; }
+        IBillingProfileBillingRoleDefinitionOperations BillingProfileBillingRoleDefinition { get; }
 
         /// <summary>
-        /// Gets the IBillingAccountbillingRoleAssignmentOperations.
+        /// Gets the IBillingAccountBillingRoleAssignmentOperations.
         /// </summary>
-        IBillingAccountbillingRoleAssignmentOperations BillingAccountbillingRoleAssignment { get; }
+        IBillingAccountBillingRoleAssignmentOperations BillingAccountBillingRoleAssignment { get; }
 
         /// <summary>
-        /// Gets the IInvoiceSectionbillingRoleAssignmentOperations.
+        /// Gets the IInvoiceSectionBillingRoleAssignmentOperations.
         /// </summary>
-        IInvoiceSectionbillingRoleAssignmentOperations InvoiceSectionbillingRoleAssignment { get; }
+        IInvoiceSectionBillingRoleAssignmentOperations InvoiceSectionBillingRoleAssignment { get; }
 
         /// <summary>
-        /// Gets the IBillingProfilebillingRoleAssignmentOperations.
+        /// Gets the IBillingProfileBillingRoleAssignmentOperations.
         /// </summary>
-        IBillingProfilebillingRoleAssignmentOperations BillingProfilebillingRoleAssignment { get; }
+        IBillingProfileBillingRoleAssignmentOperations BillingProfileBillingRoleAssignment { get; }
 
         /// <summary>
         /// Lists the transactions by billingProfileName for given start date
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.Billing
         /// billing Account Id.
         /// </param>
         /// <param name='productName'>
-        /// Invoide Id.
+        /// Invoice Id.
         /// </param>
         /// <param name='body'>
         /// Update auto renew request parameters.
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.Billing
         /// InvoiceSection Id.
         /// </param>
         /// <param name='productName'>
-        /// Invoide Id.
+        /// Invoice Id.
         /// </param>
         /// <param name='body'>
         /// Update auto renew request parameters.

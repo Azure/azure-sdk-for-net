@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for BillingAccountbillingRoleDefinitionOperations.
+    /// Extension methods for BillingAccountBillingRoleDefinitionOperations.
     /// </summary>
-    public static partial class BillingAccountbillingRoleDefinitionOperationsExtensions
+    public static partial class BillingAccountBillingRoleDefinitionOperationsExtensions
     {
             /// <summary>
             /// Gets the role definition for a role
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingRoleDefinitionName'>
             /// role definition id.
             /// </param>
-            public static BillingRoleDefinition Get(this IBillingAccountbillingRoleDefinitionOperations operations, string billingAccountName, string billingRoleDefinitionName)
+            public static BillingRoleDefinition Get(this IBillingAccountBillingRoleDefinitionOperations operations, string billingAccountName, string billingRoleDefinitionName)
             {
                 return operations.GetAsync(billingAccountName, billingRoleDefinitionName).GetAwaiter().GetResult();
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingRoleDefinition> GetAsync(this IBillingAccountbillingRoleDefinitionOperations operations, string billingAccountName, string billingRoleDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingRoleDefinition> GetAsync(this IBillingAccountBillingRoleDefinitionOperations operations, string billingAccountName, string billingRoleDefinitionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, billingRoleDefinitionName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            public static BillingRoleDefinitionListResult List(this IBillingAccountbillingRoleDefinitionOperations operations, string billingAccountName)
+            public static BillingRoleDefinitionListResult List(this IBillingAccountBillingRoleDefinitionOperations operations, string billingAccountName)
             {
                 return operations.ListAsync(billingAccountName).GetAwaiter().GetResult();
             }
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingRoleDefinitionListResult> ListAsync(this IBillingAccountbillingRoleDefinitionOperations operations, string billingAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingRoleDefinitionListResult> ListAsync(this IBillingAccountBillingRoleDefinitionOperations operations, string billingAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, null, cancellationToken).ConfigureAwait(false))
                 {

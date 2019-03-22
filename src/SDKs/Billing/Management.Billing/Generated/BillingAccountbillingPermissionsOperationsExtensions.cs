@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for BillingAccountbillingPermissionsOperations.
+    /// Extension methods for BillingAccountBillingPermissionsOperations.
     /// </summary>
-    public static partial class BillingAccountbillingPermissionsOperationsExtensions
+    public static partial class BillingAccountBillingPermissionsOperationsExtensions
     {
             /// <summary>
             /// Lists all billingPermissions for the caller has for a billing account.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            public static BillingPermissionsListResult List(this IBillingAccountbillingPermissionsOperations operations, string billingAccountName)
+            public static BillingPermissionsListResult List(this IBillingAccountBillingPermissionsOperations operations, string billingAccountName)
             {
                 return operations.ListAsync(billingAccountName).GetAwaiter().GetResult();
             }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingPermissionsListResult> ListAsync(this IBillingAccountbillingPermissionsOperations operations, string billingAccountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingPermissionsListResult> ListAsync(this IBillingAccountBillingPermissionsOperations operations, string billingAccountName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, null, cancellationToken).ConfigureAwait(false))
                 {

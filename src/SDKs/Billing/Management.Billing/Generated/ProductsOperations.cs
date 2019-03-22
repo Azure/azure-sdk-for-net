@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Billing
         /// InvoiceSection Id.
         /// </param>
         /// <param name='productName'>
-        /// Invoide Id.
+        /// Invoice Id.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -256,7 +256,7 @@ namespace Microsoft.Azure.Management.Billing
         /// InvoiceSection Id.
         /// </param>
         /// <param name='productName'>
-        /// Invoide Id.
+        /// Invoice Id.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Transfer Product operation.

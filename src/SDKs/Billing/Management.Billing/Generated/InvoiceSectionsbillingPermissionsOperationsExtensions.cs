@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for InvoiceSectionsbillingPermissionsOperations.
+    /// Extension methods for InvoiceSectionsBillingPermissionsOperations.
     /// </summary>
-    public static partial class InvoiceSectionsbillingPermissionsOperationsExtensions
+    public static partial class InvoiceSectionsBillingPermissionsOperationsExtensions
     {
             /// <summary>
             /// Lists all billingPermissions for the caller has for a Invoice Section.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='invoiceSectionName'>
             /// InvoiceSection Id.
             /// </param>
-            public static BillingPermissionsListResult List(this IInvoiceSectionsbillingPermissionsOperations operations, string billingAccountName, string invoiceSectionName)
+            public static BillingPermissionsListResult List(this IInvoiceSectionsBillingPermissionsOperations operations, string billingAccountName, string invoiceSectionName)
             {
                 return operations.ListAsync(billingAccountName, invoiceSectionName).GetAwaiter().GetResult();
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingPermissionsListResult> ListAsync(this IInvoiceSectionsbillingPermissionsOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingPermissionsListResult> ListAsync(this IInvoiceSectionsBillingPermissionsOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false))
                 {

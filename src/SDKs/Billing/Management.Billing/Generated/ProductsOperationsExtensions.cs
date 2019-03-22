@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Billing
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             public static ProductSummary Get(this IProductsOperations operations, string billingAccountName, string invoiceSectionName, string productName)
             {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Billing
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.Billing
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Transfer Product operation.
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Billing
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to the Transfer Product operation.

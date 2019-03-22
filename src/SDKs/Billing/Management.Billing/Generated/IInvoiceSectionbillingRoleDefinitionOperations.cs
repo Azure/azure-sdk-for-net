@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// InvoiceSectionbillingRoleDefinitionOperations operations.
+    /// InvoiceSectionBillingRoleDefinitionOperations operations.
     /// </summary>
-    public partial interface IInvoiceSectionbillingRoleDefinitionOperations
+    public partial interface IInvoiceSectionBillingRoleDefinitionOperations
     {
         /// <summary>
         /// Gets the role definition for a role

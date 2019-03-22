@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingProfilebillingPermissionsOperations operations.
+    /// BillingProfileBillingPermissionsOperations operations.
     /// </summary>
-    internal partial class BillingProfilebillingPermissionsOperations : IServiceOperations<BillingManagementClient>, IBillingProfilebillingPermissionsOperations
+    internal partial class BillingProfileBillingPermissionsOperations : IServiceOperations<BillingManagementClient>, IBillingProfileBillingPermissionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the BillingProfilebillingPermissionsOperations class.
+        /// Initializes a new instance of the BillingProfileBillingPermissionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BillingProfilebillingPermissionsOperations(BillingManagementClient client)
+        internal BillingProfileBillingPermissionsOperations(BillingManagementClient client)
         {
             if (client == null)
             {

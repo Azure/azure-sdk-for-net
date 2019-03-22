@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Billing
             /// billing Account Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='body'>
             /// Update auto renew request parameters.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Billing
             /// billing Account Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='body'>
             /// Update auto renew request parameters.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Billing
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='body'>
             /// Update auto renew request parameters.
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Billing
             /// InvoiceSection Id.
             /// </param>
             /// <param name='productName'>
-            /// Invoide Id.
+            /// Invoice Id.
             /// </param>
             /// <param name='body'>
             /// Update auto renew request parameters.

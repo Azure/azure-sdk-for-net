@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for BillingProfilebillingPermissionsOperations.
+    /// Extension methods for BillingProfileBillingPermissionsOperations.
     /// </summary>
-    public static partial class BillingProfilebillingPermissionsOperationsExtensions
+    public static partial class BillingProfileBillingPermissionsOperationsExtensions
     {
             /// <summary>
             /// Lists all billingPermissions for the caller has for a billing account.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            public static BillingPermissionsListResult List(this IBillingProfilebillingPermissionsOperations operations, string billingAccountName, string billingProfileName)
+            public static BillingPermissionsListResult List(this IBillingProfileBillingPermissionsOperations operations, string billingAccountName, string billingProfileName)
             {
                 return operations.ListAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BillingPermissionsListResult> ListAsync(this IBillingProfilebillingPermissionsOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BillingPermissionsListResult> ListAsync(this IBillingProfileBillingPermissionsOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {

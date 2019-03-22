@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Billing
         /// Billing Profile Id.
         /// </param>
         /// <param name='invoiceName'>
-        /// Invoide Id.
+        /// Invoice Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

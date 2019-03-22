@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// InvoiceSectionbillingRoleAssignmentOperations operations.
+    /// InvoiceSectionBillingRoleAssignmentOperations operations.
     /// </summary>
-    public partial interface IInvoiceSectionbillingRoleAssignmentOperations
+    public partial interface IInvoiceSectionBillingRoleAssignmentOperations
     {
         /// <summary>
         /// Get the role assignment for the caller on the invoice Section

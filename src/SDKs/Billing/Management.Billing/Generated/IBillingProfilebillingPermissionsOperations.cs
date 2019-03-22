@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingProfilebillingPermissionsOperations operations.
+    /// BillingProfileBillingPermissionsOperations operations.
     /// </summary>
-    public partial interface IBillingProfilebillingPermissionsOperations
+    public partial interface IBillingProfileBillingPermissionsOperations
     {
         /// <summary>
         /// Lists all billingPermissions for the caller has for a billing

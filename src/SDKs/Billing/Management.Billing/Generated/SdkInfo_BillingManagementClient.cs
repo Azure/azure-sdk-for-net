@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.Billing
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("Billing", "AvailableBalanceByBillingProfile", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "BillingAccountbillingPermissions", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "BillingAccountbillingRoleAssignment", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "BillingAccountbillingRoleDefinition", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "BillingAccountBillingPermissions", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "BillingAccountBillingRoleAssignment", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "BillingAccountBillingRoleDefinition", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingAccounts", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingAccountsWithCreateInvoiceSectionPermission", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "BillingProfilebillingPermissions", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "BillingProfilebillingRoleAssignment", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "BillingProfilebillingRoleDefinition", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "BillingProfileBillingPermissions", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "BillingProfileBillingRoleAssignment", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "BillingProfileBillingRoleDefinition", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingProfiles", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingProfilesByBillingAccountName", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingProperty", "2018-11-01-preview"),
@@ -40,11 +40,12 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "EnrollmentAccountsByBillingAccountName", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Invoice", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoicePricesheet", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "InvoiceSectionbillingRoleDefinition", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "InvoiceSectionBillingRoleAssignment", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "InvoiceSectionBillingRoleDefinition", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoiceSections", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "InvoiceSectionsBillingPermissions", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoiceSectionsByBillingAccountName", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoiceSectionsWithCreateSubscriptionPermission", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "InvoiceSectionsbillingPermissions", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoicesByBillingAccount", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoicesByBillingProfile", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Operations", "2018-11-01-preview"),
@@ -58,7 +59,6 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "TransactionsByBillingProfile", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "UpdateAutoRenewForBillingAccount", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "UpdateAutoRenewForInvoiceSection", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "invoiceSectionbillingRoleAssignment", "2018-11-01-preview"),
               }.AsEnumerable();
           }
       }
