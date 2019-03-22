@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='scope'>
             /// Scope of the resource.
             /// </param>
-            /// <param name='registratonAssignmentId'>
+            /// <param name='registrationAssignmentId'>
             /// Guid of the registration assignment.
             /// </param>
             /// <param name='apiVersion'>
@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// Tells whether to return registration definition details also along with
             /// registration assignment details.
             /// </param>
-            public static RegistrationAssignment Get(this IRegistrationAssignmentsOperations operations, string scope, string registratonAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?))
+            public static RegistrationAssignment Get(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?))
             {
-                return operations.GetAsync(scope, registratonAssignmentId, apiVersion, expandRegistrationDefinition).GetAwaiter().GetResult();
+                return operations.GetAsync(scope, registrationAssignmentId, apiVersion, expandRegistrationDefinition).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='scope'>
             /// Scope of the resource.
             /// </param>
-            /// <param name='registratonAssignmentId'>
+            /// <param name='registrationAssignmentId'>
             /// Guid of the registration assignment.
             /// </param>
             /// <param name='apiVersion'>
@@ -67,9 +67,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationAssignment> GetAsync(this IRegistrationAssignmentsOperations operations, string scope, string registratonAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistrationAssignment> GetAsync(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(scope, registratonAssignmentId, apiVersion, expandRegistrationDefinition, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(scope, registrationAssignmentId, apiVersion, expandRegistrationDefinition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,15 +84,15 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='scope'>
             /// Scope of the resource.
             /// </param>
-            /// <param name='registratonAssignmentId'>
+            /// <param name='registrationAssignmentId'>
             /// Guid of the registration assignment.
             /// </param>
             /// <param name='apiVersion'>
             /// The API version to use for this operation.
             /// </param>
-            public static RegistrationAssignment Delete(this IRegistrationAssignmentsOperations operations, string scope, string registratonAssignmentId, string apiVersion)
+            public static RegistrationAssignment Delete(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion)
             {
-                return operations.DeleteAsync(scope, registratonAssignmentId, apiVersion).GetAwaiter().GetResult();
+                return operations.DeleteAsync(scope, registrationAssignmentId, apiVersion).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='scope'>
             /// Scope of the resource.
             /// </param>
-            /// <param name='registratonAssignmentId'>
+            /// <param name='registrationAssignmentId'>
             /// Guid of the registration assignment.
             /// </param>
             /// <param name='apiVersion'>
@@ -113,9 +113,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationAssignment> DeleteAsync(this IRegistrationAssignmentsOperations operations, string scope, string registratonAssignmentId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistrationAssignment> DeleteAsync(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, registratonAssignmentId, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(scope, registrationAssignmentId, apiVersion, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='scope'>
             /// Scope of the resource.
             /// </param>
-            /// <param name='registratonAssignmentId'>
+            /// <param name='registrationAssignmentId'>
             /// Guid of the registration assignment.
             /// </param>
             /// <param name='apiVersion'>
@@ -139,9 +139,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='requestBody'>
             /// The parameters required to create new registration assignment.
             /// </param>
-            public static RegistrationAssignment CreateOrUpdate(this IRegistrationAssignmentsOperations operations, string scope, string registratonAssignmentId, string apiVersion, RegistrationAssignment requestBody)
+            public static RegistrationAssignment CreateOrUpdate(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, RegistrationAssignment requestBody)
             {
-                return operations.CreateOrUpdateAsync(scope, registratonAssignmentId, apiVersion, requestBody).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(scope, registrationAssignmentId, apiVersion, requestBody).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='scope'>
             /// Scope of the resource.
             /// </param>
-            /// <param name='registratonAssignmentId'>
+            /// <param name='registrationAssignmentId'>
             /// Guid of the registration assignment.
             /// </param>
             /// <param name='apiVersion'>
@@ -165,9 +165,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RegistrationAssignment> CreateOrUpdateAsync(this IRegistrationAssignmentsOperations operations, string scope, string registratonAssignmentId, string apiVersion, RegistrationAssignment requestBody, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RegistrationAssignment> CreateOrUpdateAsync(this IRegistrationAssignmentsOperations operations, string scope, string registrationAssignmentId, string apiVersion, RegistrationAssignment requestBody, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, registratonAssignmentId, apiVersion, requestBody, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(scope, registrationAssignmentId, apiVersion, requestBody, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

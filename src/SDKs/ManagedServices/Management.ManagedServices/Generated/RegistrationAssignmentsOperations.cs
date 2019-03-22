@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <param name='scope'>
         /// Scope of the resource.
         /// </param>
-        /// <param name='registratonAssignmentId'>
+        /// <param name='registrationAssignmentId'>
         /// Guid of the registration assignment.
         /// </param>
         /// <param name='apiVersion'>
@@ -87,15 +87,15 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistrationAssignment>> GetWithHttpMessagesAsync(string scope, string registratonAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistrationAssignment>> GetWithHttpMessagesAsync(string scope, string registrationAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            if (registratonAssignmentId == null)
+            if (registrationAssignmentId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registratonAssignmentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registrationAssignmentId");
             }
             if (apiVersion == null)
             {
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ManagedServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
-                tracingParameters.Add("registratonAssignmentId", registratonAssignmentId);
+                tracingParameters.Add("registrationAssignmentId", registrationAssignmentId);
                 tracingParameters.Add("expandRegistrationDefinition", expandRegistrationDefinition);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -117,9 +117,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registratonAssignmentId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}").ToString();
             _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{registratonAssignmentId}", System.Uri.EscapeDataString(registratonAssignmentId));
+            _url = _url.Replace("{registrationAssignmentId}", System.Uri.EscapeDataString(registrationAssignmentId));
             List<string> _queryParameters = new List<string>();
             if (expandRegistrationDefinition != null)
             {
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <param name='scope'>
         /// Scope of the resource.
         /// </param>
-        /// <param name='registratonAssignmentId'>
+        /// <param name='registrationAssignmentId'>
         /// Guid of the registration assignment.
         /// </param>
         /// <param name='apiVersion'>
@@ -282,15 +282,15 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistrationAssignment>> DeleteWithHttpMessagesAsync(string scope, string registratonAssignmentId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistrationAssignment>> DeleteWithHttpMessagesAsync(string scope, string registrationAssignmentId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            if (registratonAssignmentId == null)
+            if (registrationAssignmentId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registratonAssignmentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registrationAssignmentId");
             }
             if (apiVersion == null)
             {
@@ -304,16 +304,16 @@ namespace Microsoft.Azure.Management.ManagedServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
-                tracingParameters.Add("registratonAssignmentId", registratonAssignmentId);
+                tracingParameters.Add("registrationAssignmentId", registrationAssignmentId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registratonAssignmentId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}").ToString();
             _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{registratonAssignmentId}", System.Uri.EscapeDataString(registratonAssignmentId));
+            _url = _url.Replace("{registrationAssignmentId}", System.Uri.EscapeDataString(registrationAssignmentId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <param name='scope'>
         /// Scope of the resource.
         /// </param>
-        /// <param name='registratonAssignmentId'>
+        /// <param name='registrationAssignmentId'>
         /// Guid of the registration assignment.
         /// </param>
         /// <param name='apiVersion'>
@@ -475,15 +475,15 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistrationAssignment>> CreateOrUpdateWithHttpMessagesAsync(string scope, string registratonAssignmentId, string apiVersion, RegistrationAssignment requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistrationAssignment>> CreateOrUpdateWithHttpMessagesAsync(string scope, string registrationAssignmentId, string apiVersion, RegistrationAssignment requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            if (registratonAssignmentId == null)
+            if (registrationAssignmentId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registratonAssignmentId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registrationAssignmentId");
             }
             if (apiVersion == null)
             {
@@ -505,7 +505,7 @@ namespace Microsoft.Azure.Management.ManagedServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
-                tracingParameters.Add("registratonAssignmentId", registratonAssignmentId);
+                tracingParameters.Add("registrationAssignmentId", registrationAssignmentId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("requestBody", requestBody);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -513,9 +513,9 @@ namespace Microsoft.Azure.Management.ManagedServices
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registratonAssignmentId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationAssignments/{registrationAssignmentId}").ToString();
             _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{registratonAssignmentId}", System.Uri.EscapeDataString(registratonAssignmentId));
+            _url = _url.Replace("{registrationAssignmentId}", System.Uri.EscapeDataString(registrationAssignmentId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {

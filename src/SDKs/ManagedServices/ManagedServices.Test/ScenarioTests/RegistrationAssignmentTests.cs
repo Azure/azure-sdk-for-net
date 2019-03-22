@@ -39,7 +39,7 @@ namespace ManagedServices.Tests.ScenarioTests
                         .CreateOrUpdate(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion,
-                        registratonAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId,
+                        registrationAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId,
                         requestBody: registrationAssignment);
 
                     Assert.NotNull(registrationAssignemntResponse);
@@ -51,7 +51,7 @@ namespace ManagedServices.Tests.ScenarioTests
                         .Get(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion,
-                        registratonAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
+                        registrationAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
 
                     Assert.NotNull(registrationAssignemntResponse);
                     Assert.Equal(ManagedServicesTestUtilities.registrationAssignmentId, registrationAssignemntResponse.Name);
@@ -86,7 +86,7 @@ namespace ManagedServices.Tests.ScenarioTests
                         .Delete(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion,
-                        registratonAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
+                        registrationAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
 
                     Assert.NotNull(registrationAssignemntResponse);
                     Assert.Equal(ManagedServicesTestUtilities.registrationAssignmentId, registrationAssignemntResponse.Name);
