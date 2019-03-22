@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Storage
     public partial interface IManagementPoliciesOperations
     {
         /// <summary>
-        /// Gets the data policy rules associated with the specified storage
+        /// Gets the managementpolicy associated with the specified storage
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -51,10 +51,9 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageAccountManagementPolicies>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagementPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Sets the data policy rules associated with the specified storage
-        /// account.
+        /// Sets the managementpolicy to the specified storage account.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -66,8 +65,8 @@ namespace Microsoft.Azure.Management.Storage
         /// length and use numbers and lower-case letters only.
         /// </param>
         /// <param name='policy'>
-        /// The Storage Account ManagementPolicies Rules, in JSON format. See
-        /// more details in:
+        /// The Storage Account ManagementPolicy, in JSON format. See more
+        /// details in:
         /// https://docs.microsoft.com/en-us/azure/storage/common/storage-lifecycle-managment-concepts.
         /// </param>
         /// <param name='customHeaders'>
@@ -85,9 +84,9 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<StorageAccountManagementPolicies>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, object policy = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ManagementPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, ManagementPolicySchema policy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes the data policy rules associated with the specified storage
+        /// Deletes the managementpolicy associated with the specified storage
         /// account.
         /// </summary>
         /// <param name='resourceGroupName'>

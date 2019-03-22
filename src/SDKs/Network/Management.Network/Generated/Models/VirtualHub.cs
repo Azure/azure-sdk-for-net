@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VirtualHub</param>
         /// <param name="expressRouteGateway">The expressRouteGateway
         /// associated with this VirtualHub</param>
-        /// <param name="virtualNetworkConnections">list of all vnet
+        /// <param name="virtualNetworkConnections">List of all vnet
         /// connections with this VirtualHub.</param>
         /// <param name="addressPrefix">Address-prefix for this
         /// VirtualHub.</param>

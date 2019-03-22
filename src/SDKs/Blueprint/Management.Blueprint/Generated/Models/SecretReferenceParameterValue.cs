@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// class.
         /// </summary>
         /// <param name="reference">Specifies the reference.</param>
-        /// <param name="description">Optional property, just to establish
+        /// <param name="description">Optional property. Establishes
         /// ParameterValueBase as a BaseClass.</param>
         public SecretReferenceParameterValue(SecretValueReference reference, string description = default(string))
             : base(description)

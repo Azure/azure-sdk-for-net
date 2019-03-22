@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupName");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -583,7 +583,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -834,7 +834,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
             string policyStatesSummaryResource = "latest";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1071,7 +1071,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1331,7 +1331,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
             string policyStatesSummaryResource = "latest";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1563,7 +1563,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1599,6 +1599,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 apply = queryOptions.Apply;
             }
+            string expand = default(string);
+            if (queryOptions != null)
+            {
+                expand = queryOptions.Expand;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1616,6 +1621,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("to", to);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("apply", apply);
+                tracingParameters.Add("expand", expand);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListQueryResultsForResource", tracingParameters);
             }
@@ -1656,6 +1662,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             if (apply != null)
             {
                 _queryParameters.Add(string.Format("$apply={0}", System.Uri.EscapeDataString(apply)));
+            }
+            if (expand != null)
+            {
+                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1814,7 +1824,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
             string policyStatesSummaryResource = "latest";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2052,7 +2062,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policySetDefinitionName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2315,7 +2325,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2557,7 +2567,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyDefinitionName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2820,7 +2830,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3062,7 +3072,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3325,7 +3335,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3574,7 +3584,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyAssignmentName");
             }
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3846,7 +3856,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             }
             string policyStatesSummaryResource = "latest";
             string authorizationNamespace = "Microsoft.Authorization";
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -4070,7 +4080,7 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            string apiVersion = "2018-04-04";
+            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
