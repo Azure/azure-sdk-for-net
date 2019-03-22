@@ -30,9 +30,9 @@ namespace Azure.Base.Tests
 
             var pipeline = options.Build("test", "1.0.0");
 
-            var message = pipeline.CreateRequest();
-            message.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
-            var response = await pipeline.SendRequestAsync(message, CancellationToken.None);
+            var request = pipeline.CreateRequest();
+            request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+            var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
             var result = listener.ToString();

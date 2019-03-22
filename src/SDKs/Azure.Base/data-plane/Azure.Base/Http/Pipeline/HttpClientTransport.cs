@@ -94,20 +94,20 @@ namespace Azure.Base.Http.Pipeline
             {
                 // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
                 // and so the retry logic fails.
-                var message = new HttpRequestMessage(_requestMessage.Method, _requestMessage.RequestUri);
+                var request = new HttpRequestMessage(_requestMessage.Method, _requestMessage.RequestUri);
                 foreach (var header in _requestMessage.Headers) {
-                    if (!message.Headers.TryAddWithoutValidation(header.Key, header.Value)) {
+                    if (!request.Headers.TryAddWithoutValidation(header.Key, header.Value)) {
                         throw new Exception("could not add header " + header.ToString());
                     }
                 }
 
                 if (_requestContent != null) {
-                    message.Content = new PipelineContentAdapter(_requestContent, cancellation);
-                    if (_contentTypeHeaderValue != null) message.Content.Headers.Add("Content-Type", _contentTypeHeaderValue);
-                    if (_contentLengthHeaderValue != null) message.Content.Headers.Add("Content-Length", _contentLengthHeaderValue);
+                    request.Content = new PipelineContentAdapter(_requestContent, cancellation);
+                    if (_contentTypeHeaderValue != null) request.Content.Headers.Add("Content-Type", _contentTypeHeaderValue);
+                    if (_contentLengthHeaderValue != null) request.Content.Headers.Add("Content-Length", _contentLengthHeaderValue);
                 }
 
-                return message;
+                return request;
             }
 
             public override void Dispose()
