@@ -39,13 +39,14 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="mountTargetId">mountTargetId</param>
         /// <param name="ipAddress">ipAddress</param>
-        /// <param name="vlanId">vlanid</param>
+        /// <param name="subnet">subnet</param>
         /// <param name="startIp">startIp</param>
-        /// <param name="endIp">startIp</param>
+        /// <param name="endIp">endIp</param>
         /// <param name="gateway">gateway</param>
         /// <param name="netmask">netmask</param>
+        /// <param name="smbServerFqdn">smbServerFQDN</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public MountTarget(string location, string fileSystemId, string id = default(string), string name = default(string), object tags = default(object), string mountTargetId = default(string), string ipAddress = default(string), int? vlanId = default(int?), string startIp = default(string), string endIp = default(string), string gateway = default(string), string netmask = default(string), string provisioningState = default(string))
+        public MountTarget(string location, string fileSystemId, string id = default(string), string name = default(string), object tags = default(object), string mountTargetId = default(string), string ipAddress = default(string), string subnet = default(string), string startIp = default(string), string endIp = default(string), string gateway = default(string), string netmask = default(string), string smbServerFqdn = default(string), string provisioningState = default(string))
         {
             Location = location;
             Id = id;
@@ -54,11 +55,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
             MountTargetId = mountTargetId;
             FileSystemId = fileSystemId;
             IpAddress = ipAddress;
-            VlanId = vlanId;
+            Subnet = subnet;
             StartIp = startIp;
             EndIp = endIp;
             Gateway = gateway;
             Netmask = netmask;
+            SmbServerFqdn = smbServerFqdn;
             ProvisioningState = provisioningState;
             CustomInit();
         }
@@ -120,13 +122,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string IpAddress { get; private set; }
 
         /// <summary>
-        /// Gets or sets vlanid
+        /// Gets or sets subnet
         /// </summary>
         /// <remarks>
-        /// Vlan Id
+        /// The subnet
         /// </remarks>
-        [JsonProperty(PropertyName = "properties.vlanId")]
-        public int? VlanId { get; set; }
+        [JsonProperty(PropertyName = "properties.subnet")]
+        public string Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets startIp
@@ -139,7 +141,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string StartIp { get; set; }
 
         /// <summary>
-        /// Gets or sets startIp
+        /// Gets or sets endIp
         /// </summary>
         /// <remarks>
         /// The end of IPv4 address range to use when creating a new mount
@@ -167,6 +169,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.netmask")]
         public string Netmask { get; set; }
+
+        /// <summary>
+        /// Gets or sets smbServerFQDN
+        /// </summary>
+        /// <remarks>
+        /// The SMB server's Fully Qualified Domain Name, FQDN
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.smbServerFqdn")]
+        public string SmbServerFqdn { get; set; }
 
         /// <summary>
         /// Gets azure lifecycle management
