@@ -8,7 +8,7 @@
     <Description>Provides NetApp storage management capabilities for Microsoft Azure.</Description>
     <AssemblyTitle>Microsoft Azure NetApp Management</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.NetApp</AssemblyName>
-    <Version>0.9.0-preview</Version>
+    <Version>0.9.1-preview</Version>
     <PackageTags>MicrosoftAzure Management;NetApp</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[

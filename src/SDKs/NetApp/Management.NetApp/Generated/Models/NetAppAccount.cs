@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -39,7 +41,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
-        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string provisioningState = default(string))
+        /// <param name="activeDirectories">Active Directories</param>
+        public NetAppAccount(string location, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>))
         {
             Location = location;
             Id = id;
@@ -47,6 +50,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Type = type;
             Tags = tags;
             ProvisioningState = provisioningState;
+            ActiveDirectories = activeDirectories;
             CustomInit();
         }
 
@@ -90,6 +94,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets active Directories
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.activeDirectories")]
+        public IList<ActiveDirectory> ActiveDirectories { get; set; }
 
         /// <summary>
         /// Validate the object.
