@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the JobQueryParameter class.
         /// </summary>
         /// <param name="startTime">Date time to get jobs from.</param>
-        /// <param name="endTime">Date time to get jobs upto.</param>
+        /// <param name="endTime">Date time to get jobs up to.</param>
         /// <param name="fabricId">The Id of the fabric to search jobs
         /// under.</param>
         /// <param name="affectedObjectTypes">The type of objects.</param>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets date time to get jobs upto.
+        /// Gets or sets date time to get jobs up to.
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public string EndTime { get; set; }

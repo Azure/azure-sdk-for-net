@@ -111,6 +111,11 @@ namespace Microsoft.Azure.Management.FrontDoor
         IPoliciesOperations Policies { get; }
 
         /// <summary>
+        /// Gets the IManagedRuleSetsOperations.
+        /// </summary>
+        IManagedRuleSetsOperations ManagedRuleSets { get; }
+
+        /// <summary>
         /// Check the availability of a Front Door resource name.
         /// </summary>
         /// <param name='checkFrontDoorNameAvailabilityInput'>

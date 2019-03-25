@@ -107,6 +107,11 @@ namespace Microsoft.Azure.Management.Security
         public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
 
         /// <summary>
+        /// Gets the IDeviceSecurityGroupsOperations.
+        /// </summary>
+        public virtual IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; private set; }
+
+        /// <summary>
         /// Gets the ISettingsOperations.
         /// </summary>
         public virtual ISettingsOperations Settings { get; private set; }
@@ -160,6 +165,11 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IAllowedConnectionsOperations.
         /// </summary>
         public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdaptiveNetworkHardeningsOperations.
+        /// </summary>
+        public virtual IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -408,6 +418,7 @@ namespace Microsoft.Azure.Management.Security
             AutoProvisioningSettings = new AutoProvisioningSettingsOperations(this);
             Compliances = new CompliancesOperations(this);
             AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
+            DeviceSecurityGroups = new DeviceSecurityGroupsOperations(this);
             Settings = new SettingsOperations(this);
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             Operations = new Operations(this);
@@ -419,6 +430,7 @@ namespace Microsoft.Azure.Management.Security
             ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
             Topology = new TopologyOperations(this);
             AllowedConnections = new AllowedConnectionsOperations(this);
+            AdaptiveNetworkHardenings = new AdaptiveNetworkHardeningsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
