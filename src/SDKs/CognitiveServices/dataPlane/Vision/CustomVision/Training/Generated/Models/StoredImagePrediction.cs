@@ -38,6 +38,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="originalImageUri">The URI to the original prediction
         /// image.</param>
         /// <param name="domain">Domain used for the prediction.</param>
+        /// <param name="id">Prediction Id.</param>
+        /// <param name="project">Project Id.</param>
+        /// <param name="iteration">Iteration Id.</param>
+        /// <param name="created">Date this prediction was created.</param>
+        /// <param name="predictions">List of predictions.</param>
         public StoredImagePrediction(string resizedImageUri = default(string), string thumbnailUri = default(string), string originalImageUri = default(string), System.Guid domain = default(System.Guid), System.Guid id = default(System.Guid), System.Guid project = default(System.Guid), System.Guid iteration = default(System.Guid), System.DateTime created = default(System.DateTime), IList<Prediction> predictions = default(IList<Prediction>))
         {
             ResizedImageUri = resizedImageUri;
@@ -82,26 +87,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public System.Guid Domain { get; private set; }
 
         /// <summary>
+        /// Gets prediction Id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; private set; }
 
         /// <summary>
+        /// Gets project Id.
         /// </summary>
         [JsonProperty(PropertyName = "project")]
         public System.Guid Project { get; private set; }
 
         /// <summary>
+        /// Gets iteration Id.
         /// </summary>
         [JsonProperty(PropertyName = "iteration")]
         public System.Guid Iteration { get; private set; }
 
         /// <summary>
+        /// Gets date this prediction was created.
         /// </summary>
         [JsonProperty(PropertyName = "created")]
         public System.DateTime Created { get; private set; }
 
         /// <summary>
+        /// Gets list of predictions.
         /// </summary>
         [JsonProperty(PropertyName = "predictions")]
         public IList<Prediction> Predictions { get; private set; }

@@ -62,7 +62,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            ConfigurationSetting setting = await service.GetAsync(key: s_testSetting.Key, options : default, CancellationToken.None);
+            ConfigurationSetting setting = await service.GetAsync(s_testSetting.Key);
 
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -76,7 +76,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await service.GetAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
+                await service.GetAsync(key: s_testSetting.Key);
             });
             Assert.AreEqual(404, exception.Status);
 
@@ -113,12 +113,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new UpdateMockTransport(s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            RequestOptions options = new RequestOptions()
-            {
-                ETag = new ETagFilter() { IfMatch = new ETag("*") }
-            };
-
-            ConfigurationSetting setting = await service.UpdateAsync(s_testSetting, options, CancellationToken.None);
+            ConfigurationSetting setting = await service.UpdateAsync(s_testSetting, CancellationToken.None);
 
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
@@ -130,7 +125,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var transport = new DeleteMockTransport(s_testSetting.Key, new RequestOptions() {Label = s_testSetting.Label }, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
-            await service.DeleteAsync(key: s_testSetting.Key, options: s_testSetting.Label);
+            await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
@@ -142,7 +137,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
-                await service.DeleteAsync(key: s_testSetting.Key, options: default, CancellationToken.None);
+                await service.DeleteAsync(s_testSetting.Key);
             });
             Assert.AreEqual(404, exception.Status);
 
@@ -216,7 +211,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var client = new ConfigurationClient(connectionString, options);
 
-            ConfigurationSetting setting = await client.GetAsync(key: s_testSetting.Key, options: null, CancellationToken.None);
+            ConfigurationSetting setting = await client.GetAsync(s_testSetting.Key);
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(2, testPolicy.Retries);
         }

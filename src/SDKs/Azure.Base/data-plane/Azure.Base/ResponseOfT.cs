@@ -4,6 +4,7 @@
 using System;
 using System.ComponentModel;
 using System.Text;
+using Azure.Base.Http;
 
 namespace Azure
 {
@@ -63,21 +64,9 @@ namespace Azure
             _contentParser = default;
         }
 
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
-            => _response.TryGetHeader(name, out value);
-
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out long value)
-            => _response.TryGetHeader(name, out value);
-
-        public bool TryGetHeader(string name, out string value)
+        public bool TryGetHeader(string name, out string values)
         {
-            if (_response.TryGetHeader(Encoding.ASCII.GetBytes(name), out ReadOnlySpan<byte> valueUtf8))
-            {
-                value = Encoding.ASCII.GetString(valueUtf8.ToArray());
-                return true;
-            }
-            value = default;
-            return false;
+            return _response.TryGetHeader(name, out values);
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

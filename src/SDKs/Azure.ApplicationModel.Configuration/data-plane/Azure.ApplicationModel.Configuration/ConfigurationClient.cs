@@ -19,8 +19,8 @@ namespace Azure.ApplicationModel.Configuration
         const string ComponentVersion = "1.0.0";
 
         static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
-            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
-            500, // Internal Server Error 
+            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
+            500, // Internal Server Error
             503, // Service Unavailable
             504  // Gateway Timeout
         );
@@ -68,11 +68,9 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(IfNoneMatch, "*");
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
@@ -91,10 +89,10 @@ namespace Azure.ApplicationModel.Configuration
         public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await AddAsync(new ConfigurationSetting(key, value, label));
+            return await AddAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -106,11 +104,13 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
-                AddOptionsHeaders(options, message);
+                if (setting.ETag != default)
+                {
+                    message.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
+                }
+
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
@@ -130,10 +130,10 @@ namespace Azure.ApplicationModel.Configuration
         public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await SetAsync(new ConfigurationSetting(key, value, label));
+            return await SetAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, RequestOptions options = null, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -145,18 +145,18 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
-                message.AddHeader(HttpHeader.Common.CreateContentLength(content.Length));
+
                 if(setting.ETag != default)
                 {
                     message.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
-                } else if(options == null)
+                }
+                else
                 {
                     message.AddHeader(IfMatchName, "*");
                 }
-                AddOptionsHeaders(options, message);
+
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
@@ -175,20 +175,23 @@ namespace Azure.ApplicationModel.Configuration
         public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
-            return await UpdateAsync(new ConfigurationSetting(key, value, label));
+            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response> DeleteAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
+        public async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri uri = BuildUriForKvRoute(key, options);
+            Uri uri = BuildUriForKvRoute(key, label);
 
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Delete, uri);
 
-                message.AddHeader("Host", uri.Host);
-                AddOptionsHeaders(options, message);
+                if (etag != default)
+                {
+                    message.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
+                }
+
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
@@ -202,17 +205,15 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> LockAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> LockAsync(string key, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri uri = BuildUriForLocksRoute(key, options);
+            Uri uri = BuildUriForLocksRoute(key, label);
 
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
-                AddOptionsHeaders(options, message);
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content: default, _secret, _credential);
 
@@ -226,17 +227,15 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UnlockAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> UnlockAsync(string key, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri uri = BuildUriForLocksRoute(key, options);
+            Uri uri = BuildUriForLocksRoute(key, label);
 
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Delete, uri);
 
-                message.AddHeader("Host", uri.Host);
-                AddOptionsHeaders(options, message);
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
@@ -250,20 +249,18 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, RequestOptions options = null, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
-            Uri uri = BuildUriForKvRoute(key, options);
+            Uri uri = BuildUriForKvRoute(key, label);
 
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                AddOptionsHeaders(options, message);
-                AddClientRequestID(message);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
+                AddClientRequestID(message);
 
                 AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
 
@@ -284,7 +281,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(batchOptions, message);
                 AddClientRequestID(message);
@@ -308,7 +304,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, message);
                 AddClientRequestID(message);

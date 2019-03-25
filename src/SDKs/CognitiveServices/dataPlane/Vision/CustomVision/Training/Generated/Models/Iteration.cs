@@ -10,7 +10,10 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,10 +32,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Iteration class.
         /// </summary>
-        /// <param name="id">Gets the id of the iteration.</param>
         /// <param name="name">Gets or sets the name of the iteration.</param>
-        /// <param name="isDefault">Gets or sets a value indicating whether the
-        /// iteration is the default iteration for the project.</param>
+        /// <param name="id">Gets the id of the iteration.</param>
         /// <param name="status">Gets the current iteration status.</param>
         /// <param name="created">Gets the time this iteration was
         /// completed.</param>
@@ -40,28 +41,41 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// modified.</param>
         /// <param name="trainedAt">Gets the time this iteration was last
         /// modified.</param>
-        /// <param name="projectId">Gets The project id. of the
+        /// <param name="projectId">Gets the project id of the
         /// iteration.</param>
         /// <param name="exportable">Whether the iteration can be exported to
         /// another format for download.</param>
+        /// <param name="exportableTo">A set of platforms this iteration can
+        /// export to.</param>
         /// <param name="domainId">Get or sets a guid of the domain the
         /// iteration has been trained on.</param>
         /// <param name="classificationType">Gets the classification type of
         /// the project. Possible values include: 'Multiclass',
         /// 'Multilabel'</param>
-        public Iteration(System.Guid id = default(System.Guid), string name = default(string), bool isDefault = default(bool), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), System.Guid? domainId = default(System.Guid?), string classificationType = default(string))
+        /// <param name="trainingType">Gets the training type of the iteration.
+        /// Possible values include: 'Regular', 'Advanced'</param>
+        /// <param name="reservedBudgetInHours">Gets the reserved advanced
+        /// training budget for the iteration.</param>
+        /// <param name="publishName">Name of the published model.</param>
+        /// <param name="originalPublishResourceId">Resource Provider Id this
+        /// iteration was originally published to.</param>
+        public Iteration(string name, System.Guid id = default(System.Guid), string status = default(string), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), System.DateTime? trainedAt = default(System.DateTime?), System.Guid projectId = default(System.Guid), bool exportable = default(bool), IList<string> exportableTo = default(IList<string>), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), string trainingType = default(string), int reservedBudgetInHours = default(int), string publishName = default(string), string originalPublishResourceId = default(string))
         {
             Id = id;
             Name = name;
-            IsDefault = isDefault;
             Status = status;
             Created = created;
             LastModified = lastModified;
             TrainedAt = trainedAt;
             ProjectId = projectId;
             Exportable = exportable;
+            ExportableTo = exportableTo;
             DomainId = domainId;
             ClassificationType = classificationType;
+            TrainingType = trainingType;
+            ReservedBudgetInHours = reservedBudgetInHours;
+            PublishName = publishName;
+            OriginalPublishResourceId = originalPublishResourceId;
             CustomInit();
         }
 
@@ -81,13 +95,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether the iteration is the
-        /// default iteration for the project.
-        /// </summary>
-        [JsonProperty(PropertyName = "isDefault")]
-        public bool IsDefault { get; set; }
 
         /// <summary>
         /// Gets the current iteration status.
@@ -114,7 +121,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         public System.DateTime? TrainedAt { get; private set; }
 
         /// <summary>
-        /// Gets The project id. of the iteration.
+        /// Gets the project id of the iteration.
         /// </summary>
         [JsonProperty(PropertyName = "projectId")]
         public System.Guid ProjectId { get; private set; }
@@ -125,6 +132,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "exportable")]
         public bool Exportable { get; private set; }
+
+        /// <summary>
+        /// Gets a set of platforms this iteration can export to.
+        /// </summary>
+        [JsonProperty(PropertyName = "exportableTo")]
+        public IList<string> ExportableTo { get; private set; }
 
         /// <summary>
         /// Gets get or sets a guid of the domain the iteration has been
@@ -140,5 +153,44 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         [JsonProperty(PropertyName = "classificationType")]
         public string ClassificationType { get; private set; }
 
+        /// <summary>
+        /// Gets the training type of the iteration. Possible values include:
+        /// 'Regular', 'Advanced'
+        /// </summary>
+        [JsonProperty(PropertyName = "trainingType")]
+        public string TrainingType { get; private set; }
+
+        /// <summary>
+        /// Gets the reserved advanced training budget for the iteration.
+        /// </summary>
+        [JsonProperty(PropertyName = "reservedBudgetInHours")]
+        public int ReservedBudgetInHours { get; private set; }
+
+        /// <summary>
+        /// Gets name of the published model.
+        /// </summary>
+        [JsonProperty(PropertyName = "publishName")]
+        public string PublishName { get; private set; }
+
+        /// <summary>
+        /// Gets resource Provider Id this iteration was originally published
+        /// to.
+        /// </summary>
+        [JsonProperty(PropertyName = "originalPublishResourceId")]
+        public string OriginalPublishResourceId { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }

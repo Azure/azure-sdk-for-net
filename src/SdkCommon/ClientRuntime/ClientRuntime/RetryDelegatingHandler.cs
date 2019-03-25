@@ -6,9 +6,7 @@ namespace Microsoft.Rest
     using Microsoft.Rest.ClientRuntime.Properties;
     using Microsoft.Rest.TransientFaultHandling;
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
@@ -22,8 +20,6 @@ namespace Microsoft.Rest
         private readonly TimeSpan DefaultBackoffDelta = new TimeSpan(0, 0, 10);
         private readonly TimeSpan DefaultMaxBackoff = new TimeSpan(0, 0, 10);
         private readonly TimeSpan DefaultMinBackoff = new TimeSpan(0, 0, 1);
-
-        private bool _retryPolicyRetryingEventSubscribed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. 
@@ -40,6 +36,16 @@ namespace Microsoft.Rest
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
         public RetryDelegatingHandler(DelegatingHandler innerHandler)
+            : this((HttpMessageHandler)innerHandler)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RetryDelegatingHandler"/> class. Sets 
+        /// the default retry policy base on Exponential Backoff.
+        /// </summary>
+        /// <param name="innerHandler">Inner http handler.</param>
+        public RetryDelegatingHandler(HttpMessageHandler innerHandler)
             : base(innerHandler)
         {
             Init();
@@ -50,21 +56,14 @@ namespace Microsoft.Rest
         /// </summary>
         /// <param name="retryPolicy">Retry policy to use.</param>
         /// <param name="innerHandler">Inner http handler.</param>
-        public RetryDelegatingHandler(RetryPolicy retryPolicy, DelegatingHandler innerHandler)
+        public RetryDelegatingHandler(RetryPolicy retryPolicy, HttpMessageHandler innerHandler)
             : this(innerHandler)
         {
-            if (retryPolicy == null)
-            {
-                throw new ArgumentNullException("retryPolicy");
-            }
-
-            RetryPolicy = retryPolicy;
-        }        
+            RetryPolicy = retryPolicy ?? throw new ArgumentNullException("retryPolicy");
+        }
 
         private void Init()
         {
-            _retryPolicyRetryingEventSubscribed = false;
-
             var retryStrategy = new ExponentialBackoffRetryStrategy(
                 DefaultNumberOfAttempts,
                 DefaultMinBackoff,
@@ -82,19 +81,7 @@ namespace Microsoft.Rest
         /// <summary>
         /// Get delegate count associated with the event
         /// </summary>
-        public int EventCallbackCount
-        {
-            get
-            {
-                IEnumerable<Delegate> invokeList = this.Retrying?.GetInvocationList();
-                if (invokeList != null)
-                {
-                    return invokeList.Count<Delegate>();
-                }
-
-                return 0;
-            }
-        }
+        public int EventCallbackCount => this.RetryPolicy.EventCallbackCount;
 
         /// <summary>
         /// Sends an HTTP request to the inner handler to send to the server as an asynchronous
@@ -107,8 +94,8 @@ namespace Microsoft.Rest
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
             CancellationToken cancellationToken)
         {
-            SubscribeRetryPolicyRetryingEvent();
             HttpResponseMessage responseMessage = null;
+            HttpResponseMessage lastErrorResponseMessage = null;
             try
             {
                 await RetryPolicy.ExecuteAsync(async () =>
@@ -117,15 +104,27 @@ namespace Microsoft.Rest
 
                     if (!responseMessage.IsSuccessStatusCode)
                     {
-                        // dispose the message unless we have stopped retrying
-                        this.Retrying += (sender, args) =>
+                        try
                         {
-                            if (responseMessage != null)
+                            // Save off the response message and read back its content so it does not go away as this
+                            // response will be used if retries continue to fail.
+                            // NOTE: If the content is not read and this message is returned later, an IO Exception will end up
+                            //       happening indicating that the stream has been aborted.
+                            await responseMessage.Content?.ReadAsStringAsync();
+
+                            var oldResponse = lastErrorResponseMessage;
+                            lastErrorResponseMessage = responseMessage;
+                            oldResponse?.Dispose();
+                        }
+                        catch
+                        {
+                            // We can end up getting errors reading the content of the message if the connection was closed.
+                            // These errors will be ignored and the previous last error response will continue to be used.
+                            if (lastErrorResponseMessage != null)
                             {
-                                responseMessage.Dispose();
-                                responseMessage = null;
+                                responseMessage = lastErrorResponseMessage;
                             }
-                        };
+                        }
 
                         throw new HttpRequestWithStatusException(string.Format(
                             CultureInfo.InvariantCulture,
@@ -139,51 +138,10 @@ namespace Microsoft.Rest
 
                 return responseMessage;
             }
-            catch(Exception ex)
+            catch (Exception) when (responseMessage != null || lastErrorResponseMessage != null)
             {
-                if (responseMessage != null)
-                {
-                    return responseMessage;
-                }
-                else
-                {
-                    throw ex;
-                }
-            }
-            finally
-            {
-                if (Retrying != null)
-                {
-                    foreach (EventHandler<RetryingEventArgs> d in Retrying.GetInvocationList())
-                    {
-                        Retrying -= d;
-                    }
-                }
+                return responseMessage ?? lastErrorResponseMessage;
             }
         }
-
-        /// <summary>
-        /// Function that makes sure we subscribe once to RetryPolicy Retrying event once
-        /// </summary>
-        private void SubscribeRetryPolicyRetryingEvent()
-        {
-            if(_retryPolicyRetryingEventSubscribed == false)
-            {
-                RetryPolicy.Retrying += (sender, args) =>
-                {
-                    if (Retrying != null)
-                    {
-                        Retrying(sender, args);
-                    }
-                };
-
-                _retryPolicyRetryingEventSubscribed = true;
-            }
-        }
-
-        /// <summary>
-        /// An instance of a callback delegate that will be invoked whenever a retry condition is encountered.
-        /// </summary>
-        private event EventHandler<RetryingEventArgs> Retrying;
     }
 }

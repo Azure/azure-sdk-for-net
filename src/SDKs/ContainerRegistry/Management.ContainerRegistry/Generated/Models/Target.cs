@@ -40,7 +40,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="repository">The repository name.</param>
         /// <param name="url">The direct URL to the content.</param>
         /// <param name="tag">The tag name.</param>
-        public Target(string mediaType = default(string), long? size = default(long?), string digest = default(string), long? length = default(long?), string repository = default(string), string url = default(string), string tag = default(string))
+        /// <param name="name">The name of the artifact.</param>
+        /// <param name="version">The version of the artifact.</param>
+        public Target(string mediaType = default(string), long? size = default(long?), string digest = default(string), long? length = default(long?), string repository = default(string), string url = default(string), string tag = default(string), string name = default(string), string version = default(string))
         {
             MediaType = mediaType;
             Size = size;
@@ -49,6 +51,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Repository = repository;
             Url = url;
             Tag = tag;
+            Name = name;
+            Version = version;
             CustomInit();
         }
 
@@ -101,6 +105,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "tag")]
         public string Tag { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version of the artifact.
+        /// </summary>
+        [JsonProperty(PropertyName = "version")]
+        public string Version { get; set; }
 
     }
 }

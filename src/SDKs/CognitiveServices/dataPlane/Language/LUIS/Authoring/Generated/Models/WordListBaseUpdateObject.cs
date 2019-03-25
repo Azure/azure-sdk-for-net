@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Object model for updating one of the closed list's sublists.
+    /// Object model for updating one of the list entity's sublists.
     /// </summary>
     public partial class WordListBaseUpdateObject
     {

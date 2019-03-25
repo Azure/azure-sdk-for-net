@@ -22,10 +22,20 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public static partial class PatternExtensions
     {
             /// <summary>
-            /// Adds one pattern to the specified application.
+            /// Adds a pattern to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -39,19 +49,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PatternRuleInfo> AddPatternAsync(this IPattern operations, System.Guid appId, string versionId, PatternRuleCreateObject pattern, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PatternRuleInfo> AddPatternAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, PatternRuleCreateObject pattern, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddPatternWithHttpMessagesAsync(appId, versionId, pattern, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddPatternWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, pattern, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns an application version's patterns.
+            /// Gets patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -68,19 +88,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternRuleInfo>> GetPatternsAsync(this IPattern operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternRuleInfo>> ListPatternsAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPatternsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPatternsWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates patterns
+            /// Updates patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -94,19 +124,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternRuleInfo>> UpdatePatternsAsync(this IPattern operations, System.Guid appId, string versionId, IList<PatternRuleUpdateObject> patterns, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternRuleInfo>> UpdatePatternsAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, IList<PatternRuleUpdateObject> patterns, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdatePatternsWithHttpMessagesAsync(appId, versionId, patterns, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdatePatternsWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, patterns, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a batch of patterns to the specified application.
+            /// Adds a batch of patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -120,19 +160,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternRuleInfo>> BatchAddPatternsAsync(this IPattern operations, System.Guid appId, string versionId, IList<PatternRuleCreateObject> patterns, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternRuleInfo>> BatchAddPatternsAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, IList<PatternRuleCreateObject> patterns, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchAddPatternsWithHttpMessagesAsync(appId, versionId, patterns, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BatchAddPatternsWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, patterns, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes the patterns with the specified IDs.
+            /// Deletes a list of patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -146,19 +196,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> DeletePatternsAsync(this IPattern operations, System.Guid appId, string versionId, IList<System.Guid?> patternIds, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeletePatternsAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, IList<System.Guid?> patternIds, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeletePatternsWithHttpMessagesAsync(appId, versionId, patternIds, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeletePatternsWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, patternIds, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates a pattern
+            /// Updates a pattern in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -175,19 +235,30 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PatternRuleInfo> UpdatePatternAsync(this IPattern operations, System.Guid appId, string versionId, System.Guid patternId, PatternRuleUpdateObject pattern, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PatternRuleInfo> UpdatePatternAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid patternId, PatternRuleUpdateObject pattern, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdatePatternWithHttpMessagesAsync(appId, versionId, patternId, pattern, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdatePatternWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, patternId, pattern, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Deletes the pattern with the specified ID.
+            /// Deletes the pattern with the specified ID from a version of the
+            /// application..
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -201,19 +272,29 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> DeletePatternAsync(this IPattern operations, System.Guid appId, string versionId, System.Guid patternId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeletePatternAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid patternId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeletePatternWithHttpMessagesAsync(appId, versionId, patternId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeletePatternWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, patternId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns patterns to be retrieved for the specific intent.
+            /// Returns patterns for the specific intent in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -233,9 +314,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternRuleInfo>> GetIntentPatternsAsync(this IPattern operations, System.Guid appId, string versionId, System.Guid intentId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternRuleInfo>> ListIntentPatternsAsync(this IPattern operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, System.Guid intentId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetIntentPatternsWithHttpMessagesAsync(appId, versionId, intentId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListIntentPatternsWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, intentId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

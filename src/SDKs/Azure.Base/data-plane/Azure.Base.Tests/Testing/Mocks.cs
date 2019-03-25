@@ -83,9 +83,9 @@ namespace Azure.Base.Testing
             public override string ToString()
                 => $"{_method} {_uri}";
 
-            protected internal override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            protected override bool TryGetHeader(string name, out string values)
             {
-                value = default;
+                values = default;
                 return false;
             }
 
