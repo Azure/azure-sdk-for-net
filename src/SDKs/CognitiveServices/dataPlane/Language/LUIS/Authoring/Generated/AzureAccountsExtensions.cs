@@ -30,16 +30,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
@@ -49,9 +39,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> AssignToAppAsync(this IAzureAccounts operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> AssignToAppAsync(this IAzureAccounts operations, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AssignToAppWithHttpMessagesAsync(azureRegion, azureCloud, appId, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AssignToAppWithHttpMessagesAsync(appId, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,25 +57,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<AzureAccountInfoObject>> GetAssignedAsync(this IAzureAccounts operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<AzureAccountInfoObject>> GetAssignedAsync(this IAzureAccounts operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAssignedWithHttpMessagesAsync(azureRegion, azureCloud, appId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAssignedWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -100,16 +80,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
@@ -119,9 +89,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> RemoveFromAppAsync(this IAzureAccounts operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> RemoveFromAppAsync(this IAzureAccounts operations, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RemoveFromAppWithHttpMessagesAsync(azureRegion, azureCloud, appId, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RemoveFromAppWithHttpMessagesAsync(appId, azureAccountInfoObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -136,22 +106,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<AzureAccountInfoObject>> ListUserLUISAccountsAsync(this IAzureAccounts operations, AzureRegions azureRegion, AzureClouds azureCloud, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<AzureAccountInfoObject>> ListUserLUISAccountsAsync(this IAzureAccounts operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListUserLUISAccountsWithHttpMessagesAsync(azureRegion, azureCloud, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListUserLUISAccountsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

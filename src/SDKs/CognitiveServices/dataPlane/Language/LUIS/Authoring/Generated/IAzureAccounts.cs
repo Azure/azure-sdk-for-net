@@ -28,17 +28,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <remarks>
         /// Assigns an Azure account to the application.
         /// </remarks>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -57,7 +46,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> AssignToAppWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> AssignToAppWithHttpMessagesAsync(System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// apps - Get LUIS Azure accounts assigned to the application
         /// </summary>
@@ -65,17 +57,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Gets the LUIS Azure accounts assigned to the application for the
         /// user using his ARM token.
         /// </remarks>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -91,24 +72,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> GetAssignedWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> GetAssignedWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// apps - Removes an assigned LUIS Azure account from an application
         /// </summary>
         /// <remarks>
         /// Removes assigned Azure account from the application.
         /// </remarks>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -127,24 +100,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> RemoveFromAppWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<OperationStatus>> RemoveFromAppWithHttpMessagesAsync(System.Guid appId, AzureAccountInfoObject azureAccountInfoObject = default(AzureAccountInfoObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// user - Get LUIS Azure accounts
         /// </summary>
         /// <remarks>
         /// Gets the LUIS Azure accounts for the user using his ARM token.
         /// </remarks>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -157,6 +122,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> ListUserLUISAccountsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<IList<AzureAccountInfoObject>>> ListUserLUISAccountsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

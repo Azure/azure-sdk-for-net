@@ -59,16 +59,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// To verify training success, get the training status at least once after
         /// training is complete.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-        /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-        /// include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -96,8 +86,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<EnqueueTrainingResponse>> TrainVersionWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EnqueueTrainingResponse>> TrainVersionWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -109,8 +103,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("azureCloud", azureCloud);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -119,8 +111,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/train";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{AzureCloud}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureCloud, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -230,16 +221,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// app ID. "versionId" specifies the version number of the LUIS app. For
         /// example, "0.1".
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible values
-        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-        /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-        /// include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -267,8 +248,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ModelTrainingInfo>>> GetStatusWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<ModelTrainingInfo>>> GetStatusWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Client.Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -280,8 +265,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("azureRegion", azureRegion);
-                tracingParameters.Add("azureCloud", azureCloud);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -290,8 +273,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/train";
-            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
-            _url = _url.Replace("{AzureCloud}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureCloud, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{Endpoint}", Client.Endpoint);
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects

@@ -27,16 +27,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
@@ -46,9 +36,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<AppVersionSettingObject>> ListAsync(this ISettings operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<AppVersionSettingObject>> ListAsync(this ISettings operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -59,16 +49,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -82,9 +62,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> UpdateAsync(this ISettings operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, IList<AppVersionSettingObject> listOfAppVersionSettingObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateAsync(this ISettings operations, System.Guid appId, string versionId, IList<AppVersionSettingObject> listOfAppVersionSettingObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, listOfAppVersionSettingObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(appId, versionId, listOfAppVersionSettingObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
