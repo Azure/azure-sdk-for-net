@@ -6,7 +6,6 @@ using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,7 +14,7 @@ namespace Azure.Base.Tests
     public class PipelineTests
     {
         [Test]
-        public void Basics() {
+        public async Task Basics()
         {
             var options = new HttpPipelineOptions(new MockTransport(500, 1));
             options.RetryPolicy = new CustomRetryPolicy();

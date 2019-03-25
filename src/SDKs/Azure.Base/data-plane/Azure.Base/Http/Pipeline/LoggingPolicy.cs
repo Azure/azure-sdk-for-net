@@ -34,7 +34,7 @@ namespace Azure.Base.Http.Pipeline
             var status = message.Response.Status;
             // if error status
             if (status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1)) {
-                Log.ErrorResponse(message.Response);
+                s_eventSource.ErrorResponse(message.Response);
             }
 
             s_eventSource.ProcessingResponse(message.Response);

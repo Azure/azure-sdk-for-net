@@ -48,12 +48,12 @@ namespace Azure.Base.Tests
 
             var pipeline = options.Build("test", "1.0.0");
 
-            using (var message = pipeline.CreateMessage(cancellation: default))
+            using (var request = pipeline.CreateRequest())
             {
-                message.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
-                await pipeline.SendMessageAsync(message);
+                request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+                var response =  await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-                Assert.AreEqual(500, message.Response.Status);
+                Assert.AreEqual(500, response.Status);
             }
 
             Assert.True(_listener.EventData.Any(e =>
