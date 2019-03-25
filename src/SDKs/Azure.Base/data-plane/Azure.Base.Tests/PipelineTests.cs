@@ -6,6 +6,7 @@ using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Threading;
@@ -59,19 +60,24 @@ namespace Azure.Base.Tests
 
         class NullPipelineContext : HttpPipelineRequest
         {
-            public override void SetRequestLine(HttpVerb method, Uri uri)
-            {
-            }
+            public override Uri Uri { get; set; }
+            public override HttpVerb Method { get; set; }
+            public override HttpPipelineRequestContent Content { get; set; }
 
             public override void AddHeader(HttpHeader header)
             {
             }
 
-            public override void SetContent(HttpPipelineRequestContent content)
+            public override bool TryGetHeader(string name, out string value)
             {
+                value = null;
+                return false;
             }
 
-            public override HttpVerb Method { get; }
+            public override IEnumerable<HttpHeader> GetHeaders()
+            {
+                yield break;
+            }
 
             public override void Dispose()
             {

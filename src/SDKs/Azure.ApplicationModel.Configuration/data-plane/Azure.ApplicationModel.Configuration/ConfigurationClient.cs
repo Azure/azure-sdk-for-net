@@ -77,7 +77,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpPipelineRequestContent.Create(content));
+                request.Content = HttpPipelineRequestContent.Create(content);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -119,7 +119,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpPipelineRequestContent.Create(content));
+                request.Content = HttpPipelineRequestContent.Create(content);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -165,7 +165,7 @@ namespace Azure.ApplicationModel.Configuration
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                request.SetContent(HttpPipelineRequestContent.Create(content));
+                request.Content = HttpPipelineRequestContent.Create(content);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 

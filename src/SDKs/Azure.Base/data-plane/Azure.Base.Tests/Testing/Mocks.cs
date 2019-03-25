@@ -79,29 +79,27 @@ namespace Azure.Base.Testing
 
         class PipelineRequest : HttpPipelineRequest
         {
-            private HttpVerb _method;
-
-            public override HttpVerb Method => _method;
-
-            public Uri Uri { get; private set; }
-
-            public override void SetRequestLine(HttpVerb method, Uri uri)
-            {
-                Uri = uri;
-                _method = method;
-            }
+            public override Uri Uri { get; set; }
+            public override HttpVerb Method { get; set; }
+            public override HttpPipelineRequestContent Content { get; set; }
 
             public override void AddHeader(HttpHeader header)
             {
             }
 
-            public override string ToString() => $"{_method} {Uri}";
-
-
-
-            public override void SetContent(HttpPipelineRequestContent content)
+            public override bool TryGetHeader(string name, out string value)
             {
+                value = null;
+                return false;
             }
+
+            public override IEnumerable<HttpHeader> GetHeaders()
+            {
+                yield break;
+            }
+
+            public override string ToString() => $"{Method} {Uri}";
+
             public override void Dispose()
             {
             }
@@ -133,6 +131,11 @@ namespace Azure.Base.Testing
             {
                 value = default;
                 return false;
+            }
+
+            public override IEnumerable<HttpHeader> GetHeaders()
+            {
+                yield break;
             }
 
             public override void Dispose()

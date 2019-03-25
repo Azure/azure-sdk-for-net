@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -42,11 +41,15 @@ namespace Azure.Base.Http.Pipeline
         protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
             => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
 
+        private static string JoinHeaderValues(IEnumerable<string> values)
+        {
+            return string.Join(",", values);
+        }
+
         sealed class PipelineRequest : HttpPipelineRequest
         {
             string _contentTypeHeaderValue;
             string _contentLengthHeaderValue;
-            HttpPipelineRequestContent _requestContent;
             readonly HttpRequestMessage _requestMessage;
 
             public PipelineRequest()
@@ -54,15 +57,19 @@ namespace Azure.Base.Http.Pipeline
                 _requestMessage = new HttpRequestMessage();
             }
 
-            #region Request
-            public override void SetRequestLine(HttpVerb method, Uri uri)
+            public override Uri Uri
             {
-                _requestMessage.Method = ToHttpClientMethod(method);
-                _requestMessage.RequestUri = uri;
-                _requestMessage.Version = new Version(1, 1);
+                get => _requestMessage.RequestUri;
+                set => _requestMessage.RequestUri = value;
             }
 
-            public override HttpVerb Method => ToPipelineMethod(_requestMessage.Method);
+            public override HttpVerb Method
+            {
+                get => ToPipelineMethod(_requestMessage.Method);
+                set => _requestMessage.Method = ToHttpClientMethod(value);
+            }
+
+            public override HttpPipelineRequestContent Content { get; set; }
 
             public override void AddHeader(HttpHeader header)
             {
@@ -72,10 +79,10 @@ namespace Azure.Base.Http.Pipeline
             public override void AddHeader(string name, string value)
             {
                 // TODO (pri 1): any other headers must be added to content?
-                if (name.Equals("Content-Type", StringComparison.InvariantCulture)) {
+                if (name.Equals("Content-Type", StringComparison.InvariantCultureIgnoreCase)) {
                     _contentTypeHeaderValue = value;
                 }
-                else if (name.Equals("Content-Length", StringComparison.InvariantCulture)) {
+                else if (name.Equals("Content-Length", StringComparison.InvariantCultureIgnoreCase)) {
                     _contentLengthHeaderValue = value;
                 }
                 else {
@@ -85,8 +92,46 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
-            public override void SetContent(HttpPipelineRequestContent content)
-                => _requestContent = content;
+            public override bool TryGetHeader(string name, out string value)
+            {
+                if (name.Equals("Content-Type", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    value = _contentTypeHeaderValue;
+                    return true;
+                }
+
+                if (name.Equals("Content-Length", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    value = _contentLengthHeaderValue;
+                    return true;
+                }
+
+                if (_requestMessage.Headers.TryGetValues(name, out var values))
+                {
+                    value = JoinHeaderValues(values);
+                    return true;
+                }
+
+                value = null;
+                return false;
+            }
+
+            public override IEnumerable<HttpHeader> GetHeaders()
+            {
+                foreach (var header in _requestMessage.Headers)
+                {
+                    yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+                }
+
+                if (_contentTypeHeaderValue != null) {
+                    yield return new HttpHeader("Content-Type", _contentTypeHeaderValue);
+                }
+
+                if (_contentLengthHeaderValue != null)
+                {
+                    yield return new HttpHeader("Content-Length", _contentLengthHeaderValue);
+                }
+            }
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
@@ -99,23 +144,20 @@ namespace Azure.Base.Http.Pipeline
                     }
                 }
 
-                if (_requestContent != null) {
-                    request.Content = new PipelineContentAdapter(_requestContent, cancellation);
+                if (Content != null) {
+                    request.Content = new PipelineContentAdapter(Content, cancellation);
                     if (_contentTypeHeaderValue != null) request.Content.Headers.Add("Content-Type", _contentTypeHeaderValue);
                     if (_contentLengthHeaderValue != null) request.Content.Headers.Add("Content-Length", _contentLengthHeaderValue);
                 }
-
 
                 return request;
             }
 
             public override void Dispose()
             {
-                _requestContent?.Dispose();
+                Content?.Dispose();
                 _requestMessage.Dispose();
             }
-
-            #endregion
 
 
             public override string ToString() =>  _requestMessage.ToString();
@@ -197,7 +239,7 @@ namespace Azure.Base.Http.Pipeline
                     }
                 }
 
-                value = string.Join(",", values);
+                value = JoinHeaderValues(values);
                 return true;
             }
 
@@ -205,6 +247,22 @@ namespace Azure.Base.Http.Pipeline
             public override Stream ResponseContentStream
                 => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
             #endregion
+
+            public override IEnumerable<HttpHeader> GetHeaders()
+            {
+                foreach (var header in _responseMessage.Headers)
+                {
+                    yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+                }
+
+                if (_responseMessage.Content != null)
+                {
+                    foreach (var header in _responseMessage.Content.Headers)
+                    {
+                        yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+                    }
+                }
+            }
 
             public override void Dispose()
             {
