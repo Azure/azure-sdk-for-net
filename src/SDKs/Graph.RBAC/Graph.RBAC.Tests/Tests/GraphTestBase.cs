@@ -60,7 +60,10 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
                 result.TenantId = HttpMockServer.Variables[TenantIdKey];
-                result.Domain = HttpMockServer.Variables[DomainKey];
+                if (HttpMockServer.Variables.ContainsKey(DomainKey))
+                {
+                    result.Domain = HttpMockServer.Variables[DomainKey];
+                }
             }
             return result;
         }

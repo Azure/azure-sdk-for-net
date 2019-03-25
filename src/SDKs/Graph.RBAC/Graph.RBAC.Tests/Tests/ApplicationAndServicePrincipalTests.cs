@@ -176,6 +176,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 Application application = null;
                 ServicePrincipal servicePrincipal = null;
+
                 try
                 {
                     // Create a new application without credentials
@@ -183,10 +184,6 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                     servicePrincipal = CreateServicePrincipal(context, application.AppId);
                     string objectId = GetServicePrincipalsIdByAppId(context, application);
                     Assert.Equal(servicePrincipal.ObjectId, objectId);
-                }
-                catch(Exception e)
-                {
-                    throw e;
                 }
                 finally
                 {
@@ -200,7 +197,6 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                         // Delete application
                         DeleteApplication(context, application.ObjectId);
                     }
-
                 }
             }
         }
