@@ -48,6 +48,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -122,6 +127,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         IStorageSystemsOperations StorageSystems { get; }
 
         /// <summary>
+        /// Gets the IVolumesOperations.
+        /// </summary>
+        IVolumesOperations Volumes { get; }
+
+        /// <summary>
         /// Gets the ILogicalSubnetsOperations.
         /// </summary>
         ILogicalSubnetsOperations LogicalSubnets { get; }
@@ -145,21 +155,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the ISlbMuxInstancesOperations.
         /// </summary>
         ISlbMuxInstancesOperations SlbMuxInstances { get; }
-
-        /// <summary>
-        /// Gets the IDrivesOperations.
-        /// </summary>
-        IDrivesOperations Drives { get; }
-
-        /// <summary>
-        /// Gets the IStorageSubSystemsOperations.
-        /// </summary>
-        IStorageSubSystemsOperations StorageSubSystems { get; }
-
-        /// <summary>
-        /// Gets the IVolumesOperations.
-        /// </summary>
-        IVolumesOperations Volumes { get; }
 
     }
 }

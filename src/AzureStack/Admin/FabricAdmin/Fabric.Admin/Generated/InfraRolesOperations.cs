@@ -102,7 +102,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "infraRole");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -113,7 +116,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("infraRole", infraRole);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -125,9 +127,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{infraRole}", System.Uri.EscapeDataString(infraRole));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -301,7 +303,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -312,7 +317,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -331,9 +335,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -461,7 +465,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         }
 
         /// <summary>
-        /// Restarts the requestd infrastructure role.
+        /// Restarts the requested infrastructure role.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -486,7 +490,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         }
 
         /// <summary>
-        /// Restarts the requestd infrastructure role.
+        /// Restarts the requested infrastructure role.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -533,7 +537,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "infraRole");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -544,7 +551,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("infraRole", infraRole);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginRestart", tracingParameters);
             }
@@ -556,9 +562,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{infraRole}", System.Uri.EscapeDataString(infraRole));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -43,7 +43,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         /// <param name="tags">List of key-value pairs.</param>
         /// <param name="ipPools">All IP pools which belong to this
         /// subnet.</param>
-        /// <param name="isPublic">The visiblity status of the IP pool.  If is
+        /// <param name="isPublic">The visibility status of the IP pool.  If is
         /// true the associated pools are public IP address pools.</param>
         /// <param name="metadata">Metadata related to the logical
         /// network.</param>
@@ -68,7 +68,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin.Models
         public IList<string> IpPools { get; set; }
 
         /// <summary>
-        /// Gets or sets the visiblity status of the IP pool.  If is true the
+        /// Gets or sets the visibility status of the IP pool.  If is true the
         /// associated pools are public IP address pools.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isPublic")]

@@ -115,7 +115,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Restarts the requestd infrastructure role.
+            /// Restarts the requested infrastructure role.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -135,7 +135,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Restarts the requestd infrastructure role.
+            /// Restarts the requested infrastructure role.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -158,7 +158,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Restarts the requestd infrastructure role.
+            /// Restarts the requested infrastructure role.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -178,7 +178,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
-            /// Restarts the requestd infrastructure role.
+            /// Restarts the requested infrastructure role.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

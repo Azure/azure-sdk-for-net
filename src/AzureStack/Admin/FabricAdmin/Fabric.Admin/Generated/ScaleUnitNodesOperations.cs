@@ -255,7 +255,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNode");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -266,7 +269,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnitNode", scaleUnitNode);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -278,9 +280,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{scaleUnitNode}", System.Uri.EscapeDataString(scaleUnitNode));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -454,7 +456,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -465,7 +470,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -484,9 +488,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -661,7 +665,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNode");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -672,7 +679,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnitNode", scaleUnitNode);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginShutdown", tracingParameters);
             }
@@ -684,9 +690,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{scaleUnitNode}", System.Uri.EscapeDataString(scaleUnitNode));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -843,7 +849,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNode");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -854,7 +863,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnitNode", scaleUnitNode);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPowerOff", tracingParameters);
             }
@@ -866,9 +874,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{scaleUnitNode}", System.Uri.EscapeDataString(scaleUnitNode));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1025,7 +1033,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNode");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1036,7 +1047,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnitNode", scaleUnitNode);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPowerOn", tracingParameters);
             }
@@ -1048,9 +1058,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{scaleUnitNode}", System.Uri.EscapeDataString(scaleUnitNode));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1207,7 +1217,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNode");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1218,7 +1231,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnitNode", scaleUnitNode);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStartMaintenanceMode", tracingParameters);
             }
@@ -1230,9 +1242,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{scaleUnitNode}", System.Uri.EscapeDataString(scaleUnitNode));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1389,7 +1401,10 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNode");
             }
-            string apiVersion = "2016-05-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1400,7 +1415,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnitNode", scaleUnitNode);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStopMaintenanceMode", tracingParameters);
             }
@@ -1412,9 +1426,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{scaleUnitNode}", System.Uri.EscapeDataString(scaleUnitNode));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1574,11 +1588,14 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnitNode");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (bareMetalNode == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "bareMetalNode");
             }
-            string apiVersion = "2016-05-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1589,7 +1606,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
                 tracingParameters.Add("scaleUnitNode", scaleUnitNode);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("bareMetalNode", bareMetalNode);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginRepair", tracingParameters);
@@ -1602,9 +1618,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
             _url = _url.Replace("{scaleUnitNode}", System.Uri.EscapeDataString(scaleUnitNode));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

@@ -60,11 +60,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
-        /// <param name='scaleUnit'>
-        /// Name of the scale units.
-        /// </param>
         /// <param name='storageSubSystem'>
         /// Name of the storage system.
+        /// </param>
+        /// <param name='storagePool'>
+        /// Storage pool name.
         /// </param>
         /// <param name='volume'>
         /// Name of the storage volume.
@@ -90,7 +90,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, string volume, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string storageSubSystem, string storagePool, string volume, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -104,19 +104,22 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (scaleUnit == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnit");
-            }
             if (storageSubSystem == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "storageSubSystem");
+            }
+            if (storagePool == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storagePool");
             }
             if (volume == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "volume");
             }
-            string apiVersion = "2018-10-01";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -126,26 +129,25 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
-                tracingParameters.Add("scaleUnit", scaleUnit);
                 tracingParameters.Add("storageSubSystem", storageSubSystem);
+                tracingParameters.Add("storagePool", storagePool);
                 tracingParameters.Add("volume", volume);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/storageSubSystems/{storageSubSystem}/volumes/{volume}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/storageSubSystems/{storageSubSystem}/storagePools/{storagePool}/volumes/{volume}").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{scaleUnit}", System.Uri.EscapeDataString(scaleUnit));
             _url = _url.Replace("{storageSubSystem}", System.Uri.EscapeDataString(storageSubSystem));
+            _url = _url.Replace("{storagePool}", System.Uri.EscapeDataString(storagePool));
             _url = _url.Replace("{volume}", System.Uri.EscapeDataString(volume));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -281,11 +283,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
-        /// <param name='scaleUnit'>
-        /// Name of the scale units.
-        /// </param>
         /// <param name='storageSubSystem'>
         /// Name of the storage system.
+        /// </param>
+        /// <param name='storagePool'>
+        /// Storage pool name.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -311,7 +313,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string scaleUnit, string storageSubSystem, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, string storageSubSystem, string storagePool, ODataQuery<Volume> odataQuery = default(ODataQuery<Volume>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -325,15 +327,18 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            if (scaleUnit == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "scaleUnit");
-            }
             if (storageSubSystem == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "storageSubSystem");
             }
-            string apiVersion = "2018-10-01";
+            if (storagePool == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "storagePool");
+            }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -344,20 +349,19 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                 tracingParameters.Add("odataQuery", odataQuery);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("location", location);
-                tracingParameters.Add("scaleUnit", scaleUnit);
                 tracingParameters.Add("storageSubSystem", storageSubSystem);
-                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("storagePool", storagePool);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/scaleUnits/{scaleUnit}/storageSubSystems/{storageSubSystem}/volumes").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Fabric.Admin/fabricLocations/{location}/storageSubSystems/{storageSubSystem}/storagePools/{storagePool}/volumes").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{scaleUnit}", System.Uri.EscapeDataString(scaleUnit));
             _url = _url.Replace("{storageSubSystem}", System.Uri.EscapeDataString(storageSubSystem));
+            _url = _url.Replace("{storagePool}", System.Uri.EscapeDataString(storagePool));
             List<string> _queryParameters = new List<string>();
             if (odataQuery != null)
             {
@@ -367,9 +371,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
                     _queryParameters.Add(_odataFilter);
                 }
             }
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
