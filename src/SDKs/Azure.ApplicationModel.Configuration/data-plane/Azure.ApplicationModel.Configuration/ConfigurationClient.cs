@@ -69,7 +69,7 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.SetRequestLine(HttpVerb.Put, uri);
 
-                request.AddHeader("Host", uri.Host);
+
                 request.AddHeader(IfNoneMatch, "*");
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
@@ -108,7 +108,6 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.SetRequestLine(HttpVerb.Put, uri);
 
-                request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
 
@@ -151,7 +150,6 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.SetRequestLine(HttpVerb.Put, uri);
 
-                request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
 
@@ -195,7 +193,6 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.SetRequestLine(HttpVerb.Delete, uri);
 
-                request.AddHeader("Host", uri.Host);
                 if (etag != default)
                 {
                     request.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
@@ -224,7 +221,6 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.SetRequestLine(HttpVerb.Put, uri);
 
-                request.AddHeader("Host", uri.Host);
 
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Put, content: default, _secret, _credential);
@@ -249,7 +245,6 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.SetRequestLine(HttpVerb.Delete, uri);
 
-                request.AddHeader("Host", uri.Host);
 
                 AddClientRequestID(request);
                 AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
@@ -273,7 +268,6 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.SetRequestLine(HttpVerb.Get, uri);
 
-                request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
 
                 AddClientRequestID(request);
@@ -298,7 +292,6 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.SetRequestLine(HttpVerb.Get, uri);
 
-                request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(batchOptions, request);
                 AddClientRequestID(request);
@@ -323,7 +316,6 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.SetRequestLine(HttpVerb.Get, uri);
 
-                request.AddHeader("Host", uri.Host);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, request);
                 AddClientRequestID(request);

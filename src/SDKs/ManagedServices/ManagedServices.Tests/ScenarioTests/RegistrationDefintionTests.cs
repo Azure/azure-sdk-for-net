@@ -24,7 +24,7 @@ namespace ManagedServices.Tests.ScenarioTests
                     //1. Create Registration Defintion
                     var registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
                         .CreateOrUpdate(
-                            registratonDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
+                            registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
                             apiVersion: ManagedServicesTestUtilities.apiVersion,
                             scope: ManagedServicesTestUtilities.scope,
                             requestBody: registrationDefinition);
@@ -36,7 +36,7 @@ namespace ManagedServices.Tests.ScenarioTests
                     registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
                         .Get(
                         scope: ManagedServicesTestUtilities.scope,
-                        registratonDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
+                        registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
                         apiVersion: ManagedServicesTestUtilities.apiVersion);
 
                     Assert.NotNull(registrationDefinitionResponse);
@@ -55,7 +55,7 @@ namespace ManagedServices.Tests.ScenarioTests
                     registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
                         .Delete(
                         scope: ManagedServicesTestUtilities.scope,
-                        registratonDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
+                        registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
                         apiVersion: ManagedServicesTestUtilities.apiVersion);
 
                     Assert.NotNull(registrationDefinitionResponse);

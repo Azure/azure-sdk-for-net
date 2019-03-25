@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets the registration definition details.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
-        /// <param name='registratonDefinitionId'>
+        /// <param name='registrationDefinitionId'>
         /// Guid of the registration definition.
         /// </param>
         /// <param name='apiVersion'>
@@ -83,15 +83,15 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistrationDefinition>> GetWithHttpMessagesAsync(string scope, string registratonDefinitionId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistrationDefinition>> GetWithHttpMessagesAsync(string scope, string registrationDefinitionId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
-            if (registratonDefinitionId == null)
+            if (registrationDefinitionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registratonDefinitionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registrationDefinitionId");
             }
             if (apiVersion == null)
             {
@@ -105,16 +105,16 @@ namespace Microsoft.Azure.Management.ManagedServices
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
-                tracingParameters.Add("registratonDefinitionId", registratonDefinitionId);
+                tracingParameters.Add("registrationDefinitionId", registrationDefinitionId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registratonDefinitionId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}").ToString();
             _url = _url.Replace("{scope}", scope);
-            _url = _url.Replace("{registratonDefinitionId}", System.Uri.EscapeDataString(registratonDefinitionId));
+            _url = _url.Replace("{registrationDefinitionId}", System.Uri.EscapeDataString(registrationDefinitionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -243,14 +243,14 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <summary>
         /// Deletes the registration definition.
         /// </summary>
-        /// <param name='registratonDefinitionId'>
+        /// <param name='registrationDefinitionId'>
         /// Guid of the registration definition.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
         /// </param>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -273,11 +273,11 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistrationDefinition>> DeleteWithHttpMessagesAsync(string registratonDefinitionId, string apiVersion, string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistrationDefinition>> DeleteWithHttpMessagesAsync(string registrationDefinitionId, string apiVersion, string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (registratonDefinitionId == null)
+            if (registrationDefinitionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registratonDefinitionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registrationDefinitionId");
             }
             if (apiVersion == null)
             {
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("registratonDefinitionId", registratonDefinitionId);
+                tracingParameters.Add("registrationDefinitionId", registrationDefinitionId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -302,8 +302,8 @@ namespace Microsoft.Azure.Management.ManagedServices
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registratonDefinitionId}").ToString();
-            _url = _url.Replace("{registratonDefinitionId}", System.Uri.EscapeDataString(registratonDefinitionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}").ToString();
+            _url = _url.Replace("{registrationDefinitionId}", System.Uri.EscapeDataString(registrationDefinitionId));
             _url = _url.Replace("{scope}", scope);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -433,14 +433,14 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <summary>
         /// Creates or updates a registration definition.
         /// </summary>
-        /// <param name='registratonDefinitionId'>
+        /// <param name='registrationDefinitionId'>
         /// Guid of the registration definition.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
         /// </param>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='requestBody'>
         /// The parameters required to create new registration definition.
@@ -466,11 +466,11 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegistrationDefinition>> CreateOrUpdateWithHttpMessagesAsync(string registratonDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RegistrationDefinition>> CreateOrUpdateWithHttpMessagesAsync(string registrationDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (registratonDefinitionId == null)
+            if (registrationDefinitionId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "registratonDefinitionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "registrationDefinitionId");
             }
             if (apiVersion == null)
             {
@@ -495,7 +495,7 @@ namespace Microsoft.Azure.Management.ManagedServices
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("registratonDefinitionId", registratonDefinitionId);
+                tracingParameters.Add("registrationDefinitionId", registrationDefinitionId);
                 tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("scope", scope);
                 tracingParameters.Add("requestBody", requestBody);
@@ -504,8 +504,8 @@ namespace Microsoft.Azure.Management.ManagedServices
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registratonDefinitionId}").ToString();
-            _url = _url.Replace("{registratonDefinitionId}", System.Uri.EscapeDataString(registratonDefinitionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.ManagedServices/registrationDefinitions/{registrationDefinitionId}").ToString();
+            _url = _url.Replace("{registrationDefinitionId}", System.Uri.EscapeDataString(registrationDefinitionId));
             _url = _url.Replace("{scope}", scope);
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
@@ -660,7 +660,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets a list of the registration definitions.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.

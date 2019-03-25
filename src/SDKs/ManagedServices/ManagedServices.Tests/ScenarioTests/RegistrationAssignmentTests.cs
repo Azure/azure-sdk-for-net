@@ -26,7 +26,7 @@ namespace ManagedServices.Tests.ScenarioTests
                     //1. Create registration assignment
                     var registrationDefinitionResponse = testFixture.ManagedServicesClient.RegistrationDefinitions
                         .CreateOrUpdate(
-                            registratonDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
+                            registrationDefinitionId: ManagedServicesTestUtilities.registratonDefinitionId,
                             apiVersion: ManagedServicesTestUtilities.apiVersion,
                             scope: ManagedServicesTestUtilities.scope,
                             requestBody: registrationDefinition);
@@ -39,7 +39,7 @@ namespace ManagedServices.Tests.ScenarioTests
                         .CreateOrUpdate(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion,
-                        registratonAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId,
+                        registrationAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId,
                         requestBody: registrationAssignment);
 
                     Assert.NotNull(registrationAssignemntResponse);
@@ -51,7 +51,7 @@ namespace ManagedServices.Tests.ScenarioTests
                         .Get(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion,
-                        registratonAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
+                        registrationAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
 
                     Assert.NotNull(registrationAssignemntResponse);
                     Assert.Equal(ManagedServicesTestUtilities.registrationAssignmentId, registrationAssignemntResponse.Name);
@@ -86,7 +86,7 @@ namespace ManagedServices.Tests.ScenarioTests
                         .Delete(
                         scope: ManagedServicesTestUtilities.scope,
                         apiVersion: ManagedServicesTestUtilities.apiVersion,
-                        registratonAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
+                        registrationAssignmentId: ManagedServicesTestUtilities.registrationAssignmentId);
 
                     Assert.NotNull(registrationAssignemntResponse);
                     Assert.Equal(ManagedServicesTestUtilities.registrationAssignmentId, registrationAssignemntResponse.Name);

@@ -73,6 +73,47 @@ namespace Azure.Configuration.Tests
             Assert.AreEqual(50, contentLength);
         }
 
+        [Test]
+        public async Task HostHeaderSetFromUri()
+        {
+            string host = null;
+            Uri uri = null;
+            var mockHandler = new MockHttpClientHandler(
+                request => {
+                    uri = request.RequestUri;
+                    host = request.Headers.Host;
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var message = transport.CreateMessage(null, CancellationToken.None);
+            message.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
+
+            await transport.ProcessAsync(message);
+
+            // HttpClientHandler would correctly set Host header from Uri when it's not set explicitly
+            Assert.AreEqual("http://example.com:340/", uri.ToString());
+            Assert.Null(host);
+        }
+
+        [Test]
+        public async Task SettingHeaderOverridesDefaultHost()
+        {
+            string host = null;
+            var mockHandler = new MockHttpClientHandler(
+                request => {
+                    host = request.Headers.Host;
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var message = transport.CreateMessage(null, CancellationToken.None);
+            message.SetRequestLine(HttpVerb.Get, new Uri("http://example.com"));
+            message.AddHeader("Host", "example.org");
+
+            await transport.ProcessAsync(message);
+
+            Assert.AreEqual("example.org", host);
+        }
+
         private class MockHttpClientHandler : HttpMessageHandler
         {
             private readonly Action<HttpRequestMessage> _onSend;

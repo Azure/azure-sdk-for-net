@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         /// <param name="description">Description of the registration
         /// definition.</param>
         /// <param name="authorizations">Authorization tuple containing
-        /// prinicpal id of the user/security group or service principal and id
+        /// principal id of the user/security group or service principal and id
         /// of the build-in role.</param>
         /// <param name="registrationDefinitionName">Name of the registration
         /// definition.</param>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets authorization tuple containing prinicpal id of the
+        /// Gets or sets authorization tuple containing principal id of the
         /// user/security group or service principal and id of the build-in
         /// role.
         /// </summary>

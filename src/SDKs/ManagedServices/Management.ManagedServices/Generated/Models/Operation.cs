@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ManagedServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Object that desctibes a single Microsoft.ManagedServices operation.
+    /// Object that describes a single Microsoft.ManagedServices operation.
     /// </summary>
     public partial class Operation
     {
