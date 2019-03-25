@@ -44,12 +44,18 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 var environment = TestEnvironmentFactory.GetTestEnvironment();
                 result.TenantId = environment.Tenant;
-                result.Domain = environment.UserName
-                            .Split(new [] {"@"}, StringSplitOptions.RemoveEmptyEntries)
-                            .Last();
+                if (!string.IsNullOrEmpty(environment.UserName))
+                {
+                    result.Domain = environment.UserName
+                              .Split(new[] { "@" }, StringSplitOptions.RemoveEmptyEntries)
+                              .Last();
+                }
 
                 HttpMockServer.Variables[TenantIdKey] = result.TenantId;
-                HttpMockServer.Variables[DomainKey] = result.Domain;
+                if (!string.IsNullOrEmpty(result.Domain))
+                {
+                    HttpMockServer.Variables[DomainKey] = result.Domain;
+                }
             }
             else if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
@@ -179,6 +185,11 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
 
             return GetGraphClient(context).Applications.Create(parameters);
+        }
+
+        public string GetServicePrincipalsIdByAppId(MockContext context, Application application)
+        {
+            return GetGraphClient(context).Applications.GetServicePrincipalsIdByAppId(application.AppId).Value;
         }
 
         public void UpdateApplication(MockContext context, string applicaitonObjectId, string newDisplayName = null, string newIdentifierUri = null, PasswordCredential passwordCredential = null, KeyCredential keyCredential = null)
