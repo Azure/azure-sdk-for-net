@@ -68,7 +68,6 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(IfNoneMatch, "*");
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
@@ -105,7 +104,6 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 if (setting.ETag != default)
@@ -147,7 +145,6 @@ namespace Azure.ApplicationModel.Configuration
 
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
 
@@ -190,7 +187,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Delete, uri);
 
-                message.AddHeader("Host", uri.Host);
                 if (etag != default)
                 {
                     message.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
@@ -218,7 +214,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader("Host", uri.Host);
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Put, content: default, _secret, _credential);
 
@@ -241,7 +236,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Delete, uri);
 
-                message.AddHeader("Host", uri.Host);
                 AddClientRequestID(message);
                 AddAuthenticationHeaders(message, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
@@ -264,7 +258,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 message.AddHeader(HttpHeader.Common.JsonContentType);
                 AddClientRequestID(message);
@@ -288,7 +281,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(batchOptions, message);
                 AddClientRequestID(message);
@@ -312,7 +304,6 @@ namespace Azure.ApplicationModel.Configuration
             using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
                 message.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader("Host", uri.Host);
                 message.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, message);
                 AddClientRequestID(message);
