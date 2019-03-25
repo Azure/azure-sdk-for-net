@@ -120,6 +120,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         IReplicationProtectionContainersOperations ReplicationProtectionContainers { get; }
 
         /// <summary>
+        /// Gets the IReplicationMigrationItemsOperations.
+        /// </summary>
+        IReplicationMigrationItemsOperations ReplicationMigrationItems { get; }
+
+        /// <summary>
+        /// Gets the IMigrationRecoveryPointsOperations.
+        /// </summary>
+        IMigrationRecoveryPointsOperations MigrationRecoveryPoints { get; }
+
+        /// <summary>
         /// Gets the IReplicationProtectableItemsOperations.
         /// </summary>
         IReplicationProtectableItemsOperations ReplicationProtectableItems { get; }
@@ -178,6 +188,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Gets the IReplicationRecoveryPlansOperations.
         /// </summary>
         IReplicationRecoveryPlansOperations ReplicationRecoveryPlans { get; }
+
+        /// <summary>
+        /// Gets the ISupportedOperatingSystemsOperations.
+        /// </summary>
+        ISupportedOperatingSystemsOperations SupportedOperatingSystems { get; }
 
         /// <summary>
         /// Gets the IReplicationVaultHealthOperations.

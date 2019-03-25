@@ -10,28 +10,26 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Identity details.
+    /// Identity provider input.
     /// </summary>
-    public partial class IdentityInformation
+    public partial class IdentityProviderInput
     {
         /// <summary>
-        /// Initializes a new instance of the IdentityInformation class.
+        /// Initializes a new instance of the IdentityProviderInput class.
         /// </summary>
-        public IdentityInformation()
+        public IdentityProviderInput()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IdentityInformation class.
+        /// Initializes a new instance of the IdentityProviderInput class.
         /// </summary>
-        /// <param name="identityProviderType">The identity provider type.
-        /// Value is the ToString() of a IdentityProviderType value. Possible
-        /// values include: 'RecoveryServicesActiveDirectory'</param>
         /// <param name="tenantId">The tenant Id for the service principal with
         /// which the on-premise management/data plane components would
         /// communicate with our Azure services.</param>
@@ -46,18 +44,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// components would communicate with our Azure services.</param>
         /// <param name="aadAuthority">The base authority for Azure Active
         /// Directory authentication.</param>
-        /// <param name="certificateThumbprint">The certificate thumbprint.
-        /// Applicable only if IdentityProviderType is
-        /// RecoveryServicesActiveDirectory.</param>
-        public IdentityInformation(string identityProviderType = default(string), string tenantId = default(string), string applicationId = default(string), string objectId = default(string), string audience = default(string), string aadAuthority = default(string), string certificateThumbprint = default(string))
+        public IdentityProviderInput(string tenantId, string applicationId, string objectId, string audience, string aadAuthority)
         {
-            IdentityProviderType = identityProviderType;
             TenantId = tenantId;
             ApplicationId = applicationId;
             ObjectId = objectId;
             Audience = audience;
             AadAuthority = aadAuthority;
-            CertificateThumbprint = certificateThumbprint;
             CustomInit();
         }
 
@@ -65,14 +58,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the identity provider type. Value is the ToString() of
-        /// a IdentityProviderType value. Possible values include:
-        /// 'RecoveryServicesActiveDirectory'
-        /// </summary>
-        [JsonProperty(PropertyName = "identityProviderType")]
-        public string IdentityProviderType { get; set; }
 
         /// <summary>
         /// Gets or sets the tenant Id for the service principal with which the
@@ -114,11 +99,33 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string AadAuthority { get; set; }
 
         /// <summary>
-        /// Gets or sets the certificate thumbprint. Applicable only if
-        /// IdentityProviderType is RecoveryServicesActiveDirectory.
+        /// Validate the object.
         /// </summary>
-        [JsonProperty(PropertyName = "certificateThumbprint")]
-        public string CertificateThumbprint { get; set; }
-
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TenantId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TenantId");
+            }
+            if (ApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ApplicationId");
+            }
+            if (ObjectId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ObjectId");
+            }
+            if (Audience == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Audience");
+            }
+            if (AadAuthority == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "AadAuthority");
+            }
+        }
     }
 }
