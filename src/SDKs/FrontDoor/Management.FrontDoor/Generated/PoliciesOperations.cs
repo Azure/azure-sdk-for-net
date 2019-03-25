@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// Lists all of the protection policies within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -77,17 +77,32 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy1>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2019-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -198,7 +213,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<WebApplicationFirewallPolicy1>>();
+            var _result = new AzureOperationResponse<IPage<WebApplicationFirewallPolicy>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -211,7 +226,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<WebApplicationFirewallPolicy1>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<WebApplicationFirewallPolicy>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -234,10 +249,10 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// Retrieve protection policy with specified name within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the resource group.
+        /// The name of the Web Application Firewall Policy.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -260,11 +275,26 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WebApplicationFirewallPolicy1>> GetWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebApplicationFirewallPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
             }
             if (policyName == null)
             {
@@ -281,7 +311,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2019-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -394,7 +424,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<WebApplicationFirewallPolicy1>();
+            var _result = new AzureOperationResponse<WebApplicationFirewallPolicy>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -407,7 +437,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<WebApplicationFirewallPolicy1>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<WebApplicationFirewallPolicy>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -427,14 +457,62 @@ namespace Microsoft.Azure.Management.FrontDoor
         }
 
         /// <summary>
-        /// Creates or update policy with specified rule set name within a resource
+        /// Create or update policy with specified ruleset name within a resource
         /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the resource group.
+        /// The name of the Web Application Firewall Policy.
+        /// </param>
+        /// <param name='parameters'>
+        /// Policy to be created.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<WebApplicationFirewallPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<WebApplicationFirewallPolicy> _response = await BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, policyName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Deletes Policy
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='policyName'>
+        /// The name of the Web Application Firewall Policy.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, policyName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Create or update policy with specified ruleset name within a resource
+        /// group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='policyName'>
+        /// The name of the Web Application Firewall Policy.
         /// </param>
         /// <param name='parameters'>
         /// Policy to be created.
@@ -460,11 +538,26 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<WebApplicationFirewallPolicy1>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy1 parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<WebApplicationFirewallPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
             }
             if (policyName == null)
             {
@@ -485,7 +578,11 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2018-08-01";
+            if (parameters != null)
+            {
+                parameters.Validate();
+            }
+            string apiVersion = "2019-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -495,10 +592,10 @@ namespace Microsoft.Azure.Management.FrontDoor
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("policyName", policyName);
-                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginCreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -575,7 +672,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 201)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -605,7 +702,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<WebApplicationFirewallPolicy1>();
+            var _result = new AzureOperationResponse<WebApplicationFirewallPolicy>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -618,7 +715,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<WebApplicationFirewallPolicy1>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<WebApplicationFirewallPolicy>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -636,7 +733,25 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<WebApplicationFirewallPolicy1>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<WebApplicationFirewallPolicy>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<WebApplicationFirewallPolicy>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -659,32 +774,10 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// Deletes Policy
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(resourceGroupName, policyName, customHeaders, cancellationToken).ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Deletes Policy
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='policyName'>
-        /// The name of the resource group.
+        /// The name of the Web Application Firewall Policy.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -710,6 +803,21 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 80)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 80);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[a-zA-Z0-9_\\-\\(\\)\\.]*[^\\.]$");
+                }
+            }
             if (policyName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "policyName");
@@ -725,7 +833,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2019-03-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -884,7 +992,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy1>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -993,7 +1101,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<WebApplicationFirewallPolicy1>>();
+            var _result = new AzureOperationResponse<IPage<WebApplicationFirewallPolicy>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1006,7 +1114,7 @@ namespace Microsoft.Azure.Management.FrontDoor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<WebApplicationFirewallPolicy1>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<WebApplicationFirewallPolicy>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

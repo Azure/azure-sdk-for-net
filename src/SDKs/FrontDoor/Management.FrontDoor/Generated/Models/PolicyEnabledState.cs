@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for RuleGroupOverride.
+    /// Defines values for PolicyEnabledState.
     /// </summary>
-    public static class RuleGroupOverride
+    public static class PolicyEnabledState
     {
-        public const string SqlInjection = "SqlInjection";
-        public const string XSS = "XSS";
+        public const string Disabled = "Disabled";
+        public const string Enabled = "Enabled";
     }
 }

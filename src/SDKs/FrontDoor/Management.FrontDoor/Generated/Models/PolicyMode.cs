@@ -12,9 +12,9 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
 {
 
     /// <summary>
-    /// Defines values for Mode.
+    /// Defines values for PolicyMode.
     /// </summary>
-    public static class Mode
+    public static class PolicyMode
     {
         public const string Prevention = "Prevention";
         public const string Detection = "Detection";

@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
     /// <summary>
     /// Defines contents of custom rules
     /// </summary>
-    public partial class CustomRules
+    public partial class CustomRuleList
     {
         /// <summary>
-        /// Initializes a new instance of the CustomRules class.
+        /// Initializes a new instance of the CustomRuleList class.
         /// </summary>
-        public CustomRules()
+        public CustomRuleList()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CustomRules class.
+        /// Initializes a new instance of the CustomRuleList class.
         /// </summary>
         /// <param name="rules">List of rules</param>
-        public CustomRules(IList<CustomRule> rules = default(IList<CustomRule>))
+        public CustomRuleList(IList<CustomRule> rules = default(IList<CustomRule>))
         {
             Rules = rules;
             CustomInit();

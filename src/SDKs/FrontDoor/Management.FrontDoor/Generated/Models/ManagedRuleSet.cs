@@ -10,13 +10,15 @@
 
 namespace Microsoft.Azure.Management.FrontDoor.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Base class for all types of ManagedRuleSet.
+    /// Defines a managed rule set.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("Unknown")]
     public partial class ManagedRuleSet
     {
         /// <summary>
@@ -30,12 +32,16 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// <summary>
         /// Initializes a new instance of the ManagedRuleSet class.
         /// </summary>
-        /// <param name="priority">Describes priority of the rule</param>
-        /// <param name="version">defines version of the rule set</param>
-        public ManagedRuleSet(int? priority = default(int?), int? version = default(int?))
+        /// <param name="ruleSetType">Defines the rule set type to use.</param>
+        /// <param name="ruleSetVersion">Defines the version of the rule set to
+        /// use.</param>
+        /// <param name="ruleGroupOverrides">Defines the rule group overrides
+        /// to apply to the rule set.</param>
+        public ManagedRuleSet(string ruleSetType, string ruleSetVersion, IList<ManagedRuleGroupOverride> ruleGroupOverrides = default(IList<ManagedRuleGroupOverride>))
         {
-            Priority = priority;
-            Version = version;
+            RuleSetType = ruleSetType;
+            RuleSetVersion = ruleSetVersion;
+            RuleGroupOverrides = ruleGroupOverrides;
             CustomInit();
         }
 
@@ -45,16 +51,50 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets describes priority of the rule
+        /// Gets or sets defines the rule set type to use.
         /// </summary>
-        [JsonProperty(PropertyName = "priority")]
-        public int? Priority { get; set; }
+        [JsonProperty(PropertyName = "ruleSetType")]
+        public string RuleSetType { get; set; }
 
         /// <summary>
-        /// Gets or sets defines version of the rule set
+        /// Gets or sets defines the version of the rule set to use.
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public int? Version { get; set; }
+        [JsonProperty(PropertyName = "ruleSetVersion")]
+        public string RuleSetVersion { get; set; }
 
+        /// <summary>
+        /// Gets or sets defines the rule group overrides to apply to the rule
+        /// set.
+        /// </summary>
+        [JsonProperty(PropertyName = "ruleGroupOverrides")]
+        public IList<ManagedRuleGroupOverride> RuleGroupOverrides { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RuleSetType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetType");
+            }
+            if (RuleSetVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RuleSetVersion");
+            }
+            if (RuleGroupOverrides != null)
+            {
+                foreach (var element in RuleGroupOverrides)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }
