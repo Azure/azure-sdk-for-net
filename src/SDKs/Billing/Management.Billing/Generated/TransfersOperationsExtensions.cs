@@ -22,6 +22,146 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class TransfersOperationsExtensions
     {
             /// <summary>
+            /// Initiates the request to transfer the GTM or legacy subscriptions or RIs to
+            /// GTM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            /// <param name='body'>
+            /// Initiate transfer parameters.
+            /// </param>
+            public static TransferDetails Initiate(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, InitiateTransferRequest body)
+            {
+                return operations.InitiateAsync(billingAccountName, invoiceSectionName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Initiates the request to transfer the GTM or legacy subscriptions or RIs to
+            /// GTM.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            /// <param name='body'>
+            /// Initiate transfer parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TransferDetails> InitiateAsync(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, InitiateTransferRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.InitiateWithHttpMessagesAsync(billingAccountName, invoiceSectionName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the transfer details for given transfer Id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            /// <param name='transferName'>
+            /// Transfer Name.
+            /// </param>
+            public static TransferDetails Get(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName)
+            {
+                return operations.GetAsync(billingAccountName, invoiceSectionName, transferName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the transfer details for given transfer Id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            /// <param name='transferName'>
+            /// Transfer Name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TransferDetails> GetAsync(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(billingAccountName, invoiceSectionName, transferName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Cancels the transfer for given transfer Id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            /// <param name='transferName'>
+            /// Transfer Name.
+            /// </param>
+            public static TransferDetails Cancel(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName)
+            {
+                return operations.CancelAsync(billingAccountName, invoiceSectionName, transferName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Cancels the transfer for given transfer Id.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            /// <param name='transferName'>
+            /// Transfer Name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TransferDetails> CancelAsync(this ITransfersOperations operations, string billingAccountName, string invoiceSectionName, string transferName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CancelWithHttpMessagesAsync(billingAccountName, invoiceSectionName, transferName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all transfer's details initiated from given invoice section.
             /// </summary>
             /// <param name='operations'>

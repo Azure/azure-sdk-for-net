@@ -214,19 +214,14 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingPropertyOperations BillingProperty { get; private set; }
 
         /// <summary>
-        /// Gets the ITransferOperations.
-        /// </summary>
-        public virtual ITransferOperations Transfer { get; private set; }
-
-        /// <summary>
         /// Gets the ITransfersOperations.
         /// </summary>
         public virtual ITransfersOperations Transfers { get; private set; }
 
         /// <summary>
-        /// Gets the IRecipientTransferOperations.
+        /// Gets the IRecipientTransfersOperations.
         /// </summary>
-        public virtual IRecipientTransferOperations RecipientTransfer { get; private set; }
+        public virtual IRecipientTransfersOperations RecipientTransfers { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -546,9 +541,8 @@ namespace Microsoft.Azure.Management.Billing
             TransactionsByBillingAccount = new TransactionsByBillingAccountOperations(this);
             Policy = new PolicyOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
-            Transfer = new TransferOperations(this);
             Transfers = new TransfersOperations(this);
-            RecipientTransfer = new RecipientTransferOperations(this);
+            RecipientTransfers = new RecipientTransfersOperations(this);
             Operations = new Operations(this);
             BillingAccountBillingPermissions = new BillingAccountBillingPermissionsOperations(this);
             InvoiceSectionsBillingPermissions = new InvoiceSectionsBillingPermissionsOperations(this);

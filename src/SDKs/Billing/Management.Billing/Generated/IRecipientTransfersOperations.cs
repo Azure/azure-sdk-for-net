@@ -19,10 +19,57 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RecipientTransferOperations operations.
+    /// RecipientTransfersOperations operations.
     /// </summary>
-    public partial interface IRecipientTransferOperations
+    public partial interface IRecipientTransfersOperations
     {
+        /// <summary>
+        /// Accepts the transfer with given transfer Id.
+        /// </summary>
+        /// <param name='transferName'>
+        /// Transfer Name.
+        /// </param>
+        /// <param name='body'>
+        /// Accept transfer parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RecipientTransferDetails>> AcceptWithHttpMessagesAsync(string transferName, AcceptTransferRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Declines the transfer with given transfer Id.
+        /// </summary>
+        /// <param name='transferName'>
+        /// Transfer Name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RecipientTransferDetails>> DeclineWithHttpMessagesAsync(string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the transfer with given transfer Id.
         /// </summary>
