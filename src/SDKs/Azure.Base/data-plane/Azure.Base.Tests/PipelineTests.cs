@@ -14,20 +14,13 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Tests
 {
-    // TODO (pri 2): Do use the EventRegister NuGet package or the standalone eventRegister.exe tool, to run build-time validation of the event source classes defined in your assemblies.
     public class PipelineTests
     {
-        string expected = @"ProcessingRequest : Get https://contoso.a.io/ # ErrorResponse : 500 # ProcessingResponse : Get https://contoso.a.io/ # ProcessingRequest : Get https://contoso.a.io/ # ProcessingResponse : Get https://contoso.a.io/";
-
         [Test]
-        public async Task Basics() {
-
+        public async Task Basics()
+        {
             var options = new HttpPipelineOptions(new MockTransport(500, 1));
             options.RetryPolicy = new CustomRetryPolicy();
-            options.LoggingPolicy = new LoggingPolicy();
-
-            var listener = new TestEventListener();
-            listener.EnableEvents(EventLevel.LogAlways);
 
             var pipeline = options.Build("test", "1.0.0");
 
@@ -36,8 +29,6 @@ namespace Azure.Base.Tests
             var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
-            var result = listener.ToString();
-            Assert.AreEqual(expected, result);
         }
 
         [Test]

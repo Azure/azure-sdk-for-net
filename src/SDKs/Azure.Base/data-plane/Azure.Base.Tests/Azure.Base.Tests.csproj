@@ -4,6 +4,7 @@
     <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
     <LangVersion>7.2</LangVersion>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <SignTestAssembly>true</SignTestAssembly>
   </PropertyGroup>
 
   <ItemGroup>

@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="eTag">eTag of the resource. To handle concurrent
-        /// update scenarion, this field will be used to determine whether the
+        /// update scenario, this field will be used to determine whether the
         /// user is updating the latest version or not.</param>
         public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string))
         {
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
 
         /// <summary>
         /// Gets or sets eTag of the resource. To handle concurrent update
-        /// scenarion, this field will be used to determine whether the user is
+        /// scenario, this field will be used to determine whether the user is
         /// updating the latest version or not.
         /// </summary>
         [JsonProperty(PropertyName = "eTag")]

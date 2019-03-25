@@ -11,13 +11,11 @@ namespace Azure.Base.Diagnostics
 {
     // TODO (pri 2): make the type internal
     [EventSource(Name = SOURCE_NAME)]
-    public sealed class HttpPipelineEventSource : EventSource
+    internal sealed class HttpPipelineEventSource : EventSource
     {
         // TODO (pri 3): do we want the same source name for all SDk components?
         const string SOURCE_NAME = "AzureSDK";
 
-        const int LOG_TEXT = 1;
-        const int LOG_EXCEPTION = 2;
         const int LOG_REQUEST = 3;
         const int LOG_RESPONSE = 4;
         const int LOG_DELAY = 5;
@@ -75,24 +73,6 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Error, EventKeywords.None)) {
                 WriteEvent(LOG_ERROR_RESPONSE, status);
-            }
-        }
-
-        [Event(LOG_TEXT, Level = EventLevel.Error)]
-        public void LogMessage(EventLevel level, string message)
-        {
-            if (IsEnabled(level, EventKeywords.None)) {
-                WriteEvent(LOG_TEXT, message, level);
-            }
-        }
-
-        [Event(LOG_EXCEPTION)]
-        public void LogException(Exception exception)
-        {
-            if (IsEnabled(EventLevel.Error, EventKeywords.None)) {
-                // TODO (pri 2): should this filter some information?
-                // TODO (pri 2): should this be more structured?
-                WriteEvent(LOG_EXCEPTION, exception.ToString());
             }
         }
     }

@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -58,7 +59,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="audioGainLevel">The gain level of audio in the
         /// overlay. The value should be in the range [0, 1.0]. The default is
         /// 1.0.</param>
-        public Overlay(string inputLabel = default(string), System.TimeSpan? start = default(System.TimeSpan?), System.TimeSpan? end = default(System.TimeSpan?), System.TimeSpan? fadeInDuration = default(System.TimeSpan?), System.TimeSpan? fadeOutDuration = default(System.TimeSpan?), double? audioGainLevel = default(double?))
+        public Overlay(string inputLabel, System.TimeSpan? start = default(System.TimeSpan?), System.TimeSpan? end = default(System.TimeSpan?), System.TimeSpan? fadeInDuration = default(System.TimeSpan?), System.TimeSpan? fadeOutDuration = default(System.TimeSpan?), double? audioGainLevel = default(double?))
         {
             InputLabel = inputLabel;
             Start = start;
@@ -131,5 +132,18 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "audioGainLevel")]
         public double? AudioGainLevel { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (InputLabel == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "InputLabel");
+            }
+        }
     }
 }
