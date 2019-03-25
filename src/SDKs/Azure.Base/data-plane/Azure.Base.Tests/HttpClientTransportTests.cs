@@ -261,6 +261,21 @@ namespace Azure.Base.Tests
             CollectionAssert.Contains(response.GetHeaders(), new HttpHeader(headerName, headerValue));
         }
 
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task SettingContentHeaderDoesNotSetContent(string headerName, string headerValue, bool contentHeader)
+        {
+            HttpContent httpMessageContent = null;
+            var mockHandler = new MockHttpClientHandler(httpRequestMessage => { httpMessageContent = httpRequestMessage.Content; });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
+            request.AddHeader(headerName, headerValue);
+
+            await ExecuteRequest(request, transport);
+
+            Assert.Null(httpMessageContent);
+        }
 
         private static async Task<HttpPipelineResponse> ExecuteRequest(HttpPipelineRequest request, HttpClientTransport transport)
         {

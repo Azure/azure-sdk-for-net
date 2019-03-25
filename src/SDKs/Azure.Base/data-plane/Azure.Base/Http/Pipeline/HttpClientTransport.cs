@@ -144,7 +144,7 @@ namespace Azure.Base.Http.Pipeline
                     }
                 }
 
-                if (_requestContent != null)
+                if (_requestContent?.PipelineContent != null)
                 {
                     _requestContent.CancellationToken = cancellation;
                     request.Content = _requestContent;
@@ -220,7 +220,7 @@ namespace Azure.Base.Http.Pipeline
 
                 protected override void Dispose(bool disposing)
                 {
-                    PipelineContent.Dispose();
+                    PipelineContent?.Dispose();
                     base.Dispose(disposing);
                 }
             }
