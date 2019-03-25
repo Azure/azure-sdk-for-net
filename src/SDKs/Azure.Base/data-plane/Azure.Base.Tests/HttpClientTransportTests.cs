@@ -79,16 +79,22 @@ namespace Azure.Configuration.Tests
             string host = null;
             Uri uri = null;
             var mockHandler = new MockHttpClientHandler(
-                request => {
-                    uri = request.RequestUri;
-                    host = request.Headers.Host;
+                httpRequestMessage => {
+                    uri = httpRequestMessage.RequestUri;
+                    host = httpRequestMessage.Headers.Host;
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var message = transport.CreateMessage(null, CancellationToken.None);
-            message.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
 
-            await transport.ProcessAsync(message);
+            using (var message = new HttpPipelineMessage(CancellationToken.None)
+            {
+                Request = request
+            })
+            {
+                await transport.ProcessAsync(message);
+            }
 
             // HttpClientHandler would correctly set Host header from Uri when it's not set explicitly
             Assert.AreEqual("http://example.com:340/", uri.ToString());
@@ -100,17 +106,22 @@ namespace Azure.Configuration.Tests
         {
             string host = null;
             var mockHandler = new MockHttpClientHandler(
-                request => {
-                    host = request.Headers.Host;
+                httpRequestMessage => {
+                    host = httpRequestMessage.Headers.Host;
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var message = transport.CreateMessage(null, CancellationToken.None);
-            message.SetRequestLine(HttpVerb.Get, new Uri("http://example.com"));
-            message.AddHeader("Host", "example.org");
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
+            request.AddHeader("Host", "example.org");
 
-            await transport.ProcessAsync(message);
-
+            using (var message = new HttpPipelineMessage(CancellationToken.None)
+            {
+                Request = request
+            })
+            {
+                await transport.ProcessAsync(message);
+            }
             Assert.AreEqual("example.org", host);
         }
 
