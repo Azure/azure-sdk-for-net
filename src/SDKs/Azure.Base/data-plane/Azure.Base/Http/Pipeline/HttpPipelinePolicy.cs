@@ -19,8 +19,6 @@ namespace Azure.Base.Http.Pipeline
         /// <returns></returns>
         public abstract Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
-        protected HttpPipelineEventSource Log = HttpPipelineEventSource.Singleton;
-
         /// <summary>
         /// Invokes the next <see cref="HttpPipelinePolicy"/> in the <see cref="pipeline"/>.
         /// </summary>

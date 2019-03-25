@@ -4,6 +4,7 @@
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
@@ -13,42 +14,24 @@ namespace Azure.Base.Testing
 {
     public class TestEventListener : EventListener
     {
-        const string SOURCE_NAME = "AzureSDK";
+        private volatile bool _disposed;
+        private ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
 
-        public readonly List<string> Logged = new List<string>();
-        EventLevel _enabled;
-        EventSource _source;
-
-        protected override void OnEventSourceCreated(EventSource eventSource)
-        {
-            base.OnEventSourceCreated(eventSource);
-            if(eventSource.Name == SOURCE_NAME) {
-                _source = eventSource;
-                if(_enabled != default) {
-                    EnableEvents(_source, _enabled);
-                }
-            }
-        }
-
-        public void EnableEvents(EventLevel level)
-        {
-            _enabled = level;
-            if(_source != null) {
-                EnableEvents(_source, _enabled);
-            }
-
-        }
+        public IEnumerable<EventWrittenEventArgs> EventData => _events;
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-            base.OnEventWritten(eventData);
-            if(eventData.EventSource.Name == SOURCE_NAME) {
-                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString());
+            if (!_disposed)
+            {
+                _events.Enqueue(eventData);
             }
         }
 
-        public override string ToString()
-            =>string.Join(" # ", Logged);
+        public override void Dispose()
+        {
+            _disposed = true;
+            base.Dispose();
+        }
     }
 
     public class MockTransport : HttpPipelineTransport
