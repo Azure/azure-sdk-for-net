@@ -10,14 +10,6 @@ trigger:
 variables:
   DotNetCoreVersion: '2.1.503'
 
-resources:
-  repositories:
-    - repository: templates
-      type: github
-      name: chidozieononiwu/azure-sdk-tools
-      ref: 'refs/heads/AzureSDKToolsConsumption'
-      endpoint: chidozieononiwu
-
 jobs:
   - job: 'Build'
 
@@ -95,9 +87,14 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
-      - template: .azure-pipelines/templates/verify_agent_os.yml@templates
-        parameters:
-          osname: $(OSName)
+      - powershell:  'Invoke-WebRequest -Uri "$(VerifyAgentOSBlobPath)" -OutFile "./verify_agent_os.py"'
+        displayName: 'Download VerifyAgentOS Script From Blob'
+
+      - task: PythonScript@0
+        displayName: 'Run VerifyAgentOS script'
+        inputs:
+          scriptPath: './verify_agent_os.py'
+          arguments: $(OSName)
 
       - task: DotNetCoreInstaller@0
         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
@@ -106,7 +103,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (no live tests)'
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: eq(variables['System.TeamProject'], 'playground')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -119,7 +116,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (with live tests)'
-        condition: ne(variables['System.TeamProject'], 'public')
+        condition: ne(variables['System.TeamProject'], 'playground')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
