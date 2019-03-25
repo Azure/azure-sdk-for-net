@@ -161,5 +161,10 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         IAllowedConnectionsOperations AllowedConnections { get; }
 
+        /// <summary>
+        /// Gets the IAdaptiveNetworkHardeningsOperations.
+        /// </summary>
+        IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; }
+
     }
 }
