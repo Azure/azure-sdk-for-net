@@ -79,10 +79,6 @@ namespace Azure.Base.Testing
 
         class PipelineRequest : HttpPipelineRequest
         {
-            public override Uri Uri { get; set; }
-            public override HttpVerb Method { get; set; }
-            public override HttpPipelineRequestContent Content { get; set; }
-
             public override void AddHeader(HttpHeader header)
             {
             }

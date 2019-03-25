@@ -5,7 +5,6 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -15,7 +14,7 @@ using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using NUnit.Framework;
 
-namespace Azure.Configuration.Tests
+namespace Azure.Base.Tests
 {
     public class HttpClientTransportTests
     {
@@ -250,10 +249,7 @@ namespace Azure.Configuration.Tests
             Assert.True(response.TryGetHeader(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
-            CollectionAssert.AreEqual(new []
-            {
-                new HttpHeader(headerName, headerValue),
-            }, response.GetHeaders());
+            CollectionAssert.Contains(response.GetHeaders(), new HttpHeader(headerName, headerValue));
         }
 
 
@@ -277,7 +273,7 @@ namespace Azure.Configuration.Tests
             {
                 _onSend = req => {
                     onSend(req);
-                    return null;
+                    return Task.FromResult<HttpResponseMessage>(null);
                 };
             }
 

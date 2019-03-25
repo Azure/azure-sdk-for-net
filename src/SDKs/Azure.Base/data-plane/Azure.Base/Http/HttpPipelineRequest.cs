@@ -8,9 +8,9 @@ namespace Azure.Base.Http
 {
     public abstract class HttpPipelineRequest : IDisposable
     {
-        public abstract Uri Uri { get; set; }
+        public virtual Uri Uri { get; set; }
 
-        public abstract HttpVerb Method { get; set; }
+        public virtual HttpVerb Method { get; set; }
 
         public virtual void SetRequestLine(HttpVerb method, Uri uri)
         {
@@ -18,7 +18,7 @@ namespace Azure.Base.Http
             Uri = uri;
         }
 
-        public abstract HttpPipelineRequestContent Content { get; set; }
+        public virtual HttpPipelineRequestContent Content { get; set; }
 
         public abstract void AddHeader(HttpHeader header);
 
