@@ -21,9 +21,9 @@ namespace Azure.Base.Http.Pipeline
             => _excludeErrors = excludeErrors;
 
         // TODO (pri 1): we should remove sensitive information, e.g. keys
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            Log.ProcessingRequest(message);
+            Log.ProcessingRequest(message.Request);
 
             var before = Stopwatch.GetTimestamp();
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
@@ -32,14 +32,14 @@ namespace Azure.Base.Http.Pipeline
             var status = message.Response.Status;
             // if error status
             if (status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1)) {
-                Log.ErrorResponse(message);
+                Log.ErrorResponse(message.Response);
             }
 
-            Log.ProcessingResponse(message);
+            Log.ProcessingResponse(message.Response);
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
             if (elapsedMilliseconds > s_delayWarningThreshold) {
-                Log.ResponseDelay(message, elapsedMilliseconds);
+                Log.ResponseDelay(message.Response, elapsedMilliseconds);
             }
         }
     }

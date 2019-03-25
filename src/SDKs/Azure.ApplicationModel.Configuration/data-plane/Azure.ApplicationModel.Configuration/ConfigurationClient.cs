@@ -63,23 +63,26 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(setting);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
+            using (var request = _pipeline.CreateRequest())
+            {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                message.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader(IfNoneMatch, "*");
-                message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                message.AddHeader(HttpHeader.Common.JsonContentType);
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
 
-                message.SetContent(HttpMessageContent.Create(content));
+                request.AddHeader(IfNoneMatch, "*");
+                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.AddHeader(HttpHeader.Common.JsonContentType);
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                var response = message.Response;
-                if (response.Status == 200 || response.Status == 201) {
+                request.SetContent(HttpPipelineRequestContent.Create(content));
+
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+
+                if (response.Status == 200 || response.Status == 201)
+                {
                     return await CreateResponse(response, cancellation);
                 }
                 else throw new RequestFailedException(response);
@@ -99,26 +102,27 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(setting);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
+            using (var request = _pipeline.CreateRequest())
+            {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                message.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                message.AddHeader(HttpHeader.Common.JsonContentType);
+                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.AddHeader(HttpHeader.Common.JsonContentType);
+
                 if (setting.ETag != default)
                 {
-                    message.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
+                    request.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
                 }
 
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                message.SetContent(HttpMessageContent.Create(content));
+                request.SetContent(HttpPipelineRequestContent.Create(content));
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                var response = message.Response;
                 if (response.Status == 200) {
                     return await CreateResponse(response, cancellation);
                 }
@@ -140,32 +144,33 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(setting);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
+            using (var request = _pipeline.CreateRequest())
+            {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                message.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpVerb.Put, uri);
 
-                message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                message.AddHeader(HttpHeader.Common.JsonContentType);
+                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.AddHeader(HttpHeader.Common.JsonContentType);
 
-                if(setting.ETag != default)
+                if (setting.ETag != default)
                 {
-                    message.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                    request.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
                 }
                 else
                 {
-                    message.AddHeader(IfMatchName, "*");
+                    request.AddHeader(IfMatchName, "*");
                 }
 
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content, _secret, _credential);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
-                message.SetContent(HttpMessageContent.Create(content));
+                request.SetContent(HttpPipelineRequestContent.Create(content));
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                var response = message.Response;
-                if (response.Status == 200) {
+                if (response.Status == 200)
+                {
                     return await CreateResponse(response, cancellation);
                 }
                 else throw new RequestFailedException(response);
@@ -184,21 +189,22 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(key, label);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
-                message.SetRequestLine(HttpVerb.Delete, uri);
+            using (var request = _pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpVerb.Delete, uri);
 
                 if (etag != default)
                 {
-                    message.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
+                    request.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
                 }
 
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Delete, content: default, _secret, _credential);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                var response = message.Response;
-                if (response.Status == 200 || response.Status == 204) {
+                if (response.Status == 200 || response.Status == 204)
+                {
                     return response;
                 }
                 else throw new RequestFailedException(response);
@@ -211,16 +217,18 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForLocksRoute(key, label);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
-                message.SetRequestLine(HttpVerb.Put, uri);
+            using (var request = _pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpVerb.Put, uri);
 
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Put, content: default, _secret, _credential);
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content: default, _secret, _credential);
 
-                var response = message.Response;
-                if (response.Status == 200) {
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+
+                if (response.Status == 200)
+                {
                     return await CreateResponse(response, cancellation);
                 }
                 else throw new RequestFailedException(response);
@@ -233,16 +241,17 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForLocksRoute(key, label);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
-                message.SetRequestLine(HttpVerb.Delete, uri);
+            using (var request = _pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpVerb.Delete, uri);
 
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
-                var response = message.Response;
-                if (response.Status == 200) {
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+                if (response.Status == 200)
+                {
                     return await CreateResponse(response, cancellation);
                 }
                 else throw new RequestFailedException(response);
@@ -255,18 +264,19 @@ namespace Azure.ApplicationModel.Configuration
 
             Uri uri = BuildUriForKvRoute(key, label);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
-                message.SetRequestLine(HttpVerb.Get, uri);
+            using (var request = _pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                message.AddHeader(HttpHeader.Common.JsonContentType);
-                AddClientRequestID(message);
+                request.AddHeader(MediaTypeKeyValueApplicationHeader);
 
-                AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
+                AddClientRequestID(request);
+                request.AddHeader(HttpHeader.Common.JsonContentType);
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
-                var response = message.Response;
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+
                 if (response.Status == 200) {
                     return await CreateResponse(response, cancellation);
                 }
@@ -278,18 +288,19 @@ namespace Azure.ApplicationModel.Configuration
         {
             var uri = BuildUriForGetBatch(batchOptions);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
-                message.SetRequestLine(HttpVerb.Get, uri);
+            using (var request = _pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                AddOptionsHeaders(batchOptions, message);
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
+                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                AddOptionsHeaders(batchOptions, request);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                Response response = message.Response;
-                if (response.Status == 200 || response.Status == 206 /* partial */) {
+                if (response.Status == 200 || response.Status == 206 /* partial */)
+                {
                     var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, batchOptions, cancellation);
                     return new Response<SettingBatch>(response, batch);
                 }
@@ -301,18 +312,19 @@ namespace Azure.ApplicationModel.Configuration
         {
             var uri = BuildUriForRevisions(options);
 
-            using (HttpMessage message = _pipeline.CreateMessage(cancellation)) {
-                message.SetRequestLine(HttpVerb.Get, uri);
+            using (var request = _pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpVerb.Get, uri);
 
-                message.AddHeader(MediaTypeKeyValueApplicationHeader);
-                AddOptionsHeaders(options, message);
-                AddClientRequestID(message);
-                AddAuthenticationHeaders(message, uri, HttpVerb.Get, content: default, _secret, _credential);
+                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                AddOptionsHeaders(options, request);
+                AddClientRequestID(request);
+                AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
-                await _pipeline.SendMessageAsync(message).ConfigureAwait(false);
+                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                Response response = message.Response;
-                if (response.Status == 200 || response.Status == 206 /* partial */) {
+                if (response.Status == 200 || response.Status == 206 /* partial */)
+                {
                     var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, options, cancellation);
                     return new Response<SettingBatch>(response, batch);
                 }

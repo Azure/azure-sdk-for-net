@@ -11,23 +11,30 @@ using System.Text;
 
 namespace Azure
 {
-    public readonly struct Response
+    public readonly struct Response: IDisposable
     {
-        readonly HttpMessage _message;
+        private readonly HttpPipelineResponse _httpResponse;
 
-        public Response(HttpMessage message)
-            => _message = message;
+        public Response(HttpPipelineResponse httpResponse)
+        {
+            if (httpResponse == null)
+            {
+                throw new ArgumentNullException(nameof(httpResponse));
+            }
 
-        public int Status => _message.Status;
+            _httpResponse = httpResponse;
+        }
 
-        public Stream ContentStream => _message.ResponseContentStream;
+        public int Status => _httpResponse.Status;
+
+        public Stream ContentStream => _httpResponse.ResponseContentStream;
 
         public bool TryGetHeader(string name, out string values)
         {
-            return _message.TryGetHeader(name, out values);
+            return _httpResponse.TryGetHeader(name, out values);
         }
 
-        public void Dispose() => _message.Dispose();
+        public void Dispose() => _httpResponse.Dispose();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
@@ -36,6 +43,6 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => _message.ToString();
+        public override string ToString() => _httpResponse.ToString();
     }
 }

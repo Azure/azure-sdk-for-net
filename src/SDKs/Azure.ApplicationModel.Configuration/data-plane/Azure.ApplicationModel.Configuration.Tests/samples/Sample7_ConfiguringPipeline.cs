@@ -26,14 +26,14 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.Transport = new HttpClientTransport(s_client);
 
             // remove logging policy
-            options.LoggingPolicy = null; 
+            options.LoggingPolicy = null;
 
             // specify custom retry policy options
             options.RetryPolicy = RetryPolicy.CreateFixed(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
                 retriableCodes: new int[] {
-                    500, // Internal Server Error 
+                    500, // Internal Server Error
                     504  // Gateway Timeout
                 }
             );
@@ -54,16 +54,16 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
         class AddHeaderPolicy : HttpPipelinePolicy
         {
-            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
-                message.AddHeader("User-Agent", "ConfiguraingPipelineSample");
+                message.Request.AddHeader("User-Agent", "ConfiguraingPipelineSample");
                 await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
         }
 
         class CustomLogPolicy : HttpPipelinePolicy
         {
-            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
                 Console.WriteLine(message.ToString());
                 await ProcessNextAsync(pipeline, message).ConfigureAwait(false);

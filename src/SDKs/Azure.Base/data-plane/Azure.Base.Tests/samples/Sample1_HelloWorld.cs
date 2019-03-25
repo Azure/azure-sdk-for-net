@@ -19,21 +19,19 @@ namespace Azure.Base.Samples
         {
             var pipeline = new HttpPipeline(new HttpClientTransport());
 
-            using (HttpMessage message = pipeline.CreateMessage(cancellation: default)) {
+            var request = pipeline.CreateRequest();
 
-                var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/src/SDKs/Azure.Base/data-plane/README.md");
-                message.SetRequestLine(HttpVerb.Get, uri);
-                message.AddHeader("Host", uri.Host);
+            var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/src/SDKs/Azure.Base/data-plane/README.md");
+            request.SetRequestLine(HttpVerb.Get, uri);
+            request.AddHeader("Host", uri.Host);
 
-                await pipeline.SendMessageAsync(message).ConfigureAwait(false);
+            Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);
 
-                Response response = message.Response;
-                if (response.Status == 200) {
-                    var reader = new StreamReader(response.ContentStream);
-                    string responseText = reader.ReadToEnd();
-                }
-                else throw new RequestFailedException(response);
+            if (response.Status == 200) {
+                var reader = new StreamReader(response.ContentStream);
+                string responseText = reader.ReadToEnd();
             }
+            else throw new RequestFailedException(response);
         }
     }
 }

@@ -5,13 +5,13 @@ using System.ComponentModel;
 
 namespace Azure.Base.Http
 {
-    public abstract partial class HttpMessage
+    public partial class HttpPipelineMessage
     {
         public readonly struct HttpMessageOptions
         {
-            readonly HttpMessage _message;
+            readonly HttpPipelineMessage _message;
 
-            internal HttpMessageOptions(HttpMessage message)
+            internal HttpMessageOptions(HttpPipelineMessage message)
                 => _message = message;
 
             public T Add<T>(T option) where T : class
