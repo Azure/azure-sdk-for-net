@@ -211,6 +211,21 @@ namespace Microsoft.Azure.Management.Billing
         IBillingPropertyOperations BillingProperty { get; }
 
         /// <summary>
+        /// Gets the ITransferOperations.
+        /// </summary>
+        ITransferOperations Transfer { get; }
+
+        /// <summary>
+        /// Gets the ITransfersOperations.
+        /// </summary>
+        ITransfersOperations Transfers { get; }
+
+        /// <summary>
+        /// Gets the IRecipientTransferOperations.
+        /// </summary>
+        IRecipientTransferOperations RecipientTransfer { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

@@ -55,8 +55,11 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "ProductsByBillingAccount", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "ProductsByBillingSubscriptions", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "ProductsByInvoiceSection", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "RecipientTransfer", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "TransactionsByBillingAccount", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "TransactionsByBillingProfile", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "Transfer", "2018-11-01-preview"),
+                new Tuple<string, string, string>("Billing", "Transfers", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "UpdateAutoRenewForBillingAccount", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "UpdateAutoRenewForInvoiceSection", "2018-11-01-preview"),
               }.AsEnumerable();
