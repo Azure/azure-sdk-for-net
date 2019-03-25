@@ -107,6 +107,11 @@ namespace Microsoft.Azure.Management.Security
         public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
 
         /// <summary>
+        /// Gets the IDeviceSecurityGroupsOperations.
+        /// </summary>
+        public virtual IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; private set; }
+
+        /// <summary>
         /// Gets the ISettingsOperations.
         /// </summary>
         public virtual ISettingsOperations Settings { get; private set; }
@@ -408,6 +413,7 @@ namespace Microsoft.Azure.Management.Security
             AutoProvisioningSettings = new AutoProvisioningSettingsOperations(this);
             Compliances = new CompliancesOperations(this);
             AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
+            DeviceSecurityGroups = new DeviceSecurityGroupsOperations(this);
             Settings = new SettingsOperations(this);
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             Operations = new Operations(this);
