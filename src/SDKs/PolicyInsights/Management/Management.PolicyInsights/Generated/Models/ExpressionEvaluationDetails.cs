@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// expression value.</param>
         /// <param name="operatorProperty">Operator to compare the expression
         /// value and the target value.</param>
-        public ExpressionEvaluationDetails(string result = default(string), string expression = default(string), string path = default(string), string expressionValue = default(string), string targetValue = default(string), string operatorProperty = default(string))
+        public ExpressionEvaluationDetails(string result = default(string), string expression = default(string), string path = default(string), object expressionValue = default(object), object targetValue = default(object), string operatorProperty = default(string))
         {
             Result = result;
             Expression = expression;
@@ -79,13 +79,13 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// Gets or sets value of the expression.
         /// </summary>
         [JsonProperty(PropertyName = "expressionValue")]
-        public string ExpressionValue { get; set; }
+        public object ExpressionValue { get; set; }
 
         /// <summary>
         /// Gets or sets target value to be compared with the expression value.
         /// </summary>
         [JsonProperty(PropertyName = "targetValue")]
-        public string TargetValue { get; set; }
+        public object TargetValue { get; set; }
 
         /// <summary>
         /// Gets or sets operator to compare the expression value and the
