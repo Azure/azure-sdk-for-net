@@ -162,6 +162,11 @@ namespace Microsoft.Azure.Management.Security
         public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
 
         /// <summary>
+        /// Gets the IAdaptiveNetworkHardeningsOperations.
+        /// </summary>
+        public virtual IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -419,6 +424,7 @@ namespace Microsoft.Azure.Management.Security
             ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
             Topology = new TopologyOperations(this);
             AllowedConnections = new AllowedConnectionsOperations(this);
+            AdaptiveNetworkHardenings = new AdaptiveNetworkHardeningsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
