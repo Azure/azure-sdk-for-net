@@ -72,6 +72,17 @@ namespace Azure.Base.Http.Pipeline
             }
         }
 
+        internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
+        {
+            foreach (var header in from)
+            {
+                if (!to.TryAddWithoutValidation(header.Key, header.Value))
+                {
+                    throw new InvalidOperationException($"Unable to add header {header} to header collection.");
+                }
+            }
+        }
+
         private static string JoinHeaderValues(IEnumerable<string> values)
         {
             return string.Join(",", values);
@@ -138,16 +149,17 @@ namespace Azure.Base.Http.Pipeline
                 // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
                 // and so the retry logic fails.
                 var request = new HttpRequestMessage(_requestMessage.Method, _requestMessage.RequestUri);
-                foreach (var header in _requestMessage.Headers) {
-                    if (!request.Headers.TryAddWithoutValidation(header.Key, header.Value)) {
-                        throw new Exception("could not add header " + header.ToString());
-                    }
-                }
+
+                CopyHeaders(_requestMessage.Headers, request.Headers);
 
                 if (_requestContent?.PipelineContent != null)
                 {
-                    _requestContent.CancellationToken = cancellation;
-                    request.Content = _requestContent;
+                    request.Content = new PipelineContentAdapter()
+                    {
+                        CancellationToken = cancellation,
+                        PipelineContent = _requestContent.PipelineContent
+                    };
+                    CopyHeaders(_requestContent.Headers, request.Content.Headers);
                 }
 
                 return request;
@@ -155,10 +167,8 @@ namespace Azure.Base.Http.Pipeline
 
             public override void Dispose()
             {
-                Content?.Dispose();
                 _requestMessage.Dispose();
             }
-
 
             public override string ToString() =>  _requestMessage.ToString();
 
