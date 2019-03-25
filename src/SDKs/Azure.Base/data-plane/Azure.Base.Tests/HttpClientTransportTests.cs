@@ -176,9 +176,19 @@ namespace Azure.Base.Tests
         public static object[] HeadersWithValuesAndType =>
             new object[]
             {
-                new object[] {"Content-Length", "10", true},
-                new object[] {"Content-Type", "text/xml", true},
-                new object[] {"Date", "11/12/19", false}
+                new object[] { "Allow", "adcde", true },
+                new object[] { "Content-Disposition", "adcde", true },
+                new object[] { "Content-Encoding", "adcde", true },
+                new object[] { "Content-Language", "en-US", true },
+                new object[] { "Content-Length", "16", true },
+                new object[] { "Content-Location", "adcde", true },
+                new object[] { "Content-MD5", "adcde", true },
+                new object[] { "Content-Range", "adcde", true },
+                new object[] { "Content-Type", "text/xml", true },
+                new object[] { "Expires", "11/12/19", true },
+                new object[] { "Last-Modified", "11/12/19", true },
+                new object[] { "Date", "11/12/19", false },
+                new object[] { "Custom-Header", "11/12/19", false }
             };
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
@@ -189,9 +199,8 @@ namespace Azure.Base.Tests
             var mockHandler = new MockHttpClientHandler(
                 httpRequestMessage => {
                     Assert.True(
-                        contentHeader
-                            ? httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues)
-                            : httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues));
+                        httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
+                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
