@@ -41,11 +41,11 @@ namespace Azure.Base.Http.Pipeline
             // if error status
             if (status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1))
             {
-                s_eventSource.ResponseError(message.Response);
+                s_eventSource.ErrorResponse(message.Response);
 
                 if (message.Response.ResponseContentStream != null)
                 {
-                    await s_eventSource.ResponseErrorContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                    await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
                 }
             }
 

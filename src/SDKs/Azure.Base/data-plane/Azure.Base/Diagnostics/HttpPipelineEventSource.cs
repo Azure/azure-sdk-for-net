@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Base.Http;
 using System;
 using System.Collections.Generic;
-using Azure.Base.Http;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Text;

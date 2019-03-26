@@ -69,7 +69,7 @@ namespace Azure.Base.Tests
                 }
             }
 
-            public override string CorrelationId { get; set; } = string.Empty;
+            public override string CorrelationId { get; set; }
 
             public override void Dispose()
             {

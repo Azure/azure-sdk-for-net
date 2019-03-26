@@ -131,19 +131,4 @@ namespace Azure.Base.Tests
         private string GetStringProperty(EventWrittenEventArgs data, string propName)
             => data.Payload[data.PayloadNames.IndexOf(propName)] as string;
     }
-
-    public class PipelineTestBase
-    {
-        protected static async Task<HttpPipelineResponse> ExecuteRequest(HttpPipelineRequest request, HttpClientTransport transport)
-        {
-            using (var message = new HttpPipelineMessage(CancellationToken.None)
-            {
-                Request = request
-            })
-            {
-                await transport.ProcessAsync(message);
-                return message.Response;
-            }
-        }
-    }
 }
