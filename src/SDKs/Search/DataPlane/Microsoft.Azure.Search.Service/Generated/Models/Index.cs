@@ -49,8 +49,10 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="tokenFilters">The token filters for the index.</param>
         /// <param name="charFilters">The character filters for the
         /// index.</param>
+        /// <param name="encryptionKey">Encryption key used to encrypt the
+        /// index.</param>
         /// <param name="eTag">The ETag of the index.</param>
-        public Index(string name, IList<Field> fields, IList<ScoringProfile> scoringProfiles = default(IList<ScoringProfile>), string defaultScoringProfile = default(string), CorsOptions corsOptions = default(CorsOptions), IList<Suggester> suggesters = default(IList<Suggester>), IList<Analyzer> analyzers = default(IList<Analyzer>), IList<Tokenizer> tokenizers = default(IList<Tokenizer>), IList<TokenFilter> tokenFilters = default(IList<TokenFilter>), IList<CharFilter> charFilters = default(IList<CharFilter>), string eTag = default(string))
+        public Index(string name, IList<Field> fields, IList<ScoringProfile> scoringProfiles = default(IList<ScoringProfile>), string defaultScoringProfile = default(string), CorsOptions corsOptions = default(CorsOptions), IList<Suggester> suggesters = default(IList<Suggester>), IList<Analyzer> analyzers = default(IList<Analyzer>), IList<Tokenizer> tokenizers = default(IList<Tokenizer>), IList<TokenFilter> tokenFilters = default(IList<TokenFilter>), IList<CharFilter> charFilters = default(IList<CharFilter>), EncryptionKey encryptionKey = default(EncryptionKey), string eTag = default(string))
         {
             Name = name;
             Fields = fields;
@@ -62,6 +64,7 @@ namespace Microsoft.Azure.Search.Models
             Tokenizers = tokenizers;
             TokenFilters = tokenFilters;
             CharFilters = charFilters;
+            EncryptionKey = encryptionKey;
             ETag = eTag;
             CustomInit();
         }
@@ -134,6 +137,12 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "charFilters")]
         public IList<CharFilter> CharFilters { get; set; }
+
+        /// <summary>
+        /// Gets or sets encryption key used to encrypt the index.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionKey")]
+        public EncryptionKey EncryptionKey { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the index.
@@ -230,6 +239,10 @@ namespace Microsoft.Azure.Search.Models
                         element6.Validate();
                     }
                 }
+            }
+            if (EncryptionKey != null)
+            {
+                EncryptionKey.Validate();
             }
         }
     }

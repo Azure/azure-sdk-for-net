@@ -34,11 +34,14 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="synonyms">A series of synonym rules in the specified
         /// synonym map format. The rules must be separated by
         /// newlines.</param>
+        /// <param name="encryptionKey">Encryption key used to encrypt the
+        /// synonym map.</param>
         /// <param name="eTag">The ETag of the synonym map.</param>
-        public SynonymMap(string name, string synonyms, string eTag = default(string))
+        public SynonymMap(string name, string synonyms, EncryptionKey encryptionKey = default(EncryptionKey), string eTag = default(string))
         {
             Name = name;
             Synonyms = synonyms;
+            EncryptionKey = encryptionKey;
             ETag = eTag;
             CustomInit();
         }
@@ -69,6 +72,12 @@ namespace Microsoft.Azure.Search.Models
         public string Synonyms { get; set; }
 
         /// <summary>
+        /// Gets or sets encryption key used to encrypt the synonym map.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionKey")]
+        public EncryptionKey EncryptionKey { get; set; }
+
+        /// <summary>
         /// Gets or sets the ETag of the synonym map.
         /// </summary>
         [JsonProperty(PropertyName = "@odata.etag")]
@@ -96,6 +105,10 @@ namespace Microsoft.Azure.Search.Models
             if (Synonyms == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Synonyms");
+            }
+            if (EncryptionKey != null)
+            {
+                EncryptionKey.Validate();
             }
         }
     }
