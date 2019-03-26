@@ -11,7 +11,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     {
         /// <summary>
         /// Create a sorted key-value pair of emotions and the corresponding scores, sorted from highest score on down.
-        /// Sorting criteria: Score is the primary key, and the name is the secondary key.
+        /// Sorting criteria: Score is the primary key sorted descending, and the name is the secondary key sorted alphabetically.
         /// </summary>
         public static IEnumerable<KeyValuePair<string, double>> ToRankedList(this Emotion emotionScores)
         {
@@ -27,8 +27,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
                 { "Surprise", emotionScores.Surprise }
             }
             .OrderByDescending(emotion => emotion.Value)
-            .ThenBy(emotion => emotion.Key)
-            .ToList();
+            .ThenBy(emotion => emotion.Key);
         }
     }
 }
