@@ -125,6 +125,12 @@ namespace Azure.Configuration.Tests
             Assert.AreEqual("example.org", host);
         }
 
+        [Test]
+        public async Task RequestAndResponseHasCorrelationId()
+        {
+
+        }
+
         private class MockHttpClientHandler : HttpMessageHandler
         {
             private readonly Action<HttpRequestMessage> _onSend;

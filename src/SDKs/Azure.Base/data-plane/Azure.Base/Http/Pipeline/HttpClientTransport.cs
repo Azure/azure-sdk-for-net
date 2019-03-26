@@ -35,7 +35,7 @@ namespace Azure.Base.Http.Pipeline
             using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
             {
                 HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
-                message.Response = new PipelineResponse(responseMessage);
+                message.Response = new PipelineResponse(message.Request.CorrelationId, responseMessage);
             }
         }
 
@@ -63,6 +63,9 @@ namespace Azure.Base.Http.Pipeline
             }
 
             public override HttpVerb Method => ToPipelineMethod(_requestMessage.Method);
+
+            // TODO: faster lazy implementation
+            public override string CorrelationId { get; } = Guid.NewGuid().ToString();
 
             public override void AddHeader(HttpHeader header)
             {
@@ -179,8 +182,9 @@ namespace Azure.Base.Http.Pipeline
         {
             readonly HttpResponseMessage _responseMessage;
 
-            public PipelineResponse(HttpResponseMessage responseMessage)
+            public PipelineResponse(string correlationId, HttpResponseMessage responseMessage)
             {
+                CorrelationId = correlationId;
                 _responseMessage = responseMessage;
             }
 
@@ -204,6 +208,9 @@ namespace Azure.Base.Http.Pipeline
             // TODO (pri 1): is it ok to just call GetResult here?
             public override Stream ResponseContentStream
                 => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+
+            public override string CorrelationId { get; private set; }
+
             #endregion
 
             public override void Dispose()

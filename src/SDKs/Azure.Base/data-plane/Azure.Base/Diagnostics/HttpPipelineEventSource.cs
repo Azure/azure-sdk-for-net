@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Base.Http;
 using System;
+using Azure.Base.Http;
 using System.Diagnostics.Tracing;
 
 // TODO (pri 2): we should log correction/activity
@@ -16,10 +16,13 @@ namespace Azure.Base.Diagnostics
         // TODO (pri 3): do we want the same source name for all SDk components?
         const string SOURCE_NAME = "AzureSDK";
 
-        const int LOG_REQUEST = 3;
-        const int LOG_RESPONSE = 4;
-        const int LOG_DELAY = 5;
-        const int LOG_ERROR_RESPONSE = 6;
+        // Maximum event size is 32K but we need to account for other data
+        private const int MaxEventPayloadSize = 31000;
+        private const int RequestEvent = 3;
+        private const int RequestContentEvent = 7;
+        private const int ResponseEvent = 4;
+        private const int RequestDelayEvent = 5;
+        private const int ResponseErrorEvent = 6;
 
         private HttpPipelineEventSource() : base(SOURCE_NAME) { }
 
@@ -28,52 +31,95 @@ namespace Azure.Base.Diagnostics
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
         public void ProcessingRequest(HttpPipelineRequest request)
-            => ProcessingRequest(request.ToString());
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                ProcessingRequest(request.CorrelationId, request.Method.ToString(), "", FormatHeaders(request));
+            }
+
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                ProcessingRequestContent(request.CorrelationId, FormatContent(Array.Empty<byte>(), 0));
+            }
+
+        }
 
         [NonEvent]
         public void ProcessingResponse(HttpPipelineResponse response)
-            => ProcessingResponse(response.ToString());
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                ProcessingResponse(response.ToString());
+            }
 
-        [NonEvent]
-        public void ErrorResponse(HttpPipelineResponse response)
-            => ErrorResponse(response.Status);
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                ProcessingResponseContent(response.CorrelationId, FormatContent(Array.Empty<byte>(), 0));
+            }
+        }
 
         [NonEvent]
         public void ResponseDelay(HttpPipelineResponse response, long delayMilliseconds)
             => ResponseDelayCore(delayMilliseconds);
 
         // TODO (pri 2): there are more attribute properties we might want to set
-        [Event(LOG_REQUEST, Level = EventLevel.Informational)]
-        void ProcessingRequest(string request)
+        [Event(RequestEvent, Level = EventLevel.Informational)]
+        void ProcessingRequest(string correlationId, string method, string uri, string headers)
         {
-            // TODO (pri 2): is EventKeywords.None ok?
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None)) {
-                WriteEvent(LOG_REQUEST, request);
-            }
+            WriteEvent(RequestEvent, correlationId, method, uri, headers);
         }
 
-        [Event(LOG_RESPONSE, Level = EventLevel.Informational)]
+        [Event(ResponseEvent, Level = EventLevel.Informational)]
         void ProcessingResponse(string response)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None)) {
-                WriteEvent(LOG_RESPONSE, response);
+                WriteEvent(ResponseEvent, response);
             }
         }
 
-        [Event(LOG_DELAY, Level = EventLevel.Warning)]
+        [Event(RequestDelayEvent, Level = EventLevel.Warning)]
         void ResponseDelayCore(long delayMilliseconds)
         {
             if (IsEnabled(EventLevel.Warning, EventKeywords.None)) {
-                WriteEvent(LOG_DELAY, delayMilliseconds);
+                WriteEvent(RequestDelayEvent, delayMilliseconds);
             }
         }
 
-        [Event(LOG_ERROR_RESPONSE, Level = EventLevel.Error)]
-        void ErrorResponse(int status)
+        [Event(ResponseErrorEvent, Level = EventLevel.Error)]
+        public void ErrorResponse(string correlationId, int status)
         {
-            if (IsEnabled(EventLevel.Error, EventKeywords.None)) {
-                WriteEvent(LOG_ERROR_RESPONSE, status);
+            WriteEvent(ResponseErrorEvent, correlationId, status);
+        }
+
+        [Event(RequestContentEvent, Level = EventLevel.Verbose)]
+        private void ProcessingRequestContent(string correlationId, byte[] content)
+        {
+            WriteEvent(ResponseErrorEvent, correlationId, content);
+        }
+
+        [Event(RequestContentEvent, Level = EventLevel.Verbose)]
+        private void ProcessingResponseContent(string correlationId, byte[] content)
+        {
+            WriteEvent(ResponseErrorEvent, correlationId, content);
+        }
+
+        private byte[] FormatContent(byte[] buffer, int count)
+        {
+            count = Math.Min(count, MaxEventPayloadSize);
+
+            byte[] slice = buffer;
+            if (count != buffer.Length)
+            {
+                slice = new byte[count];
+                Buffer.BlockCopy(buffer, 0, slice, 0, count);
             }
+
+            return slice;
+        }
+
+        private string FormatHeaders(HttpPipelineRequest request)
+        {
+            return "HEADERS";
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Azure.Base.Http
 
         public abstract HttpVerb Method { get; }
 
+        public abstract string CorrelationId { get; }
+
         public abstract void Dispose();
     }
 }
