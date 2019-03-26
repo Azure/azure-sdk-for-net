@@ -165,9 +165,17 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static WhoIsBlueprintContract WhoIsBlueprint(this IAssignmentsOperations operations)
+            /// <param name='scope'>
+            /// The scope of the resource. Valid scopes are: management group (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// </param>
+            /// <param name='assignmentName'>
+            /// Name of the blueprint assignment.
+            /// </param>
+            public static WhoIsBlueprintContract WhoIsBlueprint(this IAssignmentsOperations operations, string scope, string assignmentName)
             {
-                return operations.WhoIsBlueprintAsync().GetAwaiter().GetResult();
+                return operations.WhoIsBlueprintAsync(scope, assignmentName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -176,12 +184,20 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='scope'>
+            /// The scope of the resource. Valid scopes are: management group (format:
+            /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// </param>
+            /// <param name='assignmentName'>
+            /// Name of the blueprint assignment.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WhoIsBlueprintContract> WhoIsBlueprintAsync(this IAssignmentsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WhoIsBlueprintContract> WhoIsBlueprintAsync(this IAssignmentsOperations operations, string scope, string assignmentName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.WhoIsBlueprintWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.WhoIsBlueprintWithHttpMessagesAsync(scope, assignmentName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

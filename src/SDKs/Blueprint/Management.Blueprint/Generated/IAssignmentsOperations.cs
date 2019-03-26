@@ -113,6 +113,15 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <summary>
         /// Get Blueprints service SPN objectId
         /// </summary>
+        /// <param name='scope'>
+        /// The scope of the resource. Valid scopes are: management group
+        /// (format:
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
+        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// </param>
+        /// <param name='assignmentName'>
+        /// Name of the blueprint assignment.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -125,7 +134,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<AzureOperationResponse<WhoIsBlueprintContract>> WhoIsBlueprintWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<WhoIsBlueprintContract>> WhoIsBlueprintWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List blueprint assignments within a subscription.
         /// </summary>
