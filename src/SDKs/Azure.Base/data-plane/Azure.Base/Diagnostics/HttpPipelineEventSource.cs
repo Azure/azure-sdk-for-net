@@ -21,8 +21,8 @@ namespace Azure.Base.Diagnostics
         // TODO (pri 3): do we want the same source name for all SDk components?
         private const string EventSourceName = "AzureSDK";
 
-        // Maximum event size is 32K but we need to account for other data
-        private const int MaxEventPayloadSize = 31000;
+        private const int MaxEventPayloadSize = 10 * 1024;
+
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
         private const int ResponseEvent = 5;
@@ -168,7 +168,7 @@ namespace Azure.Base.Diagnostics
 
         private static byte[] FormatContent(byte[] buffer)
         {
-            var count = Math.Min(buffer.Length, MaxEventPayloadSize);
+            int count = Math.Min(buffer.Length, MaxEventPayloadSize);
 
             byte[] slice = buffer;
             if (count != buffer.Length)
