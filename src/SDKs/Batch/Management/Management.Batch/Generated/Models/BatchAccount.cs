@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         /// <remarks>
         /// Batch is transitioning its core quota system for dedicated cores to
-        /// be enforced per Virtual Machine family. During this transitionary
+        /// be enforced per Virtual Machine family. During this transitional
         /// phase, the dedicated core quota per Virtual Machine family may not
         /// yet be enforced. If this flag is false, dedicated core quota is
         /// enforced via the old dedicatedCoreQuota property on the account and
