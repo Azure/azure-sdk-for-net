@@ -18,27 +18,33 @@ namespace Azure.Configuration.Tests
         public static object[] ContentWithLength =>
             new object[]
             {
-                new object[] { HttpMessageContent.Create(new byte[10]), 10 },
-                new object[] { HttpMessageContent.Create(new byte[10], 5, 5), 5 },
-                new object[] { HttpMessageContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
-                new object[] { HttpMessageContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
-                new object[] { HttpMessageContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
+                new object[] { HttpPipelineRequestContent.Create(new byte[10]), 10 },
+                new object[] { HttpPipelineRequestContent.Create(new byte[10], 5, 5), 5 },
+                new object[] { HttpPipelineRequestContent.Create(new ReadOnlyMemory<byte>(new byte[10])), 10 },
+                new object[] { HttpPipelineRequestContent.Create(new ReadOnlyMemory<byte>(new byte[10]).Slice(5)), 5 },
+                new object[] { HttpPipelineRequestContent.Create(new ReadOnlySequence<byte>(new byte[10])), 10 },
             };
 
         [TestCaseSource(nameof(ContentWithLength))]
-        public async Task ContentLengthIsSetForArrayContent(HttpMessageContent content, int expectedLength)
+        public async Task ContentLengthIsSetForArrayContent(HttpPipelineRequestContent content, int expectedLength)
         {
             long contentLength = 0;
             var mockHandler = new MockHttpClientHandler(
-                request => {
-                    contentLength = request.Content.Headers.ContentLength.Value;
-                });
+                httpRequestMessage => contentLength = httpRequestMessage.Content.Headers.ContentLength.Value
+                );
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var message = transport.CreateMessage(null, CancellationToken.None);
-            message.SetRequestLine(HttpVerb.Get, new Uri("http://example.com"));
-            message.SetContent(content);
-            await transport.ProcessAsync(message);
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com"));
+            request.SetContent(content);
+
+            using (var message = new HttpPipelineMessage(CancellationToken.None)
+            {
+                Request = request
+            })
+            {
+                await transport.ProcessAsync(message);
+            }
 
             Assert.AreEqual(expectedLength, contentLength);
         }
@@ -48,19 +54,75 @@ namespace Azure.Configuration.Tests
         {
             long contentLength = 0;
             var mockHandler = new MockHttpClientHandler(
-                request => {
-                    contentLength = request.Content.Headers.ContentLength.Value;
+                httpRequestMessage => contentLength = httpRequestMessage.Content.Headers.ContentLength.Value);
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com"));
+            request.SetContent(HttpPipelineRequestContent.Create(new byte[10]));
+            request.AddHeader("Content-Length", "50");
+
+            using (var message = new HttpPipelineMessage(CancellationToken.None)
+            {
+                Request = request
+            })
+            {
+                await transport.ProcessAsync(message);
+            }
+
+            Assert.AreEqual(50, contentLength);
+        }
+
+        [Test]
+        public async Task HostHeaderSetFromUri()
+        {
+            string host = null;
+            Uri uri = null;
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    uri = httpRequestMessage.RequestUri;
+                    host = httpRequestMessage.Headers.Host;
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var message = transport.CreateMessage(null, CancellationToken.None);
-            message.SetRequestLine(HttpVerb.Get, new Uri("http://example.com"));
-            message.SetContent(HttpMessageContent.Create(new byte[10]));
-            message.AddHeader("Content-Length", "50");
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
 
-            await transport.ProcessAsync(message);
+            using (var message = new HttpPipelineMessage(CancellationToken.None)
+            {
+                Request = request
+            })
+            {
+                await transport.ProcessAsync(message);
+            }
 
-            Assert.AreEqual(50, contentLength);
+            // HttpClientHandler would correctly set Host header from Uri when it's not set explicitly
+            Assert.AreEqual("http://example.com:340/", uri.ToString());
+            Assert.Null(host);
+        }
+
+        [Test]
+        public async Task SettingHeaderOverridesDefaultHost()
+        {
+            string host = null;
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    host = httpRequestMessage.Headers.Host;
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
+            request.AddHeader("Host", "example.org");
+
+            using (var message = new HttpPipelineMessage(CancellationToken.None)
+            {
+                Request = request
+            })
+            {
+                await transport.ProcessAsync(message);
+            }
+            Assert.AreEqual("example.org", host);
         }
 
         private class MockHttpClientHandler : HttpMessageHandler

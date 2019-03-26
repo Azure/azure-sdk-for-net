@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'CommonEncryptionCenc', 'CommonEncryptionCbcs'</param>
         /// <param name="paths">Streaming paths for each protocol and
         /// encryptionScheme pair</param>
-        public StreamingPath(StreamingPolicyStreamingProtocol streamingProtocol, EncryptionScheme encryptionScheme, IList<string> paths = default(IList<string>))
+        public StreamingPath(string streamingProtocol, string encryptionScheme, IList<string> paths = default(IList<string>))
         {
             StreamingProtocol = streamingProtocol;
             EncryptionScheme = encryptionScheme;
@@ -56,7 +57,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Dash', 'SmoothStreaming', 'Download'
         /// </summary>
         [JsonProperty(PropertyName = "streamingProtocol")]
-        public StreamingPolicyStreamingProtocol StreamingProtocol { get; set; }
+        public string StreamingProtocol { get; set; }
 
         /// <summary>
         /// Gets or sets encryption scheme. Possible values include:
@@ -64,7 +65,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'CommonEncryptionCbcs'
         /// </summary>
         [JsonProperty(PropertyName = "encryptionScheme")]
-        public EncryptionScheme EncryptionScheme { get; set; }
+        public string EncryptionScheme { get; set; }
 
         /// <summary>
         /// Gets or sets streaming paths for each protocol and encryptionScheme
@@ -76,11 +77,19 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (StreamingProtocol == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StreamingProtocol");
+            }
+            if (EncryptionScheme == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EncryptionScheme");
+            }
         }
     }
 }

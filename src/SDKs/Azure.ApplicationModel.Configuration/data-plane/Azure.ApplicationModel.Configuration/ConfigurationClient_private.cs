@@ -34,24 +34,24 @@ namespace Azure.ApplicationModel.Configuration
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddOptionsHeaders(RequestOptions options, HttpMessage message)
+        static void AddOptionsHeaders(RequestOptions options, HttpPipelineRequest request)
         {
             if (options == null) return;
 
             if (options.ETag.IfMatch != default)
             {
-                message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
+                request.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
             }
 
             if (options.ETag.IfNoneMatch != default)
             {
-                message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
+                request.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
             }
 
             if (options.Revision.HasValue)
             {
                 var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                message.AddHeader(AcceptDatetimeHeader, dateTime);
+                request.AddHeader(AcceptDatetimeHeader, dateTime);
             }
         }
 
@@ -200,7 +200,6 @@ namespace Azure.ApplicationModel.Configuration
 
             return content;
         }
-
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);

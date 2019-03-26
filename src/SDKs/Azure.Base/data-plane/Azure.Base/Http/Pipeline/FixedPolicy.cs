@@ -20,7 +20,7 @@ namespace Azure.Base.Http.Pipeline
             Array.Sort(_retriableCodes);
         }
 
-        protected override bool ShouldRetry(HttpMessage message, int attempted, out TimeSpan delay)
+        protected override bool ShouldRetry(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
             delay = _delay;
             if (attempted > _maxRetries) return false;

@@ -31,6 +31,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the VideoLayer class.
         /// </summary>
+        /// <param name="bitrate">The average bitrate in bits per second at
+        /// which to encode the input video when generating this layer. This is
+        /// a required field.</param>
         /// <param name="width">The width of the output video for this layer.
         /// The value can be absolute (in pixels) or relative (in percentage).
         /// For example 50% means the output video has half as many pixels in
@@ -42,9 +45,6 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="label">The alphanumeric label for this layer, which
         /// can be used in multiplexing different video and audio layers, or in
         /// naming the output file.</param>
-        /// <param name="bitrate">The average bitrate in bits per second at
-        /// which to encode the input video when generating this layer. This is
-        /// a required field.</param>
         /// <param name="maxBitrate">The maximum bitrate (in bits per second),
         /// at which the VBV buffer should be assumed to refill. If not
         /// specified, defaults to the same value as bitrate.</param>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="adaptiveBFrame">Whether or not adaptive B-frames are
         /// to be used when encoding this layer. If not specified, the encoder
         /// will turn it on whenever the video profile permits its use.</param>
-        public VideoLayer(string width = default(string), string height = default(string), string label = default(string), int? bitrate = default(int?), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?))
+        public VideoLayer(int bitrate, string width = default(string), string height = default(string), string label = default(string), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?))
             : base(width, height, label)
         {
             Bitrate = bitrate;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// required field.
         /// </summary>
         [JsonProperty(PropertyName = "bitrate")]
-        public int? Bitrate { get; set; }
+        public int Bitrate { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum bitrate (in bits per second), at which the
@@ -133,5 +133,15 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "adaptiveBFrame")]
         public bool? AdaptiveBFrame { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

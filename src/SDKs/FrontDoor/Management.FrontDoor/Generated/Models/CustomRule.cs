@@ -34,32 +34,31 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         /// <param name="priority">Describes priority of the rule. Rules with a
         /// lower value will be evaluated before rules with a higher
-        /// value</param>
+        /// value.</param>
         /// <param name="ruleType">Describes type of rule. Possible values
         /// include: 'MatchRule', 'RateLimitRule'</param>
-        /// <param name="matchConditions">List of match conditions</param>
-        /// <param name="action">Type of Actions. Possible values include:
-        /// 'Allow', 'Block', 'Log'</param>
-        /// <param name="name">Gets name of the resource that is unique within
-        /// a policy. This name can be used to access the resource.</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated.</param>
+        /// <param name="matchConditions">List of match conditions.</param>
+        /// <param name="action">Describes what action to be applied when rule
+        /// matches. Possible values include: 'Allow', 'Block', 'Log',
+        /// 'Redirect'</param>
+        /// <param name="name">Describes the name of the rule.</param>
+        /// <param name="enabledState">Describes if the custom rule is in
+        /// enabled or disabled state. Defaults to Enabled if not specified.
+        /// Possible values include: 'Disabled', 'Enabled'</param>
         /// <param name="rateLimitDurationInMinutes">Defines rate limit
-        /// duration. Default - 1 minute</param>
+        /// duration. Default is 1 minute.</param>
         /// <param name="rateLimitThreshold">Defines rate limit
-        /// threshold</param>
-        /// <param name="transforms">List of transforms</param>
-        public CustomRule(int priority, string ruleType, IList<MatchCondition1> matchConditions, string action, string name = default(string), string etag = default(string), int? rateLimitDurationInMinutes = default(int?), int? rateLimitThreshold = default(int?), IList<string> transforms = default(IList<string>))
+        /// threshold.</param>
+        public CustomRule(int priority, string ruleType, IList<MatchCondition> matchConditions, string action, string name = default(string), string enabledState = default(string), int? rateLimitDurationInMinutes = default(int?), int? rateLimitThreshold = default(int?))
         {
             Name = name;
-            Etag = etag;
             Priority = priority;
+            EnabledState = enabledState;
             RuleType = ruleType;
             RateLimitDurationInMinutes = rateLimitDurationInMinutes;
             RateLimitThreshold = rateLimitThreshold;
             MatchConditions = matchConditions;
             Action = action;
-            Transforms = transforms;
             CustomInit();
         }
 
@@ -69,25 +68,25 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets name of the resource that is unique within a policy. This name
-        /// can be used to access the resource.
+        /// Gets or sets describes the name of the rule.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets a unique read-only string that changes whenever the resource
-        /// is updated.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; private set; }
-
-        /// <summary>
         /// Gets or sets describes priority of the rule. Rules with a lower
-        /// value will be evaluated before rules with a higher value
+        /// value will be evaluated before rules with a higher value.
         /// </summary>
         [JsonProperty(PropertyName = "priority")]
         public int Priority { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes if the custom rule is in enabled or disabled
+        /// state. Defaults to Enabled if not specified. Possible values
+        /// include: 'Disabled', 'Enabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "enabledState")]
+        public string EnabledState { get; set; }
 
         /// <summary>
         /// Gets or sets describes type of rule. Possible values include:
@@ -97,35 +96,29 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public string RuleType { get; set; }
 
         /// <summary>
-        /// Gets or sets defines rate limit duration. Default - 1 minute
+        /// Gets or sets defines rate limit duration. Default is 1 minute.
         /// </summary>
         [JsonProperty(PropertyName = "rateLimitDurationInMinutes")]
         public int? RateLimitDurationInMinutes { get; set; }
 
         /// <summary>
-        /// Gets or sets defines rate limit threshold
+        /// Gets or sets defines rate limit threshold.
         /// </summary>
         [JsonProperty(PropertyName = "rateLimitThreshold")]
         public int? RateLimitThreshold { get; set; }
 
         /// <summary>
-        /// Gets or sets list of match conditions
+        /// Gets or sets list of match conditions.
         /// </summary>
         [JsonProperty(PropertyName = "matchConditions")]
-        public IList<MatchCondition1> MatchConditions { get; set; }
+        public IList<MatchCondition> MatchConditions { get; set; }
 
         /// <summary>
-        /// Gets or sets type of Actions. Possible values include: 'Allow',
-        /// 'Block', 'Log'
+        /// Gets or sets describes what action to be applied when rule matches.
+        /// Possible values include: 'Allow', 'Block', 'Log', 'Redirect'
         /// </summary>
         [JsonProperty(PropertyName = "action")]
         public string Action { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of transforms
-        /// </summary>
-        [JsonProperty(PropertyName = "transforms")]
-        public IList<string> Transforms { get; set; }
 
         /// <summary>
         /// Validate the object.

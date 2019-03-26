@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Initializes a new instance of the JobInputAsset class.
         /// </summary>
         /// <param name="assetName">The name of the input Asset.</param>
-        /// <param name="files">List of files. Required for
-        /// JobInputHttp.</param>
+        /// <param name="files">List of files. Required for JobInputHttp.
+        /// Maximum of 4000 characters each.</param>
         /// <param name="label">A label that is assigned to a JobInputClip,
         /// that is used to satisfy a reference used in the Transform. For
         /// example, a Transform can be authored so as to take an image file

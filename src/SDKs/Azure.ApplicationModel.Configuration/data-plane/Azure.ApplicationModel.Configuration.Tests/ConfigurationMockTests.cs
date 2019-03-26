@@ -118,7 +118,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
-        
+
         [Test]
         public async Task Delete()
         {
@@ -224,7 +224,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             public int Retries => _retries;
 
-            public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
                 _retries++;
                 await ProcessNextAsync(pipeline, message).ConfigureAwait(false);

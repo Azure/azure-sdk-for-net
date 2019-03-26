@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets the details of specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
-        /// <param name='registratonAssignmentId'>
+        /// <param name='registrationAssignmentId'>
         /// Guid of the registration assignment.
         /// </param>
         /// <param name='apiVersion'>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// </param>
         /// <param name='expandRegistrationDefinition'>
         /// Tells whether to return registration definition details also along
-        /// with registration assingmnet details.
+        /// with registration assignment details.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,14 +54,14 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistrationAssignment>> GetWithHttpMessagesAsync(string scope, string registratonAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegistrationAssignment>> GetWithHttpMessagesAsync(string scope, string registrationAssignmentId, string apiVersion, bool? expandRegistrationDefinition = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
-        /// <param name='registratonAssignmentId'>
+        /// <param name='registrationAssignmentId'>
         /// Guid of the registration assignment.
         /// </param>
         /// <param name='apiVersion'>
@@ -82,14 +82,14 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistrationAssignment>> DeleteWithHttpMessagesAsync(string scope, string registratonAssignmentId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegistrationAssignment>> DeleteWithHttpMessagesAsync(string scope, string registrationAssignmentId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a registration assignment.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
-        /// <param name='registratonAssignmentId'>
+        /// <param name='registrationAssignmentId'>
         /// Guid of the registration assignment.
         /// </param>
         /// <param name='apiVersion'>
@@ -113,19 +113,19 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistrationAssignment>> CreateOrUpdateWithHttpMessagesAsync(string scope, string registratonAssignmentId, string apiVersion, RegistrationAssignment requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegistrationAssignment>> CreateOrUpdateWithHttpMessagesAsync(string scope, string registrationAssignmentId, string apiVersion, RegistrationAssignment requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of the registration assignments.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
         /// </param>
         /// <param name='expandRegistrationDefinition'>
         /// Tells whether to return registration definition details also along
-        /// with registration assingmnet details.
+        /// with registration assignment details.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

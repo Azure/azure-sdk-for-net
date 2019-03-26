@@ -52,10 +52,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="healthErrorDetails">The recovery services provider
         /// health error details.</param>
         /// <param name="draIdentifier">The DRA Id.</param>
-        /// <param name="identityDetails">The identity details.</param>
+        /// <param name="authenticationIdentityDetails">The authentication
+        /// identity details.</param>
+        /// <param name="resourceAccessIdentityDetails">The resource access
+        /// identity details.</param>
         /// <param name="providerVersionDetails">The provider version
         /// details.</param>
-        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>), string draIdentifier = default(string), IdentityInformation identityDetails = default(IdentityInformation), VersionDetails providerVersionDetails = default(VersionDetails))
+        public RecoveryServicesProviderProperties(string fabricType = default(string), string friendlyName = default(string), string providerVersion = default(string), string serverVersion = default(string), string providerVersionState = default(string), System.DateTime? providerVersionExpiryDate = default(System.DateTime?), string fabricFriendlyName = default(string), System.DateTime? lastHeartBeat = default(System.DateTime?), string connectionStatus = default(string), int? protectedItemCount = default(int?), IList<string> allowedScenarios = default(IList<string>), IList<HealthError> healthErrorDetails = default(IList<HealthError>), string draIdentifier = default(string), IdentityProviderDetails authenticationIdentityDetails = default(IdentityProviderDetails), IdentityProviderDetails resourceAccessIdentityDetails = default(IdentityProviderDetails), VersionDetails providerVersionDetails = default(VersionDetails))
         {
             FabricType = fabricType;
             FriendlyName = friendlyName;
@@ -70,7 +73,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             AllowedScenarios = allowedScenarios;
             HealthErrorDetails = healthErrorDetails;
             DraIdentifier = draIdentifier;
-            IdentityDetails = identityDetails;
+            AuthenticationIdentityDetails = authenticationIdentityDetails;
+            ResourceAccessIdentityDetails = resourceAccessIdentityDetails;
             ProviderVersionDetails = providerVersionDetails;
             CustomInit();
         }
@@ -159,10 +163,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string DraIdentifier { get; set; }
 
         /// <summary>
-        /// Gets or sets the identity details.
+        /// Gets or sets the authentication identity details.
         /// </summary>
-        [JsonProperty(PropertyName = "identityDetails")]
-        public IdentityInformation IdentityDetails { get; set; }
+        [JsonProperty(PropertyName = "authenticationIdentityDetails")]
+        public IdentityProviderDetails AuthenticationIdentityDetails { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource access identity details.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceAccessIdentityDetails")]
+        public IdentityProviderDetails ResourceAccessIdentityDetails { get; set; }
 
         /// <summary>
         /// Gets or sets the provider version details.

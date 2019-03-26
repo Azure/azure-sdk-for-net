@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// primary storage account must be a Standard Storage account (either
         /// Microsoft.ClassicStorage or Microsoft.Storage). Blob only storage
         /// accounts can be added as secondary storage accounts.</param>
-        public StorageAccount(StorageAccountType type, string id = default(string))
+        public StorageAccount(string type, string id = default(string))
         {
             Id = id;
             Type = type;
@@ -63,16 +64,20 @@ namespace Microsoft.Azure.Management.Media.Models
         /// include: 'Primary', 'Secondary'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public StorageAccountType Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
         }
     }
 }

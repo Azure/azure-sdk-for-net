@@ -34,12 +34,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// class.
         /// </summary>
         /// <param name="tags">The Azure VM tags.</param>
-        /// <param name="roleAssignments">The Azure role assignments.</param>
         /// <param name="inputEndpoints">The Azure VM input endpoints.</param>
-        public AzureToAzureVmSyncedConfigDetails(IDictionary<string, string> tags = default(IDictionary<string, string>), IList<RoleAssignment> roleAssignments = default(IList<RoleAssignment>), IList<InputEndpoint> inputEndpoints = default(IList<InputEndpoint>))
+        public AzureToAzureVmSyncedConfigDetails(IDictionary<string, string> tags = default(IDictionary<string, string>), IList<InputEndpoint> inputEndpoints = default(IList<InputEndpoint>))
         {
             Tags = tags;
-            RoleAssignments = roleAssignments;
             InputEndpoints = inputEndpoints;
             CustomInit();
         }
@@ -54,12 +52,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Azure role assignments.
-        /// </summary>
-        [JsonProperty(PropertyName = "roleAssignments")]
-        public IList<RoleAssignment> RoleAssignments { get; set; }
 
         /// <summary>
         /// Gets or sets the Azure VM input endpoints.
