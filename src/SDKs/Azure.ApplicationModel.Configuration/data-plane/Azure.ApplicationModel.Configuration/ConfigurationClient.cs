@@ -79,7 +79,7 @@ namespace Azure.ApplicationModel.Configuration
 
 
 
-                request.SetContent(HttpPipelineRequestContent.Create(content));
+                request.Content = HttpPipelineRequestContent.Create(content);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -118,7 +118,7 @@ namespace Azure.ApplicationModel.Configuration
                     request.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
                 }
 
-                request.SetContent(HttpPipelineRequestContent.Create(content));
+                request.Content = HttpPipelineRequestContent.Create(content);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -162,7 +162,7 @@ namespace Azure.ApplicationModel.Configuration
                 }
                 
 
-                request.SetContent(HttpPipelineRequestContent.Create(content));
+                request.Content = HttpPipelineRequestContent.Create(content);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
