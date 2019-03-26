@@ -221,7 +221,6 @@ namespace DeploymentManager.Tests
                 serviceUnitName: serviceUnitName));
             Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
         }
-
         private void RolloutCrudTests(
             string serviceTopologyId,
             string artifactSourceId,
