@@ -16,6 +16,7 @@
     3) Aligned with latest Face API, Million-Scale features (LargePersonGroup and LargeFaceList) were added.
     4) Some inconsistencies in naming, parameter order were corrected.
     5) Aligned with latest Face API, Snapshot features for data migration were added.
+    6) Aligned with latest Face API, multiple recognition model feature was added.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
