@@ -6,13 +6,13 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.EventHub</PackageId>
 		<Description>Provides developers with a library to create and manage all Azure Event Hubs resources. Note: This client library is for EventHub under Azure Resource Manager.</Description>
-		<Version>2.4.0</Version>
+		<Version>2.5.0</Version>
 		<AssemblyName>Microsoft.Azure.Management.EventHub</AssemblyName>
 		<PackageTags>Microsoft Azure EventHubs Management;Event Hubs;Event Hubs management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 		Event Hubs:
-    1) added new boolean property SkipEmptyArchives to Skip Empty Archives
+    1) added NetworkRuleSet operations
 	  ]]>
 		</PackageReleaseNotes>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
