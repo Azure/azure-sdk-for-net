@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse<IPage<MigrationConfigProperties>>> ListWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates Migration configuration and starts migration of enties from
-        /// Standard to Premium namespace
+        /// Creates Migration configuration and starts migration of entities
+        /// from Standard to Premium namespace
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         Task<AzureOperationResponse<MigrationConfigProperties>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// This operation Completes Migration of entities by pointing the
-        /// connection strings to Premium namespace and any enties created
+        /// connection strings to Premium namespace and any entities created
         /// after the operation will be under Premium Namespace.
         /// CompleteMigration operation will fail when entity migration is
         /// in-progress.
@@ -173,8 +173,8 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </exception>
         Task<AzureOperationResponse> RevertWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates Migration configuration and starts migration of enties from
-        /// Standard to Premium namespace
+        /// Creates Migration configuration and starts migration of entities
+        /// from Standard to Premium namespace
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.

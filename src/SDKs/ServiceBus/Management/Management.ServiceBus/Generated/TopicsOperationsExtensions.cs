@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates an authorizatio rule for the specified topic.
+            /// Creates an authorization rule for the specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720678.aspx" />
             /// </summary>
             /// <param name='operations'>
@@ -295,7 +295,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -306,7 +306,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates an authorizatio rule for the specified topic.
+            /// Creates an authorization rule for the specified topic.
             /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt720678.aspx" />
             /// </summary>
             /// <param name='operations'>
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -355,7 +355,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static SBAuthorizationRule GetAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
             {
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static void DeleteAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
             {
@@ -433,7 +433,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -460,7 +460,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static AccessKeys ListKeys(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
             {
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// Parameters supplied to regenerate the authorization rule.

@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <param name="pendingReplicationOperationsCount">Number of entities
         /// pending to be replicated.</param>
         /// <param name="partnerNamespace">ARM Id of the Primary/Secondary
-        /// eventhub namespace name, which is part of GEO DR pairning</param>
+        /// eventhub namespace name, which is part of GEO DR pairing</param>
         /// <param name="alternateName">Primary/Secondary eventhub namespace
-        /// name, which is part of GEO DR pairning</param>
+        /// name, which is part of GEO DR pairing</param>
         /// <param name="role">role of namespace in GEO DR - possible values
         /// 'Primary' or 'PrimaryNotReplicating' or 'Secondary'. Possible
         /// values include: 'Primary', 'PrimaryNotReplicating',
@@ -83,14 +83,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
         /// <summary>
         /// Gets or sets ARM Id of the Primary/Secondary eventhub namespace
-        /// name, which is part of GEO DR pairning
+        /// name, which is part of GEO DR pairing
         /// </summary>
         [JsonProperty(PropertyName = "properties.partnerNamespace")]
         public string PartnerNamespace { get; set; }
 
         /// <summary>
         /// Gets or sets primary/Secondary eventhub namespace name, which is
-        /// part of GEO DR pairning
+        /// part of GEO DR pairing
         /// </summary>
         [JsonProperty(PropertyName = "properties.alternateName")]
         public string AlternateName { get; set; }

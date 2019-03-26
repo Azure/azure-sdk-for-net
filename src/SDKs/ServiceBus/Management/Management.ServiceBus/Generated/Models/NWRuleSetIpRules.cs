@@ -14,29 +14,28 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Linq;
 
     /// <summary>
-    /// Error response indicates ServiceBus service is not able to process the
-    /// incoming request. The reason is provided in the error message.
+    /// Description of NetWorkRuleSet - IpRules resource.
     /// </summary>
-    public partial class ErrorResponse
+    public partial class NWRuleSetIpRules
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the NWRuleSetIpRules class.
         /// </summary>
-        public ErrorResponse()
+        public NWRuleSetIpRules()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the NWRuleSetIpRules class.
         /// </summary>
-        /// <param name="code">Error code.</param>
-        /// <param name="message">Error message indicating why the operation
-        /// failed.</param>
-        public ErrorResponse(string code = default(string), string message = default(string))
+        /// <param name="ipMask">IP Mask</param>
+        /// <param name="action">The IP Filter Action. Possible values include:
+        /// 'Allow'</param>
+        public NWRuleSetIpRules(string ipMask = default(string), string action = default(string))
         {
-            Code = code;
-            Message = message;
+            IpMask = ipMask;
+            Action = action;
             CustomInit();
         }
 
@@ -46,16 +45,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets error code.
+        /// Gets or sets IP Mask
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
-        public string Code { get; set; }
+        [JsonProperty(PropertyName = "ipMask")]
+        public string IpMask { get; set; }
 
         /// <summary>
-        /// Gets or sets error message indicating why the operation failed.
+        /// Gets or sets the IP Filter Action. Possible values include: 'Allow'
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
-        public string Message { get; set; }
+        [JsonProperty(PropertyName = "action")]
+        public string Action { get; set; }
 
     }
 }
