@@ -87,6 +87,15 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
+      - powershell:  'Invoke-WebRequest -Uri "$(VerifyAgentOSBlobPath)" -OutFile "./verify_agent_os.py"'
+        displayName: 'Download VerifyAgentOS Script From Github Release'
+
+      - task: PythonScript@0
+        displayName: 'Run VerifyAgentOS script'
+        inputs:
+          scriptPath: './verify_agent_os.py'
+          arguments: $(OSName)
+
       - task: DotNetCoreInstaller@0
         displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
         inputs:
