@@ -284,6 +284,7 @@ namespace Azure.Base.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
             Assert.IsNotEmpty(request.CorrelationId);
+            Assert.True(Guid.TryParse(request.CorrelationId, out _));
             request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
 
             var response =  await ExecuteRequest(request, transport);
