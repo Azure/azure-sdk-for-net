@@ -88,7 +88,7 @@ jobs:
 
     steps:
       - powershell:  'Invoke-WebRequest -Uri "$(VerifyAgentOSBlobPath)" -OutFile "./verify_agent_os.py"'
-        displayName: 'Download VerifyAgentOS Script From Blob'
+        displayName: 'Download VerifyAgentOS Script From Github Release'
 
       - task: PythonScript@0
         displayName: 'Run VerifyAgentOS script'
