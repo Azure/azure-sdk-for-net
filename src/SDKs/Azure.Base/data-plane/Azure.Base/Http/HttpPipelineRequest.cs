@@ -29,7 +29,7 @@ namespace Azure.Base.Http
 
         public abstract IEnumerable<HttpHeader> Headers { get; }
 
-        public abstract string CorrelationId { get; }
+        public abstract string CorrelationId { get; set; }
 
         public abstract void Dispose();
     }

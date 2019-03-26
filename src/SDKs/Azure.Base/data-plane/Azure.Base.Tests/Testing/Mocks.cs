@@ -80,6 +80,8 @@ namespace Azure.Base.Testing
                 }
             }
 
+            public override string CorrelationId { get; set; }
+
             public override string ToString() => $"{Method} {Uri}";
 
             public override void Dispose()
@@ -104,6 +106,7 @@ namespace Azure.Base.Testing
             public override int Status => _status;
 
             public override Stream ResponseContentStream => throw new NotImplementedException();
+            public override string CorrelationId { get; set; }
 
             public void SetStatus(int status) => _status = status;
 

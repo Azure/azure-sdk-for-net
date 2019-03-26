@@ -8,7 +8,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
@@ -16,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Base.Tests
 {
-    public class HttpClientTransportTests
+    public class HttpClientTransportTests: PipelineTestBase
     {
         public static object[] ContentWithLength =>
             new object[]
@@ -277,47 +276,33 @@ namespace Azure.Base.Tests
             Assert.Null(httpMessageContent);
         }
 
-        private static async Task<HttpPipelineResponse> ExecuteRequest(HttpPipelineRequest request, HttpClientTransport transport)
-        {
-            using (var message = new HttpPipelineMessage(CancellationToken.None)
-            {
-                Request = request
-            })
-            {
-                await transport.ProcessAsync(message);
-                return message.Response;
-            }
-        }
-
         [Test]
         public async Task RequestAndResponseHasCorrelationId()
         {
+            var mockHandler = new MockHttpClientHandler(httpRequestMessage => { });
 
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var request = transport.CreateRequest(null);
+            Assert.IsNotEmpty(request.CorrelationId);
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
+
+            var response =  await ExecuteRequest(request, transport);
+            Assert.AreEqual(request.CorrelationId, response.CorrelationId);
         }
 
-        private class MockHttpClientHandler : HttpMessageHandler
+        [Test]
+        public async Task CorrelationIdCanBeOverriden()
         {
-            private readonly Func<HttpRequestMessage, Task<HttpResponseMessage>> _onSend;
+            var mockHandler = new MockHttpClientHandler(httpRequestMessage => { });
 
-            public MockHttpClientHandler(Action<HttpRequestMessage> onSend)
-            {
-                _onSend = req => {
-                    onSend(req);
-                    return Task.FromResult<HttpResponseMessage>(null);
-                };
-            }
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var request = transport.CreateRequest(null);
 
-            public MockHttpClientHandler(Func<HttpRequestMessage, Task<HttpResponseMessage>> onSend)
-            {
-                _onSend = onSend;
-            }
+            request.CorrelationId = "123";
+            request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
 
-            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
-            {
-                var response = await _onSend(request);
-
-                return response ?? new HttpResponseMessage((HttpStatusCode)200);
-            }
+            var response =  await ExecuteRequest(request, transport);
+            Assert.AreEqual(request.CorrelationId, response.CorrelationId);
         }
     }
 }

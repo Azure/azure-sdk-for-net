@@ -15,7 +15,7 @@ namespace Azure.Base.Http
 
         public abstract Stream ResponseContentStream { get; }
 
-        public abstract string CorrelationId { get; }
+        public abstract string CorrelationId { get; set; }
 
         public abstract IEnumerable<HttpHeader> Headers { get; }
 

@@ -97,6 +97,7 @@ namespace Azure.Base.Http.Pipeline
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
+                CorrelationId = Guid.NewGuid().ToString();
             }
 
             public override Uri Uri
@@ -121,8 +122,7 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
-            // TODO: faster lazy implementation
-            public override string CorrelationId { get; } = Guid.NewGuid().ToString();
+            public override string CorrelationId { get; set; }
 
             public override void AddHeader(HttpHeader header)
             {
@@ -255,8 +255,7 @@ namespace Azure.Base.Http.Pipeline
             public override Stream ResponseContentStream
                 => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 
-            public override string CorrelationId { get; private set; }
-
+            public override string CorrelationId { get; set; }
 
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
