@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// AAD object Id of the Azure Blueprints service principal in the tenant.
+    /// Response schema for querying the Azure Blueprints service principal in
+    /// the tenant.
     /// </summary>
     public partial class WhoIsBlueprintContract
     {
@@ -29,7 +30,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the WhoIsBlueprintContract class.
         /// </summary>
-        /// <param name="objectId">Identifier.</param>
+        /// <param name="objectId">AAD object Id of the Azure Blueprints
+        /// service principal in the tenant.</param>
         public WhoIsBlueprintContract(string objectId = default(string))
         {
             ObjectId = objectId;
@@ -42,7 +44,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets identifier.
+        /// Gets or sets AAD object Id of the Azure Blueprints service
+        /// principal in the tenant.
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
         public string ObjectId { get; set; }

@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.Blueprint
                 new Tuple<string, string, string>("Blueprint", "Blueprints", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Blueprint", "PublishedArtifacts", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Blueprint", "PublishedBlueprints", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Blueprint", "WhoIsBlueprint", "2018-11-01-preview"),
               }.AsEnumerable();
           }
       }

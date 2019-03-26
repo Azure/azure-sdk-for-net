@@ -160,6 +160,34 @@ namespace Microsoft.Azure.Management.Blueprint
             }
 
             /// <summary>
+            /// Get Blueprints service SPN objectId
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static WhoIsBlueprintContract WhoIsBlueprint(this IAssignmentsOperations operations)
+            {
+                return operations.WhoIsBlueprintAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Blueprints service SPN objectId
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WhoIsBlueprintContract> WhoIsBlueprintAsync(this IAssignmentsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.WhoIsBlueprintWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// List blueprint assignments within a subscription.
             /// </summary>
             /// <param name='operations'>

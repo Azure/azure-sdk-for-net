@@ -111,6 +111,22 @@ namespace Microsoft.Azure.Management.Blueprint
         /// </exception>
         Task<AzureOperationResponse<Assignment>> DeleteWithHttpMessagesAsync(string scope, string assignmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get Blueprints service SPN objectId
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        Task<AzureOperationResponse<WhoIsBlueprintContract>> WhoIsBlueprintWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// List blueprint assignments within a subscription.
         /// </summary>
         /// <param name='scope'>

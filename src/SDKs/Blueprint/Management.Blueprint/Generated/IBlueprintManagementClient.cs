@@ -14,10 +14,6 @@ namespace Microsoft.Azure.Management.Blueprint
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Threading.Tasks;
 
     /// <summary>
     /// Blueprint Client
@@ -97,17 +93,6 @@ namespace Microsoft.Azure.Management.Blueprint
         /// Gets the IAssignmentOperations.
         /// </summary>
         IAssignmentOperations AssignmentOperations { get; }
-
-        /// <summary>
-        /// Get Blueprints service SPN objectId
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<WhoIsBlueprintContract>> WhoIsBlueprintWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="mode">Lock mode. Possible values include: 'None',
         /// 'AllResourcesReadOnly', 'AllResourcesDoNotDelete'</param>
         /// <param name="excludedPrincipals">List of AAD principals excluded
-        /// from blueprint locks. Up to 5 principals permitted.</param>
+        /// from blueprint locks. Up to 5 principals are permitted.</param>
         public AssignmentLockSettings(string mode = default(string), IList<string> excludedPrincipals = default(IList<string>))
         {
             Mode = mode;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 
         /// <summary>
         /// Gets or sets list of AAD principals excluded from blueprint locks.
-        /// Up to 5 principals permitted.
+        /// Up to 5 principals are permitted.
         /// </summary>
         [JsonProperty(PropertyName = "excludedPrincipals")]
         public IList<string> ExcludedPrincipals { get; set; }
