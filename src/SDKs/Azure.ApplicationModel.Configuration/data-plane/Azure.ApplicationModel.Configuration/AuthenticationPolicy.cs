@@ -1,7 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
 
 using System;
 using System.IO;
@@ -60,6 +58,7 @@ namespace Azure.ApplicationModel.Configuration
                 message.Request.AddHeader("x-ms-content-sha256", contentHash);
                 message.Request.AddHeader("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
+
 
             await ProcessNextAsync(pipeline, message);
         }

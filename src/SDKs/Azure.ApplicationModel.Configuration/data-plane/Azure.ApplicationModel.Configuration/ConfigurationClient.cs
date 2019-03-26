@@ -52,7 +52,6 @@ namespace Azure.ApplicationModel.Configuration
             options.AddPerCallPolicy(new AuthenticationPolicy(credential, secret));
 
             _pipeline = options.Build(ComponentName, ComponentVersion);
-
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
@@ -160,7 +159,6 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     request.AddHeader(IfMatchName, "*");
                 }
-                
 
                 request.Content = HttpPipelineRequestContent.Create(content);
 
