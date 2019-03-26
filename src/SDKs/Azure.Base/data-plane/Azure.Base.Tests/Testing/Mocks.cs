@@ -72,9 +72,12 @@ namespace Azure.Base.Testing
                 return false;
             }
 
-            public override IEnumerable<HttpHeader> GetHeaders()
+            public override IEnumerable<HttpHeader> Headers
             {
-                yield break;
+                get
+                {
+                    yield break;
+                }
             }
 
             public override string ToString() => $"{Method} {Uri}";
@@ -112,9 +115,12 @@ namespace Azure.Base.Testing
                 return false;
             }
 
-            public override IEnumerable<HttpHeader> GetHeaders()
+            public override IEnumerable<HttpHeader> Headers
             {
-                yield break;
+                get
+                {
+                    yield break;
+                }
             }
 
             public override void Dispose()

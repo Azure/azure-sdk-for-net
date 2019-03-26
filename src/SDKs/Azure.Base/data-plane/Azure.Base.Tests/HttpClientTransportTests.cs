@@ -219,7 +219,7 @@ namespace Azure.Base.Tests
             CollectionAssert.AreEqual(new []
             {
                 new HttpHeader(headerName, headerValue),
-            }, request.GetHeaders());
+            }, request.Headers);
 
             await ExecuteRequest(request, transport);
 
@@ -258,7 +258,7 @@ namespace Azure.Base.Tests
             Assert.True(response.TryGetHeader(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
-            CollectionAssert.Contains(response.GetHeaders(), new HttpHeader(headerName, headerValue));
+            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]

@@ -142,7 +142,7 @@ namespace Azure.Base.Http.Pipeline
 
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
 
-            public override IEnumerable<HttpHeader> GetHeaders() => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
+            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
@@ -253,7 +253,7 @@ namespace Azure.Base.Http.Pipeline
 
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
-            public override IEnumerable<HttpHeader> GetHeaders() => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
+            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
 
             public override void Dispose()
             {

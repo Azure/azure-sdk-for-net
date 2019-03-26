@@ -27,7 +27,7 @@ namespace Azure.Base.Http
 
         public abstract bool TryGetHeader(string name, out string value);
 
-        public abstract IEnumerable<HttpHeader> GetHeaders();
+        public abstract IEnumerable<HttpHeader> Headers { get; }
 
         public abstract void Dispose();
     }

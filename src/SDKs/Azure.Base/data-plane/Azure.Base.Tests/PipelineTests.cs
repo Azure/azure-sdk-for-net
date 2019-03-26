@@ -61,9 +61,12 @@ namespace Azure.Base.Tests
                 return false;
             }
 
-            public override IEnumerable<HttpHeader> GetHeaders()
+            public override IEnumerable<HttpHeader> Headers
             {
-                yield break;
+                get
+                {
+                    yield break;
+                }
             }
 
             public override void Dispose()
