@@ -169,6 +169,37 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
+        [Fact]
+        public void GetServicePrincipalsIdByAppIdTest()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                Application application = null;
+                ServicePrincipal servicePrincipal = null;
+
+                try
+                {
+                    // Create a new application without credentials
+                    application = CreateApplication(context);
+                    servicePrincipal = CreateServicePrincipal(context, application.AppId);
+                    string objectId = GetServicePrincipalsIdByAppId(context, application);
+                    Assert.Equal(servicePrincipal.ObjectId, objectId);
+                }
+                finally
+                {
+                    if (servicePrincipal != null)
+                    {
+                        // Delete ServicePrincipal
+                        DeleteServicePrincipal(context, servicePrincipal.ObjectId);
+                    }
+                    if (application != null)
+                    {
+                        // Delete application
+                        DeleteApplication(context, application.ObjectId);
+                    }
+                }
+            }
+        }
 
         [Fact]
         public void CreateDeleteSpCredentialTest()
