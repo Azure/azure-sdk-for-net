@@ -1,7 +1,7 @@
-﻿// // Copyright (c) Microsoft Corporation. All rights reserved.
-// // Licensed under the MIT License.
-// // Copyright (c) Microsoft Corporation. All rights reserved.
-// // Licensed under the MIT License.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.IO;
@@ -26,24 +26,25 @@ namespace Azure.ApplicationModel.Configuration
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            //if (message.Request.Content)
-            //{
-
-            //}
-            string contentHash = null;
+            string contentHash;
 
             using (var alg = SHA256.Create())
             {
                 using (var memoryStream = new MemoryStream())
                 using (var contentHashStream = new CryptoStream(memoryStream, alg, CryptoStreamMode.Write))
                 {
-                    //message.Request.c
+                    if (message.Request.Content != null)
+                    {
+                        await message.Request.Content.WriteTo(contentHashStream, message.Cancellation);
+                    }
                 }
+
+                contentHash = Convert.ToBase64String(alg.Hash);
             }
 
             using (var hmac = new HMACSHA256(_secret))
             {
-                var uri = new Uri("http://example.com");
+                var uri = message.Request.Uri;
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 

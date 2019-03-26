@@ -2,13 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base;
 using Azure.Base.Http;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
