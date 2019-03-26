@@ -38,11 +38,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public CopySource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object))
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
+        public CopySource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object))
         {
             AdditionalProperties = additionalProperties;
             SourceRetryCount = sourceRetryCount;
             SourceRetryWait = sourceRetryWait;
+            MaxConcurrentConnections = maxConcurrentConnections;
             CustomInit();
         }
 
@@ -72,6 +76,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceRetryWait")]
         public object SourceRetryWait { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum concurrent connection count for the source
+        /// data store. Type: integer (or Expression with resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "maxConcurrentConnections")]
+        public object MaxConcurrentConnections { get; set; }
 
     }
 }

@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.Security
         /// Settings of different configurations in security center
         /// </summary>
         /// <param name='settingName'>
-        /// Name of setting. Possible values include: 'MCAS', 'WDATP'
+        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS',
+        /// 'WDATP'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -68,10 +69,12 @@ namespace Microsoft.Azure.Management.Security
         /// updating settings about different configurations in security center
         /// </summary>
         /// <param name='settingName'>
-        /// Name of setting. Possible values include: 'MCAS', 'WDATP'
+        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS',
+        /// 'WDATP'
         /// </param>
-        /// <param name='setting'>
-        /// Setting object
+        /// <param name='kind'>
+        /// the kind of the settings string (DataExportSetting). Possible
+        /// values include: 'DataExportSetting', 'AlertSuppressionSetting'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -88,7 +91,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Setting>> UpdateWithHttpMessagesAsync(string settingName, Setting setting, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Setting>> UpdateWithHttpMessagesAsync(string settingName, string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Settings about different configurations in security center
         /// </summary>

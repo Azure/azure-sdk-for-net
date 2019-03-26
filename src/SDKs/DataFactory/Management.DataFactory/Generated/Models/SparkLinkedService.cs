@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="serverType">The type of Spark server. Possible values
         /// include: 'SharkServer', 'SharkServer2', 'SparkThriftServer'</param>
         /// <param name="thriftTransportProtocol">The transport protocol to use

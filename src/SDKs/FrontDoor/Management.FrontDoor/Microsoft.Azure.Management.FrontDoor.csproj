@@ -7,10 +7,20 @@
 		<PackageId>Microsoft.Azure.Management.FrontDoor</PackageId>
 		<Description>Provides management capabilities for Front Door services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.FrontDoor</AssemblyName>
-		<Version>0.10.0-preview</Version>
-		<PackageTags>Microsoft Azure Front Door management;FrontDoor;Front Door management;</PackageTags>    
+		<Version>0.12.0-preview</Version>
+		<PackageTags>Microsoft Azure Front Door management;FrontDoor;Front Door management;</PackageTags>
 		<PackageReleaseNotes>
-			Taking dependency on 10.0.3 version of Newtonsoft nuget package.
+			<![CDATA[
+				Update FrontDoor Web Application Firewall API to version 2019-03-01-preview
+				- Include linked frontend endpoint resources with policy
+				- Add flag to disable custom rule
+				- Add redirect custom and managed rule action
+				- Add optional custom response body and status code for block actions
+				- Add regular expression (RegEx) match operator
+				- Add cookies match variable
+				- Add operations to get managed rule set definitions
+				- Allow managed rule set overrides by rule group and rule id
+			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

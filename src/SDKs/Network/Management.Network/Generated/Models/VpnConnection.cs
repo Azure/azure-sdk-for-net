@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="remoteVpnSite">Id of the connected vpn site.</param>
-        /// <param name="routingWeight">routing weight for vpn
+        /// <param name="routingWeight">Routing weight for vpn
         /// connection.</param>
         /// <param name="connectionStatus">The connection status. Possible
         /// values include: 'Unknown', 'Connecting', 'Connected',

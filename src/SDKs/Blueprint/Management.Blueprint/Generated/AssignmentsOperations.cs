@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Blueprint
         public BlueprintManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create or update a Blueprint assignment.
+        /// Create or update a blueprint assignment.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -59,10 +59,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='assignment'>
-        /// assignment object to save.
+        /// Blueprint assignment object to save.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// Get a Blueprint assignment.
+        /// Get a blueprint assignment.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -455,7 +455,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// Delete a Blueprint assignment.
+        /// Delete a blueprint assignment.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -463,7 +463,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='assignmentName'>
-        /// name of the assignment.
+        /// Name of the blueprint assignment.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// List Blueprint assignments within a subscription.
+        /// List blueprint assignments within a subscription.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -832,7 +832,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// List Blueprint assignments within a subscription.
+        /// List blueprint assignments within a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

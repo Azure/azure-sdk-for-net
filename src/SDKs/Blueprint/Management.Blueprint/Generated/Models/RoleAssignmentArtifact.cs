@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Blueprint artifact applies Azure role assignment.
+    /// Blueprint artifact that applies a Role assignment.
     /// </summary>
     [Newtonsoft.Json.JsonObject("roleAssignment")]
     [Rest.Serialization.JsonTransformation]
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="roleDefinitionId">Azure resource ID of the
         /// RoleDefinition.</param>
         /// <param name="principalIds">Array of user or group identities in
-        /// Azure Active Directory. The roleDefinition will apply to these
+        /// Azure Active Directory. The roleDefinition will apply to each
         /// identity.</param>
         /// <param name="id">String Id used to locate any resource on
         /// Azure.</param>
@@ -50,8 +50,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="dependsOn">Artifacts which need to be deployed before
         /// the specified artifact.</param>
         /// <param name="resourceGroup">RoleAssignment will be scope to this
-        /// resourceGroup, if left empty, it would scope to the
-        /// subscription.</param>
+        /// resourceGroup. If empty, it scopes to the subscription.</param>
         public RoleAssignmentArtifact(string roleDefinitionId, object principalIds, string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), IList<string> dependsOn = default(IList<string>), string resourceGroup = default(string))
             : base(id, type, name)
         {
@@ -96,14 +95,14 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 
         /// <summary>
         /// Gets or sets array of user or group identities in Azure Active
-        /// Directory. The roleDefinition will apply to these identity.
+        /// Directory. The roleDefinition will apply to each identity.
         /// </summary>
         [JsonProperty(PropertyName = "properties.principalIds")]
         public object PrincipalIds { get; set; }
 
         /// <summary>
-        /// Gets or sets roleAssignment will be scope to this resourceGroup, if
-        /// left empty, it would scope to the subscription.
+        /// Gets or sets roleAssignment will be scope to this resourceGroup. If
+        /// empty, it scopes to the subscription.
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroup")]
         public string ResourceGroup { get; set; }

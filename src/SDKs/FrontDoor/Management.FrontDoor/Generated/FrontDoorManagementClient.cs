@@ -114,6 +114,11 @@ namespace Microsoft.Azure.Management.FrontDoor
         public virtual IPoliciesOperations Policies { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedRuleSetsOperations.
+        /// </summary>
+        public virtual IManagedRuleSetsOperations ManagedRuleSets { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the FrontDoorManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -362,6 +367,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             FrontendEndpoints = new FrontendEndpointsOperations(this);
             Endpoints = new EndpointsOperations(this);
             Policies = new PoliciesOperations(this);
+            ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -392,8 +398,6 @@ namespace Microsoft.Azure.Management.FrontDoor
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ManagedRuleSet>("ruleSetType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ManagedRuleSet>("ruleSetType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

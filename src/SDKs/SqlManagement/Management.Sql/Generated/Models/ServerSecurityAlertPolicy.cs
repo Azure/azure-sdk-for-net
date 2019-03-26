@@ -35,7 +35,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// Initializes a new instance of the ServerSecurityAlertPolicy class.
         /// </summary>
         /// <param name="state">Specifies the state of the policy, whether it
-        /// is enabled or disabled. Possible values include: 'New', 'Enabled',
+        /// is enabled or disabled or a policy has not been applied yet on the
+        /// specific database. Possible values include: 'New', 'Enabled',
         /// 'Disabled'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -78,7 +79,8 @@ namespace Microsoft.Azure.Management.Sql.Models
 
         /// <summary>
         /// Gets or sets specifies the state of the policy, whether it is
-        /// enabled or disabled. Possible values include: 'New', 'Enabled',
+        /// enabled or disabled or a policy has not been applied yet on the
+        /// specific database. Possible values include: 'New', 'Enabled',
         /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]

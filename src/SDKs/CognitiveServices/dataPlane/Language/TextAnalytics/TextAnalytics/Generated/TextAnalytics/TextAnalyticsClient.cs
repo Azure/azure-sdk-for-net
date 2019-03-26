@@ -186,7 +186,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/text/analytics/v2.1-preview";
+            BaseUri = "{Endpoint}/text/analytics/v2.1";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -215,179 +215,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             CustomInitialize();
         }
         /// <summary>
-        /// The API returns a list of strings denoting the key talking points in the
-        /// input text.
-        /// </summary>
-        /// <remarks>
-        /// See the &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
-        /// Analytics Documentation&lt;/a&gt; for details about the languages that are
-        /// supported by key phrase extraction.
-        /// </remarks>
-        /// <param name='input'>
-        /// Collection of documents to analyze. Documents can now contain a language
-        /// field to indicate the text language
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<KeyPhraseBatchResult>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (input == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "input");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("input", input);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "KeyPhrases", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "keyPhrases";
-            _url = _url.Replace("{Endpoint}", Endpoint);
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(input != null)
-            {
-                _requestContent = SafeJsonConvert.SerializeObject(input, SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<KeyPhraseBatchResult>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<KeyPhraseBatchResult>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
         /// The API returns the detected language and a numeric score between 0 and 1.
         /// </summary>
         /// <remarks>
         /// Scores close to 1 indicate 100% certainty that the identified language is
         /// true. A total of 120 languages are supported.
         /// </remarks>
-        /// <param name='input'>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document level
+        /// statistics.
+        /// </param>
+        /// <param name='languageBatchInput'>
         /// Collection of documents to analyze.
         /// </param>
         /// <param name='customHeaders'>
@@ -411,15 +249,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LanguageBatchResult>> DetectLanguageWithHttpMessagesAsync(BatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LanguageBatchResult>> DetectLanguageWithHttpMessagesAsync(bool? showStats = default(bool?), LanguageBatchInput languageBatchInput = default(LanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (input == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "input");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -428,7 +262,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("input", input);
+                tracingParameters.Add("showStats", showStats);
+                tracingParameters.Add("languageBatchInput", languageBatchInput);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DetectLanguage", tracingParameters);
             }
@@ -436,6 +271,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "languages";
             _url = _url.Replace("{Endpoint}", Endpoint);
+            List<string> _queryParameters = new List<string>();
+            if (showStats != null)
+            {
+                _queryParameters.Add(string.Format("showStats={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(showStats, SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -458,9 +302,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
 
             // Serialize Request
             string _requestContent = null;
-            if(input != null)
+            if(languageBatchInput != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(input, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(languageBatchInput, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -543,17 +387,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         }
 
         /// <summary>
-        /// The API returns a numeric score between 0 and 1.
+        /// The API returns a list of recognized entities in a given document.
         /// </summary>
         /// <remarks>
-        /// Scores close to 1 indicate positive sentiment, while scores close to 0
-        /// indicate negative sentiment. A score of 0.5 indicates the lack of sentiment
-        /// (e.g. a factoid statement). See the &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
-        /// Analytics Documentation&lt;/a&gt; for details about the languages that are
-        /// supported by sentiment analysis.
+        /// To get even more information on each recognized entity we recommend using
+        /// the Bing Entity Search API by querying for the recognized entities names.
+        /// See the &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
+        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
+        /// languages.
         /// </remarks>
-        /// <param name='input'>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document level
+        /// statistics.
+        /// </param>
+        /// <param name='multiLanguageBatchInput'>
         /// Collection of documents to analyze.
         /// </param>
         /// <param name='customHeaders'>
@@ -577,15 +425,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<SentimentBatchResult>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<EntitiesBatchResult>> EntitiesWithHttpMessagesAsync(bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (input == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "input");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -594,14 +438,24 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("input", input);
+                tracingParameters.Add("showStats", showStats);
+                tracingParameters.Add("multiLanguageBatchInput", multiLanguageBatchInput);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Sentiment", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Entities", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "sentiment";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "entities";
             _url = _url.Replace("{Endpoint}", Endpoint);
+            List<string> _queryParameters = new List<string>();
+            if (showStats != null)
+            {
+                _queryParameters.Add(string.Format("showStats={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(showStats, SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -624,9 +478,361 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
 
             // Serialize Request
             string _requestContent = null;
-            if(input != null)
+            if(multiLanguageBatchInput != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(input, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(multiLanguageBatchInput, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<EntitiesBatchResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<EntitiesBatchResult>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// The API returns a list of strings denoting the key talking points in the
+        /// input text.
+        /// </summary>
+        /// <remarks>
+        /// See the &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
+        /// Analytics Documentation&lt;/a&gt; for details about the languages that are
+        /// supported by key phrase extraction.
+        /// </remarks>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document level
+        /// statistics.
+        /// </param>
+        /// <param name='multiLanguageBatchInput'>
+        /// Collection of documents to analyze. Documents can now contain a language
+        /// field to indicate the text language
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<KeyPhraseBatchResult>> KeyPhrasesWithHttpMessagesAsync(bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("showStats", showStats);
+                tracingParameters.Add("multiLanguageBatchInput", multiLanguageBatchInput);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "KeyPhrases", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "keyPhrases";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            List<string> _queryParameters = new List<string>();
+            if (showStats != null)
+            {
+                _queryParameters.Add(string.Format("showStats={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(showStats, SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(multiLanguageBatchInput != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(multiLanguageBatchInput, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<KeyPhraseBatchResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<KeyPhraseBatchResult>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// The API returns a numeric score between 0 and 1.
+        /// </summary>
+        /// <remarks>
+        /// Scores close to 1 indicate positive sentiment, while scores close to 0
+        /// indicate negative sentiment. A score of 0.5 indicates the lack of sentiment
+        /// (e.g. a factoid statement). See the &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/overview#supported-languages"&gt;Text
+        /// Analytics Documentation&lt;/a&gt; for details about the languages that are
+        /// supported by sentiment analysis.
+        /// </remarks>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document level
+        /// statistics.
+        /// </param>
+        /// <param name='multiLanguageBatchInput'>
+        /// Collection of documents to analyze.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<SentimentBatchResult>> SentimentWithHttpMessagesAsync(bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("showStats", showStats);
+                tracingParameters.Add("multiLanguageBatchInput", multiLanguageBatchInput);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Sentiment", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "sentiment";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            List<string> _queryParameters = new List<string>();
+            if (showStats != null)
+            {
+                _queryParameters.Add(string.Format("showStats={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(showStats, SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(multiLanguageBatchInput != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(multiLanguageBatchInput, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -690,185 +896,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<SentimentBatchResult>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// The API returns a list of recognized entities in a given document.
-        /// </summary>
-        /// <remarks>
-        /// The API returns a list of recognized entities in a given document. To get
-        /// even more information on each recognized entity we recommend using the Bing
-        /// Entity Search API by querying for the recognized entities names. See the
-        /// &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
-        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
-        /// languages.The API returns a list of known entities and general named
-        /// entities ("Person", "Location", "Organization" etc) in a given document.
-        /// Known entities are returned with Wikipedia Id and Wikipedia link, and also
-        /// Bing Id which can be used in Bing Entity Search API. General named entities
-        /// are returned with entity types. If a general named entity is also a known
-        /// entity, then all information regarding it (Wikipedia Id, Bing Id, entity
-        /// type etc) will be returned. See the &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-entity-linking#supported-types-for-named-entity-recognition"&gt;Supported
-        /// Entity Types in Text Analytics API&lt;/a&gt; for the list of supported
-        /// Entity Types. See the &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
-        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
-        /// languages.
-        /// </remarks>
-        /// <param name='input'>
-        /// Collection of documents to analyze.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<EntitiesBatchResultV2dot1>> EntitiesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (input == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "input");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("input", input);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Entities", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "entities";
-            _url = _url.Replace("{Endpoint}", Endpoint);
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            if(input != null)
-            {
-                _requestContent = SafeJsonConvert.SerializeObject(input, SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            }
-            // Set Credentials
-            if (Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<EntitiesBatchResultV2dot1>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<EntitiesBatchResultV2dot1>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

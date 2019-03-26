@@ -31,8 +31,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Initializes a new instance of the EntitiesSuggestionExample class.
         /// </summary>
-        /// <param name="text">The utterance. E.g.: what's the weather like in
-        /// seattle?</param>
+        /// <param name="text">The utterance. For example, "What's the weather
+        /// like in seattle?"</param>
         /// <param name="tokenizedText">The utterance tokenized.</param>
         /// <param name="intentPredictions">Predicted/suggested
         /// intents.</param>
@@ -53,8 +53,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the utterance. E.g.: what's the weather like in
-        /// seattle?
+        /// Gets or sets the utterance. For example, "What's the weather like
+        /// in seattle?"
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }

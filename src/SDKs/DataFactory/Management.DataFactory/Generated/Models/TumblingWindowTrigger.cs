@@ -55,6 +55,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="runtimeState">Indicates if trigger is running or not.
         /// Updated when Start/Stop APIs are called on the Trigger. Possible
         /// values include: 'Started', 'Stopped', 'Disabled'</param>
+        /// <param name="annotations">List of tags that can be used for
+        /// describing the trigger.</param>
         /// <param name="endTime">The end time for the time period for the
         /// trigger during which events are fired for windows that are ready.
         /// Only UTC time is currently supported.</param>
@@ -67,8 +69,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// failed pipeline runs.</param>
         /// <param name="dependsOn">Triggers that this trigger depends on. Only
         /// tumbling window triggers are supported.</param>
-        public TumblingWindowTrigger(TriggerPipelineReference pipeline, string frequency, int interval, System.DateTime startTime, int maxConcurrency, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), RetryPolicy retryPolicy = default(RetryPolicy), IList<DependencyReference> dependsOn = default(IList<DependencyReference>))
-            : base(additionalProperties, description, runtimeState)
+        public TumblingWindowTrigger(TriggerPipelineReference pipeline, string frequency, int interval, System.DateTime startTime, int maxConcurrency, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), string runtimeState = default(string), IList<object> annotations = default(IList<object>), System.DateTime? endTime = default(System.DateTime?), object delay = default(object), RetryPolicy retryPolicy = default(RetryPolicy), IList<DependencyReference> dependsOn = default(IList<DependencyReference>))
+            : base(additionalProperties, description, runtimeState, annotations)
         {
             Pipeline = pipeline;
             Frequency = frequency;

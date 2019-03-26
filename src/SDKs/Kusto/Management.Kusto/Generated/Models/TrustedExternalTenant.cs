@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Represents a tenant ID that is trusted by the cluster.
+    /// </summary>
     public partial class TrustedExternalTenant
     {
         /// <summary>

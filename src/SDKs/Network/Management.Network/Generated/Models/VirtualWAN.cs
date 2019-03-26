@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="office365LocalBreakoutCategory">The office local
         /// breakout category. Possible values include: 'Optimize',
         /// 'OptimizeAndAllow', 'All', 'None'</param>
-        /// <param name="p2SVpnServerConfigurations">list of all
+        /// <param name="p2SVpnServerConfigurations">List of all
         /// P2SVpnServerConfigurations associated with the virtual wan.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',

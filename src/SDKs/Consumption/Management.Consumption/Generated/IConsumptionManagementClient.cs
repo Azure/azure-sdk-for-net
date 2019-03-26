@@ -43,57 +43,28 @@ namespace Microsoft.Azure.Management.Consumption
 
         /// <summary>
         /// Version of the API to be used with the client request. The current
-        /// version is 2018-01-31.
+        /// version is 2018-11-01-preview.
         /// </summary>
         string ApiVersion { get; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
-        /// <summary>
-        /// Gets the IUsageDetailsOperations.
-        /// </summary>
-        IUsageDetailsOperations UsageDetails { get; }
-
-        /// <summary>
-        /// Gets the IMarketplacesOperations.
-        /// </summary>
-        IMarketplacesOperations Marketplaces { get; }
-
-        /// <summary>
-        /// Gets the IReservationsSummariesOperations.
-        /// </summary>
-        IReservationsSummariesOperations ReservationsSummaries { get; }
-
-        /// <summary>
-        /// Gets the IReservationsDetailsOperations.
-        /// </summary>
-        IReservationsDetailsOperations ReservationsDetails { get; }
-
-        /// <summary>
-        /// Gets the IBudgetsOperations.
-        /// </summary>
-        IBudgetsOperations Budgets { get; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -101,9 +72,44 @@ namespace Microsoft.Azure.Management.Consumption
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IPriceSheetOperations.
+        /// Gets the ICreditSummaryByBillingProfileOperations.
         /// </summary>
-        IPriceSheetOperations PriceSheet { get; }
+        ICreditSummaryByBillingProfileOperations CreditSummaryByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the IEventsByBillingProfileOperations.
+        /// </summary>
+        IEventsByBillingProfileOperations EventsByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the ILotsByBillingProfileOperations.
+        /// </summary>
+        ILotsByBillingProfileOperations LotsByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the IInvoicePricesheetOperations.
+        /// </summary>
+        IInvoicePricesheetOperations InvoicePricesheet { get; }
+
+        /// <summary>
+        /// Gets the IBillingProfilePricesheetOperations.
+        /// </summary>
+        IBillingProfilePricesheetOperations BillingProfilePricesheet { get; }
+
+        /// <summary>
+        /// Gets the IChargesByBillingAccountOperations.
+        /// </summary>
+        IChargesByBillingAccountOperations ChargesByBillingAccount { get; }
+
+        /// <summary>
+        /// Gets the IChargesByBillingProfileOperations.
+        /// </summary>
+        IChargesByBillingProfileOperations ChargesByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the IChargesByInvoiceSectionOperations.
+        /// </summary>
+        IChargesByInvoiceSectionOperations ChargesByInvoiceSection { get; }
 
     }
 }

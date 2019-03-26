@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// A class that contains database statistics information.
+    /// </summary>
     public partial class DatabaseStatistics
     {
         /// <summary>

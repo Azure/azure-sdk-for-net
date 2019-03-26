@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Blueprint
         public BlueprintManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Create or update Blueprint artifact.
+        /// Create or update blueprint artifact.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -59,13 +59,13 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='artifactName'>
-        /// name of the artifact.
+        /// Name of the blueprint artifact.
         /// </param>
         /// <param name='artifact'>
-        /// Blueprint artifact to save.
+        /// Blueprint artifact to create or update.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// Get a Blueprint artifact.
+        /// Get a blueprint artifact.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -275,10 +275,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='artifactName'>
-        /// name of the artifact.
+        /// Name of the blueprint artifact.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -469,7 +469,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// Delete a Blueprint artifact.
+        /// Delete a blueprint artifact.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -477,10 +477,10 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='artifactName'>
-        /// name of the artifact.
+        /// Name of the blueprint artifact.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// List artifacts for a given Blueprint.
+        /// List artifacts for a given blueprint definition.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
@@ -679,7 +679,7 @@ namespace Microsoft.Azure.Management.Blueprint
         /// subscription (format: '/subscriptions/{subscriptionId}').
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -864,7 +864,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// List artifacts for a given Blueprint.
+        /// List artifacts for a given blueprint definition.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

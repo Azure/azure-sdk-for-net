@@ -30,18 +30,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the VmwareCbtPolicyDetails class.
         /// </summary>
-        /// <param name="recoveryPointThresholdInMinutes">The recovery point
-        /// threshold in minutes.</param>
-        /// <param name="recoveryPointHistory">The duration in minutes until
-        /// which the recovery points need to be stored.</param>
+        /// <param name="recoveryPointHistoryInMinutes">The duration in minutes
+        /// until which the recovery points need to be stored.</param>
         /// <param name="appConsistentFrequencyInMinutes">The app consistent
         /// snapshot frequency in minutes.</param>
         /// <param name="crashConsistentFrequencyInMinutes">The crash
         /// consistent snapshot frequency in minutes.</param>
-        public VmwareCbtPolicyDetails(int? recoveryPointThresholdInMinutes = default(int?), int? recoveryPointHistory = default(int?), int? appConsistentFrequencyInMinutes = default(int?), int? crashConsistentFrequencyInMinutes = default(int?))
+        public VmwareCbtPolicyDetails(int? recoveryPointHistoryInMinutes = default(int?), int? appConsistentFrequencyInMinutes = default(int?), int? crashConsistentFrequencyInMinutes = default(int?))
         {
-            RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutes;
-            RecoveryPointHistory = recoveryPointHistory;
+            RecoveryPointHistoryInMinutes = recoveryPointHistoryInMinutes;
             AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutes;
             CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutes;
             CustomInit();
@@ -53,17 +50,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the recovery point threshold in minutes.
-        /// </summary>
-        [JsonProperty(PropertyName = "recoveryPointThresholdInMinutes")]
-        public int? RecoveryPointThresholdInMinutes { get; set; }
-
-        /// <summary>
         /// Gets or sets the duration in minutes until which the recovery
         /// points need to be stored.
         /// </summary>
-        [JsonProperty(PropertyName = "recoveryPointHistory")]
-        public int? RecoveryPointHistory { get; set; }
+        [JsonProperty(PropertyName = "recoveryPointHistoryInMinutes")]
+        public int? RecoveryPointHistoryInMinutes { get; set; }
 
         /// <summary>
         /// Gets or sets the app consistent snapshot frequency in minutes.

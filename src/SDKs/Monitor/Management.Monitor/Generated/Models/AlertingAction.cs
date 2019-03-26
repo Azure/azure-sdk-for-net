@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// Specifiy action need to be taken when rule type is Alert
+    /// Specify action need to be taken when rule type is Alert
     /// </summary>
     [Newtonsoft.Json.JsonObject("Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.Microsoft.AppInsights.Nexus.DataContracts.Resources.ScheduledQueryRules.AlertingAction")]
     public partial class AlertingAction : Action
@@ -33,12 +33,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="severity">Severity of the alert. Possible values
         /// include: '0', '1', '2', '3', '4'</param>
-        /// <param name="aznsAction">Azure action group reference.</param>
         /// <param name="trigger">The trigger condition that results in the
         /// alert rule being.</param>
+        /// <param name="aznsAction">Azure action group reference.</param>
         /// <param name="throttlingInMin">time (in minutes) for which Alerts
         /// should be throttled or suppressed.</param>
-        public AlertingAction(string severity, AzNsActionGroup aznsAction, TriggerCondition trigger, int? throttlingInMin = default(int?))
+        public AlertingAction(string severity, TriggerCondition trigger, AzNsActionGroup aznsAction = default(AzNsActionGroup), int? throttlingInMin = default(int?))
         {
             Severity = severity;
             AznsAction = aznsAction;
@@ -90,10 +90,6 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (Severity == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Severity");
-            }
-            if (AznsAction == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AznsAction");
             }
             if (Trigger == null)
             {

@@ -28,7 +28,7 @@ namespace EdgeGateway.Tests
         public void Test_SACManagement()
         {
             //Create storage account credential
-            AsymmetricEncryptedSecret encryptedSecret = Client.Devices.GetAsymmetricEncryptedSecret(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "EyIbt0QelBmm4ggkWsvQGaGaijYv/JBXIRl5ZR7pwgCJCkLYQmKY+H5RV4COGhbi01dBRIC1dNSF1sbJoeAL1Q==", TestConstants.GatewayActivationKey);
+            AsymmetricEncryptedSecret encryptedSecret = Client.Devices.GetAsymmetricEncryptedSecretUsingActivationKey(TestConstants.GatewayResourceName, TestConstants.DefaultResourceGroupName, "EyIbt0QelBmm4ggkWsvQGaGaijYv/JBXIRl5ZR7pwgCJCkLYQmKY+H5RV4COGhbi01dBRIC1dNSF1sbJoeAL1Q==", TestConstants.GatewayActivationKey);
             StorageAccountCredential sac1 = TestUtilities.GetSACObject(encryptedSecret, "sac1");
             Client.StorageAccountCredentials.CreateOrUpdate(TestConstants.GatewayResourceName, "sac1", sac1, TestConstants.DefaultResourceGroupName);
 

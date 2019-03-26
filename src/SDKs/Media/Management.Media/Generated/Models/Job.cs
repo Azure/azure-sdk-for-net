@@ -54,9 +54,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// processed. Higher priority jobs are processed before lower priority
         /// jobs. If not set, the default is normal. Possible values include:
         /// 'Low', 'Normal', 'High'</param>
-        /// <param name="correlationData">Customer provided correlation data
+        /// <param name="correlationData">Customer provided key, value pairs
         /// that will be returned in Job and JobOutput state events.</param>
-        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), JobState state = default(JobState), string description = default(string), System.DateTime lastModified = default(System.DateTime), Priority? priority = default(Priority?), IDictionary<string, string> correlationData = default(IDictionary<string, string>))
+        public Job(JobInput input, IList<JobOutput> outputs, string id = default(string), string name = default(string), string type = default(string), System.DateTime created = default(System.DateTime), string state = default(string), string description = default(string), System.DateTime lastModified = default(System.DateTime), string priority = default(string), IDictionary<string, string> correlationData = default(IDictionary<string, string>))
             : base(id, name, type)
         {
             Created = created;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Queued', 'Scheduled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
-        public JobState State { get; private set; }
+        public string State { get; private set; }
 
         /// <summary>
         /// Gets or sets optional customer supplied description of the Job.
@@ -122,10 +122,10 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Normal', 'High'
         /// </summary>
         [JsonProperty(PropertyName = "properties.priority")]
-        public Priority? Priority { get; set; }
+        public string Priority { get; set; }
 
         /// <summary>
-        /// Gets or sets customer provided correlation data that will be
+        /// Gets or sets customer provided key, value pairs that will be
         /// returned in Job and JobOutput state events.
         /// </summary>
         [JsonProperty(PropertyName = "properties.correlationData")]

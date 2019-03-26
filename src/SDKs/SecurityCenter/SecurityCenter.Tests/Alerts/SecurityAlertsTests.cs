@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System.Net;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Security;
 using Microsoft.Azure.Management.Security.Models;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -52,77 +54,132 @@ namespace SecurityCenter.Tests
         }
 
         [Fact]
-        public void SecurityAlerts_GetResourceGroupLevelAlerts()
+        public async Task SecurityAlerts_GetResourceGroupLevelAlerts()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var alert = securityCenterClient.Alerts.GetResourceGroupLevelAlerts("2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF", "RSG");
+
+                var alerts = await securityCenterClient.Alerts.ListAsync();
+                var enumerator = alerts.GetEnumerator();
+                enumerator.MoveNext();
+
+                while (!enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
+
+                Assert.NotNull(enumerator.Current);
+
+                var alert = securityCenterClient.Alerts.GetResourceGroupLevelAlerts(enumerator.Current.Name, Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
                 ValidateAlert(alert);
             }
         }
 
         [Fact]
-        public void SecurityAlerts_GetSubscriptionLevelAlert()
+        public async Task SecurityAlerts_GetSubscriptionLevelAlert()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var alert = securityCenterClient.Alerts.GetSubscriptionLevelAlert("2518710774894070750_EEE23C70-80EF-4A8B-9122-507B0EA8DFFF");
+
+                var alerts = await securityCenterClient.Alerts.ListAsync();
+                var enumerator = alerts.GetEnumerator();
+                enumerator.MoveNext();
+
+                while (enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
+
+                Assert.NotNull(enumerator.Current);
+
+                var alert = securityCenterClient.Alerts.GetSubscriptionLevelAlert(enumerator.Current.Name);
                 ValidateAlert(alert);
             }
         }
 
         [Fact]
-        public void SecurityAlerts_ListByResourceGroup()
+        public async Task SecurityAlerts_ListByResourceGroup()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var alerts = securityCenterClient.Alerts.ListByResourceGroup("RSG");
-                ValidateAlerts(alerts);
+                var alerts = await securityCenterClient.Alerts.ListAsync();
+                var enumerator = alerts.GetEnumerator();
+                enumerator.MoveNext();
+
+                while (!enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
+
+                var rgAlerts = securityCenterClient.Alerts.ListByResourceGroup(Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
+                ValidateAlerts(rgAlerts);
             }
         }
 
         [Fact]
-        public void SecurityAlerts_ListResourceGroupLevelAlertsByRegion()
+        public async Task SecurityAlerts_ListResourceGroupLevelAlertsByRegion()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var alerts = securityCenterClient.Alerts.ListResourceGroupLevelAlertsByRegion("RSG");
-                ValidateAlerts(alerts);
+                var alerts = await securityCenterClient.Alerts.ListAsync();
+                var enumerator = alerts.GetEnumerator();
+                enumerator.MoveNext();
+
+                while (!enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
+
+                securityCenterClient.AscLocation = Regex.Match(enumerator.Current.Id, @"(?<=locations/)[^/]+?(?=/)").Value;
+                var rgAlerts = securityCenterClient.Alerts.ListResourceGroupLevelAlertsByRegion(Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
+                ValidateAlerts(rgAlerts);
             }
         }
 
         [Fact]
-        public void SecurityAlerts_ListSubscriptionLevelAlertsByRegion()
+        public async Task SecurityAlerts_ListSubscriptionLevelAlertsByRegion()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                var alerts = securityCenterClient.Alerts.ListSubscriptionLevelAlertsByRegion();
-                ValidateAlerts(alerts);
+                var alerts = await securityCenterClient.Alerts.ListAsync();
+                var enumerator = alerts.GetEnumerator();
+                enumerator.MoveNext();
+
+                while (enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
+
+                securityCenterClient.AscLocation = Regex.Match(enumerator.Current.Id, @"(?<=locations/)[^/]+?(?=/)").Value;
+
+                var regionAlerts = securityCenterClient.Alerts.ListSubscriptionLevelAlertsByRegion();
+                ValidateAlerts(regionAlerts);
             }
         }
 
         [Fact]
-        public void SecurityAlerts_UpdateResourceGroupLevelAlertState()
+        public async Task SecurityAlerts_UpdateResourceGroupLevelAlertState()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.Alerts.UpdateResourceGroupLevelAlertState("2518710774294070750_FFF23C70-80EF-4A8B-9122-507B0EA8DFFF", "Dismiss", "RSG");
+                var alerts = await securityCenterClient.Alerts.ListAsync();
+                var enumerator = alerts.GetEnumerator();
+                enumerator.MoveNext();
+
+                while (!enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
+
+                securityCenterClient.AscLocation = Regex.Match(enumerator.Current.Id, @"(?<=locations/)[^/]+?(?=/)").Value;
+
+                securityCenterClient.Alerts.UpdateResourceGroupLevelAlertState(enumerator.Current.Name, "Dismiss", Regex.Match(enumerator.Current.Id, @"(?<=resourceGroups/)[^/]+?(?=/)").Value);
             }
         }
 
         [Fact]
-        public void SecurityAlerts_UpdateSubscriptionLevelAlertState()
+        public async Task SecurityAlerts_UpdateSubscriptionLevelAlertState()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 var securityCenterClient = GetSecurityCenterClient(context);
-                securityCenterClient.Alerts.UpdateSubscriptionLevelAlertState("2518710774894070750_EEE23C70-80EF-4A8B-9122-507B0EA8DFFF", "Dismiss");
+                var alerts = await securityCenterClient.Alerts.ListAsync();
+                var enumerator = alerts.GetEnumerator();
+                enumerator.MoveNext();
+
+                while (enumerator.Current.Id.Contains("resourceGroups") && enumerator.MoveNext()) ;
+
+                securityCenterClient.AscLocation = Regex.Match(enumerator.Current.Id, @"(?<=locations/)[^/]+?(?=/)").Value;
+
+                securityCenterClient.Alerts.UpdateSubscriptionLevelAlertState(enumerator.Current.Name, "Dismiss");
             }
         }
 

@@ -33,6 +33,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
+            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
@@ -42,9 +52,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<EnqueueTrainingResponse> TrainVersionAsync(this ITrain operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EnqueueTrainingResponse> TrainVersionAsync(this ITrain operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TrainVersionWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TrainVersionWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -60,6 +70,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='azureRegion'>
+            /// Supported Azure regions for Cognitive Services endpoints. Possible values
+            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+            /// </param>
+            /// <param name='azureCloud'>
+            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+            /// include: 'com', 'us'
+            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
@@ -69,9 +89,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelTrainingInfo>> GetStatusAsync(this ITrain operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ModelTrainingInfo>> GetStatusAsync(this ITrain operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetStatusWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetStatusWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
