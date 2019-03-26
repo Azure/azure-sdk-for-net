@@ -19,23 +19,28 @@ namespace Azure.ApplicationModel.Configuration.Samples
         [Test]
         public async Task ConfiguringPipeline()
         {
+            var options = new ConfigurationClientOptions();
+
             // custon HttpClient
-            var transport = new HttpClientTransport(s_client);
+            options.ReplaceTransport(new HttpClientTransport(s_client));
 
             // custom retry policy
-            var retry = RetryPolicy.CreateFixed(
+            options.ReplaceRetryPolicy(new FixedRetryPolicy(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
                 retriableCodes: new int[] {
                     500, // Internal Server Error 
                     504  // Gateway Timeout
                 }
-            );
+            ));
+
+            options.AddPolicy(new AddIdHeader());
+            options.AddPolicy(new ConsoleLog());
 
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
 
             // pass the policy options to the client
-            var client = new ConfigurationClient(connectionString, transport, retry, new AddIdHeader(), new ConsoleLog());
+            var client = new ConfigurationClient(connectionString, options);
 
             await client.SetAsync(new ConfigurationSetting("some_key", "some_value"));
             await client.DeleteAsync("some_key");

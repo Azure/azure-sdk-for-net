@@ -16,19 +16,23 @@ namespace Azure.ApplicationModel.Configuration.Samples
         [Test]
         public async Task ConfiguringRetries()
         {
-            var retry = RetryPolicy.CreateFixed(
-                maxRetries: 10,
-                delay: TimeSpan.FromSeconds(1),
-                retriableCodes: new int[] {
-                    500, // Internal Server Error 
-                    504  // Gateway Timeout
-                }
+            var options = new ConfigurationClientOptions();
+
+            options.ReplaceRetryPolicy(
+                new FixedRetryPolicy(
+                    maxRetries: 10,
+                    delay: TimeSpan.FromSeconds(1),
+                    retriableCodes: new int[] {
+                        500, // Internal Server Error 
+                        504  // Gateway Timeout
+                    }
+                )
             );
 
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
 
             // pass the policy options to the client
-            var client = new ConfigurationClient(connectionString, retry);
+            var client = new ConfigurationClient(connectionString, options);
 
             await client.SetAsync(new ConfigurationSetting("some_key", "some_value"));
             await client.DeleteAsync("some_key");

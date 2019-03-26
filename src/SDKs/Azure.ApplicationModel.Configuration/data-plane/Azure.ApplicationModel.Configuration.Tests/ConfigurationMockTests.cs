@@ -35,12 +35,15 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            var testPool = new TestPool<byte>();
-            var pool = HttpPipelineOption.CreateService(testPool, typeof(ArrayPool<byte>));
+            var pool = new TestPool<byte>();
 
-            var service = new ConfigurationClient(connectionString, transport, pool);
+            var options = new ConfigurationClientOptions();
+            options.ReplaceTransport(transport);
+            options.AddService(pool, typeof(ArrayPool<byte>));
+            
+            var service = new ConfigurationClient(connectionString, options);
 
-            return (service, testPool);
+            return (service, pool);
         }
 
         private static bool TagsEqual(IDictionary<string, string> expected, IDictionary<string, string> actual)
@@ -70,8 +73,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task Raw()
         {
-            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            var service = new ConfigurationClient(connectionString, transport);
+            var options = new ConfigurationClientOptions();
+            options.ReplaceTransport(new GetMockTransport(s_testSetting.Key, default, s_testSetting));
+
+            var service = new ConfigurationClient(connectionString, options);
 
             HttpPipeline pipeline = service.Pipeline;
             using (var message = pipeline.CreateMessage(default)) {
@@ -225,11 +230,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             TelemetryPolicy.ApplicationId = "test_application";
 
-            var pool = HttpPipelineOption.CreateService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
-            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            var retry = RetryPolicy.CreateFixed(5, TimeSpan.FromMilliseconds(100), 404);
+            var options = new ConfigurationClientOptions();
+            options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
+            options.ReplaceTransport(new GetMockTransport(s_testSetting.Key, default, s_testSetting));
+            options.ReplaceRetryPolicy(new FixedRetryPolicy(5, TimeSpan.FromMilliseconds(100), 404));
 
-            var client = new ConfigurationClient(connectionString, transport, retry, pool);
+            var client = new ConfigurationClient(connectionString, options);
 
             var e = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {

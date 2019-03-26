@@ -8,8 +8,8 @@ namespace Azure.Base.Http.Pipeline
 {
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
-        public static RetryPolicy CreateFixed(int maxRetries, TimeSpan delay, params int[] retriableCodes)
-            => new FixedPolicy(retriableCodes, maxRetries, delay);
+        public static RetryPolicy CreateFixedRetryPolicy(int maxRetries, TimeSpan delay, params int[] retriableCodes)
+            => new FixedRetryPolicy(maxRetries, delay, retriableCodes);
 
         public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
@@ -25,6 +25,6 @@ namespace Azure.Base.Http.Pipeline
         protected abstract bool ShouldRetry(HttpMessage message, int attempted, out TimeSpan delay);
 
         public override void Register(HttpPipelineOptions options)
-            => options.RetryPolicy = this;
+            => options.ReplaceRetryPolicy(this);
     }
 }

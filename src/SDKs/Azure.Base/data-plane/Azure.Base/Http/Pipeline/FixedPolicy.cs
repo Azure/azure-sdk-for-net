@@ -5,12 +5,12 @@ using System;
 
 namespace Azure.Base.Http.Pipeline
 {
-    class FixedPolicy : RetryPolicy {
+    public class FixedRetryPolicy : RetryPolicy {
         int _maxRetries;
         TimeSpan _delay;
         int[] _retriableCodes;
 
-        public FixedPolicy(int[] retriableCodes, int maxRetries, TimeSpan delay)
+        public FixedRetryPolicy(int maxRetries, TimeSpan delay, params int[] retriableCodes)
         {
             if (retriableCodes == null) throw new ArgumentNullException(nameof(retriableCodes));
 

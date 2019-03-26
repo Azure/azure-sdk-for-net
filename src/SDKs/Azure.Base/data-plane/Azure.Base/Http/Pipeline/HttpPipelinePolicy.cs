@@ -3,7 +3,6 @@
 
 using Azure.Base.Diagnostics;
 using System;
-using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
@@ -12,15 +11,6 @@ namespace Azure.Base.Http.Pipeline
     public abstract class HttpPipelineOption
     {
         public abstract void Register(HttpPipelineOptions options);
-
-        public static HttpPipelineOption CreateService(object service, Type serviceType)
-            => new Service(service, serviceType);
-
-        public static HttpPipelineOption CreateFixedRetryPolicy(int maxRetries, TimeSpan delay, params int[] retriableCodes)
-            => RetryPolicy.CreateFixed(maxRetries, delay, retriableCodes);
-
-        public static HttpPipelineOption CreateHttpClientTransport(HttpClient client)
-            => new HttpClientTransport(client);
 
         sealed class Service : HttpPipelineOption
         {

@@ -74,7 +74,7 @@ namespace Azure.Base.Testing
         }
 
         public override void Register(HttpPipelineOptions options)
-            => options.Transport = this;
+            => options.ReplaceTransport(this);
 
         class Message : HttpMessage
         {

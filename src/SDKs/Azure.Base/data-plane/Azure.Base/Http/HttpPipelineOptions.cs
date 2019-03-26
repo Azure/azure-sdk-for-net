@@ -10,31 +10,45 @@ namespace Azure.Base.Http
 {
     public class HttpPipelineOptions
     {
+        static readonly HttpPipelinePolicy s_defaultRetryPolicy = new FixedRetryPolicy(3, TimeSpan.Zero,
+            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
+            500, // Internal Server Error 
+            503, // Service Unavailable
+            504  // Gateway Timeout
+        );
+
         ServiceProvider _container;
 
-        HttpPipelineTransport _transport;
         List<HttpPipelinePolicy> _perCallPolicies;
+
+        HttpPipelinePolicy _retryPolicy;
+        bool _retryPolicySet;
+        
         List<HttpPipelinePolicy> _perRetryPolicies;
 
-        public HttpPipelineTransport Transport {
-            get => _transport;
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-                _transport = value;
-            }
+        HttpPipelinePolicy _loggingPolicy = LoggingPolicy.Shared;
+        HttpPipelineTransport _transport = HttpClientTransport.Shared;
+
+        public void ReplaceLoggingPolicy(HttpPipelinePolicy loggingPolicy)
+        {
+            _loggingPolicy = loggingPolicy;
         }
 
-        public HttpPipelinePolicy LoggingPolicy { get; set; } = Pipeline.LoggingPolicy.Shared;
+        public void ReplaceRetryPolicy(HttpPipelinePolicy retryPolicy)
+        {
+            _retryPolicy = retryPolicy;
+            _retryPolicySet = true;
+        }
 
-        public HttpPipelinePolicy RetryPolicy { get; set; }
+        public void ReplaceTransport(HttpPipelineTransport transport)
+        {
+            if (transport == null) throw new ArgumentNullException(nameof(transport));
+            _transport = transport;
+        }
 
-        public HttpPipelineOptions(HttpPipelineTransport transport)
-            => _transport = transport;
-
-        public HttpPipelineOptions() : this( HttpClientTransport.Shared)
-        { }
-
-        public void AddPolicy(HttpPipelinePolicy policy, PolicyRunner runner)
+        public void AddOption(HttpPipelineOption option) => option.Register(this);
+        
+        public void AddPolicy(HttpPipelinePolicy policy, PolicyRunner runner = PolicyRunner.Auto)
         {
             if (policy == null) throw new ArgumentNullException(nameof(policy));
 
@@ -53,20 +67,21 @@ namespace Azure.Base.Http
             }
         }
 
-        public void AddService(object service, Type type = null)
+        public void AddService(object service, Type type)
         {
             if (service == null) throw new ArgumentNullException(nameof(service));
+            if (type == null) throw new ArgumentNullException(nameof(type));
 
             if (_container == null) _container = new ServiceProvider();
-            _container.Add(service, type != null ? type : service.GetType());
+            _container.Add(service, type);
         }
 
         int PolicyCount {
             get {
                 int numberOfPolicies = 2; // HttpPipelineTransport, TelemetryPolicy
 
-                if (LoggingPolicy != null) numberOfPolicies++;
-                if (RetryPolicy != null) numberOfPolicies++;
+                if (_loggingPolicy != null) numberOfPolicies++;
+                if (_retryPolicy != null) numberOfPolicies++;
 
                 if (_perCallPolicies != null) numberOfPolicies += _perCallPolicies.Count;
                 if (_perRetryPolicies != null) numberOfPolicies += _perRetryPolicies.Count;
@@ -75,28 +90,35 @@ namespace Azure.Base.Http
             }
         }
 
-        public HttpPipeline Build(string componentName, string componentVersion)
+        protected virtual string ComponentName { get; } = "Azure.Base";
+        protected virtual string ComponentVersion { get; } = "1.0.0";
+        protected virtual HttpPipelinePolicy DefaultRetryPolicy { get; } = s_defaultRetryPolicy;
+
+        public HttpPipeline CreatePipeline()
         {
             HttpPipelinePolicy[] policies = new HttpPipelinePolicy[PolicyCount];
             int index = 0;
 
-            policies[index++] = new TelemetryPolicy(componentName, componentVersion);
+            policies[index++] = new TelemetryPolicy(ComponentName, ComponentVersion);
         
             if (_perCallPolicies != null) {
-                foreach (var policy in _perCallPolicies) {
+                foreach (var policy in _perCallPolicies) {  
                     policies[index++] = policy;
                 }
             }
-            if (RetryPolicy != null) {
-                policies[index++] = RetryPolicy;
+            if (!_retryPolicySet) {
+                _retryPolicy = DefaultRetryPolicy;
+            }
+            else if (_retryPolicy != null) {
+                policies[index++] = _retryPolicy;
             }
             if (_perRetryPolicies != null) {
                 foreach (var policy in _perRetryPolicies) {
                     policies[index++] = policy;
                 }
             }
-            if (LoggingPolicy != null) {
-                policies[index++] = LoggingPolicy;
+            if (_loggingPolicy != null) {
+                policies[index++] = _loggingPolicy;
             }
             policies[index++] = _transport;
 

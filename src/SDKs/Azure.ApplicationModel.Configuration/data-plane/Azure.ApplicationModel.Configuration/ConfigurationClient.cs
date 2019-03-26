@@ -13,47 +13,42 @@ using System.Threading.Tasks;
 
 namespace Azure.ApplicationModel.Configuration
 {
-    public partial class ConfigurationClient
+    public class ConfigurationClientOptions : HttpPipelineOptions
     {
-        const string ComponentName = "Azure.Configuration";
-        const string ComponentVersion = "1.0.0";
+        public ConfigurationClientOptions()
+        {
+            ReplaceRetryPolicy(DefaultRetryPolicy);
+        }
 
-        static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
+        protected override string ComponentName => "Azure.Configuration";
+
+        protected override string ComponentVersion => "1.0.0";
+
+        protected override HttpPipelinePolicy DefaultRetryPolicy => new FixedRetryPolicy(3, TimeSpan.Zero,
             //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
             500, // Internal Server Error 
             503, // Service Unavailable
             504  // Gateway Timeout
         );
+    }
 
+    public partial class ConfigurationClient
+    {
         readonly Uri _baseUri;
         readonly string _credential;
         readonly byte[] _secret;
         HttpPipeline _pipeline;
 
-        static HttpPipelineOptions CreateDefaultPipelineOptions()
-        {
-            var options = new HttpPipelineOptions(HttpClientTransport.Shared);
-            options.LoggingPolicy = LoggingPolicy.Shared;
-            options.RetryPolicy = s_defaultRetryPolicy;
-            return options;
-        }
-
         public ConfigurationClient(string connectionString)
-            : this(connectionString, Array.Empty<HttpPipelineOption>())
-        {
-        }
+            : this(connectionString, new ConfigurationClientOptions())
+        { }
 
-        public ConfigurationClient(string connectionString, params HttpPipelineOption[] options)
+        public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
 
-            var builder = CreateDefaultPipelineOptions();
-            foreach(var option in options) {
-                option.Register(builder);
-            }
-
-            _pipeline = builder.Build(ComponentName, ComponentVersion);
+            _pipeline = options.CreatePipeline();
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 

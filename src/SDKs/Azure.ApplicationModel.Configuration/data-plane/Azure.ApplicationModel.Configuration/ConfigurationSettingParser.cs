@@ -23,7 +23,7 @@ namespace Azure.ApplicationModel.Configuration
                 var writer = new FixedSizedBufferWriter(buffer);
                 var json = new Utf8JsonWriter(writer);
                 json.WriteStartObject();
-                json.WriteString("value", setting.Value);
+                json.WriteString("value", setting.Value, false);
                 json.WriteString("content_type", setting.ContentType);
                 if(setting.Tags != null)
                 {
