@@ -13,12 +13,12 @@ namespace Azure.ApplicationModel.Configuration
         const string ClientRequestIdHeader = "x-ms-client-request-id";
         const string EchoClientRequestId = "x-ms-return-client-request-id";
 
-        public override async Task ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
-            message.AddHeader(EchoClientRequestId, "true");
+            message.Request.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
+            message.Request.AddHeader(EchoClientRequestId, "true");
 
-            await ProcessNextAsync(pipeline, message);
+            return ProcessNextAsync(pipeline, message);
         }
     }
 }
