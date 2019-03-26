@@ -116,6 +116,11 @@ namespace Microsoft.Azure.Management.Billing
         IInvoiceSectionsOperations InvoiceSections { get; }
 
         /// <summary>
+        /// Gets the IInvoiceSectionsByBillingProfileNameOperations.
+        /// </summary>
+        IInvoiceSectionsByBillingProfileNameOperations InvoiceSectionsByBillingProfileName { get; }
+
+        /// <summary>
         /// Gets the IInvoiceSectionsWithCreateSubscriptionPermissionOperations.
         /// </summary>
         IInvoiceSectionsWithCreateSubscriptionPermissionOperations InvoiceSectionsWithCreateSubscriptionPermission { get; }
@@ -209,6 +214,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IBillingPropertyOperations.
         /// </summary>
         IBillingPropertyOperations BillingProperty { get; }
+
+        /// <summary>
+        /// Gets the IBillingProfileInvoiceSectionOperations.
+        /// </summary>
+        IBillingProfileInvoiceSectionOperations BillingProfileInvoiceSection { get; }
 
         /// <summary>
         /// Gets the ITransfersOperations.

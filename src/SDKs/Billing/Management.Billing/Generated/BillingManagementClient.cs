@@ -119,6 +119,11 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IInvoiceSectionsOperations InvoiceSections { get; private set; }
 
         /// <summary>
+        /// Gets the IInvoiceSectionsByBillingProfileNameOperations.
+        /// </summary>
+        public virtual IInvoiceSectionsByBillingProfileNameOperations InvoiceSectionsByBillingProfileName { get; private set; }
+
+        /// <summary>
         /// Gets the IInvoiceSectionsWithCreateSubscriptionPermissionOperations.
         /// </summary>
         public virtual IInvoiceSectionsWithCreateSubscriptionPermissionOperations InvoiceSectionsWithCreateSubscriptionPermission { get; private set; }
@@ -212,6 +217,11 @@ namespace Microsoft.Azure.Management.Billing
         /// Gets the IBillingPropertyOperations.
         /// </summary>
         public virtual IBillingPropertyOperations BillingProperty { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfileInvoiceSectionOperations.
+        /// </summary>
+        public virtual IBillingProfileInvoiceSectionOperations BillingProfileInvoiceSection { get; private set; }
 
         /// <summary>
         /// Gets the ITransfersOperations.
@@ -522,6 +532,7 @@ namespace Microsoft.Azure.Management.Billing
             BillingProfiles = new BillingProfilesOperations(this);
             InvoiceSectionsByBillingAccountName = new InvoiceSectionsByBillingAccountNameOperations(this);
             InvoiceSections = new InvoiceSectionsOperations(this);
+            InvoiceSectionsByBillingProfileName = new InvoiceSectionsByBillingProfileNameOperations(this);
             InvoiceSectionsWithCreateSubscriptionPermission = new InvoiceSectionsWithCreateSubscriptionPermissionOperations(this);
             DepartmentsByBillingAccountName = new DepartmentsByBillingAccountNameOperations(this);
             Departments = new DepartmentsOperations(this);
@@ -541,6 +552,7 @@ namespace Microsoft.Azure.Management.Billing
             TransactionsByBillingAccount = new TransactionsByBillingAccountOperations(this);
             Policy = new PolicyOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
+            BillingProfileInvoiceSection = new BillingProfileInvoiceSectionOperations(this);
             Transfers = new TransfersOperations(this);
             RecipientTransfers = new RecipientTransfersOperations(this);
             Operations = new Operations(this);
