@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -42,27 +42,84 @@ namespace Azure.Base.Http.Pipeline
         protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
             => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
 
+
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
+        {
+            if (headers.TryGetValues(name, out var values) ||
+                (content != null && content.Headers.TryGetValues(name, out values)))
+            {
+                value = JoinHeaderValues(values);
+                return true;
+            }
+
+            value = null;
+            return false;
+        }
+
+        internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent content)
+        {
+            foreach (var header in headers)
+            {
+                yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+            }
+
+            if (content != null)
+            {
+                foreach (var header in content.Headers)
+                {
+                    yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+                }
+            }
+        }
+
+        internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
+        {
+            foreach (var header in from)
+            {
+                if (!to.TryAddWithoutValidation(header.Key, header.Value))
+                {
+                    throw new InvalidOperationException($"Unable to add header {header} to header collection.");
+                }
+            }
+        }
+
+        private static string JoinHeaderValues(IEnumerable<string> values)
+        {
+            return string.Join(",", values);
+        }
+
         sealed class PipelineRequest : HttpPipelineRequest
         {
-            string _contentTypeHeaderValue;
-            string _contentLengthHeaderValue;
-            HttpPipelineRequestContent _requestContent;
-            readonly HttpRequestMessage _requestMessage;
+            private readonly HttpRequestMessage _requestMessage;
+
+            private PipelineContentAdapter _requestContent;
 
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
             }
 
-            #region Request
-            public override void SetRequestLine(HttpVerb method, Uri uri)
+            public override Uri Uri
             {
-                _requestMessage.Method = ToHttpClientMethod(method);
-                _requestMessage.RequestUri = uri;
-                _requestMessage.Version = new Version(1, 1);
+                get => _requestMessage.RequestUri;
+                set => _requestMessage.RequestUri = value;
             }
 
-            public override HttpVerb Method => ToPipelineMethod(_requestMessage.Method);
+            public override HttpVerb Method
+            {
+                get => ToPipelineMethod(_requestMessage.Method);
+                set => _requestMessage.Method = ToHttpClientMethod(value);
+            }
+
+            public override HttpPipelineRequestContent Content
+            {
+                get => _requestContent?.PipelineContent;
+                set
+                {
+                    EnsureContentInitialized();
+                    _requestContent.PipelineContent = value;
+                }
+            }
 
             // TODO: faster lazy implementation
             public override string CorrelationId { get; } = Guid.NewGuid().ToString();
@@ -74,52 +131,47 @@ namespace Azure.Base.Http.Pipeline
 
             public override void AddHeader(string name, string value)
             {
-                // TODO (pri 1): any other headers must be added to content?
-                if (name.Equals("Content-Type", StringComparison.InvariantCulture)) {
-                    _contentTypeHeaderValue = value;
+                if (_requestMessage.Headers.TryAddWithoutValidation(name, value))
+                {
+                    return;
                 }
-                else if (name.Equals("Content-Length", StringComparison.InvariantCulture)) {
-                    _contentLengthHeaderValue = value;
-                }
-                else {
-                    if (!_requestMessage.Headers.TryAddWithoutValidation(name, value)) {
-                        throw new InvalidOperationException();
-                    }
+
+                EnsureContentInitialized();
+                if (!_requestContent.Headers.TryAddWithoutValidation(name, value))
+                {
+                    throw new InvalidOperationException("Unable to add header to request or content");
                 }
             }
 
-            public override void SetContent(HttpPipelineRequestContent content)
-                => _requestContent = content;
+            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
+
+            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
                 // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
                 // and so the retry logic fails.
                 var request = new HttpRequestMessage(_requestMessage.Method, _requestMessage.RequestUri);
-                foreach (var header in _requestMessage.Headers) {
-                    if (!request.Headers.TryAddWithoutValidation(header.Key, header.Value)) {
-                        throw new Exception("could not add header " + header.ToString());
-                    }
-                }
 
-                if (_requestContent != null) {
-                    request.Content = new PipelineContentAdapter(_requestContent, cancellation);
-                    if (_contentTypeHeaderValue != null) request.Content.Headers.Add("Content-Type", _contentTypeHeaderValue);
-                    if (_contentLengthHeaderValue != null) request.Content.Headers.Add("Content-Length", _contentLengthHeaderValue);
-                }
+                CopyHeaders(_requestMessage.Headers, request.Headers);
 
+                if (_requestContent?.PipelineContent != null)
+                {
+                    request.Content = new PipelineContentAdapter()
+                    {
+                        CancellationToken = cancellation,
+                        PipelineContent = _requestContent.PipelineContent
+                    };
+                    CopyHeaders(_requestContent.Headers, request.Content.Headers);
+                }
 
                 return request;
             }
 
             public override void Dispose()
             {
-                _requestContent?.Dispose();
                 _requestMessage.Dispose();
             }
-
-            #endregion
-
 
             public override string ToString() =>  _requestMessage.ToString();
 
@@ -151,28 +203,37 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
+            private void EnsureContentInitialized()
+            {
+                if (_requestContent == null)
+                {
+                    _requestContent = new PipelineContentAdapter();
+                }
+            }
+
             sealed class PipelineContentAdapter : HttpContent
             {
-                HttpPipelineRequestContent _content;
-                CancellationToken _cancellation;
+                public HttpPipelineRequestContent PipelineContent { get; set; }
 
-                public PipelineContentAdapter(HttpPipelineRequestContent content, CancellationToken cancellation)
+                public CancellationToken CancellationToken { get; set; }
+
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
                 {
-                    Debug.Assert(content != null);
-
-                    _content = content;
-                    _cancellation = cancellation;
+                    Debug.Assert(PipelineContent != null);
+                    await PipelineContent.WriteTo(stream, CancellationToken).ConfigureAwait(false);
                 }
 
-                protected async override Task SerializeToStreamAsync(Stream stream, TransportContext context)
-                    => await _content.WriteTo(stream, _cancellation).ConfigureAwait(false);
-
                 protected override bool TryComputeLength(out long length)
-                    => _content.TryComputeLength(out length);
+                {
+                    Debug.Assert(PipelineContent != null);
+
+                    return PipelineContent.TryComputeLength(out length);
+                }
+
 
                 protected override void Dispose(bool disposing)
                 {
-                    _content.Dispose();
+                    PipelineContent?.Dispose();
                     base.Dispose(disposing);
                 }
             }
@@ -188,22 +249,7 @@ namespace Azure.Base.Http.Pipeline
                 _responseMessage = responseMessage;
             }
 
-            #region Response
-
             public override int Status => (int)_responseMessage.StatusCode;
-
-            public override bool TryGetHeader(string name, out string value)
-            {
-                if (!_responseMessage.Headers.TryGetValues(name, out var values)) {
-                    if (!_responseMessage.Content.Headers.TryGetValues(name, out values)) {
-                        value = default;
-                        return false;
-                    }
-                }
-
-                value = string.Join(",", values);
-                return true;
-            }
 
             // TODO (pri 1): is it ok to just call GetResult here?
             public override Stream ResponseContentStream
@@ -211,7 +257,10 @@ namespace Azure.Base.Http.Pipeline
 
             public override string CorrelationId { get; private set; }
 
-            #endregion
+
+            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
+
+            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
 
             public override void Dispose()
             {
