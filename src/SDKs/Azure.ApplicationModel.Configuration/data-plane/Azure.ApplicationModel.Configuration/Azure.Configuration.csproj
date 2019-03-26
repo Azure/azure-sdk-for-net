@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory" Version="4.5.1" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
     <PackageReference Include="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
