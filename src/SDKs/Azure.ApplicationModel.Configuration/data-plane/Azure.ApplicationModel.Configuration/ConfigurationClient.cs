@@ -25,10 +25,8 @@ namespace Azure.ApplicationModel.Configuration
             504  // Gateway Timeout
         );
 
-        readonly Uri _baseUri;
-        readonly string _credential;
-        readonly byte[] _secret;
-        HttpPipeline _pipeline;
+        private readonly Uri _baseUri;
+        private readonly HttpPipeline _pipeline;
 
         public static HttpPipelineOptions CreateDefaultPipelineOptions()
         {
@@ -48,8 +46,12 @@ namespace Azure.ApplicationModel.Configuration
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
 
+            ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
+
+            options.AddPerCallPolicy(ClientRequestIdPolicy.Singleton);
+            options.AddPerCallPolicy(new AuthenticationPolicy(credential, secret));
+
             _pipeline = options.Build(ComponentName, ComponentVersion);
-            ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
@@ -69,13 +71,9 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.SetRequestLine(HttpVerb.Put, uri);
 
-
                 request.AddHeader(IfNoneMatch, "*");
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
-
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
                 request.Content = HttpPipelineRequestContent.Create(content);
 
@@ -115,9 +113,6 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     request.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
                 }
-
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
 
                 request.Content = HttpPipelineRequestContent.Create(content);
 
@@ -162,9 +157,6 @@ namespace Azure.ApplicationModel.Configuration
                     request.AddHeader(IfMatchName, "*");
                 }
 
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content, _secret, _credential);
-
                 request.Content = HttpPipelineRequestContent.Create(content);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
@@ -198,9 +190,6 @@ namespace Azure.ApplicationModel.Configuration
                     request.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
                 }
 
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
-
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 204)
@@ -220,10 +209,6 @@ namespace Azure.ApplicationModel.Configuration
             using (var request = _pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpVerb.Put, uri);
-
-
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Put, content: default, _secret, _credential);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -246,8 +231,6 @@ namespace Azure.ApplicationModel.Configuration
                 request.SetRequestLine(HttpVerb.Delete, uri);
 
 
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Delete, content: default, _secret, _credential);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
                 if (response.Status == 200)
@@ -270,10 +253,8 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
 
-                AddClientRequestID(request);
-                request.AddHeader(HttpHeader.Common.JsonContentType);
 
-                AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
+                request.AddHeader(HttpHeader.Common.JsonContentType);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -294,8 +275,6 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(batchOptions, request);
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -318,8 +297,6 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 AddOptionsHeaders(options, request);
-                AddClientRequestID(request);
-                AddAuthenticationHeaders(request, uri, HttpVerb.Get, content: default, _secret, _credential);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
