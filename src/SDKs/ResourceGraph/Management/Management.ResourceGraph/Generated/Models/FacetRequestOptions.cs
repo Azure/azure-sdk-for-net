@@ -30,13 +30,20 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         /// <summary>
         /// Initializes a new instance of the FacetRequestOptions class.
         /// </summary>
-        /// <param name="sortOrder">The sorting order by the hit count.
-        /// Possible values include: 'asc', 'desc'</param>
+        /// <param name="sortBy">The column name or query expression to sort
+        /// on. Defaults to count if not present.</param>
+        /// <param name="sortOrder">The sorting order by the selected column
+        /// (count by default). Possible values include: 'asc', 'desc'</param>
+        /// <param name="filter">Specifies the filter condition for the 'where'
+        /// clause which will be run on main query's result, just before the
+        /// actual faceting.</param>
         /// <param name="top">The maximum number of facet rows that should be
         /// returned.</param>
-        public FacetRequestOptions(FacetSortOrder? sortOrder = default(FacetSortOrder?), int? top = default(int?))
+        public FacetRequestOptions(string sortBy = default(string), FacetSortOrder? sortOrder = default(FacetSortOrder?), string filter = default(string), int? top = default(int?))
         {
+            SortBy = sortBy;
             SortOrder = sortOrder;
+            Filter = filter;
             Top = top;
             CustomInit();
         }
@@ -47,11 +54,26 @@ namespace Microsoft.Azure.Management.ResourceGraph.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sorting order by the hit count. Possible values
-        /// include: 'asc', 'desc'
+        /// Gets or sets the column name or query expression to sort on.
+        /// Defaults to count if not present.
+        /// </summary>
+        [JsonProperty(PropertyName = "sortBy")]
+        public string SortBy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sorting order by the selected column (count by
+        /// default). Possible values include: 'asc', 'desc'
         /// </summary>
         [JsonProperty(PropertyName = "sortOrder")]
         public FacetSortOrder? SortOrder { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the filter condition for the 'where' clause
+        /// which will be run on main query's result, just before the actual
+        /// faceting.
+        /// </summary>
+        [JsonProperty(PropertyName = "filter")]
+        public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of facet rows that should be
