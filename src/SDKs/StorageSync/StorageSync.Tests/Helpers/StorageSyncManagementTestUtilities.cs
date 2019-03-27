@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
             return new CloudEndpointCreateParameters
             {
                 StorageAccountResourceId = "/subscriptions/1d16f9b3-bbe3-48d4-930a-27a74dca003b/resourcegroups/sasdkwestcentralus/providers/Microsoft.Storage/storageAccounts/sasdkwestcentralus",
-                StorageAccountShareName = "afsfileshare1",
+                AzureFileShareName = "afsfileshare1",
                 StorageAccountTenantId = "\"72f988bf-86f1-41af-91ab-2d7cd011db47\""
             };
         }
