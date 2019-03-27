@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Gateway settings.
+    /// </summary>
     public partial class GatewaySettings
     {
         /// <summary>

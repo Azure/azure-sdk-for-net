@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The update gateway settings request parameters.
+    /// </summary>
     public partial class UpdateGatewaySettingsParameters
     {
         /// <summary>
