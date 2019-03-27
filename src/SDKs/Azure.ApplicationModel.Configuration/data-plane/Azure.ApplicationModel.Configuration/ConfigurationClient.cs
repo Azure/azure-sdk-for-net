@@ -16,6 +16,8 @@ namespace Azure.ApplicationModel.Configuration
 {
     public class ConfigurationClientOptions : HttpPipelineOptions
     {
+        Version _serviceAPIVersion = Version.V1;
+
         public ConfigurationClientOptions()
         {
             ComponentName = "Azure.Configuration";
@@ -29,6 +31,19 @@ namespace Azure.ApplicationModel.Configuration
             503, // Service Unavailable
             504  // Gateway Timeout
         );
+
+        public Version ServiceVersion {
+            get => _serviceAPIVersion;
+            set {
+                if (value != Version.V1) throw new ArgumentOutOfRangeException(nameof(value));
+                _serviceAPIVersion = Version.V1;
+            }
+        }
+
+        public enum Version : ushort
+        {
+            V1,
+        }
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -57,7 +72,6 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
-
             _pipeline = HttpPipeline.Create(options);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }

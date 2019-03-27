@@ -21,6 +21,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             var options = new ConfigurationClientOptions();
 
+            // service API version
+            options.ServiceVersion = ConfigurationClientOptions.Version.V1;
+
             // custon HttpClient
             options.Transport = new HttpClientTransport(s_client);
 
