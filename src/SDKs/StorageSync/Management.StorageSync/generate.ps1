@@ -1,2 +1,1 @@
-#Start-AutoRestCodeGeneration -ResourceProvider "storagesync/resource-manager" -AutoRestVersion "latest" 
-Start-AutoRestCodeGenerationWithLocalConfig -ResourceProvider "storagesync/resource-manager" -AutoRestVersion "latest" -LocalConfigFilePath "C:\code\azure\azure-rest-api-specs\specification\storagesync\resource-manager\readme.md" -SdkDirectory "C:\graph\azure-sdk-for-net\src\SDKs\StorageSync\Management.StorageSync\Generated"
+Start-AutoRestCodeGeneration -ResourceProvider "storagesync/resource-manager" -AutoRestVersion "latest"
