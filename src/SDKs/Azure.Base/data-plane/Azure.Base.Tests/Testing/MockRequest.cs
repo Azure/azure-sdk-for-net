@@ -33,6 +33,8 @@ namespace Azure.Base.Testing
 
         public override IEnumerable<HttpHeader> Headers => _headers;
 
+        public override string RequestId { get; set; }
+
         public override string ToString() => $"{Method} {Uri}";
 
         public override void Dispose()

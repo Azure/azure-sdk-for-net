@@ -23,6 +23,8 @@ namespace Azure.Base.Testing
 
         public override Stream ResponseContentStream => _responseContentStream;
 
+        public override string RequestId { get; set; }
+
         public override string ToString() => $"{Status}";
 
         public void AddHeader(HttpHeader header)
