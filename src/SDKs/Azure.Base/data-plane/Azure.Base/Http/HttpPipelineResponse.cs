@@ -9,7 +9,7 @@ namespace Azure.Base.Http
 {
     public abstract class HttpPipelineResponse: IDisposable
     {
-        public abstract int Status { get; }
+        public abstract int Status { get; set; }
 
         public abstract bool TryGetHeader(string name, out string value);
 

@@ -7,8 +7,8 @@ using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.IO;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,7 +19,19 @@ namespace Azure.Base.Tests
         [Test]
         public async Task Basics()
         {
-            var options = new HttpPipelineOptions(new MockTransport(500, 1));
+            var requestIndex = 0;
+            var mockTransport = new MockTransport(
+                _ => {
+                    if (requestIndex == 0)
+                    {
+                        return new MockResponse(500);
+                    }
+
+                    requestIndex++;
+                    return new MockResponse(1);
+                });
+
+            var options = new HttpPipelineOptions(mockTransport);
             options.RetryPolicy = new CustomRetryPolicy();
 
             var pipeline = options.Build("test", "1.0.0");
@@ -36,6 +48,28 @@ namespace Azure.Base.Tests
         {
             var pipeline = new HttpPipeline();
             await pipeline.SendRequestAsync(new NullPipelineContext(), CancellationToken.None);
+        }
+
+        [Test]
+        public async Task ComponentNameAndVersionReadFromAssembly()
+        {
+            string userAgent = null;
+
+            var mockTransport = new MockTransport(
+                req => {
+                    Assert.True(req.TryGetHeader("User-Agent", out userAgent));
+                    return new MockResponse(200);
+                });
+
+            var pipeline = new HttpPipelineOptions(mockTransport).Build(typeof(PipelineTests));
+
+            var request = pipeline.CreateRequest();
+            request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+            await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            Assert.AreEqual(userAgent, $"AzureSDK.Tests/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
 
         class CustomRetryPolicy : RetryPolicy

@@ -5,6 +5,8 @@ using Azure.Base.Http.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
+using Azure.Base.Attributes;
 
 namespace Azure.Base.Http
 {
@@ -75,6 +77,19 @@ namespace Azure.Base.Http
 
                 return numberOfPolicies;
             }
+        }
+
+        public HttpPipeline Build(Type clientType)
+        {
+            var componentAttribute = clientType.Assembly.GetCustomAttribute<AzureSdkComponentAttribute>();
+            if (componentAttribute == null)
+            {
+                throw new InvalidOperationException($"{nameof(AzureSdkComponentAttribute)} is required to be set on client SDK assembly.");
+            }
+
+            var assemblyVersion = clientType.Assembly.GetName().Version.ToString();
+
+            return Build(componentAttribute.ComponentName, assemblyVersion);
         }
 
         public HttpPipeline Build(string componentName, string componentVersion)
