@@ -41,7 +41,7 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                Request(request.CorrelationId, request.Method.ToString().ToUpperInvariant(), request.Uri.ToString(), FormatHeaders(request.Headers));
+                Request(request.RequestId, request.Method.ToString().ToUpperInvariant(), request.Uri.ToString(), FormatHeaders(request.Headers));
             }
         }
 
@@ -50,7 +50,7 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                RequestContent(request.CorrelationId, await FormatContentAsync(request.Content, cancellationToken));
+                RequestContent(request.RequestId, await FormatContentAsync(request.Content, cancellationToken));
             }
         }
 
@@ -59,7 +59,7 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                Response(response.CorrelationId, response.Status, FormatHeaders(response.Headers));
+                Response(response.RequestId, response.Status, FormatHeaders(response.Headers));
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                ResponseContent(response.CorrelationId, await FormatContentAsync(response.ResponseContentStream));
+                ResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream));
             }
         }
 
@@ -77,7 +77,7 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
             {
-                ErrorResponse(response.CorrelationId, response.Status, FormatHeaders(response.Headers));
+                ErrorResponse(response.RequestId, response.Status, FormatHeaders(response.Headers));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                ErrorResponseContent(response.CorrelationId, await FormatContentAsync(response.ResponseContentStream).ConfigureAwait(false));
+                ErrorResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream).ConfigureAwait(false));
             }
         }
 
@@ -98,40 +98,40 @@ namespace Azure.Base.Diagnostics
 
         // TODO (pri 2): there are more attribute properties we might want to set
         [Event(RequestEvent, Level = EventLevel.Informational)]
-        private void Request(string correlationId, string method, string uri, string headers)
+        private void Request(string requestId, string method, string uri, string headers)
         {
-            WriteEvent(RequestEvent, correlationId, method, uri, headers);
+            WriteEvent(RequestEvent, requestId, method, uri, headers);
         }
 
         [Event(RequestContentEvent, Level = EventLevel.Verbose)]
-        private void RequestContent(string correlationId, byte[] content)
+        private void RequestContent(string requestId, byte[] content)
         {
-            WriteEvent(RequestContentEvent, correlationId, content);
+            WriteEvent(RequestContentEvent, requestId, content);
         }
 
         [Event(ResponseEvent, Level = EventLevel.Informational)]
-        private void Response(string correlationId, int status, string headers)
+        private void Response(string requestId, int status, string headers)
         {
-            WriteEvent(ResponseEvent, correlationId, status, headers);
+            WriteEvent(ResponseEvent, requestId, status, headers);
         }
 
 
         [Event(ResponseContentEvent, Level = EventLevel.Verbose)]
-        private void ResponseContent(string correlationId, byte[] content)
+        private void ResponseContent(string requestId, byte[] content)
         {
-            WriteEvent(ResponseContentEvent, correlationId, content);
+            WriteEvent(ResponseContentEvent, requestId, content);
         }
 
         [Event(ErrorResponseEvent, Level = EventLevel.Error)]
-        public void ErrorResponse(string correlationId, int status, string headers)
+        public void ErrorResponse(string requestId, int status, string headers)
         {
-            WriteEvent(ErrorResponseEvent, correlationId, status, headers);
+            WriteEvent(ErrorResponseEvent, requestId, status, headers);
         }
 
         [Event(ErrorResponseContentEvent, Level = EventLevel.Informational)]
-        private void ErrorResponseContent(string correlationId, byte[] content)
+        private void ErrorResponseContent(string requestId, byte[] content)
         {
-            WriteEvent(ErrorResponseContentEvent, correlationId, content);
+            WriteEvent(ErrorResponseContentEvent, requestId, content);
         }
 
         [Event(RequestDelayEvent, Level = EventLevel.Warning)]

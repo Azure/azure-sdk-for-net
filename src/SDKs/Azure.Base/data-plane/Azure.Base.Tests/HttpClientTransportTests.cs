@@ -277,33 +277,33 @@ namespace Azure.Base.Tests
         }
 
         [Test]
-        public async Task RequestAndResponseHasCorrelationId()
+        public async Task RequestAndResponseHasRequestId()
         {
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => { });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
-            Assert.IsNotEmpty(request.CorrelationId);
-            Assert.True(Guid.TryParse(request.CorrelationId, out _));
+            Assert.IsNotEmpty(request.RequestId);
+            Assert.True(Guid.TryParse(request.RequestId, out _));
             request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
 
             var response =  await ExecuteRequest(request, transport);
-            Assert.AreEqual(request.CorrelationId, response.CorrelationId);
+            Assert.AreEqual(request.RequestId, response.RequestId);
         }
 
         [Test]
-        public async Task CorrelationIdCanBeOverriden()
+        public async Task RequestIdCanBeOverriden()
         {
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => { });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
 
-            request.CorrelationId = "123";
+            request.RequestId = "123";
             request.SetRequestLine(HttpVerb.Get, new Uri("http://example.com:340"));
 
             var response =  await ExecuteRequest(request, transport);
-            Assert.AreEqual(request.CorrelationId, response.CorrelationId);
+            Assert.AreEqual(request.RequestId, response.RequestId);
         }
     }
 }

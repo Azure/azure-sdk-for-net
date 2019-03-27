@@ -56,7 +56,7 @@ namespace Azure.Base.Tests
             };
 
             var pipeline = options.Build("test", "1.0.0");
-            string correlationId;
+            string requestId;
 
             using (var request = pipeline.CreateRequest())
             {
@@ -64,7 +64,7 @@ namespace Azure.Base.Tests
                 request.AddHeader("Date", "3/26/2019");
                 request.AddHeader("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] {1, 2, 3, 4, 5});
-                correlationId = request.CorrelationId;
+                requestId = request.RequestId;
 
                 var response =  await pipeline.SendRequestAsync(request, CancellationToken.None);
 
@@ -75,7 +75,7 @@ namespace Azure.Base.Tests
                 e.EventId == 1 &&
                 e.Level == EventLevel.Informational &&
                 e.EventName == "Request" &&
-                GetStringProperty(e, "correlationId").Equals(correlationId) &&
+                GetStringProperty(e, "requestId").Equals(requestId) &&
                 GetStringProperty(e, "uri").Equals("https://contoso.a.io/") &&
                 GetStringProperty(e, "method").Equals("GET") &&
                 GetStringProperty(e, "headers").Contains($"Date:3/26/2019{Environment.NewLine}") &&
@@ -86,7 +86,7 @@ namespace Azure.Base.Tests
                 e.EventId == 2 &&
                 e.Level == EventLevel.Verbose &&
                 e.EventName == "RequestContent" &&
-                GetStringProperty(e, "correlationId").Equals(correlationId) &&
+                GetStringProperty(e, "requestId").Equals(requestId) &&
                 ((byte[])GetProperty(e, "content")).SequenceEqual(new byte[] {1, 2 , 3, 4, 5}))
             );
 
@@ -94,7 +94,7 @@ namespace Azure.Base.Tests
                 e.EventId == 5 &&
                 e.Level == EventLevel.Informational &&
                 e.EventName == "Response" &&
-                GetStringProperty(e, "correlationId").Equals(correlationId) &&
+                GetStringProperty(e, "requestId").Equals(requestId) &&
                 (int)GetProperty(e, "status") == 500 &&
                 GetStringProperty(e, "headers").Contains($"Custom-Response-Header:Improved value{Environment.NewLine}")
             ));
@@ -103,7 +103,7 @@ namespace Azure.Base.Tests
                 e.EventId == 6 &&
                 e.Level == EventLevel.Verbose &&
                 e.EventName == "ResponseContent" &&
-                GetStringProperty(e, "correlationId").Equals(correlationId) &&
+                GetStringProperty(e, "requestId").Equals(requestId) &&
                 ((byte[])GetProperty(e, "content")).SequenceEqual(new byte[] {6, 7, 8, 9, 0}))
             );
 
@@ -111,7 +111,7 @@ namespace Azure.Base.Tests
                 e.EventId == 8 &&
                 e.Level == EventLevel.Error &&
                 e.EventName == "ErrorResponse" &&
-                GetStringProperty(e, "correlationId").Equals(correlationId) &&
+                GetStringProperty(e, "requestId").Equals(requestId) &&
                 (int)GetProperty(e, "status") == 500 &&
                 GetStringProperty(e, "headers").Contains($"Custom-Response-Header:Improved value{Environment.NewLine}")
             ));
@@ -120,7 +120,7 @@ namespace Azure.Base.Tests
                 e.EventId == 9 &&
                 e.Level == EventLevel.Informational &&
                 e.EventName == "ErrorResponseContent" &&
-                GetStringProperty(e, "correlationId").Equals(correlationId) &&
+                GetStringProperty(e, "requestId").Equals(requestId) &&
                 ((byte[])GetProperty(e, "content")).SequenceEqual(new byte[] {6, 7, 8, 9, 0}))
             );
         }

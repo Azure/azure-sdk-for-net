@@ -35,7 +35,7 @@ namespace Azure.Base.Http.Pipeline
             using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
             {
                 HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
-                message.Response = new PipelineResponse(message.Request.CorrelationId, responseMessage);
+                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Base.Http.Pipeline
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
-                CorrelationId = Guid.NewGuid().ToString();
+                RequestId = Guid.NewGuid().ToString();
             }
 
             public override Uri Uri
@@ -122,7 +122,7 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
-            public override string CorrelationId { get; set; }
+            public override string RequestId { get; set; }
 
             public override void AddHeader(HttpHeader header)
             {
@@ -243,9 +243,9 @@ namespace Azure.Base.Http.Pipeline
         {
             readonly HttpResponseMessage _responseMessage;
 
-            public PipelineResponse(string correlationId, HttpResponseMessage responseMessage)
+            public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
-                CorrelationId = correlationId;
+                RequestId = requestId;
                 _responseMessage = responseMessage;
             }
 
@@ -255,7 +255,7 @@ namespace Azure.Base.Http.Pipeline
             public override Stream ResponseContentStream
                 => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 
-            public override string CorrelationId { get; set; }
+            public override string RequestId { get; set; }
 
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
