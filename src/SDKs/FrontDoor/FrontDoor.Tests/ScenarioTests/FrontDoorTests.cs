@@ -36,13 +36,16 @@ namespace FrontDoor.Tests.ScenarioTests
                 // Create two different frontDoor
                 string frontDoorName = TestUtilities.GenerateName("frontDoor");
 
+                ForwardingConfiguration forwardingConfiguration = new ForwardingConfiguration(
+                    forwardingProtocol: "MatchRequest",
+                    backendPool: new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/backendPools/backendPool1"));
+                
                 RoutingRule routingrule1 = new RoutingRule(
                     name: "routingrule1",
                     frontendEndpoints: new List<refID> { new refID("/subscriptions/"+subid+"/resourceGroups/"+resourceGroupName+"/providers/Microsoft.Network/frontDoors/"+frontDoorName+"/frontendEndpoints/frontendEndpoint1")},
                     acceptedProtocols: new List<string> { "Https" },
                     patternsToMatch: new List<string> { "/*" },
-                    forwardingProtocol: "MatchRequest",
-                    backendPool: new refID("/subscriptions/"+subid+"/resourceGroups/"+resourceGroupName+"/providers/Microsoft.Network/frontDoors/"+frontDoorName+"/backendPools/backendPool1"),
+                    routeConfiguration: forwardingConfiguration,
                     enabledState: "Enabled"
                 );
                 HealthProbeSettingsModel healthProbeSettings1 = new HealthProbeSettingsModel(
@@ -312,8 +315,8 @@ namespace FrontDoor.Tests.ScenarioTests
             {
                 Assert.Equal(routingRules[i].AcceptedProtocols, parameters[i].AcceptedProtocols);
                 Assert.Equal(routingRules[i].PatternsToMatch, parameters[i].PatternsToMatch);
-                Assert.Equal(routingRules[i].CustomForwardingPath, parameters[i].CustomForwardingPath);
-                Assert.Equal(routingRules[i].ForwardingProtocol, parameters[i].ForwardingProtocol);
+                Assert.Equal((routingRules[i].RouteConfiguration as ForwardingConfiguration).CustomForwardingPath, (parameters[i].RouteConfiguration as ForwardingConfiguration).CustomForwardingPath);
+                Assert.Equal((routingRules[i].RouteConfiguration as ForwardingConfiguration).ForwardingProtocol, (parameters[i].RouteConfiguration as ForwardingConfiguration).ForwardingProtocol);
             }
         }
 
