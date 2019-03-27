@@ -74,7 +74,7 @@ namespace Azure.Base.Http
                     return new HttpHeader(Names.UserAgent, $"{applicationId} azsdk-net-{componentName}/{componentVersion} {PlatformInformation}");
                 }
 
-                return new HttpHeader(Names.UserAgent, $"{componentName}/{componentVersion} {PlatformInformation}");
+                return new HttpHeader(Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {PlatformInformation}");
             }
 
 
