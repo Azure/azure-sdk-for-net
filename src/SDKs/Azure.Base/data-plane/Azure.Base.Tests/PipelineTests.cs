@@ -95,6 +95,8 @@ namespace Azure.Base.Tests
                 }
             }
 
+            public override string RequestId { get; set; }
+
             public override void Dispose()
             {
             }

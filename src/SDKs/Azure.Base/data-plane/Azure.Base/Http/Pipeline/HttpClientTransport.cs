@@ -35,7 +35,7 @@ namespace Azure.Base.Http.Pipeline
             using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
             {
                 HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
-                message.Response = new PipelineResponse(responseMessage);
+                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
             }
         }
 
@@ -97,6 +97,7 @@ namespace Azure.Base.Http.Pipeline
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
+                RequestId = Guid.NewGuid().ToString();
             }
 
             public override Uri Uri
@@ -120,6 +121,8 @@ namespace Azure.Base.Http.Pipeline
                     _requestContent.PipelineContent = value;
                 }
             }
+
+            public override string RequestId { get; set; }
 
             public override void AddHeader(HttpHeader header)
             {
@@ -226,8 +229,9 @@ namespace Azure.Base.Http.Pipeline
         {
             readonly HttpResponseMessage _responseMessage;
 
-            public PipelineResponse(HttpResponseMessage responseMessage)
+            public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
+                RequestId = requestId;
                 _responseMessage = responseMessage;
             }
 
@@ -236,6 +240,8 @@ namespace Azure.Base.Http.Pipeline
             // TODO (pri 1): is it ok to just call GetResult here?
             public override Stream ResponseContentStream
                 => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+
+            public override string RequestId { get; set; }
 
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
