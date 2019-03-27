@@ -87,13 +87,16 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
-      - powershell:  'Invoke-WebRequest -Uri "$(VerifyAgentOSBlobPath)" -OutFile "./verify_agent_os.py"'
-        displayName: 'Download VerifyAgentOS Script From Github Release'
+      - powershell: |
+          Invoke-WebRequest -Uri "https://github.com/chidozieononiwu/azure-sdk-for-net/releases/download/verifyAgentOS_v1.1/verify_agent_os.zip" `
+          -OutFile "verify_agent_os.zip" | Wait-Process; Expand-Archive -Path "verify_agent_os.zip" -DestinationPath "./azure-sdk-tools/"
+        workingDirectory: '$(System.DefaultWorkingDirectory)'
+        displayName: 'Download Tools Archive Script From Github Release and Extract it'
 
       - task: PythonScript@0
         displayName: 'Run VerifyAgentOS script'
         inputs:
-          scriptPath: './verify_agent_os.py'
+          scriptPath: './azure-sdk-tools/verify_agent_os.py'
           arguments: $(OSName)
 
       - task: DotNetCoreInstaller@0
