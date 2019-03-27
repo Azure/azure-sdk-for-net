@@ -10,13 +10,58 @@
 
 namespace Microsoft.Azure.Management.Blueprint.Models
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Converters;
+    using System.Runtime;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for BlueprintTargetScope.
     /// </summary>
-    public static class BlueprintTargetScope
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum BlueprintTargetScope
     {
-        public const string Subscription = "subscription";
-        public const string ManagementGroup = "managementGroup";
+        /// <summary>
+        /// The blueprint targets a subscription during blueprint assignment.
+        /// </summary>
+        [EnumMember(Value = "subscription")]
+        Subscription,
+        /// <summary>
+        /// The blueprint targets a management group during blueprint
+        /// assignment. This is reserved for future use.
+        /// </summary>
+        [EnumMember(Value = "managementGroup")]
+        ManagementGroup
+    }
+    internal static class BlueprintTargetScopeEnumExtension
+    {
+        internal static string ToSerializedValue(this BlueprintTargetScope? value)
+        {
+            return value == null ? null : ((BlueprintTargetScope)value).ToSerializedValue();
+        }
+
+        internal static string ToSerializedValue(this BlueprintTargetScope value)
+        {
+            switch( value )
+            {
+                case BlueprintTargetScope.Subscription:
+                    return "subscription";
+                case BlueprintTargetScope.ManagementGroup:
+                    return "managementGroup";
+            }
+            return null;
+        }
+
+        internal static BlueprintTargetScope? ParseBlueprintTargetScope(this string value)
+        {
+            switch( value )
+            {
+                case "subscription":
+                    return BlueprintTargetScope.Subscription;
+                case "managementGroup":
+                    return BlueprintTargetScope.ManagementGroup;
+            }
+            return null;
+        }
     }
 }

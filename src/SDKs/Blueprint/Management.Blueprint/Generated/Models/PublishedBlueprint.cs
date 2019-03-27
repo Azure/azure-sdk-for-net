@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="blueprintName">Name of the published blueprint
         /// definition.</param>
         /// <param name="changeNotes">Version-specific change notes.</param>
-        public PublishedBlueprint(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), BlueprintStatus status = default(BlueprintStatus), string targetScope = default(string), IDictionary<string, ParameterDefinition> parameters = default(IDictionary<string, ParameterDefinition>), IDictionary<string, ResourceGroupDefinition> resourceGroups = default(IDictionary<string, ResourceGroupDefinition>), string blueprintName = default(string), string changeNotes = default(string))
+        public PublishedBlueprint(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), BlueprintStatus status = default(BlueprintStatus), BlueprintTargetScope? targetScope = default(BlueprintTargetScope?), IDictionary<string, ParameterDefinition> parameters = default(IDictionary<string, ParameterDefinition>), IDictionary<string, ResourceGroupDefinition> resourceGroups = default(IDictionary<string, ResourceGroupDefinition>), string blueprintName = default(string), string changeNotes = default(string))
             : base(id, type, name)
         {
             DisplayName = displayName;
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// values include: 'subscription', 'managementGroup'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetScope")]
-        public string TargetScope { get; set; }
+        public BlueprintTargetScope? TargetScope { get; set; }
 
         /// <summary>
         /// Gets or sets parameters required by this blueprint definition.

@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// definition.</param>
         /// <param name="layout">Layout view of the blueprint definition for UI
         /// reference.</param>
-        public BlueprintModel(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), BlueprintStatus status = default(BlueprintStatus), string targetScope = default(string), IDictionary<string, ParameterDefinition> parameters = default(IDictionary<string, ParameterDefinition>), IDictionary<string, ResourceGroupDefinition> resourceGroups = default(IDictionary<string, ResourceGroupDefinition>), object versions = default(object), object layout = default(object))
+        public BlueprintModel(string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), BlueprintStatus status = default(BlueprintStatus), BlueprintTargetScope? targetScope = default(BlueprintTargetScope?), IDictionary<string, ParameterDefinition> parameters = default(IDictionary<string, ParameterDefinition>), IDictionary<string, ResourceGroupDefinition> resourceGroups = default(IDictionary<string, ResourceGroupDefinition>), object versions = default(object), object layout = default(object))
             : base(id, type, name)
         {
             DisplayName = displayName;
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// values include: 'subscription', 'managementGroup'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetScope")]
-        public string TargetScope { get; set; }
+        public BlueprintTargetScope? TargetScope { get; set; }
 
         /// <summary>
         /// Gets or sets parameters required by this blueprint definition.
