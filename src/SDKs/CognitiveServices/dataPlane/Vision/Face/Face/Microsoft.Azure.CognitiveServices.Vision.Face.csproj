@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.Face</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Face APIs.</Description>
-    <Version>2.3.0-preview</Version>
+    <Version>2.4.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Face</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Face;Face API;Face SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
@@ -16,6 +16,7 @@
     3) Aligned with latest Face API, Million-Scale features (LargePersonGroup and LargeFaceList) were added.
     4) Some inconsistencies in naming, parameter order were corrected.
     5) Aligned with latest Face API, Snapshot features for data migration were added.
+    6) Aligned with latest Face API, multiple recognition model feature was added.
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

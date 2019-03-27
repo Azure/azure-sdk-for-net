@@ -17,6 +17,8 @@ namespace FaceSDK.Tests
         // of Cognitive Service Face. We can leave it as `Guid.Empty` in the `playback` test mode.
         private static readonly List<Guid> ApplyScope = new List<Guid> { Guid.Empty };
 
+        private static readonly string recognitionModel = RecognitionModel.Recognition02;
+
         [Fact]
         public void FaceSnapshotTestFaceList()
         {
@@ -29,7 +31,7 @@ namespace FaceSDK.Tests
                 var userdata = $"userdata{sourceFaceListId}";
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
-                client.FaceList.CreateAsync(sourceFaceListId, name, userdata).Wait();
+                client.FaceList.CreateAsync(sourceFaceListId, name, userdata, recognitionModel: recognitionModel).Wait();
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                 {
@@ -84,7 +86,7 @@ namespace FaceSDK.Tests
                 var userdata = $"userdata{sourceLargeFacelistId}";
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
-                client.LargeFaceList.CreateAsync(sourceLargeFacelistId, name, userdata).Wait();
+                client.LargeFaceList.CreateAsync(sourceLargeFacelistId, name, userdata, recognitionModel: recognitionModel).Wait();
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                 {
@@ -145,7 +147,7 @@ namespace FaceSDK.Tests
                 var userdata = $"userdata{sourceLargePersonGroupId}";
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
-                client.LargePersonGroup.CreateAsync(sourceLargePersonGroupId, name, userdata).Wait();
+                client.LargePersonGroup.CreateAsync(sourceLargePersonGroupId, name, userdata, recognitionModel: recognitionModel).Wait();
 
                 var personName = $"personName{sourceLargePersonGroupId}";
                 var personUserdata = $"personUserdata{sourceLargePersonGroupId}";
@@ -215,7 +217,7 @@ namespace FaceSDK.Tests
                 var userdata = $"userdata{sourcePersonGroupId}";
 
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
-                client.PersonGroup.CreateAsync(sourcePersonGroupId, name, userdata).Wait();
+                client.PersonGroup.CreateAsync(sourcePersonGroupId, name, userdata, recognitionModel: recognitionModel).Wait();
 
                 var personName = $"personName{sourcePersonGroupId}";
                 var personUserdata = $"personUserdata{sourcePersonGroupId}";
