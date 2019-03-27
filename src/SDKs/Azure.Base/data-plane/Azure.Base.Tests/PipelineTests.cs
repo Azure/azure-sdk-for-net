@@ -21,15 +21,7 @@ namespace Azure.Base.Tests
         {
             var requestIndex = 0;
             var mockTransport = new MockTransport(
-                _ => {
-                    if (requestIndex == 0)
-                    {
-                        return new MockResponse(500);
-                    }
-
-                    requestIndex++;
-                    return new MockResponse(1);
-                });
+                _ => requestIndex++ == 0 ? new MockResponse(500) : new MockResponse(1));
 
             var options = new HttpPipelineOptions(mockTransport);
             options.RetryPolicy = new CustomRetryPolicy();
