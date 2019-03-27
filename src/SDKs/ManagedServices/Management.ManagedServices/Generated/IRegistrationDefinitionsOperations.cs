@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// Gets the registration definition details.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
-        /// <param name='registratonDefinitionId'>
+        /// <param name='registrationDefinitionId'>
         /// Guid of the registration definition.
         /// </param>
         /// <param name='apiVersion'>
@@ -50,18 +50,18 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistrationDefinition>> GetWithHttpMessagesAsync(string scope, string registratonDefinitionId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegistrationDefinition>> GetWithHttpMessagesAsync(string scope, string registrationDefinitionId, string apiVersion, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the registration definition.
         /// </summary>
-        /// <param name='registratonDefinitionId'>
+        /// <param name='registrationDefinitionId'>
         /// Guid of the registration definition.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
         /// </param>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,18 +78,18 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistrationDefinition>> DeleteWithHttpMessagesAsync(string registratonDefinitionId, string apiVersion, string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegistrationDefinition>> DeleteWithHttpMessagesAsync(string registrationDefinitionId, string apiVersion, string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates a registration definition.
         /// </summary>
-        /// <param name='registratonDefinitionId'>
+        /// <param name='registrationDefinitionId'>
         /// Guid of the registration definition.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.
         /// </param>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='requestBody'>
         /// The parameters required to create new registration definition.
@@ -109,12 +109,12 @@ namespace Microsoft.Azure.Management.ManagedServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegistrationDefinition>> CreateOrUpdateWithHttpMessagesAsync(string registratonDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RegistrationDefinition>> CreateOrUpdateWithHttpMessagesAsync(string registrationDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of the registration definitions.
         /// </summary>
         /// <param name='scope'>
-        /// Id of the source subscription.
+        /// Scope of the resource.
         /// </param>
         /// <param name='apiVersion'>
         /// The API version to use for this operation.

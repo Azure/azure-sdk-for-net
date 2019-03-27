@@ -37,8 +37,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the AzureDataLakeStoreDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
-        /// <param name="folderPath">Path to the folder in the Azure Data Lake
-        /// Store. Type: string (or Expression with resultType string).</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
@@ -53,12 +51,14 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
+        /// <param name="folderPath">Path to the folder in the Azure Data Lake
+        /// Store. Type: string (or Expression with resultType string).</param>
         /// <param name="fileName">The name of the file in the Azure Data Lake
         /// Store. Type: string (or Expression with resultType string).</param>
         /// <param name="format">The format of the Data Lake Store.</param>
         /// <param name="compression">The data compression method used for the
         /// item(s) in the Azure Data Lake Store.</param>
-        public AzureDataLakeStoreDataset(LinkedServiceReference linkedServiceName, object folderPath, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+        public AzureDataLakeStoreDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object folderPath = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             FolderPath = folderPath;
@@ -109,10 +109,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         public override void Validate()
         {
             base.Validate();
-            if (FolderPath == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FolderPath");
-            }
         }
     }
 }

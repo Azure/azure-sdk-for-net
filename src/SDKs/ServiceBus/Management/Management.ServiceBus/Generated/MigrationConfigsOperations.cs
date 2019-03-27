@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Creates Migration configuration and starts migration of enties from
+        /// Creates Migration configuration and starts migration of entities from
         /// Standard to Premium namespace
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -702,7 +702,7 @@ namespace Microsoft.Azure.Management.ServiceBus
 
         /// <summary>
         /// This operation Completes Migration of entities by pointing the connection
-        /// strings to Premium namespace and any enties created after the operation
+        /// strings to Premium namespace and any entities created after the operation
         /// will be under Premium Namespace. CompleteMigration operation will fail when
         /// entity migration is in-progress.
         /// </summary>
@@ -1094,7 +1094,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Creates Migration configuration and starts migration of enties from
+        /// Creates Migration configuration and starts migration of entities from
         /// Standard to Premium namespace
         /// </summary>
         /// <param name='resourceGroupName'>

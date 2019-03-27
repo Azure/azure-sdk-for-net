@@ -25,12 +25,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         StandardLRS,
         [EnumMember(Value = "Standard_GRS")]
         StandardGRS,
-        [EnumMember(Value = "Standard_GZRS")]
-        StandardGZRS,
         [EnumMember(Value = "Standard_RAGRS")]
         StandardRAGRS,
-        [EnumMember(Value = "Standard_RAGZRS")]
-        StandardRAGZRS,
         [EnumMember(Value = "Standard_ZRS")]
         StandardZRS,
         [EnumMember(Value = "Premium_LRS")]
@@ -53,12 +49,8 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return "Standard_LRS";
                 case SkuName.StandardGRS:
                     return "Standard_GRS";
-                case SkuName.StandardGZRS:
-                    return "Standard_GZRS";
                 case SkuName.StandardRAGRS:
                     return "Standard_RAGRS";
-                case SkuName.StandardRAGZRS:
-                    return "Standard_RAGZRS";
                 case SkuName.StandardZRS:
                     return "Standard_ZRS";
                 case SkuName.PremiumLRS:
@@ -77,12 +69,8 @@ namespace Microsoft.Azure.Management.Storage.Models
                     return SkuName.StandardLRS;
                 case "Standard_GRS":
                     return SkuName.StandardGRS;
-                case "Standard_GZRS":
-                    return SkuName.StandardGZRS;
                 case "Standard_RAGRS":
                     return SkuName.StandardRAGRS;
-                case "Standard_RAGZRS":
-                    return SkuName.StandardRAGZRS;
                 case "Standard_ZRS":
                     return SkuName.StandardZRS;
                 case "Premium_LRS":

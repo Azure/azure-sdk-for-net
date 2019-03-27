@@ -10,150 +10,60 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobErrorCode.
     /// </summary>
-    /// <summary>
-    /// Determine base value for a given allowed value if exists, else return
-    /// the value itself
-    /// </summary>
-    [JsonConverter(typeof(JobErrorCodeConverter))]
-    public struct JobErrorCode : System.IEquatable<JobErrorCode>
+    public static class JobErrorCode
     {
-        private JobErrorCode(string underlyingValue)
-        {
-            UnderlyingValue=underlyingValue;
-        }
-
         /// <summary>
         /// Fatal service error, please contact support.
         /// </summary>
-        public static readonly JobErrorCode ServiceError = "ServiceError";
-
+        public const string ServiceError = "ServiceError";
         /// <summary>
         /// Transient error, please retry, if retry is unsuccessful, please
         /// contact support.
         /// </summary>
-        public static readonly JobErrorCode ServiceTransientError = "ServiceTransientError";
-
+        public const string ServiceTransientError = "ServiceTransientError";
         /// <summary>
         /// While trying to download the input files, the files were not
         /// accessible, please check the availability of the source.
         /// </summary>
-        public static readonly JobErrorCode DownloadNotAccessible = "DownloadNotAccessible";
-
+        public const string DownloadNotAccessible = "DownloadNotAccessible";
         /// <summary>
         /// While trying to download the input files, there was an issue during
         /// transfer (storage service, network errors), see details and check
         /// your source.
         /// </summary>
-        public static readonly JobErrorCode DownloadTransientError = "DownloadTransientError";
-
+        public const string DownloadTransientError = "DownloadTransientError";
         /// <summary>
         /// While trying to upload the output files, the destination was not
         /// reachable, please check the availability of the destination.
         /// </summary>
-        public static readonly JobErrorCode UploadNotAccessible = "UploadNotAccessible";
-
+        public const string UploadNotAccessible = "UploadNotAccessible";
         /// <summary>
         /// While trying to upload the output files, there was an issue during
         /// transfer (storage service, network errors), see details and check
         /// your destination.
         /// </summary>
-        public static readonly JobErrorCode UploadTransientError = "UploadTransientError";
-
+        public const string UploadTransientError = "UploadTransientError";
         /// <summary>
         /// There was a problem with the combination of input files and the
         /// configuration settings applied, fix the configuration settings and
         /// retry with the same input, or change input to match the
         /// configuration.
         /// </summary>
-        public static readonly JobErrorCode ConfigurationUnsupported = "ConfigurationUnsupported";
-
+        public const string ConfigurationUnsupported = "ConfigurationUnsupported";
         /// <summary>
         /// There was a problem with the input content (for example: zero byte
         /// files, or corrupt/non-decodable files), check the input files.
         /// </summary>
-        public static readonly JobErrorCode ContentMalformed = "ContentMalformed";
-
+        public const string ContentMalformed = "ContentMalformed";
         /// <summary>
         /// There was a problem with the format of the input (not valid media
         /// file, or an unsupported file/codec), check the validity of the
         /// input files.
         /// </summary>
-        public static readonly JobErrorCode ContentUnsupported = "ContentUnsupported";
-
-
-        /// <summary>
-        /// Underlying value of enum JobErrorCode
-        /// </summary>
-        private readonly string UnderlyingValue;
-
-        /// <summary>
-        /// Returns string representation for JobErrorCode
-        /// </summary>
-        public override string ToString()
-        {
-            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
-        }
-
-        /// <summary>
-        /// Compares enums of type JobErrorCode
-        /// </summary>
-        public bool Equals(JobErrorCode e)
-        {
-            return UnderlyingValue.Equals(e.UnderlyingValue);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert string to JobErrorCode
-        /// </summary>
-        public static implicit operator JobErrorCode(string value)
-        {
-            return new JobErrorCode(value);
-        }
-
-        /// <summary>
-        /// Implicit operator to convert JobErrorCode to string
-        /// </summary>
-        public static implicit operator string(JobErrorCode e)
-        {
-            return e.UnderlyingValue;
-        }
-
-        /// <summary>
-        /// Overriding == operator for enum JobErrorCode
-        /// </summary>
-        public static bool operator == (JobErrorCode e1, JobErrorCode e2)
-        {
-            return e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overriding != operator for enum JobErrorCode
-        /// </summary>
-        public static bool operator != (JobErrorCode e1, JobErrorCode e2)
-        {
-            return !e2.Equals(e1);
-        }
-
-        /// <summary>
-        /// Overrides Equals operator for JobErrorCode
-        /// </summary>
-        public override bool Equals(object obj)
-        {
-            return obj is JobErrorCode && Equals((JobErrorCode)obj);
-        }
-
-        /// <summary>
-        /// Returns for hashCode JobErrorCode
-        /// </summary>
-        public override int GetHashCode()
-        {
-            return UnderlyingValue.GetHashCode();
-        }
-
+        public const string ContentUnsupported = "ContentUnsupported";
     }
 }

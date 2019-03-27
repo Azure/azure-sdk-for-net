@@ -11,55 +11,30 @@ using System.Text;
 
 namespace Azure
 {
-    public readonly struct Response
+    public readonly struct Response: IDisposable
     {
-        readonly HttpMessage _message;
+        private readonly HttpPipelineResponse _httpResponse;
 
-        public Response(HttpMessage message)
-            => _message = message;
-
-        public int Status => _message.Status;
-
-        public Stream ContentStream => _message.ResponseContentStream;
-
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out long value)
+        public Response(HttpPipelineResponse httpResponse)
         {
-            value = default;
-            if (!TryGetHeader(name, out ReadOnlySpan<byte> bytes)) return false;
-            if (!Utf8Parser.TryParse(bytes, out value, out int consumed) || consumed != bytes.Length)
-                throw new Exception("bad content-length value");
-            return true;
-        }
-
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
-            => _message.TryGetHeader(name, out value);
-
-        public bool TryGetHeader(ReadOnlySpan<byte> name, out string value)
-        {
-            if (TryGetHeader(name, out ReadOnlySpan<byte> span)) {
-                value = span.AsciiToString();
-                return true;
+            if (httpResponse == null)
+            {
+                throw new ArgumentNullException(nameof(httpResponse));
             }
-            value = default;
-            return false;
+
+            _httpResponse = httpResponse;
         }
 
-        public bool TryGetHeader(string name, out long value)
+        public int Status => _httpResponse.Status;
+
+        public Stream ContentStream => _httpResponse.ResponseContentStream;
+
+        public bool TryGetHeader(string name, out string values)
         {
-            value = default;
-            if (!TryGetHeader(name, out string valueString)) return false;
-            if (!long.TryParse(valueString, out value))
-                throw new Exception("bad content-length value");
-            return true;
+            return _httpResponse.TryGetHeader(name, out values);
         }
 
-        public bool TryGetHeader(string name, out string value)
-        {
-            var utf8Name = Encoding.ASCII.GetBytes(name);
-            return TryGetHeader(utf8Name, out value);
-        }
-
-        public void Dispose() => _message.Dispose();
+        public void Dispose() => _httpResponse.Dispose();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
@@ -68,6 +43,6 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => _message.ToString();
+        public override string ToString() => _httpResponse.ToString();
     }
 }

@@ -95,6 +95,7 @@ namespace Microsoft.Azure.Management.Sql
                 new Tuple<string, string, string>("Sql", "TdeCertificates", "2017-10-01-preview"),
                 new Tuple<string, string, string>("Sql", "TransparentDataEncryptionActivities", "2014-04-01"),
                 new Tuple<string, string, string>("Sql", "TransparentDataEncryptions", "2014-04-01"),
+                new Tuple<string, string, string>("Sql", "VirtualClusters", "2015-05-01-preview"),
                 new Tuple<string, string, string>("Sql", "VirtualNetworkRules", "2015-05-01-preview"),
               }.AsEnumerable();
           }

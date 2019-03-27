@@ -33,9 +33,8 @@ namespace Microsoft.Azure.Management.Peering.Models
         /// </summary>
         /// <param name="connections">The set of connections that constitute an
         /// exchange peering.</param>
-        /// <param name="peerAsn">The Autonomous System Number (ASN) associated
-        /// with the peering.</param>
-        public PeeringPropertiesExchange(IList<ExchangeConnection> connections = default(IList<ExchangeConnection>), int? peerAsn = default(int?))
+        /// <param name="peerAsn">The reference of the peer ASN.</param>
+        public PeeringPropertiesExchange(IList<ExchangeConnection> connections = default(IList<ExchangeConnection>), SubResource peerAsn = default(SubResource))
         {
             Connections = connections;
             PeerAsn = peerAsn;
@@ -55,11 +54,10 @@ namespace Microsoft.Azure.Management.Peering.Models
         public IList<ExchangeConnection> Connections { get; set; }
 
         /// <summary>
-        /// Gets or sets the Autonomous System Number (ASN) associated with the
-        /// peering.
+        /// Gets or sets the reference of the peer ASN.
         /// </summary>
         [JsonProperty(PropertyName = "peerAsn")]
-        public int? PeerAsn { get; set; }
+        public SubResource PeerAsn { get; set; }
 
     }
 }

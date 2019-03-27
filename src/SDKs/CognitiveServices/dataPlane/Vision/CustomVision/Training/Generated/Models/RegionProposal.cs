@@ -48,5 +48,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         [JsonProperty(PropertyName = "boundingBox")]
         public BoundingBox BoundingBox { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BoundingBox != null)
+            {
+                BoundingBox.Validate();
+            }
+        }
     }
 }
