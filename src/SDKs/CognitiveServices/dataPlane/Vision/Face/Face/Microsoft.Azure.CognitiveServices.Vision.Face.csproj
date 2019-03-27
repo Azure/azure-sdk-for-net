@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.Face</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Face APIs.</Description>
-    <Version>2.3.0-preview</Version>
+    <Version>2.4.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Face</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Face;Face API;Face SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
