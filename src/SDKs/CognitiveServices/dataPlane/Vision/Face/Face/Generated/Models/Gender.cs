@@ -24,7 +24,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         [EnumMember(Value = "male")]
         Male,
         [EnumMember(Value = "female")]
-        Female
+        Female,
+        [EnumMember(Value = "genderless")]
+        Genderless
     }
     internal static class GenderEnumExtension
     {
@@ -41,6 +43,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                     return "male";
                 case Gender.Female:
                     return "female";
+                case Gender.Genderless:
+                    return "genderless";
             }
             return null;
         }
@@ -53,6 +57,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
                     return Gender.Male;
                 case "female":
                     return Gender.Female;
+                case "genderless":
+                    return Gender.Genderless;
             }
             return null;
         }
