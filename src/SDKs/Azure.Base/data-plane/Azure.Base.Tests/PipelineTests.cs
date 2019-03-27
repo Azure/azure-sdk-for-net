@@ -21,14 +21,14 @@ namespace Azure.Base.Tests
         public void Basics() {
 
             var options = new HttpPipelineOptions();
-            options.ReplaceTransport(new MockTransport(500, 1));
-            options.ReplaceRetryPolicy(new CustomRetryPolicy());
-            options.ReplaceLoggingPolicy(new LoggingPolicy());
+            options.Transport = new MockTransport(500, 1);
+            options.RetryPolicy = new CustomRetryPolicy();
+            options.LoggingPolicy = new LoggingPolicy();
 
             var listener = new TestEventListener();
             listener.EnableEvents(EventLevel.LogAlways);
 
-            var pipeline = options.CreatePipeline();
+            var pipeline = HttpPipeline.Create(options);
 
             using (var message = pipeline.CreateMessage(cancellation: default))
             {

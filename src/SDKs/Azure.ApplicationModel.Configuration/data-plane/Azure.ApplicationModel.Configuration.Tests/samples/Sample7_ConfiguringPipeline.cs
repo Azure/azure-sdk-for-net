@@ -22,17 +22,14 @@ namespace Azure.ApplicationModel.Configuration.Samples
             var options = new ConfigurationClientOptions();
 
             // custon HttpClient
-            options.ReplaceTransport(new HttpClientTransport(s_client));
+            options.Transport = new HttpClientTransport(s_client);
 
             // custom retry policy
-            options.ReplaceRetryPolicy(new FixedRetryPolicy(
+            options.RetryPolicy = new FixedRetryPolicy(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
-                retriableCodes: new int[] {
-                    500, // Internal Server Error 
-                    504  // Gateway Timeout
-                }
-            ));
+                500, 504 // status codes to retry
+            );
 
             options.AddPolicy(new AddIdHeader());
             options.AddPolicy(new ConsoleLog());

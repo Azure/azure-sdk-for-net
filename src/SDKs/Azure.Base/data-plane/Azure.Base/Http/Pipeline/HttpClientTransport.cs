@@ -42,7 +42,7 @@ namespace Azure.Base.Http.Pipeline
             => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
 
         public override void Register(HttpPipelineOptions options)
-            => options.ReplaceTransport(this);
+            => options.Transport = this;
 
         sealed class Message : HttpMessage
         {

@@ -24,6 +24,6 @@ namespace Azure.Base.Testing
             => _logged.ToString();
 
         public override void Register(HttpPipelineOptions options)
-            => options.ReplaceLoggingPolicy(this);
+            => options.LoggingPolicy = this;
     }
 }

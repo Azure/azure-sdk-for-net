@@ -18,15 +18,10 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             var options = new ConfigurationClientOptions();
 
-            options.ReplaceRetryPolicy(
-                new FixedRetryPolicy(
-                    maxRetries: 10,
-                    delay: TimeSpan.FromSeconds(1),
-                    retriableCodes: new int[] {
-                        500, // Internal Server Error 
-                        504  // Gateway Timeout
-                    }
-                )
+            options.RetryPolicy = new FixedRetryPolicy(
+                maxRetries: 10,
+                delay: TimeSpan.FromSeconds(1),
+                500, 504 // status codes to retry
             );
 
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");

@@ -26,6 +26,7 @@ namespace Azure.Base.Http
             _pipeline = all;
             _services = services != null ? services: HttpPipelineOptions.EmptyServiceProvider.Singleton;
         }
+        public static HttpPipeline Create(HttpPipelineOptions options) => options.CreatePipeline();
 
         internal HttpPipeline(HttpPipelinePolicy[] policies, IServiceProvider services = default)
         {

@@ -38,7 +38,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var pool = new TestPool<byte>();
 
             var options = new ConfigurationClientOptions();
-            options.ReplaceTransport(transport);
+            options.Transport = transport;
             options.AddService(pool, typeof(ArrayPool<byte>));
             
             var service = new ConfigurationClient(connectionString, options);
@@ -74,7 +74,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         public async Task Raw()
         {
             var options = new ConfigurationClientOptions();
-            options.ReplaceTransport(new GetMockTransport(s_testSetting.Key, default, s_testSetting));
+            options.Transport =new GetMockTransport(s_testSetting.Key, default, s_testSetting);
 
             var service = new ConfigurationClient(connectionString, options);
 
@@ -231,9 +231,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
             TelemetryPolicy.ApplicationId = "test_application";
 
             var options = new ConfigurationClientOptions();
+            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
+            options.RetryPolicy = new FixedRetryPolicy(5, TimeSpan.FromMilliseconds(100), 404);
             options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
-            options.ReplaceTransport(new GetMockTransport(s_testSetting.Key, default, s_testSetting));
-            options.ReplaceRetryPolicy(new FixedRetryPolicy(5, TimeSpan.FromMilliseconds(100), 404));
 
             var client = new ConfigurationClient(connectionString, options);
 

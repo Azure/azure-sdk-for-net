@@ -44,6 +44,6 @@ namespace Azure.Base.Http.Pipeline
         }
 
         public override void Register(HttpPipelineOptions options)
-            => options.ReplaceLoggingPolicy(this);
+            => options.LoggingPolicy = this;
     }
 }

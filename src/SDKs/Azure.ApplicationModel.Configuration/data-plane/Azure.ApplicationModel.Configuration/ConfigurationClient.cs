@@ -7,6 +7,7 @@ using Azure.Base.Diagnostics;
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using System;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,19 +18,28 @@ namespace Azure.ApplicationModel.Configuration
     {
         public ConfigurationClientOptions()
         {
-            ReplaceRetryPolicy(DefaultRetryPolicy);
+            ComponentName = "Azure.Configuration";
+            ComponentVersion = "1.0.0";
+            RetryPolicy = s_defaultRetryPolicy;
         }
 
-        protected override string ComponentName => "Azure.Configuration";
-
-        protected override string ComponentVersion => "1.0.0";
-
-        protected override HttpPipelinePolicy DefaultRetryPolicy => new FixedRetryPolicy(3, TimeSpan.Zero,
+        static HttpPipelinePolicy s_defaultRetryPolicy = new FixedRetryPolicy(3, TimeSpan.Zero,
             //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after 
             500, // Internal Server Error 
             503, // Service Unavailable
             504  // Gateway Timeout
         );
+
+        #region nobody wants to see these
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => base.Equals(obj);
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => base.GetHashCode();
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override string ToString() => base.ToString();
+        #endregion
     }
 
     public partial class ConfigurationClient
@@ -48,7 +58,7 @@ namespace Azure.ApplicationModel.Configuration
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
 
-            _pipeline = options.CreatePipeline();
+            _pipeline = HttpPipeline.Create(options);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 
