@@ -25,8 +25,8 @@ namespace Azure.ApplicationModel.Configuration
             504  // Gateway Timeout
         );
 
-        readonly Uri _baseUri;
-        HttpPipeline _pipeline;
+        private readonly Uri _baseUri;
+        private readonly HttpPipeline _pipeline;
 
         public static HttpPipelineOptions CreateDefaultPipelineOptions()
         {
@@ -48,7 +48,7 @@ namespace Azure.ApplicationModel.Configuration
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            options.AddPerCallPolicy(new ClientRequestIdPolicy());
+            options.AddPerCallPolicy(ClientRequestIdPolicy.Singleton);
             options.AddPerCallPolicy(new AuthenticationPolicy(credential, secret));
 
             _pipeline = options.Build(ComponentName, ComponentVersion);
@@ -71,12 +71,9 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.SetRequestLine(HttpVerb.Put, uri);
 
-
                 request.AddHeader(IfNoneMatch, "*");
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
-
-
 
                 request.Content = HttpPipelineRequestContent.Create(content);
 
@@ -212,8 +209,6 @@ namespace Azure.ApplicationModel.Configuration
             using (var request = _pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpVerb.Put, uri);
-
-
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 

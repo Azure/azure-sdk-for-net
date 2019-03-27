@@ -46,7 +46,7 @@ namespace Azure.ApplicationModel.Configuration
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 
-                string verb = message.Request.Method.ToString().ToUpper();
+                string verb = HttpVerbConverter.ToString(message.Request.Method);
                 DateTimeOffset utcNow = DateTimeOffset.UtcNow;
                 var utcNowString = utcNow.ToString("r");
                 var stringToSign = $"{verb}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
@@ -58,7 +58,6 @@ namespace Azure.ApplicationModel.Configuration
                 message.Request.AddHeader("x-ms-content-sha256", contentHash);
                 message.Request.AddHeader("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
-
 
             await ProcessNextAsync(pipeline, message);
         }

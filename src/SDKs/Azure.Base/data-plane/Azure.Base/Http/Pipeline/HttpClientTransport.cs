@@ -107,7 +107,7 @@ namespace Azure.Base.Http.Pipeline
 
             public override HttpVerb Method
             {
-                get => ToPipelineMethod(_requestMessage.Method);
+                get => HttpVerbConverter.Parse(_requestMessage.Method.Method);
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
@@ -183,20 +183,6 @@ namespace Azure.Base.Http.Pipeline
                     case HttpVerb.Patch: return s_patch;
 
                     default: throw new NotImplementedException();
-                }
-            }
-
-            public static HttpVerb ToPipelineMethod(HttpMethod method)
-            {
-                switch (method.Method) {
-                    case "GET": return HttpVerb.Get;
-                    case "POST": return HttpVerb.Post;
-                    case "PUT": return HttpVerb.Put;
-                    case "DELETE": return HttpVerb.Delete;
-                    case "PATCH": return HttpVerb.Patch;
-
-                    // method argument is not a REST verb
-                    default: throw new ArgumentOutOfRangeException(nameof(method));
                 }
             }
 
