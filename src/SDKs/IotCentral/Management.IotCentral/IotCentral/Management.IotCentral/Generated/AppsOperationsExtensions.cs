@@ -331,6 +331,34 @@ namespace Microsoft.Azure.Management.IotCentral
             }
 
             /// <summary>
+            /// Get all available application templates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static AppTemplatesResult Templates(this IAppsOperations operations)
+            {
+                return operations.TemplatesAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all available application templates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AppTemplatesResult> TemplatesAsync(this IAppsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TemplatesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update the metadata of an IoT Central application. The usual
             /// pattern to modify a property is to retrieve the IoT Central application
             /// metadata and security metadata, and then combine them with the modified
