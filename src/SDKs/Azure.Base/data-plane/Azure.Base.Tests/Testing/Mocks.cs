@@ -29,14 +29,8 @@ namespace Azure.Base.Testing
 
         public override void Dispose()
         {
-<<<<<<< HEAD
             _disposed = true;
             base.Dispose();
-=======
-            if(eventData.EventSource.Name == SOURCE_NAME) {
-                Logged.Add(eventData.EventName + " : " + eventData.Payload[0].ToString()); 
-            }
->>>>>>> Updated tests to function with the .Net framework
         }
     }
 
