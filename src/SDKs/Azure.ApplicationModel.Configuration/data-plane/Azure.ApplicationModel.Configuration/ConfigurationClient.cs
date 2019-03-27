@@ -237,7 +237,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, CancellationToken cancellation = default)
+        public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
@@ -248,8 +248,11 @@ namespace Azure.ApplicationModel.Configuration
                 request.SetRequestLine(HttpVerb.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
-
-
+                if (acceptDateTime != default)
+                {
+                    var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
+                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                }
                 request.AddHeader(HttpHeader.Common.JsonContentType);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
@@ -261,44 +264,50 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(BatchRequestOptions batchOptions, CancellationToken cancellation = default)
+        public async Task<Response<SettingBatch>> GetBatchAsync(ConfigurationSelector selector, CancellationToken cancellation = default)
         {
-            var uri = BuildUriForGetBatch(batchOptions);
+            var uri = BuildUriForGetBatch(selector);
 
             using (var request = _pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpVerb.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                AddOptionsHeaders(batchOptions, request);
-
+                if (selector.AcceptDateTime.HasValue)
+                {
+                    var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 206 /* partial */)
                 {
-                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, batchOptions, cancellation);
+                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation);
                     return new Response<SettingBatch>(response, batch);
                 }
                 else throw new RequestFailedException(response);
             }
         }
 
-        public async Task<Response<SettingBatch>> GetRevisionsAsync(BatchRequestOptions options, CancellationToken cancellation = default)
+        public async Task<Response<SettingBatch>> GetRevisionsAsync(ConfigurationSelector selector, CancellationToken cancellation = default)
         {
-            var uri = BuildUriForRevisions(options);
+            var uri = BuildUriForRevisions(selector);
 
             using (var request = _pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpVerb.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                AddOptionsHeaders(options, request);
-
+                if (selector.AcceptDateTime.HasValue)
+                {
+                    var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 206 /* partial */)
                 {
-                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, options, cancellation);
+                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation);
                     return new Response<SettingBatch>(response, batch);
                 }
                 else throw new RequestFailedException(response);

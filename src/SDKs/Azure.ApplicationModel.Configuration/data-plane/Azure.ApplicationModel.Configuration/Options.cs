@@ -4,6 +4,7 @@
 
 using Azure.Base;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Azure.ApplicationModel.Configuration
@@ -24,26 +25,49 @@ namespace Azure.ApplicationModel.Configuration
         All = uint.MaxValue
     }
 
-    public class RequestOptions
+    public class ConfigurationSelector
     {
+        public static readonly string Any = "*";
         /// <summary>
-        /// Specific label of the key.
+        /// Keys that will be used to filter.
         /// </summary>
-        public string Label { get; set; } = null;
-
-        public ETagFilter ETag { get; set; }
-
+        /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
+        public List<string> Keys { get; set; } = new List<string> { Any };
         /// <summary>
-        /// If set, then key values will be retrieved exactly as they existed at the provided time.
+        /// Labels that will be used to filter.
         /// </summary>
-        public DateTimeOffset? Revision { get; set; }
-
+        /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
+        public List<string> Labels { get; set; } = new List<string> { Any };
         /// <summary>
         /// IKeyValue fields that will be retrieved.
         /// </summary>
         public SettingFields Fields { get; set; } = SettingFields.All;
-        
-        public static implicit operator RequestOptions(string label) => new RequestOptions() { Label = label };
+        /// <summary>
+        /// If set, then key values will be retrieved exactly as they existed at the provided time.
+        /// </summary>
+        public DateTimeOffset? AcceptDateTime { get; set; }
+
+        public ConfigurationSelector() { }
+
+        public ConfigurationSelector(string key, string label = default)
+        {
+            Keys = new List<string> { key };
+            if(label != default) Labels = new List<string> { label };
+        }
+
+        internal string BatchLink { get; set; }
+
+        internal ConfigurationSelector Clone(string batchLink)
+        {
+            return new ConfigurationSelector()
+            {
+                Keys = Keys,
+                Labels = Labels,
+                Fields = Fields,
+                AcceptDateTime = AcceptDateTime,
+                BatchLink = batchLink
+            };
+        }
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -56,32 +80,5 @@ namespace Azure.ApplicationModel.Configuration
         // TODO ()
         public override string ToString() => base.ToString();
         #endregion
-    }
-
-    public class BatchRequestOptions : RequestOptions
-    {
-        /// <summary>
-        /// Keys that will be used to filter.
-        /// </summary>
-        /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
-        public string Key { get; set; } = "*";
-
-        public string BatchLink { get; set; }
-
-        internal BatchRequestOptions Clone()
-        {
-            return new BatchRequestOptions()
-            {
-                Key = Key,
-                BatchLink = BatchLink
-            };
-        }
-    }
-
-    public static class LabelFilters
-    {
-        public static readonly string Null = "\0";
-
-        public static readonly string Any = "*";
     }
 }

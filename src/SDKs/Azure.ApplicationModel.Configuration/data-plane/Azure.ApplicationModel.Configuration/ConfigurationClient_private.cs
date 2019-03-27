@@ -30,28 +30,6 @@ namespace Azure.ApplicationModel.Configuration
             "application/vnd.microsoft.appconfig.kv+json"
         );
 
-        // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddOptionsHeaders(RequestOptions options, HttpPipelineRequest request)
-        {
-            if (options == null) return;
-
-            if (options.ETag.IfMatch != default)
-            {
-                request.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
-            }
-
-            if (options.ETag.IfNoneMatch != default)
-            {
-                request.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
-            }
-
-            if (options.Revision.HasValue)
-            {
-                var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                request.AddHeader(AcceptDatetimeHeader, dateTime);
-            }
-        }
-
         static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)
         {
             ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation);
@@ -127,56 +105,54 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        void BuildBatchQuery(UriBuilder builder, BatchRequestOptions options)
+        void BuildBatchQuery(UriBuilder builder, ConfigurationSelector selector)
         {
-            if (!string.IsNullOrEmpty(options.Key))
+            if (selector.Keys != null)
             {
-                builder.AppendQuery(KeyQueryFilter, options.Key);
+                var keys = string.Join(",", selector.Keys).ToLower();
+                builder.AppendQuery(KeyQueryFilter, keys);
             }
 
-            if (!string.IsNullOrEmpty(options.BatchLink))
+            if (selector.Labels != null)
             {
-                builder.AppendQuery("after", options.BatchLink);
-            }
-
-            if (options.Label != null)
-            {
-                if (options.Label == string.Empty)
+                for(int i =0; i < selector.Labels.Count; i++)
                 {
-                    options.Label = "\0";
+                    if (selector.Labels[i] == string.Empty)
+                    {
+                        selector.Labels[i] = "\0";
+                    }
                 }
-                builder.AppendQuery(LabelQueryFilter, options.Label);
+                var labels = string.Join(",", selector.Labels).ToLower();
+                builder.AppendQuery(LabelQueryFilter, labels);
             }
 
-            if (options.Fields != SettingFields.All)
+            if (selector.Fields != SettingFields.All)
             {
-                var filter = (options.Fields).ToString().ToLower();
+                var filter = (selector.Fields).ToString().ToLower();
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
+
+            if (!string.IsNullOrEmpty(selector.BatchLink))
+            {
+                builder.AppendQuery("after", selector.BatchLink);
+            }
         }
 
-        Uri BuildUriForList()
+        Uri BuildUriForGetBatch(ConfigurationSelector selector)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute;
+            BuildBatchQuery(builder, selector);
+
             return builder.Uri;
         }
 
-        Uri BuildUriForGetBatch(BatchRequestOptions options)
-        {
-            var builder = new UriBuilder(_baseUri);
-            builder.Path = KvRoute;
-
-            BuildBatchQuery(builder, options);
-            return builder.Uri;
-        }
-
-        Uri BuildUriForRevisions(BatchRequestOptions options)
+        Uri BuildUriForRevisions(ConfigurationSelector selector)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = RevisionsRoute;
+            BuildBatchQuery(builder, selector);
 
-            BuildBatchQuery(builder, options);
             return builder.Uri;
         }
 

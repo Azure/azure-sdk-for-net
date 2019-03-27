@@ -412,10 +412,9 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(testSettingUpdate);
 
                 // Test
-                var filter = new BatchRequestOptions();
-                filter.Key = setting.Key;
-                filter.Revision = DateTimeOffset.MaxValue;
-                SettingBatch batch = await service.GetRevisionsAsync(filter, CancellationToken.None);
+                var selector = new ConfigurationSelector(setting.Key);
+                selector.AcceptDateTime = DateTimeOffset.MaxValue;
+                SettingBatch batch = await service.GetRevisionsAsync(selector, CancellationToken.None);
 
                 int resultsReturned = 0;
                 for (int i = 0; i < batch.Count; i++)
@@ -508,6 +507,27 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
+        public async Task GetWithAcceptDateTime()
+        {
+            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
+            var service = new ConfigurationClient(connectionString);
+
+            try
+            {
+                await service.SetAsync(s_testSetting);
+
+                // Test
+                ConfigurationSetting responseSetting = await service.GetAsync(s_testSetting.Key, s_testSetting.Label, DateTimeOffset.MaxValue);
+                Assert.AreEqual(s_testSetting, responseSetting);
+            }
+            finally
+            {
+                await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
+            }
+        }
+
+        [Test]
         public async Task GetBatchPagination()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
@@ -518,16 +538,18 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var key = await SetMultipleKeys(service, expectedEvents);
 
             int resultsReturned = 0;
-            BatchRequestOptions options = new BatchRequestOptions() { Key = key };
+            ConfigurationSelector selector = new ConfigurationSelector(key);
             while (true)
             {
-                using (Response<SettingBatch> response = await service.GetBatchAsync(options, CancellationToken.None))
+                using (Response<SettingBatch> response = await service.GetBatchAsync(selector, CancellationToken.None))
                 {
                     SettingBatch batch = response.Result;
                     resultsReturned += batch.Count;
-                    options = batch.NextBatch;
+                    var nextBatch = batch.NextBatch;
 
-                    if (string.IsNullOrEmpty(options.BatchLink)) break;
+                    if (nextBatch == null) break;
+
+                    selector = nextBatch;
                 }
             }
             Assert.AreEqual(expectedEvents, resultsReturned);
@@ -545,12 +567,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 await service.SetAsync(s_testSetting);
 
-                BatchRequestOptions options = new BatchRequestOptions()
+                ConfigurationSelector selector = new ConfigurationSelector()
                 {
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value
                 };
 
-                SettingBatch batch = await service.GetBatchAsync(options, CancellationToken.None);
+                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
                 int resultsReturned = batch.Count;
 
                 //At least there should be one key available
