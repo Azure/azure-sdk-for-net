@@ -19,7 +19,7 @@ namespace Azure.Base.Testing
             Status = status;
         }
 
-        public override int Status { get; set; }
+        public override int Status { get; }
 
         public override Stream ResponseContentStream => _responseContentStream;
 

@@ -34,7 +34,7 @@ namespace Azure.Base.Tests
         {
             var userAgent = HttpHeader.Common.CreateUserAgent("sdk_name", "sdk_version", "application_id").ToString();
 
-            var isValidFormat = Regex.IsMatch(userAgent, @"^User-Agent:application_id sdk_name/sdk_version \(.*;.*\)", RegexOptions.IgnoreCase);
+            var isValidFormat = Regex.IsMatch(userAgent, @"^User-Agent:application_id azsdk-net-sdk_name/sdk_version \(.*;.*\)", RegexOptions.IgnoreCase);
             Assert.True(isValidFormat);
 
             var userAgentWithApplication = HttpHeader.Common.CreateUserAgent("sdk_name", "sdk_version").ToString();

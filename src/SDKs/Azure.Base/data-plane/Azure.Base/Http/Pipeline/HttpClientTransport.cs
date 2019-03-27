@@ -245,11 +245,7 @@ namespace Azure.Base.Http.Pipeline
                 _responseMessage = responseMessage;
             }
 
-            public override int Status
-            {
-                get => (int)_responseMessage.StatusCode;
-                set => _responseMessage.StatusCode = (HttpStatusCode)value;
-            }
+            public override int Status => (int)_responseMessage.StatusCode;
 
             // TODO (pri 1): is it ok to just call GetResult here?
             public override Stream ResponseContentStream

@@ -1,3 +1,3 @@
 ﻿using Azure.Base.Attributes;
 
-[assembly:AzureSdkComponent("Azure.Configuration")]
+[assembly:AzureSdkClientLibrary("config")]

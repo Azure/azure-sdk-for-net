@@ -44,7 +44,7 @@ namespace Azure.ApplicationModel.Configuration
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
 
-            _pipeline = options.Build(typeof(ConfigurationClient));
+            _pipeline = options.Build(typeof(ConfigurationClient).Assembly);
             ParseConnectionString(connectionString, out _baseUri, out _credential, out _secret);
         }
 

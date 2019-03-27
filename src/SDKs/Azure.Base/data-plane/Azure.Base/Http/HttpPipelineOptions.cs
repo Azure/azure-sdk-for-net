@@ -79,15 +79,20 @@ namespace Azure.Base.Http
             }
         }
 
-        public HttpPipeline Build(Type clientType)
+        public HttpPipeline Build(Assembly clientAssembly)
         {
-            var componentAttribute = clientType.Assembly.GetCustomAttribute<AzureSdkComponentAttribute>();
-            if (componentAttribute == null)
+            if (clientAssembly == null)
             {
-                throw new InvalidOperationException($"{nameof(AzureSdkComponentAttribute)} is required to be set on client SDK assembly.");
+                throw new ArgumentNullException(nameof(clientAssembly));
             }
 
-            var assemblyVersion = clientType.Assembly.GetName().Version.ToString();
+            var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+            if (componentAttribute == null)
+            {
+                throw new InvalidOperationException($"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
+            }
+
+            var assemblyVersion = clientAssembly.GetName().Version.ToString();
 
             return Build(componentAttribute.ComponentName, assemblyVersion);
         }

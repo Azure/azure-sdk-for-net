@@ -6,11 +6,11 @@ using System;
 namespace Azure.Base.Attributes
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
-    public class AzureSdkComponentAttribute: Attribute
+    public class AzureSdkClientLibraryAttribute: Attribute
     {
         public string ComponentName { get; }
 
-        public AzureSdkComponentAttribute(string componentName)
+        public AzureSdkClientLibraryAttribute(string componentName)
         {
             ComponentName = componentName;
         }

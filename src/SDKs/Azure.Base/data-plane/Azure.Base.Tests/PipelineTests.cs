@@ -53,7 +53,7 @@ namespace Azure.Base.Tests
                     return new MockResponse(200);
                 });
 
-            var pipeline = new HttpPipelineOptions(mockTransport).Build(typeof(PipelineTests));
+            var pipeline = new HttpPipelineOptions(mockTransport).Build(typeof(PipelineTests).Assembly);
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
@@ -61,7 +61,7 @@ namespace Azure.Base.Tests
 
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            Assert.AreEqual(userAgent, $"AzureSDK.Tests/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
+            Assert.AreEqual(userAgent, $"azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
 
         class CustomRetryPolicy : RetryPolicy
