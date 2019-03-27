@@ -15,6 +15,8 @@ namespace Azure.Base.Http
 
         public abstract Stream ResponseContentStream { get; }
 
+        public abstract string RequestId { get; set; }
+
         public abstract IEnumerable<HttpHeader> Headers { get; }
 
         public abstract void Dispose();
