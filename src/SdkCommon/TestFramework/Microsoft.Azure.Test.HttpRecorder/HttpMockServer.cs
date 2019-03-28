@@ -76,7 +76,8 @@ namespace Microsoft.Azure.Test.HttpRecorder
                     break;
                 }
             }
-#elif netcoreapp11 || netcoreapp20
+#elif !FullNetFx
+//netcoreapp11 || netcoreapp20
             location = AppContext.BaseDirectory;
 #endif
             RecordsDirectory = Path.Combine(location, RecordsDirectory);

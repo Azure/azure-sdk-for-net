@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Count', 'Bytes', 'Seconds', 'Percent', 'CountPerSecond',
         /// 'BytesPerSecond'</param>
         /// <param name="metricAvailabilities">The list of database metric
-        /// availabities for the metric.</param>
+        /// availabilities for the metric.</param>
         public MetricDefinition(MetricName name = default(MetricName), string primaryAggregationType = default(string), string resourceUri = default(string), string unit = default(string), IList<MetricAvailability> metricAvailabilities = default(IList<MetricAvailability>))
         {
             Name = name;
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Unit { get; private set; }
 
         /// <summary>
-        /// Gets the list of database metric availabities for the metric.
+        /// Gets the list of database metric availabilities for the metric.
         /// </summary>
         [JsonProperty(PropertyName = "metricAvailabilities")]
         public IList<MetricAvailability> MetricAvailabilities { get; private set; }

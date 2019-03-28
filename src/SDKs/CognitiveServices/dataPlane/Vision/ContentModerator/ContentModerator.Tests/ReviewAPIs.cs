@@ -1,6 +1,6 @@
 ﻿using System;
-using Microsoft.CognitiveServices.ContentModerator;
-using Microsoft.CognitiveServices.ContentModerator.Models;
+using Microsoft.Azure.CognitiveServices.ContentModerator;
+using Microsoft.Azure.CognitiveServices.ContentModerator.Models;
 using System.Collections.Generic;
 using ContentModeratorTests.Helpers;
 using Newtonsoft.Json;

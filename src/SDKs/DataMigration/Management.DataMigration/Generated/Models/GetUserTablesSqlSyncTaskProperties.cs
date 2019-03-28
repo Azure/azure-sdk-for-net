@@ -42,11 +42,13 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// 'Canceled', 'Succeeded', 'Failed', 'FailedInputValidation',
         /// 'Faulted'</param>
         /// <param name="commands">Array of command properties.</param>
+        /// <param name="clientData">Key value pairs of client data to attach
+        /// meta data information to task</param>
         /// <param name="input">Task input</param>
         /// <param name="output">Task output. This is ignored if
         /// submitted.</param>
-        public GetUserTablesSqlSyncTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), GetUserTablesSqlSyncTaskInput input = default(GetUserTablesSqlSyncTaskInput), IList<GetUserTablesSqlSyncTaskOutput> output = default(IList<GetUserTablesSqlSyncTaskOutput>))
-            : base(errors, state, commands)
+        public GetUserTablesSqlSyncTaskProperties(IList<ODataError> errors = default(IList<ODataError>), string state = default(string), IList<CommandProperties> commands = default(IList<CommandProperties>), IDictionary<string, string> clientData = default(IDictionary<string, string>), GetUserTablesSqlSyncTaskInput input = default(GetUserTablesSqlSyncTaskInput), IList<GetUserTablesSqlSyncTaskOutput> output = default(IList<GetUserTablesSqlSyncTaskOutput>))
+            : base(errors, state, commands, clientData)
         {
             Input = input;
             Output = output;

@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <remarks>
         /// The low-priority node has been preempted. Tasks which were running
-        /// on the node when it was pre-empted will be rescheduled when another
+        /// on the node when it was preempted will be rescheduled when another
         /// node becomes available. Possible values include: 'idle',
         /// 'rebooting', 'reimaging', 'running', 'unusable', 'creating',
         /// 'starting', 'waitingForStartTask', 'startTaskFailed', 'unknown',

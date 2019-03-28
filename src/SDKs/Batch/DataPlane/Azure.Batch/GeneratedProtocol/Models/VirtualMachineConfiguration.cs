@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="windowsConfiguration">Windows operating system
         /// settings on the virtual machine.</param>
         /// <param name="dataDisks">The configuration for data disks attached
-        /// to the comptue nodes in the pool.</param>
+        /// to the compute nodes in the pool.</param>
         /// <param name="licenseType">The type of on-premises license to be
         /// used when deploying the operating system.</param>
         /// <param name="containerConfiguration">The container configuration
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the configuration for data disks attached to the
-        /// comptue nodes in the pool.
+        /// compute nodes in the pool.
         /// </summary>
         /// <remarks>
         /// This property must be specified if the compute nodes in the pool

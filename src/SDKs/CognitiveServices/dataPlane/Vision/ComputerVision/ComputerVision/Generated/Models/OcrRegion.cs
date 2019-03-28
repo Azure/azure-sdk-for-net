@@ -39,6 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// rotated around its center according to the detected text angle (see
         /// textAngle property), with the origin at the top-left corner, and
         /// the y-axis pointing down.</param>
+        /// <param name="lines">An array of recognized lines of text.</param>
         public OcrRegion(string boundingBox = default(string), IList<OcrLine> lines = default(IList<OcrLine>))
         {
             BoundingBox = boundingBox;
@@ -64,6 +65,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public string BoundingBox { get; set; }
 
         /// <summary>
+        /// Gets or sets an array of recognized lines of text.
         /// </summary>
         [JsonProperty(PropertyName = "lines")]
         public IList<OcrLine> Lines { get; set; }

@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <PropertyGroup>
+    <Description>Microsoft Azure Key Vault Extensions Class Library</Description>
+    <AssemblyTitle>Microsoft Azure Key Vault Extensions</AssemblyTitle>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault.Core\Microsoft.Azure.KeyVault.Core.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault.Cryptography\Microsoft.Azure.KeyVault.Cryptography.csproj" />
+    <ProjectReference Include="..\Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+</Project>

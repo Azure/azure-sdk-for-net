@@ -644,7 +644,7 @@ namespace Storage.Tests
                     CustomDomain = new CustomDomain
                     {
                         Name = "foo.example.com",
-                        UseSubDomain = true
+                        UseSubDomainName = true
                     }
                 };
 
@@ -753,7 +753,7 @@ namespace Storage.Tests
                     CustomDomain = new CustomDomain
                     {
                         Name = "foo.example.com",
-                        UseSubDomain = true
+                        UseSubDomainName = true
                     }
                 };
 
@@ -1912,6 +1912,7 @@ namespace Storage.Tests
                 Assert.NotNull(account.GeoReplicationStats);
                 Assert.NotNull(account.GeoReplicationStats.Status);
                 Assert.NotNull(account.GeoReplicationStats.LastSyncTime);
+                Assert.NotNull(account.GeoReplicationStats.CanFailover);
             }
         }
     }

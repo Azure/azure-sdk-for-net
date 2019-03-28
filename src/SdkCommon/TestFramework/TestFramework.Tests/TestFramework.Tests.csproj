@@ -5,6 +5,9 @@
     <AssemblyName>TestFramework.Tests</AssemblyName>
     <PackageId>TestFramework.Tests</PackageId>
   </PropertyGroup>  
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Test.HttpRecorder\Microsoft.Azure.Test.HttpRecorder.csproj" /> 
     <ProjectReference Include="..\ClientRuntime.Azure.TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj" />

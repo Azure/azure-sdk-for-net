@@ -40,22 +40,22 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// use.</param>
         /// <param name="nodeAgentSkuId">The SKU of the Batch node agent to be
         /// provisioned on compute nodes in the pool.</param>
-        /// <param name="osDisk">Settings for the operating system disk of the
-        /// Virtual Machine.</param>
         /// <param name="windowsConfiguration">Windows operating system
         /// settings on the virtual machine.</param>
         /// <param name="dataDisks">The configuration for data disks attached
-        /// to the comptue nodes in the pool.</param>
+        /// to the compute nodes in the pool.</param>
         /// <param name="licenseType">The type of on-premises license to be
         /// used when deploying the operating system.</param>
-        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, OSDisk osDisk = default(OSDisk), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string))
+        /// <param name="containerConfiguration">The container configuration
+        /// for the pool.</param>
+        public VirtualMachineConfiguration(ImageReference imageReference, string nodeAgentSkuId, WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), IList<DataDisk> dataDisks = default(IList<DataDisk>), string licenseType = default(string), ContainerConfiguration containerConfiguration = default(ContainerConfiguration))
         {
             ImageReference = imageReference;
-            OsDisk = osDisk;
             NodeAgentSkuId = nodeAgentSkuId;
             WindowsConfiguration = windowsConfiguration;
             DataDisks = dataDisks;
             LicenseType = licenseType;
+            ContainerConfiguration = containerConfiguration;
             CustomInit();
         }
 
@@ -70,13 +70,6 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </summary>
         [JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
-
-        /// <summary>
-        /// Gets or sets settings for the operating system disk of the Virtual
-        /// Machine.
-        /// </summary>
-        [JsonProperty(PropertyName = "osDisk")]
-        public OSDisk OsDisk { get; set; }
 
         /// <summary>
         /// Gets or sets the SKU of the Batch node agent to be provisioned on
@@ -108,7 +101,7 @@ namespace Microsoft.Azure.Management.Batch.Models
 
         /// <summary>
         /// Gets or sets the configuration for data disks attached to the
-        /// comptue nodes in the pool.
+        /// compute nodes in the pool.
         /// </summary>
         /// <remarks>
         /// This property must be specified if the compute nodes in the pool
@@ -133,6 +126,18 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// </remarks>
         [JsonProperty(PropertyName = "licenseType")]
         public string LicenseType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the container configuration for the pool.
+        /// </summary>
+        /// <remarks>
+        /// If specified, setup is performed on each node in the pool to allow
+        /// tasks to run in containers. All regular tasks and job manager tasks
+        /// run on this pool must specify the containerSettings property, and
+        /// all other tasks may specify it.
+        /// </remarks>
+        [JsonProperty(PropertyName = "containerConfiguration")]
+        public ContainerConfiguration ContainerConfiguration { get; set; }
 
         /// <summary>
         /// Validate the object.

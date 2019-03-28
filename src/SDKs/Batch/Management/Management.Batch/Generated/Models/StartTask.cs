@@ -47,7 +47,9 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// for the start task to complete successfully (that is, to exit with
         /// exit code 0) before scheduling any tasks on the compute
         /// node.</param>
-        public StartTask(string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), UserIdentity userIdentity = default(UserIdentity), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?))
+        /// <param name="containerSettings">The settings for the container
+        /// under which the start task runs.</param>
+        public StartTask(string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), UserIdentity userIdentity = default(UserIdentity), int? maxTaskRetryCount = default(int?), bool? waitForSuccess = default(bool?), TaskContainerSettings containerSettings = default(TaskContainerSettings))
         {
             CommandLine = commandLine;
             ResourceFiles = resourceFiles;
@@ -55,6 +57,7 @@ namespace Microsoft.Azure.Management.Batch.Models
             UserIdentity = userIdentity;
             MaxTaskRetryCount = maxTaskRetryCount;
             WaitForSuccess = waitForSuccess;
+            ContainerSettings = containerSettings;
             CustomInit();
         }
 
@@ -138,5 +141,42 @@ namespace Microsoft.Azure.Management.Batch.Models
         [JsonProperty(PropertyName = "waitForSuccess")]
         public bool? WaitForSuccess { get; set; }
 
+        /// <summary>
+        /// Gets or sets the settings for the container under which the start
+        /// task runs.
+        /// </summary>
+        /// <remarks>
+        /// When this is specified, all directories recursively below the
+        /// AZ_BATCH_NODE_ROOT_DIR (the root of Azure Batch directories on the
+        /// node) are mapped into the container, all task environment variables
+        /// are mapped into the container, and the task command line is
+        /// executed in the container.
+        /// </remarks>
+        [JsonProperty(PropertyName = "containerSettings")]
+        public TaskContainerSettings ContainerSettings { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (EnvironmentSettings != null)
+            {
+                foreach (var element in EnvironmentSettings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (ContainerSettings != null)
+            {
+                ContainerSettings.Validate();
+            }
+        }
     }
 }
