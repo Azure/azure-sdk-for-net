@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// API to check for resource name availability.
             /// A name is available if no other resource exists that has the same
             /// SubscriptionId, Resource Name and Type
-            /// or if one or more such resources exist, each of these must be GCed and
+            /// or if one or more such resources exist, each of these must be GC'd and
             /// their time of deletion be more than 24 Hours Ago
             /// </summary>
             /// <param name='operations'>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='input'>
             /// Contains information about Resource type and Resource name
             /// </param>
-            public static ResourceNameAvailabilityResultResource CheckNameAvailability(this IRecoveryServicesOperations operations, string resourceGroupName, string location, ResourceNameAvailabilityParameters input)
+            public static CheckNameAvailabilityResultResource CheckNameAvailability(this IRecoveryServicesOperations operations, string resourceGroupName, string location, ResourceNameAvailabilityParameters input)
             {
                 return operations.CheckNameAvailabilityAsync(resourceGroupName, location, input).GetAwaiter().GetResult();
             }
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// API to check for resource name availability.
             /// A name is available if no other resource exists that has the same
             /// SubscriptionId, Resource Name and Type
-            /// or if one or more such resources exist, each of these must be GCed and
+            /// or if one or more such resources exist, each of these must be GC'd and
             /// their time of deletion be more than 24 Hours Ago
             /// </summary>
             /// <param name='operations'>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceNameAvailabilityResultResource> CheckNameAvailabilityAsync(this IRecoveryServicesOperations operations, string resourceGroupName, string location, ResourceNameAvailabilityParameters input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityResultResource> CheckNameAvailabilityAsync(this IRecoveryServicesOperations operations, string resourceGroupName, string location, ResourceNameAvailabilityParameters input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, location, input, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same
         /// SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GCed
+        /// or if one or more such resources exist, each of these must be GC'd
         /// and their time of deletion be more than 24 Hours Ago
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -55,6 +55,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ResourceNameAvailabilityResultResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, ResourceNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CheckNameAvailabilityResultResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, ResourceNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

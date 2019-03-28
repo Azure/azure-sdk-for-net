@@ -17,20 +17,20 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// Response for check name availability API. Resource provider will set
     /// availability as true | false.
     /// </summary>
-    public partial class ResourceNameAvailabilityResultResource : Resource
+    public partial class CheckNameAvailabilityResultResource : Resource
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// ResourceNameAvailabilityResultResource class.
+        /// CheckNameAvailabilityResultResource class.
         /// </summary>
-        public ResourceNameAvailabilityResultResource()
+        public CheckNameAvailabilityResultResource()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// ResourceNameAvailabilityResultResource class.
+        /// CheckNameAvailabilityResultResource class.
         /// </summary>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
         /// <param name="eTag">Optional ETag.</param>
-        /// <param name="properties">ResourceNameAvailabilityResultResource
+        /// <param name="properties">CheckNameAvailabilityResultResource
         /// properties</param>
-        public ResourceNameAvailabilityResultResource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), ResourceNameAvailabilityResult properties = default(ResourceNameAvailabilityResult))
+        public CheckNameAvailabilityResultResource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), CheckNameAvailabilityResult properties = default(CheckNameAvailabilityResult))
             : base(id, name, type, eTag)
         {
             Properties = properties;
@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets resourceNameAvailabilityResultResource properties
+        /// Gets or sets checkNameAvailabilityResultResource properties
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public ResourceNameAvailabilityResult Properties { get; set; }
+        public CheckNameAvailabilityResult Properties { get; set; }
 
     }
 }

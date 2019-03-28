@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// API to check for resource name availability.
         /// A name is available if no other resource exists that has the same
         /// SubscriptionId, Resource Name and Type
-        /// or if one or more such resources exist, each of these must be GCed and
+        /// or if one or more such resources exist, each of these must be GC'd and
         /// their time of deletion be more than 24 Hours Ago
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ResourceNameAvailabilityResultResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, ResourceNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResultResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, ResourceNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ResourceNameAvailabilityResultResource>();
+            var _result = new AzureOperationResponse<CheckNameAvailabilityResultResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<ResourceNameAvailabilityResultResource>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<CheckNameAvailabilityResultResource>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
