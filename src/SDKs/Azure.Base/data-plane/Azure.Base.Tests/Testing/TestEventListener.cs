@@ -28,4 +28,10 @@ namespace Azure.Base.Testing
             base.Dispose();
         }
     }
+
+    public static class TestEventListenerExtensions
+    {
+        public static T GetProperty<T>(this EventWrittenEventArgs data, string propName)
+            => (T)data.Payload[data.PayloadNames.IndexOf(propName)];
+    }
 }

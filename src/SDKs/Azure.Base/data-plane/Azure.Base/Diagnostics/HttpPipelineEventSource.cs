@@ -30,6 +30,7 @@ namespace Azure.Base.Diagnostics
         private const int RequestDelayEvent = 7;
         private const int ErrorResponseEvent = 8;
         private const int ErrorResponseContentEvent = 9;
+        private const int RequestRetryingEvent = 10;
 
         private HttpPipelineEventSource() : base(EventSourceName) { }
 
@@ -96,6 +97,12 @@ namespace Azure.Base.Diagnostics
             ResponseDelayCore(delayMilliseconds);
         }
 
+        [NonEvent]
+        public void RequestRetrying(HttpPipelineRequest request, int retryNumber)
+        {
+            RequestRetrying(request.RequestId, retryNumber);
+        }
+
         // TODO (pri 2): there are more attribute properties we might want to set
         [Event(RequestEvent, Level = EventLevel.Informational)]
         private void Request(string requestId, string method, string uri, string headers)
@@ -141,6 +148,12 @@ namespace Azure.Base.Diagnostics
             {
                 WriteEvent(RequestDelayEvent, delayMilliseconds);
             }
+        }
+
+        [Event(RequestRetryingEvent, Level = EventLevel.Informational)]
+        private void RequestRetrying(string requestId, int retryNumber)
+        {
+            WriteEvent(RequestRetryingEvent, requestId, retryNumber);
         }
 
         private static async Task<byte[]> FormatContentAsync(Stream responseContent)

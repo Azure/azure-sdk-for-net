@@ -75,60 +75,54 @@ namespace Azure.Base.Tests
                 e.EventId == 1 &&
                 e.Level == EventLevel.Informational &&
                 e.EventName == "Request" &&
-                GetStringProperty(e, "requestId").Equals(requestId) &&
-                GetStringProperty(e, "uri").Equals("https://contoso.a.io/") &&
-                GetStringProperty(e, "method").Equals("GET") &&
-                GetStringProperty(e, "headers").Contains($"Date:3/26/2019{Environment.NewLine}") &&
-                GetStringProperty(e, "headers").Contains($"Custom-Header:Value{Environment.NewLine}")
+                e.GetProperty<string>("requestId").Equals(requestId) &&
+                e.GetProperty<string>("uri").Equals("https://contoso.a.io/") &&
+                e.GetProperty<string>("method").Equals("GET") &&
+                e.GetProperty<string>("headers").Contains($"Date:3/26/2019{Environment.NewLine}") &&
+                e.GetProperty<string>("headers").Contains($"Custom-Header:Value{Environment.NewLine}")
             ));
 
             Assert.True(_listener.EventData.Any(e =>
                 e.EventId == 2 &&
                 e.Level == EventLevel.Verbose &&
                 e.EventName == "RequestContent" &&
-                GetStringProperty(e, "requestId").Equals(requestId) &&
-                ((byte[])GetProperty(e, "content")).SequenceEqual(new byte[] {1, 2 , 3, 4, 5}))
+                e.GetProperty<string>("requestId").Equals(requestId) &&
+                e.GetProperty<byte[]>("content").SequenceEqual(new byte[] {1, 2 , 3, 4, 5}))
             );
 
             Assert.True(_listener.EventData.Any(e =>
                 e.EventId == 5 &&
                 e.Level == EventLevel.Informational &&
                 e.EventName == "Response" &&
-                GetStringProperty(e, "requestId").Equals(requestId) &&
-                (int)GetProperty(e, "status") == 500 &&
-                GetStringProperty(e, "headers").Contains($"Custom-Response-Header:Improved value{Environment.NewLine}")
+                e.GetProperty<string>("requestId").Equals(requestId) &&
+                e.GetProperty<int>("status")  == 500 &&
+                e.GetProperty<string>("headers").Contains($"Custom-Response-Header:Improved value{Environment.NewLine}")
             ));
 
             Assert.True(_listener.EventData.Any(e =>
                 e.EventId == 6 &&
                 e.Level == EventLevel.Verbose &&
                 e.EventName == "ResponseContent" &&
-                GetStringProperty(e, "requestId").Equals(requestId) &&
-                ((byte[])GetProperty(e, "content")).SequenceEqual(new byte[] {6, 7, 8, 9, 0}))
+                e.GetProperty<string>("requestId").Equals(requestId) &&
+                e.GetProperty<byte[]>("content").SequenceEqual(new byte[] {6, 7, 8, 9, 0}))
             );
 
             Assert.True(_listener.EventData.Any(e =>
                 e.EventId == 8 &&
                 e.Level == EventLevel.Error &&
                 e.EventName == "ErrorResponse" &&
-                GetStringProperty(e, "requestId").Equals(requestId) &&
-                (int)GetProperty(e, "status") == 500 &&
-                GetStringProperty(e, "headers").Contains($"Custom-Response-Header:Improved value{Environment.NewLine}")
+                e.GetProperty<string>("requestId").Equals(requestId) &&
+                e.GetProperty<int>("status") == 500 &&
+                e.GetProperty<string>("headers").Contains($"Custom-Response-Header:Improved value{Environment.NewLine}")
             ));
 
             Assert.True(_listener.EventData.Any(e =>
                 e.EventId == 9 &&
                 e.Level == EventLevel.Informational &&
                 e.EventName == "ErrorResponseContent" &&
-                GetStringProperty(e, "requestId").Equals(requestId) &&
-                ((byte[])GetProperty(e, "content")).SequenceEqual(new byte[] {6, 7, 8, 9, 0}))
+                e.GetProperty<string>("requestId").Equals(requestId) &&
+                e.GetProperty<byte[]>("content").SequenceEqual(new byte[] {6, 7, 8, 9, 0}))
             );
         }
-
-        private object GetProperty(EventWrittenEventArgs data, string propName)
-            => data.Payload[data.PayloadNames.IndexOf(propName)];
-
-        private string GetStringProperty(EventWrittenEventArgs data, string propName)
-            => data.Payload[data.PayloadNames.IndexOf(propName)] as string;
     }
 }

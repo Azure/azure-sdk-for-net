@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Base.Diagnostics;
 
 namespace Azure.Base.Http.Pipeline
 {
@@ -50,10 +51,12 @@ namespace Azure.Base.Http.Pipeline
                 {
                     await Delay(delay, message.Cancellation);
                 }
+
+                HttpPipelineEventSource.Singleton.RequestRetrying(message.Request, attempt - 1);
             }
         }
 
-        protected virtual async Task Delay(TimeSpan time, CancellationToken cancellationToken)
+        internal virtual async Task Delay(TimeSpan time, CancellationToken cancellationToken)
         {
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
         }

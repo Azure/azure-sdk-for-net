@@ -3,9 +3,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Base.Diagnostics;
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
@@ -125,6 +127,44 @@ namespace Azure.Base.Tests
             CollectionAssert.AreEqual(new[] {1, 500, 0}, codes);
         }
 
+        [Test]
+        [NonParallelizable]
+        public async Task RetryingEmitsEventSourceEvent()
+        {
+            var listener = new TestEventListener();
+            listener.EnableEvents(HttpPipelineEventSource.Singleton, EventLevel.Informational);
+
+            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, delay: TimeSpan.FromSeconds(3), maxRetries: 2);
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy);
+
+            var request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
+
+            for (int i = 0; i < 2; i++)
+            {
+                var delay = await policy.DelayGate.Cycle();
+                Assert.AreEqual(delay, TimeSpan.FromSeconds(3));
+
+                await mockTransport.RequestGate.Cycle(new MockResponse(500));
+            }
+
+            await task.TimeoutAfterDefault();
+
+            AssertRetryEvent(listener, request, 1);
+            AssertRetryEvent(listener, request, 2);
+        }
+
+        private static void AssertRetryEvent(TestEventListener listener, MockRequest request, int retryNumber)
+        {
+            Assert.True(listener.EventData.Any(e =>
+                e.EventId == 10 &&
+                e.Level == EventLevel.Informational &&
+                e.EventName == "RequestRetrying" &&
+                e.GetProperty<string>("requestId").Equals(request.RequestId) &&
+                e.GetProperty<int>("retryNumber") == retryNumber
+            ));
+        }
+
         private static Task<Response> SendRequest(MockTransport mockTransport, FixedRetryPolicyMock policy)
         {
             var options = new HttpPipelineOptions(mockTransport);
@@ -146,7 +186,7 @@ namespace Azure.Base.Tests
             {
             }
 
-            protected override Task Delay(TimeSpan time, CancellationToken cancellationToken)
+            internal override Task Delay(TimeSpan time, CancellationToken cancellationToken)
             {
                 return DelayGate.WaitForRelease(time);
             }
