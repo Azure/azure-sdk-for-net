@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -52,7 +53,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -80,7 +82,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -99,7 +102,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -124,7 +128,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -143,7 +148,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -168,7 +174,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -187,7 +194,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='assignmentName'>
             /// Name of the blueprint assignment.
@@ -212,7 +220,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             public static IPage<Assignment> List(this IAssignmentsOperations operations, string scope)
             {
@@ -228,7 +237,8 @@ namespace Microsoft.Azure.Management.Blueprint
             /// <param name='scope'>
             /// The scope of the resource. Valid scopes are: management group (format:
             /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-            /// subscription (format: '/subscriptions/{subscriptionId}').
+            /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+            /// assignments management group scope is reserved for future use.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

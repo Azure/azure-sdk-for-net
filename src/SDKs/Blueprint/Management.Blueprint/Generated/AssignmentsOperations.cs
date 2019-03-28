@@ -56,7 +56,8 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+        /// assignments management group scope is reserved for future use.
         /// </param>
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
@@ -267,7 +268,8 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+        /// assignments management group scope is reserved for future use.
         /// </param>
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
@@ -460,7 +462,8 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+        /// assignments management group scope is reserved for future use.
         /// </param>
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
@@ -653,7 +656,8 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+        /// assignments management group scope is reserved for future use.
         /// </param>
         /// <param name='assignmentName'>
         /// Name of the blueprint assignment.
@@ -846,7 +850,8 @@ namespace Microsoft.Azure.Management.Blueprint
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+        /// assignments management group scope is reserved for future use.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
