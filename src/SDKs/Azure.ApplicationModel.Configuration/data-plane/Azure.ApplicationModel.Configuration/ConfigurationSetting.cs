@@ -151,14 +151,14 @@ namespace Azure.ApplicationModel.Configuration
     public class SettingBatch
     {
         readonly ConfigurationSetting[] _settings;
-        readonly SettingSelector _filter;
+        readonly SettingSelector _selector;
         readonly string _link;
 
         internal SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
         {
             _settings = settings;
             _link = link;
-            _filter = selector;
+            _selector = selector;
         }
 
         public ConfigurationSetting this[int index] => _settings[index];
@@ -171,7 +171,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 if (_link != null)
                 {
-                    return _filter.CloneWithBatchLink(_link);
+                    return _selector.CloneWithBatchLink(_link);
                 }
                 return null;
             }

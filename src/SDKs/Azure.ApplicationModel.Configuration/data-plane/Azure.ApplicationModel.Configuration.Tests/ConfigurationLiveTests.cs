@@ -646,8 +646,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
         private bool SettingSelectoComparissonr(SettingSelector actual, SettingSelector other)
         {
             if (actual != null && other == null) return false;
-            if (actual.Keys.Except(other.Keys).ToList().Count != 0) return false;
-            if (actual.Keys.Except(other.Keys).ToList().Count != 0) return false;
+            if (!actual.Keys.SequenceEqual(other.Keys)) return false;
+            if (!actual.Labels.SequenceEqual(other.Labels)) return false;
             if (!actual.Fields.Equals(other.Fields)) return false;
             if (actual.AsOf != other.AsOf) return false;
             
@@ -665,10 +665,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 AsOf = DateTimeOffset.Now
             };
 
-            Type type = typeof(SettingSelector);
-            MethodInfo cloneMethod = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.Name == "CloneWithBatchLink").First();
+            var selectorWithLink = selector.CloneWithBatchLink("someLink");
 
-            var selectorWithLink = (SettingSelector)cloneMethod.Invoke(selector, new object[] { "someLink" });
             Assert.IsTrue(SettingSelectoComparissonr(selector, selectorWithLink));
 
             selector.Keys.Add("Key4");

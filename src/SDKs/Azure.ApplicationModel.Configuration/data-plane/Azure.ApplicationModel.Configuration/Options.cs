@@ -71,20 +71,19 @@ namespace Azure.ApplicationModel.Configuration
             };
         }
 
-        #region nobody wants to see these
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public bool Equals(SettingSelector other)
         {
             if (other == null) return false;
-            if( Keys.Except(other.Keys).ToList().Count != 0) return false;
-            if (Keys.Except(other.Keys).ToList().Count != 0) return false;
+            if (!Keys.SequenceEqual(other.Keys)) return false;
+            if (!Labels.SequenceEqual(other.Labels)) return false;
             if (!Fields.Equals(other.Fields)) return false;
             if (AsOf != other.AsOf) return false;
             if (!string.Equals(BatchLink, other.BatchLink, StringComparison.Ordinal)) return false;
 
             return true;
         }
-        
+
+        #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {

@@ -4,6 +4,7 @@
 
 using Azure.Base.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
@@ -115,14 +116,19 @@ namespace Azure.ApplicationModel.Configuration
 
             if (selector.Labels.Count > 0)
             {
-                for(int i =0; i < selector.Labels.Count; i++)
+                var labelsCopy = new List<string>();
+                foreach (var label in selector.Labels)
                 {
-                    if (selector.Labels[i] == string.Empty)
+                    if (label == string.Empty)
                     {
-                        selector.Labels[i] = "\0";
+                        labelsCopy.Add("\0");
+                    }
+                    else
+                    {
+                        labelsCopy.Add(label);
                     }
                 }
-                var labels = string.Join(",", selector.Labels).ToLower();
+                var labels = string.Join(",", labelsCopy).ToLower();
                 builder.AppendQuery(LabelQueryFilter, labels);
             }
 
