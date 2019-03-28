@@ -1,46 +1,38 @@
-﻿using Microsoft.Azure.Management.DeploymentManager;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using TrackedResource = Microsoft.Azure.Management.DeploymentManager.Models.TrackedResource;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace Management.DeploymentManager.Tests
 {
+    using Microsoft.Azure.Management.Authorization;
+    using Microsoft.Azure.Management.DeploymentManager;
+    using Microsoft.Azure.Management.ManagedServiceIdentity;
+    using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.Storage;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Threading;
+
     public static class DeploymentManagerTestUtilities
     {
-        public const string ProviderName = "Microsoft.DeploymentManager";
-
-        public const string Location = "Central US";
-
-        public const string StorageAccountResourceGroup = "adm-sdk-tests";
-
-        public const string StorageAccountName = "sdktests";
-
-        public const string ContainerName = "artifacts";
-
-        public static readonly Dictionary<string, string> DefaultTags = new Dictionary<string, string>
-        {
-            { "key1", "value1" },
-            { "key2", "value2" },
-        };
-        public static readonly Dictionary<string, string> DefaultNewTags = new Dictionary<string, string>
-        {
-            { "key2","value2"},
-            { "key3","value3"},
-            { "key4","value4"}
-        };
-
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
             var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
+            return client;
+        }
+
+        public static AuthorizationManagementClient GetAuthorizationManagementClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<AuthorizationManagementClient>(handlers: handler);
+            return client;
+        }
+
+        public static ManagedServiceIdentityClient GetManagedServiceIdentityClient(MockContext context, RecordedDelegatingHandler handler)
+        {
+            handler.IsPassThrough = true;
+            var client = context.GetServiceClient<ManagedServiceIdentityClient>(handlers: handler);
             return client;
         }
 
@@ -58,32 +50,12 @@ namespace Management.DeploymentManager.Tests
             return client;
         }
 
-        public static void ValidateResourceDefaultTags(TrackedResource resource)
+        public static void Sleep(TimeSpan duration)
         {
-            ValidateResource(resource);
-            Assert.NotNull(resource.Tags);
-            Assert.Equal(2, resource.Tags.Count);
-            Assert.Equal("value1", resource.Tags["key1"]);
-            Assert.Equal("value2", resource.Tags["key2"]);
-        }
-
-        public static void ValidateResourceDefaultNewTags(TrackedResource resource)
-        {
-            ValidateResource(resource);
-            Assert.NotNull(resource.Tags);
-            Assert.Equal(3, resource.Tags.Count);
-            Assert.Equal("value2", resource.Tags["key2"]);
-            Assert.Equal("value3", resource.Tags["key3"]);
-            Assert.Equal("value4", resource.Tags["key4"]);
-        }
-
-        private static void ValidateResource(TrackedResource resource)
-        {
-            Assert.NotNull(resource);
-            Assert.NotNull(resource.Id);
-            Assert.NotNull(resource.Name);
-            Assert.NotNull(resource.Type);
-            Assert.NotNull(resource.Location);
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                Thread.Sleep(duration);
+            }
         }
     }
 }

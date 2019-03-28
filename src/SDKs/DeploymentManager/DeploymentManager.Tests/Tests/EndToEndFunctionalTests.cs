@@ -1,18 +1,38 @@
-﻿using Management.DeploymentManager.Tests;
-using Microsoft.Azure.Management.DeploymentManager;
-using Microsoft.Azure.Management.DeploymentManager.Models;
-using Microsoft.Rest.Azure;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Net;
-using System.Threading;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 namespace DeploymentManager.Tests
 {
-    public class EndToEndFunctionalTests : AdmTestBase
+    using Management.DeploymentManager.Tests;
+    using Microsoft.Azure.Management.DeploymentManager;
+    using Microsoft.Azure.Management.DeploymentManager.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Collections.Generic;
+    using System.Net;
+    using Xunit;
+
+    public class EndToEndFunctionalTests : TestBase
     {
+        private static string subscriptionId;
+        private const string artifactSourceType = "AzureStorage";
+        private const string artifactRoot = @"Tests\ArtifactRoot";
+        private const string containerName = "artifacts";
+
+        private const string parametersFileName = "Storage.Parameters.json";
+        private const string invalidParametersFileName = "Storage_Invalid.Parameters.json";
+        private const string templateFileName = "Storage.Template.json";
+        private const string parametersCopyFileName = "Storage.Copy.Parameters.json";
+        private const string templateCopyFileName = "Storage.Copy.Template.json";
+
+        private const string ParametersArtifactSourceRelativePath = artifactRoot + @"\" + parametersFileName;
+        private const string TemplateArtifactSourceRelativePath = artifactRoot + @"\" + templateFileName;
+        private const string InvalidParametersArtifactSourceRelativePath = artifactRoot + @"\" + invalidParametersFileName;
+        private const string ParametersCopyArtifactSourceRelativePath = artifactRoot + @"\" + parametersCopyFileName;
+        private const string TemplateCopyArtifactSourceRelativePath = artifactRoot + @"\" + templateCopyFileName;
+
         [Fact]
         public void TopologyAndRolloutScenarioTest()
         {
@@ -21,67 +41,96 @@ namespace DeploymentManager.Tests
             using (var context = MockContext.Start(typeof(EndToEndFunctionalTests).FullName))
             {
                 var deploymentManagerClient = DeploymentManagerTestUtilities.GetDeploymentManagerClient(context, handler);
-
                 var clientHelper = new DeploymentManagerClientHelper(this, context);
 
-                // Create resource group
-                var location = DeploymentManagerTestUtilities.Location;
-                clientHelper.TryCreateResourceGroup(location);
+                var te = TestEnvironmentFactory.GetTestEnvironment();
+                subscriptionId = te.SubscriptionId;
 
-                // Create artifact source
-                var artifactSource = this.CreateArtifactSource(artifactSourceName, location, deploymentManagerClient, clientHelper);
+                var location = clientHelper.GetProviderLocation("Microsoft.DeploymentManager", "serviceTopologies");
 
-                // Test Create service topology.
-                var serviceTopologyName = "sdk-for-net";
+                try
+                {
+                    // Create resource group
+                    clientHelper.TryCreateResourceGroup(location);
 
-                var inputTopology = new ServiceTopologyResource(
-                    location: location,
-                    name: serviceTopologyName,
-                    artifactSourceId: artifactSource.Id);
+                    var artifactSourceName = clientHelper.ResourceGroupName + "ArtifactSource";
+                    var updatedArtifactSourceName = clientHelper.ResourceGroupName + "UpdatedArtifactSource";
+                    var storageAccountName = clientHelper.ResourceGroupName + "stgacct";
 
-                var createTopologyResponse = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
-                    resourceGroupName: clientHelper.ResourceGroupName,
-                    serviceTopologyName: serviceTopologyName,
-                    serviceTopologyInfo: inputTopology);
+                    // Create artifact source
+                    var artifactSource = this.CreateArtifactSource(
+                        storageAccountName,
+                        artifactSourceName,
+                        location,
+                        deploymentManagerClient,
+                        clientHelper,
+                        setupContainer: true);
 
-                this.ValidateTopology(inputTopology, createTopologyResponse);
+                    // Test Create service topology.
+                    var serviceTopologyName = clientHelper.ResourceGroupName + "ServiceTopology";
 
-                // Test Get topology.
-                var serviceTopology = deploymentManagerClient.ServiceTopologies.Get(
-                    resourceGroupName: clientHelper.ResourceGroupName,
-                    serviceTopologyName: serviceTopologyName);
+                    var inputTopology = new ServiceTopologyResource(
+                        location: location,
+                        name: serviceTopologyName,
+                        artifactSourceId: artifactSource.Id);
 
-                this.ValidateTopology(inputTopology, serviceTopology);
+                    var createTopologyResponse = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: serviceTopologyName,
+                        serviceTopologyInfo: inputTopology);
 
-                // Test CRUD operations on services. 
-                this.ServiceCrudTests(artifactSource, serviceTopology, location, deploymentManagerClient, clientHelper);
+                    this.ValidateTopology(inputTopology, createTopologyResponse);
 
-                // Create another artifact source to test update topology.
-                artifactSource = this.CreateArtifactSource(updatedArtifactSourceName, location, deploymentManagerClient, clientHelper);
+                    // Test Get topology.
+                    var serviceTopology = deploymentManagerClient.ServiceTopologies.Get(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: serviceTopologyName);
 
-                // Test Update topology.
-                serviceTopology.ArtifactSourceId = artifactSource.Id;
-                var updatedStepResource = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
-                    resourceGroupName: clientHelper.ResourceGroupName,
-                    serviceTopologyName: serviceTopologyName,
-                    serviceTopologyInfo: serviceTopology);
+                    this.ValidateTopology(inputTopology, serviceTopology);
 
-                this.ValidateTopology(serviceTopology, updatedStepResource);
+                    // Test CRUD operations on services. 
+                    this.ServiceCrudTests(artifactSource, serviceTopology, location, deploymentManagerClient, clientHelper);
 
-                // Test Delete topology.
-                deploymentManagerClient.ServiceTopologies.Delete(
-                    resourceGroupName: clientHelper.ResourceGroupName,
-                    serviceTopologyName: serviceTopologyName);
+                    // Create another artifact source to test update topology.
+                    artifactSource = this.CreateArtifactSource(
+                        storageAccountName,
+                        updatedArtifactSourceName,
+                        location,
+                        deploymentManagerClient,
+                        clientHelper);
 
-                var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.ServiceTopologies.Get(
-                    resourceGroupName: clientHelper.ResourceGroupName,
-                    serviceTopologyName: serviceTopologyName));
-                Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+                    // Test Update topology.
+                    serviceTopology.ArtifactSourceId = artifactSource.Id;
+                    var updatedStepResource = deploymentManagerClient.ServiceTopologies.CreateOrUpdate(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: serviceTopologyName,
+                        serviceTopologyInfo: serviceTopology);
 
-                // Cleanup artifact source
-                this.CleanupArtifactSources(location, deploymentManagerClient, clientHelper);
+                    this.ValidateTopology(serviceTopology, updatedStepResource);
 
-                clientHelper.DeleteResourceGroup();
+                    // Test Delete topology.
+                    deploymentManagerClient.ServiceTopologies.Delete(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: serviceTopologyName);
+
+                    var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.ServiceTopologies.Get(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        serviceTopologyName: serviceTopologyName));
+                    Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+
+                    // Cleanup artifact source
+                    this.CleanupArtifactSources(artifactSourceName, location, deploymentManagerClient, clientHelper);
+                    this.CleanupArtifactSources(updatedArtifactSourceName, location, deploymentManagerClient, clientHelper);
+
+                    cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.ArtifactSources.Get(
+                        resourceGroupName: clientHelper.ResourceGroupName,
+                        artifactSourceName: artifactSourceName));
+                    Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+                }
+                finally
+                {
+                    clientHelper.DeleteResourceGroup();
+                }
             }
         }
 
@@ -92,8 +141,8 @@ namespace DeploymentManager.Tests
             AzureDeploymentManagerClient deploymentManagerClient, 
             DeploymentManagerClientHelper clientHelper)
         {
-            var serviceName = "Contoso_Service";
-            var targetLocation = "East US 2";
+            var serviceName = clientHelper.ResourceGroupName + "Service";
+            var targetLocation = clientHelper.GetProviderLocation(providerName: "Microsoft.Storage", resourceType: "storageAccounts");
 
             var inputService = new ServiceResource(
                 location: location,
@@ -118,7 +167,13 @@ namespace DeploymentManager.Tests
             this.ValidateService(inputService, service);
 
             // Test CRUD operations on service units. 
-            this.ServiceUnitCrudTests(artifactSource, serviceTopologyResource, serviceName, location, deploymentManagerClient, clientHelper);
+            this.ServiceUnitCrudTests(
+                artifactSource, 
+                serviceTopologyResource, 
+                serviceName, 
+                location, 
+                deploymentManagerClient, 
+                clientHelper);
 
             // Test Update service.
             service.TargetSubscriptionId = "1e591dc1-b014-4754-b53b-58b67bcab1cd";
@@ -151,12 +206,13 @@ namespace DeploymentManager.Tests
             AzureDeploymentManagerClient deploymentManagerClient, 
             DeploymentManagerClientHelper clientHelper)
         {
-            var serviceUnitName = "Contoso_WebApp";
-            var targetResourceGroup = "sdk-net-targetResourceGroup";
+            var serviceUnitName = clientHelper.ResourceGroupName + "ServiceUnit";
+            var failureServiceUnitName = clientHelper.ResourceGroupName + "InvalidServiceUnit";
+            var targetResourceGroup = clientHelper.ResourceGroupName;
             var artifacts = new ServiceUnitArtifacts()
             {
-                ParametersArtifactSourceRelativePath = "Parameters/WebApp.Parameters.json",
-                TemplateArtifactSourceRelativePath = "Templates/WebApp.Template.json"
+                ParametersArtifactSourceRelativePath = parametersFileName,
+                TemplateArtifactSourceRelativePath = templateFileName 
             };
 
             var inputServiceUnit = new ServiceUnitResource(
@@ -184,18 +240,43 @@ namespace DeploymentManager.Tests
 
             this.ValidateServiceUnit(inputServiceUnit, serviceUnit);
 
-            this.RolloutCrudTests(
+            // Create a service unit that fails deployment for failure rollout scenario.
+            var invalidArtifacts = new ServiceUnitArtifacts()
+            {
+                ParametersArtifactSourceRelativePath = invalidParametersFileName,
+                TemplateArtifactSourceRelativePath = templateFileName 
+            };
+
+            var failureServiceUnitInput = new ServiceUnitResource(
+                location: location,
+                targetResourceGroup: targetResourceGroup,
+                name: failureServiceUnitName,
+                deploymentMode: DeploymentMode.Incremental,
+                artifacts: invalidArtifacts);
+
+            var failureServiceUnitResponse = deploymentManagerClient.ServiceUnits.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: serviceName,
+                serviceUnitName: failureServiceUnitName,
+                serviceUnitInfo: failureServiceUnitInput);
+            
+            this.ValidateServiceUnit(failureServiceUnitInput, failureServiceUnitResponse);
+
+            // Test Steps CRUD operations along with running a rollout.
+            this.StepsCrudTests(
                 serviceTopologyResource.Id,
                 artifactSource.Id,
                 serviceUnit.Id,
+                failureServiceUnitResponse.Id,
                 location,
-                deploymentManagerClient,
-                clientHelper);
+                clientHelper,
+                deploymentManagerClient);
 
             // Test Update service unit.
             serviceUnit.DeploymentMode = DeploymentMode.Complete;
-            serviceUnit.Artifacts.ParametersArtifactSourceRelativePath = "Parameters/WebApp.Parameters.Dup.json";
-            serviceUnit.Artifacts.TemplateArtifactSourceRelativePath = "Templates/WebApp.Template.Dup.json";
+            serviceUnit.Artifacts.ParametersArtifactSourceRelativePath = parametersCopyFileName;
+            serviceUnit.Artifacts.TemplateArtifactSourceRelativePath = templateCopyFileName;
             var updatedService = deploymentManagerClient.ServiceUnits.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
@@ -212,36 +293,133 @@ namespace DeploymentManager.Tests
                 serviceName: serviceName,
                 serviceUnitName: serviceUnitName);
 
-            clientHelper.DeleteResourceGroup(targetResourceGroup);
-
             var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.ServiceUnits.Get(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
                 serviceName: serviceName,
                 serviceUnitName: serviceUnitName));
             Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+
+            deploymentManagerClient.ServiceUnits.Delete(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                serviceTopologyName: serviceTopologyResource.Name,
+                serviceName: serviceName,
+                serviceUnitName: failureServiceUnitName);
         }
+
+        private void StepsCrudTests(
+            string serviceTopologyId,
+            string artifactSourceId,
+            string serviceUnitId,
+            string failureServiceUnitId,
+            string location,
+            DeploymentManagerClientHelper clientHelper,
+            AzureDeploymentManagerClient deploymentManagerClient)
+        {
+            // Test Create step.
+            var stepName = clientHelper.ResourceGroupName + "WaitStep";
+            var stepProperties = new WaitStepProperties()
+            {
+                Attributes = new WaitStepAttributes()
+                {
+                    Duration = "PT5M"
+                }
+            };
+
+            var inputStep = new StepResource(
+                location: location,
+                properties: stepProperties,
+                name: stepName);
+
+            var stepResponse = deploymentManagerClient.Steps.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName,
+                stepInfo: inputStep);
+
+            this.ValidateStep(inputStep, stepResponse);
+
+            // Test Get step.
+            var getStepResource = deploymentManagerClient.Steps.Get(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName);
+
+            this.ValidateStep(inputStep, getStepResource);
+
+            this.RolloutCrudTests(
+                serviceTopologyId: serviceTopologyId,
+                artifactSourceId: artifactSourceId,
+                serviceUnitId: serviceUnitId,
+                failureServiceUnitId: failureServiceUnitId,
+                stepId: getStepResource.Id,
+                location: location,
+                deploymentManagerClient: deploymentManagerClient,
+                clientHelper: clientHelper);
+
+            // Test Update step.
+            ((WaitStepProperties)(getStepResource.Properties)).Attributes.Duration = "PT10M";
+            var updatedStepResource = deploymentManagerClient.Steps.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName,
+                stepInfo: getStepResource);
+
+            this.ValidateStep(getStepResource, updatedStepResource);
+
+            // Test Delete step.
+            deploymentManagerClient.Steps.Delete(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName);
+
+            var cloudException = Assert.Throws<CloudException>(() => deploymentManagerClient.Steps.Get(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                stepName: stepName));
+            Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+        }
+
+        private void ValidateStep(StepResource inputStep, StepResource stepResponse)
+        {
+            Assert.NotNull(stepResponse);
+            Assert.Equal(inputStep.Location, stepResponse.Location);
+            Assert.Equal(inputStep.Name, stepResponse.Name);
+
+            var stepProperties = stepResponse.Properties as WaitStepProperties;
+            Assert.NotNull(stepProperties);
+            Assert.Equal(((WaitStepProperties)inputStep.Properties).Attributes.Duration, stepProperties.Attributes.Duration);
+        }
+
         private void RolloutCrudTests(
             string serviceTopologyId,
             string artifactSourceId,
             string serviceUnitId,
+            string failureServiceUnitId,
+            string stepId,
             string location, 
             AzureDeploymentManagerClient deploymentManagerClient, 
             DeploymentManagerClientHelper clientHelper)
         {
-            var rolloutName = "rollout1";
+            var rolloutName = clientHelper.ResourceGroupName + "Rollout";
+            var failureRolloutName = clientHelper.ResourceGroupName + "FailureRollout";
+
+            var userAssignedIdentity = this.SetManagedIdentity(subscriptionId, clientHelper); 
+
             var identity = new Identity()
             {
                 Type = "userAssigned",
                 IdentityIds = new List<string>()
                 {
-                    "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/adm-sdk-tests/providers/Microsoft.ManagedIdentity/userassignedidentities/admsdktests"
+                    userAssignedIdentity
                 }
             };
 
             var stepGroup = new Step(
                 name: "First_Region",
-                deploymentTargetId: serviceUnitId);
+                deploymentTargetId: serviceUnitId)
+            {
+                PreDeploymentSteps = new List<PrePostStep> () { new PrePostStep(stepId) }
+            };
+
+            var stepGroupForFailureRollout = new Step(
+                name: "FirstRegion",
+                deploymentTargetId: failureServiceUnitId);
 
             var rolloutRequest = new RolloutRequest(
                 location: location,
@@ -251,12 +429,28 @@ namespace DeploymentManager.Tests
                 artifactSourceId: artifactSourceId,
                 stepGroups: new List<Step>() { stepGroup });
 
-            var createServiceResponse = deploymentManagerClient.Rollouts.CreateOrUpdate(
+            var createRolloutResponse = deploymentManagerClient.Rollouts.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 rolloutName: rolloutName,
                 rolloutRequest: rolloutRequest);
 
-            this.ValidateRollout(rolloutRequest, createServiceResponse);
+            this.ValidateRollout(rolloutRequest, createRolloutResponse);
+
+            // Kick off a rollout that would fail to test restart operation.
+            var failureRolloutRequest = new RolloutRequest(
+                location: location,
+                buildVersion: "1.0.0.0",
+                identity: identity,
+                targetServiceTopologyId: serviceTopologyId,
+                artifactSourceId: artifactSourceId,
+                stepGroups: new List<Step>() { stepGroupForFailureRollout });
+
+            var failureRolloutResponse = deploymentManagerClient.Rollouts.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                rolloutName: failureRolloutName,
+                rolloutRequest: failureRolloutRequest);
+
+            this.ValidateRollout(failureRolloutRequest, failureRolloutResponse);
 
             // Test Get rollout.
             var rollout = deploymentManagerClient.Rollouts.Get(
@@ -290,9 +484,28 @@ namespace DeploymentManager.Tests
                 resourceGroupName: clientHelper.ResourceGroupName,
                 rolloutName: rolloutName));
             Assert.Equal(HttpStatusCode.NotFound, cloudException.Response.StatusCode);
+
+            // Check status of rollout expected to fail and attempt restart operation.
+            var failureRollout = this.WaitForRolloutTermination(
+                failureRolloutName,
+                deploymentManagerClient,
+                clientHelper);
+
+            Assert.NotNull(failureRollout);
+            Assert.Equal("Failed", failureRollout.Status);
+
+            // Test Restart rollout.
+            failureRollout = deploymentManagerClient.Rollouts.Restart(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                rolloutName: failureRolloutName);
+
+            Assert.NotNull(failureRollout);
+            Assert.Equal("Running", failureRollout.Status);
+            Assert.Equal(1, failureRollout.TotalRetryAttempts);
+            Assert.Equal(false.ToString(), failureRollout.OperationInfo.SkipSucceededOnRetry.ToString());
         }
 
-        private void WaitForRolloutTermination(
+        private Rollout WaitForRolloutTermination(
             string rolloutName,
             AzureDeploymentManagerClient deploymentManagerClient, 
             DeploymentManagerClientHelper clientHelper)
@@ -300,11 +513,13 @@ namespace DeploymentManager.Tests
             Rollout rollout;
             do
             {
-                Thread.Sleep(TimeSpan.FromMinutes(1));
+                DeploymentManagerTestUtilities.Sleep(TimeSpan.FromMinutes(1));
                 rollout = deploymentManagerClient.Rollouts.Get(
                    resourceGroupName: clientHelper.ResourceGroupName,
                    rolloutName: rolloutName);
             } while (rollout.Status == "Running");
+
+            return rollout;
         }
 
         private void ValidateRollout(RolloutRequest rolloutRequest, RolloutRequest rolloutResponse)
@@ -331,7 +546,6 @@ namespace DeploymentManager.Tests
             Assert.NotNull(serviceResponse);
             Assert.Equal(inputService.Location, serviceResponse.Location);
             Assert.Equal(inputService.Name, serviceResponse.Name);
-            Assert.Equal(inputService.TargetLocation, serviceResponse.TargetLocation);
             Assert.Equal(inputService.TargetSubscriptionId, serviceResponse.TargetSubscriptionId);
         }
 
@@ -341,6 +555,129 @@ namespace DeploymentManager.Tests
             Assert.Equal(inputTopology.Location, serviceTopologyResponse.Location);
             Assert.Equal(inputTopology.Name, serviceTopologyResponse.Name);
             Assert.Equal(inputTopology.ArtifactSourceId, serviceTopologyResponse.ArtifactSourceId);
+        }
+
+        private string SetManagedIdentity(
+            string subscriptionId,
+            DeploymentManagerClientHelper clientHelper)
+        {
+            var identityName = clientHelper.ResourceGroupName + "Identity";
+
+            var identityId = clientHelper.CreateManagedIdentity(subscriptionId, identityName);
+
+            return identityId;
+        }
+
+        private ArtifactSource CreateArtifactSource(
+            string storageAccountName,
+            string artifactSourceName,
+            string location, 
+            AzureDeploymentManagerClient deploymentManagerClient, 
+            DeploymentManagerClientHelper clientHelper,
+            bool setupContainer = false)
+        {
+            if (setupContainer)
+            {
+                this.SetupContainer(storageAccountName, clientHelper);
+            }
+
+            var authentication = new SasAuthentication()
+            {
+                SasUri = clientHelper.GetBlobContainerSasUri(
+                    clientHelper.ResourceGroupName,
+                    storageAccountName,
+                    containerName: "artifacts")
+            };
+
+            var inputArtifactSource = new ArtifactSource(
+                location: location,
+                sourceType: artifactSourceType,
+                authentication: authentication,
+                artifactRoot: artifactRoot,
+                name: artifactSourceName);
+
+            var artifactSourceResponse = deploymentManagerClient.ArtifactSources.CreateOrUpdate(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                artifactSourceName: artifactSourceName,
+                artifactSourceInfo: inputArtifactSource);
+
+            this.ValidateArtifactSource(inputArtifactSource, artifactSourceResponse);
+            return artifactSourceResponse;
+        }
+
+        private void SetupContainer(
+            string storageAccountName,
+            DeploymentManagerClientHelper clientHelper)
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                clientHelper.CreateStorageAccount(storageAccountName);
+                var storageAccountNameForTemplate = clientHelper.ResourceGroupName + "stgtempl";
+                var storageAccountReplacementSymbol = "__STORAGEACCOUNTNAME__";
+
+                this.ReplaceString(storageAccountReplacementSymbol, storageAccountNameForTemplate, ParametersArtifactSourceRelativePath);
+                this.ReplaceString(storageAccountReplacementSymbol, storageAccountNameForTemplate, TemplateArtifactSourceRelativePath);
+                this.ReplaceString(storageAccountReplacementSymbol, storageAccountNameForTemplate, ParametersCopyArtifactSourceRelativePath);
+                this.ReplaceString(storageAccountReplacementSymbol, storageAccountNameForTemplate, TemplateCopyArtifactSourceRelativePath);
+
+                clientHelper.UploadBlob(storageAccountName, containerName, ParametersArtifactSourceRelativePath, ParametersArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, containerName, ParametersCopyArtifactSourceRelativePath, ParametersCopyArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, containerName, InvalidParametersArtifactSourceRelativePath, InvalidParametersArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, containerName, TemplateArtifactSourceRelativePath, TemplateArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, containerName, TemplateCopyArtifactSourceRelativePath, TemplateCopyArtifactSourceRelativePath);
+            }
+        }
+
+        private void ReplaceRolloutSymbols(
+            string rolloutName,
+            string targetServiceTopologyId,
+            string artifactSourceId,
+            string stepId,
+            string serviceUnitId,
+            string filePath)
+        {
+            this.ReplaceString("__ROLLOUT_NAME__", rolloutName, filePath);
+            this.ReplaceString("__TARGET_SERVICE_TOPOLOGY__", targetServiceTopologyId, filePath);
+            this.ReplaceString("__ARTIFACT_SOURCE_ID__", artifactSourceId, filePath);
+            this.ReplaceString("__STEP_ID__", stepId, filePath);
+            this.ReplaceString("__SERVICE_UNIT_ID__", serviceUnitId, filePath);
+        }
+
+        private void ReplaceString(
+            string replacementSymbol,
+            string replacementValue,
+            string filePath)
+        {
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                var fileSystemUtils = new FileSystemUtils();
+                var fileContents = fileSystemUtils.ReadFileAsText(filePath);
+
+                fileContents = fileContents.Replace(replacementSymbol, replacementValue);
+
+                fileSystemUtils.WriteFile(filePath, fileContents);
+            }
+        }
+
+        protected void CleanupArtifactSources(
+            string artifactSourceName,
+            string location, 
+            AzureDeploymentManagerClient deploymentManagerClient, 
+            DeploymentManagerClientHelper clientHelper)
+        {
+            deploymentManagerClient.ArtifactSources.Delete(
+                resourceGroupName: clientHelper.ResourceGroupName,
+                artifactSourceName: artifactSourceName);
+        }
+
+        private void ValidateArtifactSource(ArtifactSource inputArtifactSource, ArtifactSource artifactSourceResponse)
+        {
+            Assert.NotNull(artifactSourceResponse);
+            Assert.Equal(inputArtifactSource.Location, artifactSourceResponse.Location);
+            Assert.Equal(inputArtifactSource.Name, artifactSourceResponse.Name);
+            Assert.Equal(inputArtifactSource.SourceType, artifactSourceResponse.SourceType);
+            Assert.Equal(inputArtifactSource.ArtifactRoot, artifactSourceResponse.ArtifactRoot);
+            Assert.Equal(typeof(SasAuthentication), artifactSourceResponse.Authentication.GetType());
         }
     }
 }
