@@ -30,18 +30,36 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     Name = IndexName,
                     Fields = new[]
                     {
-                        new Field("hotelId", DataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("baseRate", DataType.Double) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("description", DataType.String) { IsSearchable = true },
-                        new Field("descriptionFr", AnalyzerName.FrLucene),
-                        new Field("hotelName", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("category", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("tags", DataType.Collection(DataType.String)) { IsSearchable = true, IsFilterable = true, IsFacetable = true },
-                        new Field("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true }
+                        Field.New("hotelId", DataType.String, isKey: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("hotelName", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: false),
+                        Field.NewSearchableString("description", AnalyzerName.EnLucene),
+                        Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene),
+                        Field.New("category", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isFacetable: true),
+                        Field.New("parkingIncluded", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("lastRenovationDate", DataType.DateTimeOffset, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("rating", DataType.Int32, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.NewComplex("address", isCollection: false, fields: new[]
+                        {
+                            Field.New("streetAddress", DataType.String, isSearchable: true),
+                            Field.New("city", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                            Field.New("stateProvince", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                            Field.New("country", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                            Field.New("postalCode", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true)
+                        }),
+                        Field.New("location", DataType.GeographyPoint, isFilterable: true, isSortable: true),
+                        Field.NewComplex("rooms", isCollection: true, fields: new[]
+                        {
+                            Field.NewSearchableString("description", AnalyzerName.EnLucene),
+                            Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene),
+                            Field.New("type", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
+                            Field.New("baseRate", DataType.Double, isFilterable: true, isFacetable: true),
+                            Field.New("bedOptions", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
+                            Field.New("sleepsCount", DataType.Int32, isFilterable: true, isFacetable: true),
+                            Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isFacetable: true),
+                            Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isFacetable: true)
+                        })
                     },
                     Suggesters = new[]
                     {
