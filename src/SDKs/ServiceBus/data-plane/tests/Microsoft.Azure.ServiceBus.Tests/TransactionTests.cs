@@ -83,7 +83,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await sender.SendAsync(message).ConfigureAwait(false);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -166,7 +165,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -213,7 +211,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -269,7 +266,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -454,7 +450,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     {
                         await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
                         await sender.SendAsync(message2).ConfigureAwait(false);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
