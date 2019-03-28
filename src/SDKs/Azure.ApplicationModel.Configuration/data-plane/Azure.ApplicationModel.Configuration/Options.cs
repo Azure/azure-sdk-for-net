@@ -33,12 +33,12 @@ namespace Azure.ApplicationModel.Configuration
         /// Keys that will be used to filter.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
-        public IList<string> Keys { get; set; } = new List<string> { Any };
+        public IList<string> Keys { get; set; }
         /// <summary>
         /// Labels that will be used to filter.
         /// </summary>
         /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
-        public IList<string> Labels { get; set; } = new List<string> { Any };
+        public IList<string> Labels { get; set; }
         /// <summary>
         /// IKeyValue fields that will be retrieved.
         /// </summary>
@@ -48,12 +48,13 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         public DateTimeOffset? AsOf { get; set; }
 
-        public SettingSelector() { }
+        public SettingSelector() : this(Any, Any) { }
 
         public SettingSelector(string key, string label = default)
         {
             Keys = new List<string> { key };
-            if(label != default) Labels = new List<string> { label };
+            Labels = new List<string>();
+            if (label != null) Labels.Add(label);
         }
 
         internal string BatchLink { get; set; }

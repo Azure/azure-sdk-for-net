@@ -107,13 +107,13 @@ namespace Azure.ApplicationModel.Configuration
 
         void BuildBatchQuery(UriBuilder builder, SettingSelector selector)
         {
-            if (selector.Keys != null)
+            if (selector.Keys.Count > 0)
             {
                 var keys = string.Join(",", selector.Keys).ToLower();
                 builder.AppendQuery(KeyQueryFilter, keys);
             }
 
-            if (selector.Labels != null)
+            if (selector.Labels.Count > 0)
             {
                 for(int i =0; i < selector.Labels.Count; i++)
                 {
