@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO.Pipes;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
+using Azure.Base.Tests.Testing;
 using NUnit.Framework;
 
 namespace Azure.Base.Tests

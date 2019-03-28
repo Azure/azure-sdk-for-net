@@ -6,6 +6,7 @@ using Azure.Base.Http.Pipeline;
 using System;
 using System.Threading.Tasks;
 using Azure.Base.Tests;
+using Azure.Base.Tests.Testing;
 
 namespace Azure.Base.Testing
 {
