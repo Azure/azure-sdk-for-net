@@ -55,6 +55,6 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ResourceNameAvailabilityResponseResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, ResourceNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceNameAvailabilityResultResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, ResourceNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

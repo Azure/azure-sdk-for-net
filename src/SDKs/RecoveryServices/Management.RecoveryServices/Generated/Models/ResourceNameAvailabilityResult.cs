@@ -17,22 +17,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// Response for check name availability API. Resource provider will set
     /// availability as true | false.
     /// </summary>
-    public partial class ResourceNameAvailabilityResponse
+    public partial class ResourceNameAvailabilityResult
     {
         /// <summary>
-        /// Initializes a new instance of the ResourceNameAvailabilityResponse
+        /// Initializes a new instance of the ResourceNameAvailabilityResult
         /// class.
         /// </summary>
-        public ResourceNameAvailabilityResponse()
+        public ResourceNameAvailabilityResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ResourceNameAvailabilityResponse
+        /// Initializes a new instance of the ResourceNameAvailabilityResult
         /// class.
         /// </summary>
-        public ResourceNameAvailabilityResponse(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
+        public ResourceNameAvailabilityResult(bool? nameAvailable = default(bool?), string reason = default(string), string message = default(string))
         {
             NameAvailable = nameAvailable;
             Reason = reason;
