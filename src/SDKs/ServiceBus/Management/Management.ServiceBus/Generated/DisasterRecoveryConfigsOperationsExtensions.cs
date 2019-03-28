@@ -296,7 +296,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// envokes GEO DR failover and reconfigure the alias to point to the secondary
+            /// Invokes GEO DR failover and reconfigure the alias to point to the secondary
             /// namespace
             /// </summary>
             /// <param name='operations'>
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// envokes GEO DR failover and reconfigure the alias to point to the secondary
+            /// Invokes GEO DR failover and reconfigure the alias to point to the secondary
             /// namespace
             /// </summary>
             /// <param name='operations'>
@@ -405,7 +405,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The Disaster Recovery configuration name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static SBAuthorizationRule GetAuthorizationRule(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
             {
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The Disaster Recovery configuration name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The Disaster Recovery configuration name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             public static AccessKeys ListKeys(this IDisasterRecoveryConfigsOperations operations, string resourceGroupName, string namespaceName, string alias, string authorizationRuleName)
             {
@@ -483,7 +483,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The Disaster Recovery configuration name
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationrule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

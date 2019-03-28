@@ -207,7 +207,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='applicationObjectId'>
             /// The object ID of the application for which to get owners.
             /// </param>
-            public static IEnumerable<DirectoryObject> ListOwners(this IApplicationsOperations operations, string applicationObjectId)
+            public static IPage<DirectoryObject> ListOwners(this IApplicationsOperations operations, string applicationObjectId)
             {
                 return operations.ListOwnersAsync(applicationObjectId).GetAwaiter().GetResult();
             }
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<DirectoryObject>> ListOwnersAsync(this IApplicationsOperations operations, string applicationObjectId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<DirectoryObject>> ListOwnersAsync(this IApplicationsOperations operations, string applicationObjectId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListOwnersWithHttpMessagesAsync(applicationObjectId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Graph.RBAC
             /// The URL of the owner object, such as
             /// https://graph.windows.net/0b1f9851-1bf0-433f-aec3-cb9272f093dc/directoryObjects/f260bbc4-c254-447b-94cf-293b5ec434dd.
             /// </param>
-            public static void AddOwner(this IApplicationsOperations operations, string applicationObjectId, ApplicationAddOwnerParameters parameters)
+            public static void AddOwner(this IApplicationsOperations operations, string applicationObjectId, AddOwnerParameters parameters)
             {
                 operations.AddOwnerAsync(applicationObjectId, parameters).GetAwaiter().GetResult();
             }
@@ -270,9 +270,46 @@ namespace Microsoft.Azure.Graph.RBAC
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AddOwnerAsync(this IApplicationsOperations operations, string applicationObjectId, ApplicationAddOwnerParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AddOwnerAsync(this IApplicationsOperations operations, string applicationObjectId, AddOwnerParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.AddOwnerWithHttpMessagesAsync(applicationObjectId, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Remove a member from owners.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// The object ID of the application from which to remove the owner.
+            /// </param>
+            /// <param name='ownerObjectId'>
+            /// Owner object id
+            /// </param>
+            public static void RemoveOwner(this IApplicationsOperations operations, string applicationObjectId, string ownerObjectId)
+            {
+                operations.RemoveOwnerAsync(applicationObjectId, ownerObjectId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Remove a member from owners.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationObjectId'>
+            /// The object ID of the application from which to remove the owner.
+            /// </param>
+            /// <param name='ownerObjectId'>
+            /// Owner object id
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RemoveOwnerAsync(this IApplicationsOperations operations, string applicationObjectId, string ownerObjectId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RemoveOwnerWithHttpMessagesAsync(applicationObjectId, ownerObjectId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -418,6 +455,40 @@ namespace Microsoft.Azure.Graph.RBAC
             }
 
             /// <summary>
+            /// Gets an object id for a given application id from the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationID'>
+            /// The application ID.
+            /// </param>
+            public static ServicePrincipalObjectResult GetServicePrincipalsIdByAppId(this IApplicationsOperations operations, string applicationID)
+            {
+                return operations.GetServicePrincipalsIdByAppIdAsync(applicationID).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets an object id for a given application id from the current tenant.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='applicationID'>
+            /// The application ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ServicePrincipalObjectResult> GetServicePrincipalsIdByAppIdAsync(this IApplicationsOperations operations, string applicationID, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetServicePrincipalsIdByAppIdWithHttpMessagesAsync(applicationID, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of applications from the current tenant.
             /// </summary>
             /// <param name='operations'>
@@ -446,6 +517,48 @@ namespace Microsoft.Azure.Graph.RBAC
             public static async Task<IPage<Application>> ListNextAsync(this IApplicationsOperations operations, string nextLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Directory objects that are owners of the application.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<DirectoryObject> ListOwnersNext(this IApplicationsOperations operations, string nextPageLink)
+            {
+                return operations.ListOwnersNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Directory objects that are owners of the application.
+            /// </summary>
+            /// <remarks>
+            /// The owners are a set of non-admin users who are allowed to modify this
+            /// object.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<DirectoryObject>> ListOwnersNextAsync(this IApplicationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListOwnersNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

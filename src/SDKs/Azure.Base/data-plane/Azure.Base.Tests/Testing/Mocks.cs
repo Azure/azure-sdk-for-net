@@ -4,123 +4,30 @@
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.IO;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Testing
 {
-    public class TestEventListener : EventListener
-    {
-        private volatile bool _disposed;
-        private ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
-
-        public IEnumerable<EventWrittenEventArgs> EventData => _events;
-
-        protected override void OnEventWritten(EventWrittenEventArgs eventData)
-        {
-            if (!_disposed)
-            {
-                _events.Enqueue(eventData);
-            }
-        }
-
-        public override void Dispose()
-        {
-            _disposed = true;
-            base.Dispose();
-        }
-    }
-
     public class MockTransport : HttpPipelineTransport
     {
-        int[] _statusCodes;
-        int _index;
+        private readonly Func<MockRequest, MockResponse> _responseFactory;
 
-        public MockTransport(params int[] statusCodes)
-            => _statusCodes = statusCodes;
+        public MockTransport(Func<MockRequest, MockResponse> responseFactory)
+        {
+            _responseFactory = responseFactory;
+        }
 
         public override HttpPipelineRequest CreateRequest(IServiceProvider services)
-            => new PipelineRequest();
+            => new MockRequest();
 
         public override Task ProcessAsync(HttpPipelineMessage message)
         {
-            var request = message.Request as PipelineRequest;
+            var request = message.Request as MockRequest;
             if (request == null) throw new InvalidOperationException("the request is not compatible with the transport");
 
-            if (_index >= _statusCodes.Length) _index = 0;
+            message.Response = _responseFactory(request);
 
-            var response = new PipelineResponse(request.Method, request.Uri);
-
-            response.SetStatus(_statusCodes[_index++]);
-
-            message.Response = response;
             return Task.CompletedTask;
-        }
-
-        class PipelineRequest : HttpPipelineRequest
-        {
-            private HttpVerb _method;
-
-            public override HttpVerb Method => _method;
-
-            public Uri Uri { get; private set; }
-
-            public override void SetRequestLine(HttpVerb method, Uri uri)
-            {
-                Uri = uri;
-                _method = method;
-            }
-
-            public override void AddHeader(HttpHeader header)
-            {
-            }
-
-            public override string ToString() => $"{_method} {Uri}";
-
-
-
-            public override void SetContent(HttpPipelineRequestContent content)
-            {
-            }
-            public override void Dispose()
-            {
-            }
-        }
-
-        class PipelineResponse : HttpPipelineResponse
-        {
-            private readonly HttpVerb _method;
-
-            private readonly Uri _uri;
-
-            private int _status;
-
-            public PipelineResponse(HttpVerb method, Uri uri)
-            {
-                _method = method;
-                _uri = uri;
-            }
-
-            public override int Status => _status;
-
-            public override Stream ResponseContentStream => throw new NotImplementedException();
-
-            public void SetStatus(int status) => _status = status;
-
-            public override string ToString() => $"{_method} {_uri}";
-
-            public override bool TryGetHeader(string name, out string value)
-            {
-                value = default;
-                return false;
-            }
-
-            public override void Dispose()
-            {
-            }
         }
     }
 }

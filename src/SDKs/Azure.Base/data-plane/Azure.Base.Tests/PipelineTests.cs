@@ -6,6 +6,9 @@ using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +19,11 @@ namespace Azure.Base.Tests
         [Test]
         public async Task Basics()
         {
-            var options = new HttpPipelineOptions(new MockTransport(500, 1));
+            var requestIndex = 0;
+            var mockTransport = new MockTransport(
+                _ => requestIndex++ == 0 ? new MockResponse(500) : new MockResponse(1));
+
+            var options = new HttpPipelineOptions(mockTransport);
             options.RetryPolicy = new CustomRetryPolicy();
 
             var pipeline = options.Build("test", "1.0.0");
@@ -35,6 +42,28 @@ namespace Azure.Base.Tests
             await pipeline.SendRequestAsync(new NullPipelineContext(), CancellationToken.None);
         }
 
+        [Test]
+        public async Task ComponentNameAndVersionReadFromAssembly()
+        {
+            string userAgent = null;
+
+            var mockTransport = new MockTransport(
+                req => {
+                    Assert.True(req.TryGetHeader("User-Agent", out userAgent));
+                    return new MockResponse(200);
+                });
+
+            var pipeline = new HttpPipelineOptions(mockTransport).Build(typeof(PipelineTests).Assembly);
+
+            var request = pipeline.CreateRequest();
+            request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+            await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            Assert.AreEqual(userAgent, $"azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
+        }
+
         class CustomRetryPolicy : RetryPolicy
         {
             protected override bool ShouldRetry(HttpPipelineMessage message, int retry, out TimeSpan delay)
@@ -48,19 +77,25 @@ namespace Azure.Base.Tests
 
         class NullPipelineContext : HttpPipelineRequest
         {
-            public override void SetRequestLine(HttpVerb method, Uri uri)
-            {
-            }
-
             public override void AddHeader(HttpHeader header)
             {
             }
 
-            public override void SetContent(HttpPipelineRequestContent content)
+            public override bool TryGetHeader(string name, out string value)
             {
+                value = null;
+                return false;
             }
 
-            public override HttpVerb Method { get; }
+            public override IEnumerable<HttpHeader> Headers
+            {
+                get
+                {
+                    yield break;
+                }
+            }
+
+            public override string RequestId { get; set; }
 
             public override void Dispose()
             {

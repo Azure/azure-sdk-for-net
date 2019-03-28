@@ -11,204 +11,224 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public static IEnumerable<object[]> TestPermutations => new object[][]
         {
-            new object[] { TestConstants.NonPartitionedTopicName },
-            new object[] { TestConstants.PartitionedTopicName }
+            // Expected structure: { usePartitionedTopic, useSessionTopic }
+            new object[] { false, false },
+            new object[] { true, false }
         };
-
-        string SubscriptionName => TestConstants.SubscriptionName;
-
+        
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockTest(string topicName, int messageCount = 10)
+        async Task PeekLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                this.SubscriptionName);
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName);
 
-            try
-            {
-                await this.PeekLockTestCase(
-                    topicClient.InnerSender,
-                    subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                    messageCount);
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
-        }
-
-        [Theory]
-        [MemberData(nameof(TestPermutations))]
-        [LiveTest]
-        [DisplayTestMethodName]
-        async Task TopicClientReceiveDeleteTestCase(string topicName, int messageCount = 10)
-        {
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                this.SubscriptionName,
-                ReceiveMode.ReceiveAndDelete);
-            try
-            {
-                await
-                    this.ReceiveDeleteTestCase(
+                try
+                {
+                    await this.PeekLockTestCase(
                         topicClient.InnerSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task TopicClientPeekLockWithAbandonTestCase(string topicName, int messageCount = 10)
+        async Task TopicClientReceiveDeleteTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                this.SubscriptionName);
-            try
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                await
-                    this.PeekLockWithAbandonTestCase(
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName,
+                    ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    await
+                        this.ReceiveDeleteTestCase(
+                            topicClient.InnerSender,
+                            subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                            messageCount);
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
+        }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [LiveTest]
+        [DisplayTestMethodName]
+        async Task TopicClientPeekLockWithAbandonTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        {
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName);
+                try
+                {
+                    await
+                        this.PeekLockWithAbandonTestCase(
+                            topicClient.InnerSender,
+                            subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                            messageCount);
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
+        }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [LiveTest]
+        [DisplayTestMethodName]
+        async Task TopicClientPeekLockWithDeadLetterTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        {
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName);
+
+                // Create DLQ Client To Receive DeadLetteredMessages
+                var subscriptionDeadletterPath = EntityNameHelper.FormatDeadLetterPath(subscriptionName);
+                var deadLetterSubscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionDeadletterPath);
+
+                try
+                {
+                    await
+                        this.PeekLockWithDeadLetterTestCase(
+                            topicClient.InnerSender,
+                            subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                            deadLetterSubscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                            messageCount);
+                }
+                finally
+                {
+                    await deadLetterSubscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                    await subscriptionClient.CloseAsync();
+                }
+            });
+        }
+
+        [Theory]
+        [MemberData(nameof(TestPermutations))]
+        [LiveTest]
+        [DisplayTestMethodName]
+        async Task TopicClientRenewLockTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        {
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
+            {
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName);
+                try
+                {
+                    await this.RenewLockTestCase(
                         topicClient.InnerSender,
                         subscriptionClient.InnerSubscriptionClient.InnerReceiver,
                         messageCount);
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task TopicClientPeekLockWithDeadLetterTestCase(string topicName, int messageCount = 10)
+        async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                this.SubscriptionName);
-
-            // Create DLQ Client To Receive DeadLetteredMessages
-            var subscriptionDeadletterPath = EntityNameHelper.FormatDeadLetterPath(this.SubscriptionName);
-            var deadLetterSubscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                subscriptionDeadletterPath);
-
-            try
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                await
-                    this.PeekLockWithDeadLetterTestCase(
-                        topicClient.InnerSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                        deadLetterSubscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                        messageCount);
-            }
-            finally
-            {
-                await deadLetterSubscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-                await subscriptionClient.CloseAsync();
-            }
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName,
+                    ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    await
+                        this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(
+                            topicClient.InnerSender,
+                            subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                            messageCount);
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task TopicClientRenewLockTestCase(string topicName, int messageCount = 10)
+        async Task CancelScheduledMessagesAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                this.SubscriptionName);
-            try
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                await this.RenewLockTestCase(
-                    topicClient.InnerSender,
-                    subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                    messageCount);
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
-        }
-
-        [Theory]
-        [MemberData(nameof(TestPermutations))]
-        [LiveTest]
-        [DisplayTestMethodName]
-        async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(string topicName, int messageCount = 1)
-        {
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                this.SubscriptionName,
-                ReceiveMode.ReceiveAndDelete);
-            try
-            {
-                await
-                    this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(
-                        topicClient.InnerSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                        messageCount);
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
-        }
-
-        [Theory]
-        [MemberData(nameof(TestPermutations))]
-        [LiveTest]
-        [DisplayTestMethodName]
-        async Task CancelScheduledMessagesAsyncTest(string topicName, int messageCount = 1)
-        {
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicName,
-                this.SubscriptionName,
-                ReceiveMode.ReceiveAndDelete);
-            try
-            {
-                await
-                    this.CancelScheduledMessagesAsyncTestCase(
-                        topicClient.InnerSender,
-                        subscriptionClient.InnerSubscriptionClient.InnerReceiver,
-                        messageCount);
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicName,
+                    subscriptionName,
+                    ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    await
+                        this.CancelScheduledMessagesAsyncTestCase(
+                            topicClient.InnerSender,
+                            subscriptionClient.InnerSubscriptionClient.InnerReceiver,
+                            messageCount);
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
         }
     }
 }

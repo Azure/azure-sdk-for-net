@@ -71,10 +71,10 @@ namespace Azure.Base.Http
             {
                 if (applicationId != null)
                 {
-                    return new HttpHeader(Names.UserAgent, $"{applicationId} {componentName}/{componentVersion} {PlatformInformation}");
+                    return new HttpHeader(Names.UserAgent, $"{applicationId} azsdk-net-{componentName}/{componentVersion} {PlatformInformation}");
                 }
 
-                return new HttpHeader(Names.UserAgent, $"{componentName}/{componentVersion} {PlatformInformation}");
+                return new HttpHeader(Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {PlatformInformation}");
             }
 
 

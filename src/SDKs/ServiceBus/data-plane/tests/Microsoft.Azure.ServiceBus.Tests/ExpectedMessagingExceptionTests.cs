@@ -15,169 +15,184 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [LiveTest]
         async Task MessageLockLostExceptionTest()
         {
-            const int messageCount = 2;
-
-            var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
-            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, receiveMode: ReceiveMode.PeekLock);
-
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                await TestUtility.SendMessagesAsync(sender, messageCount);
-                var receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
+                const int messageCount = 2;
 
-                Assert.True(receivedMessages.Count == messageCount);
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.PeekLock);
 
-                // Let the messages expire
-                await Task.Delay(TimeSpan.FromMinutes(1));
+                try
+                {
+                    await TestUtility.SendMessagesAsync(sender, messageCount);
+                    var receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
 
-                // Complete should throw
-                await
-                    Assert.ThrowsAsync<MessageLockLostException>(
-                        async () => await TestUtility.CompleteMessagesAsync(receiver, receivedMessages));
+                    Assert.True(receivedMessages.Count == messageCount);
 
-                receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
-                Assert.True(receivedMessages.Count == messageCount);
+                    // Let the messages expire
+                    await Task.Delay(TimeSpan.FromMinutes(1));
 
-                await TestUtility.CompleteMessagesAsync(receiver, receivedMessages);
-            }
-            finally
-            {
-                await sender.CloseAsync().ConfigureAwait(false);
-                await receiver.CloseAsync().ConfigureAwait(false);
-            }
+                    // Complete should throw
+                    await
+                        Assert.ThrowsAsync<MessageLockLostException>(
+                            async () => await TestUtility.CompleteMessagesAsync(receiver, receivedMessages));
+
+                    receivedMessages = await TestUtility.ReceiveMessagesAsync(receiver, messageCount);
+                    Assert.True(receivedMessages.Count == messageCount);
+
+                    await TestUtility.CompleteMessagesAsync(receiver, receivedMessages);
+                }
+                finally
+                {
+                    await sender.CloseAsync().ConfigureAwait(false);
+                    await receiver.CloseAsync().ConfigureAwait(false);
+                }
+            });
         }
 
         [Fact]
         [LiveTest]
         async Task CompleteOnPeekedMessagesShouldThrowTest()
         {
-            var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
-            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, receiveMode: ReceiveMode.ReceiveAndDelete);
-
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                await TestUtility.SendMessagesAsync(sender, 1);
-                var message = await receiver.PeekAsync();
-                Assert.NotNull(message);
-                await
-                    Assert.ThrowsAsync<InvalidOperationException>(
-                        async () => await receiver.CompleteAsync(message.SystemProperties.LockToken));
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
 
-                message = await receiver.ReceiveAsync();
-                Assert.NotNull(message);
-            }
-            finally
-            {
-                await sender.CloseAsync().ConfigureAwait(false);
-                await receiver.CloseAsync().ConfigureAwait(false);
-            }
+                try
+                {
+                    await TestUtility.SendMessagesAsync(sender, 1);
+                    var message = await receiver.PeekAsync();
+                    Assert.NotNull(message);
+                    await
+                        Assert.ThrowsAsync<InvalidOperationException>(
+                            async () => await receiver.CompleteAsync(message.SystemProperties.LockToken));
+
+                    message = await receiver.ReceiveAsync();
+                    Assert.NotNull(message);
+                }
+                finally
+                {
+                    await sender.CloseAsync().ConfigureAwait(false);
+                    await receiver.CloseAsync().ConfigureAwait(false);
+                }
+            });
         }
 
         [Fact]
         [LiveTest]
         async Task SessionLockLostExceptionTest()
         {
-            var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
-            var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
-
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
-                var messageId = "test-message1";
-                var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(new Message { MessageId = messageId, SessionId = sessionId });
-                TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
 
-                var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
-                Assert.NotNull(sessionReceiver);
-                TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
+                try
+                {
+                    var messageId = "test-message1";
+                    var sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(new Message { MessageId = messageId, SessionId = sessionId });
+                    TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
-                var message = await sessionReceiver.ReceiveAsync();
-                Assert.True(message.MessageId == messageId);
-                TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
+                    var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
+                    Assert.NotNull(sessionReceiver);
+                    TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
 
-                // Let the Session expire with some buffer time
-                TestUtility.Log($"Waiting for session lock to time out...");
-                await Task.Delay((sessionReceiver.LockedUntilUtc - DateTime.UtcNow) + TimeSpan.FromSeconds(10));
+                    var message = await sessionReceiver.ReceiveAsync();
+                    Assert.True(message.MessageId == messageId);
+                    TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
 
-                await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.ReceiveAsync());
-                await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.RenewSessionLockAsync());
-                await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.GetStateAsync());
-                await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.SetStateAsync(null));
-                await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken));
+                    // Let the Session expire with some buffer time
+                    TestUtility.Log($"Waiting for session lock to time out...");
+                    await Task.Delay((sessionReceiver.LockedUntilUtc - DateTime.UtcNow) + TimeSpan.FromSeconds(10));
 
-                await sessionReceiver.CloseAsync();
-                TestUtility.Log($"Closed Session Receiver...");
+                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.ReceiveAsync());
+                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.RenewSessionLockAsync());
+                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.GetStateAsync());
+                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.SetStateAsync(null));
+                    await Assert.ThrowsAsync<SessionLockLostException>(async () => await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken));
 
-                //Accept a new Session and Complete the message
-                sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
-                Assert.NotNull(sessionReceiver);
-                TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}");
-                message = await sessionReceiver.ReceiveAsync();
-                TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
-                await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
-                await sessionReceiver.CloseAsync();
-            }
-            finally
-            {
-                await sender.CloseAsync();
-                await sessionClient.CloseAsync();
-            }
+                    await sessionReceiver.CloseAsync();
+                    TestUtility.Log($"Closed Session Receiver...");
+
+                    //Accept a new Session and Complete the message
+                    sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
+                    Assert.NotNull(sessionReceiver);
+                    TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}");
+                    message = await sessionReceiver.ReceiveAsync();
+                    TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
+                    await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await sessionReceiver.CloseAsync();
+                }
+                finally
+                {
+                    await sender.CloseAsync();
+                    await sessionClient.CloseAsync();
+                }
+            });
         }
 
         [Fact]
         [LiveTest]
         async Task OperationsOnMessageSenderReceiverAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
-            var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName);
-            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, receiveMode: ReceiveMode.ReceiveAndDelete);
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, receiveMode: ReceiveMode.ReceiveAndDelete);
 
-            await sender.CloseAsync();
-            await receiver.CloseAsync();
+                await sender.CloseAsync();
+                await receiver.CloseAsync();
 
-            await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("test"))));
-            await Assert.ThrowsAsync<ObjectDisposedException>(async () => await receiver.ReceiveAsync());
-            await Assert.ThrowsAsync<ObjectDisposedException>(async () => await receiver.CompleteAsync("blah"));
+                await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sender.SendAsync(new Message(Encoding.UTF8.GetBytes("test"))));
+                await Assert.ThrowsAsync<ObjectDisposedException>(async () => await receiver.ReceiveAsync());
+                await Assert.ThrowsAsync<ObjectDisposedException>(async () => await receiver.CompleteAsync("blah"));
+            });
         }
 
         [Fact]
         [LiveTest]
         async Task OperationsOnMessageSessionAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
-            var sender = new MessageSender(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
-            var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, TestConstants.SessionNonPartitionedQueueName);
-            IMessageSession sessionReceiver = null;
-
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
-                var messageId = "test-message1";
-                var sessionId = Guid.NewGuid().ToString();
-                await sender.SendAsync(new Message { MessageId = messageId, SessionId = sessionId });
-                TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var sessionClient = new SessionClient(TestUtility.NamespaceConnectionString, queueName);
+                IMessageSession sessionReceiver = null;
 
-                sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
-                Assert.NotNull(sessionReceiver);
-                TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
+                try
+                {
+                    var messageId = "test-message1";
+                    var sessionId = Guid.NewGuid().ToString();
+                    await sender.SendAsync(new Message { MessageId = messageId, SessionId = sessionId });
+                    TestUtility.Log($"Sent Message: {messageId} to Session: {sessionId}");
 
-                await sessionReceiver.CloseAsync();
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sessionReceiver.ReceiveAsync());
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sessionReceiver.GetStateAsync());
-                await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sessionReceiver.SetStateAsync(null));
+                    sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
+                    Assert.NotNull(sessionReceiver);
+                    TestUtility.Log($"Received Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
 
-                sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
-                Assert.NotNull(sessionReceiver);
-                TestUtility.Log($"Reaccept Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
+                    await sessionReceiver.CloseAsync();
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sessionReceiver.ReceiveAsync());
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sessionReceiver.GetStateAsync());
+                    await Assert.ThrowsAsync<ObjectDisposedException>(async () => await sessionReceiver.SetStateAsync(null));
 
-                var message = await sessionReceiver.ReceiveAsync();
-                Assert.True(message.MessageId == messageId);
-                TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
-                await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
-                await sessionReceiver.CloseAsync();
-            }
-            finally
-            {
-                await sender.CloseAsync();
-                await sessionClient.CloseAsync();
-            }
+                    sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
+                    Assert.NotNull(sessionReceiver);
+                    TestUtility.Log($"Reaccept Session: SessionId: {sessionReceiver.SessionId}: LockedUntilUtc: {sessionReceiver.LockedUntilUtc}");
+
+                    var message = await sessionReceiver.ReceiveAsync();
+                    Assert.True(message.MessageId == messageId);
+                    TestUtility.Log($"Received Message: MessageId: {message.MessageId}");
+                    await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
+                    await sessionReceiver.CloseAsync();
+                }
+                finally
+                {
+                    await sender.CloseAsync();
+                    await sessionClient.CloseAsync();
+                }
+            });
         }
     }
 }

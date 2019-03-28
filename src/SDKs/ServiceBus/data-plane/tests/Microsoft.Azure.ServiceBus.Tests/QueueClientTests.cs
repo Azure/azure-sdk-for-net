@@ -12,72 +12,82 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public static IEnumerable<object[]> TestPermutations => new object[][]
         {
-            new object[] { TestConstants.NonPartitionedQueueName },
-            new object[] { TestConstants.PartitionedQueueName }
+            // Expected structure: { usePartitionedQueue, useSessionQueue }
+            new object[] { false, false },
+            new object[] { true, false }
         };
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockTest(string queueName, int messageCount = 10)
+        async Task PeekLockTest(bool partitioned, bool sessionEnabled,  int messageCount = 10)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                try
+                {
+                    await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekDeliveryCountTest(string queueName)
+        async Task PeekDeliveryCountTest(bool partitioned, bool sessionEnabled)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                try
+                {
+                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
 
-                var message = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
+                    var message = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
 
-                Assert.Equal(0, message.SystemProperties.DeliveryCount);
-            }
-            finally
-            {
-                var messageToDelete = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
-                await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messageToDelete);
+                    Assert.Equal(0, message.SystemProperties.DeliveryCount);
+                }
+                finally
+                {
+                    var messageToDelete = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                    await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messageToDelete);
 
-                await queueClient.CloseAsync();
-            }
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockDeliveryCountTest(string queueName)
+        async Task PeekLockDeliveryCountTest(bool partitioned, bool sessionEnabled)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                try
+                {
+                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
 
-                var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                    var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
 
-                await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
+                    await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
 
-                Assert.Equal(1, messages.First().SystemProperties.DeliveryCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                    Assert.Equal(1, messages.First().SystemProperties.DeliveryCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
 
@@ -85,112 +95,130 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiveDeleteTest(string queueName, int messageCount = 10)
+        async Task ReceiveDeleteTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.ReceiveDeleteTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    await this.ReceiveDeleteTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockWithAbandonTest(string queueName, int messageCount = 10)
+        async Task PeekLockWithAbandonTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.PeekLockWithAbandonTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                try
+                {
+                    await this.PeekLockWithAbandonTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockWithDeadLetterTest(string queueName, int messageCount = 10)
+        async Task PeekLockWithDeadLetterTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-
-            // Create DLQ Client To Receive DeadLetteredMessages
-            var deadLetterQueueClient = new QueueClient(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName));
-
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await
-                    this.PeekLockWithDeadLetterTestCase(
-                        queueClient.InnerSender,
-                        queueClient.InnerReceiver,
-                        deadLetterQueueClient.InnerReceiver,
-                        messageCount);
-            }
-            finally
-            {
-                await deadLetterQueueClient.CloseAsync();
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+
+                // Create DLQ Client To Receive DeadLetteredMessages
+                var deadLetterQueueClient = new QueueClient(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatDeadLetterPath(queueClient.QueueName));
+
+                try
+                {
+                    await
+                        this.PeekLockWithDeadLetterTestCase(
+                            queueClient.InnerSender,
+                            queueClient.InnerReceiver,
+                            deadLetterQueueClient.InnerReceiver,
+                            messageCount);
+                }
+                finally
+                {
+                    await deadLetterQueueClient.CloseAsync();
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task BasicRenewLockTest(string queueName, int messageCount = 10)
+        async Task BasicRenewLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.RenewLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
+                try
+                {
+                    await this.RenewLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(string queueName, int messageCount = 1)
+        async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    await this.ScheduleMessagesAppearAfterScheduledTimeAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task CancelScheduledMessagesAsyncTest(string queueName, int messageCount = 1)
+        async Task CancelScheduledMessagesAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.CancelScheduledMessagesAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    await this.CancelScheduledMessagesAsyncTestCase(queueClient.InnerSender, queueClient.InnerReceiver, messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Fact]
@@ -198,29 +226,31 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task UpdatingPrefetchCountOnQueueClientUpdatesTheReceiverPrefetchCount()
         {
-            var queueName = TestConstants.NonPartitionedQueueName;
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                Assert.Equal(0, queueClient.PrefetchCount);
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
 
-                queueClient.PrefetchCount = 2;
-                Assert.Equal(2, queueClient.PrefetchCount);
+                try
+                {
+                    Assert.Equal(0, queueClient.PrefetchCount);
 
-                // Message receiver should be created with latest prefetch count (lazy load).
-                Assert.Equal(2, queueClient.InnerReceiver.PrefetchCount);
+                    queueClient.PrefetchCount = 2;
+                    Assert.Equal(2, queueClient.PrefetchCount);
 
-                queueClient.PrefetchCount = 3;
-                Assert.Equal(3, queueClient.PrefetchCount);
+                    // Message receiver should be created with latest prefetch count (lazy load).
+                    Assert.Equal(2, queueClient.InnerReceiver.PrefetchCount);
 
-                // Already created message receiver should have its prefetch value updated.
-                Assert.Equal(3, queueClient.InnerReceiver.PrefetchCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                    queueClient.PrefetchCount = 3;
+                    Assert.Equal(3, queueClient.PrefetchCount);
+
+                    // Already created message receiver should have its prefetch value updated.
+                    Assert.Equal(3, queueClient.InnerReceiver.PrefetchCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
     }
 }

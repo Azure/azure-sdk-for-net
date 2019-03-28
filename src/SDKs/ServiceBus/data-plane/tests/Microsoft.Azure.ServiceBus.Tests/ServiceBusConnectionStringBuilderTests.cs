@@ -140,17 +140,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         public async Task NonAmqpUriSchemesShouldWorkAsExpected()
         {
-            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
-            csb.Endpoint = new UriBuilder(csb.Endpoint)
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                Scheme = Uri.UriSchemeHttps
-            }.Uri.ToString();
-            csb.EntityPath = TestConstants.NonPartitionedQueueName;
+                var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+                csb.Endpoint = new UriBuilder(csb.Endpoint)
+                {
+                    Scheme = Uri.UriSchemeHttps
+                }.Uri.ToString();
+                csb.EntityPath = queueName;
 
-            var receiver = new MessageReceiver(csb);
-            var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                var receiver = new MessageReceiver(csb);
+                var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
 
-            await receiver.CloseAsync();
+                await receiver.CloseAsync();
+            });
         }
     }
 }
