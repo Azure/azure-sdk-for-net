@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure;
 using Azure.Base.Diagnostics;
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
@@ -15,9 +14,6 @@ namespace Azure.ApplicationModel.Configuration
 {
     public partial class ConfigurationClient
     {
-        const string ComponentName = "Azure.Configuration";
-        const string ComponentVersion = "1.0.0";
-
         static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
             //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
             500, // Internal Server Error
@@ -51,7 +47,7 @@ namespace Azure.ApplicationModel.Configuration
             options.AddPerCallPolicy(ClientRequestIdPolicy.Singleton);
             options.AddPerCallPolicy(new AuthenticationPolicy(credential, secret));
 
-            _pipeline = options.Build(ComponentName, ComponentVersion);
+            _pipeline = options.Build(typeof(ConfigurationClient).Assembly);
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
