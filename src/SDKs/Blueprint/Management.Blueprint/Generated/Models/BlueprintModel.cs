@@ -44,8 +44,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="status">Status of the blueprint. This field is
         /// readonly.</param>
         /// <param name="targetScope">The scope where this blueprint definition
-        /// can be assigned. Management group is reserved for future use.
-        /// Possible values include: 'subscription', 'managementGroup'</param>
+        /// can be assigned. Possible values include: 'subscription',
+        /// 'managementGroup'</param>
         /// <param name="parameters">Parameters required by this blueprint
         /// definition.</param>
         /// <param name="resourceGroups">Resource group placeholders defined by
@@ -93,8 +93,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 
         /// <summary>
         /// Gets or sets the scope where this blueprint definition can be
-        /// assigned. Management group is reserved for future use. Possible
-        /// values include: 'subscription', 'managementGroup'
+        /// assigned. Possible values include: 'subscription',
+        /// 'managementGroup'
         /// </summary>
         [JsonProperty(PropertyName = "properties.targetScope")]
         public BlueprintTargetScope? TargetScope { get; set; }
