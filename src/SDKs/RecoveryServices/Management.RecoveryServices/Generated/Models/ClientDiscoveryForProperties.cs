@@ -14,24 +14,27 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     using System.Linq;
 
     /// <summary>
-    /// Details of the certificate to be uploaded to the vault.
+    /// Class to represent shoebox properties in json client discovery.
     /// </summary>
-    public partial class CertificateRequest
+    public partial class ClientDiscoveryForProperties
     {
         /// <summary>
-        /// Initializes a new instance of the CertificateRequest class.
+        /// Initializes a new instance of the ClientDiscoveryForProperties
+        /// class.
         /// </summary>
-        public CertificateRequest()
+        public ClientDiscoveryForProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CertificateRequest class.
+        /// Initializes a new instance of the ClientDiscoveryForProperties
+        /// class.
         /// </summary>
-        public CertificateRequest(RawCertificateData properties = default(RawCertificateData))
+        /// <param name="serviceSpecification">Operation properties.</param>
+        public ClientDiscoveryForProperties(ClientDiscoveryForServiceSpecification serviceSpecification = default(ClientDiscoveryForServiceSpecification))
         {
-            Properties = properties;
+            ServiceSpecification = serviceSpecification;
             CustomInit();
         }
 
@@ -41,9 +44,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets operation properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public RawCertificateData Properties { get; set; }
+        [JsonProperty(PropertyName = "serviceSpecification")]
+        public ClientDiscoveryForServiceSpecification ServiceSpecification { get; set; }
 
     }
 }

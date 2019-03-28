@@ -11,27 +11,27 @@
 namespace Microsoft.Azure.Management.RecoveryServices.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Resource information, as returned by the resource provider.
+    /// Response for check name availability API. Resource provider will set
+    /// availability as true | false.
     /// </summary>
-    public partial class Vault : TrackedResource
+    public partial class ResourceNameAvailabilityResponseResource : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the Vault class.
+        /// Initializes a new instance of the
+        /// ResourceNameAvailabilityResponseResource class.
         /// </summary>
-        public Vault()
+        public ResourceNameAvailabilityResponseResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Vault class.
+        /// Initializes a new instance of the
+        /// ResourceNameAvailabilityResponseResource class.
         /// </summary>
-        /// <param name="location">Resource location.</param>
         /// <param name="id">Resource Id represents the complete path to the
         /// resource.</param>
         /// <param name="name">Resource name associated with the
@@ -39,12 +39,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <param name="type">Resource type represents the complete path of
         /// the form Namespace/ResourceType/ResourceType/...</param>
         /// <param name="eTag">Optional ETag.</param>
-        /// <param name="tags">Resource tags.</param>
-        public Vault(string location, string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), VaultProperties properties = default(VaultProperties), Sku sku = default(Sku))
-            : base(location, id, name, type, eTag, tags)
+        /// <param name="properties">ResourceNameAvailabilityResponseResource
+        /// properties</param>
+        public ResourceNameAvailabilityResponseResource(string id = default(string), string name = default(string), string type = default(string), string eTag = default(string), ResourceNameAvailabilityResponse properties = default(ResourceNameAvailabilityResponse))
+            : base(id, name, type, eTag)
         {
             Properties = properties;
-            Sku = sku;
             CustomInit();
         }
 
@@ -54,28 +54,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets resourceNameAvailabilityResponseResource properties
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public VaultProperties Properties { get; set; }
+        public ResourceNameAvailabilityResponse Properties { get; set; }
 
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "sku")]
-        public Sku Sku { get; set; }
-
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public override void Validate()
-        {
-            base.Validate();
-            if (Sku != null)
-            {
-                Sku.Validate();
-            }
-        }
     }
 }
