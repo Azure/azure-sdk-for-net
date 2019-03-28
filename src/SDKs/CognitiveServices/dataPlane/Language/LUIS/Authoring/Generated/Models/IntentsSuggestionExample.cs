@@ -31,9 +31,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Initializes a new instance of the IntentsSuggestionExample class.
         /// </summary>
-        /// <param name="text">The utterance. E.g.: what's the weather like in
-        /// seattle?</param>
-        /// <param name="tokenizedText">The utterance tokenized.</param>
+        /// <param name="text">The utterance. For example, "What's the weather
+        /// like in seattle?"</param>
+        /// <param name="tokenizedText">The tokenized utterance.</param>
         /// <param name="intentPredictions">Predicted/suggested
         /// intents.</param>
         /// <param name="entityPredictions">Predicted/suggested
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the utterance. E.g.: what's the weather like in
-        /// seattle?
+        /// Gets or sets the utterance. For example, "What's the weather like
+        /// in seattle?"
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the utterance tokenized.
+        /// Gets or sets the tokenized utterance.
         /// </summary>
         [JsonProperty(PropertyName = "tokenizedText")]
         public IList<string> TokenizedText { get; set; }

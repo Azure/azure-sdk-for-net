@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// A Hierarchical Entity Extractor.
+    /// A hierarchical entity extractor.
     /// </summary>
     public partial class HierarchicalEntityModel
     {

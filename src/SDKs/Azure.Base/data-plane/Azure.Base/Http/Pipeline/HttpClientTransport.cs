@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Base.Buffers;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
+using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,128 +24,156 @@ namespace Azure.Base.Http.Pipeline
 
         public readonly static HttpClientTransport Shared = new HttpClientTransport();
 
-        public sealed override HttpMessage CreateMessage(IServiceProvider services, CancellationToken cancellation)
-            => new Message(cancellation);
+        public sealed override HttpPipelineRequest CreateRequest(IServiceProvider services)
+            => new PipelineRequest();
 
-        public sealed override async Task ProcessAsync(HttpMessage message)
+        public sealed override async Task ProcessAsync(HttpPipelineMessage message)
         {
-            var httpTransportMessage = message as Message;
-            if (httpTransportMessage == null) throw new InvalidOperationException("the message is not compatible with the transport");
+            var pipelineRequest = message.Request as PipelineRequest;
+            if (pipelineRequest == null) throw new InvalidOperationException("the request is not compatible with the transport");
 
-            HttpRequestMessage httpRequest = httpTransportMessage.BuildRequestMessage();
-
-            HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
-            httpTransportMessage.ProcessResponseMessage(responseMessage);
+            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
+            {
+                HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
+                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
+            }
         }
 
         protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
             => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
 
-        sealed class Message : HttpMessage
+
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
         {
-            string _contentTypeHeaderValue;
-            string _contentLengthHeaderValue;
-            HttpMessageContent _requestContent;
-            HttpRequestMessage _requestMessage;
-            HttpResponseMessage _responseMessage;
-
-            public Message(CancellationToken cancellation) : base(cancellation)
-                => _requestMessage = new HttpRequestMessage();
-
-            #region Request
-            public override void SetRequestLine(HttpVerb method, Uri uri)
+            if (headers.TryGetValues(name, out var values) ||
+                (content != null && content.Headers.TryGetValues(name, out values)))
             {
-                _requestMessage.Method = ToHttpClientMethod(method);
-                _requestMessage.RequestUri = uri;
-                _requestMessage.Version = new Version(1, 1);
+                value = JoinHeaderValues(values);
+                return true;
             }
 
-            public override HttpVerb Method => ToPipelineMethod(_requestMessage.Method);
+            value = null;
+            return false;
+        }
+
+        internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent content)
+        {
+            foreach (var header in headers)
+            {
+                yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+            }
+
+            if (content != null)
+            {
+                foreach (var header in content.Headers)
+                {
+                    yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
+                }
+            }
+        }
+
+        internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
+        {
+            foreach (var header in from)
+            {
+                if (!to.TryAddWithoutValidation(header.Key, header.Value))
+                {
+                    throw new InvalidOperationException($"Unable to add header {header} to header collection.");
+                }
+            }
+        }
+
+        private static string JoinHeaderValues(IEnumerable<string> values)
+        {
+            return string.Join(",", values);
+        }
+
+        sealed class PipelineRequest : HttpPipelineRequest
+        {
+            private readonly HttpRequestMessage _requestMessage;
+
+            private PipelineContentAdapter _requestContent;
+
+            public PipelineRequest()
+            {
+                _requestMessage = new HttpRequestMessage();
+                RequestId = Guid.NewGuid().ToString();
+            }
+
+            public override Uri Uri
+            {
+                get => _requestMessage.RequestUri;
+                set => _requestMessage.RequestUri = value;
+            }
+
+            public override HttpVerb Method
+            {
+                get => HttpVerbConverter.Parse(_requestMessage.Method.Method);
+                set => _requestMessage.Method = ToHttpClientMethod(value);
+            }
+
+            public override HttpPipelineRequestContent Content
+            {
+                get => _requestContent?.PipelineContent;
+                set
+                {
+                    EnsureContentInitialized();
+                    _requestContent.PipelineContent = value;
+                }
+            }
+
+            public override string RequestId { get; set; }
 
             public override void AddHeader(HttpHeader header)
             {
-                var valueString = header.Value.AsciiToString();
-                var nameString = header.Name.AsciiToString();
-                AddHeader(nameString, valueString);
+                AddHeader(header.Name, header.Value);
             }
 
             public override void AddHeader(string name, string value)
             {
-                // TODO (pri 1): any other headers must be added to content?
-                if (name.Equals("Content-Type", StringComparison.InvariantCulture)) {
-                    _contentTypeHeaderValue = value;
+                if (_requestMessage.Headers.TryAddWithoutValidation(name, value))
+                {
+                    return;
                 }
-                else if (name.Equals("Content-Length", StringComparison.InvariantCulture)) {
-                    _contentLengthHeaderValue = value;
-                }
-                else {
-                    if (!_requestMessage.Headers.TryAddWithoutValidation(name, value)) {
-                        throw new InvalidOperationException();
-                    }
+
+                EnsureContentInitialized();
+                if (!_requestContent.Headers.TryAddWithoutValidation(name, value))
+                {
+                    throw new InvalidOperationException("Unable to add header to request or content");
                 }
             }
 
-            public override void SetContent(HttpMessageContent content)
-                => _requestContent = content;
+            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
 
-            public HttpRequestMessage BuildRequestMessage()
+            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
+
+            public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
                 // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
                 // and so the retry logic fails.
-                var message = new HttpRequestMessage(_requestMessage.Method, _requestMessage.RequestUri);
-                foreach (var header in _requestMessage.Headers) {
-                    if (!message.Headers.TryAddWithoutValidation(header.Key, header.Value)) {
-                        throw new Exception("could not add header " + header.ToString());
-                    }
+                var request = new HttpRequestMessage(_requestMessage.Method, _requestMessage.RequestUri);
+
+                CopyHeaders(_requestMessage.Headers, request.Headers);
+
+                if (_requestContent?.PipelineContent != null)
+                {
+                    request.Content = new PipelineContentAdapter()
+                    {
+                        CancellationToken = cancellation,
+                        PipelineContent = _requestContent.PipelineContent
+                    };
+                    CopyHeaders(_requestContent.Headers, request.Content.Headers);
                 }
 
-                if (_requestContent != null) {
-                    message.Content = new PipelineContentAdapter(_requestContent, Cancellation);
-                    if (_contentTypeHeaderValue != null) message.Content.Headers.Add("Content-Type", _contentTypeHeaderValue);
-                    if (_contentLengthHeaderValue != null) message.Content.Headers.Add("Content-Length", _contentLengthHeaderValue);
-                }
-
-                return message;
+                return request;
             }
-            #endregion
-
-            #region Response
-            internal void ProcessResponseMessage(HttpResponseMessage response) {
-                _responseMessage = response;
-                _requestMessage.Dispose();
-            }
-
-            protected internal override int Status => (int)_responseMessage.StatusCode;
-
-            protected internal override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
-            {
-                string nameString = name.AsciiToString();
-                if (!_responseMessage.Headers.TryGetValues(nameString, out var values)) {
-                    if (!_responseMessage.Content.Headers.TryGetValues(nameString, out values)) {
-                        value = default;
-                        return false;
-                    }
-                }
-
-                var all = string.Join(",", values);
-                value = Encoding.ASCII.GetBytes(all);
-                return true;
-            }
-
-            // TODO (pri 1): is it ok to just call .Result here?
-            protected internal override Stream ResponseContentStream => _responseMessage.Content.ReadAsStreamAsync().Result;
-            #endregion
 
             public override void Dispose()
             {
-                _requestContent?.Dispose();
-                _requestMessage?.Dispose();
-                _responseMessage?.Dispose();
-                base.Dispose();
+                _requestMessage.Dispose();
             }
 
-            public override string ToString() =>
-                _responseMessage!=null? _responseMessage.ToString() : _requestMessage.ToString();
+            public override string ToString() =>  _requestMessage.ToString();
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
             public static HttpMethod ToHttpClientMethod(HttpVerb method)
@@ -161,45 +189,70 @@ namespace Azure.Base.Http.Pipeline
                 }
             }
 
-            public static HttpVerb ToPipelineMethod(HttpMethod method)
+            private void EnsureContentInitialized()
             {
-                switch (method.Method) {
-                    case "GET": return HttpVerb.Get;
-                    case "POST": return HttpVerb.Post;
-                    case "PUT": return HttpVerb.Put;
-                    case "DELETE": return HttpVerb.Delete;
-                    case "PATCH": return HttpVerb.Patch;
-
-                    // method argument is not a REST verb
-                    default: throw new ArgumentOutOfRangeException(nameof(method));
+                if (_requestContent == null)
+                {
+                    _requestContent = new PipelineContentAdapter();
                 }
             }
 
             sealed class PipelineContentAdapter : HttpContent
             {
-                HttpMessageContent _content;
-                CancellationToken _cancellation;
+                public HttpPipelineRequestContent PipelineContent { get; set; }
 
-                public PipelineContentAdapter(HttpMessageContent content, CancellationToken cancellation)
+                public CancellationToken CancellationToken { get; set; }
+
+                protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
                 {
-                    Debug.Assert(content != null);
-
-                    _content = content;
-                    _cancellation = cancellation;
+                    Debug.Assert(PipelineContent != null);
+                    await PipelineContent.WriteTo(stream, CancellationToken).ConfigureAwait(false);
                 }
 
-                protected async override Task SerializeToStreamAsync(Stream stream, TransportContext context)
-                    => await _content.WriteTo(stream, _cancellation).ConfigureAwait(false);
-
                 protected override bool TryComputeLength(out long length)
-                    => _content.TryComputeLength(out length);
+                {
+                    Debug.Assert(PipelineContent != null);
+
+                    return PipelineContent.TryComputeLength(out length);
+                }
+
 
                 protected override void Dispose(bool disposing)
                 {
-                    _content.Dispose();
+                    PipelineContent?.Dispose();
                     base.Dispose(disposing);
                 }
             }
+        }
+
+        sealed class PipelineResponse : HttpPipelineResponse
+        {
+            readonly HttpResponseMessage _responseMessage;
+
+            public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
+            {
+                RequestId = requestId;
+                _responseMessage = responseMessage;
+            }
+
+            public override int Status => (int)_responseMessage.StatusCode;
+
+            // TODO (pri 1): is it ok to just call GetResult here?
+            public override Stream ResponseContentStream
+                => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+
+            public override string RequestId { get; set; }
+
+            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
+
+            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
+
+            public override void Dispose()
+            {
+                _responseMessage?.Dispose();
+            }
+
+            public override string ToString() => _responseMessage.ToString();
         }
     }
 }

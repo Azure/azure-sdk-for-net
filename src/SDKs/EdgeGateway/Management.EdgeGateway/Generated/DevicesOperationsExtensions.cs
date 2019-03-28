@@ -312,54 +312,6 @@ namespace Microsoft.Azure.Management.EdgeGateway
             }
 
             /// <summary>
-            /// Creates or updates the additional information of a the data box
-            /// edge/gateway device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The additional information.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            public static DataBoxEdgeDeviceExtendedInfo CreateOrUpdateExtendedInfo(this IDevicesOperations operations, string deviceName, DataBoxEdgeDeviceExtendedInfo parameters, string resourceGroupName)
-            {
-                return operations.CreateOrUpdateExtendedInfoAsync(deviceName, parameters, resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates or updates the additional information of a the data box
-            /// edge/gateway device.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='deviceName'>
-            /// The device name.
-            /// </param>
-            /// <param name='parameters'>
-            /// The additional information.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The resource group name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<DataBoxEdgeDeviceExtendedInfo> CreateOrUpdateExtendedInfoAsync(this IDevicesOperations operations, string deviceName, DataBoxEdgeDeviceExtendedInfo parameters, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateExtendedInfoWithHttpMessagesAsync(deviceName, parameters, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Gets additional information for the specified data box edge/gateway device.
             /// </summary>
             /// <param name='operations'>

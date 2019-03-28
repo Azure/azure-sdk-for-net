@@ -13,54 +13,58 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public static IEnumerable<object[]> TestPermutations => new object[][]
         {
-            new object[] { TestConstants.NonPartitionedQueueName, 1 },
-            new object[] { TestConstants.NonPartitionedQueueName, 10 },
-            new object[] { TestConstants.PartitionedQueueName, 1 },
-            new object[] { TestConstants.PartitionedQueueName, 10 },
+            // Expected structure: { usePartitionedQueue, useSessionQueue, maxCurrentCalls }
+            new object[] { false, false, 1 },
+            new object[] { false, false, 10 },
+            new object[] { true, false, 1 },
+            new object[] { true, false, 10 },
         };
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnMessagePeekLockWithAutoCompleteTrue(string queueName, int maxConcurrentCalls)
+        Task OnMessagePeekLockWithAutoCompleteTrue(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
-            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
+            return this.OnMessageTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnMessagePeekLockWithAutoCompleteFalse(string queueName, int maxConcurrentCalls)
+        Task OnMessagePeekLockWithAutoCompleteFalse(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
-            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
+            return this.OnMessageTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnMessageReceiveDelete(string queueName, int maxConcurrentCalls)
+        Task OnMessageReceiveDelete(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
-            return this.OnMessageTestAsync(queueName, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
+            return this.OnMessageTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task OnMessageRegistrationWithoutPendingMessagesReceiveAndDelete(string queueName, int maxConcurrentCalls)
+        async Task OnMessageRegistrationWithoutPendingMessagesReceiveAndDelete(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.OnMessageRegistrationWithoutPendingMessagesTestCase(queueClient.InnerSender, queueClient.InnerReceiver, maxConcurrentCalls, true);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    await this.OnMessageRegistrationWithoutPendingMessagesTestCase(queueClient.InnerSender, queueClient.InnerReceiver, maxConcurrentCalls, true);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Fact]
@@ -68,10 +72,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task OnMessageExceptionHandlerCalledTest()
         {
-            var queueName = "nonexistentqueuename";
+            var invalidQueueName = "nonexistentqueuename";
             var exceptionReceivedHandlerCalled = false;
 
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, invalidQueueName, ReceiveMode.ReceiveAndDelete);
             queueClient.RegisterMessageHandler(
                 (message, token) => throw new Exception("Unexpected exception: Did not expect messages here"),
                 (eventArgs) =>
@@ -107,24 +111,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
-        async Task OnMessageTestAsync(string queueName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
+        async Task OnMessageTestAsync(bool partitioned, bool sessionEnabled, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
         {
             const int messageCount = 10;
 
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
-            try
+            await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
-                await this.OnMessageAsyncTestCase(
-                    queueClient.InnerSender,
-                    queueClient.InnerReceiver,
-                    maxConcurrentCalls,
-                    autoComplete,
-                    messageCount);
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, mode);
+                try
+                {
+                    await this.OnMessageAsyncTestCase(
+                        queueClient.InnerSender,
+                        queueClient.InnerReceiver,
+                        maxConcurrentCalls,
+                        autoComplete,
+                        messageCount);
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
     }
 }

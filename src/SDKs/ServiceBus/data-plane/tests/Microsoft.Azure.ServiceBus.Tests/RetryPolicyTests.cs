@@ -8,7 +8,6 @@
     public class RetryPolicyTests
     {
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task Should_retry_when_throttled_and_no_ambient_transaction_is_detected()
         {
@@ -32,7 +31,6 @@
         }
 
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         public async Task Should_not_retry_when_throttled_and_ambient_transaction_is_detected()
         {

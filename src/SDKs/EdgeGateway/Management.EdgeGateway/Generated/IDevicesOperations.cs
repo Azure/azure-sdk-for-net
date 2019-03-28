@@ -200,35 +200,6 @@ namespace Microsoft.Azure.Management.EdgeGateway
         /// </exception>
         Task<AzureOperationResponse> DownloadUpdatesWithHttpMessagesAsync(string deviceName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or updates the additional information of a the data box
-        /// edge/gateway device.
-        /// </summary>
-        /// <param name='deviceName'>
-        /// The device name.
-        /// </param>
-        /// <param name='parameters'>
-        /// The additional information.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// The resource group name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<DataBoxEdgeDeviceExtendedInfo>> CreateOrUpdateExtendedInfoWithHttpMessagesAsync(string deviceName, DataBoxEdgeDeviceExtendedInfo parameters, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Gets additional information for the specified data box edge/gateway
         /// device.
         /// </summary>

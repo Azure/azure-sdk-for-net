@@ -10,8 +10,9 @@
 
 namespace Microsoft.Azure.Management.StorageSync.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -30,18 +31,27 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         /// <summary>
         /// Initializes a new instance of the SyncSessionStatus class.
         /// </summary>
-        /// <param name="lastSyncResult">Last sync status</param>
+        /// <param name="lastSyncResult">Last sync result (HResult)</param>
         /// <param name="lastSyncTimestamp">Last sync timestamp</param>
         /// <param name="lastSyncSuccessTimestamp">Last sync success
         /// timestamp</param>
         /// <param name="lastSyncPerItemErrorCount">Last sync per item error
         /// count.</param>
-        public SyncSessionStatus(int? lastSyncResult = default(int?), System.DateTime? lastSyncTimestamp = default(System.DateTime?), System.DateTime? lastSyncSuccessTimestamp = default(System.DateTime?), int? lastSyncPerItemErrorCount = default(int?))
+        /// <param name="persistentFilesNotSyncingCount">Count of persistent
+        /// files not syncing. Reserved for future use.</param>
+        /// <param name="transientFilesNotSyncingCount">Count of transient
+        /// files not syncing. Reserved for future use.</param>
+        /// <param name="filesNotSyncingErrors">Array of per-item errors coming
+        /// from the last sync session. Reserved for future use.</param>
+        public SyncSessionStatus(int? lastSyncResult = default(int?), System.DateTime? lastSyncTimestamp = default(System.DateTime?), System.DateTime? lastSyncSuccessTimestamp = default(System.DateTime?), long? lastSyncPerItemErrorCount = default(long?), long? persistentFilesNotSyncingCount = default(long?), long? transientFilesNotSyncingCount = default(long?), IList<FilesNotSyncingError> filesNotSyncingErrors = default(IList<FilesNotSyncingError>))
         {
             LastSyncResult = lastSyncResult;
             LastSyncTimestamp = lastSyncTimestamp;
             LastSyncSuccessTimestamp = lastSyncSuccessTimestamp;
             LastSyncPerItemErrorCount = lastSyncPerItemErrorCount;
+            PersistentFilesNotSyncingCount = persistentFilesNotSyncingCount;
+            TransientFilesNotSyncingCount = transientFilesNotSyncingCount;
+            FilesNotSyncingErrors = filesNotSyncingErrors;
             CustomInit();
         }
 
@@ -51,45 +61,48 @@ namespace Microsoft.Azure.Management.StorageSync.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets last sync status
+        /// Gets last sync result (HResult)
         /// </summary>
         [JsonProperty(PropertyName = "lastSyncResult")]
-        public int? LastSyncResult { get; set; }
+        public int? LastSyncResult { get; private set; }
 
         /// <summary>
-        /// Gets or sets last sync timestamp
+        /// Gets last sync timestamp
         /// </summary>
         [JsonProperty(PropertyName = "lastSyncTimestamp")]
-        public System.DateTime? LastSyncTimestamp { get; set; }
+        public System.DateTime? LastSyncTimestamp { get; private set; }
 
         /// <summary>
-        /// Gets or sets last sync success timestamp
+        /// Gets last sync success timestamp
         /// </summary>
         [JsonProperty(PropertyName = "lastSyncSuccessTimestamp")]
-        public System.DateTime? LastSyncSuccessTimestamp { get; set; }
+        public System.DateTime? LastSyncSuccessTimestamp { get; private set; }
 
         /// <summary>
-        /// Gets or sets last sync per item error count.
+        /// Gets last sync per item error count.
         /// </summary>
         [JsonProperty(PropertyName = "lastSyncPerItemErrorCount")]
-        public int? LastSyncPerItemErrorCount { get; set; }
+        public long? LastSyncPerItemErrorCount { get; private set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets count of persistent files not syncing. Reserved for future
+        /// use.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (LastSyncPerItemErrorCount > 2147483647)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "LastSyncPerItemErrorCount", 2147483647);
-            }
-            if (LastSyncPerItemErrorCount < 0)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "LastSyncPerItemErrorCount", 0);
-            }
-        }
+        [JsonProperty(PropertyName = "persistentFilesNotSyncingCount")]
+        public long? PersistentFilesNotSyncingCount { get; private set; }
+
+        /// <summary>
+        /// Gets count of transient files not syncing. Reserved for future use.
+        /// </summary>
+        [JsonProperty(PropertyName = "transientFilesNotSyncingCount")]
+        public long? TransientFilesNotSyncingCount { get; private set; }
+
+        /// <summary>
+        /// Gets array of per-item errors coming from the last sync session.
+        /// Reserved for future use.
+        /// </summary>
+        [JsonProperty(PropertyName = "filesNotSyncingErrors")]
+        public IList<FilesNotSyncingError> FilesNotSyncingErrors { get; private set; }
+
     }
 }

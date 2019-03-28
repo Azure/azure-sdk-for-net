@@ -51,8 +51,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         public LUISAuthoringClient Client { get; private set; }
 
         /// <summary>
-        /// Adds a labeled example to the application.
+        /// Adds a labeled example utterance in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible values
+        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+        /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+        /// include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -60,7 +70,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='exampleLabelObject'>
-        /// An example label with the expected intent and entities.
+        /// A labeled example utterance with the expected intent and entities.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -83,12 +93,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LabelExampleResponse>> AddWithHttpMessagesAsync(System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LabelExampleResponse>> AddWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, ExampleLabelObject exampleLabelObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -104,6 +110,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("azureRegion", azureRegion);
+                tracingParameters.Add("azureCloud", azureCloud);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("exampleLabelObject", exampleLabelObject);
@@ -113,7 +121,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/example";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureCloud}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureCloud, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -223,8 +232,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Adds a batch of labeled examples to the application.
+        /// Adds a batch of labeled example utterances to a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible values
+        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+        /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+        /// include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -232,7 +251,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='exampleLabelObjectArray'>
-        /// Array of examples.
+        /// Array of example utterances.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -255,12 +274,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<BatchLabelExample>>> BatchWithHttpMessagesAsync(System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<BatchLabelExample>>> BatchWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, IList<ExampleLabelObject> exampleLabelObjectArray, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -276,6 +291,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("azureRegion", azureRegion);
+                tracingParameters.Add("azureCloud", azureCloud);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("exampleLabelObjectArray", exampleLabelObjectArray);
@@ -285,7 +302,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/examples";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureCloud}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureCloud, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             // Create HTTP transport objects
@@ -413,8 +431,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Returns examples to be reviewed.
+        /// Returns example utterances to be reviewed from a version of the
+        /// application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible values
+        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+        /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+        /// include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -448,12 +477,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<LabeledUtterance>>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<LabeledUtterance>>> ListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -477,6 +502,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("azureRegion", azureRegion);
+                tracingParameters.Add("azureCloud", azureCloud);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("skip", skip);
@@ -487,7 +514,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/examples";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureCloud}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureCloud, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             List<string> _queryParameters = new List<string>();
@@ -604,8 +632,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Deletes the labeled example with the specified ID.
+        /// Deletes the labeled example utterances with the specified ID from a version
+        /// of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible values
+        /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
+        /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
+        /// include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -636,12 +675,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(System.Guid appId, string versionId, int exampleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int exampleId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.Endpoint == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
@@ -653,6 +688,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("azureRegion", azureRegion);
+                tracingParameters.Add("azureCloud", azureCloud);
                 tracingParameters.Add("appId", appId);
                 tracingParameters.Add("versionId", versionId);
                 tracingParameters.Add("exampleId", exampleId);
@@ -662,7 +699,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}/versions/{versionId}/examples/{exampleId}";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            _url = _url.Replace("{AzureRegion}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureRegion, Client.SerializationSettings).Trim('"'));
+            _url = _url.Replace("{AzureCloud}", Rest.Serialization.SafeJsonConvert.SerializeObject(azureCloud, Client.SerializationSettings).Trim('"'));
             _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{versionId}", System.Uri.EscapeDataString(versionId));
             _url = _url.Replace("{exampleId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(exampleId, Client.SerializationSettings).Trim('"')));

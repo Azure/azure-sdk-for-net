@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <RootNamespace>Microsoft.Azure.ServiceBus.UnitTests</RootNamespace>
@@ -45,14 +45,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+    <PackageReference Include="Polly" Version="7.1.0" />
     <PackageReference Include="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="PublicApiGenerator" Version="8.1.0" />
-    <PackageReference Include="ApprovalTests" Version="3.0.18" NoWarn="NU1701" />
-    <PackageReference Include="ApprovalUtilities" Version="3.0.18" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalTests" Version="3.0.21" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalUtilities" Version="3.0.21" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
   </ItemGroup>
 

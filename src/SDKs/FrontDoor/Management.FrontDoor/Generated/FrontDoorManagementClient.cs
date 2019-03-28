@@ -114,6 +114,11 @@ namespace Microsoft.Azure.Management.FrontDoor
         public virtual IPoliciesOperations Policies { get; private set; }
 
         /// <summary>
+        /// Gets the IManagedRuleSetsOperations.
+        /// </summary>
+        public virtual IManagedRuleSetsOperations ManagedRuleSets { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the FrontDoorManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -362,6 +367,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             FrontendEndpoints = new FrontendEndpointsOperations(this);
             Endpoints = new EndpointsOperations(this);
             Policies = new PoliciesOperations(this);
+            ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -392,8 +398,8 @@ namespace Microsoft.Azure.Management.FrontDoor
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ManagedRuleSet>("ruleSetType"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ManagedRuleSet>("ruleSetType"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<RouteConfiguration>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<RouteConfiguration>("@odata.type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
@@ -435,7 +441,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 checkFrontDoorNameAvailabilityInput.Validate();
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -623,7 +629,7 @@ namespace Microsoft.Azure.Management.FrontDoor
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-08-01";
+            string apiVersion = "2019-04-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

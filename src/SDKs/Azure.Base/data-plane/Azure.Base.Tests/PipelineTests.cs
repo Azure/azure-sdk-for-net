@@ -6,50 +6,67 @@ using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
-using System.Diagnostics.Tracing;
-using System.IO;
+using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Tests
 {
-    // TODO (pri 2): Do use the EventRegister NuGet package or the standalone eventRegister.exe tool, to run build-time validation of the event source classes defined in your assemblies.
     public class PipelineTests
     {
-        string expected = @"ProcessingRequest : Get https://contoso.a.io/ # ErrorResponse : 500 # ProcessingResponse : Get https://contoso.a.io/ # ProcessingRequest : Get https://contoso.a.io/ # ProcessingResponse : Get https://contoso.a.io/";
-
         [Test]
-        public void Basics() {
+        public async Task Basics()
+        {
+            var requestIndex = 0;
+            var mockTransport = new MockTransport(
+                _ => requestIndex++ == 0 ? new MockResponse(500) : new MockResponse(1));
 
-            var options = new HttpPipelineOptions(new MockTransport(500, 1));
+            var options = new HttpPipelineOptions(mockTransport);
             options.RetryPolicy = new CustomRetryPolicy();
-            options.LoggingPolicy = new LoggingPolicy();
-
-            var listener = new TestEventListener();
-            listener.EnableEvents(EventLevel.LogAlways);
 
             var pipeline = options.Build("test", "1.0.0");
 
-            using (var message = pipeline.CreateMessage(cancellation: default))
-            {
-                message.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
-                pipeline.SendMessageAsync(message).Wait();
+            var request = pipeline.CreateRequest();
+            request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+            var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
-                Assert.AreEqual(1, message.Response.Status);
-                var result = listener.ToString();
-                Assert.AreEqual(expected, result);
-            }
+            Assert.AreEqual(1, response.Status);
         }
 
         [Test]
         public async Task EmptyPipeline()
         {
             var pipeline = new HttpPipeline();
-            await pipeline.SendMessageAsync(new NullMessage());
+            await pipeline.SendRequestAsync(new NullPipelineContext(), CancellationToken.None);
+        }
+
+        [Test]
+        public async Task ComponentNameAndVersionReadFromAssembly()
+        {
+            string userAgent = null;
+
+            var mockTransport = new MockTransport(
+                req => {
+                    Assert.True(req.TryGetHeader("User-Agent", out userAgent));
+                    return new MockResponse(200);
+                });
+
+            var pipeline = new HttpPipelineOptions(mockTransport).Build(typeof(PipelineTests).Assembly);
+
+            var request = pipeline.CreateRequest();
+            request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+            await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            Assert.AreEqual(userAgent, $"azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
 
         class CustomRetryPolicy : RetryPolicy
         {
-            protected override bool ShouldRetry(HttpMessage message, int retry, out TimeSpan delay)
+            protected override bool ShouldRetry(HttpPipelineMessage message, int retry, out TimeSpan delay)
             {
                 delay = TimeSpan.Zero;
                 if (retry > 5) return false;
@@ -58,33 +75,30 @@ namespace Azure.Base.Tests
             }
         }
 
-        class NullMessage : HttpMessage
+        class NullPipelineContext : HttpPipelineRequest
         {
-            public NullMessage() : base(default) { }
-            public override HttpVerb Method => throw new NotImplementedException();
-
-            protected override int Status => throw new NotImplementedException();
-
-            protected override Stream ResponseContentStream => throw new NotImplementedException();
-
             public override void AddHeader(HttpHeader header)
             {
-                throw new NotImplementedException();
             }
 
-            public override void SetContent(HttpMessageContent content)
+            public override bool TryGetHeader(string name, out string value)
             {
-                throw new NotImplementedException();
+                value = null;
+                return false;
             }
 
-            public override void SetRequestLine(HttpVerb method, Uri uri)
+            public override IEnumerable<HttpHeader> Headers
             {
-                throw new NotImplementedException();
+                get
+                {
+                    yield break;
+                }
             }
 
-            protected override bool TryGetHeader(ReadOnlySpan<byte> name, out ReadOnlySpan<byte> value)
+            public override string RequestId { get; set; }
+
+            public override void Dispose()
             {
-                throw new NotImplementedException();
             }
         }
     }

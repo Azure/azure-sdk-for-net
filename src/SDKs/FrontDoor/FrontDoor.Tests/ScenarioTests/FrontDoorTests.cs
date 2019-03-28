@@ -36,13 +36,16 @@ namespace FrontDoor.Tests.ScenarioTests
                 // Create two different frontDoor
                 string frontDoorName = TestUtilities.GenerateName("frontDoor");
 
+                ForwardingConfiguration forwardingConfiguration = new ForwardingConfiguration(
+                    forwardingProtocol: "MatchRequest",
+                    backendPool: new refID("/subscriptions/" + subid + "/resourceGroups/" + resourceGroupName + "/providers/Microsoft.Network/frontDoors/" + frontDoorName + "/backendPools/backendPool1"));
+                
                 RoutingRule routingrule1 = new RoutingRule(
                     name: "routingrule1",
                     frontendEndpoints: new List<refID> { new refID("/subscriptions/"+subid+"/resourceGroups/"+resourceGroupName+"/providers/Microsoft.Network/frontDoors/"+frontDoorName+"/frontendEndpoints/frontendEndpoint1")},
                     acceptedProtocols: new List<string> { "Https" },
                     patternsToMatch: new List<string> { "/*" },
-                    forwardingProtocol: "MatchRequest",
-                    backendPool: new refID("/subscriptions/"+subid+"/resourceGroups/"+resourceGroupName+"/providers/Microsoft.Network/frontDoors/"+frontDoorName+"/backendPools/backendPool1"),
+                    routeConfiguration: forwardingConfiguration,
                     enabledState: "Enabled"
                 );
                 HealthProbeSettingsModel healthProbeSettings1 = new HealthProbeSettingsModel(
@@ -155,31 +158,35 @@ namespace FrontDoor.Tests.ScenarioTests
                 // Create a frontDoor
                 string policyName = TestUtilities.GenerateName("policy");
 
-                WebApplicationFirewallPolicy1 createParameters = new WebApplicationFirewallPolicy1
+                WebApplicationFirewallPolicy createParameters = new WebApplicationFirewallPolicy
                 {
                     Location = "global",
                     Tags = new Dictionary<string, string>
-                        {
-                            {"key1","value1"},
-                            {"key2","value2"}
-                        },
+                    {
+                        {"key1","value1"},
+                        {"key2","value2"}
+                    },
                     PolicySettings = new PolicySettings
                     {
                         EnabledState = "Enabled",
-                        Mode = "Prevention"
+                        Mode = "Prevention",
+                        CustomBlockResponseBody = "PGh0bWw+SGVsbG88L2h0bWw+",
+                        CustomBlockResponseStatusCode = 403,
+                        RedirectUrl = "http://www.bing.com"
                     },
-                    CustomRules = new CustomRules(
+                    CustomRules = new CustomRuleList(
                         new List<CustomRule>
                         {
                             new CustomRule
                             {
                                 Name = "rule1",
+                                EnabledState = "Enabled",
                                 Priority = 1,
                                 RuleType = "RateLimitRule",
                                 RateLimitThreshold = 1000,
-                                MatchConditions = new List<MatchCondition1>
+                                MatchConditions = new List<MatchCondition>
                                 {
-                                    new MatchCondition1
+                                    new MatchCondition
                                     {
                                         MatchVariable = "RemoteAddr",
                                         OperatorProperty = "IPMatch",
@@ -194,18 +201,27 @@ namespace FrontDoor.Tests.ScenarioTests
                             }
                         }
                     ),
-                    ManagedRules = new ManagedRuleSets(
+                    ManagedRules = new ManagedRuleSetList(
                         new List <ManagedRuleSet> {
-                            new AzureManagedRuleSet
+                            new ManagedRuleSet
                             {
-                                Priority = 1,
-                                RuleGroupOverrides = new List<AzureManagedOverrideRuleGroup>
+                                RuleSetType = "DefaultRuleSet",
+                                RuleSetVersion = "1.0",
+                                RuleGroupOverrides = new List<ManagedRuleGroupOverride>
                                 {
-                                    new AzureManagedOverrideRuleGroup
+                                    new ManagedRuleGroupOverride
                                     {
-                                        RuleGroupOverride = "SqlInjection",
-                                        Action = "Block"
-                                    },
+                                        RuleGroupName = "SQLI",
+                                        Rules = new List<ManagedRuleOverride>
+                                        {
+                                            new ManagedRuleOverride
+                                            {
+                                                RuleId = "Rule1",
+                                                Action = "Redirect",
+                                                EnabledState = "Disabled"
+                                            }
+                                        }
+                                    }
                                 }
                             }
                             
@@ -230,9 +246,9 @@ namespace FrontDoor.Tests.ScenarioTests
                     Name = "rule2",
                     Priority = 2,
                     RuleType = "MatchRule",
-                    MatchConditions = new List<MatchCondition1>
+                    MatchConditions = new List<MatchCondition>
                                 {
-                                    new MatchCondition1
+                                    new MatchCondition
                                     {
                                         MatchVariable = "RemoteAddr",
                                         OperatorProperty = "GeoMatch",
@@ -247,7 +263,7 @@ namespace FrontDoor.Tests.ScenarioTests
                 retrievedPolicy.CustomRules.Rules.Add(geoFilter);
 
 
-                var updatedPolicy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName,policyName, retrievedPolicy);
+                var updatedPolicy = frontDoorMgmtClient.Policies.CreateOrUpdate(resourceGroupName, policyName, retrievedPolicy);
 
                 // validate that Policy is correctly updated
                 VerifyPolicy(updatedPolicy, retrievedPolicy);
@@ -264,15 +280,19 @@ namespace FrontDoor.Tests.ScenarioTests
                 FrontDoorTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
             }
         }
-        private static void VerifyPolicy(WebApplicationFirewallPolicy1 policy, WebApplicationFirewallPolicy1 parameters)
+
+        private static void VerifyPolicy(WebApplicationFirewallPolicy policy, WebApplicationFirewallPolicy parameters)
         {
             Assert.Equal(policy.Location.ToLower(), parameters.Location.ToLower());
             Assert.Equal(policy.Tags.Count, parameters.Tags.Count);
             Assert.True(policy.Tags.SequenceEqual(parameters.Tags));
             Assert.Equal(policy.PolicySettings.EnabledState, parameters.PolicySettings.EnabledState);
             Assert.Equal(policy.PolicySettings.Mode, parameters.PolicySettings.Mode);
+            Assert.Equal(policy.PolicySettings.CustomBlockResponseBody, parameters.PolicySettings.CustomBlockResponseBody);
+            Assert.Equal(policy.PolicySettings.CustomBlockResponseStatusCode, parameters.PolicySettings.CustomBlockResponseStatusCode);
+            Assert.Equal(policy.PolicySettings.RedirectUrl, parameters.PolicySettings.RedirectUrl);
             Assert.Equal(policy.CustomRules.Rules.Count, parameters.CustomRules.Rules.Count);
-            Assert.Equal(policy.ManagedRules.RuleSets.Count, parameters.ManagedRules.RuleSets.Count);
+            Assert.Equal(policy.ManagedRules.ManagedRuleSets.Count, parameters.ManagedRules.ManagedRuleSets.Count);
         }
 
         private static void VerifyFrontDoor(FrontDoorModel frontDoor, FrontDoorModel parameters)
@@ -295,8 +315,8 @@ namespace FrontDoor.Tests.ScenarioTests
             {
                 Assert.Equal(routingRules[i].AcceptedProtocols, parameters[i].AcceptedProtocols);
                 Assert.Equal(routingRules[i].PatternsToMatch, parameters[i].PatternsToMatch);
-                Assert.Equal(routingRules[i].CustomForwardingPath, parameters[i].CustomForwardingPath);
-                Assert.Equal(routingRules[i].ForwardingProtocol, parameters[i].ForwardingProtocol);
+                Assert.Equal((routingRules[i].RouteConfiguration as ForwardingConfiguration).CustomForwardingPath, (parameters[i].RouteConfiguration as ForwardingConfiguration).CustomForwardingPath);
+                Assert.Equal((routingRules[i].RouteConfiguration as ForwardingConfiguration).ForwardingProtocol, (parameters[i].RouteConfiguration as ForwardingConfiguration).ForwardingProtocol);
             }
         }
 

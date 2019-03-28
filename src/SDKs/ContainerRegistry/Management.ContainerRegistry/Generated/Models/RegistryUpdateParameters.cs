@@ -42,12 +42,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// for the container registry. Only applicable to Classic SKU. If
         /// specified, the storage account must be in the same physical
         /// location as the container registry.</param>
-        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties))
+        /// <param name="networkRuleSet">The network rule set for a container
+        /// registry.</param>
+        public RegistryUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet))
         {
             Tags = tags;
             Sku = sku;
             AdminUserEnabled = adminUserEnabled;
             StorageAccount = storageAccount;
+            NetworkRuleSet = networkRuleSet;
             CustomInit();
         }
 
@@ -85,6 +88,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         public StorageAccountProperties StorageAccount { get; set; }
 
         /// <summary>
+        /// Gets or sets the network rule set for a container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.networkRuleSet")]
+        public NetworkRuleSet NetworkRuleSet { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -99,6 +108,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             if (StorageAccount != null)
             {
                 StorageAccount.Validate();
+            }
+            if (NetworkRuleSet != null)
+            {
+                NetworkRuleSet.Validate();
             }
         }
     }

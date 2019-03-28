@@ -3,97 +3,191 @@
 
 using Azure.Base.Http;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.IO;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 // TODO (pri 2): we should log correction/activity
 // TODO (pri 2): we should log exceptions
 namespace Azure.Base.Diagnostics
 {
     // TODO (pri 2): make the type internal
-    [EventSource(Name = SOURCE_NAME)]
-    public sealed class HttpPipelineEventSource : EventSource
+    [EventSource(Name = EventSourceName)]
+    internal sealed class HttpPipelineEventSource : EventSource
     {
         // TODO (pri 3): do we want the same source name for all SDk components?
-        const string SOURCE_NAME = "AzureSDK";
+        private const string EventSourceName = "AzureSDK";
 
-        const int LOG_TEXT = 1;
-        const int LOG_EXCEPTION = 2;
-        const int LOG_REQUEST = 3;
-        const int LOG_RESPONSE = 4;
-        const int LOG_DELAY = 5;
-        const int LOG_ERROR_RESPONSE = 6;
-               
-        private HttpPipelineEventSource() : base(SOURCE_NAME) { }
+        private const int MaxEventPayloadSize = 10 * 1024;
+
+        private const int RequestEvent = 1;
+        private const int RequestContentEvent = 2;
+        private const int ResponseEvent = 5;
+        private const int ResponseContentEvent = 6;
+        private const int RequestDelayEvent = 7;
+        private const int ErrorResponseEvent = 8;
+        private const int ErrorResponseContentEvent = 9;
+
+        private HttpPipelineEventSource() : base(EventSourceName) { }
 
         internal static readonly HttpPipelineEventSource Singleton = new HttpPipelineEventSource();
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
-        public void ProcessingRequest(HttpMessage request)
-            => ProcessingRequest(request.ToString());
+        public void Request(HttpPipelineRequest request)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                Request(request.RequestId, request.Method.ToString().ToUpperInvariant(), request.Uri.ToString(), FormatHeaders(request.Headers));
+            }
+        }
 
         [NonEvent]
-        public void ProcessingResponse(HttpMessage response)
-            => ProcessingResponse(response.ToString());
+        public async Task RequestContentAsync(HttpPipelineRequest request, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                RequestContent(request.RequestId, await FormatContentAsync(request.Content, cancellationToken));
+            }
+        }
 
         [NonEvent]
-        public void ErrorResponse(HttpMessage response)
-            => ErrorResponse(response.Status);
+        public void Response(HttpPipelineResponse response)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                Response(response.RequestId, response.Status, FormatHeaders(response.Headers));
+            }
+        }
 
         [NonEvent]
-        public void ResponseDelay(HttpMessage message, long delayMilliseconds)
-            => ResponseDelayCore(delayMilliseconds);
+        public async Task ResponseContentAsync(HttpPipelineResponse response, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                ResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream));
+            }
+        }
+
+        [NonEvent]
+        public void ErrorResponse(HttpPipelineResponse response)
+        {
+            if (IsEnabled(EventLevel.Error, EventKeywords.None))
+            {
+                ErrorResponse(response.RequestId, response.Status, FormatHeaders(response.Headers));
+            }
+        }
+
+        [NonEvent]
+        public async Task ErrorResponseContentAsync(HttpPipelineResponse response, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                ErrorResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream).ConfigureAwait(false));
+            }
+        }
+
+        [NonEvent]
+        public void ResponseDelay(HttpPipelineResponse response, long delayMilliseconds)
+        {
+            ResponseDelayCore(delayMilliseconds);
+        }
 
         // TODO (pri 2): there are more attribute properties we might want to set
-        [Event(LOG_REQUEST, Level = EventLevel.Informational)]
-        void ProcessingRequest(string request)
+        [Event(RequestEvent, Level = EventLevel.Informational)]
+        private void Request(string requestId, string method, string uri, string headers)
         {
-            // TODO (pri 2): is EventKeywords.None ok?
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None)) {
-                WriteEvent(LOG_REQUEST, request);
+            WriteEvent(RequestEvent, requestId, method, uri, headers);
+        }
+
+        [Event(RequestContentEvent, Level = EventLevel.Verbose)]
+        private void RequestContent(string requestId, byte[] content)
+        {
+            WriteEvent(RequestContentEvent, requestId, content);
+        }
+
+        [Event(ResponseEvent, Level = EventLevel.Informational)]
+        private void Response(string requestId, int status, string headers)
+        {
+            WriteEvent(ResponseEvent, requestId, status, headers);
+        }
+
+
+        [Event(ResponseContentEvent, Level = EventLevel.Verbose)]
+        private void ResponseContent(string requestId, byte[] content)
+        {
+            WriteEvent(ResponseContentEvent, requestId, content);
+        }
+
+        [Event(ErrorResponseEvent, Level = EventLevel.Error)]
+        public void ErrorResponse(string requestId, int status, string headers)
+        {
+            WriteEvent(ErrorResponseEvent, requestId, status, headers);
+        }
+
+        [Event(ErrorResponseContentEvent, Level = EventLevel.Informational)]
+        private void ErrorResponseContent(string requestId, byte[] content)
+        {
+            WriteEvent(ErrorResponseContentEvent, requestId, content);
+        }
+
+        [Event(RequestDelayEvent, Level = EventLevel.Warning)]
+        private void ResponseDelayCore(long delayMilliseconds)
+        {
+            if (IsEnabled(EventLevel.Warning, EventKeywords.None))
+            {
+                WriteEvent(RequestDelayEvent, delayMilliseconds);
             }
         }
 
-        [Event(LOG_RESPONSE, Level = EventLevel.Informational)]
-        void ProcessingResponse(string response)
+        private static async Task<byte[]> FormatContentAsync(Stream responseContent)
         {
-            if (IsEnabled(EventLevel.Informational, EventKeywords.None)) {
-                WriteEvent(LOG_RESPONSE, response);
+            using (var memoryStream = new MemoryStream())
+            {
+                await responseContent.CopyToAsync(memoryStream);
+
+                // Rewind the stream
+                responseContent.Position = 0;
+
+                return FormatContent(memoryStream.ToArray());
             }
         }
 
-        [Event(LOG_DELAY, Level = EventLevel.Warning)]
-        void ResponseDelayCore(long delayMilliseconds)
+        private static async Task<byte[]> FormatContentAsync(HttpPipelineRequestContent requestContent, CancellationToken cancellationToken)
         {
-            if (IsEnabled(EventLevel.Warning, EventKeywords.None)) {
-                WriteEvent(LOG_DELAY, delayMilliseconds);
+            using (var memoryStream = new MemoryStream())
+            {
+                await requestContent.WriteTo(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+
+                return FormatContent(memoryStream.ToArray());
             }
         }
 
-        [Event(LOG_ERROR_RESPONSE, Level = EventLevel.Error)]
-        void ErrorResponse(int status)
+        private static byte[] FormatContent(byte[] buffer)
         {
-            if (IsEnabled(EventLevel.Error, EventKeywords.None)) {
-                WriteEvent(LOG_ERROR_RESPONSE, status);
+            int count = Math.Min(buffer.Length, MaxEventPayloadSize);
+
+            byte[] slice = buffer;
+            if (count != buffer.Length)
+            {
+                slice = new byte[count];
+                Buffer.BlockCopy(buffer, 0, slice, 0, count);
             }
+
+            return slice;
         }
 
-        [Event(LOG_TEXT, Level = EventLevel.Error)]
-        public void LogMessage(EventLevel level, string message)
+        private static string FormatHeaders(IEnumerable<HttpHeader> headers)
         {
-            if (IsEnabled(level, EventKeywords.None)) {
-                WriteEvent(LOG_TEXT, message, level);
+            var stringBuilder = new StringBuilder();
+            foreach (var header in headers)
+            {
+                stringBuilder.AppendLine(header.ToString());
             }
-        }
-
-        [Event(LOG_EXCEPTION)]
-        public void LogException(Exception exception)
-        {
-            if (IsEnabled(EventLevel.Error, EventKeywords.None)) {
-                // TODO (pri 2): should this filter some information?
-                // TODO (pri 2): should this be more structured?
-                WriteEvent(LOG_EXCEPTION, exception.ToString());
-            }
+            return stringBuilder.ToString();
         }
     }
 }

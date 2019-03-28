@@ -39,29 +39,18 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// rule</param>
         /// <param name="patternsToMatch">The route patterns of the
         /// rule.</param>
-        /// <param name="customForwardingPath">A custom path used to rewrite
-        /// resource paths matched by this rule. Leave empty to use incoming
-        /// path.</param>
-        /// <param name="forwardingProtocol">Protocol this rule will use when
-        /// forwarding traffic to backends. Possible values include:
-        /// 'HttpOnly', 'HttpsOnly', 'MatchRequest'</param>
-        /// <param name="cacheConfiguration">The caching configuration
-        /// associated with this rule.</param>
-        /// <param name="backendPool">A reference to the BackendPool which this
-        /// rule routes to.</param>
         /// <param name="enabledState">Whether to enable use of this rule.
         /// Permitted values are 'Enabled' or 'Disabled'. Possible values
         /// include: 'Enabled', 'Disabled'</param>
-        public RoutingRuleUpdateParameters(IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string customForwardingPath = default(string), string forwardingProtocol = default(string), CacheConfiguration cacheConfiguration = default(CacheConfiguration), SubResource backendPool = default(SubResource), string enabledState = default(string))
+        /// <param name="routeConfiguration">A reference to the routing
+        /// configuration.</param>
+        public RoutingRuleUpdateParameters(IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string enabledState = default(string), RouteConfiguration routeConfiguration = default(RouteConfiguration))
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;
             PatternsToMatch = patternsToMatch;
-            CustomForwardingPath = customForwardingPath;
-            ForwardingProtocol = forwardingProtocol;
-            CacheConfiguration = cacheConfiguration;
-            BackendPool = backendPool;
             EnabledState = enabledState;
+            RouteConfiguration = routeConfiguration;
             CustomInit();
         }
 
@@ -89,40 +78,18 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public IList<string> PatternsToMatch { get; set; }
 
         /// <summary>
-        /// Gets or sets a custom path used to rewrite resource paths matched
-        /// by this rule. Leave empty to use incoming path.
-        /// </summary>
-        [JsonProperty(PropertyName = "customForwardingPath")]
-        public string CustomForwardingPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets protocol this rule will use when forwarding traffic to
-        /// backends. Possible values include: 'HttpOnly', 'HttpsOnly',
-        /// 'MatchRequest'
-        /// </summary>
-        [JsonProperty(PropertyName = "forwardingProtocol")]
-        public string ForwardingProtocol { get; set; }
-
-        /// <summary>
-        /// Gets or sets the caching configuration associated with this rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "cacheConfiguration")]
-        public CacheConfiguration CacheConfiguration { get; set; }
-
-        /// <summary>
-        /// Gets or sets a reference to the BackendPool which this rule routes
-        /// to.
-        /// </summary>
-        [JsonProperty(PropertyName = "backendPool")]
-        public SubResource BackendPool { get; set; }
-
-        /// <summary>
         /// Gets or sets whether to enable use of this rule. Permitted values
         /// are 'Enabled' or 'Disabled'. Possible values include: 'Enabled',
         /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "enabledState")]
         public string EnabledState { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference to the routing configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "routeConfiguration")]
+        public RouteConfiguration RouteConfiguration { get; set; }
 
     }
 }

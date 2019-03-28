@@ -14,7 +14,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     public class MessageTests
     {
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         public void TestClone()
         {
@@ -68,7 +67,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         public class WhenQueryingIsReceivedProperty
         {
             [Fact]
-            [LiveTest]
             [DisplayTestMethodName]
             public void Should_return_false_for_message_that_was_not_sent()
             {
@@ -84,24 +82,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             [LiveTest]
             public async Task Should_return_true_for_message_that_was_sent_and_received(ReceiveMode receiveMode)
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, receiveMode);
-
-                try
+                await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
                 {
-                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                    var receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
-                    Assert.True(receivedMessages.First().SystemProperties.IsReceived);
+                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, receiveMode);
 
-                    // TODO: remove when per test cleanup is possible
-                    if (receiveMode == ReceiveMode.PeekLock)
+                    try
                     {
-                        await queueClient.CompleteAsync(receivedMessages.First().SystemProperties.LockToken);
+                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                        var receivedMessages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                        Assert.True(receivedMessages.First().SystemProperties.IsReceived);
+
+                        // TODO: remove when per test cleanup is possible
+                        if (receiveMode == ReceiveMode.PeekLock)
+                        {
+                            await queueClient.CompleteAsync(receivedMessages.First().SystemProperties.LockToken);
+                        }
                     }
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                    finally
+                    {
+                        await queueClient.CloseAsync();
+                    }
+                });
             }
 
             [Fact]
@@ -109,21 +110,24 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             [DisplayTestMethodName]
             public async Task Should_return_true_for_peeked_message()
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
+                await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+                {
+                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
 
-                try
-                {
-                    await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
-                    var peekedMessage = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
-                    var result = peekedMessage.SystemProperties.IsReceived;
-                    Assert.True(result);
-                }
-                finally
-                {
-                    var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
-                    await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
-                    await queueClient.CloseAsync();
-                }
+                    try
+                    {
+                        await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
+                        var peekedMessage = await TestUtility.PeekMessageAsync(queueClient.InnerReceiver);
+                        var result = peekedMessage.SystemProperties.IsReceived;
+                        Assert.True(result);
+                    }
+                    finally
+                    {
+                        var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
+                        await TestUtility.CompleteMessagesAsync(queueClient.InnerReceiver, messages);
+                        await queueClient.CloseAsync();
+                    }
+                });
             }
 
             [Fact]
@@ -131,29 +135,32 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             [DisplayTestMethodName]
             public async Task MessageWithMaxMessageSizeShouldWorkAsExpected()
             {
-                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
-
-                try
+                await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
                 {
-                    var maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
-                    var maxPayload = Encoding.ASCII.GetBytes(new string('a', maxMessageSize));
-                    var maxSizeMessage = new Message(maxPayload);
+                    var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
 
-                    await queueClient.SendAsync(maxSizeMessage);
+                    try
+                    {
+                        var maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
+                        var maxPayload = Encoding.ASCII.GetBytes(new string('a', maxMessageSize));
+                        var maxSizeMessage = new Message(maxPayload);
 
-                    var receivedMaxSizeMessage = await queueClient.InnerReceiver.ReceiveAsync();
-                    await queueClient.CompleteAsync(receivedMaxSizeMessage.SystemProperties.LockToken);
-                    Assert.Equal(maxPayload, receivedMaxSizeMessage.Body);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
-                finally
-                {
-                    await queueClient.CloseAsync();
-                }
+                        await queueClient.SendAsync(maxSizeMessage);
+
+                        var receivedMaxSizeMessage = await queueClient.InnerReceiver.ReceiveAsync();
+                        await queueClient.CompleteAsync(receivedMaxSizeMessage.SystemProperties.LockToken);
+                        Assert.Equal(maxPayload, receivedMaxSizeMessage.Body);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        throw;
+                    }
+                    finally
+                    {
+                        await queueClient.CloseAsync();
+                    }
+                });
             }
         }
 
@@ -162,7 +169,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [InlineData(null)]
         [InlineData("123")]
         [InlineData("jøbber-nå")]
-        [LiveTest]
         public void Should_return_string_representation_of_message(string id)
         {
             var message = new Message();
@@ -179,23 +185,26 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         public async void LargeMessageShouldThrowMessageSizeExceededException()
         {
-            var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock);
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
 
-            try
-            {
-                // 2 MB message.
-                var message = new Message(new byte[1024 * 1024 * 2]);
-                await Assert.ThrowsAsync<MessageSizeExceededException>(async () => await queueClient.SendAsync(message));
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            finally
-            {
-                await queueClient.CloseAsync();
-            }
+                try
+                {
+                    // 2 MB message.
+                    var message = new Message(new byte[1024 * 1024 * 2]);
+                    await Assert.ThrowsAsync<MessageSizeExceededException>(async () => await queueClient.SendAsync(message));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+                finally
+                {
+                    await queueClient.CloseAsync();
+                }
+            });
         }
 
         [Fact]
@@ -203,56 +212,58 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         public async Task MessagePropertiesShouldSupportValidPropertyTypes()
         {
-            var queueName = TestConstants.NonPartitionedQueueName;
-            var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
-            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            {
+                var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
 
-            /// Only following value types are supported:
-            /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
-            /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
-            var msg = new Message();
-            msg.UserProperties.Add("byte", (byte)2);
-            msg.UserProperties.Add("sbyte", (sbyte)3);
-            msg.UserProperties.Add("char", 'c');
-            msg.UserProperties.Add("short", (short)4);
-            msg.UserProperties.Add("ushort", (ushort)5);
-            msg.UserProperties.Add("int", (int)6);
-            msg.UserProperties.Add("uint", (uint)7);
-            msg.UserProperties.Add("long", (long)8);
-            msg.UserProperties.Add("ulong", (ulong)9);
-            msg.UserProperties.Add("float", (float)10.0);
-            msg.UserProperties.Add("double", (double)11.0);
-            msg.UserProperties.Add("decimal", (decimal)12.0);
-            msg.UserProperties.Add("bool", true);
-            msg.UserProperties.Add("Guid", Guid.NewGuid());
-            msg.UserProperties.Add("string", "value");
-            msg.UserProperties.Add("Uri", new Uri("http://nonExistingServiceBusWebsite.com"));
-            msg.UserProperties.Add("DateTime", DateTime.UtcNow);
-            msg.UserProperties.Add("DateTimeOffset", DateTimeOffset.UtcNow);
-            msg.UserProperties.Add("TimeSpan", TimeSpan.FromMinutes(5));
+                /// Only following value types are supported:
+                /// byte, sbyte, char, short, ushort, int, uint, long, ulong, float, double, decimal,
+                /// bool, Guid, string, Uri, DateTime, DateTimeOffset, TimeSpan
+                var msg = new Message();
+                msg.UserProperties.Add("byte", (byte)2);
+                msg.UserProperties.Add("sbyte", (sbyte)3);
+                msg.UserProperties.Add("char", 'c');
+                msg.UserProperties.Add("short", (short)4);
+                msg.UserProperties.Add("ushort", (ushort)5);
+                msg.UserProperties.Add("int", (int)6);
+                msg.UserProperties.Add("uint", (uint)7);
+                msg.UserProperties.Add("long", (long)8);
+                msg.UserProperties.Add("ulong", (ulong)9);
+                msg.UserProperties.Add("float", (float)10.0);
+                msg.UserProperties.Add("double", (double)11.0);
+                msg.UserProperties.Add("decimal", (decimal)12.0);
+                msg.UserProperties.Add("bool", true);
+                msg.UserProperties.Add("Guid", Guid.NewGuid());
+                msg.UserProperties.Add("string", "value");
+                msg.UserProperties.Add("Uri", new Uri("http://nonExistingServiceBusWebsite.com"));
+                msg.UserProperties.Add("DateTime", DateTime.UtcNow);
+                msg.UserProperties.Add("DateTimeOffset", DateTimeOffset.UtcNow);
+                msg.UserProperties.Add("TimeSpan", TimeSpan.FromMinutes(5));
 
-            await sender.SendAsync(msg);
-            var receivedMsg = await receiver.ReceiveAsync();
+                await sender.SendAsync(msg);
+                var receivedMsg = await receiver.ReceiveAsync();
 
-            Assert.IsType<byte>(receivedMsg.UserProperties["byte"]);
-            Assert.IsType<sbyte>(receivedMsg.UserProperties["sbyte"]);
-            Assert.IsType<char>(receivedMsg.UserProperties["char"]);
-            Assert.IsType<short>(receivedMsg.UserProperties["short"]);
-            Assert.IsType<ushort>(receivedMsg.UserProperties["ushort"]);
-            Assert.IsType<int>(receivedMsg.UserProperties["int"]);
-            Assert.IsType<uint>(receivedMsg.UserProperties["uint"]);
-            Assert.IsType<long>(receivedMsg.UserProperties["long"]);
-            Assert.IsType<ulong>(receivedMsg.UserProperties["ulong"]);
-            Assert.IsType<float>(receivedMsg.UserProperties["float"]);
-            Assert.IsType<double>(receivedMsg.UserProperties["double"]);
-            Assert.IsType<decimal>(receivedMsg.UserProperties["decimal"]);
-            Assert.IsType<bool>(receivedMsg.UserProperties["bool"]);
-            Assert.IsType<Guid>(receivedMsg.UserProperties["Guid"]);
-            Assert.IsType<string>(receivedMsg.UserProperties["string"]);
-            Assert.IsType<Uri>(receivedMsg.UserProperties["Uri"]);
-            Assert.IsType<DateTime>(receivedMsg.UserProperties["DateTime"]);
-            Assert.IsType<DateTimeOffset>(receivedMsg.UserProperties["DateTimeOffset"]);
-            Assert.IsType<TimeSpan>(receivedMsg.UserProperties["TimeSpan"]);
+                Assert.IsType<byte>(receivedMsg.UserProperties["byte"]);
+                Assert.IsType<sbyte>(receivedMsg.UserProperties["sbyte"]);
+                Assert.IsType<char>(receivedMsg.UserProperties["char"]);
+                Assert.IsType<short>(receivedMsg.UserProperties["short"]);
+                Assert.IsType<ushort>(receivedMsg.UserProperties["ushort"]);
+                Assert.IsType<int>(receivedMsg.UserProperties["int"]);
+                Assert.IsType<uint>(receivedMsg.UserProperties["uint"]);
+                Assert.IsType<long>(receivedMsg.UserProperties["long"]);
+                Assert.IsType<ulong>(receivedMsg.UserProperties["ulong"]);
+                Assert.IsType<float>(receivedMsg.UserProperties["float"]);
+                Assert.IsType<double>(receivedMsg.UserProperties["double"]);
+                Assert.IsType<decimal>(receivedMsg.UserProperties["decimal"]);
+                Assert.IsType<bool>(receivedMsg.UserProperties["bool"]);
+                Assert.IsType<Guid>(receivedMsg.UserProperties["Guid"]);
+                Assert.IsType<string>(receivedMsg.UserProperties["string"]);
+                Assert.IsType<Uri>(receivedMsg.UserProperties["Uri"]);
+                Assert.IsType<DateTime>(receivedMsg.UserProperties["DateTime"]);
+                Assert.IsType<DateTimeOffset>(receivedMsg.UserProperties["DateTimeOffset"]);
+                Assert.IsType<TimeSpan>(receivedMsg.UserProperties["TimeSpan"]);            
+            });
         }
     }
 }

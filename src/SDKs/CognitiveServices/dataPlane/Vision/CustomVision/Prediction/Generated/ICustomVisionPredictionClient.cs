@@ -38,33 +38,78 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// API key.
         /// </summary>
         string ApiKey { get; set; }
 
         /// <summary>
-        /// Supported Cognitive Services endpoints
+        /// Supported Cognitive Services endpoints.
         /// </summary>
         string Endpoint { get; set; }
 
 
         /// <summary>
-        /// Predict an image url and saves the result
+        /// Classify an image url and saves the result.
         /// </summary>
         /// <param name='projectId'>
-        /// The project id
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
+        /// </param>
+        /// <param name='imageUrl'>
+        /// An ImageUrl that contains the url of the image to be evaluated.
+        /// </param>
+        /// <param name='application'>
+        /// Optional. Specifies the name of application using the endpoint.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ImagePrediction>> ClassifyImageUrlWithHttpMessagesAsync(System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Classify an image and saves the result.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
+        /// </param>
+        /// <param name='imageData'>
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP.
+        /// Supports images up to 4MB.
+        /// </param>
+        /// <param name='application'>
+        /// Optional. Specifies the name of application using the endpoint.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ImagePrediction>> ClassifyImageWithHttpMessagesAsync(System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Classify an image url without saving the result.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
         /// </param>
         /// <param name='imageUrl'>
         /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the
-        /// image to be evaluated
-        /// </param>
-        /// <param name='iterationId'>
-        /// Optional. Specifies the id of a particular iteration to evaluate
-        /// against.
-        /// The default iteration for the project will be used when not
-        /// specified
+        /// image to be evaluated.
         /// </param>
         /// <param name='application'>
-        /// Optional. Specifies the name of application using the endpoint
+        /// Optional. Specifies the name of application using the endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,24 +117,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> ClassifyImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Predict an image and saves the result
+        /// Classify an image without saving the result.
         /// </summary>
         /// <param name='projectId'>
-        /// The project id
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
         /// </param>
         /// <param name='imageData'>
-        /// </param>
-        /// <param name='iterationId'>
-        /// Optional. Specifies the id of a particular iteration to evaluate
-        /// against.
-        /// The default iteration for the project will be used when not
-        /// specified
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP.
+        /// Supports images up to 0MB.
         /// </param>
         /// <param name='application'>
-        /// Optional. Specifies the name of application using the endpoint
+        /// Optional. Specifies the name of application using the endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -97,26 +141,70 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePrediction>> PredictImageWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> ClassifyImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Predict an image url without saving the result
+        /// Detect objects in an image url and saves the result.
         /// </summary>
         /// <param name='projectId'>
-        /// The project id
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
+        /// </param>
+        /// <param name='imageUrl'>
+        /// An ImageUrl that contains the url of the image to be evaluated.
+        /// </param>
+        /// <param name='application'>
+        /// Optional. Specifies the name of application using the endpoint.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ImagePrediction>> DetectImageUrlWithHttpMessagesAsync(System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Detect objects in an image and saves the result.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
+        /// </param>
+        /// <param name='imageData'>
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP.
+        /// Supports images up to 4MB.
+        /// </param>
+        /// <param name='application'>
+        /// Optional. Specifies the name of application using the endpoint.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ImagePrediction>> DetectImageWithHttpMessagesAsync(System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Detect objects in an image url without saving the result.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
         /// </param>
         /// <param name='imageUrl'>
         /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the
-        /// image to be evaluated
-        /// </param>
-        /// <param name='iterationId'>
-        /// Optional. Specifies the id of a particular iteration to evaluate
-        /// against.
-        /// The default iteration for the project will be used when not
-        /// specified
+        /// image to be evaluated.
         /// </param>
         /// <param name='application'>
-        /// Optional. Specifies the name of application using the endpoint
+        /// Optional. Specifies the name of application using the endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -124,24 +212,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePrediction>> PredictImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> DetectImageUrlWithNoStoreWithHttpMessagesAsync(System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Predict an image without saving the result
+        /// Detect objects in an image without saving the result.
         /// </summary>
         /// <param name='projectId'>
-        /// The project id
+        /// The project id.
+        /// </param>
+        /// <param name='publishedName'>
+        /// Specifies the name of the model to evaluate against.
         /// </param>
         /// <param name='imageData'>
-        /// </param>
-        /// <param name='iterationId'>
-        /// Optional. Specifies the id of a particular iteration to evaluate
-        /// against.
-        /// The default iteration for the project will be used when not
-        /// specified
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP.
+        /// Supports images up to 0MB.
         /// </param>
         /// <param name='application'>
-        /// Optional. Specifies the name of application using the endpoint
+        /// Optional. Specifies the name of application using the endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -149,7 +236,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ImagePrediction>> PredictImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<ImagePrediction>> DetectImageWithNoStoreWithHttpMessagesAsync(System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

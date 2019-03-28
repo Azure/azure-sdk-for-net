@@ -19,20 +19,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "PredictImage", "2.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "PredictImageUrl", "2.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "PredictImageUrlWithNoStore", "2.0"),
-                new Tuple<string, string, string>("CustomVisionPredictionClient", "PredictImageWithNoStore", "2.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImage", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageUrl", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageUrlWithNoStore", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "ClassifyImageWithNoStore", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImage", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageUrl", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageUrlWithNoStore", "3.0"),
+                new Tuple<string, string, string>("CustomVisionPredictionClient", "DetectImageWithNoStore", "3.0"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\git\\forked\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/CustomVision/Prediction/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net2\\src\\SDKs";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "835770d81d8601c36966f1041bdcae1882341739";
+      public static readonly String GithubCommidId = "23d6a7c9f38409ea7a1364304b8b2abcc9f06938";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

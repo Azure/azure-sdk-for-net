@@ -23,8 +23,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public partial interface ISettings
     {
         /// <summary>
-        /// Gets the application version settings.
+        /// Gets the settings in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -46,10 +57,21 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<AppVersionSettingObject>>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<AppVersionSettingObject>>> ListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the application version settings.
+        /// Updates the settings in a version of the application.
         /// </summary>
+        /// <param name='azureRegion'>
+        /// Supported Azure regions for Cognitive Services endpoints. Possible
+        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
+        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
+        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
+        /// 'virginia'
+        /// </param>
+        /// <param name='azureCloud'>
+        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
+        /// values include: 'com', 'us'
+        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -74,6 +96,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdateWithHttpMessagesAsync(System.Guid appId, string versionId, AppVersionSettingObject listOfAppVersionSettingObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdateWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, IList<AppVersionSettingObject> listOfAppVersionSettingObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

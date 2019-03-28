@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
     /// <summary>
     /// Parameters supplied to the Regenerate Authorization Rule operation,
-    /// specifies which key neeeds to be reset.
+    /// specifies which key needs to be reset.
     /// </summary>
     public partial class RegenerateAccessKeyParameters
     {

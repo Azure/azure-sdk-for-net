@@ -2,13 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base;
 using Azure.Base.Http;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,8 +16,6 @@ namespace Azure.ApplicationModel.Configuration
         const string MediaTypeProblemApplication = "application/problem+json";
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";
-        const string ClientRequestIdHeader = "x-ms-client-request-id";
-        const string EchoClientRequestId = "x-ms-return-client-request-id";
         const string KvRoute = "/kv/";
         const string LocksRoute = "/locks/";
         const string RevisionsRoute = "/revisions/";
@@ -32,35 +27,29 @@ namespace Azure.ApplicationModel.Configuration
 
         static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
-            Encoding.ASCII.GetBytes("application/vnd.microsoft.appconfig.kv+json")
+            "application/vnd.microsoft.appconfig.kv+json"
         );
 
         // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddOptionsHeaders(RequestOptions options, HttpMessage message)
+        static void AddOptionsHeaders(RequestOptions options, HttpPipelineRequest request)
         {
             if (options == null) return;
 
             if (options.ETag.IfMatch != default)
             {
-                message.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
+                request.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
             }
 
             if (options.ETag.IfNoneMatch != default)
             {
-                message.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
+                request.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
             }
 
             if (options.Revision.HasValue)
             {
                 var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                message.AddHeader(AcceptDatetimeHeader, dateTime);
+                request.AddHeader(AcceptDatetimeHeader, dateTime);
             }
-        }
-
-        static void AddClientRequestID(HttpMessage message)
-        {
-            message.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
-            message.AddHeader(EchoClientRequestId, "true");
         }
 
         static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)
@@ -111,27 +100,28 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         Uri BuildUriForKvRoute(ConfigurationSetting keyValue)
-            => BuildUriForKvRoute(keyValue.Key, new RequestOptions() { Label = keyValue.Label }); // TODO (pri 2) : does this need to filter ETag?
+            => BuildUriForKvRoute(keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        Uri BuildUriForKvRoute(string key, RequestOptions options)
+        Uri BuildUriForKvRoute(string key, string label)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute + key;
 
-            if (options != null && options.Label != null) {
-                builder.AppendQuery(LabelQueryFilter, options.Label);                 
+            if (label != null)
+            {
+                builder.AppendQuery(LabelQueryFilter, label);
             }
 
             return builder.Uri;
         }
 
-        Uri BuildUriForLocksRoute(string key, RequestOptions options)
+        Uri BuildUriForLocksRoute(string key, string label)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = LocksRoute + key;
 
-            if (options != null && options.Label != null) {
-                builder.AppendQuery(LabelQueryFilter, options.Label);
+            if (label != null) {
+                builder.AppendQuery(LabelQueryFilter, label);
             }
 
             return builder.Uri;
@@ -148,7 +138,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 builder.AppendQuery("after", options.BatchLink);
             }
-            
+
             if (options.Label != null)
             {
                 if (options.Label == string.Empty)
@@ -207,35 +197,6 @@ namespace Azure.ApplicationModel.Configuration
 
             return content;
         }
-        
-        internal static void AddAuthenticationHeaders(HttpMessage message, Uri uri, HttpVerb method, ReadOnlyMemory<byte> content, byte[] secret, string credential)
-        {
-            string contentHash = null;
-            using (var alg = SHA256.Create())
-            {
-                // TODO (pri 3): ToArray should nopt be called here. Instead, TryGetArray, or PipelineContent should do hashing on the fly 
-                contentHash = Convert.ToBase64String(alg.ComputeHash(content.ToArray()));
-            }
-
-            using (var hmac = new HMACSHA256(secret))
-            {
-                var host = uri.Host;
-                var pathAndQuery = uri.PathAndQuery;
-
-                string verb = method.ToString().ToUpper();
-                DateTimeOffset utcNow = DateTimeOffset.UtcNow;
-                var utcNowString = utcNow.ToString("r");
-                var stringToSign = $"{verb}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
-                var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
-                string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
-
-                // TODO (pri 3): should date header writing be moved out from here?
-                message.AddHeader("Date", utcNowString);
-                message.AddHeader("x-ms-content-sha256", contentHash);
-                message.AddHeader("Authorization", $"HMAC-SHA256 Credential={credential}, SignedHeaders={signedHeaders}, Signature={signature}");
-            }
-        }
-
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
