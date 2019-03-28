@@ -19,9 +19,9 @@ namespace Azure.Base.Tests
         [Test]
         public async Task Basics()
         {
-            var requestIndex = 0;
             var mockTransport = new MockTransport(
-                _ => requestIndex++ == 0 ? new MockResponse(500) : new MockResponse(1));
+                new MockResponse(500),
+                new MockResponse(1));
 
             var options = new HttpPipelineOptions(mockTransport);
             options.RetryPolicy = new CustomRetryPolicy();
@@ -66,7 +66,7 @@ namespace Azure.Base.Tests
 
         class CustomRetryPolicy : RetryPolicy
         {
-            protected override bool ShouldRetry(HttpPipelineMessage message, int retry, out TimeSpan delay)
+            protected override bool ShouldRetry(HttpPipelineMessage message, Exception exception, int retry, out TimeSpan delay)
             {
                 delay = TimeSpan.Zero;
                 if (retry > 5) return false;

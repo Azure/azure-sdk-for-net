@@ -2,30 +2,47 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 
 namespace Azure.Base.Http.Pipeline
 {
-    class FixedPolicy : RetryPolicy {
-        int _maxRetries;
-        TimeSpan _delay;
-        int[] _retriableCodes;
+    internal class FixedPolicy : RetryPolicy
+    {
+        private readonly int _maxRetries;
+
+        private readonly TimeSpan _delay;
+
+        private readonly int[] _retriableCodes;
 
         public FixedPolicy(int[] retriableCodes, int maxRetries, TimeSpan delay)
         {
-            if (retriableCodes == null) throw new ArgumentNullException(nameof(retriableCodes));
+            if (retriableCodes == null)
+            {
+                throw new ArgumentNullException(nameof(retriableCodes));
+            }
 
             _maxRetries = maxRetries;
             _delay = delay;
-            _retriableCodes = retriableCodes;
+
+            _retriableCodes = retriableCodes.ToArray();
             Array.Sort(_retriableCodes);
         }
 
-        protected override bool ShouldRetry(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        protected override bool ShouldRetry(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
         {
             delay = _delay;
-            if (attempted > _maxRetries) return false;
-            if(Array.BinarySearch(_retriableCodes, message.Response.Status) < 0) return false;
-            return true;
+
+            if (attempted > _maxRetries)
+            {
+                return false;
+            }
+
+            if (exception != null)
+            {
+                return true;
+            }
+
+            return Array.BinarySearch(_retriableCodes, message.Response.Status) >= 0;
         }
     }
 }
