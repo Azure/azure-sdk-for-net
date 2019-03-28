@@ -17,13 +17,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for InvoiceSectionsByBillingProfileNameOperations.
+    /// Extension methods for InvoiceSectionOperations.
     /// </summary>
-    public static partial class InvoiceSectionsByBillingProfileNameOperationsExtensions
+    public static partial class InvoiceSectionOperationsExtensions
     {
             /// <summary>
-            /// Lists all invoice sections under a billing profile for a user which he has
-            /// access to.
+            /// Elevates the caller's access to match their billing profile access.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -31,17 +30,16 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
             /// </param>
-            public static InvoiceSectionListResult List(this IInvoiceSectionsByBillingProfileNameOperations operations, string billingAccountName, string billingProfileName)
+            public static void ElevateToBillingProfile(this IInvoiceSectionOperations operations, string billingAccountName, string invoiceSectionName)
             {
-                return operations.ListAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
+                operations.ElevateToBillingProfileAsync(billingAccountName, invoiceSectionName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all invoice sections under a billing profile for a user which he has
-            /// access to.
+            /// Elevates the caller's access to match their billing profile access.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -49,18 +47,15 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingAccountName'>
             /// billing Account Id.
             /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<InvoiceSectionListResult> ListAsync(this IInvoiceSectionsByBillingProfileNameOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ElevateToBillingProfileAsync(this IInvoiceSectionOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.ElevateToBillingProfileWithHttpMessagesAsync(billingAccountName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

@@ -19,19 +19,18 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// InvoiceSectionsByBillingProfileNameOperations operations.
+    /// InvoiceSectionOperations operations.
     /// </summary>
-    public partial interface IInvoiceSectionsByBillingProfileNameOperations
+    public partial interface IInvoiceSectionOperations
     {
         /// <summary>
-        /// Lists all invoice sections under a billing profile for a user which
-        /// he has access to.
+        /// Elevates the caller's access to match their billing profile access.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -42,12 +41,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InvoiceSectionListResult>> ListWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> ElevateToBillingProfileWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

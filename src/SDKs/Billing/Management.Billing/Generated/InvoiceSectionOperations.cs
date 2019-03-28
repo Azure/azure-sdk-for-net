@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingProfileInvoiceSectionOperations operations.
+    /// InvoiceSectionOperations operations.
     /// </summary>
-    internal partial class BillingProfileInvoiceSectionOperations : IServiceOperations<BillingManagementClient>, IBillingProfileInvoiceSectionOperations
+    internal partial class InvoiceSectionOperations : IServiceOperations<BillingManagementClient>, IInvoiceSectionOperations
     {
         /// <summary>
-        /// Initializes a new instance of the BillingProfileInvoiceSectionOperations class.
+        /// Initializes a new instance of the InvoiceSectionOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BillingProfileInvoiceSectionOperations(BillingManagementClient client)
+        internal InvoiceSectionOperations(BillingManagementClient client)
         {
             if (client == null)
             {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ElevateWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> ElevateToBillingProfileWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (billingAccountName == null)
             {
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Billing
                 tracingParameters.Add("billingAccountName", billingAccountName);
                 tracingParameters.Add("invoiceSectionName", invoiceSectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Elevate", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ElevateToBillingProfile", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
