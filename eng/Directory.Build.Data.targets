@@ -23,7 +23,7 @@
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
     <IsPackable>false</IsPackable>
     <SignAssembly>false</SignAssembly>
-    <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp2.0;net461</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
 
