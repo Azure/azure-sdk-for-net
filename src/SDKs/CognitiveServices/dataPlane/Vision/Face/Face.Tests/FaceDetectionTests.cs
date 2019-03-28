@@ -156,5 +156,35 @@ namespace FaceSDK.Tests
                 }
             }
         }
+
+        [Fact]
+        public void FaceDetectionEmotionsToRankedList()
+        {
+            // Arrange
+            var emotions = new Emotion()
+            {
+                Anger = 0,
+                Contempt = 0,
+                Disgust = 0.05,
+                Fear = 0.06,
+                Happiness = 0.65,
+                Neutral = 0.2,
+                Sadness = 0.03,
+                Surprise = 0.01
+            };
+            
+            // Act
+            var rankedList = emotions.ToRankedList().ToList();
+
+            // Ensure face emotions ranked list is sorted correctly.
+            Assert.Equal("Happiness", rankedList[0].Key);
+            Assert.Equal("Neutral", rankedList[1].Key);
+            Assert.Equal("Fear", rankedList[2].Key);
+            Assert.Equal("Disgust", rankedList[3].Key);
+            Assert.Equal("Sadness", rankedList[4].Key);
+            Assert.Equal("Surprise", rankedList[5].Key);
+            Assert.Equal("Anger", rankedList[6].Key);
+            Assert.Equal("Contempt", rankedList[7].Key);
+        }
     }
 }
