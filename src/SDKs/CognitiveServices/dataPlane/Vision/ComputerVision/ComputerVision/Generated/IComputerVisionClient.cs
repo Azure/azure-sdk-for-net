@@ -46,7 +46,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Supported Cognitive Services endpoints
+        /// Supported Cognitive Services endpoints.
         /// </summary>
         string Endpoint { get; set; }
 
@@ -58,50 +58,40 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
 
 
         /// <summary>
-        /// This operation returns the list of domain-specific models that are
-        /// supported by the Computer Vision API.  Currently, the API only
-        /// supports one domain-specific model: a celebrity recognizer. A
-        /// successful response will be returned in JSON.  If the request
+        /// This operation extracts a rich set of visual features based on the
+        /// image content.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL. Within your request, there is an optional
+        /// parameter to allow you to choose which features to return. By
+        /// default, image categories are returned in the response.
+        /// A successful response will be returned in JSON. If the request
         /// failed, the response will contain an error code and a message to
         /// help understand what went wrong.
         /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<ListModelsResult>> ListModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// This operation extracts a rich set of visual features based on the
-        /// image content. Two input methods are supported -- (1) Uploading an
-        /// image or (2) specifying an image URL.  Within your request, there
-        /// is an optional parameter to allow you to choose which features to
-        /// return.  By default, image categories are returned in the response.
-        /// </summary>
         /// <param name='url'>
-        /// Publicly reachable URL of an image
+        /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='visualFeatures'>
         /// A string indicating what visual feature types to return. Multiple
         /// values should be comma-separated. Valid visual feature types
-        /// include:Categories - categorizes image content according to a
+        /// include: Categories - categorizes image content according to a
         /// taxonomy defined in documentation. Tags - tags the image with a
         /// detailed list of words related to the image content. Description -
         /// describes the image content with a complete English sentence. Faces
         /// - detects if faces are present. If present, generate coordinates,
         /// gender and age. ImageType - detects if image is clipart or a line
         /// drawing. Color - determines the accent color, dominant color, and
-        /// whether an image is black&amp;white.Adult - detects if the image is
-        /// pornographic in nature (depicts nudity or a sex act).  Sexually
-        /// suggestive content is also detected.
+        /// whether an image is black&amp;white. Adult - detects if the image
+        /// is pornographic in nature (depicts nudity or a sex act).  Sexually
+        /// suggestive content is also detected. Objects - detects various
+        /// objects within an image, including the approximate location. The
+        /// Objects argument is only available in English.
         /// </param>
         /// <param name='details'>
         /// A string indicating which domain-specific details to return.
         /// Multiple values should be comma-separated. Valid visual feature
-        /// types include:Celebrities - identifies celebrities if detected in
-        /// the image.
+        /// types include: Celebrities - identifies celebrities if detected in
+        /// the image, Landmarks - identifies notable landmarks in the image.
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
@@ -119,84 +109,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageWithHttpMessagesAsync(string url, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// This operation generates a thumbnail image with the user-specified
-        /// width and height. By default, the service analyzes the image,
-        /// identifies the region of interest (ROI), and generates smart
-        /// cropping coordinates based on the ROI. Smart cropping helps when
-        /// you specify an aspect ratio that differs from that of the input
-        /// image. A successful response contains the thumbnail image binary.
-        /// If the request failed, the response contains an error code and a
-        /// message to help determine what went wrong.
-        /// </summary>
-        /// <param name='width'>
-        /// Width of the thumbnail. It must be between 1 and 1024. Recommended
-        /// minimum of 50.
-        /// </param>
-        /// <param name='height'>
-        /// Height of the thumbnail. It must be between 1 and 1024. Recommended
-        /// minimum of 50.
-        /// </param>
-        /// <param name='url'>
-        /// Publicly reachable URL of an image
-        /// </param>
-        /// <param name='smartCropping'>
-        /// Boolean flag for enabling smart cropping.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<Stream>> GenerateThumbnailWithHttpMessagesAsync(int width, int height, string url, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// Optical Character Recognition (OCR) detects printed text in an
-        /// image and extracts the recognized characters into a machine-usable
-        /// character stream.   Upon success, the OCR results will be returned.
-        /// Upon failure, the error code together with an error message will be
-        /// returned. The error code can be one of InvalidImageUrl,
-        /// InvalidImageFormat, InvalidImageSize, NotSupportedImage,
-        /// NotSupportedLanguage, or InternalServerError.
-        /// </summary>
-        /// <param name='detectOrientation'>
-        /// Whether detect the text orientation in the image. With
-        /// detectOrientation=true the OCR service tries to detect the image
-        /// orientation and correct it before further processing (e.g. if it's
-        /// upside-down).
-        /// </param>
-        /// <param name='url'>
-        /// Publicly reachable URL of an image
-        /// </param>
-        /// <param name='language'>
-        /// The BCP-47 language code of the text to be detected in the image.
-        /// The default value is 'unk'. Possible values include: 'unk',
-        /// 'zh-Hans', 'zh-Hant', 'cs', 'da', 'nl', 'en', 'fi', 'fr', 'de',
-        /// 'el', 'hu', 'it', 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv',
-        /// 'tr', 'ar', 'ro', 'sr-Cyrl', 'sr-Latn', 'sk'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages language = default(OcrLanguages), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// This operation generates a description of an image in human
-        /// readable language with complete sentences.  The description is
-        /// based on a collection of content tags, which are also returned by
-        /// the operation. More than one description can be generated for each
-        /// image.  Descriptions are ordered by their confidence score. All
-        /// descriptions are in English. Two input methods are supported -- (1)
-        /// Uploading an image or (2) specifying an image URL.A successful
-        /// response will be returned in JSON.  If the request failed, the
-        /// response will contain an error code and a message to help
-        /// understand what went wrong.
+        /// readable language with complete sentences. The description is based
+        /// on a collection of content tags, which are also returned by the
+        /// operation. More than one description can be generated for each
+        /// image. Descriptions are ordered by their confidence score. All
+        /// descriptions are in English.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
         /// </summary>
         /// <param name='url'>
-        /// Publicly reachable URL of an image
+        /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='maxCandidates'>
         /// Maximum number of candidate descriptions to be returned.  The
@@ -218,24 +144,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         Task<HttpOperationResponse<ImageDescription>> DescribeImageWithHttpMessagesAsync(string url, int? maxCandidates = 1, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// This operation generates a list of words, or tags, that are
-        /// relevant to the content of the supplied image. The Computer Vision
-        /// API can return tags based on objects, living beings, scenery or
-        /// actions found in images. Unlike categories, tags are not organized
-        /// according to a hierarchical classification system, but correspond
-        /// to image content. Tags may contain hints to avoid ambiguity or
-        /// provide context, for example the tag 'cello' may be accompanied by
-        /// the hint 'musical instrument'. All tags are in English.
+        /// Performs object detection on the specified image.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
         /// </summary>
         /// <param name='url'>
-        /// Publicly reachable URL of an image
-        /// </param>
-        /// <param name='language'>
-        /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -243,24 +160,42 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<DetectResult>> DetectObjectsWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// This operation returns the list of domain-specific models that are
+        /// supported by the Computer Vision API. Currently, the API supports
+        /// following domain-specific models: celebrity recognizer, landmark
+        /// recognizer.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ListModelsResult>> ListModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// This operation recognizes content within an image by applying a
-        /// domain-specific model.  The list of domain-specific models that are
+        /// domain-specific model. The list of domain-specific models that are
         /// supported by the Computer Vision API can be retrieved using the
-        /// /models GET request.  Currently, the API only provides a single
-        /// domain-specific model: celebrities. Two input methods are supported
-        /// -- (1) Uploading an image or (2) specifying an image URL. A
-        /// successful response will be returned in JSON.  If the request
-        /// failed, the response will contain an error code and a message to
-        /// help understand what went wrong.
+        /// /models GET request. Currently, the API provides following
+        /// domain-specific models: celebrities, landmarks.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON.
+        /// If the request failed, the response will contain an error code and
+        /// a message to help understand what went wrong.
         /// </summary>
         /// <param name='model'>
         /// The domain-specific content to recognize.
         /// </param>
         /// <param name='url'>
-        /// Publicly reachable URL of an image
+        /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
@@ -278,6 +213,132 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainWithHttpMessagesAsync(string model, string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// Optical Character Recognition (OCR) detects text in an image and
+        /// extracts the recognized characters into a machine-usable character
+        /// stream.
+        /// Upon success, the OCR results will be returned.
+        /// Upon failure, the error code together with an error message will be
+        /// returned. The error code can be one of InvalidImageUrl,
+        /// InvalidImageFormat, InvalidImageSize, NotSupportedImage,
+        /// NotSupportedLanguage, or InternalServerError.
+        /// </summary>
+        /// <param name='detectOrientation'>
+        /// Whether detect the text orientation in the image. With
+        /// detectOrientation=true the OCR service tries to detect the image
+        /// orientation and correct it before further processing (e.g. if it's
+        /// upside-down).
+        /// </param>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image.
+        /// </param>
+        /// <param name='language'>
+        /// The BCP-47 language code of the text to be detected in the image.
+        /// The default value is 'unk'. Possible values include: 'unk',
+        /// 'zh-Hans', 'zh-Hant', 'cs', 'da', 'nl', 'en', 'fi', 'fr', 'de',
+        /// 'el', 'hu', 'it', 'ja', 'ko', 'nb', 'pl', 'pt', 'ru', 'es', 'sv',
+        /// 'tr', 'ar', 'ro', 'sr-Cyrl', 'sr-Latn', 'sk'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextWithHttpMessagesAsync(bool detectOrientation, string url, OcrLanguages language = default(OcrLanguages), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// This operation generates a list of words, or tags, that are
+        /// relevant to the content of the supplied image. The Computer Vision
+        /// API can return tags based on objects, living beings, scenery or
+        /// actions found in images. Unlike categories, tags are not organized
+        /// according to a hierarchical classification system, but correspond
+        /// to image content. Tags may contain hints to avoid ambiguity or
+        /// provide context, for example the tag "cello" may be accompanied by
+        /// the hint "musical instrument". All tags are in English.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
+        /// </summary>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image.
+        /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<TagResult>> TagImageWithHttpMessagesAsync(string url, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// This operation generates a thumbnail image with the user-specified
+        /// width and height. By default, the service analyzes the image,
+        /// identifies the region of interest (ROI), and generates smart
+        /// cropping coordinates based on the ROI. Smart cropping helps when
+        /// you specify an aspect ratio that differs from that of the input
+        /// image.
+        /// A successful response contains the thumbnail image binary. If the
+        /// request failed, the response contains an error code and a message
+        /// to help determine what went wrong.
+        /// Upon failure, the error code and an error message are returned. The
+        /// error code could be one of InvalidImageUrl, InvalidImageFormat,
+        /// InvalidImageSize, InvalidThumbnailSize, NotSupportedImage,
+        /// FailedToProcess, Timeout, or InternalServerError.
+        /// </summary>
+        /// <param name='width'>
+        /// Width of the thumbnail, in pixels. It must be between 1 and 1024.
+        /// Recommended minimum of 50.
+        /// </param>
+        /// <param name='height'>
+        /// Height of the thumbnail, in pixels. It must be between 1 and 1024.
+        /// Recommended minimum of 50.
+        /// </param>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image.
+        /// </param>
+        /// <param name='smartCropping'>
+        /// Boolean flag for enabling smart cropping.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<Stream>> GenerateThumbnailWithHttpMessagesAsync(int width, int height, string url, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// This operation returns a bounding box around the most important
+        /// area of the image.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response contains an error code and a message to help
+        /// determine what went wrong.
+        /// Upon failure, the error code and an error message are returned. The
+        /// error code could be one of InvalidImageUrl, InvalidImageFormat,
+        /// InvalidImageSize, NotSupportedImage, FailedToProcess, Timeout, or
+        /// InternalServerError.
+        /// </summary>
+        /// <param name='url'>
+        /// Publicly reachable URL of an image.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestWithHttpMessagesAsync(string url, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// Recognize Text operation. When you use the Recognize Text
         /// interface, the response contains a field called
         /// 'Operation-Location'. The 'Operation-Location' field contains the
@@ -289,7 +350,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// 'Printed'
         /// </param>
         /// <param name='url'>
-        /// Publicly reachable URL of an image
+        /// Publicly reachable URL of an image.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -319,6 +380,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <summary>
         /// This operation extracts a rich set of visual features based on the
         /// image content.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL. Within your request, there is an optional
+        /// parameter to allow you to choose which features to return. By
+        /// default, image categories are returned in the response.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
         /// </summary>
         /// <param name='image'>
         /// An image stream.
@@ -326,22 +394,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='visualFeatures'>
         /// A string indicating what visual feature types to return. Multiple
         /// values should be comma-separated. Valid visual feature types
-        /// include:Categories - categorizes image content according to a
+        /// include: Categories - categorizes image content according to a
         /// taxonomy defined in documentation. Tags - tags the image with a
         /// detailed list of words related to the image content. Description -
         /// describes the image content with a complete English sentence. Faces
         /// - detects if faces are present. If present, generate coordinates,
         /// gender and age. ImageType - detects if image is clipart or a line
         /// drawing. Color - determines the accent color, dominant color, and
-        /// whether an image is black&amp;white.Adult - detects if the image is
-        /// pornographic in nature (depicts nudity or a sex act).  Sexually
-        /// suggestive content is also detected.
+        /// whether an image is black&amp;white. Adult - detects if the image
+        /// is pornographic in nature (depicts nudity or a sex act).  Sexually
+        /// suggestive content is also detected. Objects - detects various
+        /// objects within an image, including the approximate location. The
+        /// Objects argument is only available in English.
         /// </param>
         /// <param name='details'>
         /// A string indicating which domain-specific details to return.
         /// Multiple values should be comma-separated. Valid visual feature
-        /// types include:Celebrities - identifies celebrities if detected in
-        /// the image.
+        /// types include: Celebrities - identifies celebrities if detected in
+        /// the image, Landmarks - identifies notable landmarks in the image.
         /// </param>
         /// <param name='language'>
         /// The desired language for output generation. If this parameter is
@@ -359,22 +429,103 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         Task<HttpOperationResponse<ImageAnalysis>> AnalyzeImageInStreamWithHttpMessagesAsync(Stream image, IList<VisualFeatureTypes> visualFeatures = default(IList<VisualFeatureTypes>), IList<Details> details = default(IList<Details>), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
+        /// This operation returns a bounding box around the most important
+        /// area of the image.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response contains an error code and a message to help
+        /// determine what went wrong.
+        /// Upon failure, the error code and an error message are returned. The
+        /// error code could be one of InvalidImageUrl, InvalidImageFormat,
+        /// InvalidImageSize, NotSupportedImage, FailedToProcess, Timeout, or
+        /// InternalServerError.
+        /// </summary>
+        /// <param name='image'>
+        /// An image stream.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<AreaOfInterestResult>> GetAreaOfInterestInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// This operation generates a description of an image in human
+        /// readable language with complete sentences. The description is based
+        /// on a collection of content tags, which are also returned by the
+        /// operation. More than one description can be generated for each
+        /// image. Descriptions are ordered by their confidence score. All
+        /// descriptions are in English.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
+        /// </summary>
+        /// <param name='image'>
+        /// An image stream.
+        /// </param>
+        /// <param name='maxCandidates'>
+        /// Maximum number of candidate descriptions to be returned.  The
+        /// default is 1.
+        /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Performs object detection on the specified image.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
+        /// </summary>
+        /// <param name='image'>
+        /// An image stream.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<DetectResult>> DetectObjectsInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// This operation generates a thumbnail image with the user-specified
         /// width and height. By default, the service analyzes the image,
         /// identifies the region of interest (ROI), and generates smart
         /// cropping coordinates based on the ROI. Smart cropping helps when
         /// you specify an aspect ratio that differs from that of the input
-        /// image. A successful response contains the thumbnail image binary.
-        /// If the request failed, the response contains an error code and a
-        /// message to help determine what went wrong.
+        /// image.
+        /// A successful response contains the thumbnail image binary. If the
+        /// request failed, the response contains an error code and a message
+        /// to help determine what went wrong.
+        /// Upon failure, the error code and an error message are returned. The
+        /// error code could be one of InvalidImageUrl, InvalidImageFormat,
+        /// InvalidImageSize, InvalidThumbnailSize, NotSupportedImage,
+        /// FailedToProcess, Timeout, or InternalServerError.
         /// </summary>
         /// <param name='width'>
-        /// Width of the thumbnail. It must be between 1 and 1024. Recommended
-        /// minimum of 50.
+        /// Width of the thumbnail, in pixels. It must be between 1 and 1024.
+        /// Recommended minimum of 50.
         /// </param>
         /// <param name='height'>
-        /// Height of the thumbnail. It must be between 1 and 1024. Recommended
-        /// minimum of 50.
+        /// Height of the thumbnail, in pixels. It must be between 1 and 1024.
+        /// Recommended minimum of 50.
         /// </param>
         /// <param name='image'>
         /// An image stream.
@@ -391,9 +542,43 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         Task<HttpOperationResponse<Stream>> GenerateThumbnailInStreamWithHttpMessagesAsync(int width, int height, Stream image, bool? smartCropping = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// Optical Character Recognition (OCR) detects printed text in an
-        /// image and extracts the recognized characters into a machine-usable
-        /// character stream.   Upon success, the OCR results will be returned.
+        /// This operation recognizes content within an image by applying a
+        /// domain-specific model. The list of domain-specific models that are
+        /// supported by the Computer Vision API can be retrieved using the
+        /// /models GET request. Currently, the API provides following
+        /// domain-specific models: celebrities, landmarks.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON.
+        /// If the request failed, the response will contain an error code and
+        /// a message to help understand what went wrong.
+        /// </summary>
+        /// <param name='model'>
+        /// The domain-specific content to recognize.
+        /// </param>
+        /// <param name='image'>
+        /// An image stream.
+        /// </param>
+        /// <param name='language'>
+        /// The desired language for output generation. If this parameter is
+        /// not specified, the default value is
+        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
+        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
+        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Optical Character Recognition (OCR) detects text in an image and
+        /// extracts the recognized characters into a machine-usable character
+        /// stream.
+        /// Upon success, the OCR results will be returned.
         /// Upon failure, the error code together with an error message will be
         /// returned. The error code can be one of InvalidImageUrl,
         /// InvalidImageFormat, InvalidImageSize, NotSupportedImage,
@@ -424,48 +609,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         Task<HttpOperationResponse<OcrResult>> RecognizePrintedTextInStreamWithHttpMessagesAsync(bool detectOrientation, Stream image, OcrLanguages language = default(OcrLanguages), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
-        /// This operation generates a description of an image in human
-        /// readable language with complete sentences.  The description is
-        /// based on a collection of content tags, which are also returned by
-        /// the operation. More than one description can be generated for each
-        /// image.  Descriptions are ordered by their confidence score. All
-        /// descriptions are in English. Two input methods are supported -- (1)
-        /// Uploading an image or (2) specifying an image URL.A successful
-        /// response will be returned in JSON.  If the request failed, the
-        /// response will contain an error code and a message to help
-        /// understand what went wrong.
-        /// </summary>
-        /// <param name='image'>
-        /// An image stream.
-        /// </param>
-        /// <param name='maxCandidates'>
-        /// Maximum number of candidate descriptions to be returned.  The
-        /// default is 1.
-        /// </param>
-        /// <param name='language'>
-        /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<ImageDescription>> DescribeImageInStreamWithHttpMessagesAsync(Stream image, int? maxCandidates = 1, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
         /// This operation generates a list of words, or tags, that are
         /// relevant to the content of the supplied image. The Computer Vision
         /// API can return tags based on objects, living beings, scenery or
         /// actions found in images. Unlike categories, tags are not organized
         /// according to a hierarchical classification system, but correspond
         /// to image content. Tags may contain hints to avoid ambiguity or
-        /// provide context, for example the tag 'cello' may be accompanied by
-        /// the hint 'musical instrument'. All tags are in English.
+        /// provide context, for example the tag "cello" may be accompanied by
+        /// the hint "musical instrument". All tags are in English.
+        /// Two input methods are supported -- (1) Uploading an image or (2)
+        /// specifying an image URL.
+        /// A successful response will be returned in JSON. If the request
+        /// failed, the response will contain an error code and a message to
+        /// help understand what went wrong.
         /// </summary>
         /// <param name='image'>
         /// An image stream.
@@ -484,38 +640,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<TagResult>> TagImageInStreamWithHttpMessagesAsync(Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// This operation recognizes content within an image by applying a
-        /// domain-specific model.  The list of domain-specific models that are
-        /// supported by the Computer Vision API can be retrieved using the
-        /// /models GET request.  Currently, the API only provides a single
-        /// domain-specific model: celebrities. Two input methods are supported
-        /// -- (1) Uploading an image or (2) specifying an image URL. A
-        /// successful response will be returned in JSON.  If the request
-        /// failed, the response will contain an error code and a message to
-        /// help understand what went wrong.
-        /// </summary>
-        /// <param name='model'>
-        /// The domain-specific content to recognize.
-        /// </param>
-        /// <param name='image'>
-        /// An image stream.
-        /// </param>
-        /// <param name='language'>
-        /// The desired language for output generation. If this parameter is
-        /// not specified, the default value is
-        /// &amp;quot;en&amp;quot;.Supported languages:en - English, Default.
-        /// es - Spanish, ja - Japanese, pt - Portuguese, zh - Simplified
-        /// Chinese. Possible values include: 'en', 'es', 'ja', 'pt', 'zh'
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<DomainModelResults>> AnalyzeImageByDomainInStreamWithHttpMessagesAsync(string model, Stream image, string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Recognize Text operation. When you use the Recognize Text

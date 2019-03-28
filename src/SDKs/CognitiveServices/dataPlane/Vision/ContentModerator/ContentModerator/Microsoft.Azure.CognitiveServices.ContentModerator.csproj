@@ -6,20 +6,21 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.ContentModerator</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Content Moderator APIs.</Description>
-    <Version>1.0.0</Version>
+    <Version>2.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.ContentModerator</AssemblyName>
     <PackageTags>ContentModerator;Content Moderator;</PackageTags>
     <PackageReleaseNotes>
 <![CDATA[
 This is a public release of the Cognitive Services Content Moderator SDK.
 
-Included with this release is support for Content Moderator API
+Changes in this release:
+1) Change the namespace from `Microsoft.CognitiveServices.ContentModerator` to `Microsoft.Azure.CognitiveServices.ContentModerator`.
 ]]>
 	</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
   </PropertyGroup>
    
   <!-- Please do not move/edit code below this line -->

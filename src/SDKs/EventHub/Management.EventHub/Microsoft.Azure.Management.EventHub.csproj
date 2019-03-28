@@ -15,7 +15,7 @@
     1) added new boolean property KafkaEnabled to enable Kafka for the EventHub namepsace
 	  ]]>
 		</PackageReleaseNotes>
-		<TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
 	</PropertyGroup> 
 
 

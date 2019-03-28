@@ -377,6 +377,90 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Lists all available server variables.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static ApplicationGatewayAvailableServerVariablesResult ListAvailableServerVariables(this IApplicationGatewaysOperations operations)
+            {
+                return operations.ListAvailableServerVariablesAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all available server variables.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayAvailableServerVariablesResult> ListAvailableServerVariablesAsync(this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAvailableServerVariablesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all available request headers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static ApplicationGatewayAvailableRequestHeadersResult ListAvailableRequestHeaders(this IApplicationGatewaysOperations operations)
+            {
+                return operations.ListAvailableRequestHeadersAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all available request headers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayAvailableRequestHeadersResult> ListAvailableRequestHeadersAsync(this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAvailableRequestHeadersWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all available response headers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static ApplicationGatewayAvailableResponseHeadersResult ListAvailableResponseHeaders(this IApplicationGatewaysOperations operations)
+            {
+                return operations.ListAvailableResponseHeadersAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all available response headers.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayAvailableResponseHeadersResult> ListAvailableResponseHeadersAsync(this IApplicationGatewaysOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListAvailableResponseHeadersWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all available web application firewall rule sets.
             /// </summary>
             /// <param name='operations'>

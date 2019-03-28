@@ -31,6 +31,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the ModelDescription class.
         /// </summary>
+        /// <param name="name">The name of the model.</param>
+        /// <param name="categories">Categories of the model.</param>
         public ModelDescription(string name = default(string), IList<string> categories = default(IList<string>))
         {
             Name = name;
@@ -44,11 +46,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the name of the model.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets categories of the model.
         /// </summary>
         [JsonProperty(PropertyName = "categories")]
         public IList<string> Categories { get; set; }

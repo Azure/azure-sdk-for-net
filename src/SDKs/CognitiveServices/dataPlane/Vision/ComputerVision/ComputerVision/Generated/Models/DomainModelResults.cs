@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the DomainModelResults class.
         /// </summary>
-        /// <param name="result">Model-specific response</param>
+        /// <param name="result">Model-specific response.</param>
         /// <param name="requestId">Id of the REST API request.</param>
         public DomainModelResults(object result = default(object), string requestId = default(string), ImageMetadata metadata = default(ImageMetadata))
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets model-specific response
+        /// Gets or sets model-specific response.
         /// </summary>
         [JsonProperty(PropertyName = "result")]
         public object Result { get; set; }

@@ -189,6 +189,54 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets all global reach connections associated with a private peering in an
+            /// express route circuit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='circuitName'>
+            /// The name of the circuit.
+            /// </param>
+            /// <param name='peeringName'>
+            /// The name of the peering.
+            /// </param>
+            public static IPage<ExpressRouteCircuitConnection> List(this IExpressRouteCircuitConnectionsOperations operations, string resourceGroupName, string circuitName, string peeringName)
+            {
+                return operations.ListAsync(resourceGroupName, circuitName, peeringName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all global reach connections associated with a private peering in an
+            /// express route circuit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='circuitName'>
+            /// The name of the circuit.
+            /// </param>
+            /// <param name='peeringName'>
+            /// The name of the peering.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ExpressRouteCircuitConnection>> ListAsync(this IExpressRouteCircuitConnectionsOperations operations, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes the specified Express Route Circuit Connection from the specified
             /// express route circuit.
             /// </summary>
@@ -296,6 +344,42 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<ExpressRouteCircuitConnection> BeginCreateOrUpdateAsync(this IExpressRouteCircuitConnectionsOperations operations, string resourceGroupName, string circuitName, string peeringName, string connectionName, ExpressRouteCircuitConnection expressRouteCircuitConnectionParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, connectionName, expressRouteCircuitConnectionParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets all global reach connections associated with a private peering in an
+            /// express route circuit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ExpressRouteCircuitConnection> ListNext(this IExpressRouteCircuitConnectionsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets all global reach connections associated with a private peering in an
+            /// express route circuit.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ExpressRouteCircuitConnection>> ListNextAsync(this IExpressRouteCircuitConnectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// A copy activity Hubspot Serivce source.
+    /// A copy activity Hubspot Service source.
     /// </summary>
     public partial class HubspotSource : CopySource
     {

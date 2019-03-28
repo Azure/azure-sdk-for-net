@@ -101,6 +101,11 @@ namespace Microsoft.Azure.Management.Network
         IAzureFirewallFqdnTagsOperations AzureFirewallFqdnTags { get; }
 
         /// <summary>
+        /// Gets the IDdosCustomPoliciesOperations.
+        /// </summary>
+        IDdosCustomPoliciesOperations DdosCustomPolicies { get; }
+
+        /// <summary>
         /// Gets the IDdosProtectionPlansOperations.
         /// </summary>
         IDdosProtectionPlansOperations DdosProtectionPlans { get; }

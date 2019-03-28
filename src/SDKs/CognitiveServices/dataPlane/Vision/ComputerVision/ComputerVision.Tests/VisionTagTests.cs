@@ -25,7 +25,7 @@ namespace ComputerVisionSDK.Tests
                     TagResult result = client.TagImageInStreamAsync(stream, Chinese).Result;
 
                     Assert.Equal(
-                        new string[] { "草", "户外", "天空", "屋子", "建筑", "绿色", "草坪", "住宅", "绿色的" },
+                        new string[] { "草", "户外", "天空", "屋子", "建筑", "绿色", "草坪", "住宅", "绿色的", "家", "房子", "屋顶", "平房", "车库", "历史" },
                         result.Tags.Select(tag => tag.Name).ToArray());
                 }
             }
@@ -45,7 +45,7 @@ namespace ComputerVisionSDK.Tests
                     TagResult result = client.TagImageAsync(imageUrl).Result;
 
                     Assert.Equal(
-                        new string[] { "grass", "outdoor", "sky", "house", "building", "green", "lawn", "residential", "grassy" },
+                        new string[] { "grass", "outdoor", "sky", "house", "building", "green", "lawn", "residential", "grassy", "home", "roof", "bungalow", "garage" , "historic" },
                         result.Tags.Select(tag => tag.Name).ToArray());
 
                     // Confirm tags are in descending confidence order

@@ -21,8 +21,14 @@ namespace Microsoft.Azure.Management.Batch.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum InterNodeCommunicationState
     {
+        /// <summary>
+        /// Enable network communication between virtual machines.
+        /// </summary>
         [EnumMember(Value = "Enabled")]
         Enabled,
+        /// <summary>
+        /// Disable network communication between virtual machines.
+        /// </summary>
         [EnumMember(Value = "Disabled")]
         Disabled
     }

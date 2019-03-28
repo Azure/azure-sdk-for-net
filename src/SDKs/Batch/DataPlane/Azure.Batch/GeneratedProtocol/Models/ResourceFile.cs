@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// access; that is, the Batch service does not present any credentials
         /// when downloading blobs from the container. There are two ways to
         /// get such a URL for a container in Azure storage: include a Shared
-        /// Access Signature (SAS) granting read permissions on the container,
-        /// or set the ACL for the container to allow public access.
+        /// Access Signature (SAS) granting read and list permissions on the
+        /// container, or set the ACL for the container to allow public access.
         /// </remarks>
         [JsonProperty(PropertyName = "storageContainerUrl")]
         public string StorageContainerUrl { get; set; }

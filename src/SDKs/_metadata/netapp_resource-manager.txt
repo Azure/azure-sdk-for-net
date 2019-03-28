@@ -1,4 +1,4 @@
-﻿Installing AutoRest version: latest
+Installing AutoRest version: latest
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code

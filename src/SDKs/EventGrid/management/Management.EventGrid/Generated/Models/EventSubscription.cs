@@ -48,17 +48,12 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// <param name="filter">Information about the filter for the event
         /// subscription.</param>
         /// <param name="labels">List of user defined labels.</param>
-        /// <param name="expirationTimeUtc">Expiration time of the event
-        /// subscription.</param>
-        /// <param name="eventDeliverySchema">The event delivery schema for the
-        /// event subscription. Possible values include: 'EventGridSchema',
-        /// 'CloudEventV01Schema', 'CustomInputSchema'</param>
         /// <param name="retryPolicy">The retry policy for events. This can be
         /// used to configure maximum number of delivery attempts and time to
         /// live for events.</param>
         /// <param name="deadLetterDestination">The DeadLetter destination of
         /// the event subscription.</param>
-        public EventSubscription(string id = default(string), string name = default(string), string type = default(string), string topic = default(string), string provisioningState = default(string), EventSubscriptionDestination destination = default(EventSubscriptionDestination), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>), System.DateTime? expirationTimeUtc = default(System.DateTime?), string eventDeliverySchema = default(string), RetryPolicy retryPolicy = default(RetryPolicy), DeadLetterDestination deadLetterDestination = default(DeadLetterDestination))
+        public EventSubscription(string id = default(string), string name = default(string), string type = default(string), string topic = default(string), string provisioningState = default(string), EventSubscriptionDestination destination = default(EventSubscriptionDestination), EventSubscriptionFilter filter = default(EventSubscriptionFilter), IList<string> labels = default(IList<string>), RetryPolicy retryPolicy = default(RetryPolicy), DeadLetterDestination deadLetterDestination = default(DeadLetterDestination))
             : base(id, name, type)
         {
             Topic = topic;
@@ -66,8 +61,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
             Destination = destination;
             Filter = filter;
             Labels = labels;
-            ExpirationTimeUtc = expirationTimeUtc;
-            EventDeliverySchema = eventDeliverySchema;
             RetryPolicy = retryPolicy;
             DeadLetterDestination = deadLetterDestination;
             CustomInit();
@@ -111,20 +104,6 @@ namespace Microsoft.Azure.Management.EventGrid.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.labels")]
         public IList<string> Labels { get; set; }
-
-        /// <summary>
-        /// Gets or sets expiration time of the event subscription.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.expirationTimeUtc")]
-        public System.DateTime? ExpirationTimeUtc { get; set; }
-
-        /// <summary>
-        /// Gets or sets the event delivery schema for the event subscription.
-        /// Possible values include: 'EventGridSchema', 'CloudEventV01Schema',
-        /// 'CustomInputSchema'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.eventDeliverySchema")]
-        public string EventDeliverySchema { get; set; }
 
         /// <summary>
         /// Gets or sets the retry policy for events. This can be used to

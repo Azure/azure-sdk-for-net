@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         /// property can be set when creating or updating the file
         /// resource.</param>
         /// <param name="lastModified">Modification DateTime.</param>
-        /// <param name="mediaType">File content type. This propery can be
+        /// <param name="mediaType">File content type. This property can be
         /// modified to reflect the file content type.</param>
         /// <param name="size">File size.</param>
         public ProjectFileProperties(string extension = default(string), string filePath = default(string), System.DateTimeOffset? lastModified = default(System.DateTimeOffset?), string mediaType = default(string), long? size = default(long?))
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         public System.DateTimeOffset? LastModified { get; private set; }
 
         /// <summary>
-        /// Gets or sets file content type. This propery can be modified to
+        /// Gets or sets file content type. This property can be modified to
         /// reflect the file content type.
         /// </summary>
         [JsonProperty(PropertyName = "mediaType")]

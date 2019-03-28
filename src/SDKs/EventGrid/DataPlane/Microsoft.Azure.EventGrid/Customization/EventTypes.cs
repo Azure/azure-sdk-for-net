@@ -44,6 +44,7 @@ namespace Microsoft.Azure.EventGrid
         public const string MediaJobOutputFinishedEvent = "Microsoft.Media.JobOutputFinished";
         public const string MediaJobOutputProcessingEvent = "Microsoft.Media.JobOutputProcessing";
         public const string MediaJobOutputScheduledEvent = "Microsoft.Media.JobOutputScheduled";
+        public const string MediaJobOutputProgressEvent = "Microsoft.Media.JobOutputProgress";
         public const string MediaLiveEventEncoderConnectedEvent = "Microsoft.Media.LiveEventEncoderConnected";
         public const string MediaLiveEventConnectionRejectedEvent = "Microsoft.Media.LiveEventConnectionRejected";
         public const string MediaLiveEventEncoderDisconnectedEvent = "Microsoft.Media.LiveEventEncoderDisconnected";

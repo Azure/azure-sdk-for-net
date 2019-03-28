@@ -29,9 +29,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the ImageCaption class.
         /// </summary>
-        /// <param name="text">The text of the caption</param>
+        /// <param name="text">The text of the caption.</param>
         /// <param name="confidence">The level of confidence the service has in
-        /// the caption</param>
+        /// the caption.</param>
         public ImageCaption(string text = default(string), double confidence = default(double))
         {
             Text = text;
@@ -45,13 +45,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the text of the caption
+        /// Gets or sets the text of the caption.
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
 
         /// <summary>
-        /// Gets or sets the level of confidence the service has in the caption
+        /// Gets or sets the level of confidence the service has in the
+        /// caption.
         /// </summary>
         [JsonProperty(PropertyName = "confidence")]
         public double Confidence { get; set; }
