@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="name">The name of the arm role receiver. Names must be
         /// unique across all receivers within an action group.</param>
         /// <param name="roleId">The arm role id.</param>
-        public ArmRoleReceiver(string name, string roleId)
+        /// <param name="useCommonAlertSchema">Indicates whether to use common
+        /// alert schema.</param>
+        public ArmRoleReceiver(string name, string roleId, bool useCommonAlertSchema)
         {
             Name = name;
             RoleId = roleId;
+            UseCommonAlertSchema = useCommonAlertSchema;
             CustomInit();
         }
 
@@ -57,6 +60,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "roleId")]
         public string RoleId { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether to use common alert schema.
+        /// </summary>
+        [JsonProperty(PropertyName = "useCommonAlertSchema")]
+        public bool UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

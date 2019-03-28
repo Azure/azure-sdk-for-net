@@ -15,32 +15,27 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// A webhook receiver.
+    /// Represents a baseline metadata value.
     /// </summary>
-    public partial class WebhookReceiver
+    public partial class BaselineMetadata
     {
         /// <summary>
-        /// Initializes a new instance of the WebhookReceiver class.
+        /// Initializes a new instance of the BaselineMetadata class.
         /// </summary>
-        public WebhookReceiver()
+        public BaselineMetadata()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the WebhookReceiver class.
+        /// Initializes a new instance of the BaselineMetadata class.
         /// </summary>
-        /// <param name="name">The name of the webhook receiver. Names must be
-        /// unique across all receivers within an action group.</param>
-        /// <param name="serviceUri">The URI where webhooks should be
-        /// sent.</param>
-        /// <param name="useCommonAlertSchema">Indicates whether to use common
-        /// alert schema.</param>
-        public WebhookReceiver(string name, string serviceUri, bool useCommonAlertSchema)
+        /// <param name="name">Name of the baseline metadata.</param>
+        /// <param name="value">Value of the baseline metadata.</param>
+        public BaselineMetadata(string name, string value)
         {
             Name = name;
-            ServiceUri = serviceUri;
-            UseCommonAlertSchema = useCommonAlertSchema;
+            Value = value;
             CustomInit();
         }
 
@@ -50,23 +45,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the webhook receiver. Names must be unique
-        /// across all receivers within an action group.
+        /// Gets or sets name of the baseline metadata.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI where webhooks should be sent.
+        /// Gets or sets value of the baseline metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "serviceUri")]
-        public string ServiceUri { get; set; }
-
-        /// <summary>
-        /// Gets or sets indicates whether to use common alert schema.
-        /// </summary>
-        [JsonProperty(PropertyName = "useCommonAlertSchema")]
-        public bool UseCommonAlertSchema { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -80,9 +68,9 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
-            if (ServiceUri == null)
+            if (Value == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ServiceUri");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
         }
     }

@@ -140,6 +140,11 @@ namespace Microsoft.Azure.Management.Monitor
         IMetricBaselineOperations MetricBaseline { get; }
 
         /// <summary>
+        /// Gets the IMetricBaselinesOperations.
+        /// </summary>
+        IMetricBaselinesOperations MetricBaselines { get; }
+
+        /// <summary>
         /// Gets the IMetricAlertsOperations.
         /// </summary>
         IMetricAlertsOperations MetricAlerts { get; }
