@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "EnrollmentAccountsByBillingAccountName", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "Invoice", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoicePricesheet", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "InvoiceSection", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoiceSectionBillingRoleAssignment", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoiceSectionBillingRoleDefinition", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "InvoiceSections", "2018-11-01-preview"),

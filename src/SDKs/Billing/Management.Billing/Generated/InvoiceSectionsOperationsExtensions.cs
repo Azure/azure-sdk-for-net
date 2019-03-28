@@ -196,6 +196,43 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
+            /// Elevates the caller's access to match their billing profile access.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            public static void ElevateToBillingProfile(this IInvoiceSectionsOperations operations, string billingAccountName, string invoiceSectionName)
+            {
+                operations.ElevateToBillingProfileAsync(billingAccountName, invoiceSectionName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Elevates the caller's access to match their billing profile access.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// InvoiceSection Id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ElevateToBillingProfileAsync(this IInvoiceSectionsOperations operations, string billingAccountName, string invoiceSectionName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ElevateToBillingProfileWithHttpMessagesAsync(billingAccountName, invoiceSectionName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// The operation to create a InvoiceSection.
             /// </summary>
             /// <param name='operations'>

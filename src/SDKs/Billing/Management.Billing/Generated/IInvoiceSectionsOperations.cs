@@ -131,6 +131,28 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<InvoiceSection,InvoiceSectionsUpdateHeaders>> UpdateWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, InvoiceSection parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Elevates the caller's access to match their billing profile access.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ElevateToBillingProfileWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// The operation to create a InvoiceSection.
         /// </summary>
         /// <param name='billingAccountName'>
