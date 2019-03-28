@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Type: string (or Expression with resultType string).</param>
         /// <param name="authentication">Authentication method used for calling
         /// the endpoint.</param>
-        public WebHookActivity(string name, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), object timeout = default(object), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication))
+        public WebHookActivity(string name, object url, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), IList<ActivityDependency> dependsOn = default(IList<ActivityDependency>), IList<UserProperty> userProperties = default(IList<UserProperty>), string timeout = default(string), object headers = default(object), object body = default(object), WebActivityAuthentication authentication = default(WebActivityAuthentication))
             : base(name, additionalProperties, description, dependsOn, userProperties)
         {
             Url = url;
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.timeout")]
-        public object Timeout { get; set; }
+        public string Timeout { get; set; }
 
         /// <summary>
         /// Gets or sets represents the headers that will be sent to the
