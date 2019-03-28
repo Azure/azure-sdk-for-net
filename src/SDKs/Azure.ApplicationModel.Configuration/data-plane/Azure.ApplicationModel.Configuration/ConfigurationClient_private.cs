@@ -105,7 +105,7 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        void BuildBatchQuery(UriBuilder builder, ConfigurationSelector selector)
+        void BuildBatchQuery(UriBuilder builder, SettingSelector selector)
         {
             if (selector.Keys != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        Uri BuildUriForGetBatch(ConfigurationSelector selector)
+        Uri BuildUriForGetBatch(SettingSelector selector)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute;
@@ -147,7 +147,7 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        Uri BuildUriForRevisions(ConfigurationSelector selector)
+        Uri BuildUriForRevisions(SettingSelector selector)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = RevisionsRoute;

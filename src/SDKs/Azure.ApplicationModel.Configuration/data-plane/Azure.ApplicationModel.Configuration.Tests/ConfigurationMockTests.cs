@@ -197,7 +197,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var (service, pool) = CreateTestService(transport);
 
-            var query = new ConfigurationSelector();
+            var query = new SettingSelector();
             int keyIndex = 0;
             while (true)
             {

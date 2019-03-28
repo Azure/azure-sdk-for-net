@@ -151,10 +151,10 @@ namespace Azure.ApplicationModel.Configuration
     public class SettingBatch
     {
         readonly ConfigurationSetting[] _settings;
-        readonly ConfigurationSelector _filter;
+        readonly SettingSelector _filter;
         readonly string _link;
 
-        internal SettingBatch(ConfigurationSetting[] settings, string link, ConfigurationSelector selector)
+        internal SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
         {
             _settings = settings;
             _link = link;
@@ -165,13 +165,13 @@ namespace Azure.ApplicationModel.Configuration
 
         public int Count => _settings.Length;
 
-        public ConfigurationSelector NextBatch
+        public SettingSelector NextBatch
         {
             get
             {
                 if (_link != null)
                 {
-                    return _filter.Clone(_link);
+                    return _filter.CloneWithBatchLink(_link);
                 }
                 return null;
             }

@@ -2,15 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.Tracing;
+using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Http;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
@@ -412,8 +410,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(testSettingUpdate);
 
                 // Test
-                var selector = new ConfigurationSelector(setting.Key);
-                selector.AcceptDateTime = DateTimeOffset.MaxValue;
+                var selector = new SettingSelector(setting.Key);
+                selector.AsOf = DateTimeOffset.MaxValue;
                 SettingBatch batch = await service.GetRevisionsAsync(selector, CancellationToken.None);
 
                 int resultsReturned = 0;
@@ -538,7 +536,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var key = await SetMultipleKeys(service, expectedEvents);
 
             int resultsReturned = 0;
-            ConfigurationSelector selector = new ConfigurationSelector(key);
+            SettingSelector selector = new SettingSelector(key);
             while (true)
             {
                 using (Response<SettingBatch> response = await service.GetBatchAsync(selector, CancellationToken.None))
@@ -567,7 +565,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 await service.SetAsync(s_testSetting);
 
-                ConfigurationSelector selector = new ConfigurationSelector()
+                SettingSelector selector = new SettingSelector()
                 {
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value
                 };
@@ -643,6 +641,41 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var testSettingDiffTags = s_testSetting.Clone();
             testSettingDiffTags.Tags.Add("tag3", "test_value3");
             Assert.AreNotEqual(s_testSetting, testSettingDiffTags);
+        }
+
+        private bool SettingSelectoComparissonr(SettingSelector actual, SettingSelector other)
+        {
+            if (actual != null && other == null) return false;
+            if (actual.Keys.Except(other.Keys).ToList().Count != 0) return false;
+            if (actual.Keys.Except(other.Keys).ToList().Count != 0) return false;
+            if (!actual.Fields.Equals(other.Fields)) return false;
+            if (actual.AsOf != other.AsOf) return false;
+            
+            return true;
+        }
+
+        [Test]
+        public void SettingSelectorCloneWithBatchLink()
+        {
+            SettingSelector selector = new SettingSelector()
+            {
+                Keys = new List<string> { "key1", "key2", "key3" },
+                Labels = { "label1" },
+                Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value,
+                AsOf = DateTimeOffset.Now
+            };
+
+            Type type = typeof(SettingSelector);
+            MethodInfo cloneMethod = type.GetMethods(BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.Name == "CloneWithBatchLink").First();
+
+            var selectorWithLink = (SettingSelector)cloneMethod.Invoke(selector, new object[] { "someLink" });
+            Assert.IsTrue(SettingSelectoComparissonr(selector, selectorWithLink));
+
+            selector.Keys.Add("Key4");
+            selector.Labels.Add("Label2");
+            selector.Fields = SettingFields.All;
+
+            Assert.IsFalse(SettingSelectoComparissonr(selector, selectorWithLink));
         }
     }
 

@@ -264,7 +264,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(ConfigurationSelector selector, CancellationToken cancellation = default)
+        public async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
             var uri = BuildUriForGetBatch(selector);
 
@@ -273,9 +273,9 @@ namespace Azure.ApplicationModel.Configuration
                 request.SetRequestLine(HttpVerb.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (selector.AcceptDateTime.HasValue)
+                if (selector.AsOf.HasValue)
                 {
-                    var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                    var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
                     request.AddHeader(AcceptDatetimeHeader, dateTime);
                 }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
@@ -289,7 +289,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetRevisionsAsync(ConfigurationSelector selector, CancellationToken cancellation = default)
+        public async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
             var uri = BuildUriForRevisions(selector);
 
@@ -298,9 +298,9 @@ namespace Azure.ApplicationModel.Configuration
                 request.SetRequestLine(HttpVerb.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                if (selector.AcceptDateTime.HasValue)
+                if (selector.AsOf.HasValue)
                 {
-                    var dateTime = selector.AcceptDateTime.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                    var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
                     request.AddHeader(AcceptDatetimeHeader, dateTime);
                 }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);

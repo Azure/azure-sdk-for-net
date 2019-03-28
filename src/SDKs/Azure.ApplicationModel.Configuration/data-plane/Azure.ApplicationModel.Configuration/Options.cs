@@ -6,6 +6,7 @@ using Azure.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -25,19 +26,19 @@ namespace Azure.ApplicationModel.Configuration
         All = uint.MaxValue
     }
 
-    public class ConfigurationSelector
+    public class SettingSelector
     {
         public static readonly string Any = "*";
         /// <summary>
         /// Keys that will be used to filter.
         /// </summary>
-        /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
-        public List<string> Keys { get; set; } = new List<string> { Any };
+        /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
+        public IList<string> Keys { get; set; } = new List<string> { Any };
         /// <summary>
         /// Labels that will be used to filter.
         /// </summary>
-        /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
-        public List<string> Labels { get; set; } = new List<string> { Any };
+        /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
+        public IList<string> Labels { get; set; } = new List<string> { Any };
         /// <summary>
         /// IKeyValue fields that will be retrieved.
         /// </summary>
@@ -45,11 +46,11 @@ namespace Azure.ApplicationModel.Configuration
         /// <summary>
         /// If set, then key values will be retrieved exactly as they existed at the provided time.
         /// </summary>
-        public DateTimeOffset? AcceptDateTime { get; set; }
+        public DateTimeOffset? AsOf { get; set; }
 
-        public ConfigurationSelector() { }
+        public SettingSelector() { }
 
-        public ConfigurationSelector(string key, string label = default)
+        public SettingSelector(string key, string label = default)
         {
             Keys = new List<string> { key };
             if(label != default) Labels = new List<string> { label };
@@ -57,21 +58,42 @@ namespace Azure.ApplicationModel.Configuration
 
         internal string BatchLink { get; set; }
 
-        internal ConfigurationSelector Clone(string batchLink)
+        internal SettingSelector CloneWithBatchLink(string batchLink)
         {
-            return new ConfigurationSelector()
+            return new SettingSelector()
             {
-                Keys = Keys,
-                Labels = Labels,
+                Keys = new List<string>(Keys),
+                Labels = new List<string>(Labels),
                 Fields = Fields,
-                AcceptDateTime = AcceptDateTime,
+                AsOf = AsOf,
                 BatchLink = batchLink
             };
         }
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public bool Equals(SettingSelector other)
+        {
+            if (other == null) return false;
+            if( Keys.Except(other.Keys).ToList().Count != 0) return false;
+            if (Keys.Except(other.Keys).ToList().Count != 0) return false;
+            if (!Fields.Equals(other.Fields)) return false;
+            if (AsOf != other.AsOf) return false;
+            if (!string.Equals(BatchLink, other.BatchLink, StringComparison.Ordinal)) return false;
+
+            return true;
+        }
+        
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is SettingSelector other)
+            {
+                return Equals(other);
+            }
+            else return false;
+        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
