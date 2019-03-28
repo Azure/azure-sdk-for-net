@@ -11,17 +11,118 @@ namespace Microsoft.Azure.Search.Tests
     using Spatial;
 
     [SerializePropertyNamesAsCamelCase]
-    public class Hotel
+    public class HotelAddress
     {
-        public string HotelId { get; set; }
+        public string StreetAddress { get; set; }
 
-        public double? BaseRate { get; set; }
+        public string City { get; set; }
 
+        public string StateProvince { get; set; }
+
+        public string Country { get; set; }
+
+        public string PostalCode { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is HotelAddress other))
+            {
+                return false;
+            }
+
+            return
+                StreetAddress == other.StreetAddress &&
+                City == other.City &&
+                StateProvince == other.StateProvince &&
+                Country == other.Country &&
+                PostalCode == other.PostalCode;
+        }
+
+        public override int GetHashCode() => StreetAddress?.GetHashCode() ?? 0;
+
+        public override string ToString() =>
+            $"StreetAddress: {StreetAddress}; City: {City}; State/Province: {StateProvince}; Country: {Country}; " +
+            $"PostalCode: {PostalCode}";
+
+        public Document AsDocument() =>
+            new Document()
+            {
+                ["streetAddress"] = StreetAddress,
+                ["city"] = City,
+                ["stateProvince"] = StateProvince,
+                ["country"] = Country,
+                ["postalCode"] = PostalCode
+            };
+    }
+
+    [SerializePropertyNamesAsCamelCase]
+    public class HotelRoom
+    {
         public string Description { get; set; }
 
         public string DescriptionFr { get; set; }
 
+        public string Type { get; set; }
+
+        public double? BaseRate { get; set; }
+
+        public string BedOptions { get; set; }
+
+        public int? SleepsCount { get; set; }
+
+        public bool? SmokingAllowed { get; set; }
+
+        public string[] Tags { get; set; }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is HotelRoom other))
+            {
+                return false;
+            }
+
+            return
+                Description == other.Description &&
+                DescriptionFr == other.DescriptionFr &&
+                Type == other.Type &&
+                BaseRate.EqualsDouble(other.BaseRate) &&
+                BedOptions == other.BedOptions &&
+                SleepsCount == other.SleepsCount &&
+                SmokingAllowed == other.SmokingAllowed &&
+                Tags.SequenceEqualsNullSafe(other.Tags);
+        }
+
+        public override int GetHashCode() => Description?.GetHashCode() ?? 0;
+
+        public override string ToString() =>
+            $"Description: {Description}; Description (French): {DescriptionFr}; Type: {Type}; BaseRate: {BaseRate}; " +
+            $"Bed Options: {BedOptions}; Sleeps: {SleepsCount}; Smoking: {SmokingAllowed}; " +
+            $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}";
+
+        public Document AsDocument() =>
+            new Document()
+            {
+                ["description"] = Description,
+                ["descriptionFr"] = DescriptionFr,
+                ["type"] = Type,
+                ["baseRate"] = BaseRate,
+                ["bedOptions"] = BedOptions,
+                ["sleepsCount"] = SleepsCount,
+                ["smokingAllowed"] = SmokingAllowed,
+                ["tags"] = Tags ?? new string[0]   // OData always gives [] instead of null for collections.
+            };
+    }
+
+    [SerializePropertyNamesAsCamelCase]
+    public class Hotel
+    {
+        public string HotelId { get; set; }
+
         public string HotelName { get; set; }
+
+        public string Description { get; set; }
+
+        public string DescriptionFr { get; set; }
 
         public string Category { get; set; }
 
@@ -37,6 +138,10 @@ namespace Microsoft.Azure.Search.Tests
 
         public GeographyPoint Location { get; set; }
 
+        public HotelAddress Address { get; set; }
+
+        public HotelRoom[] Rooms { get; set; }
+
         public override bool Equals(object obj)
         {
             if (!(obj is Hotel other))
@@ -46,82 +151,51 @@ namespace Microsoft.Azure.Search.Tests
 
             return
                 HotelId == other.HotelId &&
-                DoublesEqual(BaseRate, other.BaseRate) &&
+                HotelName == other.HotelName &&
                 Description == other.Description &&
                 DescriptionFr == other.DescriptionFr &&
-                HotelName == other.HotelName &&
                 Category == other.Category &&
-                ((Tags == null) ? (other.Tags == null || other.Tags.Length == 0) : Tags.SequenceEqual(other.Tags ?? new string[0])) &&
+                Tags.SequenceEqualsNullSafe(other.Tags) &&
                 ParkingIncluded == other.ParkingIncluded &&
                 SmokingAllowed == other.SmokingAllowed &&
-                DateTimeOffsetsEqual(LastRenovationDate, other.LastRenovationDate) &&
+                LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
                 Rating == other.Rating &&
-                ((Location == null) ? other.Location == null : Location.Equals(other.Location));
+                Location.EqualsNullSafe(other.Location) &&
+                Address.EqualsNullSafe(other.Address) &&
+                Rooms.SequenceEqualsNullSafe(other.Rooms);
         }
 
         public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
 
-        public override string ToString() =>
-            $"ID: {HotelId}; BaseRate: {BaseRate}; Description: {Description}; " +
-            $"Description (French): {DescriptionFr}; Name: {HotelName}; Category: {Category}; " +
-            $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
-            $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
-            $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]";
+        public override string ToString()
+        {
+            string FormatRoom(HotelRoom room) => $"{{ {room} }}";
+
+            return
+                $"ID: {HotelId}; Name: {HotelName}; Description: {Description}; " +
+                $"Description (French): {DescriptionFr}; Category: {Category}; " +
+                $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
+                $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
+                $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
+                $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
+        }
 
         public Document AsDocument() =>
             new Document()
             {
-                ["baseRate"] = BaseRate,
-                ["category"] = Category,
-                ["description"] = Description,
-                ["descriptionFr"] = DescriptionFr,
                 ["hotelId"] = HotelId,
                 ["hotelName"] = HotelName,
-                ["lastRenovationDate"] = LastRenovationDate,
-                ["location"] = Location,
+                ["description"] = Description,
+                ["descriptionFr"] = DescriptionFr,
+                ["category"] = Category,
+                ["tags"] = Tags ?? new string[0],   // OData always gives [] instead of null for collections.
                 ["parkingIncluded"] = ParkingIncluded,
-                ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
                 ["smokingAllowed"] = SmokingAllowed,
-                ["tags"] = Tags ?? new string[0]   // OData always gives [] instead of null for collections.
+                ["lastRenovationDate"] = LastRenovationDate,
+                ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
+                ["location"] = Location,
+                ["address"] = Address.AsDocument(),
+                ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new Document[0]
             };
-
-        private static bool DoublesEqual(double? x, double? y)
-        {
-            if (x == null)
-            {
-                return y == null;
-            }
-
-            if (Double.IsNaN(x.Value))
-            {
-                return y != null && Double.IsNaN(y.Value);
-            }
-
-            return x == y;
-        }
-
-        private static bool DateTimeOffsetsEqual(DateTimeOffset? a, DateTimeOffset? b)
-        {
-            if (a == null)
-            {
-                return b == null;
-            }
-
-            if (b == null)
-            {
-                return false;
-            }
-
-            if (a.Value.EqualsExact(b.Value))
-            {
-                return true;
-            }
-
-            // Allow for some loss of precision in the tick count.
-            long aTicks = a.Value.UtcTicks;
-            long bTicks = b.Value.UtcTicks;
-
-            return (aTicks / 10000) == (bTicks / 10000);
-        }
     }
 }

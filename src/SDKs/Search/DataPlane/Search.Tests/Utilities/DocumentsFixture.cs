@@ -17,7 +17,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new Hotel()
                 {
                     HotelId = "1",
-                    BaseRate = 199.0,
                     Description =
                         "Best hotel in town if you like luxury hotels. They have an amazing infinity pool, a spa, " +
                         "and a really helpful concierge. The location is perfect -- right downtown, close to all " +
@@ -39,7 +38,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new Hotel()
                 {
                     HotelId = "2",
-                    BaseRate = 79.99,
                     Description = "Cheapest hotel in town. Infact, a motel.",
                     DescriptionFr = "Hôtel le moins cher en ville. Infact, un motel.",
                     HotelName = "Roach Motel",
@@ -54,7 +52,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new Hotel()
                 {
                     HotelId = "3",
-                    BaseRate = 129.99,
                     Description = "Very popular hotel in town",
                     DescriptionFr = "Hôtel le plus populaire en ville",
                     HotelName = "EconoStay",
@@ -69,7 +66,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new Hotel()
                 {
                     HotelId = "4",
-                    BaseRate = 129.99,
                     Description = "Pretty good hotel",
                     DescriptionFr = "Assez bon hôtel",
                     HotelName = "Express Rooms",
@@ -84,7 +80,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new Hotel()
                 {
                     HotelId = "5",
-                    BaseRate = 129.99,
                     Description = "Another good hotel",
                     DescriptionFr = "Un autre bon hôtel",
                     HotelName = "Comfy Place",
@@ -99,14 +94,12 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new Hotel()
                 {
                     HotelId = "6",
-                    BaseRate = 279.99,
                     Description = "Surprisingly expensive. Model suites have an ocean-view.",
                     LastRenovationDate = null
                 },
                 new Hotel()
                 {
                     HotelId = "7",
-                    BaseRate = 279.99,
                     Description = "Modern architecture, very polite staff and very clean. Also very affordable.",
                     DescriptionFr = "Architecture moderne, personnel poli et très propre. Aussi très abordable.",
                     HotelName = "Modern Stay"
@@ -114,9 +107,102 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 new Hotel()
                 {
                     HotelId = "8",
-                    BaseRate = 79.99,
                     Description = "Has some road noise and is next to the very police station. Bathrooms had morel coverings.",
                     DescriptionFr = "Il y a du bruit de la route et se trouve à côté de la station de police. Les salles de bain avaient des revêtements de morilles."
+                },
+                new Hotel()
+                {
+                    HotelId = "9",
+                    HotelName = "Secret Point Motel",
+                    Description = "The hotel is ideally located on the main commercial artery of the city in the heart of New York. A few minutes away is Time's Square and the historic centre of the city, as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
+                    DescriptionFr = "L'hôtel est idéalement situé sur la principale artère commerciale de la ville en plein cœur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d'autres lieux d'intérêt qui font de New York l'une des villes les plus attractives et cosmopolites de l'Amérique.",
+                    Category = "Boutique",
+                    Tags = new[] { "pool", "air conditioning", "concierge" },
+                    ParkingIncluded = false,
+                    SmokingAllowed = true,
+                    LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
+                    Rating = 4,
+                    Location = GeographyPoint.Create(40.760586, -73.975403),
+                    Address = new HotelAddress()
+                    {
+                        StreetAddress = "677 5th Ave",
+                        City = "New York",
+                        StateProvince = "NY",
+                        Country = "USA",
+                        PostalCode = "10022"
+                    },
+                    Rooms = new[]
+                    {
+                        new HotelRoom()
+                        {
+                            Description = "Budget Room, 1 Queen Bed (Cityside)",
+                            DescriptionFr = "Chambre Économique, 1 grand lit (côté ville)",
+                            Type = "Budget Room",
+                            BaseRate = 9.69,
+                            BedOptions = "1 Queen Bed",
+                            SleepsCount = 2,
+                            SmokingAllowed = true,
+                            Tags = new[] { "vcr/dvd" }
+                        },
+                        new HotelRoom()
+                        {
+                            Description = "Budget Room, 1 King Bed (Mountain View)",
+                            DescriptionFr = "Chambre Économique, 1 très grand lit (Mountain View)",
+                            Type = "Budget Room",
+                            BaseRate = 8.09,
+                            BedOptions = "1 King Bed",
+                            SleepsCount = 2,
+                            SmokingAllowed = true,
+                            Tags = new[] { "vcr/dvd", "jacuzzi tub" }
+                        }
+                    }
+                },
+                new Hotel()
+                {
+                    HotelId = "10",
+                    HotelName = "Countryside Hotel",
+                    Description = "Save up to 50% off traditional hotels.  Free WiFi, great location near downtown, full kitchen, washer & dryer, 24/7 support, bowling alley, fitness center and more.",
+                    DescriptionFr = "Économisez jusqu'à 50% sur les hôtels traditionnels.  WiFi gratuit, très bien situé près du centre-ville, cuisine complète, laveuse & sécheuse, support 24/7, bowling, centre de fitness et plus encore.",
+                    Category = "Budget",
+                    Tags = new[] { "24-hour front desk service", "coffee in lobby", "restaurant" },
+                    ParkingIncluded = false,
+                    SmokingAllowed = true,
+                    LastRenovationDate = new DateTimeOffset(1999, 9, 6, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
+                    Rating = 3,
+                    Location = GeographyPoint.Create(35.904160, -78.940483),
+                    Address = new HotelAddress()
+                    {
+                        StreetAddress = "6910 Fayetteville Rd",
+                        City = "Durham",
+                        StateProvince = "NC",
+                        Country = "USA",
+                        PostalCode = "27713"
+                    },
+                    Rooms = new[]
+                    {
+                        new HotelRoom()
+                        {
+                            Description = "Suite, 1 King Bed (Amenities)",
+                            DescriptionFr = "Suite, 1 très grand lit (Services)",
+                            Type = "Suite",
+                            BaseRate = 2.44,
+                            BedOptions = "1 King Bed",
+                            SleepsCount = 2,
+                            SmokingAllowed = true,
+                            Tags = new[] { "coffee maker" }
+                        },
+                        new HotelRoom()
+                        {
+                            Description = "Budget Room, 1 Queen Bed (Amenities)",
+                            DescriptionFr = "Chambre Économique, 1 grand lit (Services)",
+                            Type = "Budget Room",
+                            BaseRate = 7.69,
+                            BedOptions = "1 Queen Bed",
+                            SleepsCount = 2,
+                            SmokingAllowed = false,
+                            Tags = new [] { "coffee maker" }
+                        }
+                    }
                 }
             };
 

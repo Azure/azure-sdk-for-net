@@ -208,13 +208,13 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     SearchFields = new[] { "category", "hotelName" },
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("fancy luxury", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
+            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", Rating = 5 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -229,13 +229,13 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     QueryType = QueryType.Full,
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("hotelName:roch~", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 5 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -267,13 +267,13 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     QueryType = QueryType.Full,
                     SearchFields = new[] { "hotelName" },
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("luxury", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199 };
+            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", Rating = 5 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -288,13 +288,13 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     QueryType = QueryType.Full,
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>(@"hotelName:/.*oach.*\/?/", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 5 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);

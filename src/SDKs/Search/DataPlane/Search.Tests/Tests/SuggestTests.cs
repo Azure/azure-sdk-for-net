@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
-    using Microsoft.Rest.Azure;
     using Xunit;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
@@ -189,13 +188,13 @@ namespace Microsoft.Azure.Search.Tests
             var suggestParameters =
                 new SuggestParameters()
                 {
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
+            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", Rating = 5 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
