@@ -5,7 +5,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.NetApp
+namespace Microsoft.NetApp
 {
   using System;
   using System.Collections.Generic;

@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.NetApp.Models
+namespace Microsoft.NetApp.Models
 {
 
     /// <summary>
@@ -25,8 +25,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         public const string Premium = "Premium";
         /// <summary>
-        /// Extreme service level
+        /// Ultra service level
         /// </summary>
-        public const string Extreme = "Extreme";
+        public const string Ultra = "Ultra";
     }
 }

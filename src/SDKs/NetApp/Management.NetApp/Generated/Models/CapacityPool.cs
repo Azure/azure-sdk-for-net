@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.NetApp.Models
+namespace Microsoft.NetApp.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <remarks>
         /// The service level of the file system. Possible values include:
-        /// 'Standard', 'Premium', 'Extreme'
+        /// 'Standard', 'Premium', 'Ultra'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.serviceLevel")]
         public string ServiceLevel { get; set; }
