@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Core;
     using Microsoft.Azure.ServiceBus.Management;
@@ -27,61 +28,69 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
 
-            var qd = new QueueDescription(queueName)
+            try
             {
-                AutoDeleteOnIdle = TimeSpan.FromHours(1),
-                DefaultMessageTimeToLive = TimeSpan.FromDays(2),
-                DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1),
-                EnableBatchedOperations = true,
-                EnableDeadLetteringOnMessageExpiration = true,
-                EnablePartitioning = false,
-                ForwardDeadLetteredMessagesTo = null,
-                ForwardTo = null,
-                LockDuration = TimeSpan.FromSeconds(45),
-                MaxDeliveryCount = 8,
-                MaxSizeInMB = 2048,
-                RequiresDuplicateDetection = true,
-                RequiresSession = true,
-                UserMetadata = nameof(BasicQueueCrudTest)
-            };
+                var qd = new QueueDescription(queueName)
+                {
+                    AutoDeleteOnIdle = TimeSpan.FromHours(1),
+                    DefaultMessageTimeToLive = TimeSpan.FromDays(2),
+                    DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1),
+                    EnableBatchedOperations = true,
+                    EnableDeadLetteringOnMessageExpiration = true,
+                    EnablePartitioning = false,
+                    ForwardDeadLetteredMessagesTo = null,
+                    ForwardTo = null,
+                    LockDuration = TimeSpan.FromSeconds(45),
+                    MaxDeliveryCount = 8,
+                    MaxSizeInMB = 2048,
+                    RequiresDuplicateDetection = true,
+                    RequiresSession = true,
+                    UserMetadata = nameof(BasicQueueCrudTest)
+                };
 
-            qd.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
-                "allClaims",
-                new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
+                qd.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
+                    "allClaims",
+                    new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
 
-            var finalQ = await client.CreateQueueAsync(qd);
-            Assert.Equal(qd, finalQ);
+                var finalQ = await client.CreateQueueAsync(qd);
+                Assert.Equal(qd, finalQ);
 
-            var getQ = await client.GetQueueAsync(qd.Path);
-            Assert.Equal(qd, getQ);
+                var getQ = await client.GetQueueAsync(qd.Path);
+                Assert.Equal(qd, getQ);
 
-            getQ.EnableBatchedOperations = false;
-            getQ.MaxDeliveryCount = 9;
-            getQ.AuthorizationRules.Clear();
-            getQ.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
-                "noManage",
-                new[] { AccessRights.Send, AccessRights.Listen }));
+                getQ.EnableBatchedOperations = false;
+                getQ.MaxDeliveryCount = 9;
+                getQ.AuthorizationRules.Clear();
+                getQ.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
+                    "noManage",
+                    new[] { AccessRights.Send, AccessRights.Listen }));
 
-            var updatedQ = await client.UpdateQueueAsync(getQ);
-            Assert.Equal(getQ, updatedQ);
+                var updatedQ = await client.UpdateQueueAsync(getQ);
+                Assert.Equal(getQ, updatedQ);
 
-            var exists = await client.QueueExistsAsync(queueName);
-            Assert.True(exists);
+                var exists = await client.QueueExistsAsync(queueName);
+                Assert.True(exists);
 
-            var queues = await client.GetQueuesAsync();
-            Assert.True(queues.Count > 1);
-            Assert.Contains(queues, e => e.Path.Equals(queueName, StringComparison.OrdinalIgnoreCase));
+                var queues = await client.GetQueuesAsync();
+                Assert.True(queues.Count >= 1);
+                Assert.Contains(queues, e => e.Path.Equals(queueName, StringComparison.OrdinalIgnoreCase));
 
-            await client.DeleteQueueAsync(updatedQ.Path);
+                await client.DeleteQueueAsync(updatedQ.Path);
 
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                    async () =>
-                    {
-                        await client.GetQueueAsync(qd.Path);
-                    });
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                        async () =>
+                        {
+                            await client.GetQueueAsync(qd.Path);
+                        });
 
-            exists = await client.QueueExistsAsync(queueName);
-            Assert.False(exists);
+                exists = await client.QueueExistsAsync(queueName);
+                Assert.False(exists);
+            }
+            catch
+            {
+                await SafeDeleteQueue(queueName);
+                throw;
+            }
         }
 
         [Fact]
@@ -91,51 +100,59 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
 
-            var td = new TopicDescription(topicName)
+            try
             {
-                AutoDeleteOnIdle = TimeSpan.FromHours(1),
-                DefaultMessageTimeToLive = TimeSpan.FromDays(2),
-                DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1),
-                EnableBatchedOperations = true,
-                EnablePartitioning = false,
-                MaxSizeInMB = 2048,
-                RequiresDuplicateDetection = true,
-                UserMetadata = nameof(BasicTopicCrudTest)
-            };
+                var td = new TopicDescription(topicName)
+                {
+                    AutoDeleteOnIdle = TimeSpan.FromHours(1),
+                    DefaultMessageTimeToLive = TimeSpan.FromDays(2),
+                    DuplicateDetectionHistoryTimeWindow = TimeSpan.FromMinutes(1),
+                    EnableBatchedOperations = true,
+                    EnablePartitioning = false,
+                    MaxSizeInMB = 2048,
+                    RequiresDuplicateDetection = true,
+                    UserMetadata = nameof(BasicTopicCrudTest)
+                };
 
-            td.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
-               "allClaims",
-               new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
+                td.AuthorizationRules.Add(new SharedAccessAuthorizationRule(
+                   "allClaims",
+                   new[] { AccessRights.Manage, AccessRights.Send, AccessRights.Listen }));
 
-            var createdT = await client.CreateTopicAsync(td);
-            Assert.Equal(td, createdT);
+                var createdT = await client.CreateTopicAsync(td);
+                Assert.Equal(td, createdT);
 
-            var getT = await client.GetTopicAsync(td.Path);
-            Assert.Equal(td, getT);
+                var getT = await client.GetTopicAsync(td.Path);
+                Assert.Equal(td, getT);
 
-            getT.EnableBatchedOperations = false;
-            getT.DefaultMessageTimeToLive = TimeSpan.FromDays(3);
+                getT.EnableBatchedOperations = false;
+                getT.DefaultMessageTimeToLive = TimeSpan.FromDays(3);
 
-            var updatedT = await client.UpdateTopicAsync(getT);
-            Assert.Equal(getT, updatedT);
+                var updatedT = await client.UpdateTopicAsync(getT);
+                Assert.Equal(getT, updatedT);
 
-            var exists = await client.TopicExistsAsync(topicName);
-            Assert.True(exists);
+                var exists = await client.TopicExistsAsync(topicName);
+                Assert.True(exists);
 
-            var topics = await client.GetTopicsAsync();
-            Assert.True(topics.Count > 1);
-            Assert.Contains(topics, e => e.Path.Equals(topicName, StringComparison.OrdinalIgnoreCase));
+                var topics = await client.GetTopicsAsync();
+                Assert.True(topics.Count >= 1);
+                Assert.Contains(topics, e => e.Path.Equals(topicName, StringComparison.OrdinalIgnoreCase));
 
-            await client.DeleteTopicAsync(updatedT.Path);
+                await client.DeleteTopicAsync(updatedT.Path);
 
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                    async () =>
-                    {
-                        await client.GetTopicAsync(td.Path);
-                    });
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                        async () =>
+                        {
+                            await client.GetTopicAsync(td.Path);
+                        });
 
-            exists = await client.TopicExistsAsync(topicName);
-            Assert.False(exists);
+                exists = await client.TopicExistsAsync(topicName);
+                Assert.False(exists);
+            }
+            catch
+            {
+                await SafeDeleteTopic(topicName);
+                throw;
+            }
         }
 
         [Fact]
@@ -144,53 +161,62 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task BasicSubscriptionCrudTest()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            await client.CreateTopicAsync(topicName);
 
-            var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var sd = new SubscriptionDescription(topicName, subscriptionName)
+            try
             {
-                AutoDeleteOnIdle = TimeSpan.FromHours(1),
-                DefaultMessageTimeToLive = TimeSpan.FromDays(2),
-                EnableDeadLetteringOnMessageExpiration = true,
-                EnableBatchedOperations = false,
-                ForwardDeadLetteredMessagesTo = null,
-                ForwardTo = null,
-                LockDuration = TimeSpan.FromSeconds(45),
-                MaxDeliveryCount = 8,
-                RequiresSession = true,
-                UserMetadata = nameof(BasicSubscriptionCrudTest)
-            };
+                await client.CreateTopicAsync(topicName);
 
-            var createdS = await client.CreateSubscriptionAsync(sd);
-            Assert.Equal(sd, createdS);
+                var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+                var sd = new SubscriptionDescription(topicName, subscriptionName)
+                {
+                    AutoDeleteOnIdle = TimeSpan.FromHours(1),
+                    DefaultMessageTimeToLive = TimeSpan.FromDays(2),
+                    EnableDeadLetteringOnMessageExpiration = true,
+                    EnableBatchedOperations = false,
+                    ForwardDeadLetteredMessagesTo = null,
+                    ForwardTo = null,
+                    LockDuration = TimeSpan.FromSeconds(45),
+                    MaxDeliveryCount = 8,
+                    RequiresSession = true,
+                    UserMetadata = nameof(BasicSubscriptionCrudTest)
+                };
 
-            var getS = await client.GetSubscriptionAsync(sd.TopicPath, sd.SubscriptionName);
-            Assert.Equal(sd, getS);
+                var createdS = await client.CreateSubscriptionAsync(sd);
+                Assert.Equal(sd, createdS);
 
-            getS.DefaultMessageTimeToLive = TimeSpan.FromDays(3);
-            getS.MaxDeliveryCount = 9;
+                var getS = await client.GetSubscriptionAsync(sd.TopicPath, sd.SubscriptionName);
+                Assert.Equal(sd, getS);
 
-            var updatedS = await client.UpdateSubscriptionAsync(getS);
-            Assert.Equal(getS, updatedS);
+                getS.DefaultMessageTimeToLive = TimeSpan.FromDays(3);
+                getS.MaxDeliveryCount = 9;
 
-            var exists = await client.SubscriptionExistsAsync(topicName, subscriptionName);
-            Assert.True(exists);
+                var updatedS = await client.UpdateSubscriptionAsync(getS);
+                Assert.Equal(getS, updatedS);
 
-            var subs = await client.GetSubscriptionsAsync(topicName);
-            Assert.Equal(1, subs.Count);
+                var exists = await client.SubscriptionExistsAsync(topicName, subscriptionName);
+                Assert.True(exists);
 
-            await client.DeleteSubscriptionAsync(sd.TopicPath, sd.SubscriptionName);
+                var subs = await client.GetSubscriptionsAsync(topicName);
+                Assert.Equal(1, subs.Count);
 
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                    async () =>
-                    {
-                        await client.GetSubscriptionAsync(sd.TopicPath, sd.SubscriptionName);
-                    });
+                await client.DeleteSubscriptionAsync(sd.TopicPath, sd.SubscriptionName);
 
-            await client.DeleteTopicAsync(sd.TopicPath);
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                        async () =>
+                        {
+                            await client.GetSubscriptionAsync(sd.TopicPath, sd.SubscriptionName);
+                        });
 
-            exists = await client.SubscriptionExistsAsync(topicName, subscriptionName);
-            Assert.False(exists);
+                await client.DeleteTopicAsync(sd.TopicPath);
+
+                exists = await client.SubscriptionExistsAsync(topicName, subscriptionName);
+                Assert.False(exists);
+            }
+            catch
+            {
+                await SafeDeleteTopic(topicName);
+                throw;
+            }
         }
 
         [Fact]
@@ -201,64 +227,72 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
 
-            await client.CreateTopicAsync(topicName);
-            await client.CreateSubscriptionAsync(
-                new SubscriptionDescription(topicName, subscriptionName),
-                new RuleDescription("rule0", new FalseFilter()));
-
-            var sqlFilter = new SqlFilter("stringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam");
-            sqlFilter.Parameters.Add("@stringParam", "string");
-            sqlFilter.Parameters.Add("@intParam", (int)1);
-            sqlFilter.Parameters.Add("@longParam", (long)12);
-            sqlFilter.Parameters.Add("@dateParam", DateTime.UtcNow);
-            var rule1 = new RuleDescription()
+            try
             {
-                Name = "rule1",
-                Filter = sqlFilter,
-                Action = new SqlRuleAction("SET a='b'")
-            };
-            await client.CreateRuleAsync(topicName, subscriptionName, rule1);
+                await client.CreateTopicAsync(topicName);
+                await client.CreateSubscriptionAsync(
+                    new SubscriptionDescription(topicName, subscriptionName),
+                    new RuleDescription("rule0", new FalseFilter()));
 
-            var correlationFilter = new CorrelationFilter()
+                var sqlFilter = new SqlFilter("stringValue = @stringParam AND intValue = @intParam AND longValue = @longParam AND dateValue = @dateParam");
+                sqlFilter.Parameters.Add("@stringParam", "string");
+                sqlFilter.Parameters.Add("@intParam", (int)1);
+                sqlFilter.Parameters.Add("@longParam", (long)12);
+                sqlFilter.Parameters.Add("@dateParam", DateTime.UtcNow);
+                var rule1 = new RuleDescription()
+                {
+                    Name = "rule1",
+                    Filter = sqlFilter,
+                    Action = new SqlRuleAction("SET a='b'")
+                };
+                await client.CreateRuleAsync(topicName, subscriptionName, rule1);
+
+                var correlationFilter = new CorrelationFilter()
+                {
+                    ContentType = "contentType",
+                    CorrelationId = "correlationId",
+                    Label = "label",
+                    MessageId = "messageId",
+                    ReplyTo = "replyTo",
+                    ReplyToSessionId = "replyToSessionId",
+                    SessionId = "sessionId",
+                    To = "to"
+                };
+                correlationFilter.Properties.Add("customKey", "customValue");
+                var rule2 = new RuleDescription()
+                {
+                    Name = "rule2",
+                    Filter = correlationFilter,
+                    Action = null
+                };
+                await client.CreateRuleAsync(topicName, subscriptionName, rule2);
+
+                var rules = await client.GetRulesAsync(topicName, subscriptionName);
+                Assert.True(rules.Count == 3);
+                Assert.Equal("rule0", rules[0].Name);
+                Assert.Equal(rule1, rules[1]);
+                Assert.Equal(rule2, rules[2]);
+
+                ((CorrelationFilter)rule2.Filter).CorrelationId = "correlationIdModified";
+                var updatedRule2 = await client.UpdateRuleAsync(topicName, subscriptionName, rule2);
+                Assert.Equal(rule2, updatedRule2);
+
+                var defaultRule = await client.GetRuleAsync(topicName, subscriptionName, "rule0");
+                Assert.NotNull(defaultRule);
+                await client.DeleteRuleAsync(topicName, subscriptionName, "rule0");
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                        async () =>
+                        {
+                            await client.GetRuleAsync(topicName, subscriptionName, "rule0");
+                        });
+
+                await client.DeleteTopicAsync(topicName);
+            }
+            catch
             {
-                ContentType = "contentType",
-                CorrelationId = "correlationId",
-                Label = "label",
-                MessageId = "messageId",
-                ReplyTo = "replyTo",
-                ReplyToSessionId = "replyToSessionId",
-                SessionId = "sessionId",
-                To = "to"
-            };
-            correlationFilter.Properties.Add("customKey", "customValue");
-            var rule2 = new RuleDescription()
-            {
-                Name = "rule2",
-                Filter = correlationFilter,
-                Action = null
-            };
-            await client.CreateRuleAsync(topicName, subscriptionName, rule2);
-
-            var rules = await client.GetRulesAsync(topicName, subscriptionName);
-            Assert.True(rules.Count == 3);
-            Assert.Equal("rule0", rules[0].Name);
-            Assert.Equal(rule1, rules[1]);
-            Assert.Equal(rule2, rules[2]);
-
-            ((CorrelationFilter)rule2.Filter).CorrelationId = "correlationIdModified";
-            var updatedRule2 = await client.UpdateRuleAsync(topicName, subscriptionName, rule2);
-            Assert.Equal(rule2, updatedRule2);
-
-            var defaultRule = await client.GetRuleAsync(topicName, subscriptionName, "rule0");
-            Assert.NotNull(defaultRule);
-            await client.DeleteRuleAsync(topicName, subscriptionName, "rule0");
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                    async () =>
-                    {
-                        await client.GetRuleAsync(topicName, subscriptionName, "rule0");
-                    });
-
-            await client.DeleteTopicAsync(topicName);
+                await SafeDeleteTopic(topicName);
+                throw;
+            }
         }
 
         [Fact]
@@ -268,35 +302,43 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
 
-            // Fixing Created Time
-            var qd = await client.CreateQueueAsync(queueName);
+            try
+            {
+                // Fixing Created Time
+                var qd = await client.CreateQueueAsync(queueName);
 
-            // Changing Last Updated Time
-            qd.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
-            var updatedQ = await client.UpdateQueueAsync(qd);
+                // Changing Last Updated Time
+                qd.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
+                var updatedQ = await client.UpdateQueueAsync(qd);
 
-            // Populating 1 active message, 1 dead letter message and 1 scheduled message
-            // Changing Last Accessed Time
-            var qClient = new QueueClient(this.ConnectionString, queueName);
-            await qClient.SendAsync(new Message() { MessageId = "1" });
-            await qClient.SendAsync(new Message() { MessageId = "2" });
-            await qClient.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
-            var msg = await qClient.InnerReceiver.ReceiveAsync();
-            await qClient.DeadLetterAsync(msg.SystemProperties.LockToken);
+                // Populating 1 active message, 1 dead letter message and 1 scheduled message
+                // Changing Last Accessed Time
+                var qClient = new QueueClient(this.ConnectionString, queueName);
+                await qClient.SendAsync(new Message() { MessageId = "1" });
+                await qClient.SendAsync(new Message() { MessageId = "2" });
+                await qClient.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
+                var msg = await qClient.InnerReceiver.ReceiveAsync();
+                await qClient.DeadLetterAsync(msg.SystemProperties.LockToken);
 
-            var runtimeInfo = await client.GetQueueRuntimeInfoAsync(queueName);
+                var runtimeInfo = await client.GetQueueRuntimeInfoAsync(queueName);
 
-            Assert.Equal(queueName, runtimeInfo.Path);
-            Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
-            Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
-            Assert.Equal(1, runtimeInfo.MessageCountDetails.ActiveMessageCount);
-            Assert.Equal(1, runtimeInfo.MessageCountDetails.DeadLetterMessageCount);
-            Assert.Equal(1, runtimeInfo.MessageCountDetails.ScheduledMessageCount);
-            Assert.Equal(3, runtimeInfo.MessageCount);
-            Assert.True(runtimeInfo.SizeInBytes > 0);
+                Assert.Equal(queueName, runtimeInfo.Path);
+                Assert.True(runtimeInfo.CreatedAt < runtimeInfo.UpdatedAt);
+                Assert.True(runtimeInfo.UpdatedAt < runtimeInfo.AccessedAt);
+                Assert.Equal(1, runtimeInfo.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(1, runtimeInfo.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(1, runtimeInfo.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(3, runtimeInfo.MessageCount);
+                Assert.True(runtimeInfo.SizeInBytes > 0);
 
-            await client.DeleteQueueAsync(queueName);
-            await qClient.CloseAsync();
+                await client.DeleteQueueAsync(queueName);
+                await qClient.CloseAsync();
+            }
+            catch
+            {
+                await SafeDeleteQueue(queueName);
+                throw;
+            }
         }
 
         [Fact]
@@ -305,56 +347,65 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task GetTopicAndSubscriptionRuntimeInfoTest()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var td = await client.CreateTopicAsync(topicName);
-
-            // Changing Last Updated Time
-            td.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
-            var updatedT = await client.UpdateTopicAsync(td);
-
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var sd = await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            // Changing Last Updated Time for subscription
-            sd.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
-            var updatedS = await client.UpdateSubscriptionAsync(sd);
+            try
+            {
+                var td = await client.CreateTopicAsync(topicName);
 
-            // Populating 1 active message, 1 dead letter message and 1 scheduled message
-            // Changing Last Accessed Time
-            var sender = new MessageSender(this.ConnectionString, topicName);
-            var receiver = new MessageReceiver(this.ConnectionString, EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName));
-            await sender.SendAsync(new Message() { MessageId = "1" });
-            await sender.SendAsync(new Message() { MessageId = "2" });
-            await sender.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
-            var msg = await receiver.ReceiveAsync();
-            await receiver.DeadLetterAsync(msg.SystemProperties.LockToken);
+                // Changing Last Updated Time
+                td.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
+                var updatedT = await client.UpdateTopicAsync(td);
+                        
+                var sd = await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            var topicRI = await client.GetTopicRuntimeInfoAsync(topicName);
-            var subscriptionRI = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
+                // Changing Last Updated Time for subscription
+                sd.AutoDeleteOnIdle = TimeSpan.FromMinutes(100);
+                var updatedS = await client.UpdateSubscriptionAsync(sd);
 
-            Assert.Equal(topicName, topicRI.Path);
-            Assert.Equal(topicName, subscriptionRI.TopicPath);
-            Assert.Equal(subscriptionName, subscriptionRI.SubscriptionName);
+                // Populating 1 active message, 1 dead letter message and 1 scheduled message
+                // Changing Last Accessed Time
+                var sender = new MessageSender(this.ConnectionString, topicName);
+                var receiver = new MessageReceiver(this.ConnectionString, EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName));
+                await sender.SendAsync(new Message() { MessageId = "1" });
+                await sender.SendAsync(new Message() { MessageId = "2" });
+                await sender.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
+                var msg = await receiver.ReceiveAsync();
+                await receiver.DeadLetterAsync(msg.SystemProperties.LockToken);
 
-            Assert.True(topicRI.CreatedAt < topicRI.UpdatedAt);
-            Assert.True(topicRI.UpdatedAt < topicRI.AccessedAt);
-            Assert.True(subscriptionRI.CreatedAt < subscriptionRI.UpdatedAt);
-            Assert.True(subscriptionRI.UpdatedAt < subscriptionRI.AccessedAt);
-            Assert.True(topicRI.UpdatedAt < subscriptionRI.UpdatedAt);
+                var topicRI = await client.GetTopicRuntimeInfoAsync(topicName);
+                var subscriptionRI = await client.GetSubscriptionRuntimeInfoAsync(topicName, subscriptionName);
 
-            Assert.Equal(0, topicRI.MessageCountDetails.ActiveMessageCount);
-            Assert.Equal(0, topicRI.MessageCountDetails.DeadLetterMessageCount);
-            Assert.Equal(1, topicRI.MessageCountDetails.ScheduledMessageCount);
-            Assert.Equal(1, subscriptionRI.MessageCountDetails.ActiveMessageCount);
-            Assert.Equal(1, subscriptionRI.MessageCountDetails.DeadLetterMessageCount);
-            Assert.Equal(0, subscriptionRI.MessageCountDetails.ScheduledMessageCount);
-            Assert.Equal(2, subscriptionRI.MessageCount);
-            Assert.Equal(1, topicRI.SubscriptionCount);
-            Assert.True(topicRI.SizeInBytes > 0);
+                Assert.Equal(topicName, topicRI.Path);
+                Assert.Equal(topicName, subscriptionRI.TopicPath);
+                Assert.Equal(subscriptionName, subscriptionRI.SubscriptionName);
 
-            await client.DeleteSubscriptionAsync(topicName, subscriptionName);
-            await client.DeleteTopicAsync(topicName);
-            await sender.CloseAsync();
-            await receiver.CloseAsync();
+                Assert.True(topicRI.CreatedAt < topicRI.UpdatedAt);
+                Assert.True(topicRI.UpdatedAt < topicRI.AccessedAt);
+                Assert.True(subscriptionRI.CreatedAt < subscriptionRI.UpdatedAt);
+                Assert.True(subscriptionRI.UpdatedAt < subscriptionRI.AccessedAt);
+                Assert.True(topicRI.UpdatedAt < subscriptionRI.UpdatedAt);
+
+                Assert.Equal(0, topicRI.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(0, topicRI.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(1, topicRI.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(1, subscriptionRI.MessageCountDetails.ActiveMessageCount);
+                Assert.Equal(1, subscriptionRI.MessageCountDetails.DeadLetterMessageCount);
+                Assert.Equal(0, subscriptionRI.MessageCountDetails.ScheduledMessageCount);
+                Assert.Equal(2, subscriptionRI.MessageCount);
+                Assert.Equal(1, topicRI.SubscriptionCount);
+                Assert.True(topicRI.SizeInBytes > 0);
+
+                await client.DeleteSubscriptionAsync(topicName, subscriptionName);
+                await client.DeleteTopicAsync(topicName);
+                await sender.CloseAsync();
+                await receiver.CloseAsync();
+            }
+            catch
+            {
+                await SafeDeleteTopic(topicName);
+                throw;
+            }
         }
 
         [Fact]
@@ -412,24 +463,33 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            await client.CreateQueueAsync(queueName);
-            await client.CreateTopicAsync(topicName);
 
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.GetQueueAsync(topicName);
-                });
+            try
+            {
+                await client.CreateQueueAsync(queueName);
+                await client.CreateTopicAsync(topicName);
 
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.GetTopicAsync(queueName);
-                });
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.GetQueueAsync(topicName);
+                    });
 
-            // Cleanup
-            await client.DeleteQueueAsync(queueName);
-            await client.DeleteTopicAsync(topicName);
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.GetTopicAsync(queueName);
+                    });
+
+                // Cleanup
+                await client.DeleteQueueAsync(queueName);
+                await client.DeleteTopicAsync(topicName);
+            }
+            catch
+            {
+                await Task.WhenAll(SafeDeleteQueue(queueName), SafeDeleteTopic(topicName));
+                throw;
+            }
         }
 
         [Fact]
@@ -440,31 +500,40 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            await client.CreateQueueAsync(queueName);
-            await client.CreateTopicAsync(topicName);
-            await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            await Assert.ThrowsAsync<MessagingEntityAlreadyExistsException>(
-                async () =>
-                {
-                    await client.CreateQueueAsync(queueName);
-                });
+            try
+            {
+                await client.CreateQueueAsync(queueName);
+                await client.CreateTopicAsync(topicName);
+                await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            await Assert.ThrowsAsync<MessagingEntityAlreadyExistsException>(
-                async () =>
-                {
-                    await client.CreateTopicAsync(topicName);
-                });
+                await Assert.ThrowsAsync<MessagingEntityAlreadyExistsException>(
+                    async () =>
+                    {
+                        await client.CreateQueueAsync(queueName);
+                    });
 
-            await Assert.ThrowsAsync<MessagingEntityAlreadyExistsException>(
-                async () =>
-                {
-                    await client.CreateSubscriptionAsync(topicName, subscriptionName);
-                });
+                await Assert.ThrowsAsync<MessagingEntityAlreadyExistsException>(
+                    async () =>
+                    {
+                        await client.CreateTopicAsync(topicName);
+                    });
 
-            // Cleanup
-            await client.DeleteQueueAsync(queueName);
-            await client.DeleteTopicAsync(topicName);
+                await Assert.ThrowsAsync<MessagingEntityAlreadyExistsException>(
+                    async () =>
+                    {
+                        await client.CreateSubscriptionAsync(topicName, subscriptionName);
+                    });
+
+                // Cleanup
+                await client.DeleteQueueAsync(queueName);
+                await client.DeleteTopicAsync(topicName);
+            }
+            catch
+            {
+                await Task.WhenAll(SafeDeleteTopic(topicName), SafeDeleteQueue(queueName));
+                throw;
+            }
         }
 
         public static IEnumerable<object[]> TestData_EntityNameValidationTest => new[]
@@ -478,7 +547,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             new object[] {"qq#", true},
         };
         [Theory]
-        [MemberData(nameof(TestData_EntityNameValidationTest))]
+        [MemberData(nameof(TestData_EntityNameValidationTest))]    
         [LiveTest]
         [DisplayTestMethodName]
         public void EntityNameValidationTest(string entityName, bool isPathSeparatorAllowed)
@@ -507,43 +576,51 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             var destinationName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var dlqDestinationName = Guid.NewGuid().ToString("D").Substring(0, 8);
 
-            var dlqDestinationQ = await client.CreateQueueAsync(dlqDestinationName);
-            var destinationQ = await client.CreateQueueAsync(
-                new QueueDescription(destinationName)
-                {
-                    ForwardDeadLetteredMessagesTo = dlqDestinationName
-                });
-
-            var qd = new QueueDescription(queueName)
+            try
             {
-                ForwardTo = destinationName
-            };
-            var baseQ = await client.CreateQueueAsync(qd);
+                var dlqDestinationQ = await client.CreateQueueAsync(dlqDestinationName);
+                var destinationQ = await client.CreateQueueAsync(
+                    new QueueDescription(destinationName)
+                    {
+                        ForwardDeadLetteredMessagesTo = dlqDestinationName
+                    });
 
-            var sender = new MessageSender(this.ConnectionString, queueName);
-            await sender.SendAsync(new Message() { MessageId = "mid" });
-            await sender.CloseAsync();
+                var qd = new QueueDescription(queueName)
+                {
+                    ForwardTo = destinationName
+                };
+                var baseQ = await client.CreateQueueAsync(qd);
 
-            var receiver = new MessageReceiver(this.ConnectionString, destinationName);
-            var msg = await receiver.ReceiveAsync();
-            Assert.NotNull(msg);
-            Assert.Equal("mid", msg.MessageId);
-            await receiver.DeadLetterAsync(msg.SystemProperties.LockToken);
-            await receiver.CloseAsync();
+                var sender = new MessageSender(this.ConnectionString, queueName);
+                await sender.SendAsync(new Message() { MessageId = "mid" });
+                await sender.CloseAsync();
 
-            receiver = new MessageReceiver(this.ConnectionString, dlqDestinationName);
-            msg = await receiver.ReceiveAsync();
-            Assert.NotNull(msg);
-            Assert.Equal("mid", msg.MessageId);
-            await receiver.CompleteAsync(msg.SystemProperties.LockToken);
-            await receiver.CloseAsync();
+                var receiver = new MessageReceiver(this.ConnectionString, destinationName);
+                var msg = await receiver.ReceiveAsync();
+                Assert.NotNull(msg);
+                Assert.Equal("mid", msg.MessageId);
+                await receiver.DeadLetterAsync(msg.SystemProperties.LockToken);
+                await receiver.CloseAsync();
 
-            await client.DeleteQueueAsync(queueName);
-            await client.DeleteQueueAsync(destinationName);
-            await client.DeleteQueueAsync(dlqDestinationName);
+                receiver = new MessageReceiver(this.ConnectionString, dlqDestinationName);
+                msg = await receiver.ReceiveAsync();
+                Assert.NotNull(msg);
+                Assert.Equal("mid", msg.MessageId);
+                await receiver.CompleteAsync(msg.SystemProperties.LockToken);
+                await receiver.CloseAsync();
+
+                await client.DeleteQueueAsync(queueName);
+                await client.DeleteQueueAsync(destinationName);
+                await client.DeleteQueueAsync(dlqDestinationName);
+            }
+            catch
+            {
+                await Task.WhenAll(SafeDeleteQueue(queueName), SafeDeleteQueue(destinationName), SafeDeleteQueue(dlqDestinationName));
+                throw;
+            }
         }
 
-        [Fact]
+        [Fact]   
         [LiveTest]
         [DisplayTestMethodName]
         public void AuthRulesEqualityCheckTest()
@@ -567,13 +644,22 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task QueueDescriptionParsedFromResponseEqualityCheckTest()
         {
             var name = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var queueDescription = new QueueDescription(name);
-            var createdQueueDescription = await client.CreateQueueAsync(queueDescription);
 
-            var identicalQueueDescription = new QueueDescription(name);
-            Assert.Equal(identicalQueueDescription, createdQueueDescription);
+            try
+            {
+                var queueDescription = new QueueDescription(name);
+                var createdQueueDescription = await client.CreateQueueAsync(queueDescription);
 
-            await client.DeleteQueueAsync(name);
+                var identicalQueueDescription = new QueueDescription(name);
+                Assert.Equal(identicalQueueDescription, createdQueueDescription);
+
+                await client.DeleteQueueAsync(name);
+            }
+            catch
+            {
+                await SafeDeleteQueue(name);
+                throw;
+            }
         }
 
         [Fact]
@@ -582,13 +668,22 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task TopicDescriptionParsedFromResponseEqualityCheckTest()
         {
             var name = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var topicDescription = new TopicDescription(name);
-            var createdTopicDescription = await client.CreateTopicAsync(topicDescription);
 
-            var identicalTopicDescription = new TopicDescription(name);
-            Assert.Equal(identicalTopicDescription, createdTopicDescription);
+            try
+            {
+                var topicDescription = new TopicDescription(name);
+                var createdTopicDescription = await client.CreateTopicAsync(topicDescription);
 
-            await client.DeleteTopicAsync(name);
+                var identicalTopicDescription = new TopicDescription(name);
+                Assert.Equal(identicalTopicDescription, createdTopicDescription);
+
+                await client.DeleteTopicAsync(name);
+            }
+            catch
+            {
+                await SafeDeleteTopic(name);
+                throw;
+            }
         }
 
         [Fact]
@@ -598,31 +693,40 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            await client.CreateTopicAsync(topicName);
-            await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            SqlFilter sqlFilter = new SqlFilter(
-                "PROPERTY(@propertyName) = @stringPropertyValue " +
-                "AND PROPERTY(intProperty) = @intPropertyValue " +
-                "AND PROPERTY(longProperty) = @longPropertyValue " +
-                "AND PROPERTY(boolProperty) = @boolPropertyValue " +
-                "AND PROPERTY(doubleProperty) = @doublePropertyValue ")
+            try
             {
-                Parameters =
-                   {
-                        { "@propertyName", "MyProperty" },
-                        { "@stringPropertyValue", "string" },
-                        { "@intPropertyValue", 3 },
-                        { "@longPropertyValue", 3L },
-                        { "@boolPropertyValue", true },
-                        { "@doublePropertyValue", (double)3.0 },
-                   }
-            };
+                await client.CreateTopicAsync(topicName);
+                await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            var rule = await client.CreateRuleAsync(topicName, subscriptionName, new RuleDescription("rule1", sqlFilter));
-            Assert.Equal(sqlFilter, rule.Filter);
+                SqlFilter sqlFilter = new SqlFilter(
+                    "PROPERTY(@propertyName) = @stringPropertyValue " +
+                    "AND PROPERTY(intProperty) = @intPropertyValue " +
+                    "AND PROPERTY(longProperty) = @longPropertyValue " +
+                    "AND PROPERTY(boolProperty) = @boolPropertyValue " +
+                    "AND PROPERTY(doubleProperty) = @doublePropertyValue ")
+                {
+                    Parameters =
+                       {
+                            { "@propertyName", "MyProperty" },
+                            { "@stringPropertyValue", "string" },
+                            { "@intPropertyValue", 3 },
+                            { "@longPropertyValue", 3L },
+                            { "@boolPropertyValue", true },
+                            { "@doublePropertyValue", (double)3.0 },
+                       }
+                };
 
-            await client.DeleteTopicAsync(topicName);
+                var rule = await client.CreateRuleAsync(topicName, subscriptionName, new RuleDescription("rule1", sqlFilter));
+                Assert.Equal(sqlFilter, rule.Filter);
+
+                await client.DeleteTopicAsync(topicName);
+            }
+            catch
+            {
+                await SafeDeleteTopic(topicName);
+                throw;
+            }
         }
 
         [Fact]
@@ -632,20 +736,29 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            await client.CreateTopicAsync(topicName);
-            await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            var sClient = new SubscriptionClient(ConnectionString, topicName, subscriptionName);
-            var filter = new CorrelationFilter();
-            filter.Properties.Add("stringKey", "stringVal");
-            filter.Properties.Add("intKey", 5);
-            filter.Properties.Add("dateTimeKey", DateTime.UtcNow);
+            try
+            {
+                await client.CreateTopicAsync(topicName);
+                await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-            var rule = await client.CreateRuleAsync(topicName, subscriptionName, new RuleDescription("rule1", filter));
-            Assert.True(filter.Properties.Count == 3);
-            Assert.Equal(filter, rule.Filter);
+                var sClient = new SubscriptionClient(ConnectionString, topicName, subscriptionName);
+                var filter = new CorrelationFilter();
+                filter.Properties.Add("stringKey", "stringVal");
+                filter.Properties.Add("intKey", 5);
+                filter.Properties.Add("dateTimeKey", DateTime.UtcNow);
 
-            await client.DeleteTopicAsync(topicName);
+                var rule = await client.CreateRuleAsync(topicName, subscriptionName, new RuleDescription("rule1", filter));
+                Assert.True(filter.Properties.Count == 3);
+                Assert.Equal(filter, rule.Filter);
+
+                await client.DeleteTopicAsync(topicName);
+            }
+            catch
+            {
+                await SafeDeleteTopic(topicName);
+                throw;
+            }
         }
 
         [Fact]
@@ -662,6 +775,30 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public void Dispose()
         {
             client.CloseAsync().Wait();
+        }
+
+        private async Task SafeDeleteQueue(string name, [CallerMemberName] string caller = null)
+        {
+            try
+            {
+                await client?.DeleteQueueAsync(name);
+            }
+            catch (Exception ex)
+            {                
+                TestUtility.Log($"{ caller } could not delete the queue [{ name }].  Error: [{ ex.Message }]");
+            }
+        }
+
+        private async Task SafeDeleteTopic(string name, [CallerMemberName] string caller = null)
+        {
+            try
+            {
+                await client?.DeleteTopicAsync(name);
+            }
+            catch (Exception ex)
+            {
+                TestUtility.Log($"{ caller } could not delete the topic [{ name }].  Error: [{ ex.Message }]");
+            }
         }
     }
 }

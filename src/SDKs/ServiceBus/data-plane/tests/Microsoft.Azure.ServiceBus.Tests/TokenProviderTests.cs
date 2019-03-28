@@ -12,13 +12,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class TokenProviderTests : SenderReceiverClientTestBase
     {
-        /// <summary>
-        /// This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret before running.
-        /// </summary>
-        /// <returns></returns>
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
+        #pragma warning disable xUnit1013 
+        /// <remarks>
+        ///   This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret and uncomment 
+        ///   the [Fact] attribute before running.
+        /// </remarks>
+        //[Fact]
+        [DisplayTestMethodName]        
         public async Task UseITokenProviderWithAad()
         {
             var tenantId = "";
@@ -42,28 +42,32 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Send and receive messages.
             await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, 10);
         }
+        #pragma warning restore xUnit1013 
 
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async void SasTokenWithLargeExpiryTimeShouldBeAccepted()
         {
-            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
-            var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey, TimeSpan.FromDays(100));
-            var connection = new ServiceBusConnection(csb)
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                TokenProvider = tokenProvider
-            };
-            var receiver = new MessageReceiver(connection, TestConstants.NonPartitionedQueueName, ReceiveMode.PeekLock, RetryPolicy.Default);
+                var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+                var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey, TimeSpan.FromDays(100));
+                var connection = new ServiceBusConnection(csb)
+                {
+                    TokenProvider = tokenProvider
+                };
+                var receiver = new MessageReceiver(connection, queueName, ReceiveMode.PeekLock, RetryPolicy.Default);
 
-            try
-            {
-                var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
-            }
-            finally
-            {
-                await receiver.CloseAsync();
-            }
+                try
+                {
+                    var msg = await receiver.ReceiveAsync(TimeSpan.FromSeconds(5));
+                }
+                finally
+                {
+                    await receiver.CloseAsync();
+                }
+            });
         }
     }
 }

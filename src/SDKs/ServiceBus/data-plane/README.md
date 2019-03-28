@@ -52,7 +52,7 @@ For information on building the Azure Service bus client library, please see [Bu
 
     *Running the above template will provision a standard Service Bus namespace along with the required entities to successfully run the unit tests.*
 
-1. Add an Environment Variable named `azure-service-bus-dotnet/connectionstring` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
+1. Add an Environment Variable named `AZ_SERVICE_BUS_CONNECTION` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
 
 Once you have completed the above, you can run `dotnet test` from the `/src/SDKs/ServiceBus/data-plane/tests/Microsoft.Azure.ServiceBus.Tests` directory.
 

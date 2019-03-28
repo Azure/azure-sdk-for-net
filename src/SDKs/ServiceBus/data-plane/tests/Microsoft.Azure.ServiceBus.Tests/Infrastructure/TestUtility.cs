@@ -8,44 +8,38 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
+    using System.Threading;
     using System.Threading.Tasks;
     using Core;
+    using Polly;
 
     static class TestUtility
     {
-        static TestUtility()
-        {
-            var envConnectionString = Environment.GetEnvironmentVariable(TestConstants.ConnectionStringEnvironmentVariable);
+        private static readonly Lazy<string> NamespaceConnectionStringInstance = 
+            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()).ToString(), LazyThreadSafetyMode.PublicationOnly);
+        
+        private static readonly Lazy<string> SocketNamespaceConnectionStringInstance = 
+            new Lazy<string>( () => new ServiceBusConnectionStringBuilder(ReadEnvironmentConnectionString()){TransportType = TransportType.AmqpWebSockets}.ToString(), LazyThreadSafetyMode.PublicationOnly);
 
-            if (string.IsNullOrWhiteSpace(envConnectionString))
-            {
-                throw new InvalidOperationException($"'{TestConstants.ConnectionStringEnvironmentVariable}' environment variable was not found!");
-            }
+        internal static string NamespaceConnectionString => NamespaceConnectionStringInstance.Value;
 
-            // Validate the connection string
-            NamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString).ToString();
-            WebSocketsNamespaceConnectionString = new ServiceBusConnectionStringBuilder(envConnectionString){TransportType = TransportType.AmqpWebSockets}.ToString();
-        }
+        internal static string WebSocketsNamespaceConnectionString => SocketNamespaceConnectionStringInstance.Value;
 
-        internal static string NamespaceConnectionString { get; }
-
-        internal static string WebSocketsNamespaceConnectionString { get; }
-
-        internal static string GetEntityConnectionString(string entityName)
-        {
-            // If the entity name is populated in the connection string, it will be overridden.
-            var connectionStringBuilder = new ServiceBusConnectionStringBuilder(NamespaceConnectionString)
-            {
-                EntityPath = entityName
-            };
-            return connectionStringBuilder.ToString();
-        }
+        internal static string GetEntityConnectionString(string entityName) =>
+            new ServiceBusConnectionStringBuilder(NamespaceConnectionString) { EntityPath = entityName }.ToString();
 
         internal static void Log(string message)
         {
-            var formattedMessage = $"{DateTime.Now.TimeOfDay}: {message}";
-            Debug.WriteLine(formattedMessage);
-            Console.WriteLine(formattedMessage);
+            try
+            {
+                var formattedMessage = $"{DateTime.Now.TimeOfDay}: {message}";
+                Debug.WriteLine(formattedMessage);
+                Console.WriteLine(formattedMessage);
+            }
+            catch
+            {
+                // Consider a logging exception non-fatal.  Fail silently.
+            }
         }
 
         internal static async Task SendMessagesAsync(IMessageSender messageSender, int messageCount)
@@ -204,7 +198,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Log($"Sent {messagesPerSession} messages each for {numberOfSessions} sessions.");
         }
 
-        static void VerifyUniqueMessages(List<Message> messages)
+        private static void VerifyUniqueMessages(List<Message> messages)
         {
             if (messages != null && messages.Count > 1)
             {
@@ -219,6 +213,20 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
         }
 
+        private static string ReadEnvironmentConnectionString()
+        {
+            var envConnectionString = Environment.GetEnvironmentVariable(TestConstants.ConnectionStringEnvironmentVariable);
+
+            if (string.IsNullOrWhiteSpace(envConnectionString))
+            {
+                throw new InvalidOperationException($"'{TestConstants.ConnectionStringEnvironmentVariable}' environment variable was not found!");
+            }
+
+            return envConnectionString;
+        }
+
+        // String extension methods
+        
         internal static string GetString(this byte[] bytes)
         {
             return Encoding.ASCII.GetString(bytes);

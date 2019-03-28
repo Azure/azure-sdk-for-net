@@ -13,30 +13,29 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         public static IEnumerable<object[]> TestPermutations => new object[][]
         {
-            new object[] { TestConstants.NonPartitionedSessionTopicName, 1 },
-            new object[] { TestConstants.NonPartitionedSessionTopicName, 5 },
-            new object[] { TestConstants.PartitionedSessionTopicName, 1 },
-            new object[] { TestConstants.PartitionedSessionTopicName, 5 },
+            // Expected structure: { usePartitionedTopic, useSessionTopic, maxCurrentCalls }
+            new object[] { false, true, 1 },
+            new object[] { false, true, 5 },
+            new object[] { true, true, 1 },
+            new object[] { true, true, 5 },
         };
-
-        string SubscriptionName => TestConstants.SessionSubscriptionName;
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteTrue(string topicName, int maxConcurrentCalls)
+        Task OnSessionPeekLockWithAutoCompleteTrue(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
-            return this.OnSessionTestAsync(topicName, maxConcurrentCalls, ReceiveMode.PeekLock, true);
+            return this.OnSessionTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteFalse(string topicName, int maxConcurrentCalls)
+        Task OnSessionPeekLockWithAutoCompleteFalse(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
-            return this.OnSessionTestAsync(topicName, maxConcurrentCalls, ReceiveMode.PeekLock, false);
+            return this.OnSessionTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
 
         [Fact]
@@ -44,93 +43,99 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [DisplayTestMethodName]
         async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulSubscription()
         {
-            var exceptionReceivedHandlerCalled = false;
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, TestConstants.NonPartitionedTopicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicClient.TopicName,
-                TestConstants.SubscriptionName,
-                ReceiveMode.PeekLock);
-
-            var sessionHandlerOptions = new SessionHandlerOptions(eventArgs =>
+            await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
-                Assert.NotNull(eventArgs);
-                Assert.NotNull(eventArgs.Exception);
-                if (eventArgs.Exception is InvalidOperationException)
-                {
-                    exceptionReceivedHandlerCalled = true;
-                }
-                return Task.CompletedTask;
-            })
-            { MaxConcurrentSessions = 1 };
+                var exceptionReceivedHandlerCalled = false;
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicClient.TopicName,
+                    subscriptionName,
+                    ReceiveMode.PeekLock);
 
-            subscriptionClient.RegisterSessionHandler(
-               (session, message, token) => Task.CompletedTask,
-               sessionHandlerOptions);
-
-            try
-            {
-                var stopwatch = Stopwatch.StartNew();
-                while (stopwatch.Elapsed.TotalSeconds <= 10)
+                var sessionHandlerOptions = new SessionHandlerOptions(eventArgs =>
                 {
-                    if (exceptionReceivedHandlerCalled)
+                    Assert.NotNull(eventArgs);
+                    Assert.NotNull(eventArgs.Exception);
+                    if (eventArgs.Exception is InvalidOperationException)
                     {
-                        break;
+                        exceptionReceivedHandlerCalled = true;
+                    }
+                    return Task.CompletedTask;
+                })
+                { MaxConcurrentSessions = 1 };
+
+                subscriptionClient.RegisterSessionHandler(
+                   (session, message, token) => Task.CompletedTask,
+                   sessionHandlerOptions);
+
+                try
+                {
+                    var stopwatch = Stopwatch.StartNew();
+                    while (stopwatch.Elapsed.TotalSeconds <= 10)
+                    {
+                        if (exceptionReceivedHandlerCalled)
+                        {
+                            break;
+                        }
+
+                        await Task.Delay(TimeSpan.FromSeconds(1));
                     }
 
-                    await Task.Delay(TimeSpan.FromSeconds(1));
+                    TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
+                    Assert.True(exceptionReceivedHandlerCalled);
                 }
-
-                TestUtility.Log($"{DateTime.Now}: ExceptionReceivedHandlerCalled: {exceptionReceivedHandlerCalled}");
-                Assert.True(exceptionReceivedHandlerCalled);
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
         }
 
-        async Task OnSessionTestAsync(string topicName, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
+        async Task OnSessionTestAsync(bool partitioned, bool sessionEnabled, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
         {
-            TestUtility.Log($"Topic: {topicName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
-            var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
-            var subscriptionClient = new SubscriptionClient(
-                TestUtility.NamespaceConnectionString,
-                topicClient.TopicName,
-                this.SubscriptionName,
-                ReceiveMode.PeekLock);
-
-            try
+            await ServiceBusScope.UsingTopicAsync(partitioned, sessionEnabled, async (topicName, subscriptionName) =>
             {
-                var sessionHandlerOptions =
-                    new SessionHandlerOptions(ExceptionReceivedHandler)
-                    {
-                        MaxConcurrentSessions = 5,
-                        MessageWaitTimeout = TimeSpan.FromSeconds(5),
-                        AutoComplete = true
-                    };
+                TestUtility.Log($"Topic: {topicName}, MaxConcurrentCalls: {maxConcurrentCalls}, Receive Mode: {mode.ToString()}, AutoComplete: {autoComplete}");
+                var topicClient = new TopicClient(TestUtility.NamespaceConnectionString, topicName);
+                var subscriptionClient = new SubscriptionClient(
+                    TestUtility.NamespaceConnectionString,
+                    topicClient.TopicName,
+                    subscriptionName,
+                    ReceiveMode.PeekLock);
 
-                var testSessionHandler = new TestSessionHandler(
-                    subscriptionClient.ReceiveMode,
-                    sessionHandlerOptions,
-                    topicClient.InnerSender,
-                    subscriptionClient.SessionPumpHost);
+                try
+                {
+                    var sessionHandlerOptions =
+                        new SessionHandlerOptions(ExceptionReceivedHandler)
+                        {
+                            MaxConcurrentSessions = 5,
+                            MessageWaitTimeout = TimeSpan.FromSeconds(5),
+                            AutoComplete = true
+                        };
 
-                // Send messages to Session
-                await testSessionHandler.SendSessionMessages();
+                    var testSessionHandler = new TestSessionHandler(
+                        subscriptionClient.ReceiveMode,
+                        sessionHandlerOptions,
+                        topicClient.InnerSender,
+                        subscriptionClient.SessionPumpHost);
 
-                // Register handler
-                testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
+                    // Send messages to Session
+                    await testSessionHandler.SendSessionMessages();
 
-                // Verify messages were received.
-                await testSessionHandler.VerifyRun();
-            }
-            finally
-            {
-                await subscriptionClient.CloseAsync();
-                await topicClient.CloseAsync();
-            }
+                    // Register handler
+                    testSessionHandler.RegisterSessionHandler(sessionHandlerOptions);
+
+                    // Verify messages were received.
+                    await testSessionHandler.VerifyRun();
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                    await topicClient.CloseAsync();
+                }
+            });
         }
 
         Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)

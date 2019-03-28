@@ -125,14 +125,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact(Skip = "Flaky Test in Appveyor, fix and enable back")]
-        [LiveTest]
         async void RunOperationShouldReturnImmediatelyIfRetryIntervalIsGreaterThanOperationTimeout()
         {
             var policy = RetryPolicy.Default;
             var watch = Stopwatch.StartNew();
             await Assert.ThrowsAsync<ServiceBusException>(async () => await policy.RunOperation(
-                    () => throw new ServiceBusException(true, string.Empty), TimeSpan.FromSeconds(8))
-                .ConfigureAwait(false));
+                    () => throw new ServiceBusException(true, string.Empty), TimeSpan.FromSeconds(8)));
 
             TestUtility.Log($"Elapsed Milliseconds: {watch.Elapsed.TotalMilliseconds}");
             Assert.True(watch.Elapsed.TotalSeconds < 7);

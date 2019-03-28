@@ -10,7 +10,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
     public class ExtractActivityTests
     {
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         void ValidIdAndContextAreExtracted()
         {
@@ -32,7 +31,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         void ValidIdAndMultipleContextAreExtracted()
         {
@@ -58,7 +56,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         void ActivityNameCouldBeChanged()
         {
@@ -71,7 +68,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         }
 
         [Fact]
-        [LiveTest]
         [DisplayTestMethodName]
         void ValidIdAndNoContextAreExtracted()
         {
@@ -87,14 +83,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             var baggage = activity.Baggage.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             Assert.Empty(baggage);
         }
-
-
+        
         [Theory]
         [InlineData(null)]
         [InlineData("")]
         [InlineData("not valid context")]
         [InlineData("not,valid,context")]
-        [LiveTest]
         [DisplayTestMethodName]
         void ValidIdAndInvalidContextAreExtracted(string context)
         {
@@ -115,7 +109,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        [LiveTest]
         [DisplayTestMethodName]
         void EmptyIdResultsInActivityWithoutParent(string id)
         {
