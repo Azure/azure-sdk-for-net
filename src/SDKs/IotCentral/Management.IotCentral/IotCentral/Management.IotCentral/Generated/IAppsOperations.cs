@@ -223,6 +223,29 @@ namespace Microsoft.Azure.Management.IotCentral
         /// </exception>
         Task<AzureOperationResponse<AppAvailabilityInfo>> CheckSubdomainAvailabilityWithHttpMessagesAsync(OperationInputs operationInputs, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Get a single application template.
+        /// </summary>
+        /// <param name='applicationTemplateId'>
+        /// The combination id of manifestId and manifestVersion of the IoT
+        /// Central application template.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<AppTemplate>> TemplateWithHttpMessagesAsync(string applicationTemplateId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Get all available application templates.
         /// </summary>
         /// <param name='customHeaders'>
