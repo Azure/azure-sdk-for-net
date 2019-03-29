@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Monitor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// MetricBaselineOperations operations.
+    /// BaselineOperations operations.
     /// </summary>
-    public partial interface IMetricBaselineOperations
+    public partial interface IBaselineOperations
     {
         /// <summary>
         /// **Gets the baseline values for a specific metric**.

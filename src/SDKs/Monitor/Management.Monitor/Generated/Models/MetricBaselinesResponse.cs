@@ -38,10 +38,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// metric data was returned in.  This may be adjusted in the future
         /// and returned back from what was originally requested.  This is not
         /// present if a metadata request was made.</param>
-        /// <param name="value">the properties of the baseline.</param>
+        /// <param name="value">The baseline results of a single
+        /// metric.</param>
         /// <param name="namespaceProperty">The namespace of the metrics been
         /// queried.</param>
-        public MetricBaselinesResponse(string timespan, System.TimeSpan interval, MetricBaseline value, string namespaceProperty = default(string))
+        public MetricBaselinesResponse(string timespan, System.TimeSpan interval, SingleMetricBaseline value, string namespaceProperty = default(string))
         {
             Timespan = timespan;
             Interval = interval;
@@ -80,10 +81,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string NamespaceProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties of the baseline.
+        /// Gets or sets the baseline results of a single metric.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public MetricBaseline Value { get; set; }
+        public SingleMetricBaseline Value { get; set; }
 
         /// <summary>
         /// Validate the object.

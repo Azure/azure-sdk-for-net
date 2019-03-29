@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Monitor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for MetricBaselineOperations.
+    /// Extension methods for BaselineOperations.
     /// </summary>
-    public static partial class MetricBaselineOperationsExtensions
+    public static partial class BaselineOperationsExtensions
     {
             /// <summary>
             /// **Gets the baseline values for a specific metric**.
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// Allows retrieving only metadata of the baseline. On data request all
             /// information is retrieved. Possible values include: 'Data', 'Metadata'
             /// </param>
-            public static BaselineResponse Get(this IMetricBaselineOperations operations, string resourceUri, string metricName, string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), ResultType? resultType = default(ResultType?))
+            public static BaselineResponse Get(this IBaselineOperations operations, string resourceUri, string metricName, string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), ResultType? resultType = default(ResultType?))
             {
                 return operations.GetAsync(resourceUri, metricName, timespan, interval, aggregation, sensitivities, resultType).GetAwaiter().GetResult();
             }
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BaselineResponse> GetAsync(this IMetricBaselineOperations operations, string resourceUri, string metricName, string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), ResultType? resultType = default(ResultType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BaselineResponse> GetAsync(this IBaselineOperations operations, string resourceUri, string metricName, string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), ResultType? resultType = default(ResultType?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceUri, metricName, timespan, interval, aggregation, sensitivities, resultType, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// Information that need to be specified to calculate a baseline on a time
             /// series.
             /// </param>
-            public static CalculateBaselineResponse CalculateBaseline(this IMetricBaselineOperations operations, string resourceUri, TimeSeriesInformation timeSeriesInformation)
+            public static CalculateBaselineResponse CalculateBaseline(this IBaselineOperations operations, string resourceUri, TimeSeriesInformation timeSeriesInformation)
             {
                 return operations.CalculateBaselineAsync(resourceUri, timeSeriesInformation).GetAwaiter().GetResult();
             }
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CalculateBaselineResponse> CalculateBaselineAsync(this IMetricBaselineOperations operations, string resourceUri, TimeSeriesInformation timeSeriesInformation, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CalculateBaselineResponse> CalculateBaselineAsync(this IBaselineOperations operations, string resourceUri, TimeSeriesInformation timeSeriesInformation, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CalculateBaselineWithHttpMessagesAsync(resourceUri, timeSeriesInformation, null, cancellationToken).ConfigureAwait(false))
                 {

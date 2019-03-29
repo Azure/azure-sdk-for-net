@@ -17,20 +17,20 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// The baseline results of a specific metric.
+    /// The baseline results of a single metric.
     /// </summary>
-    public partial class MetricBaseline
+    public partial class SingleMetricBaseline
     {
         /// <summary>
-        /// Initializes a new instance of the MetricBaseline class.
+        /// Initializes a new instance of the SingleMetricBaseline class.
         /// </summary>
-        public MetricBaseline()
+        public SingleMetricBaseline()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the MetricBaseline class.
+        /// Initializes a new instance of the SingleMetricBaseline class.
         /// </summary>
         /// <param name="id">the metric baseline Id.</param>
         /// <param name="type">the resource type of the metric baseline
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="metricName">the name of the metric.</param>
         /// <param name="baselines">the baseline for each time series that was
         /// queried.</param>
-        public MetricBaseline(string id, string type, string metricName, IList<TimeSeriesBaseline> baselines)
+        public SingleMetricBaseline(string id, string type, string metricName, IList<TimeSeriesBaseline> baselines)
         {
             Id = id;
             Type = type;
@@ -59,16 +59,16 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets the resource type of the metric baseline resource.
+        /// Gets or sets the resource type of the metric baseline resource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public string Type { get; set; }
 
         /// <summary>
-        /// Gets the name of the metric.
+        /// Gets or sets the name of the metric.
         /// </summary>
         [JsonProperty(PropertyName = "metricName")]
-        public string MetricName { get; private set; }
+        public string MetricName { get; set; }
 
         /// <summary>
         /// Gets or sets the baseline for each time series that was queried.
@@ -87,6 +87,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
             if (Id == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+            }
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+            if (MetricName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MetricName");
             }
             if (Baselines == null)
             {
