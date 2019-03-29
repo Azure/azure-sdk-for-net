@@ -16,79 +16,79 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void ReportsStringProperties()
         {
-            Run(fields => Assert.Equal(DataType.String, fields["Text"].Type));
+            Test(fields => Assert.Equal(DataType.String, fields["Text"].Type));
         }
 
         [Fact]
         public void ReportsInt32Properties()
         {
-            Run(fields => Assert.Equal(DataType.Int32, fields["Id"].Type));
+            Test(fields => Assert.Equal(DataType.Int32, fields["Id"].Type));
         }
 
         [Fact]
         public void ReportsNullableInt32Properties()
         {
-            Run(fields => Assert.Equal(DataType.Int32, fields["NullableInt"].Type));
+            Test(fields => Assert.Equal(DataType.Int32, fields["NullableInt"].Type));
         }
 
         [Fact]
         public void ReportsInt64Properties()
         {
-            Run(fields => Assert.Equal(DataType.Int64, fields["BigNumber"].Type));
+            Test(fields => Assert.Equal(DataType.Int64, fields["BigNumber"].Type));
         }
 
         [Fact]
         public void ReportsDoubleProperties()
         {
-            Run(fields => Assert.Equal(DataType.Double, fields["Double"].Type));
+            Test(fields => Assert.Equal(DataType.Double, fields["Double"].Type));
         }
 
         [Fact]
         public void ReportsBooleanProperties()
         {
-            Run(fields => Assert.Equal(DataType.Boolean, fields["Flag"].Type));
+            Test(fields => Assert.Equal(DataType.Boolean, fields["Flag"].Type));
         }
 
         [Fact]
         public void ReportsDateTimeOffsetProperties()
         {
-            Run(fields => Assert.Equal(DataType.DateTimeOffset, fields["Time"].Type));
+            Test(fields => Assert.Equal(DataType.DateTimeOffset, fields["Time"].Type));
         }
 
         [Fact]
         public void ReportsDateTimeProperties()
         {
-            Run(fields => Assert.Equal(DataType.DateTimeOffset, fields["TimeWithoutOffset"].Type));
+            Test(fields => Assert.Equal(DataType.DateTimeOffset, fields["TimeWithoutOffset"].Type));
         }
 
         [Fact]
         public void ReportsGeographyPointProperties()
         {
-            Run(fields => Assert.Equal(DataType.GeographyPoint, fields["GeographyPoint"].Type));
+            Test(fields => Assert.Equal(DataType.GeographyPoint, fields["GeographyPoint"].Type));
         }
 
         [Fact]
         public void ReportsStringArrayProperties()
         {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringArray"].Type));
+            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringArray"].Type));
         }
 
         [Fact]
         public void ReportsStringIListProperties()
         {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIList"].Type));
+            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIList"].Type));
         }
 
         [Fact]
         public void ReportsStringIEnumerableProperties()
         {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIEnumerable"].Type));
+            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIEnumerable"].Type));
         }
 
         [Fact]
         public void ReportsStringListProperties()
         {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringList"].Type));
+            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringList"].Type));
         }
 
         [Fact]
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void HonoursSerializePropertyNamesAsCamelCaseAttribute()
         {
-            RunCamelCase(fieldMap =>
+            TestCamelCase(fieldMap =>
             {
                 Assert.True(fieldMap.ContainsKey("id"));
                 Assert.True(fieldMap.ContainsKey("myProperty"));
@@ -157,7 +157,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private void OnlyTrueFor(Func<Field, bool?> check, params string[] ids)
         {
-            Run(fields =>
+            Test(fields =>
             {
                 foreach (var kv in fields)
                 {
@@ -168,11 +168,11 @@ namespace Microsoft.Azure.Search.Tests
 
                     if (ids.Contains(id))
                     {
-                        Assert.True(result.Value);
+                        Assert.True(result.Value, $"Expected true for field {id}.");
                     }
                     else
                     {
-                        Assert.False(result.Value);
+                        Assert.False(result.Value, $"Expected false for field {id}.");
                     }
                 }
             });
@@ -181,23 +181,23 @@ namespace Microsoft.Azure.Search.Tests
         private void OnlyFalseFor(Func<Field, bool?> check, params string[] ids) =>
             OnlyTrueFor(f => !check(f), ids);
 
-        private void Run(Action<Dictionary<string, Field>> run)
+        private void Test(Action<Dictionary<string, Field>> run)
         {
             // Test with both with and without bring-your-own-resolver, and with classes and structs.
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableModel>(new ReadOnlyJsonContractResolver()));
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableModel>());
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>(new ReadOnlyJsonContractResolver()));
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>());
+            TestForFields(run, FieldBuilder.BuildForType<ReflectableModel>(new ReadOnlyJsonContractResolver()));
+            TestForFields(run, FieldBuilder.BuildForType<ReflectableModel>());
+            TestForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>(new ReadOnlyJsonContractResolver()));
+            TestForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>());
         }
 
-        private void RunCamelCase(Action<Dictionary<string, Field>> run)
+        private void TestCamelCase(Action<Dictionary<string, Field>> run)
         {
             // Test with both classes and structs.
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableCamelCaseModel>());
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableStructCamelCaseModel>());
+            TestForFields(run, FieldBuilder.BuildForType<ReflectableCamelCaseModel>());
+            TestForFields(run, FieldBuilder.BuildForType<ReflectableStructCamelCaseModel>());
         }
 
-        private void RunForFields(Action<Dictionary<string, Field>> run, IList<Field> fields)
+        private void TestForFields(Action<Dictionary<string, Field>> run, IList<Field> fields)
         {
             var fieldMap = fields.ToDictionary(f => f.Name);
             run(fieldMap);
