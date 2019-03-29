@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.Management.NetApp.Models
+namespace Microsoft.NetApp.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
