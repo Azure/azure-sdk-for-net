@@ -26,17 +26,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// [DEPRECATED NOTICE: This operation will soon be removed] Gets all
         /// the pattern features.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -66,21 +55,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
-        Task<HttpOperationResponse<IList<PatternFeatureInfo>>> ListApplicationVersionPatternFeaturesWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PatternFeatureInfo>>> ListApplicationVersionPatternFeaturesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new phraselist feature in a version of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -107,21 +85,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<int?>> AddPhraseListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<int?>> AddPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the phraselist features in a version of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -150,22 +117,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> ListPhraseListsWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> ListPhraseListsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets all the extraction phraselist and pattern features in a
         /// version of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -194,21 +150,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<FeaturesResponseObject>> ListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<FeaturesResponseObject>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets phraselist feature info in a version of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -233,22 +178,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<PhraseListFeatureInfo>> GetPhraseListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<PhraseListFeatureInfo>> GetPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the phrases, the state and the name of the phraselist
         /// feature in a version of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -278,21 +212,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> UpdatePhraseListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> UpdatePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a phraselist feature from a version of the application.
         /// </summary>
-        /// <param name='azureRegion'>
-        /// Supported Azure regions for Cognitive Services endpoints. Possible
-        /// values include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-        /// 'westcentralus', 'westus2', 'eastus', 'southcentralus',
-        /// 'northeurope', 'eastasia', 'australiaeast', 'brazilsouth',
-        /// 'virginia'
-        /// </param>
-        /// <param name='azureCloud'>
-        /// Supported Azure Clouds for Cognitive Services endpoints. Possible
-        /// values include: 'com', 'us'
-        /// </param>
         /// <param name='appId'>
         /// The application ID.
         /// </param>
@@ -317,6 +240,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeletePhraseListWithHttpMessagesAsync(AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeletePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

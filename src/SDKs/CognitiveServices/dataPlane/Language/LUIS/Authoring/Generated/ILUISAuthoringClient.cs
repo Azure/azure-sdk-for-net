@@ -33,6 +33,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// Supported Cognitive Services endpoints (protocol and hostname, for
+        /// example: https://westus.api.cognitive.microsoft.com).
+        /// </summary>
+        string Endpoint { get; set; }
+
+        /// <summary>
         /// Subscription credentials which uniquely identify client
         /// subscription.
         /// </summary>
