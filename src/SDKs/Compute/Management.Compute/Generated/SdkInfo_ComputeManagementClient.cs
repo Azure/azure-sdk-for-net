@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "Images", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "LogAnalytics", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "Operations", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "ProximityPlacementGroups", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "ResourceSkus", "2017-09-01"),
                 new Tuple<string, string, string>("Compute", "Snapshots", "2018-09-30"),
                 new Tuple<string, string, string>("Compute", "Usage", "2018-10-01"),
@@ -44,16 +45,5 @@ namespace Microsoft.Azure.Management.Compute
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/compute/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\hylee-sdk\\diskrp\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "27ad7f33127e71036da2b8e5e8184a25f36e9d72";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-
