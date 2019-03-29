@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='input'>
             /// Contains information about Resource type and Resource name
             /// </param>
-            public static CheckNameAvailabilityResultResource CheckNameAvailability(this IRecoveryServicesOperations operations, string resourceGroupName, string location, ResourceNameAvailabilityParameters input)
+            public static CheckNameAvailabilityResultResource CheckNameAvailability(this IRecoveryServicesOperations operations, string resourceGroupName, string location, CheckNameAvailabilityParameters input)
             {
                 return operations.CheckNameAvailabilityAsync(resourceGroupName, location, input).GetAwaiter().GetResult();
             }
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResultResource> CheckNameAvailabilityAsync(this IRecoveryServicesOperations operations, string resourceGroupName, string location, ResourceNameAvailabilityParameters input, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameAvailabilityResultResource> CheckNameAvailabilityAsync(this IRecoveryServicesOperations operations, string resourceGroupName, string location, CheckNameAvailabilityParameters input, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, location, input, null, cancellationToken).ConfigureAwait(false))
                 {

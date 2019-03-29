@@ -17,26 +17,26 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// Resource Name availability input parameters - Resource type and
     /// resource name
     /// </summary>
-    public partial class ResourceNameAvailabilityParameters
+    public partial class CheckNameAvailabilityParameters
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceNameAvailabilityParameters class.
+        /// Initializes a new instance of the CheckNameAvailabilityParameters
+        /// class.
         /// </summary>
-        public ResourceNameAvailabilityParameters()
+        public CheckNameAvailabilityParameters()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// ResourceNameAvailabilityParameters class.
+        /// Initializes a new instance of the CheckNameAvailabilityParameters
+        /// class.
         /// </summary>
         /// <param name="type">Describes the Resource type:
         /// Microsoft.RecoveryServices/Vaults</param>
         /// <param name="name">Resource name for which availability needs to be
         /// checked</param>
-        public ResourceNameAvailabilityParameters(string type = default(string), string name = default(string))
+        public CheckNameAvailabilityParameters(string type = default(string), string name = default(string))
         {
             Type = type;
             Name = name;

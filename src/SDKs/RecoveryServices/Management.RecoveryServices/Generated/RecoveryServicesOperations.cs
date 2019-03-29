@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CheckNameAvailabilityResultResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, ResourceNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CheckNameAvailabilityResultResource>> CheckNameAvailabilityWithHttpMessagesAsync(string resourceGroupName, string location, CheckNameAvailabilityParameters input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
