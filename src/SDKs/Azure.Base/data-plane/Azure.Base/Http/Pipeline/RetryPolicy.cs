@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
@@ -41,6 +42,12 @@ namespace Azure.Base.Http.Pipeline
                 {
                     if (lastException != null)
                     {
+                        // Rethrow a singular exception
+                        if (exceptions.Count == 1)
+                        {
+                            ExceptionDispatchInfo.Capture(lastException).Throw();
+                        }
+
                         throw new AggregateException($"Retry failed after {attempt - 1} tries.", exceptions);
                     }
 

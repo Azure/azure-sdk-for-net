@@ -123,9 +123,7 @@ namespace Azure.Base.Tests
 
             await mockTransport.RequestGate.CycleWithException(new IOException());
 
-            var exception = Assert.ThrowsAsync<AggregateException>(async () => await task.TimeoutAfterDefault());
-            StringAssert.StartsWith("Retry failed after 1 tries.", exception.Message);
-            Assert.IsInstanceOf<IOException>(exception.InnerExceptions[0]);
+            Assert.ThrowsAsync<IOException>(async () => await task.TimeoutAfterDefault());
         }
 
         [Test]
