@@ -96,9 +96,9 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public static async Task<SettingBatch> ParseBatchAsync(Response response, BatchRequestOptions filter, CancellationToken cancellation)
+        public static async Task<SettingBatch> ParseBatchAsync(Response response, SettingSelector selector, CancellationToken cancellation)
         {
-            TryGetNextAfterValue(ref response, out string token);
+            TryGetNextAfterValue(ref response, out string nextBatchUri);
 
             Stream content = response.ContentStream;
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellation).ConfigureAwait(false))
@@ -113,7 +113,7 @@ namespace Azure.ApplicationModel.Configuration
                     settings[i++] = ReadSetting(item);
                 }
 
-                var batch = new SettingBatch(settings, token, filter);
+                var batch = new SettingBatch(settings, nextBatchUri, selector);
                 return batch;
             }
         }

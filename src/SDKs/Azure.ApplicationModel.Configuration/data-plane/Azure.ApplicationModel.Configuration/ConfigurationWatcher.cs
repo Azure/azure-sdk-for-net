@@ -85,7 +85,7 @@ namespace Azure.ApplicationModel.Configuration
             try {
                 for (int i = 0; i < _keysToWatch.Count; i++) {
 
-                    var response = await _client.GetAsync(_keysToWatch[i], null, cancellationToken).ConfigureAwait(false);
+                    var response = await _client.GetAsync(_keysToWatch[i], null, default, cancellationToken).ConfigureAwait(false);
                     if (response.Status == 200) {
                         var setting = response.Result;
                         _lastPolled[setting.Key] = setting;
@@ -106,7 +106,7 @@ namespace Azure.ApplicationModel.Configuration
 
             var tasks = new Task<Response<ConfigurationSetting>>[_keysToWatch.Count];
             for (int i = 0; i < _keysToWatch.Count; i++) {
-                tasks[i] = _client.GetAsync(_keysToWatch[i], null, cancellationToken);
+                tasks[i] = _client.GetAsync(_keysToWatch[i], null, default, cancellationToken);
             }
             await Task.WhenAll(tasks);
 

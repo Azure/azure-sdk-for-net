@@ -57,16 +57,16 @@ namespace Azure.ApplicationModel.Configuration.Test
 
     class DeleteMockTransport : MockHttpClientTransport
     {
-        public DeleteMockTransport(string key, RequestOptions filter, ConfigurationSetting result)
+        public DeleteMockTransport(string key, string label, ConfigurationSetting result)
         {
-            _expectedUri = $"https://contoso.azconfig.io/kv/{key}{GetExtraUriParameters(filter)}";
+            _expectedUri = $"https://contoso.azconfig.io/kv/{key}{GetExtraUriParameters(label)}";
             _expectedRequestContent = null;
             _expectedMethod = HttpMethod.Delete;
             _responseContent = CreateResponse(result);
         }
 
-        public DeleteMockTransport(string key, RequestOptions filter, HttpStatusCode statusCode)
-            : this(key, filter, result: null)
+        public DeleteMockTransport(string key, string label, HttpStatusCode statusCode)
+            : this(key, label, result: null)
         {
             Responses.Clear();
             Responses.Add(statusCode);
@@ -76,16 +76,16 @@ namespace Azure.ApplicationModel.Configuration.Test
     // TODO (pri 3): this should emit the etag response header
     class GetMockTransport : MockHttpClientTransport
     {
-        public GetMockTransport(string queryKey, RequestOptions filter, ConfigurationSetting result)
+        public GetMockTransport(string queryKey, string label, ConfigurationSetting result)
         {
             _expectedMethod = HttpMethod.Get;
-            _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}{GetExtraUriParameters(filter)}";
+            _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}{GetExtraUriParameters(label)}";
             _expectedRequestContent = null;
             _responseContent = CreateResponse(result);
         }
 
-        public GetMockTransport(string queryKey, RequestOptions filter, ConfigurationSetting result, params HttpStatusCode[] statusCodes)
-            : this(queryKey, filter, result)
+        public GetMockTransport(string queryKey, string label, ConfigurationSetting result, params HttpStatusCode[] statusCodes)
+            : this(queryKey, label, result)
         {
             Responses.Clear();
             foreach (var statusCode in statusCodes) {
@@ -240,11 +240,11 @@ namespace Azure.ApplicationModel.Configuration.Test
             return requestContent.ToString().ToLowerInvariant();
         }
 
-        protected string GetExtraUriParameters(RequestOptions filter)
+        protected string GetExtraUriParameters(string label)
         {
-            if (filter != null && filter.Label != null)
+            if (label != null)
             {
-                return $"?label={filter.Label}";
+                return $"?label={label}";
             }
             return string.Empty;
         }

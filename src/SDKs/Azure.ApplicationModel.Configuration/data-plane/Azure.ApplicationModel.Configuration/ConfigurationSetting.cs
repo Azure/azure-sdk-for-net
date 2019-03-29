@@ -151,27 +151,29 @@ namespace Azure.ApplicationModel.Configuration
     public class SettingBatch
     {
         readonly ConfigurationSetting[] _settings;
-        readonly BatchRequestOptions _filter;
+        readonly SettingSelector _selector;
         readonly string _link;
 
-        internal SettingBatch(ConfigurationSetting[] settings, string link, BatchRequestOptions filter)
+        internal SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
         {
             _settings = settings;
             _link = link;
-            _filter = filter;
+            _selector = selector;
         }
 
         public ConfigurationSetting this[int index] => _settings[index];
 
         public int Count => _settings.Length;
 
-        public BatchRequestOptions NextBatch
+        public SettingSelector NextBatch
         {
             get
             {
-                var clonedFilter = _filter.Clone();
-                clonedFilter.BatchLink = _link;
-                return clonedFilter;
+                if (_link != null)
+                {
+                    return _selector.CloneWithBatchLink(_link);
+                }
+                return null;
             }
         }
 

@@ -4,7 +4,9 @@
 
 using Azure.Base;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -24,30 +26,74 @@ namespace Azure.ApplicationModel.Configuration
         All = uint.MaxValue
     }
 
-    public class RequestOptions
+    public class SettingSelector
     {
+        public static readonly string Any = "*";
         /// <summary>
-        /// Specific label of the key.
+        /// Keys that will be used to filter.
         /// </summary>
-        public string Label { get; set; } = null;
-
-        public ETagFilter ETag { get; set; }
-
+        /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
+        public IList<string> Keys { get; set; }
         /// <summary>
-        /// If set, then key values will be retrieved exactly as they existed at the provided time.
+        /// Labels that will be used to filter.
         /// </summary>
-        public DateTimeOffset? Revision { get; set; }
-
+        /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
+        public IList<string> Labels { get; set; }
         /// <summary>
         /// IKeyValue fields that will be retrieved.
         /// </summary>
         public SettingFields Fields { get; set; } = SettingFields.All;
-        
-        public static implicit operator RequestOptions(string label) => new RequestOptions() { Label = label };
+        /// <summary>
+        /// If set, then key values will be retrieved exactly as they existed at the provided time.
+        /// </summary>
+        public DateTimeOffset? AsOf { get; set; }
+
+        public SettingSelector() : this(Any, Any) { }
+
+        public SettingSelector(string key, string label = default)
+        {
+            Keys = new List<string> { key };
+            Labels = new List<string>();
+            if (label != null) Labels.Add(label);
+        }
+
+        internal string BatchLink { get; set; }
+
+        internal SettingSelector CloneWithBatchLink(string batchLink)
+        {
+            return new SettingSelector()
+            {
+                Keys = new List<string>(Keys),
+                Labels = new List<string>(Labels),
+                Fields = Fields,
+                AsOf = AsOf,
+                BatchLink = batchLink
+            };
+        }
+
+        public bool Equals(SettingSelector other)
+        {
+            if (other == null) return false;
+            if (!Keys.SequenceEqual(other.Keys)) return false;
+            if (!Labels.SequenceEqual(other.Labels)) return false;
+            if (!Fields.Equals(other.Fields)) return false;
+            if (AsOf != other.AsOf) return false;
+            if (!string.Equals(BatchLink, other.BatchLink, StringComparison.Ordinal)) return false;
+
+            return true;
+        }
 
         #region nobody wants to see these
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        public override bool Equals(object obj)
+        {
+            if (obj == null) return false;
+            if (obj is SettingSelector other)
+            {
+                return Equals(other);
+            }
+            else return false;
+        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => base.GetHashCode();
@@ -56,32 +102,5 @@ namespace Azure.ApplicationModel.Configuration
         // TODO ()
         public override string ToString() => base.ToString();
         #endregion
-    }
-
-    public class BatchRequestOptions : RequestOptions
-    {
-        /// <summary>
-        /// Keys that will be used to filter.
-        /// </summary>
-        /// <remarks>See the documentation for this SDK for details on the format of filter expressions</remarks>
-        public string Key { get; set; } = "*";
-
-        public string BatchLink { get; set; }
-
-        internal BatchRequestOptions Clone()
-        {
-            return new BatchRequestOptions()
-            {
-                Key = Key,
-                BatchLink = BatchLink
-            };
-        }
-    }
-
-    public static class LabelFilters
-    {
-        public static readonly string Null = "\0";
-
-        public static readonly string Any = "*";
     }
 }
