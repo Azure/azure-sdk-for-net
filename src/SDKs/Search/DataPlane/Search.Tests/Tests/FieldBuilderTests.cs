@@ -146,6 +146,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void SynonymMapsSetOnlyOnPropertiesWithSynonymMapsAttribute()
+        {
+            OnlyTrueFor(field => field.SynonymMaps?.Contains("myMap") ?? false, nameof(ReflectableModel.Text));
+        }
+
+        [Fact]
         public void HonoursSerializePropertyNamesAsCamelCaseAttribute()
         {
             TestCamelCase(fieldMap =>

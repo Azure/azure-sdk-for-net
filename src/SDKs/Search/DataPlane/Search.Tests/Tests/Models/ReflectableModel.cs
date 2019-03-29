@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Search.Tests
         public DateTime TimeWithoutOffset { get; set; }
 
         [IsSearchable]
+        [SynonymMaps("myMap")]
         public string Text { get; set; }
 
         public string UnsearchableText { get; set; }
