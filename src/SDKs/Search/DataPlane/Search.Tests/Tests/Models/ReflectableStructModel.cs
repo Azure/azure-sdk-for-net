@@ -12,6 +12,27 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Spatial;
     using Newtonsoft.Json;
 
+    public struct ReflectableAddressStruct
+    {
+        [IsSearchable]
+        public string City { get; set; }
+
+        [IsFilterable, IsFacetable]
+        public string Country { get; set; }
+    }
+
+    public struct ReflectableComplexStruct
+    {
+        [IsSearchable]
+        [Analyzer(AnalyzerName.AsString.EnMicrosoft)]
+        public string Name { get; set; }
+
+        [IsFilterable]
+        public int Rating { get; set; }
+
+        public ReflectableAddressStruct Address { get; set; }
+    }
+
     public struct ReflectableStructModel
     {
         [Key]
@@ -127,6 +148,16 @@ namespace Microsoft.Azure.Search.Tests
         public List<GeographyPoint> GeographyPointList { get; set; }
 
         public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
+
+        public ReflectableComplexStruct? Complex { get; set; }
+
+        public ReflectableComplexStruct[] ComplexArray { get; set; }
+
+        public IList<ReflectableComplexStruct> ComplexIList { get; set; }
+
+        public List<ReflectableComplexStruct> ComplexList { get; set; }
+
+        public IEnumerable<ReflectableComplexStruct> ComplexIEnumerable { get; set; }
 
         [JsonIgnore]
         [IsRetrievable(false)]

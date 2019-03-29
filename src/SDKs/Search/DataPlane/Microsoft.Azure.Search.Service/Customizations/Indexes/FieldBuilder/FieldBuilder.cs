@@ -104,9 +104,15 @@ namespace Microsoft.Azure.Search
                     continue;
                 }
 
-                DataType dataType = GetDataType(prop.PropertyType, prop.PropertyName);
+                DataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType);
 
-                var field = new Field(prop.PropertyName, dataType);
+                Field CreateComplexField()
+                {
+                    IList<Field> subFields = BuildForType(dataTypeInfo.UnderlyingClrType, contractResolver);
+                    return new Field(prop.PropertyName, dataTypeInfo.DataType, subFields);
+                }
+
+                var field = dataTypeInfo.DataType.IsComplex() ? CreateComplexField() : new Field(prop.PropertyName, dataTypeInfo.DataType);
                                 
                 foreach (Attribute attribute in attributes)
                 {
@@ -166,28 +172,27 @@ namespace Microsoft.Azure.Search
             return fields;
         }
 
-        private static DataType GetDataType(Type propertyType, string propertyName)
+        private static DataTypeInfo GetDataTypeInfo(Type propertyType)
         {
             bool IsNullableType(Type type) =>
                 type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
 
             if (PrimitiveTypeMap.TryGetValue(propertyType, out DataType dataType))
             {
-                return dataType;
+                return new DataTypeInfo(dataType, propertyType);
             }
             else if (IsNullableType(propertyType))
             {
-                return GetDataType(propertyType.GenericTypeArguments[0], propertyName);
+                return GetDataTypeInfo(propertyType.GenericTypeArguments[0]);
             }
             else if (TryGetEnumerableElementType(propertyType, out Type elementType))
             {
-                return DataType.Collection(GetDataType(elementType, propertyName));
+                DataTypeInfo elementTypeInfo = GetDataTypeInfo(elementType);
+                return new DataTypeInfo(DataType.Collection(elementTypeInfo.DataType), elementTypeInfo.UnderlyingClrType);
             }
             else
             {
-                throw new ArgumentException(
-                    $"Property {propertyName} has unsupported type {propertyType}",
-                    nameof(propertyType));
+                return new DataTypeInfo(DataType.Complex, propertyType);
             }
         }
 
@@ -222,6 +227,19 @@ namespace Microsoft.Azure.Search
                     return false;
                 }
             }
+        }
+
+        private struct DataTypeInfo
+        {
+            public DataTypeInfo(DataType dataType, Type underlyingClrType)
+            {
+                DataType = dataType;
+                UnderlyingClrType = underlyingClrType;
+            }
+
+            public DataType DataType { get; }
+
+            public Type UnderlyingClrType { get; }
         }
     }
 }
