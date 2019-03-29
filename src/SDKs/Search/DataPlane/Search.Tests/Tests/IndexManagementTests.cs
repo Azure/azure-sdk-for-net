@@ -25,21 +25,39 @@ namespace Microsoft.Azure.Search.Tests
                 Name = indexName,
                 Fields = new[]
                 {
-                    new Field("hotelId", DataType.String) { IsKey = true, IsSearchable = false, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("baseRate", DataType.Double) { IsKey = false, IsSearchable = false, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("description", DataType.String) { IsKey = false, IsSearchable = true, IsFilterable = false, IsSortable = false, IsFacetable = false },
-                    new Field("description_fr", AnalyzerName.FrLucene) { IsFilterable = false, IsSortable = false, IsFacetable = false },
-                    new Field("description_custom", DataType.String) { IsSearchable = true, IsFilterable = false, IsSortable = false, IsFacetable = false, SearchAnalyzer = AnalyzerName.Stop, IndexAnalyzer = AnalyzerName.Stop },
-                    new Field("hotelName", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("category", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("tags", DataType.Collection(DataType.String)) { IsSearchable = true, IsFilterable = true, IsSortable = false, IsFacetable = true },
-                    new Field("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsRetrievable = true },
-                    new Field("totalGuests", DataType.Int64) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsRetrievable = false },
-                    new Field("profitMargin", DataType.Double)
+                    Field.New("hotelId", DataType.String, isKey: true, isSearchable: false, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("hotelName", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: false),
+                    Field.NewSearchableString("description", AnalyzerName.EnLucene, isKey: false, isFilterable: false, isSortable: false, isFacetable: false),
+                    Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene, isFilterable: false, isSortable: false, isFacetable: false),
+                    Field.New("description_custom", DataType.String, isSearchable: true, isFilterable: false, isSortable: false, isFacetable: false, searchAnalyzerName: AnalyzerName.Stop, indexAnalyzerName: AnalyzerName.Stop),
+                    Field.New("category", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isSortable: false, isFacetable: true),
+                    Field.New("parkingIncluded", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("lastRenovationDate", DataType.DateTimeOffset, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("rating", DataType.Int32, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.NewComplex("address", isCollection: false, fields: new[]
+                    {
+                        Field.New("streetAddress", DataType.String, isSearchable: true),
+                        Field.New("city", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("stateProvince", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("country", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("postalCode", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true)
+                    }),
+                    Field.New("location", DataType.GeographyPoint, isFilterable: true, isSortable: true, isFacetable: false, isRetrievable: true),
+                    Field.NewComplex("rooms", isCollection: true, fields: new[]
+                    {
+                        Field.NewSearchableString("description", AnalyzerName.EnLucene),
+                        Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene),
+                        Field.New("type", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
+                        Field.New("baseRate", DataType.Double, isKey: false, isSearchable: false, isFilterable: true, isFacetable: true),
+                        Field.New("bedOptions", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
+                        Field.New("sleepsCount", DataType.Int32, isFilterable: true, isFacetable: true),
+                        Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isFacetable: true),
+                        Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isSortable: false, isFacetable: true)
+                    }),
+                    Field.New("totalGuests", DataType.Int64, isFilterable: true, isSortable: true, isFacetable: true, isRetrievable: false),
+                    Field.New("profitMargin", DataType.Double)
                 },
                 ScoringProfiles = new[]
                 {
