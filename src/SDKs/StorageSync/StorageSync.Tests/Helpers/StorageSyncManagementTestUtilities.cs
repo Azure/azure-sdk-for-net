@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.StorageSync.Tests
         {
             return new ServerEndpointCreateParameters
             {
-                ServerLocalPath = "D:\\test2",
+                ServerLocalPath = "E:\\test2",
                 CloudTiering = "Off",
                 VolumeFreeSpacePercent = 0,
                 ServerResourceId = serverResourceId,
