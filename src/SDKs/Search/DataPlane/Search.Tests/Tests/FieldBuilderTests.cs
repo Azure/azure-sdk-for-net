@@ -39,7 +39,27 @@ namespace Microsoft.Azure.Search.Tests
                     (DataType.Boolean, nameof(ReflectableModel.Flag)),
                     (DataType.DateTimeOffset, nameof(ReflectableModel.Time)),
                     (DataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
-                    (DataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint))
+                    (DataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint)),
+                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country))
                 };
 
                 return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, primitivePropertyTestData));
@@ -83,10 +103,35 @@ namespace Microsoft.Azure.Search.Tests
                     (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
                     (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
                     (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
-                    (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointList))
+                    (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointList)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexArray)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexIList)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexIEnumerable)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexList))
                 };
 
                 return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, collectionPropertyTestData));
+            }
+        }
+
+        public static TheoryData<Type, string> ComplexTypeTestData
+        {
+            get
+            {
+                var complexPropertyTestData = new[]
+                {
+                    nameof(ReflectableModel.Complex),
+                    nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address)
+                };
+
+                return new TheoryData<Type, string>().PopulateFrom(
+                    from type in TestModelTypes
+                    from fieldPath in complexPropertyTestData
+                    select (type, fieldPath));
             }
         }
 
@@ -95,6 +140,13 @@ namespace Microsoft.Azure.Search.Tests
         public void ReportsPrimitiveTypedProperties(Type modelType, DataType expectedDataType, string fieldName)
         {
             Test(modelType, fields => Assert.Equal(expectedDataType, fields[fieldName].Type));
+        }
+
+        [Theory]
+        [MemberData(nameof(ComplexTypeTestData))]
+        public void ReportsComplexTypedProperties(Type modelType, string fieldName)
+        {
+            Test(modelType, fields => Assert.Equal(DataType.Complex, fields[fieldName].Type));
         }
 
         [Theory]
@@ -126,7 +178,17 @@ namespace Microsoft.Azure.Search.Tests
                 modelType,
                 field => field.IsSearchable.GetValueOrDefault(false),
                 nameof(ReflectableModel.Text),
-                nameof(ReflectableModel.MoreText));
+                nameof(ReflectableModel.MoreText),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City));
         }
 
         [Theory]
@@ -136,7 +198,17 @@ namespace Microsoft.Azure.Search.Tests
             OnlyTrueFor(
                 modelType,
                 field => field.IsFilterable.GetValueOrDefault(false),
-                nameof(ReflectableModel.FilterableText));
+                nameof(ReflectableModel.FilterableText),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
         }
 
         [Theory]
@@ -153,7 +225,12 @@ namespace Microsoft.Azure.Search.Tests
             OnlyTrueFor(
                 modelType,
                 field => field.IsFacetable.GetValueOrDefault(false),
-                nameof(ReflectableModel.FacetableText));
+                nameof(ReflectableModel.FacetableText),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
         }
 
         [Theory]
@@ -170,7 +247,12 @@ namespace Microsoft.Azure.Search.Tests
             OnlyTrueFor(
                 modelType,
                 field => field.Analyzer == AnalyzerName.EnMicrosoft,
-                nameof(ReflectableModel.TextWithAnalyzer));
+                nameof(ReflectableModel.TextWithAnalyzer),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name));
         }
 
         [Theory]
@@ -203,6 +285,10 @@ namespace Microsoft.Azure.Search.Tests
             {
                 Assert.True(fieldMap.ContainsKey("id"));
                 Assert.True(fieldMap.ContainsKey("myProperty"));
+                Assert.True(fieldMap.ContainsKey("inner"));
+                Assert.True(fieldMap.ContainsKey("inner/name"));
+                Assert.True(fieldMap.ContainsKey("innerCollection"));
+                Assert.True(fieldMap.ContainsKey("innerCollection/name"));
             }
 
             TestForFields(RunTest, FieldBuilder.BuildForType(modelType));
@@ -249,7 +335,28 @@ namespace Microsoft.Azure.Search.Tests
 
         private void TestForFields(Action<Dictionary<string, Field>> run, IList<Field> fields)
         {
-            var fieldMap = fields.ToDictionary(f => f.Name);
+            IEnumerable<KeyValuePair<string, Field>> GetSelfAndDescendants(Field topLevelField)
+            {
+                IEnumerable<KeyValuePair<string, Field>> GetSelfAndDescendantsRecursive(Field field, string parentFieldPath)
+                {
+                    string currentFieldPath =
+                        string.IsNullOrEmpty(parentFieldPath) ? field.Name : parentFieldPath + "/" + field.Name;
+
+                    yield return new KeyValuePair<string, Field>(currentFieldPath, field);
+
+                    foreach (Field subField in field.Fields ?? Enumerable.Empty<Field>())
+                    {
+                        foreach (var result in GetSelfAndDescendantsRecursive(subField, currentFieldPath))
+                        {
+                            yield return result;
+                        }
+                    }
+                }
+
+                return GetSelfAndDescendantsRecursive(topLevelField, string.Empty);
+            }
+
+            var fieldMap = fields.SelectMany(f => GetSelfAndDescendants(f)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             run(fieldMap);
         }
     }

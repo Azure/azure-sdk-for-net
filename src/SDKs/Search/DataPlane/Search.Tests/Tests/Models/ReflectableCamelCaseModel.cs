@@ -8,11 +8,21 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Models;
 
     [SerializePropertyNamesAsCamelCase]
+    public class ReflectableInnerCamelCaseModel
+    {
+        public string Name { get; set; }
+    }
+
+    [SerializePropertyNamesAsCamelCase]
     public class ReflectableCamelCaseModel
     {
         [Key]
         public int Id { get; set; }
 
         public string MyProperty { get; set; }
+
+        public ReflectableInnerCamelCaseModel Inner { get; set; }
+
+        public ReflectableInnerCamelCaseModel[] InnerCollection { get; set; }
     }
 }
