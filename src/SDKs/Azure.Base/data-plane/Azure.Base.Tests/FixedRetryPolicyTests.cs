@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -78,7 +79,7 @@ namespace Azure.Base.Tests
         [Test]
         public async Task RetriesOnException()
         {
-            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, delay: TimeSpan.FromSeconds(3));
+            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException, delay: TimeSpan.FromSeconds(3));
             var mockTransport = new MockTransport();
             var task = SendRequest(mockTransport, policy);
 
@@ -94,9 +95,43 @@ namespace Azure.Base.Tests
         }
 
         [Test]
+        public async Task RetriesOnlyFilteredException()
+        {
+            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException, delay: TimeSpan.FromSeconds(3));
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy);
+
+            await mockTransport.RequestGate.CycleWithException(new InvalidOperationException());
+
+            var delay = await policy.DelayGate.Cycle();
+            Assert.AreEqual(delay, TimeSpan.FromSeconds(3));
+
+            await mockTransport.RequestGate.CycleWithException(new IOException());
+
+            var exception = Assert.ThrowsAsync<AggregateException>(async () => await task.TimeoutAfterDefault());
+            StringAssert.StartsWith("Retry failed after 2 tries.", exception.Message);
+            Assert.IsInstanceOf<InvalidOperationException>(exception.InnerExceptions[0]);
+            Assert.IsInstanceOf<IOException>(exception.InnerExceptions[1]);
+        }
+
+        [Test]
+        public async Task RetriesOnlyFilteredExceptionFirst()
+        {
+            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException, delay: TimeSpan.FromSeconds(3));
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy);
+
+            await mockTransport.RequestGate.CycleWithException(new IOException());
+
+            var exception = Assert.ThrowsAsync<AggregateException>(async () => await task.TimeoutAfterDefault());
+            StringAssert.StartsWith("Retry failed after 1 tries.", exception.Message);
+            Assert.IsInstanceOf<IOException>(exception.InnerExceptions[0]);
+        }
+
+        [Test]
         public async Task RethrowsAggregateExceptionAfterMaxRetryCount()
         {
-            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, delay: TimeSpan.FromSeconds(3), maxRetries: 3);
+            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException, delay: TimeSpan.FromSeconds(3), maxRetries: 3);
             var mockTransport = new MockTransport();
             var task = SendRequest(mockTransport, policy);
             var exceptions = new List<Exception>();
@@ -180,7 +215,7 @@ namespace Azure.Base.Tests
         {
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            public FixedRetryPolicyMock(int[] retriableCodes, int maxRetries = 3, TimeSpan delay = default) : base(retriableCodes, maxRetries, delay)
+            public FixedRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3, TimeSpan delay = default) : base(retriableCodes, exceptionFilter, maxRetries, delay)
             {
             }
 
