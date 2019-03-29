@@ -6,26 +6,27 @@ using System.Linq;
 
 namespace Azure.Base.Http.Pipeline
 {
-    internal class FixedRetryPolicy : RetryPolicy
+    internal class ExponentialRetryPolicy : RetryPolicy
     {
+        private readonly int[] _retriableCodes;
+
         private readonly Func<Exception, bool> _exceptionFilter;
 
         private readonly int _maxRetries;
 
         private readonly TimeSpan _delay;
 
-        private readonly int[] _retriableCodes;
+        private readonly TimeSpan _maxDelay;
 
-        public FixedRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter, int maxRetries, TimeSpan delay)
+        private Random _random;
+
+        public ExponentialRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter, int maxRetries, TimeSpan delay, TimeSpan maxDelay)
         {
-            if (retriableCodes == null)
-            {
-                throw new ArgumentNullException(nameof(retriableCodes));
-            }
-
+            _random = new ThreadSafeRandom();
             _exceptionFilter = exceptionFilter;
             _maxRetries = maxRetries;
             _delay = delay;
+            _maxDelay = maxDelay;
 
             _retriableCodes = retriableCodes.ToArray();
             Array.Sort(_retriableCodes);
@@ -33,7 +34,10 @@ namespace Azure.Base.Http.Pipeline
 
         protected override bool ShouldRetry(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
         {
-            delay = _delay;
+            delay = TimeSpan.FromMilliseconds(
+                Math.Min(
+                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
+                    _maxDelay.TotalMilliseconds));
 
             if (attempted > _maxRetries)
             {
