@@ -11,7 +11,7 @@ namespace Azure.Base.Tests.Testing
 {
     public static class TaskExtensions
     {
-        public static TimeSpan DefaultTimeout { get; } = TimeSpan.FromSeconds(30);
+        public static TimeSpan DefaultTimeout { get; } = TimeSpan.FromSeconds(10);
 
         public static Task<T> TimeoutAfterDefault<T>(this Task<T> task,
             [CallerFilePath] string filePath = null,

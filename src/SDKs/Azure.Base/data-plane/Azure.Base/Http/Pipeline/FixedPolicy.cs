@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Azure.Base.Http.Pipeline
 {
-    internal class FixedPolicy : RetryPolicy
+    internal class FixedRetryPolicy : RetryPolicy
     {
         private readonly int _maxRetries;
 
@@ -14,7 +14,7 @@ namespace Azure.Base.Http.Pipeline
 
         private readonly int[] _retriableCodes;
 
-        public FixedPolicy(int[] retriableCodes, int maxRetries, TimeSpan delay)
+        public FixedRetryPolicy(int[] retriableCodes, int maxRetries, TimeSpan delay)
         {
             if (retriableCodes == null)
             {

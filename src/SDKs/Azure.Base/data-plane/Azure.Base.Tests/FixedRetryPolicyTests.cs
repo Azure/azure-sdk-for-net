@@ -156,13 +156,11 @@ namespace Azure.Base.Tests
 
         private static void AssertRetryEvent(TestEventListener listener, MockRequest request, int retryNumber)
         {
-            Assert.True(listener.EventData.Any(e =>
-                e.EventId == 10 &&
-                e.Level == EventLevel.Informational &&
-                e.EventName == "RequestRetrying" &&
-                e.GetProperty<string>("requestId").Equals(request.RequestId) &&
-                e.GetProperty<int>("retryNumber") == retryNumber
-            ));
+            var e = listener.SingleEventById(10, args => args.GetProperty<int>("retryNumber") == retryNumber);
+
+            Assert.AreEqual(EventLevel.Informational, e.Level);
+            Assert.AreEqual("RequestRetrying", e.EventName);
+            Assert.AreEqual(request.RequestId, e.GetProperty<string>("requestId"));
         }
 
         private static Task<Response> SendRequest(MockTransport mockTransport, FixedRetryPolicyMock policy)
@@ -178,7 +176,7 @@ namespace Azure.Base.Tests
             return pipeline.SendRequestAsync(httpPipelineRequest, CancellationToken.None);
         }
 
-        private class FixedRetryPolicyMock: FixedPolicy
+        private class FixedRetryPolicyMock: FixedRetryPolicy
         {
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 

@@ -12,7 +12,7 @@ namespace Azure.Base.Http.Pipeline
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
         public static RetryPolicy CreateFixed(int maxRetries, TimeSpan delay, params int[] retriableCodes)
-            => new FixedPolicy(retriableCodes, maxRetries, delay);
+            => new FixedRetryPolicy(retriableCodes, maxRetries, delay);
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
