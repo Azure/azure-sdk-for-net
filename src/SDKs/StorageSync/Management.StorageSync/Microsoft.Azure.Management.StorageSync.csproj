@@ -6,15 +6,15 @@
     <PropertyGroup>
         <PackageId>Microsoft.Azure.Management.StorageSync</PackageId>
         <Description>Provides management capabilities for Azure Storage Sync.</Description>
-        <Version>2.8.0-preview</Version>
+        <Version>3.0.0</Version>
         <AssemblyName>Microsoft.Azure.Management.StorageSync</AssemblyName>    
         <PackageTags>Microsoft Azure StorageSync;StorageSync;Azure File Sync;AFS;Microsoft.StorageSync;Storage Sync Service</PackageTags>
         <PackageReleaseNotes>
         <![CDATA[
-            This version uses 2.8.0-preview StorageSync API specification which introduced the next version for Azure File Storage Sync.
-                1. Support for Offline data transfer for Server Endpoints.
-                2. Reset of Sync server client certificate.
-      ]]>
+            This version supports the StorageSync API version 2019-02-01. New features include:
+                1. Support for tracking parallel upload and download for server endpoints
+                2. Rename the StorageAccountShareName parameter for cloud endpoints to AzureFileShareName
+        ]]>
         </PackageReleaseNotes>
     </PropertyGroup>
 
