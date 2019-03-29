@@ -19,5 +19,9 @@
 
 	<!-- Please do not move/edit code below this line -->
 	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<ItemGroup>
+	  <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.20" />
+	  <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.19" />
+	</ItemGroup>
 	<!-- Please do not move/edit code above this line -->
 </Project>

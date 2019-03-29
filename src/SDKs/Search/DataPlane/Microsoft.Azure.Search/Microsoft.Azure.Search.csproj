@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Microsoft.Azure.Search.Data\Microsoft.Azure.Search.Data.csproj" />
     <ProjectReference Include="..\Microsoft.Azure.Search.Service\Microsoft.Azure.Search.Service.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Rest.ClientRuntime" Version="2.3.20" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure" Version="3.3.19" />
+  </ItemGroup>
 </Project>

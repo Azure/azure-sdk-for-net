@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.0-preview" />
+    <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.2.0-preview" />
     <ProjectReference Include="..\Management.Search\Microsoft.Azure.Management.Search.csproj" />
     <ProjectReference Include="..\..\DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
   </ItemGroup>
@@ -22,6 +24,10 @@
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="1.13.3" />
+    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.6" />
   </ItemGroup>
 
 </Project>
