@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// ApplicationInsightsComponentExportConfiguration class.
         /// </summary>
         /// <param name="exportId">The unique ID of the export configuration
-        /// inside an Applciation Insights component. It is auto generated when
+        /// inside an Application Insights component. It is auto generated when
         /// the Continuous Export configuration is created.</param>
         /// <param name="instrumentationKey">The instrumentation key of the
         /// Application Insights component.</param>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
 
         /// <summary>
         /// Gets the unique ID of the export configuration inside an
-        /// Applciation Insights component. It is auto generated when the
+        /// Application Insights component. It is auto generated when the
         /// Continuous Export configuration is created.
         /// </summary>
         [JsonProperty(PropertyName = "ExportId")]

@@ -20,25 +20,25 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
     /// <summary>
     /// An azure resource object
     /// </summary>
-    public partial class Resource : IResource
+    public partial class ComponentsResource : IResource
     {
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ComponentsResource class.
         /// </summary>
-        public Resource()
+        public ComponentsResource()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Resource class.
+        /// Initializes a new instance of the ComponentsResource class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Azure resource Id</param>
         /// <param name="name">Azure resource name</param>
         /// <param name="type">Azure resource type</param>
         /// <param name="tags">Resource tags</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ComponentsResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;

@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IPage<WebTest> ListByResourceGroup(this IWebTestsOperations operations, string resourceGroupName)
             {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='webTestName'>
             /// The name of the Application Insights webtest resource.
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             }
 
             /// <summary>
-            /// Get all Application Insights web test alerts definitioned within a
+            /// Get all Application Insights web test alerts definitions within a
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             }
 
             /// <summary>
-            /// Get all Application Insights web test alerts definitioned within a
+            /// Get all Application Insights web test alerts definitions within a
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -255,6 +255,46 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             public static async Task<IPage<WebTest>> ListAsync(this IWebTestsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all Application Insights web tests defined for the specified component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='componentName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            public static IPage<WebTest> ListByComponent(this IWebTestsOperations operations, string componentName, string resourceGroupName)
+            {
+                return operations.ListByComponentAsync(componentName, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all Application Insights web tests defined for the specified component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='componentName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WebTest>> ListByComponentAsync(this IWebTestsOperations operations, string componentName, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByComponentWithHttpMessagesAsync(componentName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -297,7 +337,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             }
 
             /// <summary>
-            /// Get all Application Insights web test alerts definitioned within a
+            /// Get all Application Insights web test alerts definitions within a
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -312,7 +352,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             }
 
             /// <summary>
-            /// Get all Application Insights web test alerts definitioned within a
+            /// Get all Application Insights web test alerts definitions within a
             /// subscription.
             /// </summary>
             /// <param name='operations'>
@@ -327,6 +367,40 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             public static async Task<IPage<WebTest>> ListNextAsync(this IWebTestsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all Application Insights web tests defined for the specified component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<WebTest> ListByComponentNext(this IWebTestsOperations operations, string nextPageLink)
+            {
+                return operations.ListByComponentNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all Application Insights web tests defined for the specified component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<WebTest>> ListByComponentNextAsync(this IWebTestsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByComponentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
