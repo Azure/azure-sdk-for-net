@@ -72,6 +72,62 @@ namespace Microsoft.Azure.Search.Tests
 
         public GeographyPoint GeographyPoint { get; set; }
 
+        public int[] IntArray { get; set; }
+
+        public IList<int> IntIList { get; set; }
+
+        public List<int> IntList { get; set; }
+
+        public IEnumerable<int> IntIEnumerable { get; set; }
+
+        public long[] LongArray { get; set; }
+
+        public IList<long> LongIList { get; set; }
+
+        public List<long> LongList { get; set; }
+
+        public IEnumerable<long> LongIEnumerable { get; set; }
+
+        public double[] DoubleArray { get; set; }
+
+        public IList<double> DoubleIList { get; set; }
+
+        public List<double> DoubleList { get; set; }
+
+        public IEnumerable<double> DoubleIEnumerable { get; set; }
+
+        public bool[] BoolArray { get; set; }
+
+        public IList<bool> BoolIList { get; set; }
+
+        public List<bool> BoolList { get; set; }
+
+        public IEnumerable<bool> BoolIEnumerable { get; set; }
+
+        public DateTime[] DateTimeArray { get; set; }
+
+        public IList<DateTime> DateTimeIList { get; set; }
+
+        public List<DateTime> DateTimeList { get; set; }
+
+        public IEnumerable<DateTime> DateTimeIEnumerable { get; set; }
+
+        public DateTimeOffset[] DateTimeOffsetArray { get; set; }
+
+        public IList<DateTimeOffset> DateTimeOffsetIList { get; set; }
+
+        public List<DateTimeOffset> DateTimeOffsetList { get; set; }
+
+        public IEnumerable<DateTimeOffset> DateTimeOffsetIEnumerable { get; set; }
+
+        public GeographyPoint[] GeographyPointArray { get; set; }
+
+        public IList<GeographyPoint> GeographyPointIList { get; set; }
+
+        public List<GeographyPoint> GeographyPointList { get; set; }
+
+        public IEnumerable<GeographyPoint> GeographyPointIEnumerable { get; set; }
+
         [JsonIgnore]
         [IsRetrievable(false)]
 #pragma warning disable IDE1006 // Naming Styles
