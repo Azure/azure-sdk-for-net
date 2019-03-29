@@ -2,12 +2,14 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace Azure.Base.Tests.Testing
 {
     public class AsyncGate<TIn, TOut>
     {
+        private object _sync = new object();
         private TaskCompletionSource<TIn> _signalTaskCompletionSource = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
         private TaskCompletionSource<TOut> _releaseTaskCompletionSource = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
 
@@ -32,31 +34,43 @@ namespace Azure.Base.Tests.Testing
 
         public void Release(TOut value = default)
         {
-            Reset().SetResult(value);
+            lock (_sync)
+            {
+                Reset().SetResult(value);
+            }
         }
 
         public void ReleaseWithException(Exception exception)
         {
-            Reset().SetException(exception);
+            lock (_sync)
+            {
+                Reset().SetException(exception);
+            }
         }
 
         private TaskCompletionSource<TOut> Reset()
         {
-            if (!_signalTaskCompletionSource.Task.IsCompleted)
+            lock (_sync)
             {
-                throw new InvalidOperationException("No await call to release");
-            }
+                if (!_signalTaskCompletionSource.Task.IsCompleted)
+                {
+                    throw new InvalidOperationException("No await call to release");
+                }
 
-            var releaseTaskCompletionSource = _releaseTaskCompletionSource;
-            _releaseTaskCompletionSource = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
-            _signalTaskCompletionSource = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
-            return releaseTaskCompletionSource;
+                var releaseTaskCompletionSource = _releaseTaskCompletionSource;
+                _releaseTaskCompletionSource = new TaskCompletionSource<TOut>(TaskCreationOptions.RunContinuationsAsynchronously);
+                _signalTaskCompletionSource = new TaskCompletionSource<TIn>(TaskCreationOptions.RunContinuationsAsynchronously);
+                return releaseTaskCompletionSource;
+            }
         }
 
-        public async Task<TOut> WaitForRelease(TIn value = default)
+        public Task<TOut> WaitForRelease(TIn value = default)
         {
-            _signalTaskCompletionSource.SetResult(value);
-            return await _releaseTaskCompletionSource.Task.TimeoutAfter(TimeSpan.FromSeconds(10));
+            lock (_sync)
+            {
+                _signalTaskCompletionSource.SetResult(value);
+                return _releaseTaskCompletionSource.Task.TimeoutAfterDefault();
+            }
         }
     }
 }
