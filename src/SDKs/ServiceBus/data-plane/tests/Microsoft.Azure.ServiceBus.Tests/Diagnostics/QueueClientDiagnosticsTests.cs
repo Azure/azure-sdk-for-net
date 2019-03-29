@@ -142,7 +142,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             });
         }
 
-        [LiveFact]
+        [LiveFact(Skip="This test is consistently unreliable in nightly runs.  Disabling for further investigation.")]
         [DisplayTestMethodName]
         async Task SendAndHandlerFireExceptionEvents()
         {
