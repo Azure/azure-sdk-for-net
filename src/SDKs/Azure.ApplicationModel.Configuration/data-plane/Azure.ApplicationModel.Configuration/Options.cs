@@ -52,7 +52,16 @@ namespace Azure.ApplicationModel.Configuration
 
         public SettingSelector(string key, string label = default)
         {
-            Keys = new List<string> { key };
+            Keys = new List<string>();
+            if (key == null)
+            {
+                Keys.Add(Any);
+            }
+            else
+            {
+                Keys.Add(key);
+            }
+
             Labels = new List<string>();
             if (label != null) Labels.Add(label);
         }

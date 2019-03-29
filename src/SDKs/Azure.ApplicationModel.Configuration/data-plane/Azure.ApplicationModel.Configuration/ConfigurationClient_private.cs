@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -25,6 +26,8 @@ namespace Azure.ApplicationModel.Configuration
         const string FieldsQueryFilter = "$select";
         const string IfMatchName = "If-Match";
         const string IfNoneMatch = "If-None-Match";
+
+        static readonly char[] ReservedCharacters = new char[] { ',', '\\' };
 
         static readonly HttpHeader MediaTypeKeyValueApplicationHeader = new HttpHeader(
             HttpHeader.Names.Accept,
@@ -106,11 +109,40 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        void BuildBatchQuery(UriBuilder builder, SettingSelector selector)
+        private string EscapeReservedCharacters(string input)
+        {
+            string resp = string.Empty;
+            for (int i=0; i<input.Length; i++)
+            {
+                if (ReservedCharacters.Contains(input[i]))
+                {
+                    resp += $"\\{input[i]}";
+                }
+                else
+                {
+                    resp += input[i];
+                }
+            }
+            return resp;
+        }
+
+        internal void BuildBatchQuery(UriBuilder builder, SettingSelector selector)
         {
             if (selector.Keys.Count > 0)
             {
-                var keys = string.Join(",", selector.Keys).ToLower();
+                var keysCopy = new List<string>();
+                foreach (var key in selector.Keys)
+                {
+                    if (key.IndexOfAny(ReservedCharacters) != -1)
+                    {
+                        keysCopy.Add(EscapeReservedCharacters(key));
+                    }
+                    else
+                    {
+                        keysCopy.Add(key);
+                    }
+                }
+                var keys = string.Join(",", keysCopy).ToLower();
                 builder.AppendQuery(KeyQueryFilter, keys);
             }
 
@@ -122,6 +154,10 @@ namespace Azure.ApplicationModel.Configuration
                     if (label == string.Empty)
                     {
                         labelsCopy.Add("\0");
+                    }
+                    else if (label.IndexOfAny(ReservedCharacters) != -1)
+                    {
+                        labelsCopy.Add(EscapeReservedCharacters(label));
                     }
                     else
                     {
