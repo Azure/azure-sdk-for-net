@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Search
         /// <returns>A collection of fields.</returns>
         public static IList<Field> BuildForType<T>(IContractResolver contractResolver)
         {
-            var contract = (JsonObjectContract) contractResolver.ResolveContract(typeof(T));
+            var contract = (JsonObjectContract)contractResolver.ResolveContract(typeof(T));
             var fields = new List<Field>();
             foreach (JsonProperty prop in contract.Properties)
             {
@@ -70,51 +70,49 @@ namespace Microsoft.Azure.Search
                                 
                 foreach (Attribute attribute in attributes)
                 {
-                    IsRetrievableAttribute isRetrievableAttribute;
-                    AnalyzerAttribute analyzerAttribute;
-                    SearchAnalyzerAttribute searchAnalyzerAttribute;
-                    IndexAnalyzerAttribute indexAnalyzerAttribute;                    
-                    if (attribute is IsSearchableAttribute)
+                    switch (attribute)
                     {
-                        field.IsSearchable = true;
-                    }
-                    else if (attribute is IsFilterableAttribute)
-                    {
-                        field.IsFilterable = true;
-                    }
-                    else if (attribute is IsSortableAttribute)
-                    {
-                        field.IsSortable = true;
-                    }
-                    else if (attribute is IsFacetableAttribute)
-                    {
-                        field.IsFacetable = true;
-                    }
-                    else if ((isRetrievableAttribute = attribute as IsRetrievableAttribute) != null)
-                    {
-                        field.IsRetrievable = isRetrievableAttribute.IsRetrievable;
-                    }
-                    else if ((analyzerAttribute = attribute as AnalyzerAttribute) != null)
-                    {
-                        field.Analyzer = analyzerAttribute.Name;
-                    }
-                    else if ((searchAnalyzerAttribute = attribute as SearchAnalyzerAttribute) != null)
-                    {
-                        field.SearchAnalyzer = searchAnalyzerAttribute.Name;
-                    }
-                    else if ((indexAnalyzerAttribute = attribute as IndexAnalyzerAttribute) != null)
-                    {
-                        field.IndexAnalyzer = indexAnalyzerAttribute.Name;
-                    }
-                    else
-                    {
-                        // Match on name to avoid dependency - don't want to force people not using
-                        // this feature to bring in the annotations component.
-                        Type attributeType = attribute.GetType();
-                        if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute")
-                        {
-                            field.IsKey = true;
-                        }
+                        case IsSearchableAttribute _:
+                            field.IsSearchable = true;
+                            break;
+
+                        case IsFilterableAttribute _:
+                            field.IsFilterable = true;
+                            break;
+
+                        case IsSortableAttribute _:
+                            field.IsSortable = true;
+                            break;
+
+                        case IsFacetableAttribute _:
+                            field.IsFacetable = true;
+                            break;
+
+                        case IsRetrievableAttribute isRetrievableAttribute:
+                            field.IsRetrievable = isRetrievableAttribute.IsRetrievable;
+                            break;
+
+                        case AnalyzerAttribute analyzerAttribute:
+                            field.Analyzer = analyzerAttribute.Name;
+                            break;
+
+                        case SearchAnalyzerAttribute searchAnalyzerAttribute:
+                            field.SearchAnalyzer = searchAnalyzerAttribute.Name;
+                            break;
+
+                        case IndexAnalyzerAttribute indexAnalyzerAttribute:
+                            field.IndexAnalyzer = indexAnalyzerAttribute.Name;
+                            break;
+
+                        default:
+                            // Match on name to avoid dependency - don't want to force people not using
+                            // this feature to bring in the annotations component.
+                            Type attributeType = attribute.GetType();
+                            if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute")
+                            {
+                                field.IsKey = true;
+                            }
+                            break;
                     }
                 }
 
