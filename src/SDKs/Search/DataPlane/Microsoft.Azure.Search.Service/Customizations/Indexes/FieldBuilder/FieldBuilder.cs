@@ -104,6 +104,10 @@ namespace Microsoft.Azure.Search
                             field.IndexAnalyzer = indexAnalyzerAttribute.Name;
                             break;
 
+                        case SynonymMapsAttribute synonymMapsAttribute:
+                            field.SynonymMaps = synonymMapsAttribute.SynonymMaps;
+                            break;
+
                         default:
                             // Match on name to avoid dependency - don't want to force people not using
                             // this feature to bring in the annotations component.
