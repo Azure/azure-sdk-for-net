@@ -78,7 +78,7 @@ namespace Azure.Base.Tests
         private void CheckExpectedRange(TimeSpan expected, TimeSpan actual)
         {
             // Expect maximum 25% variance
-            Assert.LessOrEqual(Math.Abs(expected.TotalMilliseconds / actual.TotalMilliseconds - 1), 0.2, "Expected {0} to be around {1}", actual, expected);
+            Assert.LessOrEqual(Math.Abs(expected.TotalMilliseconds / actual.TotalMilliseconds - 1), 0.25, "Expected {0} to be around {1}", actual, expected);
         }
 
         protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3)
