@@ -13,82 +13,35 @@ namespace Microsoft.Azure.Search.Tests
 
     public class FieldBuilderTests
     {
-        [Fact]
-        public void ReportsStringProperties()
+        [Theory]
+        [InlineData(DataType.AsString.String, nameof(ReflectableModel.Text))]
+        [InlineData(DataType.AsString.Int32, nameof(ReflectableModel.Id))]
+        [InlineData(DataType.AsString.Int64, nameof(ReflectableModel.BigNumber))]
+        [InlineData(DataType.AsString.Double, nameof(ReflectableModel.Double))]
+        [InlineData(DataType.AsString.Boolean, nameof(ReflectableModel.Flag))]
+        [InlineData(DataType.AsString.DateTimeOffset, nameof(ReflectableModel.Time))]
+        [InlineData(DataType.AsString.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset))]
+        [InlineData(DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPoint))]
+        public void ReportsPrimitiveTypedProperties(string expectedDataType, string fieldName)
         {
-            Test(fields => Assert.Equal(DataType.String, fields["Text"].Type));
-        }
-
-        [Fact]
-        public void ReportsInt32Properties()
-        {
-            Test(fields => Assert.Equal(DataType.Int32, fields["Id"].Type));
+            DataType dataType = expectedDataType;
+            Test(fields => Assert.Equal(dataType, fields[fieldName].Type));
         }
 
         [Fact]
         public void ReportsNullableInt32Properties()
         {
-            Test(fields => Assert.Equal(DataType.Int32, fields["NullableInt"].Type));
+            Test(fields => Assert.Equal(DataType.Int32, fields[nameof(ReflectableModel.NullableInt)].Type));
         }
 
-        [Fact]
-        public void ReportsInt64Properties()
+        [Theory]
+        [InlineData(nameof(ReflectableModel.StringArray))]
+        [InlineData(nameof(ReflectableModel.StringIList))]
+        [InlineData(nameof(ReflectableModel.StringIEnumerable))]
+        [InlineData(nameof(ReflectableModel.StringList))]
+        public void ReportsStringCollectionProperties(string fieldName)
         {
-            Test(fields => Assert.Equal(DataType.Int64, fields["BigNumber"].Type));
-        }
-
-        [Fact]
-        public void ReportsDoubleProperties()
-        {
-            Test(fields => Assert.Equal(DataType.Double, fields["Double"].Type));
-        }
-
-        [Fact]
-        public void ReportsBooleanProperties()
-        {
-            Test(fields => Assert.Equal(DataType.Boolean, fields["Flag"].Type));
-        }
-
-        [Fact]
-        public void ReportsDateTimeOffsetProperties()
-        {
-            Test(fields => Assert.Equal(DataType.DateTimeOffset, fields["Time"].Type));
-        }
-
-        [Fact]
-        public void ReportsDateTimeProperties()
-        {
-            Test(fields => Assert.Equal(DataType.DateTimeOffset, fields["TimeWithoutOffset"].Type));
-        }
-
-        [Fact]
-        public void ReportsGeographyPointProperties()
-        {
-            Test(fields => Assert.Equal(DataType.GeographyPoint, fields["GeographyPoint"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringArrayProperties()
-        {
-            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringArray"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringIListProperties()
-        {
-            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIList"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringIEnumerableProperties()
-        {
-            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIEnumerable"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringListProperties()
-        {
-            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringList"].Type));
+            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields[fieldName].Type));
         }
 
         [Fact]

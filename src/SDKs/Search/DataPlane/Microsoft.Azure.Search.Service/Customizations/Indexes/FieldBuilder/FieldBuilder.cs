@@ -12,12 +12,27 @@ namespace Microsoft.Azure.Search
     using Microsoft.Spatial;
     using Newtonsoft.Json.Serialization;
     using Newtonsoft.Json;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Builds field definitions for an Azure Search index by reflecting over a user-defined model type.
     /// </summary>
     public static class FieldBuilder
     {
+        private static readonly IReadOnlyDictionary<Type, DataType> PrimitiveTypeMap =
+            new ReadOnlyDictionary<Type, DataType>(
+                new Dictionary<Type, DataType>()
+                {
+                    [typeof(string)] = DataType.String,
+                    [typeof(int)] = DataType.Int32,
+                    [typeof(long)] = DataType.Int64,
+                    [typeof(double)] = DataType.Double,
+                    [typeof(bool)] = DataType.Boolean,
+                    [typeof(DateTime)] = DataType.DateTimeOffset,
+                    [typeof(DateTimeOffset)] = DataType.DateTimeOffset,
+                    [typeof(GeographyPoint)] = DataType.GeographyPoint
+                });
+
         private static IContractResolver CamelCaseResolver { get; } = new CamelCasePropertyNamesContractResolver();
 
         private static IContractResolver DefaultResolver { get; } = new DefaultContractResolver();
@@ -128,64 +143,60 @@ namespace Microsoft.Azure.Search
 
         private static DataType GetDataType(Type propertyType, string propertyName)
         {
-            if (propertyType == typeof(string))
+            bool IsNullableType(Type type) =>
+                type.IsConstructedGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>);
+
+            if (PrimitiveTypeMap.TryGetValue(propertyType, out DataType dataType))
             {
-                return DataType.String;
+                return dataType;
             }
-            if (propertyType.IsConstructedGenericType &&
-                propertyType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            else if (IsNullableType(propertyType))
             {
                 return GetDataType(propertyType.GenericTypeArguments[0], propertyName);
             }
-            if (propertyType == typeof(int))
-            {
-                return DataType.Int32;
-            }
-            if (propertyType == typeof(long))
-            {
-                return DataType.Int64;
-            }
-            if (propertyType == typeof(double))
-            {
-                return DataType.Double;
-            }
-            if (propertyType == typeof(bool))
-            {
-                return DataType.Boolean;
-            }
-            if (propertyType == typeof(DateTimeOffset) ||
-                propertyType == typeof(DateTime))
-            {
-                return DataType.DateTimeOffset;
-            }
-            if (propertyType == typeof(GeographyPoint))
-            {
-                return DataType.GeographyPoint;
-            }
-            Type elementType = GetElementTypeIfIEnumerable(propertyType);
-            if (elementType != null)
+            else if (TryGetEnumerableElementType(propertyType, out Type elementType))
             {
                 return DataType.Collection(GetDataType(elementType, propertyName));
             }
-            TypeInfo ti = propertyType.GetTypeInfo();
-            var listElementTypes = ti
-                .ImplementedInterfaces
-                .Select(GetElementTypeIfIEnumerable)
-                .Where(p => p != null)
-                .ToList();
-            if (listElementTypes.Count == 1)
+            else
             {
-                return DataType.Collection(GetDataType(listElementTypes[0], propertyName));
+                throw new ArgumentException(
+                    $"Property {propertyName} has unsupported type {propertyType}",
+                    nameof(propertyType));
             }
-
-            throw new ArgumentException(
-                $"Property {propertyName} has unsupported type {propertyType}",
-                nameof(propertyType));
         }
 
-        private static Type GetElementTypeIfIEnumerable(Type t) =>
-            t.IsConstructedGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)
-                ? t.GenericTypeArguments[0]
-                : null;
+        private static bool TryGetEnumerableElementType(Type candidateType, out Type elementType)
+        {
+            Type GetElementTypeIfIEnumerable(Type t) =>
+                t.IsConstructedGenericType && t.GetGenericTypeDefinition() == typeof(IEnumerable<>)
+                    ? t.GenericTypeArguments[0]
+                    : null;
+
+            elementType = GetElementTypeIfIEnumerable(candidateType);
+            if (elementType != null)
+            {
+                return true;
+            }
+            else
+            {
+                TypeInfo ti = candidateType.GetTypeInfo();
+                var listElementTypes = ti
+                    .ImplementedInterfaces
+                    .Select(GetElementTypeIfIEnumerable)
+                    .Where(p => p != null)
+                    .ToList();
+
+                if (listElementTypes.Count == 1)
+                {
+                    elementType = listElementTypes[0];
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }
