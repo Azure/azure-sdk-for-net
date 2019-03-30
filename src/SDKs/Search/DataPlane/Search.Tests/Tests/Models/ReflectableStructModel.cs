@@ -30,6 +30,16 @@ namespace Microsoft.Azure.Search.Tests
         [IsFilterable]
         public int Rating { get; set; }
 
+        // Ensure that leaf-field-specific attributes are ignored by FieldBuilder on complex fields.
+        [IsSearchable]
+        [IsFilterable]
+        [IsSortable]
+        [IsFacetable]
+        [IsRetrievable(false)]
+        [Analyzer(AnalyzerName.AsString.ZhHantLucene)]
+        [IndexAnalyzer(AnalyzerName.AsString.ZhHantLucene)]
+        [SearchAnalyzer(AnalyzerName.AsString.ZhHantLucene)]
+        [SynonymMaps("myMap")]
         public ReflectableAddressStruct Address { get; set; }
     }
 
