@@ -3521,5 +3521,32 @@ namespace DataFactory.Tests.JsonSamples
         ]
     }
 }";
+
+        [JsonSample(version: "ValidationActivity")]
+        public const string Validation = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                ""type"": ""Validation"",
+                ""name"": ""ValidationActivity"",
+                ""description"": ""Test activity description"",
+                ""typeProperties"": {
+                    ""timeout"": ""00:03:00"",
+                    ""sleep"": 10,
+                    ""minimumSize"": {
+                        ""type"": ""Expression"",
+                        ""value"": ""@add(0,1)""
+                    },
+                    ""dataset"": {
+                        ""referenceName"": ""FileDataset"",
+                        ""type"": ""DatasetReference""
+                    }
+                }
+            }
+        ]
+    }
+}";
     }
 }
