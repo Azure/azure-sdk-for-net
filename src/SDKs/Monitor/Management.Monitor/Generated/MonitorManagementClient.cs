@@ -145,9 +145,9 @@ namespace Microsoft.Azure.Management.Monitor
         public virtual IMetricBaselineOperations MetricBaseline { get; private set; }
 
         /// <summary>
-        /// Gets the IMetricBaselinesOperations.
+        /// Gets the IBaselinesOperations.
         /// </summary>
-        public virtual IMetricBaselinesOperations MetricBaselines { get; private set; }
+        public virtual IBaselinesOperations Baselines { get; private set; }
 
         /// <summary>
         /// Gets the IMetricAlertsOperations.
@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.Monitor
             MetricDefinitions = new MetricDefinitionsOperations(this);
             Metrics = new MetricsOperations(this);
             MetricBaseline = new MetricBaselineOperations(this);
-            MetricBaselines = new MetricBaselinesOperations(this);
+            Baselines = new BaselinesOperations(this);
             MetricAlerts = new MetricAlertsOperations(this);
             MetricAlertsStatus = new MetricAlertsStatusOperations(this);
             ScheduledQueryRules = new ScheduledQueryRulesOperations(this);

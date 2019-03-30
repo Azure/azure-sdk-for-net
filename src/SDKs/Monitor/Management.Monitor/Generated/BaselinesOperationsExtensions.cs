@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Monitor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for MetricBaselinesOperations.
+    /// Extension methods for BaselinesOperations.
     /// </summary>
-    public static partial class MetricBaselinesOperationsExtensions
+    public static partial class BaselinesOperationsExtensions
     {
             /// <summary>
             /// **Lists the metric baseline values for a resource**.
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// Allows retrieving only metadata of the baseline. On data request all
             /// information is retrieved. Possible values include: 'Data', 'Metadata'
             /// </param>
-            public static MetricBaselinesResponse List(this IMetricBaselinesOperations operations, string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?))
+            public static MetricBaselinesResponse List(this IBaselinesOperations operations, string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?))
             {
                 return operations.ListAsync(resourceUri, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType).GetAwaiter().GetResult();
             }
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Monitor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetricBaselinesResponse> ListAsync(this IMetricBaselinesOperations operations, string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<MetricBaselinesResponse> ListAsync(this IBaselinesOperations operations, string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceUri, metricnames, metricnamespace, timespan, interval, aggregation, sensitivities, filter, resultType, null, cancellationToken).ConfigureAwait(false))
                 {
