@@ -140,9 +140,9 @@ namespace Microsoft.Azure.Management.Monitor
         public virtual IMetricsOperations Metrics { get; private set; }
 
         /// <summary>
-        /// Gets the IBaselineOperations.
+        /// Gets the IMetricBaselineOperations.
         /// </summary>
-        public virtual IBaselineOperations Baseline { get; private set; }
+        public virtual IMetricBaselineOperations MetricBaseline { get; private set; }
 
         /// <summary>
         /// Gets the IMetricBaselinesOperations.
@@ -429,7 +429,7 @@ namespace Microsoft.Azure.Management.Monitor
             TenantActivityLogs = new TenantActivityLogsOperations(this);
             MetricDefinitions = new MetricDefinitionsOperations(this);
             Metrics = new MetricsOperations(this);
-            Baseline = new BaselineOperations(this);
+            MetricBaseline = new MetricBaselineOperations(this);
             MetricBaselines = new MetricBaselinesOperations(this);
             MetricAlerts = new MetricAlertsOperations(this);
             MetricAlertsStatus = new MetricAlertsStatusOperations(this);

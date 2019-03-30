@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     using System.Linq;
 
     /// <summary>
-    /// The time series baseline class.
+    /// The baseline values for a single time series.
     /// </summary>
     public partial class TimeSeriesBaseline
     {
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="aggregation">The aggregation type of the
         /// metric.</param>
-        /// <param name="timestamps">the array of timestamps of the
+        /// <param name="timestamps">The list of timestamps of the
         /// baselines.</param>
-        /// <param name="data">the baseline values for each
+        /// <param name="data">The baseline values for each
         /// sensitivity.</param>
-        /// <param name="dimensions">the dimensions of this time
+        /// <param name="dimensions">The dimensions of this time
         /// series.</param>
-        /// <param name="metadata">the baseline metadata values.</param>
+        /// <param name="metadata">The baseline metadata values.</param>
         public TimeSeriesBaseline(string aggregation, IList<System.DateTime?> timestamps, IList<Baseline> data, IList<MetricSingleDimension> dimensions = default(IList<MetricSingleDimension>), IList<BaselineMetadata> metadata = default(IList<BaselineMetadata>))
         {
             Aggregation = aggregation;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public IList<MetricSingleDimension> Dimensions { get; set; }
 
         /// <summary>
-        /// Gets or sets the array of timestamps of the baselines.
+        /// Gets or sets the list of timestamps of the baselines.
         /// </summary>
         [JsonProperty(PropertyName = "timestamps")]
         public IList<System.DateTime?> Timestamps { get; set; }

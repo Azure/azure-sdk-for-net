@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Monitor
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BaselineOperations operations.
+    /// MetricBaselineOperations operations.
     /// </summary>
-    internal partial class BaselineOperations : IServiceOperations<MonitorManagementClient>, IBaselineOperations
+    internal partial class MetricBaselineOperations : IServiceOperations<MonitorManagementClient>, IMetricBaselineOperations
     {
         /// <summary>
-        /// Initializes a new instance of the BaselineOperations class.
+        /// Initializes a new instance of the MetricBaselineOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BaselineOperations(MonitorManagementClient client)
+        internal MetricBaselineOperations(MonitorManagementClient client)
         {
             if (client == null)
             {

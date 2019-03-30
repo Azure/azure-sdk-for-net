@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Initializes a new instance of the SingleMetricBaseline class.
         /// </summary>
-        /// <param name="id">the metric baseline Id.</param>
-        /// <param name="type">the resource type of the metric baseline
+        /// <param name="id">The metric baseline Id.</param>
+        /// <param name="type">The resource type of the metric baseline
         /// resource.</param>
-        /// <param name="metricName">the name of the metric.</param>
-        /// <param name="baselines">the baseline for each time series that was
+        /// <param name="metricName">The name of the metric.</param>
+        /// <param name="baselines">The baseline for each time series that was
         /// queried.</param>
         public SingleMetricBaseline(string id, string type, string metricName, IList<TimeSeriesBaseline> baselines)
         {

@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -38,11 +40,11 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// metric data was returned in.  This may be adjusted in the future
         /// and returned back from what was originally requested.  This is not
         /// present if a metadata request was made.</param>
-        /// <param name="value">The baseline results of a single
+        /// <param name="value">The list of baseline results for each
         /// metric.</param>
         /// <param name="namespaceProperty">The namespace of the metrics been
         /// queried.</param>
-        public MetricBaselinesResponse(string timespan, System.TimeSpan interval, SingleMetricBaseline value, string namespaceProperty = default(string))
+        public MetricBaselinesResponse(string timespan, System.TimeSpan interval, IList<SingleMetricBaseline> value, string namespaceProperty = default(string))
         {
             Timespan = timespan;
             Interval = interval;
@@ -81,10 +83,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string NamespaceProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the baseline results of a single metric.
+        /// Gets or sets the list of baseline results for each metric.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public SingleMetricBaseline Value { get; set; }
+        public IList<SingleMetricBaseline> Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -104,7 +106,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
             }
             if (Value != null)
             {
-                Value.Validate();
+                foreach (var element in Value)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

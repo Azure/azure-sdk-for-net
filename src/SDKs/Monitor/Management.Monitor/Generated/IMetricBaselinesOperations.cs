@@ -24,13 +24,10 @@ namespace Microsoft.Azure.Management.Monitor
     public partial interface IMetricBaselinesOperations
     {
         /// <summary>
-        /// **Gets the metric baseline values**.
+        /// **Lists the metric baseline values for a resource**.
         /// </summary>
         /// <param name='resourceUri'>
-        /// The identifier of the resource. It has the following structure:
-        /// subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/{providerName}/{resourceName}.
-        /// For example:
-        /// subscriptions/b368ca2f-e298-46b7-b0ab-012281956afa/resourceGroups/vms/providers/Microsoft.Compute/virtualMachines/vm1
+        /// The identifier of the resource.
         /// </param>
         /// <param name='metricnames'>
         /// The names of the metrics (comma separated) to retrieve.
@@ -84,6 +81,6 @@ namespace Microsoft.Azure.Management.Monitor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<MetricBaselinesResponse>> GetWithHttpMessagesAsync(string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<MetricBaselinesResponse>> ListWithHttpMessagesAsync(string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
