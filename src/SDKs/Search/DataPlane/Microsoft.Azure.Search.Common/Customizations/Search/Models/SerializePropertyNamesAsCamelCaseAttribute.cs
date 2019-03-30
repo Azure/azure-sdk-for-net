@@ -26,8 +26,16 @@ namespace Microsoft.Azure.Search.Models
         /// <typeparam name="T">The type to test.</typeparam>
         /// <returns>true if the given type is annotated with SerializePropertyNamesAsCamelCaseAttribute,
         /// false otherwise.</returns>
-        public static bool IsDefinedOnType<T>() =>
-            typeof(T)
+        public static bool IsDefinedOnType<T>() => IsDefinedOnType(typeof(T));
+
+        /// <summary>
+        /// Indicates whether the given type is annotated with SerializePropertyNamesAsCamelCaseAttribute.
+        /// </summary>
+        /// <param name="modelType">The type to test.</param>
+        /// <returns>true if the given type is annotated with SerializePropertyNamesAsCamelCaseAttribute,
+        /// false otherwise.</returns>
+        public static bool IsDefinedOnType(Type modelType) =>
+            modelType
                 .GetTypeInfo()
                 .GetCustomAttributes(typeof(SerializePropertyNamesAsCamelCaseAttribute), inherit: true)
                 .Any();

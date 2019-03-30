@@ -13,147 +13,210 @@ namespace Microsoft.Azure.Search.Tests
 
     public class FieldBuilderTests
     {
+        private static IEnumerable<Type> TestModelTypes
+        {
+            get
+            {
+                // MAINTENANCE NOTE: These two types and the types of their properties must be identical,
+                // other than that one is a group of classes and one is a group of structs.
+                yield return typeof(ReflectableModel);
+                yield return typeof(ReflectableStructModel);
+            }
+        }
+
+        public static TheoryData<Type> TestModelTypeTestData => new TheoryData<Type>().PopulateFrom(TestModelTypes);
+
+        public static TheoryData<Type, DataType, string> PrimitiveTypeTestData
+        {
+            get
+            {
+                (DataType, string)[] primitivePropertyTestData = new[]
+                {
+                    (DataType.String, nameof(ReflectableModel.Text)),
+                    (DataType.Int32, nameof(ReflectableModel.Id)),
+                    (DataType.Int64, nameof(ReflectableModel.BigNumber)),
+                    (DataType.Double, nameof(ReflectableModel.Double)),
+                    (DataType.Boolean, nameof(ReflectableModel.Flag)),
+                    (DataType.DateTimeOffset, nameof(ReflectableModel.Time)),
+                    (DataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
+                    (DataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint))
+                };
+
+                return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, primitivePropertyTestData));
+            }
+        }
+
+        public static TheoryData<Type, DataType, string> CollectionTypeTestData
+        {
+            get
+            {
+                (DataType, string)[] collectionPropertyTestData = new[]
+                {
+                    (DataType.String, nameof(ReflectableModel.StringArray)),
+                    (DataType.String, nameof(ReflectableModel.StringIList)),
+                    (DataType.String, nameof(ReflectableModel.StringIEnumerable)),
+                    (DataType.String, nameof(ReflectableModel.StringList))
+                };
+
+                return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, collectionPropertyTestData));
+            }
+        }
+
         [Theory]
-        [InlineData(DataType.AsString.String, nameof(ReflectableModel.Text))]
-        [InlineData(DataType.AsString.Int32, nameof(ReflectableModel.Id))]
-        [InlineData(DataType.AsString.Int64, nameof(ReflectableModel.BigNumber))]
-        [InlineData(DataType.AsString.Double, nameof(ReflectableModel.Double))]
-        [InlineData(DataType.AsString.Boolean, nameof(ReflectableModel.Flag))]
-        [InlineData(DataType.AsString.DateTimeOffset, nameof(ReflectableModel.Time))]
-        [InlineData(DataType.AsString.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset))]
-        [InlineData(DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPoint))]
-        public void ReportsPrimitiveTypedProperties(string expectedDataType, string fieldName)
+        [MemberData(nameof(PrimitiveTypeTestData))]
+        public void ReportsPrimitiveTypedProperties(Type modelType, DataType expectedDataType, string fieldName)
         {
-            DataType dataType = expectedDataType;
-            Test(fields => Assert.Equal(dataType, fields[fieldName].Type));
-        }
-
-        [Fact]
-        public void ReportsNullableInt32Properties()
-        {
-            Test(fields => Assert.Equal(DataType.Int32, fields[nameof(ReflectableModel.NullableInt)].Type));
+            Test(modelType, fields => Assert.Equal(expectedDataType, fields[fieldName].Type));
         }
 
         [Theory]
-        [InlineData(nameof(ReflectableModel.StringArray))]
-        [InlineData(nameof(ReflectableModel.StringIList))]
-        [InlineData(nameof(ReflectableModel.StringIEnumerable))]
-        [InlineData(nameof(ReflectableModel.StringList))]
-        public void ReportsStringCollectionProperties(string fieldName)
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void ReportsNullableInt32Properties(Type modelType)
         {
-            Test(fields => Assert.Equal(DataType.Collection(DataType.String), fields[fieldName].Type));
+            Test(modelType, fields => Assert.Equal(DataType.Int32, fields[nameof(ReflectableModel.NullableInt)].Type));
         }
 
-        [Fact]
-        public void ReportsKeyOnlyOnPropertyWithKeyAttribute()
+        [Theory]
+        [MemberData(nameof(CollectionTypeTestData))]
+        public void ReportsCollectionProperties(Type modelType, DataType expectedElementDataType, string fieldName)
         {
-            OnlyTrueFor(field => field.IsKey, nameof(ReflectableModel.Id));
+            Test(modelType, fields => Assert.Equal(DataType.Collection(expectedElementDataType), fields[fieldName].Type));
         }
 
-        [Fact]
-        public void ReportsIsSearchableOnlyOnPropertiesWithIsSearchableAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void ReportsKeyOnlyOnPropertyWithKeyAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.IsSearchable, nameof(ReflectableModel.Text), nameof(ReflectableModel.MoreText));
+            OnlyTrueFor(modelType, field => field.IsKey.GetValueOrDefault(false), nameof(ReflectableModel.Id));
         }
 
-        [Fact]
-        public void IsFilterableOnlyOnPropertiesWithIsFilterableAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void ReportsIsSearchableOnlyOnPropertiesWithIsSearchableAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.IsFilterable, nameof(ReflectableModel.FilterableText));
+            OnlyTrueFor(
+                modelType,
+                field => field.IsSearchable.GetValueOrDefault(false),
+                nameof(ReflectableModel.Text),
+                nameof(ReflectableModel.MoreText));
         }
 
-        [Fact]
-        public void IsSortableOnlyOnPropertiesWithIsSortableAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsFilterableOnlyOnPropertiesWithIsFilterableAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.IsSortable, nameof(ReflectableModel.SortableText));
+            OnlyTrueFor(
+                modelType,
+                field => field.IsFilterable.GetValueOrDefault(false),
+                nameof(ReflectableModel.FilterableText));
         }
 
-        [Fact]
-        public void IsFacetableOnlyOnPropertiesWithIsFacetableAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsSortableOnlyOnPropertiesWithIsSortableAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.IsFacetable, nameof(ReflectableModel.FacetableText));
+            OnlyTrueFor(modelType, field => field.IsSortable.GetValueOrDefault(false), nameof(ReflectableModel.SortableText));
         }
 
-        [Fact]
-        public void IsRetrievableOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsFacetableOnlyOnPropertiesWithIsFacetableAttribute(Type modelType)
         {
-            OnlyFalseFor(field => field.IsRetrievable, nameof(ReflectableModel.IrretrievableText));
+            OnlyTrueFor(
+                modelType,
+                field => field.IsFacetable.GetValueOrDefault(false),
+                nameof(ReflectableModel.FacetableText));
         }
 
-        [Fact]
-        public void AnalyzerSetOnlyOnPropertiesWithAnalyzerAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsRetrievableOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse(Type modelType)
         {
-            OnlyTrueFor(field => field.Analyzer == AnalyzerName.EnMicrosoft, nameof(ReflectableModel.TextWithAnalyzer));
+            OnlyFalseFor(modelType, field => field.IsRetrievable.GetValueOrDefault(true), nameof(ReflectableModel.IrretrievableText));
         }
 
-        [Fact]
-        public void SearchAnalyzerSetOnlyOnPropertiesWithSearchAnalyzerAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void AnalyzerSetOnlyOnPropertiesWithAnalyzerAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.SearchAnalyzer == AnalyzerName.EsLucene, nameof(ReflectableModel.TextWithSearchAnalyzer));
+            OnlyTrueFor(
+                modelType,
+                field => field.Analyzer == AnalyzerName.EnMicrosoft,
+                nameof(ReflectableModel.TextWithAnalyzer));
         }
 
-        [Fact]
-        public void IndexAnalyzerSetOnlyOnPropertiesWithIndexAnalyzerAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void SearchAnalyzerSetOnlyOnPropertiesWithSearchAnalyzerAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.IndexAnalyzer == AnalyzerName.Whitespace, nameof(ReflectableModel.TextWithIndexAnalyzer));
+            OnlyTrueFor(modelType, field => field.SearchAnalyzer == AnalyzerName.EsLucene, nameof(ReflectableModel.TextWithSearchAnalyzer));
         }
 
-        [Fact]
-        public void SynonymMapsSetOnlyOnPropertiesWithSynonymMapsAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IndexAnalyzerSetOnlyOnPropertiesWithIndexAnalyzerAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.SynonymMaps?.Contains("myMap") ?? false, nameof(ReflectableModel.Text));
+            OnlyTrueFor(modelType, field => field.IndexAnalyzer == AnalyzerName.Whitespace, nameof(ReflectableModel.TextWithIndexAnalyzer));
         }
 
-        [Fact]
-        public void HonoursSerializePropertyNamesAsCamelCaseAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void SynonymMapsSetOnlyOnPropertiesWithSynonymMapsAttribute(Type modelType)
         {
-            TestCamelCase(fieldMap =>
+            OnlyTrueFor(modelType, field => field.SynonymMaps?.Contains("myMap") ?? false, nameof(ReflectableModel.Text));
+        }
+
+        [Theory]
+        [InlineData(typeof(ReflectableCamelCaseModel))]
+        [InlineData(typeof(ReflectableStructCamelCaseModel))]
+        public void HonoursSerializePropertyNamesAsCamelCaseAttribute(Type modelType)
+        {
+            void RunTest(Dictionary<string, Field> fieldMap)
             {
                 Assert.True(fieldMap.ContainsKey("id"));
                 Assert.True(fieldMap.ContainsKey("myProperty"));
-            });
+            }
+
+            TestForFields(RunTest, FieldBuilder.BuildForType(modelType));
         }
 
-        private void OnlyTrueFor(Func<Field, bool?> check, params string[] ids)
+        private static IEnumerable<(Type, DataType, string)> CombineTestData(
+            IEnumerable<Type> modelTypes,
+            IEnumerable<(DataType, string)> testData) =>
+            from type in modelTypes
+            from tuple in testData
+            select (type, tuple.Item1, tuple.Item2);
+
+        private void OnlyTrueFor(Type modelType, Func<Field, bool> check, params string[] expectedFieldNames)
         {
-            Test(fields =>
-            {
-                foreach (var kv in fields)
+            Test(
+                modelType,
+                fields =>
                 {
-                    string id = kv.Key;
-                    Field field = kv.Value;
-                    bool? result = check(field);
-                    Assert.True(result.HasValue);
+                    foreach ((string fieldNameFromModel, Field field) in fields)
+                    {
+                        bool result = check(field);
 
-                    if (ids.Contains(id))
-                    {
-                        Assert.True(result.Value, $"Expected true for field {id}.");
+                        if (expectedFieldNames.Contains(fieldNameFromModel))
+                        {
+                            Assert.True(result, $"Expected true for field {fieldNameFromModel}.");
+                        }
+                        else
+                        {
+                            Assert.False(result, $"Expected false for field {fieldNameFromModel}.");
+                        }
                     }
-                    else
-                    {
-                        Assert.False(result.Value, $"Expected false for field {id}.");
-                    }
-                }
-            });
+                });
         }
 
-        private void OnlyFalseFor(Func<Field, bool?> check, params string[] ids) =>
-            OnlyTrueFor(f => !check(f), ids);
+        private void OnlyFalseFor(Type modelType, Func<Field, bool> check, params string[] expectedFieldNames) =>
+            OnlyTrueFor(modelType, f => !check(f), expectedFieldNames);
 
-        private void Test(Action<Dictionary<string, Field>> run)
+        private void Test(Type modelType, Action<Dictionary<string, Field>> run)
         {
-            // Test with both with and without bring-your-own-resolver, and with classes and structs.
-            TestForFields(run, FieldBuilder.BuildForType<ReflectableModel>(new ReadOnlyJsonContractResolver()));
-            TestForFields(run, FieldBuilder.BuildForType<ReflectableModel>());
-            TestForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>(new ReadOnlyJsonContractResolver()));
-            TestForFields(run, FieldBuilder.BuildForType<ReflectableStructModel>());
-        }
-
-        private void TestCamelCase(Action<Dictionary<string, Field>> run)
-        {
-            // Test with both classes and structs.
-            TestForFields(run, FieldBuilder.BuildForType<ReflectableCamelCaseModel>());
-            TestForFields(run, FieldBuilder.BuildForType<ReflectableStructCamelCaseModel>());
+            // Test with both with and without bring-your-own-resolver.
+            TestForFields(run, FieldBuilder.BuildForType(modelType, new ReadOnlyJsonContractResolver()));
+            TestForFields(run, FieldBuilder.BuildForType(modelType));
         }
 
         private void TestForFields(Action<Dictionary<string, Field>> run, IList<Field> fields)
