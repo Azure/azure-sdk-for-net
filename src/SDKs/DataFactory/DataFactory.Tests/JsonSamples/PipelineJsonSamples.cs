@@ -3496,5 +3496,30 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+
+        [JsonSample(version: "WebhookActivity")]
+        public const string Webhook = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                ""name"": ""Webhook1"",
+                ""type"": ""WebHook"",
+                ""typeProperties"": {
+                    ""url"": ""http://samplesample.azurewebsites.net/api/execute/webhook"",
+                    ""method"": ""POST"",
+                    ""headers"": {
+                        ""Content-Type"": ""application/json""
+                    },
+                    ""body"": {
+                        ""key"": ""value""
+                    },
+                    ""timeout"": ""00:03:00""
+                }
+            }
+        ]
+    }
+}";
     }
 }
