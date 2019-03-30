@@ -8,10 +8,11 @@ namespace Microsoft.Azure.Search.Tests
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Search.Models;
+    using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Serialization;
     using Xunit;
 
-    public class FieldBuilderTests
+    public class FieldBuilderTests : SearchTestBase<IndexFixture>
     {
         private static IEnumerable<Type> TestModelTypes
         {
@@ -306,6 +307,29 @@ namespace Microsoft.Azure.Search.Tests
             }
 
             Test(typeof(RecursiveModel), RunTest);
+        }
+
+        [Fact]
+        public void FieldBuilderCreatesIndexEquivalentToManuallyDefinedIndex()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+                Index expectedIndex = serviceClient.Indexes.Get(Data.IndexName);
+
+                string otherIndexName = SearchTestUtilities.GenerateName();
+                var actualIndex = new Index()
+                {
+                    Name = otherIndexName,
+                    Fields = FieldBuilder.BuildForType<Hotel>()
+                };
+
+                // Round-trip the auto-built index definition before comparing.
+                serviceClient.Indexes.Create(actualIndex);
+                actualIndex = serviceClient.Indexes.Get(otherIndexName);
+
+                Assert.Equal(expectedIndex.Fields, actualIndex.Fields, new ModelComparer<IList<Field>>());
+            });
         }
 
         private static IEnumerable<(Type, DataType, string)> CombineTestData(
