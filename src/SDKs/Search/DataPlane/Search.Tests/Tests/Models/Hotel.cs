@@ -5,22 +5,32 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using Common;
     using Models;
     using Spatial;
 
+    // MAINTENANCE NOTE: Keep these types in sync with the fields defined by IndexFixture.CreateTestIndex().
+    // Any changes to property names, types, attributes, or ordering must be reflected in both places or
+    // tests will fail.
+
     [SerializePropertyNamesAsCamelCase]
     public class HotelAddress
     {
+        [IsSearchable]
         public string StreetAddress { get; set; }
 
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         public string City { get; set; }
 
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         public string StateProvince { get; set; }
 
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         public string Country { get; set; }
 
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         public string PostalCode { get; set; }
 
         public override bool Equals(object obj)
@@ -58,20 +68,28 @@ namespace Microsoft.Azure.Search.Tests
     [SerializePropertyNamesAsCamelCase]
     public class HotelRoom
     {
+        [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
         public string Description { get; set; }
 
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
         public string DescriptionFr { get; set; }
 
+        [IsSearchable, IsFilterable, IsFacetable]
         public string Type { get; set; }
 
+        [IsFilterable, IsFacetable]
         public double? BaseRate { get; set; }
 
+        [IsSearchable, IsFilterable, IsFacetable]
         public string BedOptions { get; set; }
 
+        [IsFilterable, IsFacetable]
         public int? SleepsCount { get; set; }
 
+        [IsFilterable, IsFacetable]
         public bool? SmokingAllowed { get; set; }
 
+        [IsSearchable, IsFilterable, IsFacetable]
         public string[] Tags { get; set; }
 
         public override bool Equals(object obj)
@@ -116,26 +134,37 @@ namespace Microsoft.Azure.Search.Tests
     [SerializePropertyNamesAsCamelCase]
     public class Hotel
     {
+        [Key, IsFilterable, IsSortable, IsFacetable]
         public string HotelId { get; set; }
 
+        [IsSearchable, IsFilterable, IsSortable]
         public string HotelName { get; set; }
 
+        [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
         public string Description { get; set; }
 
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
         public string DescriptionFr { get; set; }
 
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         public string Category { get; set; }
 
+        [IsSearchable, IsFilterable, IsFacetable]
         public string[] Tags { get; set; }
 
+        [IsFilterable, IsSortable, IsFacetable]
         public bool? ParkingIncluded { get; set; }
 
+        [IsFilterable, IsSortable, IsFacetable]
         public bool? SmokingAllowed { get; set; }
 
+        [IsFilterable, IsSortable, IsFacetable]
         public DateTimeOffset? LastRenovationDate { get; set; }
 
+        [IsFilterable, IsSortable, IsFacetable]
         public int? Rating { get; set; }
 
+        [IsFilterable, IsSortable]
         public GeographyPoint Location { get; set; }
 
         public HotelAddress Address { get; set; }
