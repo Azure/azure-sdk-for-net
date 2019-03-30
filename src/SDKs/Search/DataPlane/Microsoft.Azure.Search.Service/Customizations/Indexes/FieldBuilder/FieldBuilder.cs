@@ -92,7 +92,10 @@ namespace Microsoft.Azure.Search
         /// consistent with the way the model will be serialized.
         /// </param>
         /// <returns>A collection of fields.</returns>
-        public static IList<Field> BuildForType(Type modelType, IContractResolver contractResolver)
+        public static IList<Field> BuildForType(Type modelType, IContractResolver contractResolver) =>
+            BuildForTypeRecursive(modelType, contractResolver, new Stack<Type>(new[] { modelType }));   // Avoiding dependency on ImmutableStack for now.
+
+        private static IList<Field> BuildForTypeRecursive(Type modelType, IContractResolver contractResolver, Stack<Type> processedTypes)
         {
             var contract = (JsonObjectContract)contractResolver.ResolveContract(modelType);
             var fields = new List<Field>();
@@ -105,16 +108,32 @@ namespace Microsoft.Azure.Search
                 }
 
                 DataTypeInfo dataTypeInfo = GetDataTypeInfo(prop.PropertyType);
+                DataType dataType = dataTypeInfo.DataType;
+                Type underlyingClrType = dataTypeInfo.UnderlyingClrType;
+
+                if (processedTypes.Contains(underlyingClrType))
+                {
+                    // Skip recursive types.
+                    continue;
+                }
 
                 Field CreateComplexField()
                 {
-                    IList<Field> subFields = BuildForType(dataTypeInfo.UnderlyingClrType, contractResolver);
-                    return new Field(prop.PropertyName, dataTypeInfo.DataType, subFields);
+                    try
+                    {
+                        processedTypes.Push(underlyingClrType);
+                        IList<Field> subFields = BuildForTypeRecursive(underlyingClrType, contractResolver, processedTypes);
+                        return new Field(prop.PropertyName, dataType, subFields);
+                    }
+                    finally
+                    {
+                        processedTypes.Pop();
+                    }
                 }
 
                 Field CreateSimpleField()
                 {
-                    var field = new Field(prop.PropertyName, dataTypeInfo.DataType);
+                    var field = new Field(prop.PropertyName, dataType);
 
                     foreach (Attribute attribute in attributes)
                     {
@@ -171,7 +190,7 @@ namespace Microsoft.Azure.Search
                     return field;
                 }
 
-                fields.Add(dataTypeInfo.DataType.IsComplex() ? CreateComplexField() : CreateSimpleField());
+                fields.Add(dataType.IsComplex() ? CreateComplexField() : CreateSimpleField());
             }
 
             return fields;
@@ -234,6 +253,7 @@ namespace Microsoft.Azure.Search
             }
         }
 
+        // Avoid dependency on ValueTuple for now.
         private struct DataTypeInfo
         {
             public DataTypeInfo(DataType dataType, Type underlyingClrType)

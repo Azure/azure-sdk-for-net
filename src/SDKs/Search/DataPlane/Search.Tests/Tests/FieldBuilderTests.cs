@@ -294,6 +294,20 @@ namespace Microsoft.Azure.Search.Tests
             TestForFields(RunTest, FieldBuilder.BuildForType(modelType));
         }
 
+        [Fact]
+        public void RecursivePropertiesAreIgnored()
+        {
+            void RunTest(Dictionary<string, Field> fieldMap)
+            {
+                Assert.True(fieldMap.ContainsKey(nameof(RecursiveModel.Data)));
+                Assert.True(fieldMap.ContainsKey(nameof(RecursiveModel.Next)));
+                Assert.True(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.Data)));
+                Assert.False(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.RecursiveReference)));
+            }
+
+            Test(typeof(RecursiveModel), RunTest);
+        }
+
         private static IEnumerable<(Type, DataType, string)> CombineTestData(
             IEnumerable<Type> modelTypes,
             IEnumerable<(DataType, string)> testData) =>
