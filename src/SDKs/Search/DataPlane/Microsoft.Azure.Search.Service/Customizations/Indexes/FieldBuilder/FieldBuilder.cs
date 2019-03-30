@@ -45,13 +45,23 @@ namespace Microsoft.Azure.Search
         /// The type for which fields will be created, based on its properties.
         /// </typeparam>
         /// <returns>A collection of fields.</returns>
-        public static IList<Field> BuildForType<T>()
+        public static IList<Field> BuildForType<T>() => BuildForType(typeof(T));
+
+        /// <summary>
+        /// Creates a collection of <see cref="Field"/> objects corresponding to
+        /// the properties of the type supplied.
+        /// </summary>
+        /// <param name="modelType">
+        /// The type for which fields will be created, based on its properties.
+        /// </param>
+        /// <returns>A collection of fields.</returns>
+        public static IList<Field> BuildForType(Type modelType)
         {
-            bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType<T>();
+            bool useCamelCase = SerializePropertyNamesAsCamelCaseAttribute.IsDefinedOnType(modelType);
             IContractResolver resolver = useCamelCase
                 ? CamelCaseResolver
                 : DefaultResolver;
-            return BuildForType<T>(resolver);
+            return BuildForType(modelType, resolver);
         }
 
         /// <summary>
@@ -67,9 +77,24 @@ namespace Microsoft.Azure.Search
         /// consistent with the way the model will be serialized.
         /// </param>
         /// <returns>A collection of fields.</returns>
-        public static IList<Field> BuildForType<T>(IContractResolver contractResolver)
+        public static IList<Field> BuildForType<T>(IContractResolver contractResolver) => BuildForType(typeof(T), contractResolver);
+
+        /// <summary>
+        /// Creates a collection of <see cref="Field"/> objects corresponding to
+        /// the properties of the type supplied.
+        /// </summary>
+        /// <param name="modelType">
+        /// The type for which fields will be created, based on its properties.
+        /// </param>
+        /// <param name="contractResolver">
+        /// Contract resolver that the SearchIndexClient will use.
+        /// This ensures that the field names are generated in a way that is
+        /// consistent with the way the model will be serialized.
+        /// </param>
+        /// <returns>A collection of fields.</returns>
+        public static IList<Field> BuildForType(Type modelType, IContractResolver contractResolver)
         {
-            var contract = (JsonObjectContract)contractResolver.ResolveContract(typeof(T));
+            var contract = (JsonObjectContract)contractResolver.ResolveContract(modelType);
             var fields = new List<Field>();
             foreach (JsonProperty prop in contract.Properties)
             {
