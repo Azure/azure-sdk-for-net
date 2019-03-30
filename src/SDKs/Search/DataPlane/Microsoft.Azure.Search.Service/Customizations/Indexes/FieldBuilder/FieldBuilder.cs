@@ -112,61 +112,66 @@ namespace Microsoft.Azure.Search
                     return new Field(prop.PropertyName, dataTypeInfo.DataType, subFields);
                 }
 
-                var field = dataTypeInfo.DataType.IsComplex() ? CreateComplexField() : new Field(prop.PropertyName, dataTypeInfo.DataType);
-                                
-                foreach (Attribute attribute in attributes)
+                Field CreateSimpleField()
                 {
-                    switch (attribute)
+                    var field = new Field(prop.PropertyName, dataTypeInfo.DataType);
+
+                    foreach (Attribute attribute in attributes)
                     {
-                        case IsSearchableAttribute _:
-                            field.IsSearchable = true;
-                            break;
+                        switch (attribute)
+                        {
+                            case IsSearchableAttribute _:
+                                field.IsSearchable = true;
+                                break;
 
-                        case IsFilterableAttribute _:
-                            field.IsFilterable = true;
-                            break;
+                            case IsFilterableAttribute _:
+                                field.IsFilterable = true;
+                                break;
 
-                        case IsSortableAttribute _:
-                            field.IsSortable = true;
-                            break;
+                            case IsSortableAttribute _:
+                                field.IsSortable = true;
+                                break;
 
-                        case IsFacetableAttribute _:
-                            field.IsFacetable = true;
-                            break;
+                            case IsFacetableAttribute _:
+                                field.IsFacetable = true;
+                                break;
 
-                        case IsRetrievableAttribute isRetrievableAttribute:
-                            field.IsRetrievable = isRetrievableAttribute.IsRetrievable;
-                            break;
+                            case IsRetrievableAttribute isRetrievableAttribute:
+                                field.IsRetrievable = isRetrievableAttribute.IsRetrievable;
+                                break;
 
-                        case AnalyzerAttribute analyzerAttribute:
-                            field.Analyzer = analyzerAttribute.Name;
-                            break;
+                            case AnalyzerAttribute analyzerAttribute:
+                                field.Analyzer = analyzerAttribute.Name;
+                                break;
 
-                        case SearchAnalyzerAttribute searchAnalyzerAttribute:
-                            field.SearchAnalyzer = searchAnalyzerAttribute.Name;
-                            break;
+                            case SearchAnalyzerAttribute searchAnalyzerAttribute:
+                                field.SearchAnalyzer = searchAnalyzerAttribute.Name;
+                                break;
 
-                        case IndexAnalyzerAttribute indexAnalyzerAttribute:
-                            field.IndexAnalyzer = indexAnalyzerAttribute.Name;
-                            break;
+                            case IndexAnalyzerAttribute indexAnalyzerAttribute:
+                                field.IndexAnalyzer = indexAnalyzerAttribute.Name;
+                                break;
 
-                        case SynonymMapsAttribute synonymMapsAttribute:
-                            field.SynonymMaps = synonymMapsAttribute.SynonymMaps;
-                            break;
+                            case SynonymMapsAttribute synonymMapsAttribute:
+                                field.SynonymMaps = synonymMapsAttribute.SynonymMaps;
+                                break;
 
-                        default:
-                            // Match on name to avoid dependency - don't want to force people not using
-                            // this feature to bring in the annotations component.
-                            Type attributeType = attribute.GetType();
-                            if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute")
-                            {
-                                field.IsKey = true;
-                            }
-                            break;
+                            default:
+                                // Match on name to avoid dependency - don't want to force people not using
+                                // this feature to bring in the annotations component.
+                                Type attributeType = attribute.GetType();
+                                if (attributeType.FullName == "System.ComponentModel.DataAnnotations.KeyAttribute")
+                                {
+                                    field.IsKey = true;
+                                }
+                                break;
+                        }
                     }
+
+                    return field;
                 }
 
-                fields.Add(field);
+                fields.Add(dataTypeInfo.DataType.IsComplex() ? CreateComplexField() : CreateSimpleField());
             }
 
             return fields;
