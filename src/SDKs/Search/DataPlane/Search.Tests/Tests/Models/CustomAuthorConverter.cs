@@ -8,9 +8,7 @@ namespace Microsoft.Azure.Search.Tests
     using Newtonsoft.Json;
     using Serialization;
 
-    internal class CustomBookConverter<TBook, TAuthor> : JsonConverter
-        where TBook : CustomBookBase<TAuthor>, new()
-        where TAuthor : CustomAuthor
+    internal class CustomAuthorConverter<TAuthor> : JsonConverter where TAuthor : CustomAuthor, new()
     {
         public void Install(ISearchIndexClient client)
         {
@@ -18,7 +16,7 @@ namespace Microsoft.Azure.Search.Tests
             client.DeserializationSettings.Converters.Add(this);
         }
 
-        public override bool CanConvert(Type objectType) => objectType == typeof(TBook);
+        public override bool CanConvert(Type objectType) => objectType == typeof(TAuthor);
 
         public override object ReadJson(
             JsonReader reader,
@@ -32,7 +30,7 @@ namespace Microsoft.Azure.Search.Tests
                 return null;
             }
 
-            var book = new TBook();
+            var author = new TAuthor { FullName = string.Empty };
 
             reader.ExpectAndAdvance(JsonToken.StartObject);
 
@@ -41,20 +39,14 @@ namespace Microsoft.Azure.Search.Tests
                 string propertyName = reader.ExpectAndAdvance<string>(JsonToken.PropertyName);
                 switch (propertyName)
                 {
-                    case "ISBN":
-                        book.InternationalStandardBookNumber = serializer.Deserialize<string>(reader);
+                    case "FirstName":
+                        author.FullName = serializer.Deserialize<string>(reader) + author.FullName;
                         break;
 
-                    case "Title":
-                        book.Name = serializer.Deserialize<string>(reader);
-                        break;
-
-                    case "Author":
-                        book.AuthorName = serializer.Deserialize<TAuthor>(reader);
-                        break;
-
-                    case "PublishDate":
-                        book.PublishDateTime = serializer.Deserialize<DateTime?>(reader);
+                    case "LastName":
+                        string lastName = serializer.Deserialize<string>(reader);
+                        string separator = string.IsNullOrWhiteSpace(lastName) ? string.Empty : " ";
+                        author.FullName += separator + lastName;
                         break;
 
                     default:
@@ -65,21 +57,22 @@ namespace Microsoft.Azure.Search.Tests
                 reader.Advance();
             }
 
-            return book;
+            return author;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var book = (TBook)value;
+            var author = (TAuthor)value;
+
+            string[] names = author.FullName.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            string firstName = names.Length > 0 ? names[0] : string.Empty;
+            string lastName = names.Length > 1 ? names[1] : string.Empty;
+
             writer.WriteStartObject();
-            writer.WritePropertyName("ISBN");
-            serializer.Serialize(writer, book.InternationalStandardBookNumber);
-            writer.WritePropertyName("Title");
-            serializer.Serialize(writer, book.Name);
-            writer.WritePropertyName("Author");
-            serializer.Serialize(writer, book.AuthorName);
-            writer.WritePropertyName("PublishDate");
-            serializer.Serialize(writer, book.PublishDateTime);
+            writer.WritePropertyName("FirstName");
+            serializer.Serialize(writer, firstName);
+            writer.WritePropertyName("LastName");
+            serializer.Serialize(writer, lastName);
             writer.WriteEndObject();
         }
     }

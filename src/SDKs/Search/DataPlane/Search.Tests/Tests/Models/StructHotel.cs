@@ -5,123 +5,205 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using Common;
     using Models;
     using Spatial;
 
+    // MAINTENANCE NOTE: Keep these types in sync with the fields defined by IndexFixture.CreateTestIndex().
+    // Any changes to property names, types, attributes, or ordering must be reflected in both places or
+    // tests will fail.
+
     [SerializePropertyNamesAsCamelCase]
-    public struct StructHotel
+    public struct StructHotelAddress
     {
-        public string HotelId { get; set; }
+        [IsSearchable]
+        public string StreetAddress { get; set; }
 
-        public double? BaseRate { get; set; }
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        public string City { get; set; }
 
-        public string Description { get; set; }
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        public string StateProvince { get; set; }
 
-        public string DescriptionFr { get; set; }
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        public string Country { get; set; }
 
-        public string HotelName { get; set; }
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        public string PostalCode { get; set; }
 
-        public string Category { get; set; }
+        public override bool Equals(object obj) =>
+            obj is StructHotelAddress other &&
+            StreetAddress == other.StreetAddress &&
+            City == other.City &&
+            StateProvince == other.StateProvince &&
+            Country == other.Country &&
+            PostalCode == other.PostalCode;
 
-        public string[] Tags { get; set; }
-
-        public bool? ParkingIncluded { get; set; }
-
-        public bool? SmokingAllowed { get; set; }
-
-        public DateTimeOffset? LastRenovationDate { get; set; }
-
-        public int? Rating { get; set; }
-
-        public GeographyPoint Location { get; set; }
-
-        public override bool Equals(object obj)
-        {
-            if (!(obj is StructHotel other))
-            {
-                return false;
-            }
-
-            return
-                HotelId == other.HotelId &&
-                DoublesEqual(BaseRate, other.BaseRate) &&
-                Description == other.Description &&
-                DescriptionFr == other.DescriptionFr &&
-                HotelName == other.HotelName &&
-                Category == other.Category &&
-                ((Tags == null) ? (other.Tags == null || other.Tags.Length == 0) : Tags.SequenceEqual(other.Tags ?? new string[0])) &&
-                ParkingIncluded == other.ParkingIncluded &&
-                SmokingAllowed == other.SmokingAllowed &&
-                DateTimeOffsetsEqual(LastRenovationDate, other.LastRenovationDate) &&
-                Rating == other.Rating &&
-                ((Location == null) ? other.Location == null : Location.Equals(other.Location));
-        }
-
-        public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
+        public override int GetHashCode() => StreetAddress?.GetHashCode() ?? 0;
 
         public override string ToString() =>
-            $"ID: {HotelId}; BaseRate: {BaseRate}; Description: {Description}; " +
-            $"Description (French): {DescriptionFr}; Name: {HotelName}; Category: {Category}; " +
-            $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
-            $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
-            $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]";
+            $"StreetAddress: {StreetAddress}; City: {City}; State/Province: {StateProvince}; Country: {Country}; " +
+            $"PostalCode: {PostalCode}";
 
         public Document AsDocument() =>
             new Document()
             {
-                ["baseRate"] = BaseRate,
-                ["category"] = Category,
+                ["streetAddress"] = StreetAddress,
+                ["city"] = City,
+                ["stateProvince"] = StateProvince,
+                ["country"] = Country,
+                ["postalCode"] = PostalCode
+            };
+    }
+
+    [SerializePropertyNamesAsCamelCase]
+    public struct StructHotelRoom
+    {
+        [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
+        public string Description { get; set; }
+
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
+        public string DescriptionFr { get; set; }
+
+        [IsSearchable, IsFilterable, IsFacetable]
+        public string Type { get; set; }
+
+        [IsFilterable, IsFacetable]
+        public double? BaseRate { get; set; }
+
+        [IsSearchable, IsFilterable, IsFacetable]
+        public string BedOptions { get; set; }
+
+        [IsFilterable, IsFacetable]
+        public int? SleepsCount { get; set; }
+
+        [IsFilterable, IsFacetable]
+        public bool? SmokingAllowed { get; set; }
+
+        [IsSearchable, IsFilterable, IsFacetable]
+        public string[] Tags { get; set; }
+
+        public override bool Equals(object obj) =>
+            obj is StructHotelRoom other &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Type == other.Type &&
+            BaseRate.EqualsDouble(other.BaseRate) &&
+            BedOptions == other.BedOptions &&
+            SleepsCount == other.SleepsCount &&
+            SmokingAllowed == other.SmokingAllowed &&
+            Tags.SequenceEqualsNullSafe(other.Tags);
+
+        public override int GetHashCode() => Description?.GetHashCode() ?? 0;
+
+        public override string ToString() =>
+            $"Description: {Description}; Description (French): {DescriptionFr}; Type: {Type}; BaseRate: {BaseRate}; " +
+            $"Bed Options: {BedOptions}; Sleeps: {SleepsCount}; Smoking: {SmokingAllowed}; " +
+            $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}";
+
+        public Document AsDocument() =>
+            new Document()
+            {
                 ["description"] = Description,
                 ["descriptionFr"] = DescriptionFr,
-                ["hotelId"] = HotelId,
-                ["hotelName"] = HotelName,
-                ["lastRenovationDate"] = LastRenovationDate,
-                ["location"] = Location,
-                ["parkingIncluded"] = ParkingIncluded,
-                ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
+                ["type"] = Type,
+                ["baseRate"] = BaseRate,
+                ["bedOptions"] = BedOptions,
+                ["sleepsCount"] = SleepsCount,
                 ["smokingAllowed"] = SmokingAllowed,
                 ["tags"] = Tags ?? new string[0]   // OData always gives [] instead of null for collections.
             };
+    }
 
-        private static bool DoublesEqual(double? x, double? y)
+    [SerializePropertyNamesAsCamelCase]
+    public struct StructHotel
+    {
+        [Key, IsFilterable, IsSortable, IsFacetable]
+        public string HotelId { get; set; }
+
+        [IsSearchable, IsFilterable, IsSortable]
+        public string HotelName { get; set; }
+
+        [IsSearchable, Analyzer(AnalyzerName.AsString.EnLucene)]
+        public string Description { get; set; }
+
+        [IsSearchable, Analyzer(AnalyzerName.AsString.FrLucene)]
+        public string DescriptionFr { get; set; }
+
+        [IsSearchable, IsFilterable, IsSortable, IsFacetable]
+        public string Category { get; set; }
+
+        [IsSearchable, IsFilterable, IsFacetable]
+        public string[] Tags { get; set; }
+
+        [IsFilterable, IsSortable, IsFacetable]
+        public bool? ParkingIncluded { get; set; }
+
+        [IsFilterable, IsSortable, IsFacetable]
+        public bool? SmokingAllowed { get; set; }
+
+        [IsFilterable, IsSortable, IsFacetable]
+        public DateTimeOffset? LastRenovationDate { get; set; }
+
+        [IsFilterable, IsSortable, IsFacetable]
+        public int? Rating { get; set; }
+
+        [IsFilterable, IsSortable]
+        public GeographyPoint Location { get; set; }
+
+        public StructHotelAddress Address { get; set; }
+
+        public StructHotelRoom[] Rooms { get; set; }
+
+        public override bool Equals(object obj) =>
+            obj is StructHotel other &&
+            HotelId == other.HotelId &&
+            HotelName == other.HotelName &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Category == other.Category &&
+            Tags.SequenceEqualsNullSafe(other.Tags) &&
+            ParkingIncluded == other.ParkingIncluded &&
+            SmokingAllowed == other.SmokingAllowed &&
+            LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
+            Rating == other.Rating &&
+            Location.EqualsNullSafe(other.Location) &&
+            Address.Equals(other.Address) &&
+            Rooms.SequenceEqualsNullSafe(other.Rooms);
+
+        public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
+
+        public override string ToString()
         {
-            if (x == null)
-            {
-                return y == null;
-            }
+            string FormatRoom(StructHotelRoom room) => $"{{ {room} }}";
 
-            if (Double.IsNaN(x.Value))
-            {
-                return y != null && Double.IsNaN(y.Value);
-            }
-
-            return x == y;
+            return
+                $"ID: {HotelId}; Name: {HotelName}; Description: {Description}; " +
+                $"Description (French): {DescriptionFr}; Category: {Category}; " +
+                $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}; Parking: {ParkingIncluded}; " +
+                $"Smoking: {SmokingAllowed}; LastRenovationDate: {LastRenovationDate}; Rating: {Rating}; " +
+                $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
+                $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
         }
 
-        private static bool DateTimeOffsetsEqual(DateTimeOffset? a, DateTimeOffset? b)
-        {
-            if (a == null)
+        public Document AsDocument() =>
+            new Document()
             {
-                return b == null;
-            }
-
-            if (b == null)
-            {
-                return false;
-            }
-
-            if (a.Value.EqualsExact(b.Value))
-            {
-                return true;
-            }
-
-            // Allow for some loss of precision in the tick count.
-            long aTicks = a.Value.UtcTicks;
-            long bTicks = b.Value.UtcTicks;
-
-            return (aTicks / 10000) == (bTicks / 10000);
-        }
+                ["hotelId"] = HotelId,
+                ["hotelName"] = HotelName,
+                ["description"] = Description,
+                ["descriptionFr"] = DescriptionFr,
+                ["category"] = Category,
+                ["tags"] = Tags ?? new string[0],   // OData always gives [] instead of null for collections.
+                ["parkingIncluded"] = ParkingIncluded,
+                ["smokingAllowed"] = SmokingAllowed,
+                ["lastRenovationDate"] = LastRenovationDate,
+                ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
+                ["location"] = Location,
+                ["address"] = Address.AsDocument(),
+                ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new Document[0]
+            };
     }
 }

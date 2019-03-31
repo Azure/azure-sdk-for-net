@@ -236,7 +236,8 @@ namespace Microsoft.Azure.Search.Tests
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
+            var tolkien = new Author() { FirstName = "J.R.R.", LastName = "Tolkien" };
+            var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = tolkien };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
 
@@ -263,22 +264,26 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestCanSuggestWithCustomConverter()
         {
-            TestCanSuggestWithCustomConverter<CustomBookWithConverter>();
+            TestCanSuggestWithCustomConverter<CustomBookWithConverter, CustomAuthorWithConverter>();
         }
 
         protected void TestCanSuggestWithCustomConverterViaSettings()
         {
             void CustomizeSettings(SearchIndexClient client)
             {
-                var converter = new CustomBookConverter<CustomBook>();
-                converter.Install(client);
+                var bookConverter = new CustomBookConverter<CustomBook, CustomAuthor>();
+                bookConverter.Install(client);
+
+                var authorConverter = new CustomAuthorConverter<CustomAuthor>();
+                authorConverter.Install(client);
             }
 
-            TestCanSuggestWithCustomConverter<CustomBook>(CustomizeSettings);
+            TestCanSuggestWithCustomConverter<CustomBook, CustomAuthor>(CustomizeSettings);
         }
 
-        private void TestCanSuggestWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
-            where T : CustomBook, new()
+        private void TestCanSuggestWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null)
+            where TBook : CustomBookBase<TAuthor>, new()
+            where TAuthor : CustomAuthor, new()
         {
             customizeSettings = customizeSettings ?? (client => { });
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
@@ -288,11 +293,11 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
             customizeSettings(indexClient);
 
-            var doc = new T()
+            var doc = new TBook()
             {
                 InternationalStandardBookNumber = "123",
                 Name = "Lord of the Rings",
-                AuthorName = "J.R.R. Tolkien",
+                AuthorName = new TAuthor() { FullName = "J.R.R. Tolkien" },
                 PublishDateTime = new DateTime(1954, 7, 29)
             };
 
@@ -302,7 +307,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchTestUtilities.WaitForIndexing();
 
             var parameters = new SuggestParameters() { Select = new[] { "*" } };
-            DocumentSuggestResult<T> response = indexClient.Documents.Suggest<T>("Lord", "sg", parameters);
+            DocumentSuggestResult<TBook> response = indexClient.Documents.Suggest<TBook>("Lord", "sg", parameters);
 
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc, response.Results[0].Document);

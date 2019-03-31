@@ -2,8 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Newtonsoft.Json;
-
 namespace Microsoft.Azure.Search.Tests
 {
     internal class ReviewedBook : Book
@@ -11,26 +9,10 @@ namespace Microsoft.Azure.Search.Tests
         [CustomField(shouldIgnore: true)]
         public int Rating { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            ReviewedBook other = obj as ReviewedBook;
+        public override bool Equals(object obj) => obj is ReviewedBook other && base.Equals(other) && Rating == other.Rating;
 
-            if (other == null)
-            {
-                return false;
-            }
+        public override int GetHashCode() => base.GetHashCode();
 
-            return base.Equals(other) && this.Rating == other.Rating;
-        }
-
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
-        }
-
-        public override string ToString()
-        {
-            return base.ToString() + string.Format("; Rating: {0}", this.Rating);
-        }
+        public override string ToString() => base.ToString() + $"; Rating: {Rating}";
     }
 }

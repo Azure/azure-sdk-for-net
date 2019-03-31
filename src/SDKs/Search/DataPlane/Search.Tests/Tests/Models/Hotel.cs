@@ -33,20 +33,13 @@ namespace Microsoft.Azure.Search.Tests
         [IsSearchable, IsFilterable, IsSortable, IsFacetable]
         public string PostalCode { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            if (!(obj is HotelAddress other))
-            {
-                return false;
-            }
-
-            return
-                StreetAddress == other.StreetAddress &&
-                City == other.City &&
-                StateProvince == other.StateProvince &&
-                Country == other.Country &&
-                PostalCode == other.PostalCode;
-        }
+        public override bool Equals(object obj) =>
+            obj is HotelAddress other &&
+            StreetAddress == other.StreetAddress &&
+            City == other.City &&
+            StateProvince == other.StateProvince &&
+            Country == other.Country &&
+            PostalCode == other.PostalCode;
 
         public override int GetHashCode() => StreetAddress?.GetHashCode() ?? 0;
 
@@ -92,23 +85,16 @@ namespace Microsoft.Azure.Search.Tests
         [IsSearchable, IsFilterable, IsFacetable]
         public string[] Tags { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            if (!(obj is HotelRoom other))
-            {
-                return false;
-            }
-
-            return
-                Description == other.Description &&
-                DescriptionFr == other.DescriptionFr &&
-                Type == other.Type &&
-                BaseRate.EqualsDouble(other.BaseRate) &&
-                BedOptions == other.BedOptions &&
-                SleepsCount == other.SleepsCount &&
-                SmokingAllowed == other.SmokingAllowed &&
-                Tags.SequenceEqualsNullSafe(other.Tags);
-        }
+        public override bool Equals(object obj) =>
+            obj is HotelRoom other &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Type == other.Type &&
+            BaseRate.EqualsDouble(other.BaseRate) &&
+            BedOptions == other.BedOptions &&
+            SleepsCount == other.SleepsCount &&
+            SmokingAllowed == other.SmokingAllowed &&
+            Tags.SequenceEqualsNullSafe(other.Tags);
 
         public override int GetHashCode() => Description?.GetHashCode() ?? 0;
 
@@ -171,28 +157,21 @@ namespace Microsoft.Azure.Search.Tests
 
         public HotelRoom[] Rooms { get; set; }
 
-        public override bool Equals(object obj)
-        {
-            if (!(obj is Hotel other))
-            {
-                return false;
-            }
-
-            return
-                HotelId == other.HotelId &&
-                HotelName == other.HotelName &&
-                Description == other.Description &&
-                DescriptionFr == other.DescriptionFr &&
-                Category == other.Category &&
-                Tags.SequenceEqualsNullSafe(other.Tags) &&
-                ParkingIncluded == other.ParkingIncluded &&
-                SmokingAllowed == other.SmokingAllowed &&
-                LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
-                Rating == other.Rating &&
-                Location.EqualsNullSafe(other.Location) &&
-                Address.EqualsNullSafe(other.Address) &&
-                Rooms.SequenceEqualsNullSafe(other.Rooms);
-        }
+        public override bool Equals(object obj) =>
+            obj is Hotel other &&
+            HotelId == other.HotelId &&
+            HotelName == other.HotelName &&
+            Description == other.Description &&
+            DescriptionFr == other.DescriptionFr &&
+            Category == other.Category &&
+            Tags.SequenceEqualsNullSafe(other.Tags) &&
+            ParkingIncluded == other.ParkingIncluded &&
+            SmokingAllowed == other.SmokingAllowed &&
+            LastRenovationDate.EqualsDateTimeOffset(other.LastRenovationDate) &&
+            Rating == other.Rating &&
+            Location.EqualsNullSafe(other.Location) &&
+            Address.EqualsNullSafe(other.Address) &&
+            Rooms.SequenceEqualsNullSafe(other.Rooms);
 
         public override int GetHashCode() => HotelId?.GetHashCode() ?? 0;
 
