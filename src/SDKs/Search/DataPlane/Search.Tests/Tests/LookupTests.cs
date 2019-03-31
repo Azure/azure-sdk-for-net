@@ -15,7 +15,9 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class LookupTests : SearchTestBase<IndexFixture>
     {
-        [Fact]
+#pragma warning disable xUnit1004 // Test methods should not be skipped
+        [Fact(Skip = "Dynamic documents not supported yet.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanGetDynamicDocument()
         {
@@ -81,7 +83,9 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+#pragma warning disable xUnit1004 // Test methods should not be skipped
+        [Fact(Skip = "Dynamic documents not supported yet.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         public void CanGetDynamicDocumentWithNullOrEmptyValues()
         {
             Run(() =>
@@ -122,7 +126,9 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+#pragma warning disable xUnit1004 // Test methods should not be skipped
+        [Fact(Skip = "Dynamic documents not supported yet.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         public void GetDynamicDocumentCannotAlwaysDetermineCorrectType()
         {
             Run(() =>

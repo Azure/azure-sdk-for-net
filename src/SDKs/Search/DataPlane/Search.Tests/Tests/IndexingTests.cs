@@ -698,7 +698,9 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+#pragma warning disable xUnit1004 // Test methods should not be skipped
+        [Fact(Skip = "Dynamic documents not supported yet.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeDynamicDocuments()
         {
@@ -839,7 +841,9 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+#pragma warning disable xUnit1004 // Test methods should not be skipped
+        [Fact(Skip = "Need to determine if merging sub-fields is supposed to work.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeStaticallyTypedDocuments()
         {
@@ -979,7 +983,9 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
+#pragma warning disable xUnit1004 // Test methods should not be skipped
+        [Fact(Skip = "Need to determine if merging sub-fields is supposed to work.")]
+#pragma warning restore xUnit1004 // Test methods should not be skipped
         public void CanSetExplicitNullsInStaticallyTypedDocuments()
         {
             Run(() =>
