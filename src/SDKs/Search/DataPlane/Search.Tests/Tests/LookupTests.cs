@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Search.Tests
                             ["country"] = "USA",
                             ["postalCode"] = "10022"
                         },
-                        ["Rooms"] = new[]
+                        ["rooms"] = new[]
                         {
                             new Document()
                             {

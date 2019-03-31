@@ -13,6 +13,15 @@ namespace Microsoft.Azure.Search.Tests
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+
+        public override bool Equals(object obj) =>
+            obj is Author other &&
+            FirstName == other.FirstName &&
+            LastName == other.LastName;
+
+        public override int GetHashCode() => LastName?.GetHashCode() ?? 0;
+
+        public override string ToString() => $"{FirstName} {LastName}";
     }
 
     internal class Book
@@ -51,7 +60,7 @@ namespace Microsoft.Azure.Search.Tests
             obj is Book other &&
             ISBN == other.ISBN &&
             Title == other.Title &&
-            Author == other.Author &&
+            Author.EqualsNullSafe(other.Author) &&
             PublishDate == other.PublishDate;
 
         public override int GetHashCode() => ISBN?.GetHashCode() ?? 0;

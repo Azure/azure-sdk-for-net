@@ -23,13 +23,13 @@ namespace Microsoft.Azure.Search.Tests
 
             var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
             DocumentSuggestResult<Hotel> response =
-                client.Documents.Suggest<Hotel>("good", "sg", suggestParameters);
+                client.Documents.Suggest<Hotel>("more", "sg", suggestParameters);
 
             Assert.Null(response.Coverage);
             Assert.NotNull(response.Results);
 
             IEnumerable<Hotel> expectedDocs =
-                Data.TestDocuments.Where(h => h.HotelId == "4" || h.HotelId == "5").OrderBy(h => h.HotelId);
+                Data.TestDocuments.Where(h => h.HotelId == "8" || h.HotelId == "10").OrderBy(h => h.HotelId);
                 
             Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
             Assert.Equal(expectedDocs.Select(h => h.Description), response.Results.Select(r => r.Text));
@@ -40,24 +40,20 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
-            DocumentSuggestResult<Document> response = client.Documents.Suggest("good", "sg", suggestParameters);
+            DocumentSuggestResult<Document> response = client.Documents.Suggest("more", "sg", suggestParameters);
 
             Assert.Null(response.Coverage);
             Assert.NotNull(response.Results);
 
             Document[] expectedDocs =
                 Data.TestDocuments
-                    .Where(h => h.HotelId == "4" || h.HotelId == "5")
+                    .Where(h => h.HotelId == "8" || h.HotelId == "10")
                     .OrderBy(h => h.HotelId)
                     .Select(h => h.AsDocument())
                     .ToArray();
 
-            Assert.Equal(expectedDocs.Length, response.Results.Count);
-            for (int i = 0; i < expectedDocs.Length; i++)
-            {
-                Assert.Equal(expectedDocs[i], response.Results[i].Document);
-                Assert.Equal(expectedDocs[i]["description"], response.Results[i].Text);
-            }
+            Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
+            Assert.Equal(expectedDocs.Select(d => d["description"]), response.Results.Select(r => r.Text));
         }
 
         protected void TestSuggestThrowsWhenRequestIsMalformed()
@@ -161,7 +157,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
-            AssertKeySequenceEqual(response, "1", "4", "3", "5", "2");
+            AssertKeySequenceEqual(response, "1", "9", "4", "3", "5");
         }
 
         protected void TestTopTrimsResults()
@@ -178,7 +174,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
-            AssertKeySequenceEqual(response, "1", "2", "3");
+            AssertKeySequenceEqual(response, "1", "10", "2");
         }
 
         protected void TestCanSuggestWithSelectedFields()

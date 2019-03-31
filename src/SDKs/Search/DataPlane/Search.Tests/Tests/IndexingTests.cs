@@ -728,7 +728,7 @@ namespace Microsoft.Azure.Search.Tests
                             ["country"] = "USA",
                             ["postalCode"] = "10022"
                         },
-                        ["Rooms"] = new[]
+                        ["rooms"] = new[]
                         {
                             new Document()
                             {
@@ -767,7 +767,7 @@ namespace Microsoft.Azure.Search.Tests
                         ["rating"] = 3,
                         ["location"] = null,
                         ["address"] = new Document(),
-                        ["Rooms"] = new[]
+                        ["rooms"] = new[]
                         {
                             new Document()
                             {
@@ -804,7 +804,7 @@ namespace Microsoft.Azure.Search.Tests
                             ["country"] = "USA",
                             ["postalCode"] = "10022"
                         },
-                        ["Rooms"] = new[]
+                        ["rooms"] = new[]
                         {
                             new Document()
                             {
@@ -934,7 +934,7 @@ namespace Microsoft.Azure.Search.Tests
                         Tags = new[] { "pool", "air conditioning" },
                         ParkingIncluded = true,
                         SmokingAllowed = true,
-                        LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
+                        LastRenovationDate = new DateTimeOffset(1970, 1, 18, 5, 0, 0, TimeSpan.Zero),
                         Rating = 3,
                         Location = GeographyPoint.Create(40.760586, -73.975403),
                         Address = new HotelAddress()
@@ -1002,7 +1002,7 @@ namespace Microsoft.Azure.Search.Tests
                         CATEGORY = "Boutique",
                         TAGS = new[] { "pool", "air conditioning", "concierge" },
                         PARKINGINCLUDED = false,
-                        SMOKINGALLOWED = true,
+                        SMOKINGALLOWED = false,
                         LASTRENOVATIONDATE = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
                         RATING = 4,
                         LOCATION = GeographyPoint.Create(40.760586, -73.975403),
@@ -1073,11 +1073,12 @@ namespace Microsoft.Azure.Search.Tests
                         HOTELID = "1",
                         HOTELNAME = "Secret Point Motel",
                         DESCRIPTION = null,
+                        DESCRIPTIONFRENCH = "L'hôtel est idéalement situé sur la principale artère commerciale de la ville en plein cœur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d'autres lieux d'intérêt qui font de New York l'une des villes les plus attractives et cosmopolites de l'Amérique.",
                         CATEGORY = "Boutique",
                         TAGS = new[] { "pool", "air conditioning" },
                         PARKINGINCLUDED = true,
-                        SMOKINGALLOWED = true,
-                        LASTRENOVATIONDATE = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
+                        SMOKINGALLOWED = false,
+                        LASTRENOVATIONDATE = new DateTimeOffset(1970, 1, 18, 5, 0, 0, TimeSpan.Zero),
                         RATING = 3,
                         LOCATION = null,
                         ADDRESS = new LoudHotelAddress()

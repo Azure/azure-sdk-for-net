@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<string> expectedDescriptionHighlights =
                 new[] 
                 { 
-                    "Best <b>hotel</b> in town if you like <b>luxury</b> hotels.",
+                    "Best <b>hotel</b> in town if you like <b>luxury</b> <b>hotels</b>.",
                     "We highly recommend this <b>hotel</b>."
                 };
 
@@ -185,18 +185,18 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("*", searchParameters);
 
-            AssertKeySequenceEqual(response, "1", "4", "3", "5", "2", "6", "7", "8");
+            AssertKeySequenceEqual(response, "1", "9", "4", "3", "5", "10", "2", "6", "7", "8");
         }
 
         protected void TestSearchWithoutOrderBySortsByScore()
         {
             SearchIndexClient client = GetClientForQuery();
 
-            var searchParameters = new SearchParameters() { Filter = "baseRate gt 190" };
+            var searchParameters = new SearchParameters() { Filter = "rating lt 4" };
             DocumentSearchResult<Hotel> response =
-                client.Documents.Search<Hotel>("surprisingly expensive hotel", searchParameters);
+                client.Documents.Search<Hotel>("cheapest hotel in town", searchParameters);
 
-            AssertKeySequenceEqual(response, "6", "1");
+            AssertKeySequenceEqual(response, "2", "10");
             Assert.True(response.Results[0].Score > response.Results[1].Score);
         }
 
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("hotelName:roch~", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 5 };
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 1 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>(@"hotelName:/.*oach.*\/?/", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 5 };
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 1 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -333,12 +333,12 @@ namespace Microsoft.Azure.Search.Tests
             var searchParameters = new SearchParameters() { Top = 3, Skip = 0, OrderBy = new[] { "hotelId" } };
             DocumentSearchResult<Hotel> response = client.Documents.Search<Hotel>("*", searchParameters);
 
-            AssertKeySequenceEqual(response, "1", "2", "3");
+            AssertKeySequenceEqual(response, "1", "10", "2");
 
             searchParameters.Skip = 3;
             response = client.Documents.Search<Hotel>("*", searchParameters);
 
-            AssertKeySequenceEqual(response, "4", "5", "6");
+            AssertKeySequenceEqual(response, "3", "4", "5");
         }
 
         protected void TestSearchWithScoringProfileBoostsScore()
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     Facets = new[]
                     { 
-                        "baseRate,values:80|150|200",
+                        "rooms/baseRate,values:5|8|10",
                         "lastRenovationDate,values:2000-01-01T00:00:00Z"
                     }
                 };
@@ -377,21 +377,21 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.NotNull(response.Facets);
 
-            RangeFacetResult<double>[] baseRateFacets = GetRangeFacetsForField<double>(response.Facets, "baseRate", 4);
+            RangeFacetResult<double>[] baseRateFacets = GetRangeFacetsForField<double>(response.Facets, "rooms/baseRate", 4);
                 
             Assert.False(baseRateFacets[0].From.HasValue);
-            Assert.Equal(80.0, baseRateFacets[0].To);
-            Assert.Equal(80.0, baseRateFacets[1].From);
-            Assert.Equal(150.0, baseRateFacets[1].To);
-            Assert.Equal(150.0, baseRateFacets[2].From);
-            Assert.Equal(200.0, baseRateFacets[2].To);
-            Assert.Equal(200.0, baseRateFacets[3].From);
+            Assert.Equal(5.0, baseRateFacets[0].To);
+            Assert.Equal(5.0, baseRateFacets[1].From);
+            Assert.Equal(8.0, baseRateFacets[1].To);
+            Assert.Equal(8.0, baseRateFacets[2].From);
+            Assert.Equal(10.0, baseRateFacets[2].To);
+            Assert.Equal(10.0, baseRateFacets[3].From);
             Assert.False(baseRateFacets[3].To.HasValue);
 
-            Assert.Equal(2, baseRateFacets[0].Count);
-            Assert.Equal(3, baseRateFacets[1].Count);
+            Assert.Equal(1, baseRateFacets[0].Count);
+            Assert.Equal(1, baseRateFacets[1].Count);
             Assert.Equal(1, baseRateFacets[2].Count);
-            Assert.Equal(2, baseRateFacets[3].Count);
+            Assert.Equal(0, baseRateFacets[3].Count);
 
             RangeFacetResult<DateTimeOffset>[] lastRenovationDateFacets =
                 GetRangeFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 2);
@@ -401,7 +401,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero), lastRenovationDateFacets[1].From);
             Assert.False(lastRenovationDateFacets[1].To.HasValue);
 
-            Assert.Equal(3, lastRenovationDateFacets[0].Count);
+            Assert.Equal(5, lastRenovationDateFacets[0].Count);
             Assert.Equal(2, lastRenovationDateFacets[1].Count);
         }
 
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Search.Tests
                         "smokingAllowed,sort:count",
                         "category",
                         "lastRenovationDate,interval:year",
-                        "baseRate,sort:value",
+                        "rooms/baseRate,sort:value",
                         "tags,sort:value"
                     }
                 };
@@ -431,38 +431,45 @@ namespace Microsoft.Azure.Search.Tests
             AssertValueFacetsEqual(
                 GetValueFacetsForField<long>(response.Facets, "rating", 2), 
                 new ValueFacetResult<long>(1, 5), 
-                new ValueFacetResult<long>(3, 4));
+                new ValueFacetResult<long>(4, 4));
                 
             AssertValueFacetsEqual(
                 GetValueFacetsForField<bool>(response.Facets, "smokingAllowed", 2), 
                 new ValueFacetResult<bool>(4, false), 
-                new ValueFacetResult<bool>(1, true));
+                new ValueFacetResult<bool>(3, true));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<string>(response.Facets, "category", 2),
-                new ValueFacetResult<string>(4, "Budget"),
+                GetValueFacetsForField<string>(response.Facets, "category", 3),
+                new ValueFacetResult<string>(5, "Budget"),
+                new ValueFacetResult<string>(1, "Boutique"),
                 new ValueFacetResult<string>(1, "Luxury"));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 4),
+                GetValueFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 6),
+                new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(1982, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(2, new DateTimeOffset(1995, 1, 1, 0, 0, 0, TimeSpan.Zero)),
+                new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(1999, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(2010, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(2012, 1, 1, 0, 0, 0, TimeSpan.Zero)));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<double>(response.Facets, "baseRate", 4),
-                new ValueFacetResult<double>(2, 79.99),
-                new ValueFacetResult<double>(3, 129.99),
-                new ValueFacetResult<double>(1, 199.0),
-                new ValueFacetResult<double>(2, 279.99));
+                GetValueFacetsForField<double>(response.Facets, "rooms/baseRate", 4),
+                new ValueFacetResult<double>(1, 2.44),
+                new ValueFacetResult<double>(1, 7.69),
+                new ValueFacetResult<double>(1, 8.09),
+                new ValueFacetResult<double>(1, 9.69));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<string>(response.Facets, "tags", 6),
+                GetValueFacetsForField<string>(response.Facets, "tags", 10),
+                new ValueFacetResult<string>(1, "24-hour front desk service"),
+                new ValueFacetResult<string>(1, "air conditioning"),
                 new ValueFacetResult<string>(4, "budget"),
-                new ValueFacetResult<string>(1, "concierge"),
+                new ValueFacetResult<string>(1, "coffee in lobby"),
+                new ValueFacetResult<string>(2, "concierge"),
                 new ValueFacetResult<string>(1, "motel"),
-                new ValueFacetResult<string>(1, "pool"),
+                new ValueFacetResult<string>(2, "pool"),
+                new ValueFacetResult<string>(1, "restaurant"),
                 new ValueFacetResult<string>(1, "view"),
                 new ValueFacetResult<string>(4, "wifi"));
         }
@@ -861,7 +868,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private IList<FacetResult> GetFacetsForField(FacetResults facets, string expectedField, int expectedCount)
         {
-            Assert.True(facets.ContainsKey(expectedField));
+            Assert.True(facets.ContainsKey(expectedField), $"Expecting facets to contain {expectedField}");
             IList<FacetResult> facetCollection = facets[expectedField];
             Assert.Equal(expectedCount, facetCollection.Count);
             return facetCollection;

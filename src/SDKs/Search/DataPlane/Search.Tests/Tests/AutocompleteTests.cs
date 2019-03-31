@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Search.Tests
     {
         protected void TestAutocompleteStaticallyTypedDocuments()
         {
-            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "very police", "very polite", "very pool", "very popular" };
+            var expectedText = new List<string>() { "point", "police", "polite", "pool", "popular" };
+            var expectedQueryPlusText = new List<string>() { "very point", "very police", "very polite", "very pool", "very popular" };
 
             SearchIndexClient client = GetClientForQuery();
 
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             SearchAssert.ThrowsCloudException(
-                () => client.Documents.Autocomplete("very po", String.Empty),
+                () => client.Documents.Autocomplete("very po", string.Empty),
                 HttpStatusCode.BadRequest,
                 "Cannot find fields enabled for suggestions. Please provide a value for 'suggesterName' in the query.\r\nParameter name: suggestions");
         }
@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteOneTerm()
         {
-            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "police", "polite", "pool", "popular" };
+            var expectedText = new List<string>() { "point", "police", "polite", "pool", "popular" };
+            var expectedQueryPlusText = new List<string>() { "point", "police", "polite", "pool", "popular" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTerm };
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteDefaultsToOneTermMode()
         {
-            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "police", "polite", "pool", "popular" };
+            var expectedText = new List<string>() { "point", "police", "polite", "pool", "popular" };
+            var expectedQueryPlusText = new List<string>() { "point", "police", "polite", "pool", "popular" };
 
             SearchIndexClient client = GetClientForQuery();
 
@@ -88,8 +88,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteTwoTerms()
         {
-            var expectedText = new List<String>() { "police station", "polite staff", "pool a", "popular hotel" };
-            var expectedQueryPlusText = new List<String>() { "police station", "polite staff", "pool a", "popular hotel" };
+            var expectedText = new List<string>() { "point motel", "police station", "polite staff", "pool a", "popular hotel" };
+            var expectedQueryPlusText = new List<string>() { "point motel", "police station", "polite staff", "pool a", "popular hotel" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.TwoTerms };
@@ -102,8 +102,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteOneTermWithContext()
         {
-            var expectedText = new List<String>() { "very police", "very polite", "very popular" };
-            var expectedQueryPlusText = new List<String>() { "looking for very police", "looking for very polite", "looking for very popular" };
+            var expectedText = new List<string>() { "very police", "very polite", "very popular" };
+            var expectedQueryPlusText = new List<string>() { "looking for very police", "looking for very polite", "looking for very popular" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTermWithContext };
@@ -116,8 +116,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteOneTermWithFuzzy()
         {
-            var expectedText = new List<String>() { "model", "modern", "morel", "motel" };
-            var expectedQueryPlusText = new List<String>() { "model", "modern", "morel", "motel" };
+            var expectedText = new List<string>() { "model", "modern", "morel", "motel" };
+            var expectedQueryPlusText = new List<string>() { "model", "modern", "morel", "motel" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTerm, UseFuzzyMatching = true };
@@ -130,8 +130,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteTwoTermsWithFuzzy()
         {
-            var expectedText = new List<String>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
-            var expectedQueryPlusText = new List<String>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
+            var expectedText = new List<string>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
+            var expectedQueryPlusText = new List<string>() { "model suites", "modern architecture", "modern stay", "morel coverings", "motel" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.TwoTerms, UseFuzzyMatching = true };
@@ -143,8 +143,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteOneTermWithContextWithFuzzy()
         {
-            var expectedText = new List<String>() { "very polite", "very police" };
-            var expectedQueryPlusText = new List<String>() { "very polite", "very police" };
+            var expectedText = new List<string>() { "very polite", "very police" };
+            var expectedQueryPlusText = new List<string>() { "very polite", "very police" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters() { AutocompleteMode = AutocompleteMode.OneTermWithContext, UseFuzzyMatching = true };
@@ -156,8 +156,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteCanUseHitHighlighting()
         {
-            var expectedText = new List<String>() { "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "<b>pool</b>", "<b>popular</b>" };
+            var expectedText = new List<string>() { "pool", "popular" };
+            var expectedQueryPlusText = new List<string>() { "<b>pool</b>", "<b>popular</b>" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
@@ -175,8 +175,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteTopTrimsResults()
         {
-            var expectedText = new List<String>() { "police", "polite" };
-            var expectedQueryPlusText = new List<String>() { "police", "polite" };
+            var expectedText = new List<string>() { "point", "police" };
+            var expectedQueryPlusText = new List<string>() { "point", "police" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
@@ -192,8 +192,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteWithSelectedFields()
         {
-            var expectedText = new List<String>() { "modern"};
-            var expectedQueryPlusText = new List<String>() { "modern" };
+            var expectedText = new List<string>() { "modern"};
+            var expectedQueryPlusText = new List<string>() { "modern" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
@@ -210,8 +210,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteWithMultipleSelectedFields()
         {
-            var expectedText = new List<String>() { "model", "modern" };
-            var expectedQueryPlusText = new List<String>() { "model", "modern" };
+            var expectedText = new List<string>() { "model", "modern" };
+            var expectedQueryPlusText = new List<string>() { "model", "modern" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
@@ -242,8 +242,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteWithFilter()
         {
-            var expectedText = new List<String>() { "polite" };
-            var expectedQueryPlusText = new List<String>() { "polite" };
+            var expectedText = new List<string>() { "polite" };
+            var expectedQueryPlusText = new List<string>() { "polite" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
@@ -260,8 +260,8 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteWithFilterAndFuzzy()
         {
-            var expectedText = new List<String>() { "modern", "motel" };
-            var expectedQueryPlusText = new List<String>() { "modern", "motel" };
+            var expectedText = new List<string>() { "modern", "motel" };
+            var expectedQueryPlusText = new List<string>() { "modern", "motel" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
@@ -277,11 +277,10 @@ namespace Microsoft.Azure.Search.Tests
             ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
-        private void ValidateResults(IList<AutocompleteItem> autocompletedItems, List<String> expectedText, List<String> expectedQueryPlusText)
+        private void ValidateResults(IList<AutocompleteItem> autocompletedItems, List<string> expectedText, List<string> expectedQueryPlusText)
         {
-            Assert.Equal(expectedText.Count, autocompletedItems.Count);
-            Assert.True(autocompletedItems.Select(c => c.Text).ToList().SequenceEqual(expectedText));
-            Assert.True(autocompletedItems.Select(c => c.QueryPlusText).ToList().SequenceEqual(expectedQueryPlusText));
+            Assert.Equal(expectedText, autocompletedItems.Select(c => c.Text));
+            Assert.Equal(expectedQueryPlusText, autocompletedItems.Select(c => c.QueryPlusText));
         }
 
         protected override SearchIndexClient GetClient()
