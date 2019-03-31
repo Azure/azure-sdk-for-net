@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Search.Tests
         public string BEDOPTIONS { get; set; }
 
         [CustomField("sleepsCount")]
-        public int SLEEPSCOUNT { get; set; }
+        public int? SLEEPSCOUNT { get; set; }
 
         [CustomField("smokingAllowed")]
         public bool SMOKINGALLOWED { get; set; }
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Search.Tests
                 LastRenovationDate = LASTRENOVATIONDATE,
                 Rating = RATING,
                 Location = LOCATION,
-                Address = ADDRESS.ToHotelAddress(),
+                Address = ADDRESS?.ToHotelAddress(),
                 Rooms = ROOMS?.Select(r => r.ToHotelRoom())?.ToArray()
             };
     }

@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Search.Tests
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
                 ["location"] = Location,
-                ["address"] = Address.AsDocument(),
+                ["address"] = Address?.AsDocument(),
                 ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new Document[0]
             };
     }
