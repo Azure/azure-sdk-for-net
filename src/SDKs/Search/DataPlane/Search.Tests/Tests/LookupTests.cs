@@ -245,17 +245,49 @@ namespace Microsoft.Azure.Search.Tests
                     new StructHotel()
                     {
                         HotelId = "1",
-                        BaseRate = 199.0,
-                        Description = "Best hotel in town",
-                        DescriptionFr = "Meilleur hôtel en ville",
-                        HotelName = "Fancy Stay",
-                        Category = "Luxury",
-                        Tags = new[] { "pool", "view", "wifi", "concierge" },
+                        HotelName = "Secret Point Motel",
+                        Description = "The hotel is ideally located on the main commercial artery of the city in the heart of New York. A few minutes away is Time's Square and the historic centre of the city, as well as other places of interest that make New York one of America's most attractive and cosmopolitan cities.",
+                        DescriptionFr = "L'hôtel est idéalement situé sur la principale artère commerciale de la ville en plein cœur de New York. A quelques minutes se trouve la place du temps et le centre historique de la ville, ainsi que d'autres lieux d'intérêt qui font de New York l'une des villes les plus attractives et cosmopolites de l'Amérique.",
+                        Category = "Boutique",
+                        Tags = new[] { "pool", "air conditioning", "concierge" },
                         ParkingIncluded = false,
-                        SmokingAllowed = false,
-                        LastRenovationDate = new DateTimeOffset(2010, 6, 27, 0, 0, 0, TimeSpan.Zero),
-                        Rating = 5,
-                        Location = GeographyPoint.Create(47.678581, -122.131577)
+                        SmokingAllowed = true,
+                        LastRenovationDate = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
+                        Rating = 4,
+                        Location = GeographyPoint.Create(40.760586, -73.975403),
+                        Address = new StructHotelAddress()
+                        {
+                            StreetAddress = "677 5th Ave",
+                            City = "New York",
+                            StateProvince = "NY",
+                            Country = "USA",
+                            PostalCode = "10022"
+                        },
+                        Rooms = new[]
+                        {
+                            new StructHotelRoom()
+                            {
+                                Description = "Budget Room, 1 Queen Bed (Cityside)",
+                                DescriptionFr = "Chambre Économique, 1 grand lit (côté ville)",
+                                Type = "Budget Room",
+                                BaseRate = 9.69,
+                                BedOptions = "1 Queen Bed",
+                                SleepsCount = 2,
+                                SmokingAllowed = true,
+                                Tags = new[] { "vcr/dvd" }
+                            },
+                            new StructHotelRoom()
+                            {
+                                Description = "Budget Room, 1 King Bed (Mountain View)",
+                                DescriptionFr = "Chambre Économique, 1 très grand lit (Mountain View)",
+                                Type = "Budget Room",
+                                BaseRate = 8.09,
+                                BedOptions = "1 King Bed",
+                                SleepsCount = 2,
+                                SmokingAllowed = true,
+                                Tags = new[] { "vcr/dvd", "jacuzzi tub" }
+                            }
+                        }
                     };
 
                 var batch = IndexBatch.Upload(new[] { expectedDoc });
@@ -366,7 +398,14 @@ namespace Microsoft.Azure.Search.Tests
                 serviceClient.Indexes.Create(index);
                 SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-                var expectedDoc = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
+                var expectedDoc =
+                    new Book()
+                    {
+                        ISBN = "123",
+                        Title = "Lord of the Rings",
+                        Author = new Author() { FirstName = "J.R.R.", LastName = "Tolkien" }
+                    };
+
                 var batch = IndexBatch.Upload(new[] { expectedDoc });
                 indexClient.Documents.Index(batch);
 
