@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-/* 
+
 #if FullNetFx
 namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
@@ -21,6 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             new object[] { TransportType.Amqp, MessageInteropEnd2EndTests.GetSbConnectionString(TransportType.Amqp) }
         };
 
+        /* 
         [Theory]
         [MemberData(nameof(TestEnd2EndEntityPermutations))]
         [LiveTest]
@@ -97,6 +98,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 }
             });
         }
+        */
 
         internal static string GetSbConnectionString(TransportType transportType)
         {
@@ -114,4 +116,3 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
     }
 }
 #endif
-*/
