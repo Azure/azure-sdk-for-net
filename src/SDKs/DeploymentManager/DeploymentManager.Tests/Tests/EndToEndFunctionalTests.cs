@@ -17,22 +17,25 @@ namespace DeploymentManager.Tests
     public class EndToEndFunctionalTests : TestBase
     {
         private static string subscriptionId;
-        private const string artifactSourceType = "AzureStorage";
-        private const string artifactRoot = @"Tests\ArtifactRoot";
-        private const string containerName = "artifacts";
+        private const string ArtifactSourceType = "AzureStorage";
+        private const string ArtifactRoot = @"Tests\ArtifactRoot";
+        private const string ContainerName = "artifacts";
 
-        private const string parametersFileName = "Storage.Parameters.json";
-        private const string invalidParametersFileName = "Storage_Invalid.Parameters.json";
-        private const string templateFileName = "Storage.Template.json";
-        private const string parametersCopyFileName = "Storage.Copy.Parameters.json";
-        private const string templateCopyFileName = "Storage.Copy.Template.json";
+        private const string ParametersFileName = "Storage.Parameters.json";
+        private const string InvalidParametersFileName = "Storage_Invalid.Parameters.json";
+        private const string TemplateFileName = "Storage.Template.json";
+        private const string ParametersCopyFileName = "Storage.Copy.Parameters.json";
+        private const string TemplateCopyFileName = "Storage.Copy.Template.json";
 
-        private const string ParametersArtifactSourceRelativePath = artifactRoot + @"\" + parametersFileName;
-        private const string TemplateArtifactSourceRelativePath = artifactRoot + @"\" + templateFileName;
-        private const string InvalidParametersArtifactSourceRelativePath = artifactRoot + @"\" + invalidParametersFileName;
-        private const string ParametersCopyArtifactSourceRelativePath = artifactRoot + @"\" + parametersCopyFileName;
-        private const string TemplateCopyArtifactSourceRelativePath = artifactRoot + @"\" + templateCopyFileName;
+        private const string ParametersArtifactSourceRelativePath = ArtifactRoot + @"\" + ParametersFileName;
+        private const string TemplateArtifactSourceRelativePath = ArtifactRoot + @"\" + TemplateFileName;
+        private const string InvalidParametersArtifactSourceRelativePath = ArtifactRoot + @"\" + InvalidParametersFileName;
+        private const string ParametersCopyArtifactSourceRelativePath = ArtifactRoot + @"\" + ParametersCopyFileName;
+        private const string TemplateCopyArtifactSourceRelativePath = ArtifactRoot + @"\" + TemplateCopyFileName;
 
+        /// <summary>
+        /// Tests the end to end scenarios by creating all dependent resources that are part of the API.
+        /// </summary>
         [Fact]
         public void TopologyAndRolloutScenarioTest()
         {
@@ -44,7 +47,7 @@ namespace DeploymentManager.Tests
                 var clientHelper = new DeploymentManagerClientHelper(this, context);
 
                 var te = TestEnvironmentFactory.GetTestEnvironment();
-                subscriptionId = te.SubscriptionId;
+                EndToEndFunctionalTests.subscriptionId = te.SubscriptionId;
 
                 var location = clientHelper.GetProviderLocation("Microsoft.DeploymentManager", "serviceTopologies");
 
@@ -142,13 +145,13 @@ namespace DeploymentManager.Tests
             DeploymentManagerClientHelper clientHelper)
         {
             var serviceName = clientHelper.ResourceGroupName + "Service";
-            var targetLocation = clientHelper.GetProviderLocation(providerName: "Microsoft.Storage", resourceType: "storageAccounts");
+            var targetLocation = location;
 
             var inputService = new ServiceResource(
                 location: location,
                 name: serviceName,
                 targetLocation: targetLocation,
-                targetSubscriptionId: subscriptionId);
+                targetSubscriptionId: EndToEndFunctionalTests.subscriptionId);
 
             var createServiceResponse = deploymentManagerClient.Services.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -211,8 +214,8 @@ namespace DeploymentManager.Tests
             var targetResourceGroup = clientHelper.ResourceGroupName;
             var artifacts = new ServiceUnitArtifacts()
             {
-                ParametersArtifactSourceRelativePath = parametersFileName,
-                TemplateArtifactSourceRelativePath = templateFileName 
+                ParametersArtifactSourceRelativePath = ParametersFileName,
+                TemplateArtifactSourceRelativePath = TemplateFileName 
             };
 
             var inputServiceUnit = new ServiceUnitResource(
@@ -243,8 +246,8 @@ namespace DeploymentManager.Tests
             // Create a service unit that fails deployment for failure rollout scenario.
             var invalidArtifacts = new ServiceUnitArtifacts()
             {
-                ParametersArtifactSourceRelativePath = invalidParametersFileName,
-                TemplateArtifactSourceRelativePath = templateFileName 
+                ParametersArtifactSourceRelativePath = InvalidParametersFileName,
+                TemplateArtifactSourceRelativePath = TemplateFileName 
             };
 
             var failureServiceUnitInput = new ServiceUnitResource(
@@ -275,8 +278,8 @@ namespace DeploymentManager.Tests
 
             // Test Update service unit.
             serviceUnit.DeploymentMode = DeploymentMode.Complete;
-            serviceUnit.Artifacts.ParametersArtifactSourceRelativePath = parametersCopyFileName;
-            serviceUnit.Artifacts.TemplateArtifactSourceRelativePath = templateCopyFileName;
+            serviceUnit.Artifacts.ParametersArtifactSourceRelativePath = ParametersCopyFileName;
+            serviceUnit.Artifacts.TemplateArtifactSourceRelativePath = TemplateCopyFileName;
             var updatedService = deploymentManagerClient.ServiceUnits.CreateOrUpdate(
                 resourceGroupName: clientHelper.ResourceGroupName,
                 serviceTopologyName: serviceTopologyResource.Name,
@@ -399,7 +402,7 @@ namespace DeploymentManager.Tests
             var rolloutName = clientHelper.ResourceGroupName + "Rollout";
             var failureRolloutName = clientHelper.ResourceGroupName + "FailureRollout";
 
-            var userAssignedIdentity = this.SetManagedIdentity(subscriptionId, clientHelper); 
+            var userAssignedIdentity = this.SetManagedIdentity(clientHelper); 
 
             var identity = new Identity()
             {
@@ -461,7 +464,7 @@ namespace DeploymentManager.Tests
             Assert.Equal("Running", rollout.Status);
             Assert.NotNull(rollout.OperationInfo);
             Assert.Equal(0, rollout.OperationInfo.RetryAttempt);
-     
+
             // Test cancel rollout.
             rollout = deploymentManagerClient.Rollouts.Cancel(
                 resourceGroupName: clientHelper.ResourceGroupName,
@@ -558,13 +561,10 @@ namespace DeploymentManager.Tests
         }
 
         private string SetManagedIdentity(
-            string subscriptionId,
             DeploymentManagerClientHelper clientHelper)
         {
             var identityName = clientHelper.ResourceGroupName + "Identity";
-
-            var identityId = clientHelper.CreateManagedIdentity(subscriptionId, identityName);
-
+            var identityId = clientHelper.CreateManagedIdentity(EndToEndFunctionalTests.subscriptionId, identityName);
             return identityId;
         }
 
@@ -586,14 +586,14 @@ namespace DeploymentManager.Tests
                 SasUri = clientHelper.GetBlobContainerSasUri(
                     clientHelper.ResourceGroupName,
                     storageAccountName,
-                    containerName: "artifacts")
+                    containerName: EndToEndFunctionalTests.ContainerName)
             };
 
             var inputArtifactSource = new ArtifactSource(
                 location: location,
-                sourceType: artifactSourceType,
+                sourceType: EndToEndFunctionalTests.ArtifactSourceType,
                 authentication: authentication,
-                artifactRoot: artifactRoot,
+                artifactRoot: EndToEndFunctionalTests.ArtifactRoot,
                 name: artifactSourceName);
 
             var artifactSourceResponse = deploymentManagerClient.ArtifactSources.CreateOrUpdate(
@@ -620,11 +620,11 @@ namespace DeploymentManager.Tests
                 this.ReplaceString(storageAccountReplacementSymbol, storageAccountNameForTemplate, ParametersCopyArtifactSourceRelativePath);
                 this.ReplaceString(storageAccountReplacementSymbol, storageAccountNameForTemplate, TemplateCopyArtifactSourceRelativePath);
 
-                clientHelper.UploadBlob(storageAccountName, containerName, ParametersArtifactSourceRelativePath, ParametersArtifactSourceRelativePath);
-                clientHelper.UploadBlob(storageAccountName, containerName, ParametersCopyArtifactSourceRelativePath, ParametersCopyArtifactSourceRelativePath);
-                clientHelper.UploadBlob(storageAccountName, containerName, InvalidParametersArtifactSourceRelativePath, InvalidParametersArtifactSourceRelativePath);
-                clientHelper.UploadBlob(storageAccountName, containerName, TemplateArtifactSourceRelativePath, TemplateArtifactSourceRelativePath);
-                clientHelper.UploadBlob(storageAccountName, containerName, TemplateCopyArtifactSourceRelativePath, TemplateCopyArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, ContainerName, ParametersArtifactSourceRelativePath, ParametersArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, ContainerName, ParametersCopyArtifactSourceRelativePath, ParametersCopyArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, ContainerName, InvalidParametersArtifactSourceRelativePath, InvalidParametersArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, ContainerName, TemplateArtifactSourceRelativePath, TemplateArtifactSourceRelativePath);
+                clientHelper.UploadBlob(storageAccountName, ContainerName, TemplateCopyArtifactSourceRelativePath, TemplateCopyArtifactSourceRelativePath);
             }
         }
 

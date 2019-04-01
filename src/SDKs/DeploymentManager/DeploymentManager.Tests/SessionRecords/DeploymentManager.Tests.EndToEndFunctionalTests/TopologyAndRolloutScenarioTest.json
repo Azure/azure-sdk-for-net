@@ -498,6 +498,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"key1\": \"e6Xm75ZlxpApMoFdlopJRA9JbTK+2Zyfgwp9g64JJMZw7x6fHOpP9PZZmic7WWkbWjV5Vvn5XGsaEuNNUuAmeA==\",\r\n  \"key2\": \"pYJfdzNury9DttntKOL3I9nlfBGo21qXiBlAM9yzrOgfxNR/4azJng86oGT2bU1KR7yqfdccxg47Pl/J/Ff1/A==\"\r\n}",
       "StatusCode": 200
     },
@@ -561,6 +562,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"key1\": \"e6Xm75ZlxpApMoFdlopJRA9JbTK+2Zyfgwp9g64JJMZw7x6fHOpP9PZZmic7WWkbWjV5Vvn5XGsaEuNNUuAmeA==\",\r\n  \"key2\": \"pYJfdzNury9DttntKOL3I9nlfBGo21qXiBlAM9yzrOgfxNR/4azJng86oGT2bU1KR7yqfdccxg47Pl/J/Ff1/A==\"\r\n}",
       "StatusCode": 200
     },
@@ -624,6 +626,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"key1\": \"e6Xm75ZlxpApMoFdlopJRA9JbTK+2Zyfgwp9g64JJMZw7x6fHOpP9PZZmic7WWkbWjV5Vvn5XGsaEuNNUuAmeA==\",\r\n  \"key2\": \"pYJfdzNury9DttntKOL3I9nlfBGo21qXiBlAM9yzrOgfxNR/4azJng86oGT2bU1KR7yqfdccxg47Pl/J/Ff1/A==\"\r\n}",
       "StatusCode": 200
     },
@@ -687,6 +690,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"key1\": \"e6Xm75ZlxpApMoFdlopJRA9JbTK+2Zyfgwp9g64JJMZw7x6fHOpP9PZZmic7WWkbWjV5Vvn5XGsaEuNNUuAmeA==\",\r\n  \"key2\": \"pYJfdzNury9DttntKOL3I9nlfBGo21qXiBlAM9yzrOgfxNR/4azJng86oGT2bU1KR7yqfdccxg47Pl/J/Ff1/A==\"\r\n}",
       "StatusCode": 200
     },
@@ -750,6 +754,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"key1\": \"e6Xm75ZlxpApMoFdlopJRA9JbTK+2Zyfgwp9g64JJMZw7x6fHOpP9PZZmic7WWkbWjV5Vvn5XGsaEuNNUuAmeA==\",\r\n  \"key2\": \"pYJfdzNury9DttntKOL3I9nlfBGo21qXiBlAM9yzrOgfxNR/4azJng86oGT2bU1KR7yqfdccxg47Pl/J/Ff1/A==\"\r\n}",
       "StatusCode": 200
     },
@@ -813,6 +818,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"key1\": \"e6Xm75ZlxpApMoFdlopJRA9JbTK+2Zyfgwp9g64JJMZw7x6fHOpP9PZZmic7WWkbWjV5Vvn5XGsaEuNNUuAmeA==\",\r\n  \"key2\": \"pYJfdzNury9DttntKOL3I9nlfBGo21qXiBlAM9yzrOgfxNR/4azJng86oGT2bU1KR7yqfdccxg47Pl/J/Ff1/A==\"\r\n}",
       "StatusCode": 200
     },
@@ -876,6 +882,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"key1\": \"e6Xm75ZlxpApMoFdlopJRA9JbTK+2Zyfgwp9g64JJMZw7x6fHOpP9PZZmic7WWkbWjV5Vvn5XGsaEuNNUuAmeA==\",\r\n  \"key2\": \"pYJfdzNury9DttntKOL3I9nlfBGo21qXiBlAM9yzrOgfxNR/4azJng86oGT2bU1KR7yqfdccxg47Pl/J/Ff1/A==\"\r\n}",
       "StatusCode": 200
     },
@@ -883,6 +890,7 @@
       "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/admsdknet9828/providers/Microsoft.DeploymentManager/artifactSources/admsdknet9828ArtifactSource?api-version=2018-09-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2FkbXNka25ldDk4MjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9hcnRpZmFjdFNvdXJjZXMvYWRtc2RrbmV0OTgyOEFydGlmYWN0U291cmNlP2FwaS12ZXJzaW9uPTIwMTgtMDktMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"Tests\\\\ArtifactRoot\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://admsdknet9828stgacct.blob.core.windows.net/artifacts?sv=2017-04-17&sr=c&sig=JLSL1q6Ul2aD6OCDiLsIZe7VIkQsnnjSgZVQlx0I3N4%3D&st=2019-03-27T02%3A20%3A44Z&se=2019-03-30T02%3A20%3A44Z&sp=rl\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
@@ -948,6 +956,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"Tests\\\\ArtifactRoot\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://admsdknet9828stgacct.blob.core.windows.net/artifacts?sv=2017-04-17&sr=c&sig=JLSL1q6Ul2aD6OCDiLsIZe7VIkQsnnjSgZVQlx0I3N4%3D&st=2019-03-27T02%3A20%3A44Z&se=2019-03-30T02%3A20%3A44Z&sp=rl\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/artifactSources\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/admsdknet9828/providers/Microsoft.DeploymentManager/artifactSources/admsdknet9828ArtifactSource\",\r\n  \"name\": \"admsdknet9828ArtifactSource\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 201
     },
@@ -4021,6 +4030,7 @@
       "RequestUri": "/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourceGroups/admsdknet9828/providers/Microsoft.DeploymentManager/artifactSources/admsdknet9828UpdatedArtifactSource?api-version=2018-09-01-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNTMwMTJkY2ItNTAzOS00ZTk2LThlNmMtNWQ5MTNkYTFjZGI1L3Jlc291cmNlR3JvdXBzL2FkbXNka25ldDk4MjgvcHJvdmlkZXJzL01pY3Jvc29mdC5EZXBsb3ltZW50TWFuYWdlci9hcnRpZmFjdFNvdXJjZXMvYWRtc2RrbmV0OTgyOFVwZGF0ZWRBcnRpZmFjdFNvdXJjZT9hcGktdmVyc2lvbj0yMDE4LTA5LTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"Tests\\\\ArtifactRoot\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://admsdknet9828stgacct.blob.core.windows.net/artifacts?sv=2017-04-17&sr=c&sig=WmD%2BUVgLThgwqOWcUbKBvHeWxxAuoQeDwQmX4sXsaEw%3D&st=2019-03-27T02%3A31%3A20Z&se=2019-03-30T02%3A31%3A20Z&sp=rl\"\r\n      }\r\n    }\r\n  },\r\n  \"location\": \"Central US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
@@ -4086,6 +4096,7 @@
           "-1"
         ]
       },
+      //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine", Justification="This is the secret for a resource that has since been deleted.")]
       "ResponseBody": "{\r\n  \"properties\": {\r\n    \"sourceType\": \"AzureStorage\",\r\n    \"artifactRoot\": \"Tests\\\\ArtifactRoot\",\r\n    \"authentication\": {\r\n      \"type\": \"Sas\",\r\n      \"properties\": {\r\n        \"sasUri\": \"https://admsdknet9828stgacct.blob.core.windows.net/artifacts?sv=2017-04-17&sr=c&sig=WmD%2BUVgLThgwqOWcUbKBvHeWxxAuoQeDwQmX4sXsaEw%3D&st=2019-03-27T02%3A31%3A20Z&se=2019-03-30T02%3A31%3A20Z&sp=rl\"\r\n      }\r\n    },\r\n    \"provisioningState\": \"Succeeded\"\r\n  },\r\n  \"type\": \"Microsoft.DeploymentManager/artifactSources\",\r\n  \"apiVersion\": \"2018-09-01-preview\",\r\n  \"id\": \"/subscriptions/53012dcb-5039-4e96-8e6c-5d913da1cdb5/resourcegroups/admsdknet9828/providers/Microsoft.DeploymentManager/artifactSources/admsdknet9828UpdatedArtifactSource\",\r\n  \"name\": \"admsdknet9828UpdatedArtifactSource\",\r\n  \"location\": \"Central US\"\r\n}",
       "StatusCode": 201
     },
