@@ -155,13 +155,9 @@ namespace Azure.ApplicationModel.Configuration
                     {
                         labelsCopy.Add("\0");
                     }
-                    else if (label.IndexOfAny(ReservedCharacters) != -1)
-                    {
-                        labelsCopy.Add(EscapeReservedCharacters(label));
-                    }
                     else
                     {
-                        labelsCopy.Add(label);
+                        labelsCopy.Add(EscapeReservedCharacters(label));
                     }
                 }
                 var labels = string.Join(",", labelsCopy).ToLower();
