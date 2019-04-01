@@ -19,13 +19,33 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EnrollmentAccountsOperations operations.
+    /// BillingPeriodsOperations operations.
     /// </summary>
-    public partial interface IEnrollmentAccountsOperations
+    public partial interface IBillingPeriodsOperations
     {
         /// <summary>
-        /// Lists the enrollment accounts the caller has access to.
+        /// Lists the available billing periods for a subscription in reverse
+        /// chronological order. This is only supported for Azure Web-Direct
+        /// subscriptions. Other subscription types which were not purchased
+        /// directly through the Azure web portal are not supported through
+        /// this preview API.
+        /// <see href="https://go.microsoft.com/fwlink/?linkid=844490" />
         /// </summary>
+        /// <param name='filter'>
+        /// May be used to filter billing periods by billingPeriodEndDate. The
+        /// filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does
+        /// not currently support 'ne', 'or', or 'not'.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Skiptoken is only used if a previous operation returned a partial
+        /// result. If a previous response contains a nextLink element, the
+        /// value of the nextLink element will include a skiptoken parameter
+        /// that specifies a starting point to use for subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// May be used to limit the number of results to the most recent N
+        /// billing periods.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -41,12 +61,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EnrollmentAccount>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingPeriod>>> ListWithHttpMessagesAsync(string filter = default(string), string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets a enrollment account by name.
+        /// Gets a named billing period.  This is only supported for Azure
+        /// Web-Direct subscriptions. Other subscription types which were not
+        /// purchased directly through the Azure web portal are not supported
+        /// through this preview API.
         /// </summary>
-        /// <param name='name'>
-        /// Enrollment Account name.
+        /// <param name='billingPeriodName'>
+        /// The name of a BillingPeriod resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -63,9 +86,14 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<EnrollmentAccount>> GetWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingPeriod>> GetWithHttpMessagesAsync(string billingPeriodName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the enrollment accounts the caller has access to.
+        /// Lists the available billing periods for a subscription in reverse
+        /// chronological order. This is only supported for Azure Web-Direct
+        /// subscriptions. Other subscription types which were not purchased
+        /// directly through the Azure web portal are not supported through
+        /// this preview API.
+        /// <see href="https://go.microsoft.com/fwlink/?linkid=844490" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -85,6 +113,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EnrollmentAccount>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<BillingPeriod>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
