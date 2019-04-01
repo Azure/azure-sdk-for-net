@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.HybridData.Models
     using System.Linq;
 
     /// <summary>
-    /// Base class for all objects under DataManager.
+    /// Base class for all objects under DataManager Service
     /// </summary>
     public partial class DmsBaseObject
     {

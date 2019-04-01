@@ -4,6 +4,7 @@
     using Microsoft.Azure.Management.HybridData.Models;
     using Microsoft.Rest.Azure;
     using System;
+    using System.Collections.Generic;
     using Xunit;
     using Xunit.Abstractions;
 
@@ -92,6 +93,29 @@
             {
                 Assert.True(ex.Body.Code.Equals(TestConstants.ResourceNotFoundErrorCode) ||
                     ex.Body.Code.Equals(TestConstants.DmsUserErrorEntityNotFoundErrorCode));
+            }
+            catch (Exception e)
+            {
+                Assert.Null(e);
+            }
+        }
+
+        //DataManagers_Update
+        [Fact]
+        public void DataManagers_Update()
+        {
+            try
+            {
+                var dataManager = Client.DataManagers.Get(ResourceGroupName, DataManagerName);
+                var dataManagerUpdateParameter = new DataManagerUpdateParameter
+                {
+                    Tags = dataManager.Tags,
+                    Sku = dataManager.Sku
+                };
+                dataManagerUpdateParameter.Tags.Add("UpdateDateTime", DateTime.Now.ToString());
+                var dataManagerNew = Client.DataManagers.Update(ResourceGroupName, DataManagerName,
+                    dataManagerUpdateParameter);
+                Assert.NotNull(dataManagerNew);
             }
             catch (Exception e)
             {

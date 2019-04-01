@@ -147,6 +147,41 @@ namespace Microsoft.Azure.Management.HybridData
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string dataManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Updates the properties of an existing data manager resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The Resource Group Name
+        /// </param>
+        /// <param name='dataManagerName'>
+        /// The name of the DataManager Resource within the specified resource
+        /// group. DataManager names must be between 3 and 24 characters in
+        /// length and use any alphanumeric and underscore only
+        /// </param>
+        /// <param name='dataManagerUpdateParameter'>
+        /// Data manager resource details from request body.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// Defines the If-Match condition. The patch will be performed only if
+        /// the ETag of the data manager resource on the server matches this
+        /// value.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DataManager>> UpdateWithHttpMessagesAsync(string resourceGroupName, string dataManagerName, DataManagerUpdateParameter dataManagerUpdateParameter, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Creates a new data manager resource with the specified parameters.
         /// Existing resources cannot be updated with this API
         /// and should instead be updated with the Update data manager resource
@@ -203,5 +238,40 @@ namespace Microsoft.Azure.Management.HybridData
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string dataManagerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates the properties of an existing data manager resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The Resource Group Name
+        /// </param>
+        /// <param name='dataManagerName'>
+        /// The name of the DataManager Resource within the specified resource
+        /// group. DataManager names must be between 3 and 24 characters in
+        /// length and use any alphanumeric and underscore only
+        /// </param>
+        /// <param name='dataManagerUpdateParameter'>
+        /// Data manager resource details from request body.
+        /// </param>
+        /// <param name='ifMatch'>
+        /// Defines the If-Match condition. The patch will be performed only if
+        /// the ETag of the data manager resource on the server matches this
+        /// value.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<DataManager>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string dataManagerName, DataManagerUpdateParameter dataManagerUpdateParameter, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

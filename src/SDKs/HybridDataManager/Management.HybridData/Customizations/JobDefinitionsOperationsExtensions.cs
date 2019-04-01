@@ -99,7 +99,7 @@
             HybridDataManagementClient client, string jobDefinitionName, string dataServiceName,
             string dataManagerName, string resourceGroupName,
             UserConfirmation userConfirmation, string deviceName = null, string containerName = null,
-            string[] volumeNames = null, string backupChoice = null,
+            string[] volumeNames = null, BackupChoice backupChoice = BackupChoice.UseExistingLatest,
             string fileNameFilter = null, string[] rootDirectories = null, 
             string azureStorageType = null, bool isDirectoryMode = false)
         {
@@ -129,7 +129,7 @@
                     volumeNamesObj.Add(volumeName);
                 dataServiceInputJToken["VolumeNames"] = volumeNamesObj;
             }
-            dataServiceInputJToken["BackupChoice"] = backupChoice ?? dataServiceInputJToken["BackupChoice"];
+            dataServiceInputJToken["BackupChoice"] = backupChoice.ToString() ?? dataServiceInputJToken["BackupChoice"];
             dataServiceInputJToken["IsDirectoryMode"] = isDirectoryMode;
             dataServiceInputJToken["AzureStorageType"] = azureStorageType ?? dataServiceInputJToken["AzureStorageType"];
             runParameters.DataServiceInput = dataServiceInputJToken;

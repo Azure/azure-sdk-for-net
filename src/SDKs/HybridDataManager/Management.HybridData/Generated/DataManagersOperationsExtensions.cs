@@ -223,6 +223,64 @@ namespace Microsoft.Azure.Management.HybridData
             }
 
             /// <summary>
+            /// Updates the properties of an existing data manager resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='dataManagerName'>
+            /// The name of the DataManager Resource within the specified resource group.
+            /// DataManager names must be between 3 and 24 characters in length and use any
+            /// alphanumeric and underscore only
+            /// </param>
+            /// <param name='dataManagerUpdateParameter'>
+            /// Data manager resource details from request body.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// Defines the If-Match condition. The patch will be performed only if the
+            /// ETag of the data manager resource on the server matches this value.
+            /// </param>
+            public static DataManager Update(this IDataManagersOperations operations, string resourceGroupName, string dataManagerName, DataManagerUpdateParameter dataManagerUpdateParameter, string ifMatch = default(string))
+            {
+                return operations.UpdateAsync(resourceGroupName, dataManagerName, dataManagerUpdateParameter, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the properties of an existing data manager resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='dataManagerName'>
+            /// The name of the DataManager Resource within the specified resource group.
+            /// DataManager names must be between 3 and 24 characters in length and use any
+            /// alphanumeric and underscore only
+            /// </param>
+            /// <param name='dataManagerUpdateParameter'>
+            /// Data manager resource details from request body.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// Defines the If-Match condition. The patch will be performed only if the
+            /// ETag of the data manager resource on the server matches this value.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataManager> UpdateAsync(this IDataManagersOperations operations, string resourceGroupName, string dataManagerName, DataManagerUpdateParameter dataManagerUpdateParameter, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, dataManagerName, dataManagerUpdateParameter, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Creates a new data manager resource with the specified parameters. Existing
             /// resources cannot be updated with this API
             /// and should instead be updated with the Update data manager resource API.
@@ -315,6 +373,64 @@ namespace Microsoft.Azure.Management.HybridData
             public static async Task BeginDeleteAsync(this IDataManagersOperations operations, string resourceGroupName, string dataManagerName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, dataManagerName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Updates the properties of an existing data manager resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='dataManagerName'>
+            /// The name of the DataManager Resource within the specified resource group.
+            /// DataManager names must be between 3 and 24 characters in length and use any
+            /// alphanumeric and underscore only
+            /// </param>
+            /// <param name='dataManagerUpdateParameter'>
+            /// Data manager resource details from request body.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// Defines the If-Match condition. The patch will be performed only if the
+            /// ETag of the data manager resource on the server matches this value.
+            /// </param>
+            public static DataManager BeginUpdate(this IDataManagersOperations operations, string resourceGroupName, string dataManagerName, DataManagerUpdateParameter dataManagerUpdateParameter, string ifMatch = default(string))
+            {
+                return operations.BeginUpdateAsync(resourceGroupName, dataManagerName, dataManagerUpdateParameter, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the properties of an existing data manager resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The Resource Group Name
+            /// </param>
+            /// <param name='dataManagerName'>
+            /// The name of the DataManager Resource within the specified resource group.
+            /// DataManager names must be between 3 and 24 characters in length and use any
+            /// alphanumeric and underscore only
+            /// </param>
+            /// <param name='dataManagerUpdateParameter'>
+            /// Data manager resource details from request body.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// Defines the If-Match condition. The patch will be performed only if the
+            /// ETag of the data manager resource on the server matches this value.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DataManager> BeginUpdateAsync(this IDataManagersOperations operations, string resourceGroupName, string dataManagerName, DataManagerUpdateParameter dataManagerUpdateParameter, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, dataManagerName, dataManagerUpdateParameter, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

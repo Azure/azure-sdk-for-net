@@ -138,12 +138,12 @@
         {
             try
             {
-                //string deviceName = "dmsdatasource",
-                //    containerName = "contforportal",
-                //    backupChoice = "UseExistingLatest";
+                //string deviceName = "dmsdatasource";
+                //string containerName = "contforportal";
+                //BackupChoice backupChoice = BackupChoice.UseExistingLatest;
                 UserConfirmation userConfirmation = UserConfirmation.NotRequired;
-                //string[] rootDirectories = new string[] { "\\" },
-                //    volumeNames = new string[] { "dmsbvtvol" };
+                //string[] rootDirectories = new string[] { "\\" };
+                //string[] volumeNames = new string[] { "dmsbvtvol" };
 
                 RunParameters runParameters = Client.JobDefinitions.GetRunParameters(
                     client: Client,
