@@ -120,7 +120,7 @@
                     Name = "Suggestions Entity Test"
                 });
 
-                var results = await client.Model.GetEntitySuggestionsAsync(GlobalAppId, versionId, entityId);
+                var results = await client.Model.ListEntitySuggestionsAsync(GlobalAppId, versionId, entityId);
                 var count = results.SelectMany(o => o.EntityPredictions).Count(o => o.EntityName == "Suggestions Entity Test");
 
                 await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);

@@ -23,7 +23,7 @@
                     ExplicitList = new[] { "item" }
                 });
 
-                var results = await client.Model.GetPatternAnyEntityInfosAsync(GlobalAppId, versionId);
+                var results = await client.Model.ListPatternAnyEntityInfosAsync(GlobalAppId, versionId);
 
                 var model = results.FirstOrDefault(r => r.Name == "Pattern.Any entity");
                 Assert.NotNull(model);
@@ -119,7 +119,7 @@
 
                 await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
 
-                var results = await client.Model.GetPatternAnyEntityInfosAsync(GlobalAppId, versionId);
+                var results = await client.Model.ListPatternAnyEntityInfosAsync(GlobalAppId, versionId);
 
                 Assert.DoesNotContain(results, o => o.Id == entityId);
             });
