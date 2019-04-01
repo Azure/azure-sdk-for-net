@@ -29,7 +29,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         };
 
-        private static string SetEnvironment()
+        private static string GetEnvironment()
         {
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
@@ -80,7 +80,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSettingNotFound()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var response = await service.DeleteAsync(s_testSetting.Key);
@@ -92,7 +92,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -123,7 +123,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSettingWithLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -154,7 +154,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSettingWithETag()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             // Prepare environment
@@ -175,7 +175,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -192,7 +192,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetExistingSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -211,7 +211,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetKeyValue()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
@@ -233,7 +233,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetKeyValueLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
@@ -257,7 +257,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetRequestId()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -276,7 +276,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddExistingSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -299,7 +299,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -317,7 +317,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddSettingNoLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var testSettingNoLabel = s_testSetting.Clone();
@@ -338,7 +338,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddKeyValue()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
@@ -360,7 +360,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddKeyValueLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
@@ -384,7 +384,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateKeyValue()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
@@ -407,7 +407,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var testSettingDiff = s_testSetting.Clone();
@@ -435,7 +435,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void UpdateNoExistingSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -448,7 +448,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateSettingIfETag()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             await service.SetAsync(s_testSetting);
@@ -470,7 +470,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateSettingTags()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             await service.SetAsync(s_testSetting);
@@ -505,7 +505,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetRevisions()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             //Prepare environment
@@ -552,7 +552,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             // Prepare environment
@@ -575,7 +575,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void GetSettingNotFound()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -589,7 +589,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetSettingWithLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             // Prepare environment
@@ -615,7 +615,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetWithAcceptDateTime()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -635,7 +635,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingPagination()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             const int expectedEvents = 105;
@@ -662,7 +662,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingAny()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -689,7 +689,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingKeyLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -712,7 +712,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingOnlyKey()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -734,7 +734,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingOnlyLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -761,7 +761,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingWithFields()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -788,7 +788,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task LockUnlockSetting()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             try
@@ -822,7 +822,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void LockSettingNotFound()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -836,7 +836,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void UnlockSettingNotFound()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
@@ -850,7 +850,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void FilterReservedCharacter()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
             var selector = new SettingSelector()
             {
@@ -868,7 +868,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void FilterContains()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
             var selector = new SettingSelector()
             {
@@ -885,7 +885,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void FilterNullLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
             var selector = new SettingSelector()
             {
@@ -901,7 +901,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void FilterOnlyKey()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var key = "my-key";
@@ -916,7 +916,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void FilterOnlyLabel()
         {
-            string connectionString = SetEnvironment();
+            string connectionString = GetEnvironment();
             var service = new ConfigurationClient(connectionString);
 
             var label = "my-label";
