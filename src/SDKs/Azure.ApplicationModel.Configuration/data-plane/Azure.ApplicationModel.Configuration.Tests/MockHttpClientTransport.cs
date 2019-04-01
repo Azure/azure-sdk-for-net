@@ -4,7 +4,6 @@
 
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
-using Newtonsoft.Json;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -139,14 +138,18 @@ namespace Azure.ApplicationModel.Configuration.Test
             var bathItems = new MockBatch();
             int itemIndex = batch.index;
             int count = batch.count;
+
+            StringBuilder responseContent = new StringBuilder();
+
+            responseContent.Append("{\"items\":[");
             while (count-- > 0)
             {
-                bathItems.Items.Add(KeyValues[itemIndex++]);
+                responseContent.Append(CreateResponse(KeyValues[itemIndex++]));
+                if(count != 0) responseContent.Append(",");
             }
-            string json = JsonConvert.SerializeObject(bathItems).ToLowerInvariant();
-            json = json.Replace("etag\":{}", "etag\":\"c3c231fd-39a0-4cb6-3237-4614474b92c1\"");
-            json = json.Replace("contenttype", "content_type");
-            json = json.Replace("lastmodified", "last_modified");
+            responseContent.Append("]}");
+
+            string json = responseContent.ToString().ToLowerInvariant();
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             long jsonByteCount = Encoding.UTF8.GetByteCount(json);
@@ -208,7 +211,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             response.Content.Headers.TryAddWithoutValidation("Last-Modified", "Tue, 05 Dec 2017 02:41:26 GMT");
             response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
         }
-
+        
         protected string CreateResponse(ConfigurationSetting responseContent, bool? locked = null)
         {
             if (responseContent == null) return null;
