@@ -3,6 +3,11 @@
 ## Current version
 ###  Feature Additions
 
+## Version 3.0.2
+###  Feature Additions
+    - Added new Validation and Webhook activities
+    - Added annotation property to Trigger resource 
+
 ## Version 3.0.1
 ###  Feature Additions
     - Fixed AzureFunctionActivity
