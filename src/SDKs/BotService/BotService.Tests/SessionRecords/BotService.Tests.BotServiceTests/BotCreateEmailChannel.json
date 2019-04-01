@@ -1,0 +1,310 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourcegroups/res1108?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlZ3JvdXBzL3JlczExMDg/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"centralus\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "31"
+        ],
+        "x-ms-client-request-id": [
+          "0b6f0842-ee20-4ede-87c6-e2fb9c179d15"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.6.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res1108\",\r\n  \"name\": \"res1108\",\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "170"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Apr 2018 23:16:45 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1196"
+        ],
+        "x-ms-request-id": [
+          "46354682-e7ff-4af5-8918-f4029a714401"
+        ],
+        "x-ms-correlation-request-id": [
+          "46354682-e7ff-4af5-8918-f4029a714401"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180402T231646Z:46354682-e7ff-4af5-8918-f4029a714401"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res1108/providers/Microsoft.BotService/botServices?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczExMDgvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzP2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "195c330e-5ccd-4b05-a710-8e61ee9a303b"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
+        ],
+        "x-ms-client-principal-name": [
+          "test@microsoft.com"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [],\r\n  \"nextLink\": \"https://management.azure.com/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res1108/providers/Microsoft.BotService/botServices?api-version=2017-12-01&%24skipToken=eyJuZXh0TWFya2VyIjoiMCJ9\"\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Apr 2018 23:16:46 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "d5855cbf-240a-461f-b3f0-a8484999526e"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-correlation-request-id": [
+          "5aea9bbb-708b-4fa6-a4d9-304512964447"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180402T231647Z:5aea9bbb-708b-4fa6-a4d9-304512964447"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res1108/providers/Microsoft.BotService/botServices/botservice8086?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczExMDgvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U4MDg2P2FwaS12ZXJzaW9uPTIwMTctMTItMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"1950c0e8-d435-4f33-af21-f6494766b529\"\r\n  },\r\n  \"location\": \"global\",\r\n  \"tags\": {\r\n    \"key1\": \"value1\",\r\n    \"key2\": \"value2\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "363"
+        ],
+        "x-ms-client-request-id": [
+          "23dd87b7-b7c5-4311-aa53-8c5b49044f87"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
+        ],
+        "x-ms-client-principal-name": [
+          "test@microsoft.com"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res1108/providers/Microsoft.BotService/botServices/botservice8086\",\r\n  \"name\": \"botservice8086\",\r\n  \"type\": \"Microsoft.BotService/botServices\",\r\n  \"etag\": \"W/\\\"datetime'2018-04-02T23%3A16%3A49.443842Z'\\\"\",\r\n  \"location\": \"global\",\r\n  \"sku\": {\r\n    \"name\": \"F0\"\r\n  },\r\n  \"kind\": \"sdk\",\r\n  \"properties\": {\r\n    \"displayName\": \"Default bot display name\",\r\n    \"description\": \"Default bot description\",\r\n    \"iconUrl\": \"//intercom-scratch.azureedge.net/bot-icons-v1/bot-framework-default.png\",\r\n    \"endpoint\": \"https://mybot.coffee\",\r\n    \"msaAppId\": \"1950c0e8-d435-4f33-af21-f6494766b529\",\r\n    \"developerAppInsightKey\": \"\",\r\n    \"developerAppInsightsApplicationId\": \"\",\r\n    \"luisAppIds\": [],\r\n    \"endpointVersion\": \"3.0\",\r\n    \"configuredChannels\": [\r\n      \"webchat\"\r\n    ],\r\n    \"enabledChannels\": [\r\n      \"webchat\",\r\n      \"directline\"\r\n    ],\r\n    \"isDeveloperAppInsightsApiKeySet\": false,\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "836"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Apr 2018 23:16:49 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "W/\"datetime'2018-04-02T23%3A16%3A49.443842Z'\""
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-request-id": [
+          "a59e93f6-d896-48d0-9bed-78961d43e166"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1195"
+        ],
+        "x-ms-correlation-request-id": [
+          "2117eef7-b915-49c0-b419-4bb3927c02da"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180402T231649Z:2117eef7-b915-49c0-b419-4bb3927c02da"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res1108/providers/Microsoft.BotService/botServices/botservice8086/channels/EmailChannel?api-version=2017-12-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMzVmYTc0NjEtZDQ4YS00MDUzLTlhYTItNTZjMDE0NDk1ZTg5L3Jlc291cmNlR3JvdXBzL3JlczExMDgvcHJvdmlkZXJzL01pY3Jvc29mdC5Cb3RTZXJ2aWNlL2JvdFNlcnZpY2VzL2JvdHNlcnZpY2U4MDg2L2NoYW5uZWxzL0VtYWlsQ2hhbm5lbD9hcGktdmVyc2lvbj0yMDE3LTEyLTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"channelName\": \"EmailChannel\",\r\n    \"properties\": {\r\n      \"emailAddress\": \"carlostestsdk2@outlook.com\",\r\n      \"password\": \"Carlos.Test1\",\r\n      \"isEnabled\": true\r\n    }\r\n  },\r\n  \"location\": \"global\"\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "230"
+        ],
+        "x-ms-client-request-id": [
+          "78ae5db2-b9f7-4a59-8363-8c2957c107a0"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.25211.01",
+          "Microsoft.Azure.Management.BotService.AzureBotServiceClient/1.0.0.0"
+        ],
+        "x-ms-client-principal-name": [
+          "test@microsoft.com"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/35fa7461-d48a-4053-9aa2-56c014495e89/resourceGroups/res1108/providers/Microsoft.BotService/botServices/botservice8086/channels/EmailChannel\",\r\n  \"name\": \"botservice8086/EmailChannel\",\r\n  \"type\": \"Microsoft.BotService/botServices/channels\",\r\n  \"etag\": \"W/\\\"6d5e002131b9c814bd22aa8b52a800c24/2/2018 11:16:58 PM\\\"\",\r\n  \"location\": \"global\",\r\n  \"properties\": {\r\n    \"properties\": {\r\n      \"emailAddress\": \"carlostestsdk2@outlook.com\",\r\n      \"password\": \"Carlos.Test1\",\r\n      \"isEnabled\": true\r\n    },\r\n    \"etag\": \"W/\\\"6d5e002131b9c814bd22aa8b52a800c24/2/2018 11:16:58 PM\\\"\",\r\n    \"channelName\": \"EmailChannel\",\r\n    \"location\": \"global\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "605"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Mon, 02 Apr 2018 23:16:58 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "W/\"6d5e002131b9c814bd22aa8b52a800c24/2/2018 11:16:58 PM\""
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "x-ms-request-id": [
+          "ce9fffdf-8a8c-4915-815a-37483b169a23"
+        ],
+        "Request-Context": [
+          "appId=cid-v1:bb9497da-769a-4aa5-9960-4ba1cbfd7df7"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1194"
+        ],
+        "x-ms-correlation-request-id": [
+          "1b92be5a-a3d5-46e0-ac10-444b618bc4e1"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180402T231658Z:1b92be5a-a3d5-46e0-ac10-444b618bc4e1"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 201
+    }
+  ],
+  "Names": {
+    "CreateResourceGroup": [
+      "res1108"
+    ],
+    "CreateAndValidateBot": [
+      "botservice8086"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "35fa7461-d48a-4053-9aa2-56c014495e89"
+  }
+}

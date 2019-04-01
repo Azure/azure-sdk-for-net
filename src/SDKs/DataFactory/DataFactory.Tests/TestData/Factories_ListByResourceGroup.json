@@ -1,0 +1,78 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Tue, 19 Jun 2018 05:41:51 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14993",
+        "x-ms-request-id": "f9c976e7-4205-4cfc-833e-e5d50565fcef",
+        "x-ms-correlation-request-id": "f9c976e7-4205-4cfc-833e-e5d50565fcef"
+      },
+      "body": {
+        "value": [
+          {
+            "name": "exampleFactoryName-linked",
+            "identity": {
+              "type": "SystemAssigned",
+              "principalId": "10743799-44d2-42fe-8c4d-5bc5c51c0684",
+              "tenantId": "12345678-1234-1234-1234-123456789abc"
+            },
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName-linked",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-15T08:56:07.1828318Z",
+              "version": "2017-09-01-preview"
+            },
+            "eTag": "\"00008a02-0000-0000-0000-5b237f270000\"",
+            "location": "East US",
+            "tags": {}
+          },
+          {
+            "name": "FactoryToUpgrade",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/factorytoupgrade",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-19T05:35:35.7133828Z",
+              "version": "2018-06-01"
+            },
+            "eTag": "\"00003d04-0000-0000-0000-5b28962f0000\"",
+            "location": "East US",
+            "tags": {}
+          },
+          {
+            "name": "exampleFactoryName",
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName",
+            "type": "Microsoft.DataFactory/factories",
+            "properties": {
+              "provisioningState": "Succeeded",
+              "createTime": "2018-06-19T05:41:50.0041314Z",
+              "version": "2018-06-01",
+              "repoConfiguration": {
+                "type": "FactoryVSTSConfiguration",
+                "projectName": "project",
+                "tenantId": "",
+                "accountName": "ADF",
+                "repositoryName": "repo",
+                "collaborationBranch": "master",
+                "rootFolder": "/",
+                "lastCommitId": ""
+              }
+            },
+            "eTag": "\"00004004-0000-0000-0000-5b28979e0000\"",
+            "location": "East US",
+            "tags": {
+              "exampleTag": "exampleValue"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

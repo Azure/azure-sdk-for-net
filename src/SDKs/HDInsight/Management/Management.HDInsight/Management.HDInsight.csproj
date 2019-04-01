@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<!-- Please do not move/edit code below this line -->
+	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+	<!-- Please do not move/edit code below this line -->
+
+	<PropertyGroup>
+		<PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
+		<Description>Azure HDInsight Management SDK Library</Description>
+		<AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
+		<Version>4.3.0-preview</Version>
+		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
+		<PackageReleaseNotes>
+			<![CDATA[
+        This is a public preview release of the Azure HDInsight SDK. Add support for ADLS Gen2 MSI.
+      ]]>
+		</PackageReleaseNotes>
+    
+	</PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+	</PropertyGroup>
+
+	<!-- Please do not move/edit code below this line -->
+	<Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+	<!-- Please do not move/edit code above this line -->
+</Project>

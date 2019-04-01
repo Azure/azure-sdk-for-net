@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>NetApp.Tests</PackageId>
+    <Description>NetApp.Tests Class Library</Description>
+    <AssemblyName>NetApp.Tests</AssemblyName>
+    <Version>1.0.0-preview</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Management.NetApp\Microsoft.Azure.Management.NetApp.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+</Project>

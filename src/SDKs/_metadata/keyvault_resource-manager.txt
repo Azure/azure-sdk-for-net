@@ -1,0 +1,36 @@
+﻿Installing AutoRest version: latest
+
+> autorest@2.0.4280 preinstall C:\Program Files\nodejs\node_modules\.staging\autorest-96e45455
+> node ./preinstall-check
+
+C:\Program Files\nodejs\autorest -> C:\Program Files\nodejs\node_modules\autorest\dist\app.js
+C:\Program Files\nodejs
+`-- autorest@2.0.4280 
+
+
+AutoRest installed successfully.
+Commencing code generation
+Generating CSharp code
+Executing AutoRest command
+cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/keyvault_preview/specification/keyvault/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=D:\azure-sdk-for-net\src\SDKs\KeyVault\Management\Management.KeyVault\Generated
+AutoRest code generation utility [version: 2.0.4280; node: v7.10.0]
+(C) 2018 Microsoft Corporation.
+https://aka.ms/autorest
+   Loading AutoRest core      'C:\Users\sschaab\.autorest\@microsoft.azure_autorest-core@2.0.4280\node_modules\@microsoft.azure\autorest-core\dist' (2.0.4280)
+   Loading AutoRest extension '@microsoft.azure/autorest.csharp' (~2.2.51->2.2.57)
+   Loading AutoRest extension '@microsoft.azure/autorest.modeler' (2.3.43->2.3.43)
+
+2018-06-26 09:29:45 UTC
+1) azure-rest-api-specs repository information
+GitHub fork: Azure
+Branch:      keyvault_preview
+Commit:      e560fd1b8e44a9e90f7f7f19aa9880736a5e3b7b
+
+2) AutoRest information
+Requested version: latest
+Bootstrapper version:    C:\Program Files\nodejs  `-- autorest@2.0.4280
+
+
+Latest installed version:    
+
+

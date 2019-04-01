@@ -1,0 +1,182 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourcegroups?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlZ3JvdXBzP2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "2b6df048-2279-47a3-9520-b01182bcb0ea"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice\",\r\n      \"name\": \"cleanupservice\",\r\n      \"location\": \"westus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"77cd0469-e5c0-487f-873d-b6df74bdd7e9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/DefaultResourceGroup-EUS\",\r\n      \"name\": \"DefaultResourceGroup-EUS\",\r\n      \"location\": \"eastus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"bf2a7440-e70e-4c96-90a5-19e2923f6d75\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-4657310011052018-paasv2\",\r\n      \"name\": \"demo-4657310011052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-6653292210052018-paasv2\",\r\n      \"name\": \"demo-6653292210052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"bf2a7440-e70e-4c96-90a5-19e2923f6d75\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-6921270011052018-paasv2\",\r\n      \"name\": \"demo-6921270011052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/demo-8646340811052018-paasv2\",\r\n      \"name\": \"demo-8646340811052018-paasv2\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"9a37bae7-98fa-4aa8-9089-d6b9fbcfa705\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/NewTestRG\",\r\n      \"name\": \"NewTestRG\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"b37f33c9-4882-4f7d-99e6-063175856fcc\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest06385\",\r\n      \"name\": \"RG-ADETest06385\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"eb8717b6-7347-4ea1-b3b7-9d96a4c56de9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest52113\",\r\n      \"name\": \"RG-ADETest52113\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"eb8717b6-7347-4ea1-b3b7-9d96a4c56de9\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-ADETest76180\",\r\n      \"name\": \"RG-ADETest76180\",\r\n      \"location\": \"westcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"fbb85567-9a42-4601-8dbe-61ea49afa392\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RG-Globalization-ARM-Keyvault\",\r\n      \"name\": \"RG-Globalization-ARM-Keyvault\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"a0f1ca5d-f085-4fb0-8f48-fcfc3f9be36d\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/RGMigrateSKU6333323140518\",\r\n      \"name\": \"RGMigrateSKU6333323140518\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"71d96d77-9c34-4adf-81ce-f0b62460ccc4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testadm130306\",\r\n      \"name\": \"testadm130306\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"5a74891d-f21f-4e0c-b8fe-89bea53ad9ad\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testadm150433\",\r\n      \"name\": \"testadm150433\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"71d96d77-9c34-4adf-81ce-f0b62460ccc4\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Succeeded\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/testwatchdog-15200052\",\r\n      \"name\": \"testwatchdog-15200052\",\r\n      \"location\": \"southcentralus\",\r\n      \"tags\": {\r\n        \"ResourceManagerId\": \"4aaa939d-6c31-4b67-be1b-f950dd769df7\"\r\n      },\r\n      \"properties\": {\r\n        \"provisioningState\": \"Deleting\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 May 2018 20:32:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "1d42ec48-a58c-42db-b751-8913f7c698c2"
+        ],
+        "x-ms-correlation-request-id": [
+          "1d42ec48-a58c-42db-b751-8913f7c698c2"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180515T203201Z:1d42ec48-a58c-42db-b751-8913f7c698c2"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice/resources?$filter=resourceType%20eq%20'Microsoft.ServiceFabric%2Fclusters'&api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2NsZWFudXBzZXJ2aWNlL3Jlc291cmNlcz8kZmlsdGVyPXJlc291cmNlVHlwZSUyMGVxJTIwJ01pY3Jvc29mdC5TZXJ2aWNlRmFicmljJTJGY2x1c3RlcnMnJmFwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "cf2f1a8a-cb27-4d0a-bb1a-f43b5cf3c268"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 May 2018 20:32:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "85e6e5b9-0d8d-4bfb-8686-97bb76be554d"
+        ],
+        "x-ms-correlation-request-id": [
+          "85e6e5b9-0d8d-4bfb-8686-97bb76be554d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180515T203203Z:85e6e5b9-0d8d-4bfb-8686-97bb76be554d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/b36cdf46-b75d-4dc2-9fe1-1296ee8c623d/resourceGroups/cleanupservice/providers/Microsoft.ServiceFabric/clusters/donotexisting?api-version=2018-02-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYjM2Y2RmNDYtYjc1ZC00ZGMyLTlmZTEtMTI5NmVlOGM2MjNkL3Jlc291cmNlR3JvdXBzL2NsZWFudXBzZXJ2aWNlL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmljZUZhYnJpYy9jbHVzdGVycy9kb25vdGV4aXN0aW5nP2FwaS12ZXJzaW9uPTIwMTgtMDItMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "dc86f87a-a7a3-4db7-86a3-7adb819aabe2"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26201.01",
+          "Microsoft.Azure.Management.ServiceFabric.ServiceFabricManagementClient/1.0.2.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ServiceFabric/clusters/donotexisting' under resource group 'cleanupservice' was not found.\"\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "164"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 15 May 2018 20:32:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-failure-cause": [
+          "gateway"
+        ],
+        "x-ms-request-id": [
+          "9456684a-c903-48f3-915b-6c113759844a"
+        ],
+        "x-ms-correlation-request-id": [
+          "9456684a-c903-48f3-915b-6c113759844a"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180515T203203Z:9456684a-c903-48f3-915b-6c113759844a"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ]
+      },
+      "StatusCode": 404
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "b36cdf46-b75d-4dc2-9fe1-1296ee8c623d"
+  }
+}

@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+  
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.CognitiveServices.Search.AutoSuggest</PackageId>
+    <Description>This client library provides access to the Microsoft Cognitive Services AutoSuggest API.</Description>
+    <Version>2.0.0</Version>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Search.AutoSuggest</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;AutoSuggest API;BingAutoSuggest API;REST HTTPclient;AutoSuggestSDK;BingAutoSuggestSDK;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+    <![CDATA[
+    Changes in this release:
+    1. Support overriding the default endpoint.
+    2. Change client class name to `AutoSuggestClient`.
+    ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>

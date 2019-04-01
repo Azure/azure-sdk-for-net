@@ -1,0 +1,56 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Sat, 16 Jun 2018 00:40:20 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-reads": "14986",
+        "x-ms-request-id": "e474f8f8-b34f-4536-b059-ca740e6b44c3",
+        "x-ms-correlation-request-id": "e474f8f8-b34f-4536-b059-ca740e6b44c3"
+      },
+      "body": {
+        "value": [
+          {
+            "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
+            "name": "exampleTrigger",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "properties": {
+              "type": "ScheduleTrigger",
+              "typeProperties": {
+                "recurrence": {
+                  "frequency": "Minute",
+                  "interval": 4,
+                  "startTime": "2018-06-16T00:39:14.905167Z",
+                  "endTime": "2018-06-16T00:55:14.905167Z",
+                  "timeZone": "UTC"
+                }
+              },
+              "pipelines": [
+                {
+                  "pipelineReference": {
+                    "referenceName": "examplePipeline",
+                    "type": "PipelineReference"
+                  },
+                  "parameters": {
+                    "OutputBlobNameList": [
+                      "exampleoutput.csv"
+                    ]
+                  }
+                }
+              ],
+              "description": "Example description",
+              "runtimeState": "Started"
+            },
+            "etag": "0a008ed4-0000-0000-0000-5b245c740000"
+          }
+        ]
+      }
+    }
+  }
+}

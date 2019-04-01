@@ -1,0 +1,1016 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/azsmnet9106?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5MTA2P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"location\": \"eastus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "eb644d54-0c77-4fd7-ae72-fe33be8857ad"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "29"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:20:50 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-request-id": [
+          "0a248ee1-2dc2-4389-908b-a4957447ff4d"
+        ],
+        "x-ms-correlation-request-id": [
+          "0a248ee1-2dc2-4389-908b-a4957447ff4d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222051Z:0a248ee1-2dc2-4389-908b-a4957447ff4d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "215"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106\",\r\n  \"name\": \"azsmnet9106\",\r\n  \"location\": \"eastus2\",\r\n  \"tags\": {\r\n    \"tagTestPriya\": \"tagTestPriya\"\r\n  },\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/azsmnet9106/providers/Microsoft.Web//sites/azsmnet3455?api-version=2016-08-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5MTA2L3Byb3ZpZGVycy9NaWNyb3NvZnQuV2ViLy9zaXRlcy9henNtbmV0MzQ1NT9hcGktdmVyc2lvbj0yMDE2LTA4LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"name\": \"azsmnet3455\",\r\n    \"siteMode\": \"Standard\",\r\n    \"computeMode\": \"Shared\"\r\n  },\r\n  \"location\": \"eastus2\"\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "53fb5906-4bb2-466a-a4b4-d45a7251c8ef"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "140"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"1D43A66695F9295\""
+        ],
+        "Server": [
+          "Microsoft-IIS/10.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "a1a1b104-3582-4900-b5a9-507ff7466daf"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-resource-requests": [
+          "499"
+        ],
+        "x-ms-correlation-request-id": [
+          "ee6eb954-1b24-43b8-a19d-5b6e56bb216c"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222104Z:ee6eb954-1b24-43b8-a19d-5b6e56bb216c"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "2719"
+        ],
+        "Content-Type": [
+          "application/json"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455\",\r\n  \"name\": \"azsmnet3455\",\r\n  \"type\": \"Microsoft.Web/sites\",\r\n  \"kind\": \"app\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"name\": \"azsmnet3455\",\r\n    \"state\": \"Running\",\r\n    \"hostNames\": [\r\n      \"azsmnet3455.azurewebsites.net\"\r\n    ],\r\n    \"webSpace\": \"azsmnet9106-EastUS2webspace\",\r\n    \"selfLink\": \"https://waws-prod-bn1-035.api.azurewebsites.windows.net:454/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/webspaces/azsmnet9106-EastUS2webspace/sites/azsmnet3455\",\r\n    \"repositorySiteName\": \"azsmnet3455\",\r\n    \"owner\": null,\r\n    \"usageState\": \"Normal\",\r\n    \"enabled\": true,\r\n    \"adminEnabled\": true,\r\n    \"enabledHostNames\": [\r\n      \"azsmnet3455.azurewebsites.net\",\r\n      \"azsmnet3455.scm.azurewebsites.net\"\r\n    ],\r\n    \"siteProperties\": {\r\n      \"metadata\": null,\r\n      \"properties\": [\r\n        {\r\n          \"name\": \"LinuxFxVersion\",\r\n          \"value\": \"\"\r\n        },\r\n        {\r\n          \"name\": \"WindowsFxVersion\",\r\n          \"value\": null\r\n        }\r\n      ],\r\n      \"appSettings\": null\r\n    },\r\n    \"availabilityState\": \"Normal\",\r\n    \"sslCertificates\": null,\r\n    \"csrs\": [],\r\n    \"cers\": null,\r\n    \"siteMode\": null,\r\n    \"hostNameSslStates\": [\r\n      {\r\n        \"name\": \"azsmnet3455.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Standard\"\r\n      },\r\n      {\r\n        \"name\": \"azsmnet3455.scm.azurewebsites.net\",\r\n        \"sslState\": \"Disabled\",\r\n        \"ipBasedSslResult\": null,\r\n        \"virtualIP\": null,\r\n        \"thumbprint\": null,\r\n        \"toUpdate\": null,\r\n        \"toUpdateIpBasedSsl\": null,\r\n        \"ipBasedSslState\": \"NotConfigured\",\r\n        \"hostType\": \"Repository\"\r\n      }\r\n    ],\r\n    \"computeMode\": null,\r\n    \"serverFarm\": null,\r\n    \"serverFarmId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/serverfarms/Default1\",\r\n    \"reserved\": false,\r\n    \"isXenon\": false,\r\n    \"lastModifiedTimeUtc\": \"2018-08-22T22:20:58.81\",\r\n    \"storageRecoveryDefaultState\": \"Running\",\r\n    \"contentAvailabilityState\": \"Normal\",\r\n    \"runtimeAvailabilityState\": \"Normal\",\r\n    \"siteConfig\": null,\r\n    \"deploymentId\": \"azsmnet3455\",\r\n    \"trafficManagerHostNames\": null,\r\n    \"sku\": \"Free\",\r\n    \"scmSiteAlsoStopped\": false,\r\n    \"targetSwapSlot\": null,\r\n    \"hostingEnvironment\": null,\r\n    \"hostingEnvironmentProfile\": null,\r\n    \"clientAffinityEnabled\": true,\r\n    \"clientCertEnabled\": false,\r\n    \"hostNamesDisabled\": false,\r\n    \"domainVerificationIdentifiers\": null,\r\n    \"kind\": \"app\",\r\n    \"outboundIpAddresses\": \"40.123.45.47,13.77.89.87,13.77.90.154,52.177.199.231,13.77.89.84\",\r\n    \"possibleOutboundIpAddresses\": \"40.123.45.47,13.77.89.87,13.77.90.154,52.177.199.231,13.77.89.84,52.177.196.67,52.232.240.12,13.77.95.144\",\r\n    \"containerSize\": 0,\r\n    \"dailyMemoryTimeQuota\": 0,\r\n    \"suspendedTill\": null,\r\n    \"siteDisabledReason\": 0,\r\n    \"functionExecutionUnitsCache\": null,\r\n    \"maxNumberOfWorkers\": null,\r\n    \"homeStamp\": \"waws-prod-bn1-035\",\r\n    \"cloningInfo\": null,\r\n    \"hostingEnvironmentId\": null,\r\n    \"tags\": null,\r\n    \"resourceGroup\": \"azsmnet9106\",\r\n    \"defaultHostName\": \"azsmnet3455.azurewebsites.net\",\r\n    \"slotSwapStatus\": null,\r\n    \"httpsOnly\": false\r\n  }\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0Njc3Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Definition\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "91c7fa9c-256e-442d-bd70-ca977e041fe1"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "332"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:04 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus2:c3b3f1ca-1ec1-425c-8265-9231e3c92134"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1199"
+        ],
+        "x-ms-correlation-request-id": [
+          "680ff107-db54-4f24-aacc-e98f04f9b108"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222105Z:680ff107-db54-4f24-aacc-e98f04f9b108"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "451"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet6773\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "//subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments/azsmnet8672?api-version=2018-05-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2QwNjEwYjI3LTk2NjMtNGMwNS04OWY4LTViNGJlMDFlODZhNS9yZXNvdXJjZUdyb3Vwcy9henNtbmV0OTEwNi9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9henNtbmV0MzQ1NS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDg2NzI/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773\",\r\n    \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  }\r\n}",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "0522dc2b-edb9-4fbd-b12b-b07c5ccfba3a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.9.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "443"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "westus2:2a9e59dc-ccaa-4265-af9c-bb0f4abd68af"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "05dfb30b-47b5-44dc-bef1-9e0e79741d95"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222106Z:05dfb30b-47b5-44dc-bef1-9e0e79741d95"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "652"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773\",\r\n    \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455\"\r\n  },\r\n  \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments/azsmnet8672\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet8672\"\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/azsmnet9106/providers///Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5MTA2L3Byb3ZpZGVycy8vL01pY3Jvc29mdC5XZWIvc2l0ZXMvYXpzbW5ldDM0NTUvcHJvdmlkZXJzL01pY3Jvc29mdC5BdXRob3JpemF0aW9uL3BvbGljeUFzc2lnbm1lbnRzP2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "40f51179-6a01-47ea-aa1f-1ce75286f52e"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus2:875be18e-a381-4244-a946-77f44a93667e"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-correlation-request-id": [
+          "98fc312b-fa30-436b-8ca4-c9a16d914a65"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222106Z:98fc312b-fa30-436b-8ca4-c9a16d914a65"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "19091"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"chegg DB threat detection\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/7dac65c8-ab47-462c-b75f-72188dec60c5\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"asf\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Chris Eggert\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/1420c6006aa9486eb3d72950\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"1420c6006aa9486eb3d72950\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"test_sandipsh123\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policySetDefinitions/db6c5074-a529-4cc8-8882-43f10ef42002\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [\r\n          \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/sandipsh-rg1\",\r\n          \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/sandipshrg3\"\r\n        ],\r\n        \"parameters\": {},\r\n        \"description\": \"1\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Sandip Shahane\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/1de07ba279ea4eb89c6b5395\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"1de07ba279ea4eb89c6b5395\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"audit allowed locations - exclude azureclassicautomationtutorialscript\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/LocationAuditDefinition\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [\r\n          \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/akif_incident_66953948/providers/Microsoft.Automation/automationAccounts/testaccount/runbooks/AzureAutomationTutorialScript\"\r\n        ],\r\n        \"parameters\": {\r\n          \"listOfAllowedLocations\": {\r\n            \"value\": [\r\n              \"eastus\",\r\n              \"eastus2\",\r\n              \"westus\",\r\n              \"westus2\"\r\n            ]\r\n          }\r\n        },\r\n        \"description\": \"this assignment was created after removal of billing. It is free.\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Carolyn Zysman Yehezkel\",\r\n          \"parameterScopes\": {\r\n            \"listOfAllowedLocations\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/22b7db96e2734cf3b0cb0912\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"22b7db96e2734cf3b0cb0912\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"test_sandipsh123_bug\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policySetDefinitions/db6c5074-a529-4cc8-8882-43f10ef42002\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Sandip Shahane\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/2a2cff38b0b74069928fba43\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"2a2cff38b0b74069928fba43\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Audit Missing Blob Encryption for Storage Accounts\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/655cb504-bcee-4362-bd4c-402e6aa38759\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"description\": \"Test\"\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/2aa38a41-ff9d-4579-a2ff-c268120f8009\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"2aa38a41-ff9d-4579-a2ff-c268120f8009\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Initiative with my parameterized effect policy\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policySetDefinitions/e6884163-54c6-4f5e-9570-9e4cbd95b078\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Camille Marvin\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/2f0560a9a25d44f2af3f425c\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"2f0560a9a25d44f2af3f425c\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"PriyaPolicyDefinitionTest\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/e118436a-e137-49f8-8112-7b1b38732168\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"value\": \"tagTestPriya\"\r\n          }\r\n        },\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Priya Kumar\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/390380f41d4b4defbd3f262f\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"390380f41d4b4defbd3f262f\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"akhe resource group auditIfNotExists\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/c7b9982d-2f50-4730-935f-5c241982a441\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"akhe resource group auditIfNotExists\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Akif Heren\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/45ab2ab7898d45ebb3087573\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"45ab2ab7898d45ebb3087573\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"camarvin-testdrcompliance\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/481544c2-0956-405d-a9ea-77b7c03930c2\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Camille Marvin\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/4b9f207583cb4cb488700add\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"4b9f207583cb4cb488700add\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"72aa851607b598f57c05e72163a2380d004d37512ace988187030e733437190d\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/06a78e20-9358-41c9-923c-fb736d382a4d\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"72aa851607b598f57c05e72163a2380d004d37512ace988187030e733437190d\"\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/72aa851607b598f57c05e72163a2380d004d37512ace988187030e733437190d\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"72aa851607b598f57c05e72163a2380d004d37512ace988187030e733437190d\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"defaultValue: all parameters\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/ea1688b3-022e-4add-af39-2fe60689a3b0\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"location\": {\r\n            \"value\": \"australiacentral\"\r\n          },\r\n          \"resourceGroup\": {\r\n            \"value\": \"cuterg\"\r\n          },\r\n          \"allowedLocation\": {\r\n            \"value\": \"eastus\"\r\n          },\r\n          \"allowedStorageSKU\": {\r\n            \"value\": \"Standard_ZRS\"\r\n          },\r\n          \"allowedTag\": {\r\n            \"value\": \"FirstName\"\r\n          }\r\n        },\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Camille Marvin\",\r\n          \"parameterScopes\": {\r\n            \"locations\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n            \"location\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n            \"resourceGroups\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n            \"resourceGroup\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n            \"allowedLocations\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n            \"allowedLocation\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n            \"allowedStorageSKUs\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n            \"allowedStorageSKU\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/78d6cdb2640e4bc08f63b7c3\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"78d6cdb2640e4bc08f63b7c3\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Audit eastus location\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/c8b79b49-a579-4045-984e-1b249ab8b474\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"allowedLocations\": {\r\n            \"value\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        },\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Carolyn Zysman Yehezkel\"\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/7c7d772253b746c891c1eced\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"7c7d772253b746c891c1eced\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Enforce VM Port Lockdown (CorpNet)\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policySetDefinitions/20c4afd0-8a77-4433-b8b0-4ad06e4c7115\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [\r\n          \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/MC_joelpogroup_joelpoaks_eastus\"\r\n        ],\r\n        \"parameters\": {\r\n          \"SOURCEADDRESSPREFIXES_1\": {\r\n            \"value\": [\r\n              \"167.220.148.0/23\",\r\n              \"131.107.147.0/24\",\r\n              \"131.107.159.0/24\",\r\n              \"131.107.160.0/24\",\r\n              \"131.107.174.0/24\",\r\n              \"167.220.24.0/24\",\r\n              \"167.220.26.0/24\",\r\n              \"167.220.238.0/27\",\r\n              \"167.220.238.128/27\",\r\n              \"167.220.238.192/27\",\r\n              \"167.220.238.64/27\",\r\n              \"167.220.232.0/23\",\r\n              \"167.220.255.0/25\",\r\n              \"167.220.242.0/27\",\r\n              \"167.220.242.128/27\",\r\n              \"167.220.242.192/27\",\r\n              \"167.220.242.64/27\",\r\n              \"94.245.87.0/24\",\r\n              \"167.220.196.0/23\",\r\n              \"194.69.104.0/25\",\r\n              \"191.234.97.0/26\",\r\n              \"167.220.0.0/23\",\r\n              \"167.220.2.0/24\",\r\n              \"207.68.190.32/27\",\r\n              \"13.106.78.32/27\",\r\n              \"10.254.32.0/20\",\r\n              \"10.97.136.0/22\",\r\n              \"13.106.174.32/27\",\r\n              \"13.106.4.96/27\"\r\n            ]\r\n          }\r\n        },\r\n        \"description\": \" A\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Chris Eggert\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/8a59c069ec044343a2319ed9\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"8a59c069ec044343a2319ed9\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Chegg SQL threat detection\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/35b54ce3-e432-488e-ba24-b508cfd1715f\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"asdf\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Chris Eggert\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/ad20666d77ef40129dcb87f6\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"ad20666d77ef40129dcb87f6\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"[Preview]: Enable Monitoring in Azure Security Center\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policySetDefinitions/1f3afdf9-d0c9-4c3d-847f-89da613e70a8\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"parameters\": {},\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Chris Eggert\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/ASCPolicySet\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"ASCPolicySet\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Updated CanCrudPolicyAssignment Policy Assignment $[Auto Test]\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6487\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"description\": \"Description text\",\r\n        \"metadata\": {\r\n          \"category\": \"sdk test\"\r\n        }\r\n      },\r\n      \"identity\": {\r\n        \"principalId\": \"e28aeb20-0d52-4b54-8aa4-fb6eb593d409\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"type\": \"SystemAssigned\"\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/azsmnet1994\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"azsmnet1994\",\r\n      \"location\": \"eastus\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"akhe audit not allowed resource group locations\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/1f20036f-28c3-48f3-9266-05d50fe391f4\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"allowedLocations\": {\r\n            \"value\": [\r\n              \"japanwest\",\r\n              \"westus\",\r\n              \"eastus\",\r\n              \"westus2\"\r\n            ]\r\n          }\r\n        },\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Akif Heren\",\r\n          \"parameterScopes\": {\r\n            \"allowedLocations\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\"\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/cf6bec2814bb49b9b423045b\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"cf6bec2814bb49b9b423045b\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"akhe - Subscription lvl test\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/a1b067c8-2970-4c0b-b0da-31ae7f33d1de\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"auditIfNotExists\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Akif Heren\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/cfce311e7b8b42fd87aa3603\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"cfce311e7b8b42fd87aa3603\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Audit enabling of diagnostic logs in Azure Data Lake Store robga\",\r\n        \"policyDefinitionId\": \"/providers/Microsoft.Authorization/policyDefinitions/057ef27e-665e-4328-8ea3-04b3122bd9fb\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Robert Gao\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/d280b52eb0c6476ab7001e01\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"d280b52eb0c6476ab7001e01\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"ComplianceTestInitiativeAssignment\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policySetDefinitions/a03db67e-a286-43c3-9098-b2da83d361ad\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"This is a UI test initiative 2\",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Jin Soon Lim\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/e46af646ebdb461dba708e01\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"e46af646ebdb461dba708e01\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A1\",\r\n        \"tier\": \"Standard\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Murat Test Initiative Assignment\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policySetDefinitions/e4a08f18-4e3e-47af-a2eb-cc96d8c9a01f\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {},\r\n        \"description\": \"test test and testa \",\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Akif Heren\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/e4a08f18-4e3e-47af-a2eb-cc96d8c9a030\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"e4a08f18-4e3e-47af-a2eb-cc96d8c9a030\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Audit location\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/c8b79b49-a579-4045-984e-1b249ab8b474\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [\r\n          \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/Liz\"\r\n        ],\r\n        \"parameters\": {\r\n          \"allowedLocations\": {\r\n            \"value\": [\r\n              \"eastus\"\r\n            ]\r\n          }\r\n        },\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Carolyn Zysman Yehezkel\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/eeade3e0bd4a4d4aa46efc50\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"eeade3e0bd4a4d4aa46efc50\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/policy2\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\"\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/location-lock\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"location-lock\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"test - after remove billing\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/Audit a tag and it's value\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"notScopes\": [],\r\n        \"parameters\": {\r\n          \"tagName\": {\r\n            \"value\": \"no\"\r\n          },\r\n          \"tagValue\": {\r\n            \"value\": \"no\"\r\n          }\r\n        },\r\n        \"metadata\": {\r\n          \"assignedBy\": \"Carolyn Zysman Yehezkel\",\r\n          \"parameterScopes\": {}\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/test\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"test\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"Test livesite\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/LocationAuditDefinition\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5\",\r\n        \"parameters\": {\r\n          \"listOfAllowedLocations\": {\r\n            \"value\": [\r\n              \"eastasia\"\r\n            ]\r\n          }\r\n        }\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyAssignments/Test livesite\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"Test livesite\"\r\n    },\r\n    {\r\n      \"sku\": {\r\n        \"name\": \"A0\",\r\n        \"tier\": \"Free\"\r\n      },\r\n      \"properties\": {\r\n        \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Assignment\",\r\n        \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773\",\r\n        \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455\"\r\n      },\r\n      \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments/azsmnet8672\",\r\n      \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n      \"name\": \"azsmnet8672\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments/azsmnet8672?api-version=2018-05-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2QwNjEwYjI3LTk2NjMtNGMwNS04OWY4LTViNGJlMDFlODZhNS9yZXNvdXJjZUdyb3Vwcy9henNtbmV0OTEwNi9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9henNtbmV0MzQ1NS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDg2NzI/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "ce14e7de-b81d-4fe2-a05a-d6872e79e580"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus2:3cdcec12-f711-4e65-877c-c1028e40c15d"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-correlation-request-id": [
+          "6f71a1ba-234f-4d4d-8c75-ee7321180af7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222106Z:6f71a1ba-234f-4d4d-8c75-ee7321180af7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "652"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773\",\r\n    \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455\"\r\n  },\r\n  \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments/azsmnet8672\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet8672\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments/azsmnet8672?api-version=2018-05-01",
+      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zL2QwNjEwYjI3LTk2NjMtNGMwNS04OWY4LTViNGJlMDFlODZhNS9yZXNvdXJjZUdyb3Vwcy9henNtbmV0OTEwNi9wcm92aWRlcnMvTWljcm9zb2Z0LldlYi9zaXRlcy9henNtbmV0MzQ1NS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dGhvcml6YXRpb24vcG9saWN5QXNzaWdubWVudHMvYXpzbW5ldDg2NzI/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "917a7aa5-6e5a-4587-bf42-ef712aea1847"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:06 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus2:3998520d-652c-4728-ae52-b1fde24ad23c"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-correlation-request-id": [
+          "b9014cfe-355a-46ae-a787-e9dc1a7564fb"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222106Z:b9014cfe-355a-46ae-a787-e9dc1a7564fb"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "652"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"sku\": {\r\n    \"name\": \"A0\",\r\n    \"tier\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Assignment\",\r\n    \"policyDefinitionId\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773\",\r\n    \"scope\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455\"\r\n  },\r\n  \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourceGroups/azsmnet9106/providers/Microsoft.Web/sites/azsmnet3455/providers/Microsoft.Authorization/policyAssignments/azsmnet8672\",\r\n  \"type\": \"Microsoft.Authorization/policyAssignments\",\r\n  \"name\": \"azsmnet8672\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9henNtbmV0Njc3Mz9hcGktdmVyc2lvbj0yMDE4LTA1LTAx",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "44f4157b-af16-4571-86df-c27ed2f64d08"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.PolicyClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "westus2:ab6f6c18-7605-4bb5-b703-0110ee138ab9"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14998"
+        ],
+        "x-ms-correlation-request-id": [
+          "25d353df-1b61-490c-909a-ee72f45f618f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222107Z:25d353df-1b61-490c-909a-ee72f45f618f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "451"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"displayName\": \"CanCrudPolicyAssignmentAtResource Policy Definition\",\r\n    \"policyType\": \"Custom\",\r\n    \"policyRule\": {\r\n      \"if\": {\r\n        \"source\": \"action\",\r\n        \"equals\": \"ResourceProviderTestHost/TestResourceType/TestResourceTypeNestedOne/write\"\r\n      },\r\n      \"then\": {\r\n        \"effect\": \"deny\"\r\n      }\r\n    }\r\n  },\r\n  \"id\": \"/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/azsmnet6773\",\r\n  \"type\": \"Microsoft.Authorization/policyDefinitions\",\r\n  \"name\": \"azsmnet6773\"\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/resourcegroups/azsmnet9106?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5MTA2P2FwaS12ZXJzaW9uPTIwMTgtMDUtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6c4b44cb-1239-4f8a-bc78-507a32941aed"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
+        ],
+        "x-ms-request-id": [
+          "4a68fa77-451e-4342-8bb1-debd5bb913e4"
+        ],
+        "x-ms-correlation-request-id": [
+          "4a68fa77-451e-4342-8bb1-debd5bb913e4"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222108Z:4a68fa77-451e-4342-8bb1-debd5bb913e4"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11999"
+        ],
+        "x-ms-request-id": [
+          "a783fb21-4870-4229-8cbf-eb6ce2d83550"
+        ],
+        "x-ms-correlation-request-id": [
+          "a783fb21-4870-4229-8cbf-eb6ce2d83550"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222123Z:a783fb21-4870-4229-8cbf-eb6ce2d83550"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:38 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
+        ],
+        "x-ms-request-id": [
+          "219b1c63-b9d9-4742-ae97-55708a90c025"
+        ],
+        "x-ms-correlation-request-id": [
+          "219b1c63-b9d9-4742-ae97-55708a90c025"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222138Z:219b1c63-b9d9-4742-ae97-55708a90c025"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:21:53 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-request-id": [
+          "1cde24bb-d521-43d4-aaa8-137ce9e17f8f"
+        ],
+        "x-ms-correlation-request-id": [
+          "1cde24bb-d521-43d4-aaa8-137ce9e17f8f"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222154Z:1cde24bb-d521-43d4-aaa8-137ce9e17f8f"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:22:08 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
+        "x-ms-request-id": [
+          "088100ae-2eed-47a7-bfe5-e6d60e7a47d9"
+        ],
+        "x-ms-correlation-request-id": [
+          "088100ae-2eed-47a7-bfe5-e6d60e7a47d9"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222209Z:088100ae-2eed-47a7-bfe5-e6d60e7a47d9"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:22:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11995"
+        ],
+        "x-ms-request-id": [
+          "e832cbaa-7dcb-48d4-b1e7-86bb29dc62dd"
+        ],
+        "x-ms-correlation-request-id": [
+          "e832cbaa-7dcb-48d4-b1e7-86bb29dc62dd"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222224Z:e832cbaa-7dcb-48d4-b1e7-86bb29dc62dd"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:22:39 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Location": [
+          "https://management.azure.com/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01"
+        ],
+        "Retry-After": [
+          "15"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11994"
+        ],
+        "x-ms-request-id": [
+          "1797bd76-b74b-4f3c-82c1-a085c8790ab8"
+        ],
+        "x-ms-correlation-request-id": [
+          "1797bd76-b74b-4f3c-82c1-a085c8790ab8"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222239Z:1797bd76-b74b-4f3c-82c1-a085c8790ab8"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 202
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:22:54 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11993"
+        ],
+        "x-ms-request-id": [
+          "dc318078-d8dd-4f14-a4f0-9f1e4879cf18"
+        ],
+        "x-ms-correlation-request-id": [
+          "dc318078-d8dd-4f14-a4f0-9f1e4879cf18"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222254Z:dc318078-d8dd-4f14-a4f0-9f1e4879cf18"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTEwNi1FQVNUVVMyIiwiam9iTG9jYXRpb24iOiJlYXN0dXMyIn0?api-version=2018-05-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVEV3TmkxRlFWTlVWVk15SWl3aWFtOWlURzlqWVhScGIyNGlPaUpsWVhOMGRYTXlJbjA/YXBpLXZlcnNpb249MjAxOC0wNS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "User-Agent": [
+          "FxVersion/4.6.26212.01",
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.9.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 22 Aug 2018 22:22:54 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11992"
+        ],
+        "x-ms-request-id": [
+          "1dad7b6c-5ab3-46c1-84d6-13f24ce324d7"
+        ],
+        "x-ms-correlation-request-id": [
+          "1dad7b6c-5ab3-46c1-84d6-13f24ce324d7"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20180822T222255Z:1dad7b6c-5ab3-46c1-84d6-13f24ce324d7"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {
+    "CanCrudPolicyAssignmentAtResource": [
+      "azsmnet9106",
+      "azsmnet3455",
+      "azsmnet6773",
+      "azsmnet8672"
+    ]
+  },
+  "Variables": {
+    "SubscriptionId": "d0610b27-9663-4c05-89f8-5b4be01e86a5"
+  }
+}

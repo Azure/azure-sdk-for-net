@@ -1,0 +1,71 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!--<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />-->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <RestorePackagesPath>$(LibraryNugetPackageFolder)</RestorePackagesPath>
+    <NugetCommonProfileTags />
+    <PackageOutputPath>$(BuiltPackageOutputDir)</PackageOutputPath>
+    <AddProjectReferenceForDebuggingPurpose>false</AddProjectReferenceForDebuggingPurpose>
+    <AddNugetReferenceForCIandCmdlineBuild>true</AddNugetReferenceForCIandCmdlineBuild>
+    <SkipBuildingTestProject>false</SkipBuildingTestProject>
+    <SignAssembly>false</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)'=='net452' ">
+    <DefineConstants>FullNetFx</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.1' ">
+    <DefineConstants>netcoreapp11</DefineConstants>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="xunit" Version="2.3.0-beta1-build3642" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.0-beta1-build1309" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- This is needed for discovering tests in test explorer -->
+    <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />	
+  </ItemGroup>
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Batch.Conventions.Files.IntegrationTests</PackageId>
+    <Description>Azure Batch File conventions IntegrationTests tests class library</Description>
+    <VersionPrefix>1.0.0-preview</VersionPrefix>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp1.1</TargetFrameworks>
+  </PropertyGroup>
+
+  <!--Do not remove until VS Test Tools fixes #472-->
+  <ItemGroup>
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\..\Src\AzureBatchFileConventions\AzureBatchFileConventions.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Update="Files\File\Under\Further\Under\TestText3.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\File\Under\TestText2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\TestText1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\TestTextForFarOutsideWorkingDirectory.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Files\TestTextForOutsideWorkingDirectory.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

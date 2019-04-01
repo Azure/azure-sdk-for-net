@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <!-- Please do not move/edit code below this line -->
+    <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+    <!-- Please do not move/edit code above this line -->
+
+    <PropertyGroup>
+        <PackageId>Microsoft.Azure.Management.Media</PackageId>
+        <Description>Provides developers with libraries for managing Azure Media Services using the Azure Resource Manager API.</Description>
+        <Version>2.0.1</Version>
+        <AssemblyName>Microsoft.Azure.Management.Media</AssemblyName>
+        <PackageTags>Microsoft Azure Media management;Media;Media management;</PackageTags>
+        <PackageReleaseNotes>
+            <![CDATA[
+        Updates from the GA release of the V3 API include:
+        
+        * The PresentationTimeRange properties are no longer 'required' for AssetFilters and AccountFilters. 
+        * The $top and $skip query options for Jobs and Transforms have been removed and $orderby was added. As part of adding the new ordering functionality, it was discovered that the $top and $skip options had accidentally been exposed previously even though they are not implemented.
+        * Enumeration extensibility was re-enabled. This feature was enabled in the preview versions of the SDK and got accidentally disabled in the GA version.
+        * Two predefined streaming policies have been renamed. SecureStreaming is now MultiDrmCencStreaming. SecureStreamingWithFairPlay is now Predefined_MultiDrmStreaming.
+            ]]>
+    </PackageReleaseNotes>
+    </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    </PropertyGroup>
+
+    <!-- Please do not move/edit code below this line -->
+    <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+    <!-- Please do not move/edit code above this line -->
+</Project>

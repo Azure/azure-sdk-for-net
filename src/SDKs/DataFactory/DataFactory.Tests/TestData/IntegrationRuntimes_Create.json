@@ -1,0 +1,37 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "integrationRuntimeName": "exampleIntegrationRuntime",
+    "ifMatch": null,
+    "integrationRuntime": {
+      "properties": {
+        "type": "SelfHosted",
+        "description": "A selfhosted integration runtime"
+      }
+    },
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Wed, 13 Jun 2018 22:20:47 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1197",
+        "x-ms-request-id": "125c07fa-e39a-4541-885f-5019631a5ecd",
+        "x-ms-correlation-request-id": "125c07fa-e39a-4541-885f-5019631a5ecd"
+      },
+      "body": {
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/integrationruntimes/exampleIntegrationRuntime",
+        "name": "exampleIntegrationRuntime",
+        "type": "Microsoft.DataFactory/factories/integrationruntimes",
+        "properties": {
+          "type": "SelfHosted",
+          "description": "A selfhosted integration runtime"
+        },
+        "etag": "000046c4-0000-0000-0000-5b2198bf0000"
+      }
+    }
+  }
+}

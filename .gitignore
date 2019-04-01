@@ -5,6 +5,8 @@
 *.suo
 *.user
 *.sln.docstates
+.vs/
+*.lock.json
 developer/
 
 # Build results
@@ -12,6 +14,14 @@ binaries/
 [Dd]ebug*/
 [Rr]elease/
 build/
+restoredPackages/
+PolicheckOutput/
+tools/net46/
+tools/SdkBuildTools/
+tools/Microsoft.WindowsAzure.Build.Tasks/packages/
+PublishedNugets/
+src/NuGet.Config
+tools/7-zip/
 
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*
@@ -115,6 +125,7 @@ UpgradeLog*.XML
 # NuGet
 packages
 packages/repositories.config
+testPackages
 
 # Mac development
 .DS_Store
@@ -130,3 +141,5 @@ build.out
 
 # Azure Project
 csx/
+*.GhostDoc.xml
+pingme.txt

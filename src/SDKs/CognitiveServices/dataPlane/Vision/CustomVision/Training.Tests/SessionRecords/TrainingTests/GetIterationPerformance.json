@@ -1,0 +1,84 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/3482641e-012f-46a8-98dc-bd31a2df3a3b/iterations",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8zNDgyNjQxZS0wMTJmLTQ2YTgtOThkYy1iZDMxYTJkZjNhM2IvaXRlcmF0aW9ucw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:32:15 GMT"
+        ],
+        "apim-request-id": [
+          "6b4adc1e-71c2-40fb-bfcf-cdf4ab8e8864"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "668"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "[\r\n  {\r\n    \"id\": \"334569c1-e488-4b8d-978f-482be9bd6824\",\r\n    \"name\": \"Iteration 1\",\r\n    \"status\": \"Completed\",\r\n    \"created\": \"2019-03-21T01:31:58.046Z\",\r\n    \"lastModified\": \"2019-03-21T01:32:14.295Z\",\r\n    \"trainedAt\": \"2019-03-21T01:32:13.736Z\",\r\n    \"projectId\": \"3482641e-012f-46a8-98dc-bd31a2df3a3b\",\r\n    \"exportable\": false,\r\n    \"exportableTo\": [],\r\n    \"domainId\": \"ee85a74c-405e-4adc-bb47-ffa8ca0c9f31\",\r\n    \"classificationType\": \"Multilabel\",\r\n    \"trainingType\": \"Regular\",\r\n    \"reservedBudgetInHours\": 0,\r\n    \"publishName\": \"Training UnitTest Iteration\",\r\n    \"originalPublishResourceId\": \"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceProviderName}\"\r\n  }\r\n]",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "//customvision/v3.0/training/projects/3482641e-012f-46a8-98dc-bd31a2df3a3b/iterations/334569c1-e488-4b8d-978f-482be9bd6824/performance?threshold=0.9",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy8zNDgyNjQxZS0wMTJmLTQ2YTgtOThkYy1iZDMxYTJkZjNhM2IvaXRlcmF0aW9ucy8zMzQ1NjljMS1lNDg4LTRiOGQtOTc4Zi00ODJiZTliZDY4MjQvcGVyZm9ybWFuY2U/dGhyZXNob2xkPTAuOQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Training-Key": [
+          ""
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:32:15 GMT"
+        ],
+        "apim-request-id": [
+          "392ca13e-f2a7-4be9-be25-80493d3d59b6"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains; preload"
+        ],
+        "x-content-type-options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "458"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"perTagPerformance\": [\r\n    {\r\n      \"id\": \"cfe4738b-4c8d-4472-99b5-79ab5906f7fd\",\r\n      \"name\": \"Tag1\",\r\n      \"precision\": 1.0,\r\n      \"precisionStdDeviation\": 0.0,\r\n      \"recall\": 1.0,\r\n      \"recallStdDeviation\": 0.0,\r\n      \"averagePrecision\": 1.0\r\n    },\r\n    {\r\n      \"id\": \"c4de8fcc-f282-4f8f-8d35-af1f393f38f9\",\r\n      \"name\": \"Tag2\",\r\n      \"precision\": 1.0,\r\n      \"precisionStdDeviation\": 0.0,\r\n      \"recall\": 1.0,\r\n      \"recallStdDeviation\": 0.0,\r\n      \"averagePrecision\": 1.0\r\n    }\r\n  ],\r\n  \"precision\": 1.0,\r\n  \"precisionStdDeviation\": 0.0,\r\n  \"recall\": 1.0,\r\n  \"recallStdDeviation\": 0.0,\r\n  \"averagePrecision\": 1.0\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

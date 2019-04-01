@@ -1,0 +1,80 @@
+{
+  "parameters": {
+    "subscriptionId": "12345678-1234-1234-1234-12345678abc",
+    "resourceGroupName": "exampleResourceGroup",
+    "factoryName": "exampleFactoryName",
+    "triggerName": "exampleTrigger",
+    "ifMatch": null,
+    "trigger": {
+      "properties": {
+        "type": "ScheduleTrigger",
+        "typeProperties": {
+          "recurrence": {
+            "frequency": "Minute",
+            "interval": 4,
+            "startTime": "2018-06-16T00:39:13.8441801Z",
+            "endTime": "2018-06-16T00:55:13.8441801Z",
+            "timeZone": "UTC"
+          }
+        },
+        "pipelines": [
+          {
+            "pipelineReference": {
+              "referenceName": "examplePipeline",
+              "type": "PipelineReference"
+            },
+            "parameters": {
+              "OutputBlobNameList": [
+                "exampleoutput.csv"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "api-version": "2018-06-01"
+  },
+  "responses": {
+    "200": {
+      "headers": {
+        "Date": "Sat, 16 Jun 2018 00:40:14 GMT",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-ratelimit-remaining-subscription-writes": "1186",
+        "x-ms-request-id": "373f1a49-685d-4c07-8857-0fcf1bcaffcb",
+        "x-ms-correlation-request-id": "373f1a49-685d-4c07-8857-0fcf1bcaffcb"
+      },
+      "body": {
+        "id": "/subscriptions/12345678-1234-1234-1234-12345678abc/resourceGroups/exampleResourceGroup/providers/Microsoft.DataFactory/factories/exampleFactoryName/triggers/exampleTrigger",
+        "name": "exampleTrigger",
+        "type": "Microsoft.DataFactory/factories/triggers",
+        "properties": {
+          "type": "ScheduleTrigger",
+          "typeProperties": {
+            "recurrence": {
+              "frequency": "Minute",
+              "interval": 4,
+              "startTime": "2018-06-16T00:39:13.8441801Z",
+              "endTime": "2018-06-16T00:55:13.8441801Z",
+              "timeZone": "UTC"
+            }
+          },
+          "pipelines": [
+            {
+              "pipelineReference": {
+                "referenceName": "examplePipeline",
+                "type": "PipelineReference"
+              },
+              "parameters": {
+                "OutputBlobNameList": [
+                  "exampleoutput.csv"
+                ]
+              }
+            }
+          ],
+          "runtimeState": "Stopped"
+        },
+        "etag": "0a008ad4-0000-0000-0000-5b245c6e0000"
+      }
+    }
+  }
+}

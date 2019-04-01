@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
+
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.CognitiveServices.Vision.Face</PackageId>
+    <Description>This client library provides access to the Microsoft Cognitive Services Face APIs.</Description>
+    <Version>2.4.0-preview</Version>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.Face</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Face;Face API;Face SDK;Vision;netcore451511</PackageTags>
+    <PackageReleaseNotes>
+    <![CDATA[    
+    1) The API client name was changed from FaceAPI to FaceClient, in keeping with other Azure SDKs.
+    2) Supported customizing service endpoints by assigning the endpoint string to FaceClient.Endpoint. The endpoint string can be found on Azure Portal, it should contain only protocol and hostname, for example: https://westus.api.cognitive.microsoft.com. This change ensures better global coverage.
+    3) Aligned with latest Face API, Million-Scale features (LargePersonGroup and LargeFaceList) were added.
+    4) Some inconsistencies in naming, parameter order were corrected.
+    5) Aligned with latest Face API, Snapshot features for data migration were added.
+    6) Aligned with latest Face API, multiple recognition model feature was added.
+    ]]>
+    </PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
+
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
+</Project>
