@@ -85,10 +85,10 @@ namespace HDInsight.Tests.UnitTests
 
             ClusterOperations op = new ClusterOperations(new HDInsightManagementClient());
             var extendedParams = op.GetExtendedClusterCreateParameters(clusterName, clusterCreateParams);
-            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles.Count, 1);
-            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].HardwareProfile.VmSize, "Standard_D13_V2");
-            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].Name, "headnode");
-            Assert.Equal(extendedParams.Properties.ComputeProfile.Roles[0].TargetInstanceCount, 1);            
+            Assert.Equal(1, extendedParams.Properties.ComputeProfile.Roles.Count);
+            Assert.Equal("Standard_D13_V2", extendedParams.Properties.ComputeProfile.Roles[0].HardwareProfile.VmSize);
+            Assert.Equal("headnode", extendedParams.Properties.ComputeProfile.Roles[0].Name);
+            Assert.Equal(1, extendedParams.Properties.ComputeProfile.Roles[0].TargetInstanceCount);            
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace HDInsight.Tests.UnitTests
             var roleToValidate = roles.FirstOrDefault(r => r.Name.Equals(roleName, System.StringComparison.OrdinalIgnoreCase));
             Assert.True(roleToValidate != null);
 
-            Assert.True(roleToValidate.HardwareProfile.VmSize.Equals(roleVmSize, System.StringComparison.OrdinalIgnoreCase));
+            Assert.Equal(roleToValidate.HardwareProfile.VmSize, roleVmSize, ignoreCase: true);
 
             if (roleInstanceCount != -1)
                 Assert.True(roleToValidate.TargetInstanceCount == roleInstanceCount);

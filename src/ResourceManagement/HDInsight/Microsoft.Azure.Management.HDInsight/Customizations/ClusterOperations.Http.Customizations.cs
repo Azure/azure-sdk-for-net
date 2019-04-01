@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.HDInsight
     internal partial class ClusterOperations : IClusterOperations
     {
         /// <summary>
-        /// Enables HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Enables HTTP on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -45,6 +45,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public async Task<OperationResource> EnableHttpAsync(string resourceGroupName, string clusterName,
             string username, string password, CancellationToken cancellationToken)
         {
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Begin enabling HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Begin enabling HTTP on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -80,6 +81,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public async Task<HDInsightOperationResponse> BeginEnablingHttpAsync(string resourceGroupName, string clusterName,
             string username, string password, CancellationToken cancellationToken)
         {
@@ -95,7 +97,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Disables HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Disables HTTP on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -109,6 +111,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public async Task<OperationResource> DisableHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             try
@@ -123,7 +126,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Begin disabling HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Begin disabling HTTP on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -137,6 +140,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public async Task<HDInsightOperationResponse> BeginDisablingHttpAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             try

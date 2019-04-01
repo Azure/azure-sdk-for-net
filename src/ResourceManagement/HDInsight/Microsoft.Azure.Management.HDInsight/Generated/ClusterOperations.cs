@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.HDInsight
     /// </summary>
     internal partial class ClusterOperations : IServiceOperations<HDInsightManagementClient>, IClusterOperations
     {
-        private const string _userAgentString = "ARM SDK v2.0.7";
-        
+        private const string _userAgentString = "ARM SDK v2.1.0";
+
         /// <summary>
         /// Initializes a new instance of the ClusterOperations class.
         /// </summary>
@@ -68,7 +68,9 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
-        /// Begins configuring the HTTP settings on the specified cluster.
+        /// This method has been deprecated and will stop working. Please use
+        /// BeginUpdateGatewaySettings. Begins configuring the HTTP settings
+        /// on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -85,6 +87,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working. Please use BeginUpdateGatewaySettings.")]
         public async Task<HDInsightOperationResponse> BeginConfiguringHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
         {
             // Validate
@@ -2399,7 +2402,194 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Begin updating the Gateway settings on the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='httpSettingsParameters'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        public async Task<HDInsightOperationResponse> BeginUpdateGatewaySettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+            if (httpSettingsParameters == null)
+            {
+                throw new ArgumentNullException("httpSettingsParameters");
+            }
+
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("httpSettingsParameters", httpSettingsParameters);
+                TracingAdapter.Enter(invocationId, this, "BeginUpdateGatewaySettingsAsync", tracingParameters);
+            }
+
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "/clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/updateGatewaySettings";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+
+                // Set Headers
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
+
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+
+                JObject httpSettingsParametersValue = new JObject();
+                requestDoc = httpSettingsParametersValue;
+
+                httpSettingsParametersValue["restAuthCredential.isEnabled"] = httpSettingsParameters.HttpUserEnabled;
+
+                if (httpSettingsParameters.HttpUsername != null)
+                {
+                    httpSettingsParametersValue["restAuthCredential.username"] = httpSettingsParameters.HttpUsername;
+                }
+
+                if (httpSettingsParameters.HttpPassword != null)
+                {
+                    httpSettingsParametersValue["restAuthCredential.password"] = httpSettingsParameters.HttpPassword;
+                }
+
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+
+                    // Create Result
+                    HDInsightOperationResponse result = null;
+                    // Deserialize Response
+                    result = new HDInsightOperationResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Azure-AsyncOperation"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Azure-AsyncOperation").FirstOrDefault();
+                    }
+                    if (httpResponse.Headers.Contains("RetryAfter"))
+                    {
+                        result.RetryAfter = int.Parse(httpResponse.Headers.GetValues("RetryAfter").FirstOrDefault(), CultureInfo.InvariantCulture);
+                    }
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+
+        /// <summary>
+        /// This method has been deprecated and will stop working. Please use
+        /// UpdateGatewaySettings. Configures the HTTP settings on the
+        /// specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -2416,6 +2606,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The azure async operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working. Please use UpdateGatewaySettings.")]
         public async Task<OperationResource> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
         {
             HDInsightManagementClient client = this.Client;
@@ -4171,7 +4362,9 @@ namespace Microsoft.Azure.Management.HDInsight
         }
         
         /// <summary>
-        /// Gets the connectivity settings for the specified cluster.
+        /// This method has been deprecated and will stop working. Please use
+        /// GetGatewaySettings. Gets the connectivity settings for the
+        /// specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -4185,6 +4378,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The payload for a Configure HTTP settings request.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working. Please use GetGatewaySettings.")]
         public async Task<HttpConnectivitySettings> GetConnectivitySettingsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
         {
             // Validate
@@ -4350,7 +4544,188 @@ namespace Microsoft.Azure.Management.HDInsight
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Gets the Gateway settings for the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The payload for a Configure HTTP settings request.
+        /// </returns>
+        public async Task<HttpConnectivitySettings> GetGatewaySettingsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                TracingAdapter.Enter(invocationId, this, "GetGatewaySettingsAsync", tracingParameters);
+            }
+
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "/clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/getGatewaySettings";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+
+                // Set Headers
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
+
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+
+                    // Create Result
+                    HttpConnectivitySettings result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new HttpConnectivitySettings();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken restAuthCredentialisEnabledValue = responseDoc["restAuthCredential.isEnabled"];
+                            if (restAuthCredentialisEnabledValue != null && restAuthCredentialisEnabledValue.Type != JTokenType.Null)
+                            {
+                                bool restAuthCredentialisEnabledInstance = ((bool)restAuthCredentialisEnabledValue);
+                                result.HttpUserEnabled = restAuthCredentialisEnabledInstance;
+                            }
+
+                            JToken restAuthCredentialusernameValue = responseDoc["restAuthCredential.username"];
+                            if (restAuthCredentialusernameValue != null && restAuthCredentialusernameValue.Type != JTokenType.Null)
+                            {
+                                string restAuthCredentialusernameInstance = ((string)restAuthCredentialusernameValue);
+                                result.HttpUsername = restAuthCredentialusernameInstance;
+                            }
+
+                            JToken restAuthCredentialpasswordValue = responseDoc["restAuthCredential.password"];
+                            if (restAuthCredentialpasswordValue != null && restAuthCredentialpasswordValue.Type != JTokenType.Null)
+                            {
+                                string restAuthCredentialpasswordInstance = ((string)restAuthCredentialpasswordValue);
+                                result.HttpPassword = restAuthCredentialpasswordInstance;
+                            }
+                        }
+
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the status of the Create operation.
         /// </summary>
@@ -7306,7 +7681,190 @@ namespace Microsoft.Azure.Management.HDInsight
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Gets all configuration information for an HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        public async Task<ClusterListConfigurationsResponse> ListConfigurationsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (clusterName == null)
+            {
+                throw new ArgumentNullException("clusterName");
+            }
+
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                TracingAdapter.Enter(invocationId, this, "ListConfigurationsAsync", tracingParameters);
+            }
+
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.HDInsight";
+            url = url + "/clusters/";
+            url = url + Uri.EscapeDataString(clusterName);
+            url = url + "/configurations";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-03-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Post;
+                httpRequest.RequestUri = new Uri(url);
+
+                // Set Headers
+                httpRequest.Headers.Add("User-Agent", _userAgentString);
+
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+
+                    // Create Result
+                    ClusterListConfigurationsResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ClusterListConfigurationsResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            JToken configurationsSequenceElement = ((JToken)responseDoc["configurations"]);
+                            if (configurationsSequenceElement != null && configurationsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in configurationsSequenceElement)
+                                {
+                                    string configurationsKey = ((string)property.Name);
+                                    JObject varToken = ((JObject)property.Value);
+                                    ClusterConfiguration clusterConfigurationInstance = new ClusterConfiguration();
+                                    result.Configurations.Add(configurationsKey, clusterConfigurationInstance);
+
+                                    JToken configurationSequenceElement = ((JToken)varToken);
+                                    if (configurationSequenceElement != null && configurationSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in configurationSequenceElement)
+                                        {
+                                            string configurationKey = ((string)property2.Name);
+                                            string configurationValue = ((string)property2.Value);
+                                            clusterConfigurationInstance.Configuration.Add(configurationKey, configurationValue);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+
         /// <summary>
         /// Promote ad-hoc script execution to a persisted script.
         /// </summary>
@@ -7519,6 +8077,69 @@ namespace Microsoft.Azure.Management.HDInsight
                 TracingAdapter.Exit(invocationId, result);
             }
             
+            return result;
+        }
+
+        /// <summary>
+        /// Update the Gateway settings on the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// Required. The name of the cluster.
+        /// </param>
+        /// <param name='httpSettingsParameters'>
+        /// Required. The name of the resource group.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        public async Task<OperationResource> UpdateGatewaySettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken)
+        {
+            HDInsightManagementClient client = this.Client;
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("clusterName", clusterName);
+                tracingParameters.Add("httpSettingsParameters", httpSettingsParameters);
+                TracingAdapter.Enter(invocationId, this, "UpdateGatewaySettingsAsync", tracingParameters);
+            }
+
+            cancellationToken.ThrowIfCancellationRequested();
+            HDInsightOperationResponse response = await client.Clusters.BeginUpdateGatewaySettingsAsync(resourceGroupName, clusterName, httpSettingsParameters, cancellationToken).ConfigureAwait(false);
+            cancellationToken.ThrowIfCancellationRequested();
+            OperationResource result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+            int delayInSeconds = 60;
+            if (client.LongRunningOperationInitialTimeout >= 0)
+            {
+                delayInSeconds = client.LongRunningOperationInitialTimeout;
+            }
+            while (result.State == AsyncOperationState.InProgress)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Task.Delay(delayInSeconds * 1000, cancellationToken).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
+                result = await client.GetLongRunningOperationStatusAsync(response.OperationStatusLink, cancellationToken).ConfigureAwait(false);
+                delayInSeconds = 60;
+                if (client.LongRunningOperationRetryTimeout >= 0)
+                {
+                    delayInSeconds = client.LongRunningOperationRetryTimeout;
+                }
+            }
+
+            if (shouldTrace)
+            {
+                TracingAdapter.Exit(invocationId, result);
+            }
+
             return result;
         }
     }

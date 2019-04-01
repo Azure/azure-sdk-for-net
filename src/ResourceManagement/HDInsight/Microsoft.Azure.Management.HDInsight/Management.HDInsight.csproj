@@ -3,7 +3,7 @@
     <PackageId>Microsoft.Azure.Management.HDInsight</PackageId>
     <Description>Azure HDInsight Management SDK Library</Description>
     <AssemblyName>Microsoft.Azure.Management.HDInsight</AssemblyName>
-    <Version>2.0.7</Version>
+    <Version>2.1.0</Version>
     <PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
@@ -12,7 +12,7 @@
     </PackageReleaseNotes>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>..\..\..\..\tools\MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>

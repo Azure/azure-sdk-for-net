@@ -20,7 +20,7 @@ namespace HDInsight.Tests.UnitTests
             AssertDefaultVmTypes("hbase", "Large", "Standard_D3");
         }
 
-        public void AssertDefaultVmTypes(string clusterType, string expectedheadNodeVmType, string expectedWorkerNodeVmType)
+        private void AssertDefaultVmTypes(string clusterType, string expectedheadNodeVmType, string expectedWorkerNodeVmType)
         {
             var createParams = new ClusterCreateParameters()
             {

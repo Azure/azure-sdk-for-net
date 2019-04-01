@@ -50,13 +50,13 @@ namespace HDInsight.Tests
                 Assert.NotNull(capabilities.QuotaCapability);
                 Assert.NotNull(capabilities.QuotaCapability.RegionalQuotas);
                 Assert.NotNull(capabilities.Regions);
-                Assert.Equal(capabilities.Regions.Count, 2);
+                Assert.Equal(2, capabilities.Regions.Count);
                 Assert.NotNull(capabilities.Versions);
-                Assert.Equal(capabilities.Versions.Count, 2);
+                Assert.Equal(2, capabilities.Versions.Count);
                 Assert.NotNull(capabilities.VmSizeCompatibilityFilters);
                 Assert.True(capabilities.VmSizeCompatibilityFilters.Count > 0);
                 Assert.NotNull(capabilities.VmSizes);
-                Assert.Equal(capabilities.VmSizes.Count, 2);
+                Assert.Equal(2, capabilities.VmSizes.Count);
             }
         }
     }

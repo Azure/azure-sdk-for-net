@@ -19,7 +19,7 @@ namespace HDInsight.Tests.UnitTests
 
             // Test for optional storageContainer
             var testStorageInfoOptionalContainer = new AzureStorageInfo(existingStorageNameFqdn, existingStorageKey);
-            Assert.Equal(testStorageInfoOptionalContainer.StorageContainer, "");
+            Assert.Equal("", testStorageInfoOptionalContainer.StorageContainer);
 
             var testStorageInfoContainer = new AzureStorageInfo(existingStorageNameFqdn, existingStorageKey, containerName);
             Assert.Equal(testStorageInfoContainer.StorageContainer, containerName);

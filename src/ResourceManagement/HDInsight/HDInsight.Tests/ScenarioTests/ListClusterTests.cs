@@ -33,7 +33,7 @@ namespace HDInsight.Tests
             HyakTestUtilities.SetHttpMockServerMatcher();
         }
 
-        //[Fact]
+        [Fact(Skip = "Test case will list all clusters under a subscription.")]
         public void TestListClustersInSubscription()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -57,10 +57,10 @@ namespace HDInsight.Tests
                 //    () => client.Clusters.Create(resourceGroup2, dnsname3, spec));
 
                 var listresponse = client.Clusters.List();
-                Assert.Equal(listresponse.Clusters.Count, 3);
-                Assert.True(listresponse.Clusters.Any(c => c.Name.Equals(dnsname1)));
-                Assert.True(listresponse.Clusters.Any(c => c.Name.Equals(dnsname2)));
-                Assert.True(listresponse.Clusters.Any(c => c.Name.Equals(dnsname3)));
+                Assert.Equal(3, listresponse.Clusters.Count);
+                Assert.Contains(listresponse.Clusters, c => c.Name.Equals(dnsname1));
+                Assert.Contains(listresponse.Clusters, c => c.Name.Equals(dnsname2));
+                Assert.Contains(listresponse.Clusters, c => c.Name.Equals(dnsname3));
 
                 Parallel.Invoke(
                     () => client.Clusters.Delete(resourceGroup1, dnsname1),
@@ -69,7 +69,7 @@ namespace HDInsight.Tests
             }
         }
 
-        //[Fact]
+        [Fact(Skip = "This test case will be skipped.")]
         public void TestListClustersByResourceGroup()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -122,7 +122,7 @@ namespace HDInsight.Tests
 
                 var listResult = client.Clusters.ListByResourceGroup(resourceGroup);
                 Assert.NotNull(listResult);
-                Assert.Equal(listResult.Clusters.Count, 0);
+                Assert.Equal(0, listResult.Clusters.Count);
 
                 resourceManagementClient.ResourceGroups.Delete(resourceGroup);
             }
@@ -145,7 +145,7 @@ namespace HDInsight.Tests
                 }
                 catch (CloudException ex)
                 {
-                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.NotFound);
+                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                 }
             }
         }
@@ -165,7 +165,7 @@ namespace HDInsight.Tests
                 }
                 catch (CloudException ex)
                 {
-                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.NotFound);
+                    Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                 }
             }
         }

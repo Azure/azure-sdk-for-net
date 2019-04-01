@@ -34,7 +34,9 @@ namespace Microsoft.Azure.Management.HDInsight
     public partial interface IClusterOperations
     {
         /// <summary>
-        /// Begins configuring the HTTP settings on the specified cluster.
+        /// This method has been deprecated and will stop working. Please use
+        /// BeginUpdateGatewaySettings. Begins configuring the HTTP settings
+        /// on the specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -51,6 +53,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working. Please use BeginUpdateGatewaySettings.")]
         Task<HDInsightOperationResponse> BeginConfiguringHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken);
         
         /// <summary>
@@ -191,7 +194,29 @@ namespace Microsoft.Azure.Management.HDInsight
         Task<HDInsightOperationResponse> BeginResizingAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Configures the HTTP settings on the specified cluster.
+        /// Begin updating the Gateway settings on the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='httpSettingsParameters'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The cluster long running operation response.
+        /// </returns>
+        Task<HDInsightOperationResponse> BeginUpdateGatewaySettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// This method has been deprecated and will stop working. Please use
+        /// UpdateGatewaySettings. Configures the HTTP settings on the
+        /// specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -208,8 +233,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The azure async operation response.
         /// </returns>
-        Task<OperationResource> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken);
-        
+        [Obsolete("This method has been deprecated and will stop working. Please use UpdateGatewaySettings.")]
+        Task < OperationResource> ConfigureHttpSettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken);
+
         /// <summary>
         /// Configures the RDP settings on the specified cluster.
         /// </summary>
@@ -399,7 +425,9 @@ namespace Microsoft.Azure.Management.HDInsight
         Task<ClusterConfigurationsResponse> GetClusterConfigurationsAsync(string resourceGroupName, string clusterName, string configurationName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Gets the connectivity settings for the specified cluster.
+        /// This method has been deprecated and will stop working. Please use
+        /// GetGatewaySettings. Gets the connectivity settings for the
+        /// specified cluster.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -413,8 +441,9 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The payload for a Configure HTTP settings request.
         /// </returns>
-        Task<HttpConnectivitySettings> GetConnectivitySettingsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
-        
+        [Obsolete("This method has been deprecated and will stop working. Please use GetGatewaySettings.")]
+        Task < HttpConnectivitySettings> GetConnectivitySettingsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+
         /// <summary>
         /// Gets the status of the Create operation.
         /// </summary>
@@ -442,6 +471,23 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The azure async operation response.
         /// </returns>
         Task<OperationResource> GetDeleteStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Gets the Gateway settings for the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The payload for a Configure HTTP settings request.
+        /// </returns>
+        Task<HttpConnectivitySettings> GetGatewaySettingsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Get the status of Operations Management Suite on the HDInsight
@@ -505,7 +551,24 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The List Cluster operation response.
         /// </returns>
         Task<ClusterListResponse> ListByResourceGroupAsync(string resourceGroupName, CancellationToken cancellationToken);
-        
+
+        /// <summary>
+        /// Gets all configuration information for an HDInsight cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Cluster Configurations operation response.
+        /// </returns>
+        Task<ClusterListConfigurationsResponse> ListConfigurationsAsync(string resourceGroupName, string clusterName, CancellationToken cancellationToken);
+
         /// <summary>
         /// Lists all persisted script actions for the given cluster.
         /// </summary>
@@ -580,5 +643,25 @@ namespace Microsoft.Azure.Management.HDInsight
         /// The azure async operation response.
         /// </returns>
         Task<OperationResource> ResizeAsync(string resourceGroupName, string clusterName, ClusterResizeParameters resizeParameters, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Update the Gateway settings on the specified cluster.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='clusterName'>
+        /// The name of the cluster.
+        /// </param>
+        /// <param name='httpSettingsParameters'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The azure async operation response.
+        /// </returns>
+        Task<OperationResource> UpdateGatewaySettingsAsync(string resourceGroupName, string clusterName, HttpSettingsParameters httpSettingsParameters, CancellationToken cancellationToken);
     }
 }
