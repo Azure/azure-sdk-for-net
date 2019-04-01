@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-
+/* 
 #if FullNetFx
 namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
@@ -98,8 +98,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 }
             });
         }
-        */
-
+        
         internal static string GetSbConnectionString(TransportType transportType)
         {
             // Override and Create a new ConnectionString with SbmpConnection Endpoint scheme
@@ -116,3 +115,4 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
     }
 }
 #endif
+*/
