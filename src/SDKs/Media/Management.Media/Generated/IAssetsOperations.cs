@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.Media
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<AssetContainerSas>> ListContainerSasWithHttpMessagesAsync(string resourceGroupName, string accountName, string assetName, string permissions = default(string), System.DateTime? expiryTime = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<AssetContainerSas>> ListContainerSasWithHttpMessagesAsync(string resourceGroupName, string accountName, string assetName, AssetContainerPermission? permissions = default(AssetContainerPermission?), System.DateTime? expiryTime = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the Asset storage key
         /// </summary>

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// will be resized to fit the desired output resolution(s). Default is
         /// AutoSize. Possible values include: 'None', 'AutoSize',
         /// 'AutoFit'</param>
-        public Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), string stretchMode = default(string))
+        public Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?))
             : base(label)
         {
             KeyFrameInterval = keyFrameInterval;
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// AutoSize. Possible values include: 'None', 'AutoSize', 'AutoFit'
         /// </summary>
         [JsonProperty(PropertyName = "stretchMode")]
-        public string StretchMode { get; set; }
+        public StretchMode? StretchMode { get; set; }
 
     }
 }

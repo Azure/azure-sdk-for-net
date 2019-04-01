@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -40,7 +39,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'AdaptiveStreaming', 'AACGoodQualityAudio',
         /// 'ContentAwareEncodingExperimental', 'H264MultipleBitrate1080p',
         /// 'H264MultipleBitrate720p', 'H264MultipleBitrateSD'</param>
-        public BuiltInStandardEncoderPreset(string presetName)
+        public BuiltInStandardEncoderPreset(EncoderNamedPreset presetName)
         {
             PresetName = presetName;
             CustomInit();
@@ -60,20 +59,16 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'H264MultipleBitrate720p', 'H264MultipleBitrateSD'
         /// </summary>
         [JsonProperty(PropertyName = "presetName")]
-        public string PresetName { get; set; }
+        public EncoderNamedPreset PresetName { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (PresetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PresetName");
-            }
         }
     }
 }

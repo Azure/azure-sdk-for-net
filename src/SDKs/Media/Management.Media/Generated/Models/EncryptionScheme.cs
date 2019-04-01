@@ -10,27 +10,112 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for EncryptionScheme.
     /// </summary>
-    public static class EncryptionScheme
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(EncryptionSchemeConverter))]
+    public struct EncryptionScheme : System.IEquatable<EncryptionScheme>
     {
+        private EncryptionScheme(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// NoEncryption scheme
         /// </summary>
-        public const string NoEncryption = "NoEncryption";
+        public static readonly EncryptionScheme NoEncryption = "NoEncryption";
+
         /// <summary>
         /// EnvelopeEncryption scheme
         /// </summary>
-        public const string EnvelopeEncryption = "EnvelopeEncryption";
+        public static readonly EncryptionScheme EnvelopeEncryption = "EnvelopeEncryption";
+
         /// <summary>
         /// CommonEncryptionCenc scheme
         /// </summary>
-        public const string CommonEncryptionCenc = "CommonEncryptionCenc";
+        public static readonly EncryptionScheme CommonEncryptionCenc = "CommonEncryptionCenc";
+
         /// <summary>
         /// CommonEncryptionCbcs scheme
         /// </summary>
-        public const string CommonEncryptionCbcs = "CommonEncryptionCbcs";
+        public static readonly EncryptionScheme CommonEncryptionCbcs = "CommonEncryptionCbcs";
+
+
+        /// <summary>
+        /// Underlying value of enum EncryptionScheme
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for EncryptionScheme
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type EncryptionScheme
+        /// </summary>
+        public bool Equals(EncryptionScheme e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to EncryptionScheme
+        /// </summary>
+        public static implicit operator EncryptionScheme(string value)
+        {
+            return new EncryptionScheme(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert EncryptionScheme to string
+        /// </summary>
+        public static implicit operator string(EncryptionScheme e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum EncryptionScheme
+        /// </summary>
+        public static bool operator == (EncryptionScheme e1, EncryptionScheme e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum EncryptionScheme
+        /// </summary>
+        public static bool operator != (EncryptionScheme e1, EncryptionScheme e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for EncryptionScheme
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is EncryptionScheme && Equals((EncryptionScheme)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode EncryptionScheme
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

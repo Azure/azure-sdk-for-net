@@ -10,43 +10,131 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobState.
     /// </summary>
-    public static class JobState
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(JobStateConverter))]
+    public struct JobState : System.IEquatable<JobState>
     {
+        private JobState(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The job was canceled. This is a final state for the job.
         /// </summary>
-        public const string Canceled = "Canceled";
+        public static readonly JobState Canceled = "Canceled";
+
         /// <summary>
         /// The job is in the process of being canceled. This is a transient
         /// state for the job.
         /// </summary>
-        public const string Canceling = "Canceling";
+        public static readonly JobState Canceling = "Canceling";
+
         /// <summary>
         /// The job has encountered an error. This is a final state for the
         /// job.
         /// </summary>
-        public const string Error = "Error";
+        public static readonly JobState Error = "Error";
+
         /// <summary>
         /// The job is finished. This is a final state for the job.
         /// </summary>
-        public const string Finished = "Finished";
+        public static readonly JobState Finished = "Finished";
+
         /// <summary>
         /// The job is processing. This is a transient state for the job.
         /// </summary>
-        public const string Processing = "Processing";
+        public static readonly JobState Processing = "Processing";
+
         /// <summary>
         /// The job is in a queued state, waiting for resources to become
         /// available. This is a transient state.
         /// </summary>
-        public const string Queued = "Queued";
+        public static readonly JobState Queued = "Queued";
+
         /// <summary>
         /// The job is being scheduled to run on an available resource. This is
         /// a transient state, between queued and processing states.
         /// </summary>
-        public const string Scheduled = "Scheduled";
+        public static readonly JobState Scheduled = "Scheduled";
+
+
+        /// <summary>
+        /// Underlying value of enum JobState
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for JobState
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type JobState
+        /// </summary>
+        public bool Equals(JobState e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to JobState
+        /// </summary>
+        public static implicit operator JobState(string value)
+        {
+            return new JobState(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert JobState to string
+        /// </summary>
+        public static implicit operator string(JobState e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum JobState
+        /// </summary>
+        public static bool operator == (JobState e1, JobState e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum JobState
+        /// </summary>
+        public static bool operator != (JobState e1, JobState e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for JobState
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is JobState && Equals((JobState)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode JobState
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
