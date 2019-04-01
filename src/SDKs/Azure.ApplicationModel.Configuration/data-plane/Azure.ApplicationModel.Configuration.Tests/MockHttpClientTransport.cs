@@ -262,7 +262,12 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             Assert.AreEqual(_expectedMethod, request.Method);
             _expectedUri.Verify(request.RequestUri.ToString());
+#if FullNetFx
+            Assert.AreEqual(new Version(1, 1), request.Version);
+#else
             Assert.AreEqual(new Version(2, 0), request.Version);
+#endif
+
         }
 
         void VerifyRequestContent(HttpRequestMessage request)
