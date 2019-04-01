@@ -66,7 +66,6 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-            base.OnEventWritten(eventData);
             if (eventData.EventSource.Name == SOURCE_NAME) {
                 var formatted = eventData.EventName + " : " + eventData.Payload[0].ToString();
                 Console.WriteLine(formatted);
