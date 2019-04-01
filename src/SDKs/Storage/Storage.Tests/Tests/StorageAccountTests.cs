@@ -507,6 +507,27 @@ namespace Storage.Tests
         }
 
         [Fact]
+        public void StorageAccountRevokeUserDelegationKeysTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
+
+                // Revoke User DelegationKeys
+                storageMgmtClient.StorageAccounts.RevokeUserDelegationKeys(rgname, accountName);
+            }
+        }
+
+        [Fact]
         public void StorageAccountCheckNameTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
