@@ -1,1 +1,0 @@
-<Playlist Version="1.0"><Add Test="VaultUpgrade.Tests.VaultUpgradeTests.VaultUpgrade_CheckPrereqsTests" /><Add Test="VaultUpgrade.Tests.VaultUpgradeTests.VaultUpgrade_UpgradeResourceTests" /><Add Test="VaultUpgrade.Tests.VaultUpgradeTests.VaultUpgrade_TrackResourceUpgradationTests" /></Playlist>
