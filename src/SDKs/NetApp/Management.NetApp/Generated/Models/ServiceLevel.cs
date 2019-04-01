@@ -8,7 +8,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.NetApp.Models
+namespace Microsoft.Azure.Management.NetApp.Models
 {
 
     /// <summary>
