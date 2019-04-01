@@ -9,6 +9,11 @@ namespace Azure.Base.Testing
 {
     public class MockRequest : HttpPipelineRequest
     {
+        public MockRequest()
+        {
+            RequestId = new Guid().ToString();
+        }
+
         private readonly List<HttpHeader> _headers = new List<HttpHeader>();
 
         public override void AddHeader(HttpHeader header)

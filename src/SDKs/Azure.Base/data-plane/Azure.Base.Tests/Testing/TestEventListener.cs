@@ -1,9 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics.Tracing;
+using System.Linq;
 
 namespace Azure.Base.Testing
 {
@@ -22,10 +24,26 @@ namespace Azure.Base.Testing
             }
         }
 
+        public EventWrittenEventArgs SingleEventById(int id, Func<EventWrittenEventArgs, bool> filter = null)
+        {
+            return EventsById(id).Single(filter ?? (_ => true));
+        }
+
+        public IEnumerable<EventWrittenEventArgs> EventsById(int id)
+        {
+            return _events.Where(e => e.EventId == id);
+        }
+
         public override void Dispose()
         {
             _disposed = true;
             base.Dispose();
         }
+    }
+
+    public static class TestEventListenerExtensions
+    {
+        public static T GetProperty<T>(this EventWrittenEventArgs data, string propName)
+            => (T)data.Payload[data.PayloadNames.IndexOf(propName)];
     }
 }

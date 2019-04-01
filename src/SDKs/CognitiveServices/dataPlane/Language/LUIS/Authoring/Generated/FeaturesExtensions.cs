@@ -28,16 +28,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
@@ -54,9 +44,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The cancellation token.
             /// </param>
             [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
-            public static async Task<IList<PatternFeatureInfo>> ListApplicationVersionPatternFeaturesAsync(this IFeatures operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternFeatureInfo>> ListApplicationVersionPatternFeaturesAsync(this IFeatures operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListApplicationVersionPatternFeaturesWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListApplicationVersionPatternFeaturesWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -67,16 +57,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -91,9 +71,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<int?> AddPhraseListAsync(this IFeatures operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<int?> AddPhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AddPhraseListWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, phraselistCreateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AddPhraseListWithHttpMessagesAsync(appId, versionId, phraselistCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -104,16 +84,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -130,9 +100,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PhraseListFeatureInfo>> ListPhraseListsAsync(this IFeatures operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PhraseListFeatureInfo>> ListPhraseListsAsync(this IFeatures operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListPhraseListsWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPhraseListsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -145,16 +115,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
-            /// </param>
             /// <param name='appId'>
             /// The application ID.
             /// </param>
@@ -170,9 +130,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeaturesResponseObject> ListAsync(this IFeatures operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FeaturesResponseObject> ListAsync(this IFeatures operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -183,16 +143,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -206,9 +156,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PhraseListFeatureInfo> GetPhraseListAsync(this IFeatures operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PhraseListFeatureInfo> GetPhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPhraseListWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -220,16 +170,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -248,9 +188,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> UpdatePhraseListAsync(this IFeatures operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdatePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdatePhraseListWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, phraselistId, phraselistUpdateObject, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdatePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, phraselistUpdateObject, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -261,16 +201,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='azureRegion'>
-            /// Supported Azure regions for Cognitive Services endpoints. Possible values
-            /// include: 'westus', 'westeurope', 'southeastasia', 'eastus2',
-            /// 'westcentralus', 'westus2', 'eastus', 'southcentralus', 'northeurope',
-            /// 'eastasia', 'australiaeast', 'brazilsouth', 'virginia'
-            /// </param>
-            /// <param name='azureCloud'>
-            /// Supported Azure Clouds for Cognitive Services endpoints. Possible values
-            /// include: 'com', 'us'
             /// </param>
             /// <param name='appId'>
             /// The application ID.
@@ -284,9 +214,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> DeletePhraseListAsync(this IFeatures operations, AzureRegions azureRegion, AzureClouds azureCloud, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeletePhraseListAsync(this IFeatures operations, System.Guid appId, string versionId, int phraselistId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeletePhraseListWithHttpMessagesAsync(azureRegion, azureCloud, appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeletePhraseListWithHttpMessagesAsync(appId, versionId, phraselistId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

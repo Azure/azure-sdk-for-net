@@ -69,6 +69,18 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
+        public async Task GetWithLabel()
+        {
+            var transport = new GetMockTransport(s_testSetting.Key, s_testSetting.Label, s_testSetting);
+            var (service, pool) = CreateTestService(transport);
+
+            ConfigurationSetting setting = await service.GetAsync(s_testSetting.Key, s_testSetting.Label);
+
+            Assert.AreEqual(s_testSetting, setting);
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
         public void GetNotFound()
         {
             var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.NotFound);
@@ -122,7 +134,17 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task Delete()
         {
-            var transport = new DeleteMockTransport(s_testSetting.Key, new RequestOptions() {Label = s_testSetting.Label }, s_testSetting);
+            var transport = new DeleteMockTransport(s_testSetting.Key, default, s_testSetting);
+            var (service, pool) = CreateTestService(transport);
+
+            await service.DeleteAsync(s_testSetting.Key);
+            Assert.AreEqual(0, pool.CurrentlyRented);
+        }
+
+        [Test]
+        public async Task DeletewithLabel()
+        {
+            var transport = new DeleteMockTransport(s_testSetting.Key, s_testSetting.Label, s_testSetting);
             var (service, pool) = CreateTestService(transport);
 
             await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
@@ -175,7 +197,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var (service, pool) = CreateTestService(transport);
 
-            var query = new BatchRequestOptions();
+            var query = new SettingSelector();
             int keyIndex = 0;
             while (true)
             {
@@ -188,9 +210,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                         Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
                         keyIndex++;
                     }
-                    query = batch.NextBatch;
+                    var nextBatch = batch.NextBatch;
 
-                    if (string.IsNullOrEmpty(query.BatchLink)) break;
+                    if (nextBatch == null) break;
+
+                    query = nextBatch;
                 }
             }
 

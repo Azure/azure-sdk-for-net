@@ -4,6 +4,7 @@
 
 using Azure.Base.Http;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
@@ -29,28 +30,6 @@ namespace Azure.ApplicationModel.Configuration
             HttpHeader.Names.Accept,
             "application/vnd.microsoft.appconfig.kv+json"
         );
-
-        // TODO (pri 3): do all the methods that call this accept revisions?
-        static void AddOptionsHeaders(RequestOptions options, HttpPipelineRequest request)
-        {
-            if (options == null) return;
-
-            if (options.ETag.IfMatch != default)
-            {
-                request.AddHeader(IfMatchName, $"\"{options.ETag.IfMatch}\"");
-            }
-
-            if (options.ETag.IfNoneMatch != default)
-            {
-                request.AddHeader(IfNoneMatch, $"\"{options.ETag.IfNoneMatch}\"");
-            }
-
-            if (options.Revision.HasValue)
-            {
-                var dateTime = options.Revision.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                request.AddHeader(AcceptDatetimeHeader, dateTime);
-            }
-        }
 
         static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)
         {
@@ -127,56 +106,59 @@ namespace Azure.ApplicationModel.Configuration
             return builder.Uri;
         }
 
-        void BuildBatchQuery(UriBuilder builder, BatchRequestOptions options)
+        void BuildBatchQuery(UriBuilder builder, SettingSelector selector)
         {
-            if (!string.IsNullOrEmpty(options.Key))
+            if (selector.Keys.Count > 0)
             {
-                builder.AppendQuery(KeyQueryFilter, options.Key);
+                var keys = string.Join(",", selector.Keys).ToLower();
+                builder.AppendQuery(KeyQueryFilter, keys);
             }
 
-            if (!string.IsNullOrEmpty(options.BatchLink))
+            if (selector.Labels.Count > 0)
             {
-                builder.AppendQuery("after", options.BatchLink);
-            }
-
-            if (options.Label != null)
-            {
-                if (options.Label == string.Empty)
+                var labelsCopy = new List<string>();
+                foreach (var label in selector.Labels)
                 {
-                    options.Label = "\0";
+                    if (label == string.Empty)
+                    {
+                        labelsCopy.Add("\0");
+                    }
+                    else
+                    {
+                        labelsCopy.Add(label);
+                    }
                 }
-                builder.AppendQuery(LabelQueryFilter, options.Label);
+                var labels = string.Join(",", labelsCopy).ToLower();
+                builder.AppendQuery(LabelQueryFilter, labels);
             }
 
-            if (options.Fields != SettingFields.All)
+            if (selector.Fields != SettingFields.All)
             {
-                var filter = (options.Fields).ToString().ToLower();
+                var filter = (selector.Fields).ToString().ToLower();
                 builder.AppendQuery(FieldsQueryFilter, filter);
             }
+
+            if (!string.IsNullOrEmpty(selector.BatchLink))
+            {
+                builder.AppendQuery("after", selector.BatchLink);
+            }
         }
 
-        Uri BuildUriForList()
+        Uri BuildUriForGetBatch(SettingSelector selector)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = KvRoute;
+            BuildBatchQuery(builder, selector);
+
             return builder.Uri;
         }
 
-        Uri BuildUriForGetBatch(BatchRequestOptions options)
-        {
-            var builder = new UriBuilder(_baseUri);
-            builder.Path = KvRoute;
-
-            BuildBatchQuery(builder, options);
-            return builder.Uri;
-        }
-
-        Uri BuildUriForRevisions(BatchRequestOptions options)
+        Uri BuildUriForRevisions(SettingSelector selector)
         {
             var builder = new UriBuilder(_baseUri);
             builder.Path = RevisionsRoute;
+            BuildBatchQuery(builder, selector);
 
-            BuildBatchQuery(builder, options);
             return builder.Uri;
         }
 

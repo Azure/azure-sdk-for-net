@@ -7,9 +7,9 @@
     <PackageId>Microsoft.Azure.Management.ResourceGraph</PackageId>
     <Description>Provides Resource Graph operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.ResourceGraph</AssemblyName>
-    <Version>0.10.0-preview</Version>
+    <Version>1.0.0</Version>
     <PackageTags>Azure;ResourceGraph;</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Releasing the GA version of Azure Resource Graph.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
