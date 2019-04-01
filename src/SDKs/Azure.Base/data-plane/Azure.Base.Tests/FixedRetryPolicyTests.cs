@@ -62,7 +62,7 @@ namespace Azure.Base.Tests
         {
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            public FixedRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3, TimeSpan delay = default) : base(retriableCodes, exceptionFilter, maxRetries, delay)
+            public FixedRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> shouldRetryException = null, int maxRetries = 3, TimeSpan delay = default) : base(retriableCodes, shouldRetryException, maxRetries, delay)
             {
             }
 

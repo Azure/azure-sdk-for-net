@@ -66,12 +66,17 @@ namespace Azure.Base.Tests
 
         class CustomRetryPolicy : RetryPolicy
         {
-            protected override bool ShouldRetry(HttpPipelineMessage message, Exception exception, int retry, out TimeSpan delay)
+            protected override bool ShouldRetryResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
             {
                 delay = TimeSpan.Zero;
-                if (retry > 5) return false;
+                if (attempted > 5) return false;
                 if (message.Response.Status == 1) return false;
                 return true;
+            }
+
+            protected override bool ShouldRetryException(Exception exception, int attempted, out TimeSpan delay)
+            {
+                return false;
             }
         }
 

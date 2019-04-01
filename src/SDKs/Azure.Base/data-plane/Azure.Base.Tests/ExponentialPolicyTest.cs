@@ -23,7 +23,7 @@ namespace Azure.Base.Tests
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
             var delay = await policy.DelayGate.Cycle();
-            CheckExpectedRange(TimeSpan.FromSeconds(1), delay);
+            AssertExponentialDelay(TimeSpan.FromSeconds(1), delay);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(200));
 
@@ -44,7 +44,7 @@ namespace Azure.Base.Tests
             for (int i = 0; i < 4; i++)
             {
                 var delay = await policy.DelayGate.Cycle();
-                CheckExpectedRange(TimeSpan.FromSeconds(expectedDelaysInSeconds[i]), delay);
+                AssertExponentialDelay(TimeSpan.FromSeconds(expectedDelaysInSeconds[i]), delay);
 
                 await mockTransport.RequestGate.Cycle(new MockResponse(500));
             }
@@ -66,7 +66,7 @@ namespace Azure.Base.Tests
             for (int i = 0; i < 6; i++)
             {
                 var delay = await policy.DelayGate.Cycle();
-                CheckExpectedRange(TimeSpan.FromSeconds(expectedDelaysInSeconds[i]), delay);
+                AssertExponentialDelay(TimeSpan.FromSeconds(expectedDelaysInSeconds[i]), delay);
 
                 await mockTransport.RequestGate.Cycle(new MockResponse(500));
             }
@@ -75,7 +75,7 @@ namespace Azure.Base.Tests
             Assert.AreEqual(500, response.Status);
         }
 
-        private void CheckExpectedRange(TimeSpan expected, TimeSpan actual)
+        private void AssertExponentialDelay(TimeSpan expected, TimeSpan actual)
         {
             // Expect maximum 25% variance
             Assert.LessOrEqual(Math.Abs(expected.TotalMilliseconds / actual.TotalMilliseconds - 1), 0.25, "Expected {0} to be around {1}", actual, expected);
@@ -91,8 +91,8 @@ namespace Azure.Base.Tests
         {
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            public ExponentialRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
-                : base(retriableCodes, exceptionFilter, maxRetries, delay, maxDelay)
+            public ExponentialRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> shouldRetryException = null, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
+                : base(retriableCodes, shouldRetryException, maxRetries, delay, maxDelay)
             {
             }
 

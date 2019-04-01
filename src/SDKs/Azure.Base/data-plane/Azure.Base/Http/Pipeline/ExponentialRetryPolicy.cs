@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace Azure.Base.Http.Pipeline
 {
-    internal class ExponentialRetryPolicy : RetryPolicy
+    public class ExponentialRetryPolicy : RetryPolicy
     {
         private readonly int[] _retriableCodes;
 
-        private readonly Func<Exception, bool> _exceptionFilter;
+        private readonly Func<Exception, bool> _shouldRetryException;
 
         private readonly int _maxRetries;
 
@@ -20,10 +20,10 @@ namespace Azure.Base.Http.Pipeline
 
         private Random _random;
 
-        public ExponentialRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter, int maxRetries, TimeSpan delay, TimeSpan maxDelay)
+        public ExponentialRetryPolicy(int[] retriableCodes, Func<Exception, bool> shouldRetryException, int maxRetries, TimeSpan delay, TimeSpan maxDelay)
         {
             _random = new ThreadSafeRandom();
-            _exceptionFilter = exceptionFilter;
+            _shouldRetryException = shouldRetryException;
             _maxRetries = maxRetries;
             _delay = delay;
             _maxDelay = maxDelay;
@@ -32,29 +32,36 @@ namespace Azure.Base.Http.Pipeline
             Array.Sort(_retriableCodes);
         }
 
-        protected override bool ShouldRetry(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
+        protected override bool ShouldRetryResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
-            delay = TimeSpan.FromMilliseconds(
-                Math.Min(
-                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
-                    _maxDelay.TotalMilliseconds));
+            delay = CalculateDelay(attempted);
 
             if (attempted > _maxRetries)
             {
                 return false;
             }
 
-            if (exception != null)
-            {
-                return _exceptionFilter != null && _exceptionFilter(exception);
-            }
+            return Array.BinarySearch(_retriableCodes, message.Response.Status) >= 0;
+        }
 
-            if (Array.BinarySearch(_retriableCodes, message.Response.Status) < 0)
+        protected override bool ShouldRetryException(Exception exception, int attempted, out TimeSpan delay)
+        {
+            delay = CalculateDelay(attempted);
+
+            if (attempted > _maxRetries)
             {
                 return false;
             }
 
-            return true;
+            return _shouldRetryException != null && _shouldRetryException(exception);
+        }
+
+        private TimeSpan CalculateDelay(int attempted)
+        {
+            return TimeSpan.FromMilliseconds(
+                Math.Min(
+                    (1 << (attempted - 1)) * _random.Next((int)(_delay.TotalMilliseconds * 0.8), (int)(_delay.TotalMilliseconds * 1.2)),
+                    _maxDelay.TotalMilliseconds));
         }
     }
 }

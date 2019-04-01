@@ -2,39 +2,51 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
 
 namespace Azure.Base.Http.Pipeline
 {
     internal class ThreadSafeRandom: Random
     {
-        private static int _seed = Environment.TickCount;
-
-        private readonly ThreadLocal<Random> _currentThreadRandom = new ThreadLocal<Random>(() => new Random(Interlocked.Increment(ref _seed)), false);
+        private readonly Random _random = new Random();
 
         public override int Next()
         {
-            return _currentThreadRandom.Value.Next();
+            lock (_random)
+            {
+                return _random.Next();
+            }
         }
 
         public override int Next(int minValue, int maxValue)
         {
-            return _currentThreadRandom.Value.Next(minValue, maxValue);
+            lock (_random)
+            {
+                return _random.Next(minValue, maxValue);
+            }
         }
 
         public override int Next(int maxValue)
         {
-            return _currentThreadRandom.Value.Next(maxValue);
+            lock (_random)
+            {
+                return _random.Next(maxValue);
+            }
         }
 
         public override double NextDouble()
         {
-            return _currentThreadRandom.Value.NextDouble();
+            lock (_random)
+            {
+                return _random.NextDouble();
+            }
         }
 
         public override void NextBytes(byte[] buffer)
         {
-            _currentThreadRandom.Value.NextBytes(buffer);
+            lock (_random)
+            {
+                _random.NextBytes(buffer);
+            }
         }
     }
 }
