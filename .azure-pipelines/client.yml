@@ -88,15 +88,15 @@ jobs:
 
     steps:
       - powershell: |
-          Invoke-WebRequest -Uri "https://github.com/chidozieononiwu/azure-sdk-for-net/releases/download/verifyAgentOS_v1.1/verify_agent_os.zip" `
-          -OutFile "verify_agent_os.zip" | Wait-Process; Expand-Archive -Path "verify_agent_os.zip" -DestinationPath "./azure-sdk-tools/"
-        workingDirectory: '$(System.DefaultWorkingDirectory)'
-        displayName: 'Download Tools Archive Script From Github Release and Extract it'
+          Invoke-WebRequest -Uri "https://github.com/chidozieononiwu/azure-sdk-tools/releases/download/sdk-tools_v1.0/sdk-tools.zip" `
+          -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
+        workingDirectory: '$(Build.BinariesDirectory)'
+        displayName: 'Download Tools Archive From Github Release and Extract it'
 
       - task: PythonScript@0
         displayName: 'Run VerifyAgentOS script'
         inputs:
-          scriptPath: './azure-sdk-tools/verify_agent_os.py'
+          scriptPath: '$(Build.BinariesDirectory)/sdk-tools/verify_agent_os.py'
           arguments: $(OSName)
 
       - task: DotNetCoreInstaller@0
@@ -106,7 +106,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (no live tests)'
-        condition: eq(variables['System.TeamProject'], 'public')
+        condition: eq(variables['System.TeamProject'], 'playground')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -119,7 +119,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (with live tests)'
-        condition: ne(variables['System.TeamProject'], 'public')
+        condition: ne(variables['System.TeamProject'], 'playground')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
