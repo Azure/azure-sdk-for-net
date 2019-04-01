@@ -18,6 +18,5 @@ namespace Microsoft.Azure.Management.Reservations.Models
     {
         public const string True = "True";
         public const string False = "False";
-        public const string NotSupported = "NotSupported";
     }
 }

@@ -34,15 +34,12 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="location">The Azure Region where the reserved resource
         /// lives.</param>
         /// <param name="reservedResourceType">Possible values include:
-        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb',
-        /// 'RedHat'</param>
+        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb'</param>
         /// <param name="term">Possible values include: 'P1Y', 'P3Y'</param>
         /// <param name="displayName">Friendly name of the Reservation</param>
         /// <param name="appliedScopeType">Possible values include: 'Single',
         /// 'Shared'</param>
-        /// <param name="instanceFlexibility">Possible values include: 'True',
-        /// 'False', 'NotSupported'</param>
-        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), string instanceFlexibility = default(string))
+        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), PurchaseRequestPropertiesAdvancedProperties advancedProperties = default(PurchaseRequestPropertiesAdvancedProperties))
         {
             Sku = sku;
             Location = location;
@@ -53,7 +50,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
             DisplayName = displayName;
             AppliedScopeType = appliedScopeType;
             AppliedScopes = appliedScopes;
-            InstanceFlexibility = instanceFlexibility;
+            AdvancedProperties = advancedProperties;
             CustomInit();
         }
 
@@ -75,7 +72,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'VirtualMachines',
-        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat'
+        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb'
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservedResourceType")]
         public string ReservedResourceType { get; set; }
@@ -114,11 +111,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public IList<string> AppliedScopes { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'True', 'False',
-        /// 'NotSupported'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.instanceFlexibility")]
-        public string InstanceFlexibility { get; set; }
+        [JsonProperty(PropertyName = "properties.advancedProperties")]
+        public PurchaseRequestPropertiesAdvancedProperties AdvancedProperties { get; set; }
 
     }
 }

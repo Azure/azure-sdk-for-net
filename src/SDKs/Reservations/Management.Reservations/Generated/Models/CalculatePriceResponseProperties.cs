@@ -13,22 +13,22 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class CalculateResponseProperties
+    public partial class CalculatePriceResponseProperties
     {
         /// <summary>
-        /// Initializes a new instance of the CalculateResponseProperties
+        /// Initializes a new instance of the CalculatePriceResponseProperties
         /// class.
         /// </summary>
-        public CalculateResponseProperties()
+        public CalculatePriceResponseProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CalculateResponseProperties
+        /// Initializes a new instance of the CalculatePriceResponseProperties
         /// class.
         /// </summary>
-        public CalculateResponseProperties(CalculateResponsePropertiesBillingCurrencyTotal billingCurrencyTotal = default(CalculateResponsePropertiesBillingCurrencyTotal), bool? isTaxIncluded = default(bool?), PurchaseRequest purchaseRequest = default(PurchaseRequest), bool? isBillingPartnerManaged = default(bool?), string reservationOrderId = default(string), string skuTitle = default(string), string skuDescription = default(string), CalculateResponsePropertiesPricingCurrencyTotal pricingCurrencyTotal = default(CalculateResponsePropertiesPricingCurrencyTotal))
+        public CalculatePriceResponseProperties(CalculatePriceResponsePropertiesBillingCurrencyTotal billingCurrencyTotal = default(CalculatePriceResponsePropertiesBillingCurrencyTotal), bool? isTaxIncluded = default(bool?), PurchaseRequest purchaseRequest = default(PurchaseRequest), bool? isBillingPartnerManaged = default(bool?), string reservationOrderId = default(string), string skuTitle = default(string), string skuDescription = default(string), CalculatePriceResponsePropertiesPricingCurrencyTotal pricingCurrencyTotal = default(CalculatePriceResponsePropertiesPricingCurrencyTotal))
         {
             BillingCurrencyTotal = billingCurrencyTotal;
             IsTaxIncluded = isTaxIncluded;
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "billingCurrencyTotal")]
-        public CalculateResponsePropertiesBillingCurrencyTotal BillingCurrencyTotal { get; set; }
+        public CalculatePriceResponsePropertiesBillingCurrencyTotal BillingCurrencyTotal { get; set; }
 
         /// <summary>
         /// </summary>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "pricingCurrencyTotal")]
-        public CalculateResponsePropertiesPricingCurrencyTotal PricingCurrencyTotal { get; set; }
+        public CalculatePriceResponsePropertiesPricingCurrencyTotal PricingCurrencyTotal { get; set; }
 
     }
 }

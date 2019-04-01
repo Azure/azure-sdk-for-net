@@ -13,25 +13,25 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class CalculateResponsePropertiesBillingCurrencyTotal
+    public partial class CalculatePriceResponsePropertiesBillingCurrencyTotal
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// CalculateResponsePropertiesBillingCurrencyTotal class.
+        /// CalculatePriceResponsePropertiesBillingCurrencyTotal class.
         /// </summary>
-        public CalculateResponsePropertiesBillingCurrencyTotal()
+        public CalculatePriceResponsePropertiesBillingCurrencyTotal()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// CalculateResponsePropertiesBillingCurrencyTotal class.
+        /// CalculatePriceResponsePropertiesBillingCurrencyTotal class.
         /// </summary>
-        public CalculateResponsePropertiesBillingCurrencyTotal(string currencyCode = default(string), double? estimatedTotal = default(double?))
+        public CalculatePriceResponsePropertiesBillingCurrencyTotal(string currencyCode = default(string), double? amount = default(double?))
         {
             CurrencyCode = currencyCode;
-            EstimatedTotal = estimatedTotal;
+            Amount = amount;
             CustomInit();
         }
 
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "estimatedTotal")]
-        public double? EstimatedTotal { get; set; }
+        [JsonProperty(PropertyName = "amount")]
+        public double? Amount { get; set; }
 
     }
 }

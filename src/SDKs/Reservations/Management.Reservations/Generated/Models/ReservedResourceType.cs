@@ -20,6 +20,5 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public const string SqlDatabases = "SqlDatabases";
         public const string SuseLinux = "SuseLinux";
         public const string CosmosDb = "CosmosDb";
-        public const string RedHat = "RedHat";
     }
 }

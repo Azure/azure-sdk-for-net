@@ -31,10 +31,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the ReservationProperties class.
         /// </summary>
         /// <param name="reservedResourceType">Possible values include:
-        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb',
-        /// 'RedHat'</param>
+        /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb'</param>
         /// <param name="instanceFlexibility">Possible values include: 'True',
-        /// 'False', 'NotSupported'</param>
+        /// 'False'</param>
         /// <param name="displayName">Friendly name for user to easily identify
         /// the reservation</param>
         /// <param name="appliedScopeType">Possible values include: 'Single',
@@ -75,14 +74,13 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// Gets or sets possible values include: 'VirtualMachines',
-        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb', 'RedHat'
+        /// 'SqlDatabases', 'SuseLinux', 'CosmosDb'
         /// </summary>
         [JsonProperty(PropertyName = "reservedResourceType")]
         public string ReservedResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'True', 'False',
-        /// 'NotSupported'
+        /// Gets or sets possible values include: 'True', 'False'
         /// </summary>
         [JsonProperty(PropertyName = "instanceFlexibility")]
         public string InstanceFlexibility { get; set; }

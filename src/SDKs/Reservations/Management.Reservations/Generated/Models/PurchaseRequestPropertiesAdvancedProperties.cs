@@ -13,25 +13,26 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class CalculateResponsePropertiesPricingCurrencyTotal
+    public partial class PurchaseRequestPropertiesAdvancedProperties
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// CalculateResponsePropertiesPricingCurrencyTotal class.
+        /// PurchaseRequestPropertiesAdvancedProperties class.
         /// </summary>
-        public CalculateResponsePropertiesPricingCurrencyTotal()
+        public PurchaseRequestPropertiesAdvancedProperties()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// CalculateResponsePropertiesPricingCurrencyTotal class.
+        /// PurchaseRequestPropertiesAdvancedProperties class.
         /// </summary>
-        public CalculateResponsePropertiesPricingCurrencyTotal(string currencyCode = default(string), double? estimatedTotal = default(double?))
+        /// <param name="instanceFlexibility">Possible values include: 'True',
+        /// 'False'</param>
+        public PurchaseRequestPropertiesAdvancedProperties(string instanceFlexibility = default(string))
         {
-            CurrencyCode = currencyCode;
-            EstimatedTotal = estimatedTotal;
+            InstanceFlexibility = instanceFlexibility;
             CustomInit();
         }
 
@@ -41,14 +42,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets possible values include: 'True', 'False'
         /// </summary>
-        [JsonProperty(PropertyName = "currencyCode")]
-        public string CurrencyCode { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "estimatedTotal")]
-        public double? EstimatedTotal { get; set; }
+        [JsonProperty(PropertyName = "instanceFlexibility")]
+        public string InstanceFlexibility { get; set; }
 
     }
 }
