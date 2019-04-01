@@ -63,14 +63,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// available actions. Possible values include: 'Acquire', 'Renew',
         /// 'Change', 'Release', 'Break'
         /// </summary>
-        [JsonProperty(PropertyName = "Action")]
+        [JsonProperty(PropertyName = "action")]
         public string Action { get; set; }
 
         /// <summary>
         /// Gets or sets identifies the lease. Can be specified in any valid
         /// GUID string format.
         /// </summary>
-        [JsonProperty(PropertyName = "LeaseId")]
+        [JsonProperty(PropertyName = "leaseId")]
         public string LeaseId { get; set; }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// lease should continue before it is broken, in seconds, between 0
         /// and 60.
         /// </summary>
-        [JsonProperty(PropertyName = "BreakPeriod")]
+        [JsonProperty(PropertyName = "breakPeriod")]
         public int? BreakPeriod { get; set; }
 
         /// <summary>
@@ -86,14 +86,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// lease, in seconds, or negative one (-1) for a lease that never
         /// expires.
         /// </summary>
-        [JsonProperty(PropertyName = "LeaseDuration")]
+        [JsonProperty(PropertyName = "leaseDuration")]
         public int? LeaseDuration { get; set; }
 
         /// <summary>
         /// Gets or sets optional for acquire, required for change. Proposed
         /// lease ID, in a GUID string format.
         /// </summary>
-        [JsonProperty(PropertyName = "ProposedLeaseId")]
+        [JsonProperty(PropertyName = "proposedLeaseId")]
         public string ProposedLeaseId { get; set; }
 
         /// <summary>

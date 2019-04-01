@@ -51,14 +51,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// any request to delete the container, or to renew, change, or
         /// release the lease.
         /// </summary>
-        [JsonProperty(PropertyName = "LeaseId")]
+        [JsonProperty(PropertyName = "leaseId")]
         public string LeaseId { get; set; }
 
         /// <summary>
         /// Gets or sets approximate time remaining in the lease period, in
         /// seconds.
         /// </summary>
-        [JsonProperty(PropertyName = "LeaseTimeSeconds")]
+        [JsonProperty(PropertyName = "leaseTimeSeconds")]
         public string LeaseTimeSeconds { get; set; }
 
     }
