@@ -14,6 +14,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
     /// </summary>
     public class EcKeyTests : IClassFixture<TestFixture>
     {
+#if !FullNetFx
         private static readonly string P256TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"P-256\",\"x\":\"IzSTOwCKbS-BEdPwVT0xGnW18zzgyG7CwnMDKLULyQo\",\"y\":\"K7m-pJxgWIjHGHMF5IZpWLasH6TizES9eidg--wQkSE\",\"d\":\"9hY6iHNcR-IuyacHOelfiCvjRWyfOscFVL05zJM4Ne4\"}";
         private static readonly string P384TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"P-384\",\"x\":\"5XN86Y1xhKo1GuohlWzcvoJmZs36USIFopOU1wha6qbtZzM2C1OK01lh8DJYwQsi\",\"y\":\"ZsI5YcBKzo-0d5lS3106nYPshOi9LcCecNJebIina6fw7Ab7TD3f3fhNxEaAE6ja\",\"d\":\"6g0maM_o7vcYWJzPMwqE3l0v2vsyjWtOsvRyAch44aZLg9IGaVEUu6Ol718ICyWX\"}";
         private static readonly string P521TestKey = "{\"kty\":\"EC\",\"key_ops\":[\"sign\",\"verify\"],\"crv\":\"P-521\",\"x\":\"ASggRFEA2L_FxGjnU5FNplPHBi8tU0e2L89ZWro4ZpDYvBvel0gjao_S23fuNFlhufLp5kePdGbqujy45wHKMjMR\",\"y\":\"AFDVBsQZN2V1lox2kMCmqWL5Kn4f3X0mtqnBLWgPlOSl6l-tMDHj8gcLnMGJZNarCKVGVrdjhmK9BpbYy0Q8Omnm\",\"d\":\"AJC_2pp8DO_LxfFuC7yMfd7TGD51f8ydJgHy-Tf-37NBToBjGPo6njEcrppW1QSVWTMJpjfVWJb6x24YZQ73PP04\"}";
@@ -30,7 +31,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             DoHardCodedKeyTests( P521TestKey, EcKey.P521, 521, "ES512", 64 );
             DoHardCodedKeyTests( Secp256k1TestKey, EcKey.P256K, 256, "ES256K", 32 );
         }
-
+#endif
         private static void DoHardCodedKeyTests( string json, string curve, int keySize, string defaultAlgo, int digestSize )
         {
             var privateKey = CreateKeyFromJwk( json, curve, defaultAlgo, true );
@@ -49,6 +50,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             return key;
         }
 
+#if !FullNetFx
         [Fact]
         public static void RandomKeysMustWork()
         {
@@ -60,6 +62,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
             DoRamdomKeyTest( EcKey.P521, 521, "ES512", 64 );
             DoRamdomKeyTest( EcKey.P256K, 256, "ES256K", 32 );
         }
+#endif
 
         private static void DoRamdomKeyTest( string curve, int keySize, string defaultAlgo, int digestSize )
         {
