@@ -198,10 +198,7 @@ namespace Azure.Base.Tests
 
         private static Task<Response> SendRequest(MockTransport mockTransport, FixedRetryPolicyMock policy)
         {
-            var options = new HttpPipelineOptions(mockTransport);
-            options.RetryPolicy = policy;
-
-            var pipeline = options.Build(typeof(FixedRetryPolicyTests).Assembly);
+            var pipeline = new HttpPipeline(mockTransport, new []{ policy });
 
             var httpPipelineRequest = pipeline.CreateRequest();
             httpPipelineRequest.SetRequestLine(HttpVerb.Get, new Uri("http://example.com/"));

@@ -3,40 +3,37 @@
 
 using Azure.Base.Http.Pipeline;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Base.Attributes;
 
 namespace Azure.Base.Http
 {
-    public readonly struct HttpPipeline
+    public class HttpPipeline
     {
-        readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
-        readonly IServiceProvider _services;
+        private readonly HttpPipelineTransport _transport;
+        private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
+        private readonly IServiceProvider _services;
 
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, IServiceProvider services = null)
         {
-            if (transport == null) throw new ArgumentNullException(nameof(transport));
-            if (policies == null) policies = Array.Empty<HttpPipelinePolicy>();
+            _transport = transport ?? throw new ArgumentNullException(nameof(transport));
+
+            policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
             var all = new HttpPipelinePolicy[policies.Length + 1];
-            all[policies.Length] = transport;
+            all[policies.Length] = new HttpPipelineTransportPolicy(_transport);
             policies.CopyTo(all, 0);
+
             _pipeline = all;
-            _services = services != null ? services: HttpPipelineOptions.EmptyServiceProvider.Singleton;
-        }
-
-        internal HttpPipeline(HttpPipelinePolicy[] policies, IServiceProvider services = default)
-        {
-            Debug.Assert(policies[policies.Length-1] is HttpPipelineTransport);
-
-            _services = services != null ? services : HttpPipelineOptions.EmptyServiceProvider.Singleton;
-            _pipeline = policies;
+            _services = services ?? HttpPipelineOptions.EmptyServiceProvider.Singleton;
         }
 
         public HttpPipelineRequest CreateRequest()
-            => Transport.CreateRequest(_services);
+            => _transport.CreateRequest(_services);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task<Response> SendRequestAsync(HttpPipelineRequest request, CancellationToken cancellationToken)
@@ -51,8 +48,40 @@ namespace Azure.Base.Http
             }
         }
 
-        HttpPipelineTransport Transport {
-            get => (HttpPipelineTransport)_pipeline.Span[_pipeline.Length - 1];
+        public static HttpPipeline Build(HttpPipelineOptions options, Action<IList<HttpPipelinePolicy>> configurePolicies)
+        {
+            var policies = new List<HttpPipelinePolicy>();
+
+            policies.AddRange(options.BeforePolicies);
+
+            if (!options.DisableTelemetry)
+            {
+                policies.Add(CreateTelemetryPolicy(options));
+            }
+
+            configurePolicies(policies);
+
+            policies.AddRange(options.AfterPolicies);
+
+            policies.RemoveAll(policy => policy == null);
+
+            return new HttpPipeline(options.Transport, policies.ToArray(), options.ServiceProvider);
+        }
+
+        private static AddHeadersPolicy CreateTelemetryPolicy(HttpPipelineOptions options)
+        {
+            var clientAssembly = options.GetType().Assembly;
+            var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+            if (componentAttribute == null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
+            }
+
+            var assemblyVersion = clientAssembly.GetName().Version.ToString();
+            var addHeadersPolicy = new AddHeadersPolicy();
+            addHeadersPolicy.AddHeader(HttpHeader.Common.CreateUserAgent(componentAttribute.ComponentName, assemblyVersion, options.ApplicationId));
+            return addHeadersPolicy;
         }
     }
 }
