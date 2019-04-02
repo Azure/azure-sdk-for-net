@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 
