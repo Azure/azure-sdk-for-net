@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.DeploymentManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Individial resource operation information.
+    /// Individual resource operation information.
     /// </summary>
     public partial class ResourceOperation
     {
