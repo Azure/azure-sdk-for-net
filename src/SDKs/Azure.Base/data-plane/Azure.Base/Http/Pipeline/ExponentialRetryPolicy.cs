@@ -25,7 +25,7 @@ namespace Azure.Base.Http.Pipeline
         /// </summary>
         /// <param name="retriableCodes">The list of response status codes to retry.</param>
         /// <param name="shouldRetryException">The delegate to specify is exception should be retried.</param>
-        /// <param name="maxRetries">The maximum number of retry attempts before giving up.</para   m>
+        /// <param name="maxRetries">The maximum number of retry attempts before giving up.</param>
         /// <param name="delay">The timespan used as a base for exponential backoff.</param>
         /// <param name="maxDelay">The maximum timespan to pause between requests.</param>
         public ExponentialRetryPolicy(int[] retriableCodes, Func<Exception, bool> shouldRetryException, int maxRetries, TimeSpan delay, TimeSpan maxDelay)
