@@ -16,13 +16,8 @@ namespace Azure.ApplicationModel.Configuration
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
 
-        public static ConfigurationPipelineOptions CreateDefaultPipelineOptions()
-        {
-            return new ConfigurationPipelineOptions();
-        }
-
         public ConfigurationClient(string connectionString)
-            : this(connectionString, CreateDefaultPipelineOptions())
+            : this(connectionString, new ConfigurationPipelineOptions())
         {
         }
 
