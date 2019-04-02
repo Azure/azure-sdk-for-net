@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Amount that Microsoft uses for record. Used during refund for
+    /// calculating refund limit. Tax is not included.
+    /// </summary>
     public partial class CalculatePriceResponsePropertiesPricingCurrencyTotal
     {
         /// <summary>

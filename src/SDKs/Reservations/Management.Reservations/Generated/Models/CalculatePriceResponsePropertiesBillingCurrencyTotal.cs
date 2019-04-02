@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Currency and amount that customer will be charged in customer's local
+    /// currency. Tax is not included.
+    /// </summary>
     public partial class CalculatePriceResponsePropertiesBillingCurrencyTotal
     {
         /// <summary>

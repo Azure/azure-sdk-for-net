@@ -39,7 +39,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="displayName">Friendly name of the Reservation</param>
         /// <param name="appliedScopeType">Possible values include: 'Single',
         /// 'Shared'</param>
-        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), PurchaseRequestPropertiesAdvancedProperties advancedProperties = default(PurchaseRequestPropertiesAdvancedProperties))
+        /// <param name="reservedResourceProperties">properties specific to
+        /// each reserved resource type.</param>
+        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default(PurchaseRequestPropertiesReservedResourceProperties))
         {
             Sku = sku;
             Location = location;
@@ -50,7 +52,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
             DisplayName = displayName;
             AppliedScopeType = appliedScopeType;
             AppliedScopes = appliedScopes;
-            AdvancedProperties = advancedProperties;
+            ReservedResourceProperties = reservedResourceProperties;
             CustomInit();
         }
 
@@ -111,9 +113,10 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public IList<string> AppliedScopes { get; set; }
 
         /// <summary>
+        /// Gets or sets properties specific to each reserved resource type.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.advancedProperties")]
-        public PurchaseRequestPropertiesAdvancedProperties AdvancedProperties { get; set; }
+        [JsonProperty(PropertyName = "properties.reservedResourceProperties")]
+        public PurchaseRequestPropertiesReservedResourceProperties ReservedResourceProperties { get; set; }
 
     }
 }

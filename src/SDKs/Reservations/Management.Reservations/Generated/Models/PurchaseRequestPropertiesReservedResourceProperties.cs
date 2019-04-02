@@ -13,24 +13,27 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class PurchaseRequestPropertiesAdvancedProperties
+    /// <summary>
+    /// properties specific to each reserved resource type.
+    /// </summary>
+    public partial class PurchaseRequestPropertiesReservedResourceProperties
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// PurchaseRequestPropertiesAdvancedProperties class.
+        /// PurchaseRequestPropertiesReservedResourceProperties class.
         /// </summary>
-        public PurchaseRequestPropertiesAdvancedProperties()
+        public PurchaseRequestPropertiesReservedResourceProperties()
         {
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// PurchaseRequestPropertiesAdvancedProperties class.
+        /// PurchaseRequestPropertiesReservedResourceProperties class.
         /// </summary>
         /// <param name="instanceFlexibility">Possible values include: 'True',
         /// 'False'</param>
-        public PurchaseRequestPropertiesAdvancedProperties(string instanceFlexibility = default(string))
+        public PurchaseRequestPropertiesReservedResourceProperties(string instanceFlexibility = default(string))
         {
             InstanceFlexibility = instanceFlexibility;
             CustomInit();

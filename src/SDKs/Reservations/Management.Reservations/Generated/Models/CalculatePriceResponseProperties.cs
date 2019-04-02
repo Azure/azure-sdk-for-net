@@ -28,11 +28,21 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the CalculatePriceResponseProperties
         /// class.
         /// </summary>
-        public CalculatePriceResponseProperties(CalculatePriceResponsePropertiesBillingCurrencyTotal billingCurrencyTotal = default(CalculatePriceResponsePropertiesBillingCurrencyTotal), bool? isTaxIncluded = default(bool?), PurchaseRequest purchaseRequest = default(PurchaseRequest), bool? isBillingPartnerManaged = default(bool?), string reservationOrderId = default(string), string skuTitle = default(string), string skuDescription = default(string), CalculatePriceResponsePropertiesPricingCurrencyTotal pricingCurrencyTotal = default(CalculatePriceResponsePropertiesPricingCurrencyTotal))
+        /// <param name="billingCurrencyTotal">Currency and amount that
+        /// customer will be charged in customer's local currency. Tax is not
+        /// included.</param>
+        /// <param name="reservationOrderId">GUID that represents reservation
+        /// order that can be placed after calculating price</param>
+        /// <param name="skuTitle">Long name for the SKU that is being
+        /// purchased</param>
+        /// <param name="skuDescription">Short name for the SKU that is being
+        /// purchased</param>
+        /// <param name="pricingCurrencyTotal">Amount that Microsoft uses for
+        /// record. Used during refund for calculating refund limit. Tax is not
+        /// included.</param>
+        public CalculatePriceResponseProperties(CalculatePriceResponsePropertiesBillingCurrencyTotal billingCurrencyTotal = default(CalculatePriceResponsePropertiesBillingCurrencyTotal), bool? isBillingPartnerManaged = default(bool?), string reservationOrderId = default(string), string skuTitle = default(string), string skuDescription = default(string), CalculatePriceResponsePropertiesPricingCurrencyTotal pricingCurrencyTotal = default(CalculatePriceResponsePropertiesPricingCurrencyTotal))
         {
             BillingCurrencyTotal = billingCurrencyTotal;
-            IsTaxIncluded = isTaxIncluded;
-            PurchaseRequest = purchaseRequest;
             IsBillingPartnerManaged = isBillingPartnerManaged;
             ReservationOrderId = reservationOrderId;
             SkuTitle = skuTitle;
@@ -47,19 +57,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets currency and amount that customer will be charged in
+        /// customer's local currency. Tax is not included.
         /// </summary>
         [JsonProperty(PropertyName = "billingCurrencyTotal")]
         public CalculatePriceResponsePropertiesBillingCurrencyTotal BillingCurrencyTotal { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "isTaxIncluded")]
-        public bool? IsTaxIncluded { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "purchaseRequest")]
-        public PurchaseRequest PurchaseRequest { get; set; }
 
         /// <summary>
         /// </summary>
@@ -67,21 +69,27 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public bool? IsBillingPartnerManaged { get; set; }
 
         /// <summary>
+        /// Gets or sets GUID that represents reservation order that can be
+        /// placed after calculating price
         /// </summary>
         [JsonProperty(PropertyName = "reservationOrderId")]
         public string ReservationOrderId { get; set; }
 
         /// <summary>
+        /// Gets or sets long name for the SKU that is being purchased
         /// </summary>
         [JsonProperty(PropertyName = "skuTitle")]
         public string SkuTitle { get; set; }
 
         /// <summary>
+        /// Gets or sets short name for the SKU that is being purchased
         /// </summary>
         [JsonProperty(PropertyName = "skuDescription")]
         public string SkuDescription { get; set; }
 
         /// <summary>
+        /// Gets or sets amount that Microsoft uses for record. Used during
+        /// refund for calculating refund limit. Tax is not included.
         /// </summary>
         [JsonProperty(PropertyName = "pricingCurrencyTotal")]
         public CalculatePriceResponsePropertiesPricingCurrencyTotal PricingCurrencyTotal { get; set; }
