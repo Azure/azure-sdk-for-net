@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// Calculate price for placing a `ReservationOrder`
         ///
         /// </remarks>
-        /// <param name='parameters'>
+        /// <param name='body'>
         /// Information needed for calculate or purchase reservation
         /// </param>
         /// <param name='customHeaders'>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CalculatePriceResponse>> CalculateWithHttpMessagesAsync(PurchaseRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CalculatePriceResponse>> CalculateWithHttpMessagesAsync(PurchaseRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all `ReservationOrder`s.
         /// </summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='body'>
         /// Information needed for calculate or purchase reservation
         /// </param>
         /// <param name='customHeaders'>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReservationOrderResponse>> PurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReservationOrderResponse>> PurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a specific `ReservationOrder`.
         /// </summary>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='body'>
         /// Information needed for calculate or purchase reservation
         /// </param>
         /// <param name='customHeaders'>
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReservationOrderResponse>> BeginPurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReservationOrderResponse>> BeginPurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all `ReservationOrder`s.
         /// </summary>

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// Calculate price for placing a `ReservationOrder`
         ///
         /// </remarks>
-        /// <param name='parameters'>
+        /// <param name='body'>
         /// Information needed for calculate or purchase reservation
         /// </param>
         /// <param name='customHeaders'>
@@ -81,15 +81,15 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CalculatePriceResponse>> CalculateWithHttpMessagesAsync(PurchaseRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CalculatePriceResponse>> CalculateWithHttpMessagesAsync(PurchaseRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (parameters == null)
+            if (body == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Calculate", tracingParameters);
             }
@@ -148,9 +148,9 @@ namespace Microsoft.Azure.Management.Reservations
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
+            if(body != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='body'>
         /// Information needed for calculate or purchase reservation
         /// </param>
         /// <param name='customHeaders'>
@@ -427,10 +427,10 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ReservationOrderResponse>> PurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ReservationOrderResponse>> PurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
-            AzureOperationResponse<ReservationOrderResponse> _response = await BeginPurchaseWithHttpMessagesAsync(reservationOrderId, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
+            AzureOperationResponse<ReservationOrderResponse> _response = await BeginPurchaseWithHttpMessagesAsync(reservationOrderId, body, customHeaders, cancellationToken).ConfigureAwait(false);
             return await Client.GetPutOrPatchOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
@@ -624,7 +624,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='body'>
         /// Information needed for calculate or purchase reservation
         /// </param>
         /// <param name='customHeaders'>
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ReservationOrderResponse>> BeginPurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ReservationOrderResponse>> BeginPurchaseWithHttpMessagesAsync(string reservationOrderId, PurchaseRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (reservationOrderId == null)
             {
@@ -658,9 +658,9 @@ namespace Microsoft.Azure.Management.Reservations
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            if (parameters == null)
+            if (body == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+                throw new ValidationException(ValidationRules.CannotBeNull, "body");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -670,7 +670,7 @@ namespace Microsoft.Azure.Management.Reservations
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPurchase", tracingParameters);
             }
@@ -721,9 +721,9 @@ namespace Microsoft.Azure.Management.Reservations
 
             // Serialize Request
             string _requestContent = null;
-            if(parameters != null)
+            if(body != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(parameters, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(body, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
