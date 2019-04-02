@@ -108,7 +108,7 @@ namespace Azure.Base.Http.Pipeline
 
             public override HttpPipelineMethod Method
             {
-                get => HttpMethodConverter.Parse(_requestMessage.Method.Method);
+                get => HttpPipelineMethodConverter.Parse(_requestMessage.Method.Method);
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 

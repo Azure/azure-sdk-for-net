@@ -5,7 +5,7 @@ using System;
 
 namespace Azure.Base.Http
 {
-    public static class HttpMethodConverter
+    public static class HttpPipelineMethodConverter
     {
         public static string ToString(HttpPipelineMethod method)
         {

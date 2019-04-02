@@ -46,7 +46,7 @@ namespace Azure.ApplicationModel.Configuration
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 
-                string method = HttpMethodConverter.ToString(message.Request.Method);
+                string method = HttpPipelineMethodConverter.ToString(message.Request.Method);
                 DateTimeOffset utcNow = DateTimeOffset.UtcNow;
                 var utcNowString = utcNow.ToString("r");
                 var stringToSign = $"{method}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
