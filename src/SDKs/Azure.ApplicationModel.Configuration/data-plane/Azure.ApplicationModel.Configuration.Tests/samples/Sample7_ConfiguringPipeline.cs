@@ -20,7 +20,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         public async Task ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new ConfigurationPipelineOptions();
 
             // specify custon HttpClient
             options.Transport = new HttpClientTransport(s_client);
