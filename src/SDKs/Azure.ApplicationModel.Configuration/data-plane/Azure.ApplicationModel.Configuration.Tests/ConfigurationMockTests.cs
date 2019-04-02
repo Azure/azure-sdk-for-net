@@ -229,7 +229,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             options.RetryPolicy = RetryPolicy.CreateFixed(2, TimeSpan.FromMilliseconds(100), 408 /* RequestTimeout */);
 
             var testPolicy = new TestPolicy();
-            options.AfterPolicies.Add(testPolicy);
+            options.AppendPolicies.Add(testPolicy);
 
             var client = new ConfigurationClient(connectionString, options);
 

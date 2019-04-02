@@ -61,7 +61,7 @@ namespace Azure.Base.Http
 
             configurePolicies(policies);
 
-            policies.AddRange(options.EndPolicies);
+            policies.AddRange(options.AppendPolicies);
 
             policies.RemoveAll(policy => policy == null);
 
