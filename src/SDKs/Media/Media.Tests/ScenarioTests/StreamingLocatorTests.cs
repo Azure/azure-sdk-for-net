@@ -13,6 +13,8 @@ namespace Media.Tests.ScenarioTests
 {
     public class StreamingLocatorTests : MediaScenarioTestBase
     {
+        private static readonly long HNSTimescale = 10000000;
+
         [Fact]
         public void StreamingLocatorComboTest()
         {
@@ -36,14 +38,29 @@ namespace Media.Tests.ScenarioTests
                     string assetName = TestUtilities.GenerateName("assetToPublish");
                     Asset assetToPublish = MediaClient.Assets.CreateOrUpdate(ResourceGroup, AccountName, assetName, new Asset());
 
+                    // Create 2 AssetFilters, to be added to StreamingLocator.
+                    // There's no update on StreamingLocators, so no need for update on the Filters.
+                    string filterNameA = TestUtilities.GenerateName("assetFilterA");
+                    // Create an AssetFilter
+                    var ptr = new PresentationTimeRange(0, 600 * HNSTimescale, 120 * HNSTimescale, 0, HNSTimescale, false);
+                    AssetFilter assetFilter = new AssetFilter(presentationTimeRange: ptr);
+                    AssetFilter createdAssetFilter = MediaClient.AssetFilters.CreateOrUpdate(ResourceGroup, AccountName, assetName, filterNameA, assetFilter);
+                    string filterNameB = TestUtilities.GenerateName("assetFilterB");
+                    createdAssetFilter = MediaClient.AssetFilters.CreateOrUpdate(ResourceGroup, AccountName, assetName, filterNameB, assetFilter);
+                    string[] filters = new string[]
+                        {
+                           filterNameA,
+                           filterNameB
+                        };
+
                     // Create the ContentKeyPolicy for the StreamingLocator
                     string policyName = TestUtilities.GenerateName("contentKeyPolicy");
                     CreateContentKeyPolicy(policyName);
 
                     // Create a StreamingLocator
-                    StreamingLocator input = new StreamingLocator(assetName: assetName, streamingPolicyName: PredefinedStreamingPolicy.ClearKey, defaultContentKeyPolicyName: policyName);                    
+                    StreamingLocator input = new StreamingLocator(assetName: assetName, streamingPolicyName: PredefinedStreamingPolicy.ClearKey, defaultContentKeyPolicyName: policyName, filters: filters);
                     StreamingLocator createdLocator = MediaClient.StreamingLocators.Create(ResourceGroup, AccountName, locatorName, input);
-                    ValidateLocator(createdLocator, locatorName, assetName, policyName, PredefinedStreamingPolicy.ClearKey);
+                    ValidateLocator(createdLocator, locatorName, assetName, policyName, PredefinedStreamingPolicy.ClearKey, filters);
 
                     // List the StreamingLocators and validate the newly created one shows up
                     locators = MediaClient.StreamingLocators.List(ResourceGroup, AccountName);
@@ -53,7 +70,7 @@ namespace Media.Tests.ScenarioTests
                     // Get the newly created StreamingLocator
                     locator = MediaClient.StreamingLocators.Get(ResourceGroup, AccountName, locatorName);
                     Assert.NotNull(locator);
-                    ValidateLocator(locator, locatorName, assetName, policyName, PredefinedStreamingPolicy.ClearKey);
+                    ValidateLocator(locator, locatorName, assetName, policyName, PredefinedStreamingPolicy.ClearKey, filters);
 
                     // Delete the StreamingLocator
                     MediaClient.StreamingLocators.Delete(ResourceGroup, AccountName, locatorName);
@@ -76,7 +93,7 @@ namespace Media.Tests.ScenarioTests
             }
         }
 
-        internal static void ValidateLocator(StreamingLocator locator, string expectedName, string expectedAssetName, string expectedDefaultContentKeyPolicyName, string expectedStreamingPolicyName)
+        internal static void ValidateLocator(StreamingLocator locator, string expectedName, string expectedAssetName, string expectedDefaultContentKeyPolicyName, string expectedStreamingPolicyName, string[] filters = null)
         {
             Assert.Equal(expectedAssetName, locator.AssetName);
             Assert.Equal(expectedName, locator.Name);
@@ -84,6 +101,13 @@ namespace Media.Tests.ScenarioTests
             Assert.NotEqual(Guid.Empty, locator.StreamingLocatorId);
             Assert.Equal(expectedStreamingPolicyName, locator.StreamingPolicyName);
             Assert.False(string.IsNullOrEmpty(locator.Id));
+            if (filters != null)
+            {
+                foreach (string filter in filters)
+                {
+                    Assert.True(locator.Filters.Contains(filter));
+                }
+            }
         }
 
         private void CreateContentKeyPolicy(string policyName)

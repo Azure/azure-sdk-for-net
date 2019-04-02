@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// selected.  If the content is audio only then only audio insights
         /// are extracted and if it is video only. Possible values include:
         /// 'AudioInsightsOnly', 'VideoInsightsOnly', 'AllInsights'</param>
-        public VideoAnalyzerPreset(string audioLanguage = default(string), string insightsToExtract = default(string))
+        public VideoAnalyzerPreset(string audioLanguage = default(string), InsightsType? insightsToExtract = default(InsightsType?))
             : base(audioLanguage)
         {
             InsightsToExtract = insightsToExtract;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'VideoInsightsOnly', 'AllInsights'
         /// </summary>
         [JsonProperty(PropertyName = "insightsToExtract")]
-        public string InsightsToExtract { get; set; }
+        public InsightsType? InsightsToExtract { get; set; }
 
     }
 }

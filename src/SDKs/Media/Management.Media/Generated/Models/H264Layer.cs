@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// layer. If not specified, the encoder chooses the mode that is
         /// appropriate for the profile and level. Possible values include:
         /// 'Cabac', 'Cavlc'</param>
-        public H264Layer(int bitrate, string width = default(string), string height = default(string), string label = default(string), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?), string profile = default(string), string level = default(string), System.TimeSpan? bufferWindow = default(System.TimeSpan?), int? referenceFrames = default(int?), string entropyMode = default(string))
+        public H264Layer(int bitrate, string width = default(string), string height = default(string), string label = default(string), int? maxBitrate = default(int?), int? bFrames = default(int?), string frameRate = default(string), int? slices = default(int?), bool? adaptiveBFrame = default(bool?), H264VideoProfile? profile = default(H264VideoProfile?), string level = default(string), System.TimeSpan? bufferWindow = default(System.TimeSpan?), int? referenceFrames = default(int?), EntropyMode? entropyMode = default(EntropyMode?))
             : base(bitrate, width, height, label, maxBitrate, bFrames, frameRate, slices, adaptiveBFrame)
         {
             Profile = profile;
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Baseline', 'Main', 'High', 'High422', 'High444'
         /// </summary>
         [JsonProperty(PropertyName = "profile")]
-        public string Profile { get; set; }
+        public H264VideoProfile? Profile { get; set; }
 
         /// <summary>
         /// Gets or sets we currently support Level up to 6.2. The value can be
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// profile and level. Possible values include: 'Cabac', 'Cavlc'
         /// </summary>
         [JsonProperty(PropertyName = "entropyMode")]
-        public string EntropyMode { get; set; }
+        public EntropyMode? EntropyMode { get; set; }
 
         /// <summary>
         /// Validate the object.

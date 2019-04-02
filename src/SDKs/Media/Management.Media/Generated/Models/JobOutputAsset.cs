@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// this JobOutput within the Job. Note that this index is the same as
         /// the relative index of the corresponding TransformOutput within its
         /// Transform.</param>
-        public JobOutputAsset(string assetName, JobError error = default(JobError), string state = default(string), int progress = default(int), string label = default(string))
+        public JobOutputAsset(string assetName, JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string))
             : base(error, state, progress, label)
         {
             AssetName = assetName;
