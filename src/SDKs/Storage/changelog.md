@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 10.1.0
+
+- Support Revoke UserDelegationKeys on a specified Storage account
+
 ### Changes in 10.0.0
 
 - Microsoft.Azure.Management.Storage SDK is GA
