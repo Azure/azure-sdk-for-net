@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// storage service if sets to true.</param>
         /// <param name="isHnsEnabled">Account HierarchicalNamespace enabled if
         /// sets to true.</param>
-        public StorageAccountCreateParameters(Sku sku, Kind kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?))
+        public StorageAccountCreateParameters(Sku sku, string kind, string location, IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), bool? isHnsEnabled = default(bool?))
         {
             Sku = sku;
             Kind = kind;
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'FileStorage', 'BlockBlobStorage'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public Kind Kind { get; set; }
+        public string Kind { get; set; }
 
         /// <summary>
         /// Gets or sets required. Gets or sets the location of the resource.
@@ -196,6 +196,10 @@ namespace Microsoft.Azure.Management.Storage.Models
             if (Sku == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+            }
+            if (Kind == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Kind");
             }
             if (Location == null)
             {
