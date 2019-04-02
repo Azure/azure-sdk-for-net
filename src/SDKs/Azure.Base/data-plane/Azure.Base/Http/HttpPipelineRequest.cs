@@ -10,9 +10,9 @@ namespace Azure.Base.Http
     {
         public virtual Uri Uri { get; set; }
 
-        public virtual HttpVerb Method { get; set; }
+        public virtual HttpPipelineMethod Method { get; set; }
 
-        public virtual void SetRequestLine(HttpVerb method, Uri uri)
+        public virtual void SetRequestLine(HttpPipelineMethod method, Uri uri)
         {
             Method = method;
             Uri = uri;

@@ -55,7 +55,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 var responseGet = await service.GetAsync(batchKey);
-                key = responseGet.Result.Value;
+                key = responseGet.Value.Value;
                 responseGet.Dispose();
             }
             catch
@@ -541,7 +541,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 using (Response<SettingBatch> response = await service.GetBatchAsync(selector, CancellationToken.None))
                 {
-                    SettingBatch batch = response.Result;
+                    SettingBatch batch = response.Value;
                     resultsReturned += batch.Count;
                     var nextBatch = batch.NextBatch;
 
