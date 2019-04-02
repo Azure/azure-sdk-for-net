@@ -331,42 +331,6 @@ namespace Microsoft.Azure.Management.IotCentral
             }
 
             /// <summary>
-            /// Get a single application template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='applicationTemplateId'>
-            /// The combination id of manifestId and manifestVersion of the IoT Central
-            /// application template.
-            /// </param>
-            public static AppTemplate Template(this IAppsOperations operations, string applicationTemplateId)
-            {
-                return operations.TemplateAsync(applicationTemplateId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get a single application template.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='applicationTemplateId'>
-            /// The combination id of manifestId and manifestVersion of the IoT Central
-            /// application template.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AppTemplate> TemplateAsync(this IAppsOperations operations, string applicationTemplateId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.TemplateWithHttpMessagesAsync(applicationTemplateId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Get all available application templates.
             /// </summary>
             /// <param name='operations'>

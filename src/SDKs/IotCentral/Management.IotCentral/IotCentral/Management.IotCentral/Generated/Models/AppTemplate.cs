@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.IotCentral.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -29,21 +31,16 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// <summary>
         /// Initializes a new instance of the AppTemplate class.
         /// </summary>
-        /// <param name="manifestId">The ID of the template.</param>
-        /// <param name="manifestVersion">The version of the template.</param>
-        /// <param name="name">The name of the template.</param>
-        /// <param name="title">The title of the template.</param>
-        /// <param name="order">The order of the template in the templates
-        /// list.</param>
-        /// <param name="description">The description of the template.</param>
-        public AppTemplate(string manifestId = default(string), string manifestVersion = default(string), string name = default(string), string title = default(string), double? order = default(double?), string description = default(string))
+        /// <param name="id">The application template identifier.</param>
+        /// <param name="name">The application template name.</param>
+        /// <param name="properties">The extra template properties.</param>
+        /// <param name="type">the resource type.</param>
+        public AppTemplate(string id = default(string), string name = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>), string type = default(string))
         {
-            ManifestId = manifestId;
-            ManifestVersion = manifestVersion;
+            Id = id;
             Name = name;
-            Title = title;
-            Order = order;
-            Description = description;
+            Properties = properties;
+            Type = type;
             CustomInit();
         }
 
@@ -53,40 +50,28 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the ID of the template.
+        /// Gets the application template identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "manifestId")]
-        public string ManifestId { get; private set; }
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets the version of the template.
-        /// </summary>
-        [JsonProperty(PropertyName = "manifestVersion")]
-        public string ManifestVersion { get; private set; }
-
-        /// <summary>
-        /// Gets the name of the template.
+        /// Gets the application template name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets the title of the template.
+        /// Gets or sets the extra template properties.
         /// </summary>
-        [JsonProperty(PropertyName = "title")]
-        public string Title { get; private set; }
+        [JsonProperty(PropertyName = "properties")]
+        public IDictionary<string, string> Properties { get; set; }
 
         /// <summary>
-        /// Gets the order of the template in the templates list.
+        /// Gets the resource type.
         /// </summary>
-        [JsonProperty(PropertyName = "order")]
-        public double? Order { get; private set; }
-
-        /// <summary>
-        /// Gets the description of the template.
-        /// </summary>
-        [JsonProperty(PropertyName = "description")]
-        public string Description { get; private set; }
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
 
     }
 }
