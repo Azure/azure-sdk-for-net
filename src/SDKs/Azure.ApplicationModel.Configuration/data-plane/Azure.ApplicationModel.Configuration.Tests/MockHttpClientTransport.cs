@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -23,7 +24,15 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-            _responseContent = CreateResponse(responseContent);
+            if(responseContent != null)
+            {
+                ReadOnlyMemory<byte> content = Serialize(responseContent);
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
+            }
+            else
+            {
+                _responseContent = null;
+            }
         }
     }
 
@@ -34,7 +43,15 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-            _responseContent = CreateResponse(responseContent);
+            if (responseContent != null)
+            {
+                ReadOnlyMemory<byte> content = Serialize(responseContent);
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
+            }
+            else
+            {
+                _responseContent = null;
+            }
         }
     }
 
@@ -45,7 +62,15 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/kv/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedMethod = HttpMethod.Put;
             _expectedRequestContent = GenerateExpectedRequestContent(responseContent);
-            _responseContent = CreateResponse(responseContent);
+            if (responseContent != null)
+            {
+                ReadOnlyMemory<byte> content = Serialize(responseContent);
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
+            }
+            else
+            {
+                _responseContent = null;
+            }
         }
 
         protected override void VerifyRequestCore(HttpRequestMessage request)
@@ -56,16 +81,24 @@ namespace Azure.ApplicationModel.Configuration.Test
 
     class DeleteMockTransport : MockHttpClientTransport
     {
-        public DeleteMockTransport(string key, string label, ConfigurationSetting result)
+        public DeleteMockTransport(string key, string label, ConfigurationSetting responseContent)
         {
             _expectedUri = $"https://contoso.azconfig.io/kv/{key}{GetExtraUriParameters(label)}";
             _expectedRequestContent = null;
             _expectedMethod = HttpMethod.Delete;
-            _responseContent = CreateResponse(result);
+            if (responseContent != null)
+            {
+                ReadOnlyMemory<byte> content = Serialize(responseContent);
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
+            }
+            else
+            {
+                _responseContent = null;
+            }
         }
 
         public DeleteMockTransport(string key, string label, HttpStatusCode statusCode)
-            : this(key, label, result: null)
+            : this(key, label, responseContent: null)
         {
             Responses.Clear();
             Responses.Add(statusCode);
@@ -75,12 +108,20 @@ namespace Azure.ApplicationModel.Configuration.Test
     // TODO (pri 3): this should emit the etag response header
     class GetMockTransport : MockHttpClientTransport
     {
-        public GetMockTransport(string queryKey, string label, ConfigurationSetting result)
+        public GetMockTransport(string queryKey, string label, ConfigurationSetting responseContent)
         {
             _expectedMethod = HttpMethod.Get;
             _expectedUri = $"https://contoso.azconfig.io/kv/{queryKey}{GetExtraUriParameters(label)}";
             _expectedRequestContent = null;
-            _responseContent = CreateResponse(result);
+            if (responseContent != null)
+            {
+                ReadOnlyMemory<byte> content = Serialize(responseContent);
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
+            }
+            else
+            {
+                _responseContent = null;
+            }
         }
 
         public GetMockTransport(string queryKey, string label, ConfigurationSetting result, params HttpStatusCode[] statusCodes)
@@ -100,7 +141,16 @@ namespace Azure.ApplicationModel.Configuration.Test
             _expectedUri = $"https://contoso.azconfig.io/locks/{responseContent.Key}{GetExtraUriParameters(responseContent)}";
             _expectedRequestContent = null;
             _expectedMethod = lockOtherwiseUnlock ? HttpMethod.Put : HttpMethod.Delete;
-            _responseContent = CreateResponse(responseContent, lockOtherwiseUnlock);
+            if (responseContent != null)
+            {
+                responseContent.Locked = lockOtherwiseUnlock;
+                ReadOnlyMemory<byte> content = Serialize(responseContent);
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
+            }
+            else
+            {
+                _responseContent = null;
+            }
         }
     }
 
@@ -138,18 +188,13 @@ namespace Azure.ApplicationModel.Configuration.Test
             var bathItems = new MockBatch();
             int itemIndex = batch.index;
             int count = batch.count;
-
-            StringBuilder responseContent = new StringBuilder();
-
-            responseContent.Append("{\"items\":[");
             while (count-- > 0)
             {
-                responseContent.Append(CreateResponse(KeyValues[itemIndex++]));
-                if(count != 0) responseContent.Append(",");
+                bathItems.Items.Add(KeyValues[itemIndex++]);
             }
-            responseContent.Append("]}");
+            ReadOnlyMemory<byte> content = Serialize(bathItems);
 
-            string json = responseContent.ToString().ToLowerInvariant();
+            string json = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             long jsonByteCount = Encoding.UTF8.GetByteCount(json);
@@ -157,6 +202,52 @@ namespace Azure.ApplicationModel.Configuration.Test
             if (itemIndex < KeyValues.Count)
             {
                 response.Headers.Add("Link", $"</kv?after={itemIndex}>;rel=\"next\"");
+            }
+        }
+
+        private ReadOnlyMemory<byte> Serialize(MockBatch batch)
+        {
+            if (batch == null) return null;
+
+            ReadOnlyMemory<byte> content = default;
+            int size = 256;
+            while (true)
+            {
+                byte[] buffer = new byte[size];
+                if (TrySerializeBatchConfigurationSetting(batch, buffer, out int written))
+                {
+                    content = buffer.AsMemory(0, written);
+                    break;
+                }
+                size *= 2;
+            }
+
+            return content;
+        }
+
+        private bool TrySerializeBatchConfigurationSetting(MockBatch batch, byte[] buffer, out int written)
+        {
+            try
+            {
+                var writer = new FixedSizedBufferWriter(buffer);
+                var json = new Utf8JsonWriter(writer);
+                json.WriteStartObject();
+                json.WriteStartArray("items");
+                foreach (var item in batch.Items)
+                {
+                    SerializeSetting(ref json, item);
+                }
+                json.WriteEndArray();
+                json.WriteEndObject();
+                json.Flush();
+
+                written = (int)json.BytesWritten;
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                written = 0;
+                return false;
             }
         }
     }
@@ -204,7 +295,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         protected virtual void WriteResponseCore(HttpResponseMessage response)
         {
             response.Content = new StringContent(_responseContent, Encoding.UTF8, "application/json");
-
+            
             long jsonByteCount = Encoding.UTF8.GetByteCount(_responseContent);
             response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): the service actually responds with chunked encoding
 
@@ -212,35 +303,64 @@ namespace Azure.ApplicationModel.Configuration.Test
             response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
         }
         
-        protected string CreateResponse(ConfigurationSetting responseContent, bool? locked = null)
+        public bool TrySerializeConfigurationSetting(ConfigurationSetting setting, byte[] buffer, out int written)
         {
-            if (responseContent == null) return null;
-
-            StringBuilder requestContent = new StringBuilder();
-            requestContent.AppendFormat("{{\"key\":\"{0}\",", responseContent.Key);
-            requestContent.AppendFormat("\"label\":\"{0}\",", responseContent.Label);
-            requestContent.AppendFormat("\"value\":\"{0}\",", responseContent.Value);
-            requestContent.AppendFormat("\"content_type\":\"{0}\",", responseContent.ContentType);
-            requestContent.AppendFormat("\"etag\":\"{0}\",", responseContent.ETag.ToString());
-            requestContent.AppendFormat("\"last_modified\":\"{0}\",", DateTimeOffset.Now.UtcDateTime.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ssK"));
-            if (locked.HasValue) requestContent.AppendFormat("\"locked\":{0},", locked);
-            requestContent.AppendFormat("\"tags\":{{");
-
-            bool first = true;
-            foreach (var tag in responseContent.Tags)
+            try
             {
-                if (first)
-                {
-                    requestContent.AppendFormat("\"{0}\":\"{1}\"", tag.Key, tag.Value);
-                    first = false;
-                }
-                else
-                {
-                    requestContent.AppendFormat(",\"{0}\":\"{1}\"", tag.Key, tag.Value);
-                }
+                var writer = new FixedSizedBufferWriter(buffer);
+                Utf8JsonWriter json = new Utf8JsonWriter(writer);
+                SerializeSetting(ref json, setting);
+                json.Flush();
+                written = (int)json.BytesWritten;
+                return true;
             }
-            requestContent.Append("}}");
-            return requestContent.ToString().ToLowerInvariant();
+            catch (ArgumentException)
+            {
+                written = 0;
+                return false;
+            }
+        }
+
+        protected void SerializeSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
+        {
+            json.WriteStartObject();
+            json.WriteString("key", setting.Key);
+            json.WriteString("label", setting.Label);
+            json.WriteString("value", setting.Value);
+            json.WriteString("content_type", setting.ContentType);
+            if (setting.Tags != null)
+            {
+                json.WriteStartObject("tags");
+                foreach (var tag in setting.Tags)
+                {
+                    json.WriteString(tag.Key, tag.Value);
+                }
+                json.WriteEndObject();
+            }
+            if (setting.ETag != default) json.WriteString("etag", setting.ETag.ToString());
+            if (setting.LastModified.HasValue) json.WriteString("last_modified", setting.LastModified.Value.ToString());
+            if (setting.Locked.HasValue) json.WriteBoolean("locked", setting.Locked.Value);
+            json.WriteEndObject();
+        }
+
+        protected ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
+        {
+            if (setting == null) return null;
+
+            ReadOnlyMemory<byte> content = default;
+            int size = 256;
+            while (true)
+            {
+                byte[] buffer = new byte[size];
+                if (TrySerializeConfigurationSetting(setting, buffer, out int written))
+                {
+                    content = buffer.AsMemory(0, written);
+                    break;
+                }
+                size *= 2;
+            }
+
+            return content;
         }
 
         protected string GetExtraUriParameters(string label)
