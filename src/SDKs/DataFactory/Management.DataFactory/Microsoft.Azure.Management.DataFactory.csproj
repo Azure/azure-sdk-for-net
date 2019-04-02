@@ -6,35 +6,12 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.DataFactory</PackageId>
 		<Description>Azure Data Factory V2 is the data integration platform that goes beyond Azure Data Factory V1's orchestration and batch-processing of time-series data, with a general purpose app model supporting modern data warehousing patterns and scenarios, lift-and-shift SSIS, and data-driven SaaS applications. Compose and manage reliable and secure data integration workflows at scale. Use native ADF data connectors and Integration Runtimes to move and transform cloud and on-premises data that can be unstructured, semi-structured, and structured with Hadoop, Azure Data Lake, Spark, SQL Server, Cosmos DB and many other data platforms.</Description>
-		<Version>3.0.1</Version>
+		<Version>3.0.2</Version>
 		<AssemblyName>Microsoft.Azure.Management.DataFactory</AssemblyName>
 		<PackageTags>Microsoft Azure resource management;Data Factory;ADF;</PackageTags>
 		<PackageReleaseNotes>	<![CDATA[
-    - Fixed AzureFunctionActivity
-    - Added support for RestService Source
-    - Added support for SAP BW Open Hub Source
-    - Added support for collectionReference
-    - Added recovery mode for more advanced pipeline run retry capabilities (i.e. from a specific activity)
-    - Added newClusterDriverNodeType, newClusterInitScripts, and newClusterEnableElasticDisk properties to DataBricks linked service
-    - Added retentionTimeInDays property to CustomActivity
-    - New connectors supported as Copy source:
-        * Office365
-        * Native MongoDB
-        * CosmosDB MongoDB API
-        * ADLS Gen2
-        * Dynamics AX
-        * Azure Data Explorer
-        * Oracle Service Cloud
-        * GoogleAdWords
-    - New connector supported as copy sink:
-        * ADLS Gen2
-        * CosmosDB MongoDB API
-        * Azure Data Explorer
-    - Added support for incremental copy of files based on the lastModifiedTime for S3, File and Blob
-    - Added support to copy data from ADLS Gen1 to ADLS Gen2 with ACL
-    - Added support for ServiceUrl in the existing S3 linked service
-    - Added support for AADServicePrincipal authentication in OData linked service
-    - Added support for maxConcurrentConnections in copy source and sink
+        - Added new Validation and Webhook activities
+    - Added annotation property to Trigger resource   
             ]]></PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

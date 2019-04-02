@@ -153,7 +153,7 @@ namespace LUIS.Authoring.Tests.Luis
                 };
 
                 var result = await client.Pattern.BatchAddPatternsAsync(GlobalAppId, "0.1", patternsToAdd);
-                var patterns = await client.Pattern.GetPatternsAsync(GlobalAppId, "0.1");
+                var patterns = await client.Pattern.ListPatternsAsync(GlobalAppId, "0.1");
 
                 await client.Pattern.DeletePatternsAsync(GlobalAppId, "0.1", result.Select(p => p.Id).ToList());
                 foreach (var added in prebuiltEntitiesAdded)
@@ -191,7 +191,7 @@ namespace LUIS.Authoring.Tests.Luis
                 };
 
                 var result = await client.Pattern.BatchAddPatternsAsync(GlobalAppId, "0.1", patternsToAdd);
-                var patterns = await client.Pattern.GetIntentPatternsAsync(GlobalAppId, "0.1", GlobalNoneId);
+                var patterns = await client.Pattern.ListIntentPatternsAsync(GlobalAppId, "0.1", GlobalNoneId);
 
                 await client.Pattern.DeletePatternsAsync(GlobalAppId, "0.1", result.Select(p => p.Id).ToList());
                 foreach (var added in prebuiltEntitiesAdded)
@@ -225,7 +225,7 @@ namespace LUIS.Authoring.Tests.Luis
                 var pattern = new PatternRuleCreateObject { Intent = "None", Pattern = "This is a {datetimeV2}" };
                 var result = await client.Pattern.AddPatternAsync(GlobalAppId, "0.1", pattern);
                 await client.Pattern.DeletePatternAsync(GlobalAppId, "0.1", result.Id.Value);
-                var existingPatterns = await client.Pattern.GetPatternsAsync(GlobalAppId, "0.1");
+                var existingPatterns = await client.Pattern.ListPatternsAsync(GlobalAppId, "0.1");
                 foreach (var added in prebuiltEntitiesAdded)
                 {
                     await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
@@ -255,7 +255,7 @@ namespace LUIS.Authoring.Tests.Luis
 
                 var result = await client.Pattern.BatchAddPatternsAsync(GlobalAppId, "0.1", patterns);
                 await client.Pattern.DeletePatternsAsync(GlobalAppId, "0.1", result.Select(p => p.Id).ToList());
-                var existingPatterns = await client.Pattern.GetPatternsAsync(GlobalAppId, "0.1");
+                var existingPatterns = await client.Pattern.ListPatternsAsync(GlobalAppId, "0.1");
                 foreach (var added in prebuiltEntitiesAdded)
                 {
                     await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);

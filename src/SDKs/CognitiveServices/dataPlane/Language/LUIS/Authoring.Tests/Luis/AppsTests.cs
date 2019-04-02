@@ -257,7 +257,7 @@
 
                 await client.Apps.UpdateSettingsAsync(testAppId, new ApplicationSettingUpdateObject
                 {
-                    PublicProperty = true
+                    IsPublic = true
                 });
 
                 // Assert

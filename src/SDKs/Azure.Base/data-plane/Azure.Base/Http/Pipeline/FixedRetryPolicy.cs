@@ -8,7 +8,7 @@ namespace Azure.Base.Http.Pipeline
 {
     internal class FixedRetryPolicy : RetryPolicy
     {
-        private readonly Func<Exception, bool> _exceptionFilter;
+        private readonly Func<Exception, bool> _shouldRetryException;
 
         private readonly int _maxRetries;
 
@@ -16,14 +16,14 @@ namespace Azure.Base.Http.Pipeline
 
         private readonly int[] _retriableCodes;
 
-        public FixedRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter, int maxRetries, TimeSpan delay)
+        public FixedRetryPolicy(int[] retriableCodes, Func<Exception, bool> shouldRetryException, int maxRetries, TimeSpan delay)
         {
             if (retriableCodes == null)
             {
                 throw new ArgumentNullException(nameof(retriableCodes));
             }
 
-            _exceptionFilter = exceptionFilter;
+            _shouldRetryException = shouldRetryException;
             _maxRetries = maxRetries;
             _delay = delay;
 
@@ -31,7 +31,7 @@ namespace Azure.Base.Http.Pipeline
             Array.Sort(_retriableCodes);
         }
 
-        protected override bool ShouldRetry(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
+        protected override bool ShouldRetryResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
             delay = _delay;
 
@@ -40,12 +40,19 @@ namespace Azure.Base.Http.Pipeline
                 return false;
             }
 
-            if (exception != null)
+            return Array.BinarySearch(_retriableCodes, message.Response.Status) >= 0;
+        }
+
+        protected override bool ShouldRetryException(Exception exception, int attempted, out TimeSpan delay)
+        {
+            delay = _delay;
+
+            if (attempted > _maxRetries)
             {
-                return _exceptionFilter != null && _exceptionFilter(exception);
+                return false;
             }
 
-            return Array.BinarySearch(_retriableCodes, message.Response.Status) >= 0;
+            return _shouldRetryException != null && _shouldRetryException(exception);
         }
     }
 }

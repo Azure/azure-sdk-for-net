@@ -24,7 +24,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -41,7 +41,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -65,7 +65,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -86,7 +86,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -113,7 +113,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
@@ -138,7 +138,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -160,7 +160,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -182,7 +182,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -380,7 +380,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -397,7 +397,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -421,7 +421,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -442,7 +442,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -469,7 +469,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
@@ -494,7 +494,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -516,7 +516,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -538,7 +538,7 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -769,7 +769,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeleteEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
@@ -787,7 +787,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeletePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
@@ -812,7 +812,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeleteClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
@@ -834,7 +834,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeleteRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
@@ -862,7 +862,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeleteCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
@@ -888,7 +888,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeletePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
@@ -911,7 +911,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeleteHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
@@ -934,7 +934,7 @@ namespace LUIS.Authoring.Tests.Luis
                     Name = "simple role"
                 });
                 await client.Model.DeleteCustomEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                var roles = await client.Model.ListCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
                 await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
