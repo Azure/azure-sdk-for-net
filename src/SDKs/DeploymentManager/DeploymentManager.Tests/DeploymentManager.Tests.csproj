@@ -26,10 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Management.DeploymentManager\Microsoft.Azure.Management.DeploymentManager.csproj">
-      <Project>{81e66a55-f17c-4088-80f6-ef7c01c11e37}</Project>
-      <Name>Microsoft.Azure.Management.DeploymentManager</Name>
-    </ProjectReference>
+    <ProjectReference Include="..\Management.DeploymentManager\Microsoft.Azure.Management.DeploymentManager.csproj" />
   </ItemGroup>
 
   <ItemGroup>
