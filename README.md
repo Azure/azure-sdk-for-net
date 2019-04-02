@@ -166,7 +166,7 @@ Regarding the test project, one thing that's important is to name the test proje
 
 |                        | Linux (Ubuntu 16.04) | MacOS 10.13 | Windows Server 2016 |
 |------------------------|----------------------|-------------|---------------------|
-| **.NET Core 2.1.503**  |  x                   |      x      |          x          |
+| **.NET Core 2.1**  |  x                   |      x      |          x          |
 
 
 ### Issues with Generated Code
