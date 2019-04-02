@@ -30,7 +30,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.serviceName);
                 Assert.NotNull(versionSetlistResponse);
                 Assert.Empty(versionSetlistResponse);
-                Assert.Null(versionSetlistResponse.NextPageLink);
+                Assert.NotNull(versionSetlistResponse.NextPageLink);
 
                 string newversionsetid = TestUtilities.GenerateName("apiversionsetid");
                 const string paramName = "x-ms-sdk-version";
