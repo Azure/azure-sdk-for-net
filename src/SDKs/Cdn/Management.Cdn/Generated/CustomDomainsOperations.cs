@@ -772,28 +772,6 @@ namespace Microsoft.Azure.Management.Cdn
             return _result;
         }
 
-        public async Task<AzureOperationResponse<CustomDomain>> EnableCustomHttpsWithHttpMessagesAsync(
-            string resourceGroupName,
-            string profileName,
-            string endpointName,
-            string customDomainName,
-            CustomDomainHttpsParameters customDomainHttpsParameters = default(CustomDomainHttpsParameters), 
-            Dictionary<string, List<string>> customHeaders = null,
-            CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<CustomDomain> _response = await BeginEnableCustomHttpsWithHttpMessagesAsync(
-                resourceGroupName, 
-                profileName, 
-                endpointName,
-                customDomainName,
-                customDomainHttpsParameters,
-                customHeaders,
-                cancellationToken)
-                .ConfigureAwait(false);
-            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary>
         /// Enable https delivery of the custom domain.
         /// </summary>
@@ -835,14 +813,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CustomDomain>> BeginEnableCustomHttpsWithHttpMessagesAsync(
-            string resourceGroupName, 
-            string profileName,
-            string endpointName, 
-            string customDomainName,
-            CustomDomainHttpsParameters customDomainHttpsParameters = default(CustomDomainHttpsParameters), 
-            Dictionary<string, List<string>> customHeaders = null, 
-            CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CustomDomain>> EnableCustomHttpsWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsParameters customDomainHttpsParameters = default(CustomDomainHttpsParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
