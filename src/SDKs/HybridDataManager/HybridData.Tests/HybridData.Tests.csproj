@@ -12,10 +12,6 @@
     <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Remove="Helpers\RecordedDelegatingHandler.cs" />
-    <Compile Remove="Tests\OperationResultsTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Management.HybridData\Management.HybridData.csproj" />
   </ItemGroup>
   <!--Do not remove until VS Test Tools fixes #472-->
