@@ -52,7 +52,7 @@ namespace Azure.Base.Http
         {
             var policies = new List<HttpPipelinePolicy>();
 
-            policies.AddRange(options.BeforePolicies);
+            policies.AddRange(options.PrependPolicies);
 
             if (!options.DisableTelemetry)
             {
@@ -61,7 +61,7 @@ namespace Azure.Base.Http
 
             configurePolicies(policies);
 
-            policies.AddRange(options.AfterPolicies);
+            policies.AddRange(options.EndPolicies);
 
             policies.RemoveAll(policy => policy == null);
 
