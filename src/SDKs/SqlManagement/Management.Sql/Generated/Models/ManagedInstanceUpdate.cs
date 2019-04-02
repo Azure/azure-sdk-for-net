@@ -56,8 +56,25 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="dnsZonePartner">The resource id of another managed
         /// instance whose DNS zone this managed instance will share after
         /// creation.</param>
+        /// <param name="publicDataEndpointEnabled">Whether or not the public
+        /// data endpoint is enabled.</param>
+        /// <param name="proxyOverride">Connection type used for connecting to
+        /// the instance. Possible values include: 'Proxy', 'Redirect',
+        /// 'Default'</param>
+        /// <param name="timezoneId">Id of the timezone. Allowed values are
+        /// timezones supported by Windows.
+        /// Windows keeps details on supported timezones, including the id, in
+        /// registry under
+        /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time
+        /// Zones.
+        /// You can get those registry values via SQL Server by querying SELECT
+        /// name AS timezone_id FROM sys.time_zone_info.
+        /// List of Ids can also be obtained by executing
+        /// [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time" or "W.
+        /// Europe Standard Time".</param>
         /// <param name="tags">Resource tags.</param>
-        public ManagedInstanceUpdate(Sku sku = default(Sku), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ManagedInstanceUpdate(Sku sku = default(Sku), string fullyQualifiedDomainName = default(string), string administratorLogin = default(string), string administratorLoginPassword = default(string), string subnetId = default(string), string state = default(string), string licenseType = default(string), int? vCores = default(int?), int? storageSizeInGB = default(int?), string collation = default(string), string dnsZone = default(string), string dnsZonePartner = default(string), bool? publicDataEndpointEnabled = default(bool?), string proxyOverride = default(string), string timezoneId = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             FullyQualifiedDomainName = fullyQualifiedDomainName;
@@ -71,6 +88,9 @@ namespace Microsoft.Azure.Management.Sql.Models
             Collation = collation;
             DnsZone = dnsZone;
             DnsZonePartner = dnsZonePartner;
+            PublicDataEndpointEnabled = publicDataEndpointEnabled;
+            ProxyOverride = proxyOverride;
+            TimezoneId = timezoneId;
             Tags = tags;
             CustomInit();
         }
@@ -156,6 +176,36 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsZonePartner")]
         public string DnsZonePartner { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether or not the public data endpoint is enabled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicDataEndpointEnabled")]
+        public bool? PublicDataEndpointEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets connection type used for connecting to the instance.
+        /// Possible values include: 'Proxy', 'Redirect', 'Default'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.proxyOverride")]
+        public string ProxyOverride { get; set; }
+
+        /// <summary>
+        /// Gets or sets id of the timezone. Allowed values are timezones
+        /// supported by Windows.
+        /// Windows keeps details on supported timezones, including the id, in
+        /// registry under
+        /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time
+        /// Zones.
+        /// You can get those registry values via SQL Server by querying SELECT
+        /// name AS timezone_id FROM sys.time_zone_info.
+        /// List of Ids can also be obtained by executing
+        /// [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell.
+        /// An example of valid timezone id is "Pacific Standard Time" or "W.
+        /// Europe Standard Time".
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timezoneId")]
+        public string TimezoneId { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.
