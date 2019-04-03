@@ -66,12 +66,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// were used to login to the source registry during this run.</param>
         /// <param name="customRegistries">The list of custom registries that
         /// were logged in during this run.</param>
+        /// <param name="runErrorMessage">The error message received from
+        /// backend systems after the run is scheduled.</param>
         /// <param name="provisioningState">The provisioning state of a run.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed', 'Canceled'</param>
         /// <param name="isArchiveEnabled">The value that indicates whether
         /// archiving is enabled or not.</param>
-        public Run(string id = default(string), string name = default(string), string type = default(string), string runId = default(string), string status = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string runType = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? finishTime = default(System.DateTime?), IList<ImageDescriptor> outputImages = default(IList<ImageDescriptor>), string task = default(string), ImageUpdateTrigger imageUpdateTrigger = default(ImageUpdateTrigger), SourceTriggerDescriptor sourceTrigger = default(SourceTriggerDescriptor), PlatformProperties platform = default(PlatformProperties), AgentProperties agentConfiguration = default(AgentProperties), string sourceRegistryAuth = default(string), IList<string> customRegistries = default(IList<string>), string provisioningState = default(string), bool? isArchiveEnabled = default(bool?))
+        public Run(string id = default(string), string name = default(string), string type = default(string), string runId = default(string), string status = default(string), System.DateTime? lastUpdatedTime = default(System.DateTime?), string runType = default(string), System.DateTime? createTime = default(System.DateTime?), System.DateTime? startTime = default(System.DateTime?), System.DateTime? finishTime = default(System.DateTime?), IList<ImageDescriptor> outputImages = default(IList<ImageDescriptor>), string task = default(string), ImageUpdateTrigger imageUpdateTrigger = default(ImageUpdateTrigger), SourceTriggerDescriptor sourceTrigger = default(SourceTriggerDescriptor), PlatformProperties platform = default(PlatformProperties), AgentProperties agentConfiguration = default(AgentProperties), string sourceRegistryAuth = default(string), IList<string> customRegistries = default(IList<string>), string runErrorMessage = default(string), string provisioningState = default(string), bool? isArchiveEnabled = default(bool?))
             : base(id, name, type)
         {
             RunId = runId;
@@ -89,6 +91,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             AgentConfiguration = agentConfiguration;
             SourceRegistryAuth = sourceRegistryAuth;
             CustomRegistries = customRegistries;
+            RunErrorMessage = runErrorMessage;
             ProvisioningState = provisioningState;
             IsArchiveEnabled = isArchiveEnabled;
             CustomInit();
@@ -197,6 +200,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.customRegistries")]
         public IList<string> CustomRegistries { get; set; }
+
+        /// <summary>
+        /// Gets the error message received from backend systems after the run
+        /// is scheduled.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.runErrorMessage")]
+        public string RunErrorMessage { get; private set; }
 
         /// <summary>
         /// Gets or sets the provisioning state of a run. Possible values

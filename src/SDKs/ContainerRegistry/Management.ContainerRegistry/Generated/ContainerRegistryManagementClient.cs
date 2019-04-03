@@ -97,6 +97,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         public virtual ITasksOperations Tasks { get; private set; }
 
         /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        public virtual IScopeMapsOperations ScopeMaps { get; private set; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        public virtual ITokensOperations Tokens { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ContainerRegistryManagementClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -343,6 +353,8 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             Webhooks = new WebhooksOperations(this);
             Runs = new RunsOperations(this);
             Tasks = new TasksOperations(this);
+            ScopeMaps = new ScopeMapsOperations(this);
+            Tokens = new TokensOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

@@ -93,5 +93,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
         /// </summary>
         ITasksOperations Tasks { get; }
 
+        /// <summary>
+        /// Gets the IScopeMapsOperations.
+        /// </summary>
+        IScopeMapsOperations ScopeMaps { get; }
+
+        /// <summary>
+        /// Gets the ITokensOperations.
+        /// </summary>
+        ITokensOperations Tokens { get; }
+
     }
 }

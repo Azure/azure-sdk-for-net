@@ -647,6 +647,52 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             }
 
             /// <summary>
+            /// Generate keys for a token of a specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
+            /// </param>
+            public static GenerateCredentialsResult GenerateKeys(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters)
+            {
+                return operations.GenerateKeysAsync(resourceGroupName, registryName, generateCredentialsParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generate keys for a token of a specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<GenerateCredentialsResult> GenerateKeysAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GenerateKeysWithHttpMessagesAsync(resourceGroupName, registryName, generateCredentialsParameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Copies an image to this container registry from the specified container
             /// registry.
             /// </summary>
@@ -917,6 +963,52 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             public static async System.Threading.Tasks.Task<Run> BeginScheduleRunAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, RunRequest runRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginScheduleRunWithHttpMessagesAsync(resourceGroupName, registryName, runRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Generate keys for a token of a specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
+            /// </param>
+            public static GenerateCredentialsResult BeginGenerateKeys(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters)
+            {
+                return operations.BeginGenerateKeysAsync(resourceGroupName, registryName, generateCredentialsParameters).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generate keys for a token of a specified container registry.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group to which the container registry belongs.
+            /// </param>
+            /// <param name='registryName'>
+            /// The name of the container registry.
+            /// </param>
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<GenerateCredentialsResult> BeginGenerateKeysAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginGenerateKeysWithHttpMessagesAsync(resourceGroupName, registryName, generateCredentialsParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
