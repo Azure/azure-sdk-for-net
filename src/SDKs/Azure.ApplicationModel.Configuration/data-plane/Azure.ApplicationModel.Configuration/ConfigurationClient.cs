@@ -59,13 +59,13 @@ namespace Azure.ApplicationModel.Configuration
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Uri uri = BuildUriForKvRoute(setting);
-
             using (var request = _pipeline.CreateRequest())
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpVerb.Put, uri);
+                request.Method = HttpVerb.Get;
+
+                BuildUriForKvRoute(request.UriBuilder, setting);
 
                 request.AddHeader(IfNoneMatch, "*");
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
@@ -94,14 +94,12 @@ namespace Azure.ApplicationModel.Configuration
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Uri uri = BuildUriForKvRoute(setting);
-
             using (var request = _pipeline.CreateRequest())
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpVerb.Put, uri);
-
+                request.Method = HttpVerb.Put;
+                BuildUriForKvRoute(request.UriBuilder, setting);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
 
@@ -133,14 +131,12 @@ namespace Azure.ApplicationModel.Configuration
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Uri uri = BuildUriForKvRoute(setting);
-
             using (var request = _pipeline.CreateRequest())
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpVerb.Put, uri);
-
+                request.Method = HttpVerb.Put;
+                BuildUriForKvRoute(request.UriBuilder, setting);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
 
@@ -175,11 +171,10 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri uri = BuildUriForKvRoute(key, label);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Delete, uri);
+                request.Method  = HttpVerb.Delete;
+                BuildUriForKvRoute(request.UriBuilder, key, label);
 
                 if (etag != default)
                 {
@@ -200,11 +195,10 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri uri = BuildUriForLocksRoute(key, label);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Put, uri);
+                request.Method = HttpVerb.Put;
+                BuildUriForLocksRoute(request.UriBuilder, key, label);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -220,13 +214,11 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
-            Uri uri = BuildUriForLocksRoute(key, label);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Delete, uri);
+                request.Method = HttpVerb.Delete;
 
-
+                BuildUriForLocksRoute(request.UriBuilder, key, label);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
                 if (response.Status == 200)
@@ -241,13 +233,12 @@ namespace Azure.ApplicationModel.Configuration
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
-            Uri uri = BuildUriForKvRoute(key, label);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Get, uri);
-
+                request.Method = HttpVerb.Get;
+                BuildUriForKvRoute(request.UriBuilder, key, label);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
+
                 if (acceptDateTime != default)
                 {
                     var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
@@ -266,12 +257,10 @@ namespace Azure.ApplicationModel.Configuration
 
         public async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
-            var uri = BuildUriForGetBatch(selector);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Get, uri);
-
+                request.Method = HttpVerb.Get;
+                BuildUriForGetBatch(request.UriBuilder, selector);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {
@@ -291,12 +280,10 @@ namespace Azure.ApplicationModel.Configuration
 
         public async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
-            var uri = BuildUriForRevisions(selector);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Get, uri);
-
+                request.Method = HttpVerb.Get;
+                BuildUriForRevisions(request.UriBuilder, selector);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {

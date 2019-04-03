@@ -8,14 +8,14 @@ namespace Azure.Base.Http
 {
     public abstract class HttpPipelineRequest : IDisposable
     {
-        public virtual Uri Uri { get; set; }
+        public virtual HttpPipelineUriBuilder UriBuilder { get; set; } = new HttpPipelineUriBuilder();
 
         public virtual HttpVerb Method { get; set; }
 
         public virtual void SetRequestLine(HttpVerb method, Uri uri)
         {
             Method = method;
-            Uri = uri;
+            UriBuilder.Uri = uri;
         }
 
         public virtual HttpPipelineRequestContent Content { get; set; }

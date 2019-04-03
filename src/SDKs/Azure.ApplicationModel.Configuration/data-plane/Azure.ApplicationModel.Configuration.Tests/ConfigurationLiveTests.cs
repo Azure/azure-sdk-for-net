@@ -253,7 +253,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.DeleteAsync(key, label);
             }
         }
-        
+
         [Test]
         public async Task GetRequestId()
         {
@@ -858,11 +858,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "my_label", "label,label" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, @"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label");
-            
+
         }
 
         [Test]
@@ -876,7 +876,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "*label*" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*key*&label=*label*");
@@ -892,7 +892,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*&label=%00");
@@ -907,7 +907,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var key = "my-key";
             var selector = new SettingSelector(key);
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key={key}");
@@ -922,7 +922,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var label = "my-label";
             var selector = new SettingSelector(null, label);
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key=*&label={label}");
@@ -961,7 +961,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             if (!actual.Labels.SequenceEqual(other.Labels)) return false;
             if (!actual.Fields.Equals(other.Fields)) return false;
             if (actual.AsOf != other.AsOf) return false;
-            
+
             return true;
         }
 
