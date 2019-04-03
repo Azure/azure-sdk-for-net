@@ -54,11 +54,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="overprovision">Specifies whether the Virtual Machine
         /// Scale Set should be overprovisioned.</param>
-        /// <param name="doNotRunExtensionsOnOverprovisionedVMs">In case of
-        /// overprovisioning, determines whether extensions should be run
-        /// immediately, or if they should be delayed until after
-        /// overprovisioning has finished and the set of instances to keep have
-        /// been selected.</param>
+        /// <param name="doNotRunExtensionsOnOverprovisionedVMs">When
+        /// Overprovision is enabled, extensions are launched only on the
+        /// requested number of VMs which are finally kept. This property will
+        /// hence ensure that the extensions do not run on the extra
+        /// overprovisioned VMs.</param>
         /// <param name="uniqueId">Specifies the ID which uniquely identifies a
         /// Virtual Machine Scale Set.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
@@ -140,10 +140,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? Overprovision { get; set; }
 
         /// <summary>
-        /// Gets or sets in case of overprovisioning, determines whether
-        /// extensions should be run immediately, or if they should be delayed
-        /// until after overprovisioning has finished and the set of instances
-        /// to keep have been selected.
+        /// Gets or sets when Overprovision is enabled, extensions are launched
+        /// only on the requested number of VMs which are finally kept. This
+        /// property will hence ensure that the extensions do not run on the
+        /// extra overprovisioned VMs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.doNotRunExtensionsOnOverprovisionedVMs")]
         public bool? DoNotRunExtensionsOnOverprovisionedVMs { get; set; }
