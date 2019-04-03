@@ -11,8 +11,6 @@
 namespace Microsoft.Azure.Management.IotCentral.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -33,9 +31,8 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         /// </summary>
         /// <param name="id">The application template identifier.</param>
         /// <param name="name">The application template name.</param>
-        /// <param name="properties">The extra template properties.</param>
         /// <param name="type">the resource type.</param>
-        public AppTemplate(string id = default(string), string name = default(string), IDictionary<string, string> properties = default(IDictionary<string, string>), string type = default(string))
+        public AppTemplate(string id = default(string), string name = default(string), AppTemplateProperties properties = default(AppTemplateProperties), string type = default(string))
         {
             Id = id;
             Name = name;
@@ -62,10 +59,9 @@ namespace Microsoft.Azure.Management.IotCentral.Models
         public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the extra template properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public IDictionary<string, string> Properties { get; set; }
+        public AppTemplateProperties Properties { get; set; }
 
         /// <summary>
         /// Gets the resource type.
