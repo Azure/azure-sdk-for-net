@@ -51,12 +51,17 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <param name="autoStorage">The properties and status of any
         /// auto-storage account associated with the Batch account.</param>
         /// <param name="dedicatedCoreQuota">The dedicated core quota for the
-        /// Batch account.</param>
+        /// Batch account. For accounts with PoolAllocationMode set to
+        /// UserSubscription, quota is managed on the subscription so this
+        /// value is null.</param>
         /// <param name="lowPriorityCoreQuota">The low-priority core quota for
-        /// the Batch account.</param>
+        /// the Batch account. For accounts with PoolAllocationMode set to
+        /// UserSubscription, quota is managed on the subscription so this
+        /// value is null.</param>
         /// <param name="dedicatedCoreQuotaPerVMFamily">A list of the dedicated
-        /// core quota per Virtual Machine family for the Batch
-        /// account.</param>
+        /// core quota per Virtual Machine family for the Batch account. For
+        /// accounts with PoolAllocationMode set to UserSubscription, quota is
+        /// managed on the subscription so this value is null.</param>
         /// <param name="dedicatedCoreQuotaPerVMFamilyEnforced">A value
         /// indicating whether the core quota for the Batch Account is enforced
         /// per Virtual Machine family or not.</param>
@@ -125,20 +130,26 @@ namespace Microsoft.Azure.Management.Batch.Models
         public AutoStorageProperties AutoStorage { get; private set; }
 
         /// <summary>
-        /// Gets the dedicated core quota for the Batch account.
+        /// Gets the dedicated core quota for the Batch account. For accounts
+        /// with PoolAllocationMode set to UserSubscription, quota is managed
+        /// on the subscription so this value is null.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dedicatedCoreQuota")]
         public int DedicatedCoreQuota { get; private set; }
 
         /// <summary>
-        /// Gets the low-priority core quota for the Batch account.
+        /// Gets the low-priority core quota for the Batch account. For
+        /// accounts with PoolAllocationMode set to UserSubscription, quota is
+        /// managed on the subscription so this value is null.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lowPriorityCoreQuota")]
         public int LowPriorityCoreQuota { get; private set; }
 
         /// <summary>
         /// Gets a list of the dedicated core quota per Virtual Machine family
-        /// for the Batch account.
+        /// for the Batch account. For accounts with PoolAllocationMode set to
+        /// UserSubscription, quota is managed on the subscription so this
+        /// value is null.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dedicatedCoreQuotaPerVMFamily")]
         public IList<VirtualMachineFamilyCoreQuota> DedicatedCoreQuotaPerVMFamily { get; private set; }
