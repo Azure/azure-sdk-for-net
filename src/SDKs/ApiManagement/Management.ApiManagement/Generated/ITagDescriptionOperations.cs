@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<TagDescriptionContract,TagDescriptionGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string tagId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create/Update tag fescription in scope of the Api.
+        /// Create/Update tag description in scope of the Api.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

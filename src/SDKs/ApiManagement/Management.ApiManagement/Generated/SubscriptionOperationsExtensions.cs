@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the details of a subscription specificied by its identifier.
+            /// Updates the details of a subscription specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Updates the details of a subscription specificied by its identifier.
+            /// Updates the details of a subscription specified by its identifier.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

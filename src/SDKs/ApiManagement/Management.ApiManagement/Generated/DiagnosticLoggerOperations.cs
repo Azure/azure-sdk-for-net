@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all loggers assosiated with the specified Diagnostic of the API
+        /// Lists all loggers associated with the specified Diagnostic of the API
         /// Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -528,7 +528,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Attaches a logger to a dignostic.
+        /// Attaches a logger to a diagnostic.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1027,7 +1027,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Lists all loggers assosiated with the specified Diagnostic of the API
+        /// Lists all loggers associated with the specified Diagnostic of the API
         /// Management service instance.
         /// </summary>
         /// <param name='nextPageLink'>
