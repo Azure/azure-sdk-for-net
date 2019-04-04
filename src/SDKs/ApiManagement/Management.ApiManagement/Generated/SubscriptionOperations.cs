@@ -1018,7 +1018,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Updates the details of a subscription specificied by its identifier.
+        /// Updates the details of a subscription specified by its identifier.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

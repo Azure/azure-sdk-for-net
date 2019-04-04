@@ -817,7 +817,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Create/Update tag fescription in scope of the Api.
+        /// Create/Update tag description in scope of the Api.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

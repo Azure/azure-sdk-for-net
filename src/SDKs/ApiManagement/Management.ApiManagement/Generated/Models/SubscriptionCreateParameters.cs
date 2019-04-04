@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="userId">User (user id path) for whom subscription is
         /// being created in form /users/{uid}</param>
         /// <param name="productId">Product (product id path) for which
-        /// subscription is being created in form /products/{productid}</param>
+        /// subscription is being created in form /products/{productId}</param>
         /// <param name="displayName">Subscription name.</param>
         /// <param name="primaryKey">Primary subscription key. If not specified
         /// during request key will be generated automatically.</param>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets product (product id path) for which subscription is
-        /// being created in form /products/{productid}
+        /// being created in form /products/{productId}
         /// </summary>
         [JsonProperty(PropertyName = "properties.productId")]
         public string ProductId { get; set; }

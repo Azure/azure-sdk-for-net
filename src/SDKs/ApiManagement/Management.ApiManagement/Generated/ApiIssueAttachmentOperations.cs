@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all comments for the Issue assosiated with the specified API.
+        /// Lists all comments for the Issue associated with the specified API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1495,7 +1495,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Lists all comments for the Issue assosiated with the specified API.
+        /// Lists all comments for the Issue associated with the specified API.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

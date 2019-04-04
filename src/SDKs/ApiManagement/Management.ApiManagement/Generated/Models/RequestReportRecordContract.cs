@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// generating the response. If the value is none, the cache was not
         /// used. If the value is hit, cached response was returned. If the
         /// value is miss, the cache was used but lookup resulted in a miss and
-        /// request was fullfilled by the backend.</param>
+        /// request was fulfilled by the backend.</param>
         /// <param name="apiTime">The total time it took to process this
         /// request.</param>
         /// <param name="serviceTime">he time it took to forward this request
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// the response. If the value is none, the cache was not used. If the
         /// value is hit, cached response was returned. If the value is miss,
         /// the cache was used but lookup resulted in a miss and request was
-        /// fullfilled by the backend.
+        /// fulfilled by the backend.
         /// </summary>
         [JsonProperty(PropertyName = "cache")]
         public string Cache { get; set; }
