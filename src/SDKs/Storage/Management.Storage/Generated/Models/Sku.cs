@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// notification, etc.</param>
         /// <param name="restrictions">The restrictions because of which SKU
         /// cannot be used. This is empty if there are no restrictions.</param>
-        public Sku(SkuName name, SkuTier? tier = default(SkuTier?), string resourceType = default(string), Kind? kind = default(Kind?), IList<string> locations = default(IList<string>), IList<SKUCapability> capabilities = default(IList<SKUCapability>), IList<Restriction> restrictions = default(IList<Restriction>))
+        public Sku(string name, SkuTier? tier = default(SkuTier?), string resourceType = default(string), string kind = default(string), IList<string> locations = default(IList<string>), IList<SKUCapability> capabilities = default(IList<SKUCapability>), IList<Restriction> restrictions = default(IList<Restriction>))
         {
             Name = name;
             Tier = tier;
@@ -76,7 +77,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'Premium_ZRS'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
-        public SkuName Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets the SKU tier. This is based on the SKU name. Possible values
@@ -97,7 +98,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'BlockBlobStorage'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public Kind? Kind { get; private set; }
+        public string Kind { get; private set; }
 
         /// <summary>
         /// Gets the set of locations that the SKU is available. This will be
@@ -124,11 +125,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
         }
     }
 }

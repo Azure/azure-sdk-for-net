@@ -1566,7 +1566,7 @@ namespace Storage.Tests
                 Assert.NotNull(skulist);
                 Assert.Equal(@"storageAccounts", skulist.ElementAt(0).ResourceType);
                 Assert.NotNull(skulist.ElementAt(0).Name);
-                Assert.IsType<SkuName>(skulist.ElementAt(0).Name);
+                Assert.IsType<string>(skulist.ElementAt(0).Name);
                 Assert.True(skulist.ElementAt(0).Name.Equals(SkuName.PremiumLRS)
                     || skulist.ElementAt(0).Name.Equals(SkuName.StandardGRS)
                     || skulist.ElementAt(0).Name.Equals(SkuName.StandardLRS)
