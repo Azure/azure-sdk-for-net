@@ -37,13 +37,20 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// <param name="fileSystem">The filesystem, only to be specified for
         /// Azure Data Lake Storage type Gen 2.</param>
         /// <param name="key">The storage account access key.</param>
-        public StorageAccount(string name = default(string), bool? isDefault = default(bool?), string container = default(string), string fileSystem = default(string), string key = default(string))
+        /// <param name="resourceId">The resource ID of storage account, only
+        /// to be specified for Azure Data Lake Storage Gen 2.</param>
+        /// <param name="msiResourceId">The managed identity (MSI) that is
+        /// allowed to access the storage account, only to be specified for
+        /// Azure Data Lake Storage Gen 2.</param>
+        public StorageAccount(string name = default(string), bool? isDefault = default(bool?), string container = default(string), string fileSystem = default(string), string key = default(string), string resourceId = default(string), string msiResourceId = default(string))
         {
             Name = name;
             IsDefault = isDefault;
             Container = container;
             FileSystem = fileSystem;
             Key = key;
+            ResourceId = resourceId;
+            MsiResourceId = msiResourceId;
             CustomInit();
         }
 
@@ -84,6 +91,21 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource ID of storage account, only to be
+        /// specified for Azure Data Lake Storage Gen 2.
+        /// </summary>
+        [JsonProperty(PropertyName = "resourceId")]
+        public string ResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the managed identity (MSI) that is allowed to access
+        /// the storage account, only to be specified for Azure Data Lake
+        /// Storage Gen 2.
+        /// </summary>
+        [JsonProperty(PropertyName = "msiResourceId")]
+        public string MsiResourceId { get; set; }
 
     }
 }

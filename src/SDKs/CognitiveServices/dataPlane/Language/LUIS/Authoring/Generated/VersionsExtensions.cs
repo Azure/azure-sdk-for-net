@@ -22,8 +22,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public static partial class VersionsExtensions
     {
             /// <summary>
-            /// Creates a new version using the current snapshot of the selected
-            /// application version.
+            /// Creates a new version from the selected version.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> CloneAsync(this IVersions operations, System.Guid appId, string versionId, TaskUpdateObject versionCloneObject = default(TaskUpdateObject), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<string> CloneAsync(this IVersions operations, System.Guid appId, string versionId, TaskUpdateObject versionCloneObject, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CloneWithHttpMessagesAsync(appId, versionId, versionCloneObject, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -49,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets the application versions info.
+            /// Gets a list of versions for this application ID.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,7 +74,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets the version info.
+            /// Gets the version information such as date created, last modified date,
+            /// endpoint URL, count of intents and entities, training and publishing
+            /// status.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -197,7 +198,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deleted an unlabelled utterance.
+            /// Deleted an unlabelled utterance in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

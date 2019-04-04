@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the express route circuit connection.
             /// </param>
             /// <param name='expressRouteCircuitConnectionParameters'>
-            /// Parameters supplied to the create or update express route circuit circuit
+            /// Parameters supplied to the create or update express route circuit
             /// connection operation.
             /// </param>
             public static ExpressRouteCircuitConnection CreateOrUpdate(this IExpressRouteCircuitConnectionsOperations operations, string resourceGroupName, string circuitName, string peeringName, string connectionName, ExpressRouteCircuitConnection expressRouteCircuitConnectionParameters)
@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the express route circuit connection.
             /// </param>
             /// <param name='expressRouteCircuitConnectionParameters'>
-            /// Parameters supplied to the create or update express route circuit circuit
+            /// Parameters supplied to the create or update express route circuit
             /// connection operation.
             /// </param>
             /// <param name='cancellationToken'>
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the express route circuit connection.
             /// </param>
             /// <param name='expressRouteCircuitConnectionParameters'>
-            /// Parameters supplied to the create or update express route circuit circuit
+            /// Parameters supplied to the create or update express route circuit
             /// connection operation.
             /// </param>
             public static ExpressRouteCircuitConnection BeginCreateOrUpdate(this IExpressRouteCircuitConnectionsOperations operations, string resourceGroupName, string circuitName, string peeringName, string connectionName, ExpressRouteCircuitConnection expressRouteCircuitConnectionParameters)
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the express route circuit connection.
             /// </param>
             /// <param name='expressRouteCircuitConnectionParameters'>
-            /// Parameters supplied to the create or update express route circuit circuit
+            /// Parameters supplied to the create or update express route circuit
             /// connection operation.
             /// </param>
             /// <param name='cancellationToken'>

@@ -22,7 +22,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public static partial class ExamplesExtensions
     {
             /// <summary>
-            /// Adds a labeled example to the application.
+            /// Adds a labeled example utterance in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='exampleLabelObject'>
-            /// An example label with the expected intent and entities.
+            /// A labeled example utterance with the expected intent and entities.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a batch of labeled examples to the application.
+            /// Adds a batch of labeled example utterances to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='exampleLabelObjectArray'>
-            /// Array of examples.
+            /// Array of example utterances.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -74,7 +74,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Returns examples to be reviewed.
+            /// Returns example utterances to be reviewed from a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,7 +104,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes the labeled example with the specified ID.
+            /// Deletes the labeled example utterances with the specified ID from a version
+            /// of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

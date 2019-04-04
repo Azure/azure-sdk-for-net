@@ -400,6 +400,8 @@ namespace Microsoft.Azure.Management.HDInsight
                         Name = adlsGen2Info.StorageAccountName,
                         FileSystem = adlsGen2Info.StorageFileSystem,
                         Key = adlsGen2Info.StorageAccountKey,
+                        ResourceId = adlsGen2Info.StorageResourceId,
+                        MsiResourceId = adlsGen2Info.StorageMsiResourceId,
                         IsDefault = true
                     }
                 }

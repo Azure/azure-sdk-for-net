@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// 'Disconnected'. Possible values include: 'Connected', 'Connecting',
         /// 'Disconnected'</param>
         /// <param name="provisioningState">Provisioning state of the circuit
-        /// connection resource. Possible values are: 'Succeded', 'Updating',
+        /// connection resource. Possible values are: 'Succeeded', 'Updating',
         /// 'Deleting', and 'Failed'.</param>
         /// <param name="name">Gets name of the resource that is unique within
         /// a resource group. This name can be used to access the
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets provisioning state of the circuit connection resource.
-        /// Possible values are: 'Succeded', 'Updating', 'Deleting', and
+        /// Possible values are: 'Succeeded', 'Updating', 'Deleting', and
         /// 'Failed'.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]

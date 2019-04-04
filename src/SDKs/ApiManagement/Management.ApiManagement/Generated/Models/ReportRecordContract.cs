@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as
         /// specified by the ISO 8601 standard.
         /// </param>
-        /// <param name="interval">Length of agregation period.  Interval must
+        /// <param name="interval">Length of aggregation period.  Interval must
         /// be multiple of 15 minutes and may not be zero. The value should be
         /// in ISO 8601 format
         /// (http://en.wikipedia.org/wiki/ISO_8601#Durations).</param>
@@ -54,13 +54,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="apiRegion">API region identifier.</param>
         /// <param name="subscriptionId">Subscription identifier path.
         /// /subscriptions/{subscriptionId}</param>
-        /// <param name="callCountSuccess">Number of succesful calls. This
+        /// <param name="callCountSuccess">Number of successful calls. This
         /// includes calls returning HttpStatusCode &lt;= 301 and
         /// HttpStatusCode.NotModified and
         /// HttpStatusCode.TemporaryRedirect</param>
         /// <param name="callCountBlocked">Number of calls blocked due to
         /// invalid credentials. This includes calls returning
-        /// HttpStatusCode.Unauthorize and HttpStatusCode.Forbidden and
+        /// HttpStatusCode.Unauthorized and HttpStatusCode.Forbidden and
         /// HttpStatusCode.TooManyRequests</param>
         /// <param name="callCountFailed">Number of calls failed due to proxy
         /// or backend errors. This includes calls returning
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public System.DateTime? Timestamp { get; set; }
 
         /// <summary>
-        /// Gets or sets length of agregation period.  Interval must be
+        /// Gets or sets length of aggregation period.  Interval must be
         /// multiple of 15 minutes and may not be zero. The value should be in
         /// ISO 8601 format (http://en.wikipedia.org/wiki/ISO_8601#Durations).
         /// </summary>
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets number of succesful calls. This includes calls
+        /// Gets or sets number of successful calls. This includes calls
         /// returning HttpStatusCode &amp;lt;= 301 and
         /// HttpStatusCode.NotModified and HttpStatusCode.TemporaryRedirect
         /// </summary>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets number of calls blocked due to invalid credentials.
-        /// This includes calls returning HttpStatusCode.Unauthorize and
+        /// This includes calls returning HttpStatusCode.Unauthorized and
         /// HttpStatusCode.Forbidden and HttpStatusCode.TooManyRequests
         /// </summary>
         [JsonProperty(PropertyName = "callCountBlocked")]

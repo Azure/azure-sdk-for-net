@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the certificate order.
             /// </param>
             /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
+            /// Distinguished name to use for the certificate order.
             /// </param>
             public static AppServiceCertificateOrder CreateOrUpdate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrder certificateDistinguishedName)
             {
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the certificate order.
             /// </param>
             /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
+            /// Distinguished name to use for the certificate order.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the certificate order.
             /// </param>
             /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
+            /// Distinguished name to use for the certificate order.
             /// </param>
             public static AppServiceCertificateOrder Update(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrderPatchResource certificateDistinguishedName)
             {
@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the certificate order.
             /// </param>
             /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
+            /// Distinguished name to use for the certificate order.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -983,7 +983,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the certificate order.
             /// </param>
             /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
+            /// Distinguished name to use for the certificate order.
             /// </param>
             public static AppServiceCertificateOrder BeginCreateOrUpdate(this IAppServiceCertificateOrdersOperations operations, string resourceGroupName, string certificateOrderName, AppServiceCertificateOrder certificateDistinguishedName)
             {
@@ -1006,7 +1006,7 @@ namespace Microsoft.Azure.Management.WebSites
             /// Name of the certificate order.
             /// </param>
             /// <param name='certificateDistinguishedName'>
-            /// Distinguished name to to use for the certificate order.
+            /// Distinguished name to use for the certificate order.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

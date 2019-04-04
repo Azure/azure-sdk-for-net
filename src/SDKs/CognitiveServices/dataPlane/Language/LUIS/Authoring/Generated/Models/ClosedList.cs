@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Exported Model - A Closed List.
+    /// Exported Model - A list entity.
     /// </summary>
     public partial class ClosedList
     {
@@ -31,8 +31,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Initializes a new instance of the ClosedList class.
         /// </summary>
-        /// <param name="name">Name of the closed list feature.</param>
-        /// <param name="subLists">Sublists for the feature.</param>
+        /// <param name="name">Name of the list entity.</param>
+        /// <param name="subLists">Sublists for the list entity.</param>
         public ClosedList(string name = default(string), IList<SubClosedList> subLists = default(IList<SubClosedList>), IList<string> roles = default(IList<string>))
         {
             Name = name;
@@ -47,13 +47,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the closed list feature.
+        /// Gets or sets name of the list entity.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets sublists for the feature.
+        /// Gets or sets sublists for the list entity.
         /// </summary>
         [JsonProperty(PropertyName = "subLists")]
         public IList<SubClosedList> SubLists { get; set; }

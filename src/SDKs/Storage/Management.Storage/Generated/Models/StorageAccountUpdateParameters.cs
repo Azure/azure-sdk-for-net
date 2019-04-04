@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Currently only StorageV2 value supported by server. Possible values
         /// include: 'Storage', 'StorageV2', 'BlobStorage', 'FileStorage',
         /// 'BlockBlobStorage'</param>
-        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Kind? kind = default(Kind?))
+        public StorageAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Identity identity = default(Identity), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), string kind = default(string))
         {
             Sku = sku;
             Tags = tags;
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// 'BlockBlobStorage'
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
-        public Kind? Kind { get; set; }
+        public string Kind { get; set; }
 
         /// <summary>
         /// Validate the object.

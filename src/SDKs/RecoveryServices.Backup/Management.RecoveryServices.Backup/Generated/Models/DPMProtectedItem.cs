@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Initializes a new instance of the DPMProtectedItem class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the backed up item. Possible values include: 'Invalid',
         /// 'AzureIaasVM', 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql',
         /// 'AzureStorage', 'AzureWorkload', 'DefaultBackup'</param>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase'</param>
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
         /// <param name="containerName">Unique name of container</param>
         /// <param name="sourceResourceId">ARM ID of the resource to be backed
         /// up.</param>
@@ -54,9 +54,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// item</param>
         /// <param name="backupEngineName">Backup Management server protecting
         /// this backup item</param>
-        /// <param name="protectionState">Protection state of the backupengine.
-        /// Possible values include: 'Invalid', 'IRPending', 'Protected',
-        /// 'ProtectionError', 'ProtectionStopped', 'ProtectionPaused'</param>
+        /// <param name="protectionState">Protection state of the backup
+        /// engine. Possible values include: 'Invalid', 'IRPending',
+        /// 'Protected', 'ProtectionError', 'ProtectionStopped',
+        /// 'ProtectionPaused'</param>
         /// <param name="isScheduledForDeferredDelete">To check if backup item
         /// is scheduled for deferred delete</param>
         /// <param name="extendedInfo">Extended info of the backup
@@ -90,7 +91,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string BackupEngineName { get; set; }
 
         /// <summary>
-        /// Gets or sets protection state of the backupengine. Possible values
+        /// Gets or sets protection state of the backup engine. Possible values
         /// include: 'Invalid', 'IRPending', 'Protected', 'ProtectionError',
         /// 'ProtectionStopped', 'ProtectionPaused'
         /// </summary>

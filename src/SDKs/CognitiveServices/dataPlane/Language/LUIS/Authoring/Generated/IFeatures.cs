@@ -23,7 +23,41 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public partial interface IFeatures
     {
         /// <summary>
-        /// Creates a new phraselist feature.
+        /// [DEPRECATED NOTICE: This operation will soon be removed] Gets all
+        /// the pattern features.
+        /// </summary>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='skip'>
+        /// The number of entries to skip. Default value is 0.
+        /// </param>
+        /// <param name='take'>
+        /// The number of entries to return. Maximum page size is 500. Default
+        /// is 100.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
+        Task<HttpOperationResponse<IList<PatternFeatureInfo>>> ListApplicationVersionPatternFeaturesWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates a new phraselist feature in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -53,7 +87,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<int?>> AddPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, PhraselistCreateObject phraselistCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the phraselist features.
+        /// Gets all the phraselist features in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -85,8 +119,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<IList<PhraseListFeatureInfo>>> ListPhraseListsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the extraction features for the specified application
-        /// version.
+        /// Gets all the extraction phraselist and pattern features in a
+        /// version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -118,7 +152,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<FeaturesResponseObject>> ListWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets phraselist feature info.
+        /// Gets phraselist feature info in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -147,7 +181,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         Task<HttpOperationResponse<PhraseListFeatureInfo>> GetPhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the phrases, the state and the name of the phraselist
-        /// feature.
+        /// feature in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -180,7 +214,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> UpdatePhraseListWithHttpMessagesAsync(System.Guid appId, string versionId, int phraselistId, PhraselistUpdateObject phraselistUpdateObject = default(PhraselistUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes a phraselist feature.
+        /// Deletes a phraselist feature from a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.

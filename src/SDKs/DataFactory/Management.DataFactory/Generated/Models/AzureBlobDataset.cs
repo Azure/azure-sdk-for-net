@@ -57,15 +57,23 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// (or Expression with resultType string).</param>
         /// <param name="fileName">The name of the Azure Blob. Type: string (or
         /// Expression with resultType string).</param>
+        /// <param name="modifiedDatetimeStart">The start of Azure Blob's
+        /// modified datetime. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="modifiedDatetimeEnd">The end of Azure Blob's modified
+        /// datetime. Type: string (or Expression with resultType
+        /// string).</param>
         /// <param name="format">The format of the Azure Blob storage.</param>
         /// <param name="compression">The data compression method used for the
         /// blob storage.</param>
-        public AzureBlobDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object folderPath = default(object), object tableRootLocation = default(object), object fileName = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
+        public AzureBlobDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object folderPath = default(object), object tableRootLocation = default(object), object fileName = default(object), object modifiedDatetimeStart = default(object), object modifiedDatetimeEnd = default(object), DatasetStorageFormat format = default(DatasetStorageFormat), DatasetCompression compression = default(DatasetCompression))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             FolderPath = folderPath;
             TableRootLocation = tableRootLocation;
             FileName = fileName;
+            ModifiedDatetimeStart = modifiedDatetimeStart;
+            ModifiedDatetimeEnd = modifiedDatetimeEnd;
             Format = format;
             Compression = compression;
             CustomInit();
@@ -96,6 +104,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.fileName")]
         public object FileName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the start of Azure Blob's modified datetime. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.modifiedDatetimeStart")]
+        public object ModifiedDatetimeStart { get; set; }
+
+        /// <summary>
+        /// Gets or sets the end of Azure Blob's modified datetime. Type:
+        /// string (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.modifiedDatetimeEnd")]
+        public object ModifiedDatetimeEnd { get; set; }
 
         /// <summary>
         /// Gets or sets the format of the Azure Blob storage.

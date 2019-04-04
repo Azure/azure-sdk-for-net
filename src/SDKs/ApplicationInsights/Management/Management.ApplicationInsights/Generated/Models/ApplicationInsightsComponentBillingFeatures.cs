@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// ApplicationInsightsComponentBillingFeatures class.
         /// </summary>
         /// <param name="dataVolumeCap">An Application Insights component daily
-        /// data volumne cap</param>
+        /// data volume cap</param>
         /// <param name="currentBillingFeatures">Current enabled pricing plan.
         /// When the component is in the Enterprise plan, this will list both
         /// 'Basic' and 'Application Insights Enterprise'.</param>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an Application Insights component daily data volumne
+        /// Gets or sets an Application Insights component daily data volume
         /// cap
         /// </summary>
         [JsonProperty(PropertyName = "DataVolumeCap")]

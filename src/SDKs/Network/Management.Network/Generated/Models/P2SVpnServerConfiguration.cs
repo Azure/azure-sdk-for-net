@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the P2SVpnServerConfiguration that is unique within a VirtualWan in
         /// a resource group. This name can be used to access the resource
         /// along with Paren VirtualWan resource name.</param>
-        /// <param name="vpnProtocols">vpnProtocols for the
+        /// <param name="vpnProtocols">VPN protocols for the
         /// P2SVpnServerConfiguration.</param>
         /// <param name="p2SVpnServerConfigVpnClientRootCertificates">VPN
         /// client root certificate of P2SVpnServerConfiguration.</param>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// property of the P2SVpnServerConfiguration resource for point to
         /// site client connection.</param>
         /// <param name="radiusServerSecret">The radius secret property of the
-        /// P2SVpnServerConfiguration resource for for point to site client
+        /// P2SVpnServerConfiguration resource for point to site client
         /// connection.</param>
         /// <param name="provisioningState">The provisioning state of the
         /// P2SVpnServerConfiguration resource. Possible values are:
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string P2SVpnServerConfigurationPropertiesName { get; set; }
 
         /// <summary>
-        /// Gets or sets vpnProtocols for the P2SVpnServerConfiguration.
+        /// Gets or sets VPN protocols for the P2SVpnServerConfiguration.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnProtocols")]
         public IList<string> VpnProtocols { get; set; }
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the radius secret property of the
-        /// P2SVpnServerConfiguration resource for for point to site client
+        /// P2SVpnServerConfiguration resource for point to site client
         /// connection.
         /// </summary>
         [JsonProperty(PropertyName = "properties.radiusServerSecret")]

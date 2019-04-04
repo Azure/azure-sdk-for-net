@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="processServerId">The process server Id from where the
         /// update can be orchestrated.</param>
         /// <param name="port">The port number for discovery.</param>
-        /// <param name="runAsAccountId">The CS account Id which has priviliges
+        /// <param name="runAsAccountId">The CS account Id which has privileges
         /// to update the vCenter.</param>
         public UpdateVCenterRequestProperties(string friendlyName = default(string), string ipAddress = default(string), string processServerId = default(string), string port = default(string), string runAsAccountId = default(string))
         {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string Port { get; set; }
 
         /// <summary>
-        /// Gets or sets the CS account Id which has priviliges to update the
+        /// Gets or sets the CS account Id which has privileges to update the
         /// vCenter.
         /// </summary>
         [JsonProperty(PropertyName = "runAsAccountId")]

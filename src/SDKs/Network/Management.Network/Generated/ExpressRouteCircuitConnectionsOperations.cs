@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-11-01";
+            string apiVersion = "2018-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the express route circuit connection.
         /// </param>
         /// <param name='expressRouteCircuitConnectionParameters'>
-        /// Parameters supplied to the create or update express route circuit circuit
+        /// Parameters supplied to the create or update express route circuit
         /// connection operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-11-01";
+            string apiVersion = "2018-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -585,7 +585,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-11-01";
+            string apiVersion = "2018-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -738,7 +738,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the express route circuit connection.
         /// </param>
         /// <param name='expressRouteCircuitConnectionParameters'>
-        /// Parameters supplied to the create or update express route circuit circuit
+        /// Parameters supplied to the create or update express route circuit
         /// connection operation.
         /// </param>
         /// <param name='customHeaders'>
@@ -788,7 +788,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-11-01";
+            string apiVersion = "2018-12-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

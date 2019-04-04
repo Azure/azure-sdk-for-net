@@ -31,7 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(listResponse);
                 Assert.Single(listResponse);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 var echoApi = listResponse.First();
 

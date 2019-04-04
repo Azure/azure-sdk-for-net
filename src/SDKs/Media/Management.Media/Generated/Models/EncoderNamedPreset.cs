@@ -66,6 +66,16 @@ namespace Microsoft.Azure.Management.Media.Models
         public static readonly EncoderNamedPreset AACGoodQualityAudio = "AACGoodQualityAudio";
 
         /// <summary>
+        /// Exposes an experimental preset for content-aware encoding. Given
+        /// any input content, the service attempts to automatically determine
+        /// the optimal number of layers, appropriate bitrate and resolution
+        /// settings for delivery by adaptive streaming. The underlying
+        /// algorithms will continue to evolve over time. The output will
+        /// contain MP4 files with video and audio interleaved.
+        /// </summary>
+        public static readonly EncoderNamedPreset ContentAwareEncodingExperimental = "ContentAwareEncodingExperimental";
+
+        /// <summary>
         /// Produces a set of 8 GOP-aligned MP4 files, ranging from 6000 kbps
         /// to 400 kbps, and stereo AAC audio. Resolution starts at 1080p and
         /// goes down to 360p.

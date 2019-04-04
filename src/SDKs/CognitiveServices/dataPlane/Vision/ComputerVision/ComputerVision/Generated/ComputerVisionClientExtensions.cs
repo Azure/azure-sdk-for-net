@@ -52,7 +52,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
             /// content is also detected. Objects - detects various objects within an
             /// image, including the approximate location. The Objects argument is only
-            /// available in English.
+            /// available in English. Brands - detects various brands within an image,
+            /// including the approximate location. The Brands argument is only available
+            /// in English.
             /// </param>
             /// <param name='details'>
             /// A string indicating which domain-specific details to return. Multiple
@@ -399,6 +401,58 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             }
 
             /// <summary>
+            /// Use this interface to get the result of a Read operation, employing the
+            /// state-of-the-art Optical Character Recognition (OCR) algorithms optimized
+            /// for text-heavy documents. When you use the Read File interface, the
+            /// response contains a field called "Operation-Location". The
+            /// "Operation-Location" field contains the URL that you must use for your
+            /// "Read Operation Result" operation to access OCR results.​
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='mode'>
+            /// Type of text to recognize. Possible values include: 'Handwritten',
+            /// 'Printed'
+            /// </param>
+            /// <param name='url'>
+            /// Publicly reachable URL of an image.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BatchReadFileHeaders> BatchReadFileAsync(this IComputerVisionClient operations, string url, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BatchReadFileWithHttpMessagesAsync(url, mode, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// This interface is used for getting OCR results of Read operation. The URL
+            /// to this interface should be retrieved from "Operation-Location" field
+            /// returned from Batch Read File interface.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='operationId'>
+            /// Id of read operation returned in the response of the "Batch Read File"
+            /// interface.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReadOperationResult> GetReadOperationResultAsync(this IComputerVisionClient operations, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetReadOperationResultWithHttpMessagesAsync(operationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// This operation extracts a rich set of visual features based on the image
             /// content.
             /// Two input methods are supported -- (1) Uploading an image or (2) specifying
@@ -428,7 +482,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// pornographic in nature (depicts nudity or a sex act).  Sexually suggestive
             /// content is also detected. Objects - detects various objects within an
             /// image, including the approximate location. The Objects argument is only
-            /// available in English.
+            /// available in English. Brands - detects various brands within an image,
+            /// including the approximate location. The Brands argument is only available
+            /// in English.
             /// </param>
             /// <param name='details'>
             /// A string indicating which domain-specific details to return. Multiple
@@ -725,6 +781,35 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             public static async Task<RecognizeTextInStreamHeaders> RecognizeTextInStreamAsync(this IComputerVisionClient operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RecognizeTextInStreamWithHttpMessagesAsync(image, mode, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Use this interface to get the result of a Read Document operation,
+            /// employing the state-of-the-art Optical Character Recognition (OCR)
+            /// algorithms optimized for text-heavy documents. When you use the Read
+            /// Document interface, the response contains a field called
+            /// "Operation-Location". The "Operation-Location" field contains the URL that
+            /// you must use for your "Get Read Result operation" to access OCR results.​
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='image'>
+            /// An image stream.
+            /// </param>
+            /// <param name='mode'>
+            /// Type of text to recognize. Possible values include: 'Handwritten',
+            /// 'Printed'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<BatchReadFileInStreamHeaders> BatchReadFileInStreamAsync(this IComputerVisionClient operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BatchReadFileInStreamWithHttpMessagesAsync(image, mode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

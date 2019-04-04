@@ -12,12 +12,16 @@ namespace Microsoft.Azure.Management.NetApp.Models
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// NetApp account patch resource
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class NetAppAccountPatch : IResource
     {
         /// <summary>
@@ -31,10 +35,22 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <summary>
         /// Initializes a new instance of the NetAppAccountPatch class.
         /// </summary>
+        /// <param name="location">Resource location</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        public NetAppAccountPatch(object tags = default(object))
+        /// <param name="provisioningState">Azure lifecycle management</param>
+        /// <param name="activeDirectories">Active Directories</param>
+        public NetAppAccountPatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string provisioningState = default(string), IList<ActiveDirectory> activeDirectories = default(IList<ActiveDirectory>))
         {
+            Location = location;
+            Id = id;
+            Name = name;
+            Type = type;
             Tags = tags;
+            ProvisioningState = provisioningState;
+            ActiveDirectories = activeDirectories;
             CustomInit();
         }
 
@@ -44,10 +60,46 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets resource location
+        /// </summary>
+        [JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets resource name
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
+
+        /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
         /// Gets or sets resource tags
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public object Tags { get; set; }
+
+        /// <summary>
+        /// Gets azure lifecycle management
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets active Directories
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.activeDirectories")]
+        public IList<ActiveDirectory> ActiveDirectories { get; set; }
 
     }
 }

@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="loadBalancing">Site load balancing. Possible values
         /// include: 'WeightedRoundRobin', 'LeastRequests',
         /// 'LeastResponseTime', 'WeightedTotalTraffic', 'RequestHash'</param>
-        /// <param name="experiments">This is work around for polymophic
+        /// <param name="experiments">This is work around for polymorphic
         /// types.</param>
         /// <param name="limits">Site limits.</param>
         /// <param name="autoHealEnabled">&lt;code&gt;true&lt;/code&gt; if Auto
@@ -118,8 +118,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Id</param>
         /// <param name="xManagedServiceIdentityId">Explicit Managed Service
         /// Identity Id</param>
-        /// <param name="ipSecurityRestrictions">IP security
-        /// restrictions.</param>
+        /// <param name="ipSecurityRestrictions">IP security restrictions for
+        /// main.</param>
+        /// <param name="scmIpSecurityRestrictions">IP security restrictions
+        /// for scm.</param>
+        /// <param name="scmIpSecurityRestrictionsUseMain">IP security
+        /// restrictions for scm to use main.</param>
         /// <param name="http20Enabled">Http20Enabled: configures a web site to
         /// allow clients to connect over http2.0</param>
         /// <param name="minTlsVersion">MinTlsVersion: configures the minimum
@@ -129,7 +133,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// values include: 'AllAllowed', 'FtpsOnly', 'Disabled'</param>
         /// <param name="reservedInstanceCount">Number of reserved instances.
         /// This setting only applies to the Consumption Plan</param>
-        public SiteConfigResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), string nodeVersion = default(string), string linuxFxVersion = default(string), string windowsFxVersion = default(string), bool? requestTracingEnabled = default(bool?), System.DateTime? requestTracingExpirationTime = default(System.DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IDictionary<string, AzureStorageInfoValue> azureStorageAccounts = default(IDictionary<string, AzureStorageInfoValue>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), SiteMachineKey machineKey = default(SiteMachineKey), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), string appCommandLine = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), PushSettings push = default(PushSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), string autoSwapSlotName = default(string), bool? localMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), IList<IpSecurityRestriction> ipSecurityRestrictions = default(IList<IpSecurityRestriction>), bool? http20Enabled = default(bool?), string minTlsVersion = default(string), string ftpsState = default(string), int? reservedInstanceCount = default(int?))
+        public SiteConfigResource(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? numberOfWorkers = default(int?), IList<string> defaultDocuments = default(IList<string>), string netFrameworkVersion = default(string), string phpVersion = default(string), string pythonVersion = default(string), string nodeVersion = default(string), string linuxFxVersion = default(string), string windowsFxVersion = default(string), bool? requestTracingEnabled = default(bool?), System.DateTime? requestTracingExpirationTime = default(System.DateTime?), bool? remoteDebuggingEnabled = default(bool?), string remoteDebuggingVersion = default(string), bool? httpLoggingEnabled = default(bool?), int? logsDirectorySizeLimit = default(int?), bool? detailedErrorLoggingEnabled = default(bool?), string publishingUsername = default(string), IList<NameValuePair> appSettings = default(IList<NameValuePair>), IDictionary<string, AzureStorageInfoValue> azureStorageAccounts = default(IDictionary<string, AzureStorageInfoValue>), IList<ConnStringInfo> connectionStrings = default(IList<ConnStringInfo>), SiteMachineKey machineKey = default(SiteMachineKey), IList<HandlerMapping> handlerMappings = default(IList<HandlerMapping>), string documentRoot = default(string), string scmType = default(string), bool? use32BitWorkerProcess = default(bool?), bool? webSocketsEnabled = default(bool?), bool? alwaysOn = default(bool?), string javaVersion = default(string), string javaContainer = default(string), string javaContainerVersion = default(string), string appCommandLine = default(string), ManagedPipelineMode? managedPipelineMode = default(ManagedPipelineMode?), IList<VirtualApplication> virtualApplications = default(IList<VirtualApplication>), SiteLoadBalancing? loadBalancing = default(SiteLoadBalancing?), Experiments experiments = default(Experiments), SiteLimits limits = default(SiteLimits), bool? autoHealEnabled = default(bool?), AutoHealRules autoHealRules = default(AutoHealRules), string tracingOptions = default(string), string vnetName = default(string), CorsSettings cors = default(CorsSettings), PushSettings push = default(PushSettings), ApiDefinitionInfo apiDefinition = default(ApiDefinitionInfo), string autoSwapSlotName = default(string), bool? localMySqlEnabled = default(bool?), int? managedServiceIdentityId = default(int?), int? xManagedServiceIdentityId = default(int?), IList<IpSecurityRestriction> ipSecurityRestrictions = default(IList<IpSecurityRestriction>), IList<IpSecurityRestriction> scmIpSecurityRestrictions = default(IList<IpSecurityRestriction>), bool? scmIpSecurityRestrictionsUseMain = default(bool?), bool? http20Enabled = default(bool?), string minTlsVersion = default(string), string ftpsState = default(string), int? reservedInstanceCount = default(int?))
             : base(id, name, kind, type)
         {
             NumberOfWorkers = numberOfWorkers;
@@ -179,6 +183,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ManagedServiceIdentityId = managedServiceIdentityId;
             XManagedServiceIdentityId = xManagedServiceIdentityId;
             IpSecurityRestrictions = ipSecurityRestrictions;
+            ScmIpSecurityRestrictions = scmIpSecurityRestrictions;
+            ScmIpSecurityRestrictionsUseMain = scmIpSecurityRestrictionsUseMain;
             Http20Enabled = http20Enabled;
             MinTlsVersion = minTlsVersion;
             FtpsState = ftpsState;
@@ -410,7 +416,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public SiteLoadBalancing? LoadBalancing { get; set; }
 
         /// <summary>
-        /// Gets or sets this is work around for polymophic types.
+        /// Gets or sets this is work around for polymorphic types.
         /// </summary>
         [JsonProperty(PropertyName = "properties.experiments")]
         public Experiments Experiments { get; set; }
@@ -493,10 +499,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public int? XManagedServiceIdentityId { get; set; }
 
         /// <summary>
-        /// Gets or sets IP security restrictions.
+        /// Gets or sets IP security restrictions for main.
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipSecurityRestrictions")]
         public IList<IpSecurityRestriction> IpSecurityRestrictions { get; set; }
+
+        /// <summary>
+        /// Gets or sets IP security restrictions for scm.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scmIpSecurityRestrictions")]
+        public IList<IpSecurityRestriction> ScmIpSecurityRestrictions { get; set; }
+
+        /// <summary>
+        /// Gets or sets IP security restrictions for scm to use main.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.scmIpSecurityRestrictionsUseMain")]
+        public bool? ScmIpSecurityRestrictionsUseMain { get; set; }
 
         /// <summary>
         /// Gets or sets http20Enabled: configures a web site to allow clients
@@ -538,16 +556,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
             if (Push != null)
             {
                 Push.Validate();
-            }
-            if (IpSecurityRestrictions != null)
-            {
-                foreach (var element in IpSecurityRestrictions)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
             if (ReservedInstanceCount > 10)
             {

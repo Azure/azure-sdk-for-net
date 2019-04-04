@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// the backup engine.</param>
         /// <param name="diskCount">Number of disks in the backup
         /// engine.</param>
-        /// <param name="usedDiskSpace">Diskspace used in the backup
+        /// <param name="usedDiskSpace">Disk space used in the backup
         /// engine.</param>
-        /// <param name="availableDiskSpace">Diskspace currently available in
+        /// <param name="availableDiskSpace">Disk space currently available in
         /// the backup engine.</param>
         /// <param name="refreshedAt">Last refresh time in the backup
         /// engine.</param>
@@ -87,13 +87,13 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public int? DiskCount { get; set; }
 
         /// <summary>
-        /// Gets or sets diskspace used in the backup engine.
+        /// Gets or sets disk space used in the backup engine.
         /// </summary>
         [JsonProperty(PropertyName = "usedDiskSpace")]
         public double? UsedDiskSpace { get; set; }
 
         /// <summary>
-        /// Gets or sets diskspace currently available in the backup engine.
+        /// Gets or sets disk space currently available in the backup engine.
         /// </summary>
         [JsonProperty(PropertyName = "availableDiskSpace")]
         public double? AvailableDiskSpace { get; set; }

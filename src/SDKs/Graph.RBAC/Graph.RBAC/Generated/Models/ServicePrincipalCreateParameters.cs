@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
     /// <summary>
     /// Request parameters for creating a new service principal.
     /// </summary>
-    public partial class ServicePrincipalCreateParameters
+    public partial class ServicePrincipalCreateParameters : ServicePrincipalBase
     {
         /// <summary>
         /// Initializes a new instance of the ServicePrincipalCreateParameters
@@ -34,21 +34,24 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// Initializes a new instance of the ServicePrincipalCreateParameters
         /// class.
         /// </summary>
-        /// <param name="appId">application Id</param>
-        /// <param name="accountEnabled">Whether the account is enabled</param>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        /// <param name="keyCredentials">A collection of KeyCredential
-        /// objects.</param>
-        /// <param name="passwordCredentials">A collection of
-        /// PasswordCredential objects</param>
-        public ServicePrincipalCreateParameters(string appId, bool accountEnabled, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>))
+        /// <param name="appId">The application ID.</param>
+        /// <param name="accountEnabled">whether or not the service principal
+        /// account is enabled</param>
+        /// <param name="appRoleAssignmentRequired">Specifies whether an
+        /// AppRoleAssignment to a user or group is required before Azure AD
+        /// will issue a user or access token to the application.</param>
+        /// <param name="keyCredentials">The collection of key credentials
+        /// associated with the service principal.</param>
+        /// <param name="passwordCredentials">The collection of password
+        /// credentials associated with the service principal.</param>
+        /// <param name="servicePrincipalType">the type of the service
+        /// principal</param>
+        /// <param name="tags">Optional list of tags that you can apply to your
+        /// service principals. Not nullable.</param>
+        public ServicePrincipalCreateParameters(string appId, string accountEnabled = default(string), bool? appRoleAssignmentRequired = default(bool?), IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>), string servicePrincipalType = default(string), IList<string> tags = default(IList<string>))
+            : base(accountEnabled, appRoleAssignmentRequired, keyCredentials, passwordCredentials, servicePrincipalType, tags)
         {
-            AdditionalProperties = additionalProperties;
             AppId = appId;
-            AccountEnabled = accountEnabled;
-            KeyCredentials = keyCredentials;
-            PasswordCredentials = passwordCredentials;
             CustomInit();
         }
 
@@ -58,35 +61,10 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets application Id
+        /// Gets or sets the application ID.
         /// </summary>
         [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether the account is enabled
-        /// </summary>
-        [JsonProperty(PropertyName = "accountEnabled")]
-        public bool AccountEnabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of KeyCredential objects.
-        /// </summary>
-        [JsonProperty(PropertyName = "keyCredentials")]
-        public IList<KeyCredential> KeyCredentials { get; set; }
-
-        /// <summary>
-        /// Gets or sets a collection of PasswordCredential objects
-        /// </summary>
-        [JsonProperty(PropertyName = "passwordCredentials")]
-        public IList<PasswordCredential> PasswordCredentials { get; set; }
 
         /// <summary>
         /// Validate the object.

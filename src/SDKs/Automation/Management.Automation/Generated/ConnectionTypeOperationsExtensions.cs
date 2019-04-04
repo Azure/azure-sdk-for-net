@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Automation
     public static partial class ConnectionTypeOperationsExtensions
     {
             /// <summary>
-            /// Delete the connectiontype.
+            /// Delete the connection type.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Automation
             /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
-            /// The name of connectiontype.
+            /// The name of connection type.
             /// </param>
             public static void Delete(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName)
             {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Delete the connectiontype.
+            /// Delete the connection type.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Automation
             /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
-            /// The name of connectiontype.
+            /// The name of connection type.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Retrieve the connectiontype identified by connectiontype name.
+            /// Retrieve the connection type identified by connection type name.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Automation
             /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
-            /// The name of connectiontype.
+            /// The name of connection type.
             /// </param>
             public static ConnectionType Get(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName)
             {
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Retrieve the connectiontype identified by connectiontype name.
+            /// Retrieve the connection type identified by connection type name.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Automation
             /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
-            /// The name of connectiontype.
+            /// The name of connection type.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Create a connectiontype.
+            /// Create a connection type.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -128,10 +128,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
-            /// The parameters supplied to the create or update connectiontype operation.
+            /// The parameters supplied to the create or update connection type operation.
             /// </param>
             /// <param name='parameters'>
-            /// The parameters supplied to the create or update connectiontype operation.
+            /// The parameters supplied to the create or update connection type operation.
             /// </param>
             public static ConnectionType CreateOrUpdate(this IConnectionTypeOperations operations, string resourceGroupName, string automationAccountName, string connectionTypeName, ConnectionTypeCreateOrUpdateParameters parameters)
             {
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Create a connectiontype.
+            /// Create a connection type.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -152,10 +152,10 @@ namespace Microsoft.Azure.Management.Automation
             /// The name of the automation account.
             /// </param>
             /// <param name='connectionTypeName'>
-            /// The parameters supplied to the create or update connectiontype operation.
+            /// The parameters supplied to the create or update connection type operation.
             /// </param>
             /// <param name='parameters'>
-            /// The parameters supplied to the create or update connectiontype operation.
+            /// The parameters supplied to the create or update connection type operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Retrieve a list of connectiontypes.
+            /// Retrieve a list of connection types.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Retrieve a list of connectiontypes.
+            /// Retrieve a list of connection types.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Retrieve a list of connectiontypes.
+            /// Retrieve a list of connection types.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Automation
             }
 
             /// <summary>
-            /// Retrieve a list of connectiontypes.
+            /// Retrieve a list of connection types.
             /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
             /// </summary>
             /// <param name='operations'>

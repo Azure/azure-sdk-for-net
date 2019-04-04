@@ -120,9 +120,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='parameters'>
             /// resource backed up item
             /// </param>
-            public static void CreateOrUpdate(this IProtectedItemsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, ProtectedItemResource parameters)
+            public static ProtectedItemResource CreateOrUpdate(this IProtectedItemsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, ProtectedItemResource parameters)
             {
-                operations.CreateOrUpdateAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -156,9 +156,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateOrUpdateAsync(this IProtectedItemsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, ProtectedItemResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProtectedItemResource> CreateOrUpdateAsync(this IProtectedItemsOperations operations, string vaultName, string resourceGroupName, string fabricName, string containerName, string protectedItemName, ProtectedItemResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CreateOrUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(vaultName, resourceGroupName, fabricName, containerName, protectedItemName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

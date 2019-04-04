@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the DetectorAbnormalTimePeriod class.
         /// </summary>
-        /// <param name="startTime">Start time of the corelated event</param>
-        /// <param name="endTime">End time of the corelated event</param>
+        /// <param name="startTime">Start time of the correlated event</param>
+        /// <param name="endTime">End time of the correlated event</param>
         /// <param name="message">Message describing the event</param>
         /// <param name="source">Represents the name of the Detector</param>
         /// <param name="priority">Represents the rank of the Detector</param>
@@ -61,13 +61,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets start time of the corelated event
+        /// Gets or sets start time of the correlated event
         /// </summary>
         [JsonProperty(PropertyName = "startTime")]
         public System.DateTime? StartTime { get; set; }
 
         /// <summary>
-        /// Gets or sets end time of the corelated event
+        /// Gets or sets end time of the correlated event
         /// </summary>
         [JsonProperty(PropertyName = "endTime")]
         public System.DateTime? EndTime { get; set; }

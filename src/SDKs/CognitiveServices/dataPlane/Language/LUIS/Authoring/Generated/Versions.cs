@@ -51,8 +51,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         public LUISAuthoringClient Client { get; private set; }
 
         /// <summary>
-        /// Creates a new version using the current snapshot of the selected
-        /// application version.
+        /// Creates a new version from the selected version.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -84,7 +83,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<string>> CloneWithHttpMessagesAsync(System.Guid appId, string versionId, TaskUpdateObject versionCloneObject = default(TaskUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<string>> CloneWithHttpMessagesAsync(System.Guid appId, string versionId, TaskUpdateObject versionCloneObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -93,6 +92,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             if (versionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "versionId");
+            }
+            if (versionCloneObject == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "versionCloneObject");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -220,7 +223,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Gets the application versions info.
+        /// Gets a list of versions for this application ID.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -402,7 +405,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Gets the version info.
+        /// Gets the version information such as date created, last modified date,
+        /// endpoint URL, count of intents and entities, training and publishing
+        /// status.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -1225,7 +1230,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Deleted an unlabelled utterance.
+        /// Deleted an unlabelled utterance in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.

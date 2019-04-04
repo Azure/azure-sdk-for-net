@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="password">The password corresponding to the user name
         /// that you provided in the username field.</param>
         /// <param name="useEncryptedEndpoints">Specifies whether the data

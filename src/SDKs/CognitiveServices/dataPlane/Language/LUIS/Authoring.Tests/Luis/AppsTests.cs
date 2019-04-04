@@ -177,14 +177,13 @@
         {
             UseClientFor(async client =>
             {
-                var result = await client.Apps.PublishAsync(appId, new ApplicationPublishObject
+                var result = await client.Apps.PublishAsync(GlobalAppId, new ApplicationPublishObject
                 {
                     IsStaging = false,
-                    Region = "westus",
                     VersionId = "0.1"
                 });
 
-                Assert.Equal("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + appId, result.EndpointUrl);
+                Assert.Equal("https://westus.api.cognitive.microsoft.com/luis/v2.0/apps/" + GlobalAppId, result.EndpointUrl);
                 Assert.Equal("westus", result.EndpointRegion);
                 Assert.False(result.IsStaging);
             });
@@ -258,7 +257,7 @@
 
                 await client.Apps.UpdateSettingsAsync(testAppId, new ApplicationSettingUpdateObject
                 {
-                    PublicProperty = true
+                    IsPublic = true
                 });
 
                 // Assert
@@ -391,8 +390,8 @@
         {
             UseClientFor(async client =>
             {
-                var resultsUS = await client.Apps.ListAvailableCustomPrebuiltDomainsForCultureAsync("en-US");
-                var resultsCN = await client.Apps.ListAvailableCustomPrebuiltDomainsForCultureAsync("zh-CN");
+                var resultsUS = await client.Apps.ListAvailableCustomPrebuiltDomainsForCultureAsync("en-us");
+                var resultsCN = await client.Apps.ListAvailableCustomPrebuiltDomainsForCultureAsync("zh-cn");
 
                 foreach (var resultUS in resultsUS)
                 {
@@ -412,7 +411,7 @@
             {
                 var domain = new PrebuiltDomainCreateObject
                 {
-                    Culture = "en-US",
+                    Culture = "en-us",
                     DomainName = "Calendar"
                 };
 
@@ -423,17 +422,6 @@
 
                 // Assert
                 Assert.True(result != Guid.Empty);
-            });
-        }
-        
-        [Fact]
-        public void ListCortanaEndpoints()
-        {
-            UseClientFor(async client =>
-            {
-                var result = await client.Apps.ListCortanaEndpointsAsync();
-
-                Assert.True(result.EndpointUrls.Values.All(url => Uri.TryCreate(url, UriKind.Absolute, out Uri uri)));
             });
         }
     }

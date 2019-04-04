@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// SQL specific recoverypoint, specifcally encaspulates full/diff
-    /// recoverypoint alongwith extended info
+    /// SQL specific recovery point, specifically encapsulates full/diff
+    /// recovery point along with extended info
     /// </summary>
     public partial class AzureWorkloadSQLRecoveryPoint : AzureWorkloadRecoveryPoint
     {
@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the AzureWorkloadSQLRecoveryPoint
         /// class.
         /// </summary>
-        /// <param name="recoveryPointTimeInUTC">UTC time at which
-        /// recoverypoint was created</param>
+        /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
+        /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
         /// 'Invalid', 'Full', 'Log', 'Differential'</param>
         /// <param name="extendedInfo">Extended Info that provides data

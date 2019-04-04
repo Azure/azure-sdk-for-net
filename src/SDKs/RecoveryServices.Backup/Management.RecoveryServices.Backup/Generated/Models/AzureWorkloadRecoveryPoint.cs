@@ -14,8 +14,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// Workload specific recoverypoint, specifcally encaspulates full/diff
-    /// recoverypoint
+    /// Workload specific recovery point, specifically encapsulates full/diff
+    /// recovery point
     /// </summary>
     public partial class AzureWorkloadRecoveryPoint : RecoveryPoint
     {
@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Initializes a new instance of the AzureWorkloadRecoveryPoint class.
         /// </summary>
-        /// <param name="recoveryPointTimeInUTC">UTC time at which
-        /// recoverypoint was created</param>
+        /// <param name="recoveryPointTimeInUTC">UTC time at which recovery
+        /// point was created</param>
         /// <param name="type">Type of restore point. Possible values include:
         /// 'Invalid', 'Full', 'Log', 'Differential'</param>
         public AzureWorkloadRecoveryPoint(System.DateTime? recoveryPointTimeInUTC = default(System.DateTime?), string type = default(string))
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets UTC time at which recoverypoint was created
+        /// Gets or sets UTC time at which recovery point was created
         /// </summary>
         [JsonProperty(PropertyName = "recoveryPointTimeInUTC")]
         public System.DateTime? RecoveryPointTimeInUTC { get; set; }

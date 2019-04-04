@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     using System.Linq;
 
     /// <summary>
-    /// Azure VM workload-specific workload item representing SAP Hana
+    /// Azure VM workload-specific workload item representing SAP HANA
     /// Database.
     /// </summary>
     [Newtonsoft.Json.JsonObject("SAPHanaDatabase")]
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureVmWorkloadSAPHanaDatabaseWorkloadItem class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent to
+        /// <param name="backupManagementType">Type of backup management to
         /// backup an item.</param>
         /// <param name="workloadType">Type of workload for the backup
         /// management</param>
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="isAutoProtectable">Indicates if workload item is
         /// auto-protectable</param>
         /// <param name="subinquireditemcount">For instance or AG, indicates
-        /// number of DB's present</param>
+        /// number of DBs present</param>
         /// <param name="subWorkloadItemCount">For instance or AG, indicates
-        /// number of DB's to be protected</param>
+        /// number of DBs to be protected</param>
         public AzureVmWorkloadSAPHanaDatabaseWorkloadItem(string backupManagementType = default(string), string workloadType = default(string), string friendlyName = default(string), string protectionState = default(string), string parentName = default(string), string serverName = default(string), bool? isAutoProtectable = default(bool?), int? subinquireditemcount = default(int?), int? subWorkloadItemCount = default(int?))
             : base(backupManagementType, workloadType, friendlyName, protectionState, parentName, serverName, isAutoProtectable, subinquireditemcount, subWorkloadItemCount)
         {

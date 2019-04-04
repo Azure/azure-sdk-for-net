@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.WebSites.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -38,6 +37,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// SubnetMask property must not be specified.</param>
         /// <param name="subnetMask">Subnet mask for the range of IP addresses
         /// the restriction is valid for.</param>
+        /// <param name="vnetSubnetResourceId">Virtual network resource
+        /// id</param>
+        /// <param name="vnetTrafficTag">(internal) Vnet traffic tag</param>
+        /// <param name="subnetTrafficTag">(internal) Subnet traffic
+        /// tag</param>
         /// <param name="action">Allow or Deny access for this IP
         /// range.</param>
         /// <param name="tag">Defines what this IP filter will be used for.
@@ -46,10 +50,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="priority">Priority of IP restriction rule.</param>
         /// <param name="name">IP restriction rule name.</param>
         /// <param name="description">IP restriction rule description.</param>
-        public IpSecurityRestriction(string ipAddress, string subnetMask = default(string), string action = default(string), IpFilterTag? tag = default(IpFilterTag?), int? priority = default(int?), string name = default(string), string description = default(string))
+        public IpSecurityRestriction(string ipAddress = default(string), string subnetMask = default(string), string vnetSubnetResourceId = default(string), int? vnetTrafficTag = default(int?), int? subnetTrafficTag = default(int?), string action = default(string), IpFilterTag? tag = default(IpFilterTag?), int? priority = default(int?), string name = default(string), string description = default(string))
         {
             IpAddress = ipAddress;
             SubnetMask = subnetMask;
+            VnetSubnetResourceId = vnetSubnetResourceId;
+            VnetTrafficTag = vnetTrafficTag;
+            SubnetTrafficTag = subnetTrafficTag;
             Action = action;
             Tag = tag;
             Priority = priority;
@@ -79,6 +86,24 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "subnetMask")]
         public string SubnetMask { get; set; }
+
+        /// <summary>
+        /// Gets or sets virtual network resource id
+        /// </summary>
+        [JsonProperty(PropertyName = "vnetSubnetResourceId")]
+        public string VnetSubnetResourceId { get; set; }
+
+        /// <summary>
+        /// Gets or sets (internal) Vnet traffic tag
+        /// </summary>
+        [JsonProperty(PropertyName = "vnetTrafficTag")]
+        public int? VnetTrafficTag { get; set; }
+
+        /// <summary>
+        /// Gets or sets (internal) Subnet traffic tag
+        /// </summary>
+        [JsonProperty(PropertyName = "subnetTrafficTag")]
+        public int? SubnetTrafficTag { get; set; }
 
         /// <summary>
         /// Gets or sets allow or Deny access for this IP range.
@@ -112,18 +137,5 @@ namespace Microsoft.Azure.Management.WebSites.Models
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (IpAddress == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "IpAddress");
-            }
-        }
     }
 }

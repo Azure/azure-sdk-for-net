@@ -40,8 +40,8 @@ namespace Storage.Tests.Helpers
         // These are used to create default accounts
         public static string DefaultLocation = IsTestTenant ? null : "eastus2(stage)";
         public static string DefaultRGLocation = IsTestTenant ? null : "eastus2";
-        public static SkuName DefaultSkuName = SkuName.StandardGRS;
-        public static Kind DefaultKind = Kind.Storage;
+        public static string DefaultSkuName = SkuName.StandardGRS;
+        public static string DefaultKind = Kind.Storage;
         public static Dictionary<string, string> DefaultTags = new Dictionary<string, string> 
             {
                 {"key1","value1"},

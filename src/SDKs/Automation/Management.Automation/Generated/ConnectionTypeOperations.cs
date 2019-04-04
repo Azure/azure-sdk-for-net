@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Automation
         public AutomationClient Client { get; private set; }
 
         /// <summary>
-        /// Delete the connectiontype.
+        /// Delete the connection type.
         /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the automation account.
         /// </param>
         /// <param name='connectionTypeName'>
-        /// The name of connectiontype.
+        /// The name of connection type.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.Automation
         }
 
         /// <summary>
-        /// Retrieve the connectiontype identified by connectiontype name.
+        /// Retrieve the connection type identified by connection type name.
         /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the automation account.
         /// </param>
         /// <param name='connectionTypeName'>
-        /// The name of connectiontype.
+        /// The name of connection type.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Management.Automation
         }
 
         /// <summary>
-        /// Create a connectiontype.
+        /// Create a connection type.
         /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -468,10 +468,10 @@ namespace Microsoft.Azure.Management.Automation
         /// The name of the automation account.
         /// </param>
         /// <param name='connectionTypeName'>
-        /// The parameters supplied to the create or update connectiontype operation.
+        /// The parameters supplied to the create or update connection type operation.
         /// </param>
         /// <param name='parameters'>
-        /// The parameters supplied to the create or update connectiontype operation.
+        /// The parameters supplied to the create or update connection type operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -708,7 +708,7 @@ namespace Microsoft.Azure.Management.Automation
         }
 
         /// <summary>
-        /// Retrieve a list of connectiontypes.
+        /// Retrieve a list of connection types.
         /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -913,7 +913,7 @@ namespace Microsoft.Azure.Management.Automation
         }
 
         /// <summary>
-        /// Retrieve a list of connectiontypes.
+        /// Retrieve a list of connection types.
         /// <see href="http://aka.ms/azureautomationsdk/connectiontypeoperations" />
         /// </summary>
         /// <param name='nextPageLink'>

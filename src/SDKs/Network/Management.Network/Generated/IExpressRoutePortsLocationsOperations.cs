@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Network
         /// <summary>
         /// Retrieves all ExpressRoutePort peering locations. Does not return
         /// available bandwidths for each location. Available bandwidths can
-        /// only be obtained when retriving a specific peering location.
+        /// only be obtained when retrieving a specific peering location.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Network
         /// <summary>
         /// Retrieves all ExpressRoutePort peering locations. Does not return
         /// available bandwidths for each location. Available bandwidths can
-        /// only be obtained when retriving a specific peering location.
+        /// only be obtained when retrieving a specific peering location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -39,7 +39,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// query trigger runs are TriggerName, TriggerRunTimestamp and Status.
         /// Possible values include: 'PipelineName', 'Status', 'RunStart',
         /// 'RunEnd', 'ActivityName', 'ActivityRunStart', 'ActivityRunEnd',
-        /// 'ActivityType', 'TriggerName', 'TriggerRunTimestamp'</param>
+        /// 'ActivityType', 'TriggerName', 'TriggerRunTimestamp', 'RunGroupId',
+        /// 'LatestOnly'</param>
         /// <param name="operatorProperty">Operator to be used for filter.
         /// Possible values include: 'Equals', 'NotEquals', 'In',
         /// 'NotIn'</param>
@@ -65,7 +66,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// query trigger runs are TriggerName, TriggerRunTimestamp and Status.
         /// Possible values include: 'PipelineName', 'Status', 'RunStart',
         /// 'RunEnd', 'ActivityName', 'ActivityRunStart', 'ActivityRunEnd',
-        /// 'ActivityType', 'TriggerName', 'TriggerRunTimestamp'
+        /// 'ActivityType', 'TriggerName', 'TriggerRunTimestamp', 'RunGroupId',
+        /// 'LatestOnly'
         /// </summary>
         [JsonProperty(PropertyName = "operand")]
         public string Operand { get; set; }

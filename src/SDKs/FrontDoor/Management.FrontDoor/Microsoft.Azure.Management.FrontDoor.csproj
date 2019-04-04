@@ -7,10 +7,13 @@
 		<PackageId>Microsoft.Azure.Management.FrontDoor</PackageId>
 		<Description>Provides management capabilities for Front Door services.</Description>
 		<AssemblyName>Microsoft.Azure.Management.FrontDoor</AssemblyName>
-		<Version>0.10.0-preview</Version>
-		<PackageTags>Microsoft Azure Front Door management;FrontDoor;Front Door management;</PackageTags>    
+		<Version>0.13.0-preview</Version>
+		<PackageTags>Microsoft Azure Front Door management;FrontDoor;Front Door management;</PackageTags>
 		<PackageReleaseNotes>
-			Taking dependency on 10.0.3 version of Newtonsoft nuget package.
+			<![CDATA[
+				Add capability to add redirect route configuration for routing rule
+                                Add backend pool settings that apply to all backend pools
+			]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>

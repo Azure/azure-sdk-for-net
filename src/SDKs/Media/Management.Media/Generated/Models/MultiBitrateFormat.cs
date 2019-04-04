@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="outputFiles">The list of output files to produce.
         /// Each entry in the list is a set of audio and video layer labels to
         /// be muxed together .</param>
-        public MultiBitrateFormat(string filenamePattern = default(string), IList<OutputFile> outputFiles = default(IList<OutputFile>))
+        public MultiBitrateFormat(string filenamePattern, IList<OutputFile> outputFiles = default(IList<OutputFile>))
             : base(filenamePattern)
         {
             OutputFiles = outputFiles;
@@ -68,5 +68,25 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "outputFiles")]
         public IList<OutputFile> OutputFiles { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+            if (OutputFiles != null)
+            {
+                foreach (var element in OutputFiles)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

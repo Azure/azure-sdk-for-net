@@ -89,8 +89,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Replaces the current users access list with the one sent in the body. If an
-            /// empty list is sent, all access to other users will be removed.
+            /// Replaces the current user access list with the new list sent in the body.
+            /// If an empty list is sent, all access to other users will be removed.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The application ID.
             /// </param>
             /// <param name='collaborators'>
-            /// A model containing a list of user's email addresses.
+            /// A model containing a list of user email addresses.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

@@ -1,9 +1,14 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <ItemGroup>
-    <!-- Issue https://github.com/Azure/azure-sdk-for-net/issues/5089 some KeyVault tests don't work on linix -->
-    <ExcludeProjects Include="$(RepoSrcPath)\KeyVault\data-plane\**\Microsoft.Azure.KeyVault.Tests.csproj" Condition="'$(OS)' != 'Windows_NT'" />
-    <ExcludeProjects Include="$(RepoSrcPath)\*\data-plane\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
+    <!-- Issue https://github.com/Azure/azure-sdk-for-net/issues/5089 some KeyVault tests don't work on linux -->
+    <ExcludeDataPlaneProjects Include="$(RepoSrcPath)\KeyVault\data-plane\**\Microsoft.Azure.KeyVault.Tests.csproj" Condition="'$(OS)' != 'Windows_NT'" />
+    <ExcludeDataPlaneProjects Include="$(RepoSrcPath)\*\data-plane\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
+    <DataPlaneProjectReference Include="$(RepoSrcPath)\*\data-plane\**\*.*proj" Exclude="@(ExcludeDataPlaneProjects)" />
 
-    <ProjectReference Include="$(RepoSrcPath)\*\data-plane\**\*.*proj" Exclude="@(ExcludeProjects)" />
+    <!-- All client libraries start with Azure.* -->
+    <ExcludeClientProjects Include="$(RepoRoot)\sdk\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
+    <ClientProjectReferences Include="$(RepoRoot)\sdk\*\Azure.*\**\*.*proj" Exclude="@(ExcludeClientProjects)" />
+
+    <ProjectReference Include="@(DataPlaneProjectReference);@(ClientProjectReferences)" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters allowd to update for a server.
+    /// Parameters allowed to update for a server.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ServerUpdateParameters
@@ -39,19 +39,22 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// <param name="administratorLoginPassword">The password of the
         /// administrator login.</param>
         /// <param name="version">The version of a server. Possible values
-        /// include: '9.5', '9.6'</param>
+        /// include: '9.5', '9.6', '10', '10.0', '10.2'</param>
         /// <param name="sslEnforcement">Enable ssl enforcement or not when
         /// connect to server. Possible values include: 'Enabled',
         /// 'Disabled'</param>
+        /// <param name="replicationRole">The replication role of the
+        /// server.</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs.</param>
-        public ServerUpdateParameters(Sku sku = default(Sku), StorageProfile storageProfile = default(StorageProfile), string administratorLoginPassword = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public ServerUpdateParameters(Sku sku = default(Sku), StorageProfile storageProfile = default(StorageProfile), string administratorLoginPassword = default(string), string version = default(string), SslEnforcementEnum? sslEnforcement = default(SslEnforcementEnum?), string replicationRole = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             StorageProfile = storageProfile;
             AdministratorLoginPassword = administratorLoginPassword;
             Version = version;
             SslEnforcement = sslEnforcement;
+            ReplicationRole = replicationRole;
             Tags = tags;
             CustomInit();
         }
@@ -81,7 +84,7 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
 
         /// <summary>
         /// Gets or sets the version of a server. Possible values include:
-        /// '9.5', '9.6'
+        /// '9.5', '9.6', '10', '10.0', '10.2'
         /// </summary>
         [JsonProperty(PropertyName = "properties.version")]
         public string Version { get; set; }
@@ -92,6 +95,12 @@ namespace Microsoft.Azure.Management.PostgreSQL.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.sslEnforcement")]
         public SslEnforcementEnum? SslEnforcement { get; set; }
+
+        /// <summary>
+        /// Gets or sets the replication role of the server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.replicationRole")]
+        public string ReplicationRole { get; set; }
 
         /// <summary>
         /// Gets or sets application-specific metadata in the form of key-value

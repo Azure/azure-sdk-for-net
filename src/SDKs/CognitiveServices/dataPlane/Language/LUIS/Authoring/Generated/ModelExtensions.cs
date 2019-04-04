@@ -22,7 +22,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public static partial class ModelExtensions
     {
             /// <summary>
-            /// Adds an intent classifier to the application.
+            /// Adds an intent to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='intentCreateObject'>
-            /// A model object containing the name of the new intent classifier.
+            /// A model object containing the name of the new intent.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the intent models.
+            /// Gets information about the intent models in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds an entity extractor to the application.
+            /// Adds a simple entity extractor to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='modelCreateObject'>
-            /// A model object containing the name for the new entity extractor.
+            /// A model object containing the name for the new simple entity extractor.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -103,7 +103,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the entity models.
+            /// Gets information about all the simple entity models in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,7 +133,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a hierarchical entity extractor to the application version.
+            /// Adds a hierarchical entity extractor to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -158,7 +159,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the hierarchical entity models.
+            /// Gets information about all the hierarchical entity models in a version of
+            /// the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -187,7 +189,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a composite entity extractor to the application.
+            /// Adds a composite entity extractor to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -213,7 +215,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the composite entity models.
+            /// Gets information about all the composite entity models in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -242,7 +245,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the closedlist models.
+            /// Gets information about all the list entity models in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -271,7 +275,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a closed list model to the application.
+            /// Adds a list entity model to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -283,8 +287,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='closedListModelCreateObject'>
-            /// A model containing the name and words for the new closed list entity
-            /// extractor.
+            /// A model containing the name and words for the new list entity extractor.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -298,7 +301,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a list of prebuilt entity extractors to the application.
+            /// Adds a list of prebuilt entities to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -324,7 +327,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the prebuilt entity models.
+            /// Gets information about all the prebuilt entities in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -353,7 +357,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets all the available prebuilt entity extractors for the application.
+            /// Gets all the available prebuilt entities in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -376,7 +380,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the application version models.
+            /// Gets information about all the intent and entity models in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -405,7 +410,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets the utterances for the given model in the given app version.
+            /// Gets the example utterances for the given intent or entity model in a
+            /// version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -437,7 +443,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the intent model.
+            /// Gets information about the intent model in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -463,7 +469,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the name of an intent classifier.
+            /// Updates the name of an intent in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -478,7 +484,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The intent classifier ID.
             /// </param>
             /// <param name='modelUpdateObject'>
-            /// A model object containing the new intent classifier name.
+            /// A model object containing the new intent name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -492,7 +498,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes an intent classifier from the application.
+            /// Deletes an intent from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -507,8 +513,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The intent classifier ID.
             /// </param>
             /// <param name='deleteUtterances'>
-            /// Also delete the intent's utterances (true). Or move the utterances to the
-            /// None intent (false - the default value).
+            /// If true, deletes the intent's example utterances. If false, moves the
+            /// example utterances to the None intent. The default value is false.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -522,7 +528,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the entity model.
+            /// Gets information about an entity model in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -548,7 +554,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the name of an entity extractor.
+            /// Updates the name of an entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -577,7 +583,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes an entity extractor from the application.
+            /// Deletes an entity from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -603,7 +609,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the hierarchical entity model.
+            /// Gets information about a hierarchical entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -629,7 +636,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the name and children of a hierarchical entity model.
+            /// Updates the name and children of a hierarchical entity model in a version
+            /// of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -658,7 +666,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a hierarchical entity extractor from the application version.
+            /// Deletes a hierarchical entity from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -684,7 +692,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the composite entity model.
+            /// Gets information about a composite entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -710,7 +718,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the composite entity extractor.
+            /// Updates a composite entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -739,7 +747,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a composite entity extractor from the application.
+            /// Deletes a composite entity from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -765,7 +773,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information of a closed list model.
+            /// Gets information about a list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -777,7 +785,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// The closed list model ID.
+            /// The list model ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -791,7 +799,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the closed list model.
+            /// Updates the list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -803,10 +811,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// The closed list model ID.
+            /// The list model ID.
             /// </param>
             /// <param name='closedListModelUpdateObject'>
-            /// The new entity name and words list.
+            /// The new list entity name and words list.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -820,7 +828,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a batch of sublists to an existing closedlist.
+            /// Adds a batch of sublists to an existing list entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -832,7 +841,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// The closed list model ID.
+            /// The list entity model ID.
             /// </param>
             /// <param name='closedListModelPatchObject'>
             /// A words list batch.
@@ -849,7 +858,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a closed list model from the application.
+            /// Deletes a list entity model from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -861,7 +870,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// The closed list model ID.
+            /// The list entity model ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -875,7 +884,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the prebuilt entity model.
+            /// Gets information about a prebuilt entity model in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -901,7 +911,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a prebuilt entity extractor from the application.
+            /// Deletes a prebuilt entity extractor from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -927,7 +937,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a sublist of a specific closed list model.
+            /// Deletes a sublist of a specific list entity model from a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -939,7 +950,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// The closed list entity extractor ID.
+            /// The list entity extractor ID.
             /// </param>
             /// <param name='subListId'>
             /// The sublist ID.
@@ -947,7 +958,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> DeleteSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, long subListId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -956,7 +967,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates one of the closed list's sublists.
+            /// Updates one of the list entity's sublists in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -968,7 +979,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// The closed list entity extractor ID.
+            /// The list entity extractor ID.
             /// </param>
             /// <param name='subListId'>
             /// The sublist ID.
@@ -980,7 +991,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> UpdateSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, int subListId, WordListBaseUpdateObject wordListBaseUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> UpdateSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, long subListId, WordListBaseUpdateObject wordListBaseUpdateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateSubListWithHttpMessagesAsync(appId, versionId, clEntityId, subListId, wordListBaseUpdateObject, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -989,7 +1000,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Suggests examples that would improve the accuracy of the intent model.
+            /// Suggests example utterances that would improve the accuracy of the intent
+            /// model in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1009,17 +1021,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<IntentsSuggestionExample>> GetIntentSuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<IntentsSuggestionExample>> ListIntentSuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid intentId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetIntentSuggestionsWithHttpMessagesAsync(appId, versionId, intentId, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListIntentSuggestionsWithHttpMessagesAsync(appId, versionId, intentId, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get suggestion examples that would improve the accuracy of the entity
-            /// model.
+            /// Get suggested example utterances that would improve the accuracy of the
+            /// entity model in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1039,16 +1051,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntitiesSuggestionExample>> GetEntitySuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntitiesSuggestionExample>> ListEntitySuggestionsAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntitySuggestionsWithHttpMessagesAsync(appId, versionId, entityId, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListEntitySuggestionsWithHttpMessagesAsync(appId, versionId, entityId, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a list to an existing closed list.
+            /// Adds a sublist to an existing list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1060,7 +1072,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='clEntityId'>
-            /// The closed list entity extractor ID.
+            /// The list entity extractor ID.
             /// </param>
             /// <param name='wordListCreateObject'>
             /// Words list.
@@ -1068,7 +1080,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<int?> AddSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, WordListObject wordListCreateObject, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<long?> AddSubListAsync(this IModel operations, System.Guid appId, string versionId, System.Guid clEntityId, WordListObject wordListCreateObject, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AddSubListWithHttpMessagesAsync(appId, versionId, clEntityId, wordListCreateObject, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1077,8 +1089,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a customizable prebuilt domain along with all of its models to this
-            /// application.
+            /// Adds a customizable prebuilt domain along with all of its intent and entity
+            /// models in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1104,7 +1116,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a custom prebuilt intent model to the application.
+            /// Adds a customizable prebuilt intent model to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1116,8 +1128,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='prebuiltDomainModelCreateObject'>
-            /// A model object containing the name of the custom prebuilt intent and the
-            /// name of the domain to which this model belongs.
+            /// A model object containing the name of the customizable prebuilt intent and
+            /// the name of the domain to which this model belongs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1131,7 +1143,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets custom prebuilt intents information of this application.
+            /// Gets information about customizable prebuilt intents added to a version of
+            /// the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1154,7 +1167,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a custom prebuilt entity model to the application.
+            /// Adds a prebuilt entity model to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1166,8 +1179,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='prebuiltDomainModelCreateObject'>
-            /// A model object containing the name of the custom prebuilt entity and the
-            /// name of the domain to which this model belongs.
+            /// A model object containing the name of the prebuilt entity and the name of
+            /// the domain to which this model belongs.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1181,7 +1194,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets all custom prebuilt entities information of this application.
+            /// Gets all prebuilt entities used in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1204,7 +1217,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets all custom prebuilt models information of this application.
+            /// Gets all prebuilt intent and entity model information used in a version of
+            /// this application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1227,7 +1241,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a prebuilt domain's models from the application.
+            /// Deletes a prebuilt domain's models in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1253,7 +1267,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the hierarchical entity child model.
+            /// Gets information about the child's model contained in an hierarchical
+            /// entity child model in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1282,7 +1297,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Renames a single child in an existing hierarchical entity model.
+            /// Renames a single child in an existing hierarchical entity model in a
+            /// version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1314,7 +1330,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a hierarchical entity extractor child from the application.
+            /// Deletes a hierarchical entity extractor child in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1343,7 +1360,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Creates a single child in an existing hierarchical entity model.
+            /// Creates a single child in an existing hierarchical entity model in a
+            /// version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1372,7 +1390,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Creates a single child in an existing composite entity model.
+            /// Creates a single child in an existing composite entity model in a version
+            /// of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1401,7 +1420,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a composite entity extractor child from the application.
+            /// Deletes a composite entity extractor child from a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1430,7 +1450,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the regex entity models.
+            /// Gets information about the regular expression entity models in a version of
+            /// the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1450,16 +1471,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<RegexEntityExtractor>> GetRegexEntityInfosAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<RegexEntityExtractor>> ListRegexEntityInfosAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetRegexEntityInfosWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRegexEntityInfosWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a regex entity model to the application version.
+            /// Adds a regular expression entity model to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1471,8 +1492,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='regexEntityExtractorCreateObj'>
-            /// A model object containing the name and regex pattern for the new regex
-            /// entity extractor.
+            /// A model object containing the name and regex pattern for the new regular
+            /// expression entity extractor.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1486,7 +1507,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get information about the Pattern.Any entity models.
+            /// Get information about the Pattern.Any entity models in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1506,16 +1528,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternAnyEntityExtractor>> GetPatternAnyEntityInfosAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternAnyEntityExtractor>> ListPatternAnyEntityInfosAsync(this IModel operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPatternAnyEntityInfosWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPatternAnyEntityInfosWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a pattern.any entity extractor to the application.
+            /// Adds a pattern.any entity extractor to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1542,7 +1564,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get all roles for an entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1559,16 +1581,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create an entity role in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1597,7 +1619,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get a prebuilt entity's roles in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1614,16 +1636,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetPrebuiltEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListPrebuiltEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPrebuiltEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPrebuiltEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create a role for a prebuilt entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1652,7 +1674,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get all roles for a list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1669,16 +1691,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetClosedListEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListClosedListEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetClosedListEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListClosedListEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create a role for a list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1707,7 +1729,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get all roles for a regular expression entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1724,16 +1747,17 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetRegexEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListRegexEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetRegexEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListRegexEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create a role for an regular expression entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1762,7 +1786,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get all roles for a composite entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1779,16 +1803,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetCompositeEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListCompositeEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid cEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCompositeEntityRolesWithHttpMessagesAsync(appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCompositeEntityRolesWithHttpMessagesAsync(appId, versionId, cEntityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create a role for a composite entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1817,7 +1841,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get all roles for a Pattern.any entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1834,16 +1858,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetPatternAnyEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListPatternAnyEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPatternAnyEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPatternAnyEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create a role for an Pattern.any entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1872,7 +1896,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get all roles for a hierarchical entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1889,16 +1913,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetHierarchicalEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListHierarchicalEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid hEntityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetHierarchicalEntityRolesWithHttpMessagesAsync(appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListHierarchicalEntityRolesWithHttpMessagesAsync(appId, versionId, hEntityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create a role for an hierarchical entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1927,7 +1951,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get All Entity Roles for a given entity
+            /// Get all roles for a prebuilt entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1944,16 +1968,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<EntityRole>> GetCustomPrebuiltEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<EntityRole>> ListCustomPrebuiltEntityRolesAsync(this IModel operations, System.Guid appId, string versionId, System.Guid entityId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCustomPrebuiltEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListCustomPrebuiltEntityRolesWithHttpMessagesAsync(appId, versionId, entityId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Create an entity role for an entity in the application.
+            /// Create a role for a prebuilt entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1982,7 +2006,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get the explicit list of the pattern.any entity.
+            /// Get the explicit (exception) list of the pattern.any entity in a version of
+            /// the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2008,7 +2033,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Add a new item to the explicit list for the Pattern.Any entity.
+            /// Add a new exception to the explicit list for the Pattern.Any entity in a
+            /// version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2037,7 +2063,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information of a regex entity model.
+            /// Gets information about a regular expression entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2049,7 +2076,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='regexEntityId'>
-            /// The regex entity model ID.
+            /// The regular expression entity model ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -2063,7 +2090,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the regex entity model .
+            /// Updates the regular expression entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2075,7 +2102,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='regexEntityId'>
-            /// The regex entity extractor ID.
+            /// The regular expression entity extractor ID.
             /// </param>
             /// <param name='regexEntityUpdateObject'>
             /// An object containing the new entity name and regex pattern.
@@ -2092,7 +2119,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a regex entity model from the application.
+            /// Deletes a regular expression entity from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2104,7 +2131,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The version ID.
             /// </param>
             /// <param name='regexEntityId'>
-            /// The regex entity extractor ID.
+            /// The regular expression entity extractor ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -2118,7 +2145,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets information about the application version's Pattern.Any model.
+            /// Gets information about the Pattern.Any model in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2144,7 +2172,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the name and explicit list of a Pattern.Any entity model.
+            /// Updates the name and explicit (exception) list of a Pattern.Any entity
+            /// model in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2173,7 +2202,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes a Pattern.Any entity extractor from the application.
+            /// Deletes a Pattern.Any entity extractor from a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2199,7 +2228,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2228,7 +2257,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2260,7 +2289,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete an entity role in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2289,7 +2318,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given prebuilt entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2318,7 +2347,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given prebuilt entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2350,7 +2379,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete a role in a prebuilt entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2379,7 +2408,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2408,7 +2437,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2440,7 +2469,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete a role for a given list entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2469,7 +2498,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given regular expression entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2498,7 +2528,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given regular expression entity in a version of the
+            /// application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2530,7 +2561,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete a role for a given regular expression in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2559,7 +2591,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given composite entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2588,7 +2620,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given composite entity in a version of the application
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2620,7 +2652,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete a role for a given composite entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2649,7 +2681,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given Pattern.any entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2678,7 +2711,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given Pattern.any entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2710,7 +2744,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete a role for a given Pattern.any entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2739,7 +2774,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given hierarchical entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2768,7 +2804,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given hierarchical entity in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2800,7 +2837,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete a role for a given hierarchical role in a version of the
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2829,7 +2867,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get one entity role for a given entity
+            /// Get one role for a given prebuilt entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2858,7 +2896,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Update an entity role for a given entity
+            /// Update a role for a given prebuilt entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2890,7 +2928,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete an entity role.
+            /// Delete a role for a given prebuilt entity in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2919,7 +2957,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get the explicit list of the pattern.any entity.
+            /// Get the explicit (exception) list of the pattern.any entity in a version of
+            /// the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2948,7 +2987,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates an explicit list item for a Pattern.Any entity.
+            /// Updates an explicit (exception) list item for a Pattern.Any entity in a
+            /// version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2980,7 +3020,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Delete the explicit list item from the Pattern.any explicit list.
+            /// Delete an item from the explicit (exception) list for a Pattern.any entity
+            /// in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

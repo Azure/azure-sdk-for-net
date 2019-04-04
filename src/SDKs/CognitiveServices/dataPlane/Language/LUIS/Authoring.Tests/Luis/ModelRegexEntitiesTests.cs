@@ -14,9 +14,9 @@
         {
             UseClientFor(async client =>
             {
-                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(appId, versionId, GetRegexEntitySample());
-                var regexEntities = await client.Model.GetRegexEntityInfosAsync(appId, versionId);
-                await client.Model.DeleteRegexEntityModelAsync(appId, versionId, regexEntityId);
+                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, versionId, GetRegexEntitySample());
+                var regexEntities = await client.Model.ListRegexEntityInfosAsync(GlobalAppId, versionId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, versionId, regexEntityId);
 
                 Assert.NotEmpty(regexEntities);
             });
@@ -27,8 +27,8 @@
         {
             UseClientFor(async client =>
             {
-                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(appId, versionId, GetRegexEntitySample());
-                await client.Model.DeleteRegexEntityModelAsync(appId, versionId, regexEntityId);
+                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, versionId, GetRegexEntitySample());
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, versionId, regexEntityId);
 
                 Assert.True(regexEntityId != Guid.Empty);
             });
@@ -39,9 +39,9 @@
         {
             UseClientFor(async client =>
             {
-                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(appId, versionId, GetRegexEntitySample());
-                var regexEntity = await client.Model.GetRegexEntityEntityInfoAsync(appId, versionId, regexEntityId);
-                await client.Model.DeleteRegexEntityModelAsync(appId, versionId, regexEntityId);
+                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, versionId, GetRegexEntitySample());
+                var regexEntity = await client.Model.GetRegexEntityEntityInfoAsync(GlobalAppId, versionId, regexEntityId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, versionId, regexEntityId);
 
                 // Assert
                 Assert.Equal("regex entity 1", regexEntity.Name);
@@ -54,17 +54,17 @@
         {
             UseClientFor(async client =>
             {
-                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(appId, versionId, GetRegexEntitySample());
+                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, versionId, GetRegexEntitySample());
                 var regexEntityUpdateObj = new RegexModelUpdateObject()
                 {
                     Name = "regex entity 2",
                     RegexPattern = "regex pattern 2"
                 };
 
-                await client.Model.UpdateRegexEntityModelAsync(appId, versionId, regexEntityId, regexEntityUpdateObj);
-                var updatedRegexEntity = await client.Model.GetRegexEntityEntityInfoAsync(appId, versionId, regexEntityId);
+                await client.Model.UpdateRegexEntityModelAsync(GlobalAppId, versionId, regexEntityId, regexEntityUpdateObj);
+                var updatedRegexEntity = await client.Model.GetRegexEntityEntityInfoAsync(GlobalAppId, versionId, regexEntityId);
 
-                await client.Model.DeleteRegexEntityModelAsync(appId, versionId, regexEntityId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, versionId, regexEntityId);
 
                 Assert.Equal("regex entity 2", updatedRegexEntity.Name);
                 Assert.Equal("regex pattern 2", updatedRegexEntity.RegexPattern);
@@ -76,10 +76,10 @@
         {
             UseClientFor(async client =>
             {
-                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(appId, versionId, GetRegexEntitySample());
-                await client.Model.DeleteRegexEntityModelAsync(appId, versionId, regexEntityId);
+                var regexEntityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, versionId, GetRegexEntitySample());
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, versionId, regexEntityId);
 
-                var regexEntities = await client.Model.GetRegexEntityInfosAsync(appId, versionId);
+                var regexEntities = await client.Model.ListRegexEntityInfosAsync(GlobalAppId, versionId);
 
                 Assert.DoesNotContain(regexEntities, o => o.Id == regexEntityId);
             });

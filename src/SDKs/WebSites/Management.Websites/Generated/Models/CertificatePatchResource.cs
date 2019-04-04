@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="selfLink">Self link.</param>
         /// <param name="issuer">Certificate issuer.</param>
         /// <param name="issueDate">Certificate issue Date.</param>
-        /// <param name="expirationDate">Certificate expriration date.</param>
+        /// <param name="expirationDate">Certificate expiration date.</param>
         /// <param name="thumbprint">Certificate thumbprint.</param>
         /// <param name="valid">Is the certificate valid?.</param>
         /// <param name="cerBlob">Raw bytes of .cer file</param>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public System.DateTime? IssueDate { get; private set; }
 
         /// <summary>
-        /// Gets certificate expriration date.
+        /// Gets certificate expiration date.
         /// </summary>
         [JsonProperty(PropertyName = "properties.expirationDate")]
         public System.DateTime? ExpirationDate { get; private set; }

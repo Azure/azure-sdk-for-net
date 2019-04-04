@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// User assigned Identity
+    /// User-assigned managed identity.
     /// </summary>
     public partial class UserAssignedIdentity
     {

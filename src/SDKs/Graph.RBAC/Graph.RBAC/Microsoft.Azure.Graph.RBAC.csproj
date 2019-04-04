@@ -5,13 +5,13 @@
   
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Graph.RBAC</PackageId>
-    <VersionPrefix>3.5.0-preview</VersionPrefix>
+    <VersionPrefix>3.8.0-preview</VersionPrefix>
     <Description>Microsoft.Azure.Graph.RBAC</Description>
     <AssemblyName>Microsoft.Azure.Graph.RBAC</AssemblyName>
     <PackageTags>Microsoft AutoRest Management REST;netcore451511</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-          Updating SDK -> moving to 3.5.0, with current Swagger changes (new features and fields such as customKeyIdentifier and principalType).
+		  Regenerated .net sdk from the latest version of GraphRbac rest specification.
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

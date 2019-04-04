@@ -31,12 +31,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// Initializes a new instance of the ApplicationSettingUpdateObject
         /// class.
         /// </summary>
-        /// <param name="publicProperty">Setting your application as public
-        /// allows other people to use your application's endpoint using their
-        /// own keys.</param>
-        public ApplicationSettingUpdateObject(bool publicProperty = default(bool))
+        /// <param name="isPublic">Setting your application as public allows
+        /// other people to use your application's endpoint using their own
+        /// keys.</param>
+        public ApplicationSettingUpdateObject(bool isPublic = default(bool))
         {
-            PublicProperty = publicProperty;
+            IsPublic = isPublic;
             CustomInit();
         }
 
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// to use your application's endpoint using their own keys.
         /// </summary>
         [JsonProperty(PropertyName = "public")]
-        public bool PublicProperty { get; set; }
+        public bool IsPublic { get; set; }
 
     }
 }

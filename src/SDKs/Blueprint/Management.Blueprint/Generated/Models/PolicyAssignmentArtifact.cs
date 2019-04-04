@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Blueprint artifact applies Policy assignments.
+    /// Blueprint artifact that applies a Policy assignment.
     /// </summary>
     [Newtonsoft.Json.JsonObject("policyAssignment")]
     [Rest.Serialization.JsonTransformation]

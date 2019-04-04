@@ -37,7 +37,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(listResponse);
                 Assert.Single(listResponse);
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 var echoApi = listResponse.First();
 
@@ -181,7 +181,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(listResponse);
                 Assert.Equal(2, listResponse.GetEnumerator().ToIEnumerable().Count());
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 var starterProduct = listResponse.First();
 

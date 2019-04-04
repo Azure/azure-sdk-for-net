@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2018-09-01-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOC0wOS0wMS1wcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.ResourceGraph/resources?api-version=2019-04-01",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VHcmFwaC9yZXNvdXJjZXM/YXBpLXZlcnNpb249MjAxOS0wNC0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "{\"subscriptions\": [\"00000000-0000-0000-0000-000000000000\"], \"query\": \"project id, location | limit 10\", \"facets\": [{\"expression\": \"location\", \"options\": {\"sortOrder\": \"desc\", \"$top\": 4}}, {\"expression\": \"nonExistingColumn\", \"options\": {\"sortOrder\": \"desc\", \"$top\": 4}}]}",
       "RequestHeaders": {
@@ -22,7 +22,7 @@
         "Content-Length": [
           "403"
         ]
-     },
+      },
       "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
@@ -63,10 +63,10 @@
         "Expires": [
           "-1"
         ]
-     },
+      },
       "ResponseBody": "{\"totalRecords\":10,\"count\":10,\"data\":{\"columns\":[{\"name\":\"id\",\"type\":\"string\"},{\"name\":\"location\",\"type\":\"string\"}],\"rows\":[[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/zarttest1f000000-14b9-43b9-8836-3b8df81aa6f2/providers/Microsoft.StreamAnalytics/streamingjobs/zarttest28000000\",\"southcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/testsouthcentralus\",\"southcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/newzarttest30000000-5d0c-432c-8652-102e3aa336b6/providers/Microsoft.Storage/storageAccounts/zarttest93000000\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/backup/providers/Microsoft.ClassicCompute/domainNames/rp-a\",\"westcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.Storage/storageAccounts/test1\",\"southcentralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/k8stest_centralus/providers/Microsoft.Compute/virtualMachines/aks-default-34000000-0/extensions/cse-agent-0\",\"centralus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/pere/providers/Microsoft.Network/networkSecurityGroups/shouldFail-nsg\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/newzarttestdd000000-bfc5-44f1-b6a9-aabdc7a1e614/providers/Microsoft.Storage/storageAccounts/zarttest43000000\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/newzarttest60000000-3713-4c51-9e6b-c96a30f0fbb7/providers/Microsoft.Storage/storageAccounts/zarttestd2000000\",\"eastus\"],[\"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/ManageRG/providers/Microsoft.EventHub/namespaces/resourceuse\",\"eastus\"]]},\"facets\":[{\"expression\":\"location\",\"totalRecords\":4,\"count\":4,\"data\":{\"columns\":[{\"name\":\"location\",\"type\":\"string\"},{\"name\":\"count\",\"type\":\"integer\"}],\"rows\":[[\"eastus\",5],[\"southcentralus\",3],[\"centralus\",1],[\"westcentralus\",1]]},\"resultType\":\"FacetResult\"},{\"expression\":\"nonExistingColumn\",\"errors\":[{\"code\":\"NoValidColumns\",\"message\":\"No valid columns in facet expression.\"},{\"code\":\"InvalidColumnNames\",\"message\":\"Invalid column names: [nonExistingColumn].\"}],\"resultType\":\"FacetError\"}],\"resultTruncated\":\"false\"}",
       "StatusCode": 200
-   }
+    }
   ],
   "Names": {},
   "Variables": {

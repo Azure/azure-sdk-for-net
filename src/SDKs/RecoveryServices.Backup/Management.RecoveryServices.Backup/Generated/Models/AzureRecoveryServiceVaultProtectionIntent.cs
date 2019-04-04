@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureRecoveryServiceVaultProtectionIntent class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the backed up item. Possible values include: 'Invalid',
         /// 'AzureIaasVM', 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql',
         /// 'AzureStorage', 'AzureWorkload', 'DefaultBackup'</param>

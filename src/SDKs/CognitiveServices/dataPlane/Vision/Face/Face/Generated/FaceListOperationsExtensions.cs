@@ -23,8 +23,36 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
     public static partial class FaceListOperationsExtensions
     {
             /// <summary>
-            /// Create an empty face list. Up to 64 face lists are allowed to exist in one
+            /// Create an empty face list with user-specified faceListId, name, an optional
+            /// userData and recognitionModel. Up to 64 face lists are allowed in one
             /// subscription.
+            /// &lt;br /&gt; Face list is a list of faces, up to 1,000 faces, and used by
+            /// [Face - Find
+            /// Similar](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395237).
+            /// &lt;br /&gt; After creation, user should use [FaceList - Add
+            /// Face](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395250)
+            /// to import the faces. Faces are stored on server until [FaceList -
+            /// Delete](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039524f)
+            /// is called.
+            /// &lt;br /&gt; Find Similar is used for scenario like finding celebrity-like
+            /// faces, similar face filtering, or as a light way face identification. But
+            /// if the actual use is to identify person, please use
+            /// [PersonGroup](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395244)
+            /// /
+            /// [LargePersonGroup](/docs/services/563879b61984550e40cbbe8d/operations/599acdee6ac60f11b48b5a9d)
+            /// and [Face -
+            /// Identify](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f30395239).
+            /// &lt;br /&gt; Please consider
+            /// [LargeFaceList](/docs/services/563879b61984550e40cbbe8d/operations/5a157b68d2de3616c086f2cc)
+            /// when the face number is large. It can support up to 1,000,000 faces.
+            /// 'recognitionModel' should be specified to associate with this face list.
+            /// The default value for 'recognitionModel' is 'recognition_01', if the latest
+            /// model needed, please explicitly specify the model you need in this
+            /// parameter. New faces that are added to an existing face list will use the
+            /// recognition model that's already associated with the collection. Existing
+            /// face features in a face list can't be updated to features extracted by
+            /// another version of recognition model.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,16 +66,21 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='userData'>
             /// User specified data. Length should not exceed 16KB.
             /// </param>
+            /// <param name='recognitionModel'>
+            /// Possible values include: 'recognition_01', 'recognition_02'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this IFaceListOperations operations, string faceListId, string name = default(string), string userData = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsync(this IFaceListOperations operations, string faceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CreateWithHttpMessagesAsync(faceListId, name, userData, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.CreateWithHttpMessagesAsync(faceListId, name, userData, recognitionModel, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Retrieve a face list's information.
+            /// Retrieve a face list’s faceListId, name, userData, recognitionModel and
+            /// faces in the face list.
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -55,12 +88,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             /// <param name='faceListId'>
             /// Id referencing a particular face list.
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// A value indicating whether the operation should return 'recognitionModel'
+            /// in response.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FaceList> GetAsync(this IFaceListOperations operations, string faceListId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<FaceList> GetAsync(this IFaceListOperations operations, string faceListId, bool? returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(faceListId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(faceListId, returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -108,25 +145,32 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face
             }
 
             /// <summary>
-            /// Retrieve information about all existing face lists. Only faceListId, name
-            /// and userData will be returned.
+            /// List face lists’ faceListId, name, userData and recognitionModel. &lt;br
+            /// /&gt;
+            /// To get face information inside faceList use [FaceList -
+            /// Get](/docs/services/563879b61984550e40cbbe8d/operations/563879b61984550f3039524c)
+            ///
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='returnRecognitionModel'>
+            /// A value indicating whether the operation should return 'recognitionModel'
+            /// in response.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<FaceList>> ListAsync(this IFaceListOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<FaceList>> ListAsync(this IFaceListOperations operations, bool? returnRecognitionModel = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(returnRecognitionModel, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Delete an existing face from a face list (given by a persisitedFaceId and a
+            /// Delete an existing face from a face list (given by a persistedFaceId and a
             /// faceListId). Persisted image related to the face will also be deleted.
             /// </summary>
             /// <param name='operations'>

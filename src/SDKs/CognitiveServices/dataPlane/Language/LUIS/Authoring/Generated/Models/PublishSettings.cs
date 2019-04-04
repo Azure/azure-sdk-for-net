@@ -31,12 +31,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         /// <param name="id">The application ID.</param>
         /// <param name="isSentimentAnalysisEnabled">Setting sentiment analysis
-        /// as true returns the Sentiment of the input utterance along with the
-        /// resopnse</param>
-        /// <param name="isSpeechEnabled">Setting speech as public enables
-        /// speech priming in your app</param>
-        /// <param name="isSpellCheckerEnabled">Setting spell checker as public
-        /// enables spell checking the input utterance.</param>
+        /// as true returns the sentiment of the input utterance along with the
+        /// response</param>
+        /// <param name="isSpeechEnabled">Enables speech priming in your
+        /// app</param>
+        /// <param name="isSpellCheckerEnabled">Enables spell checking of the
+        /// utterance.</param>
         public PublishSettings(System.Guid id, bool isSentimentAnalysisEnabled, bool isSpeechEnabled, bool isSpellCheckerEnabled)
         {
             Id = id;
@@ -59,21 +59,19 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 
         /// <summary>
         /// Gets or sets setting sentiment analysis as true returns the
-        /// Sentiment of the input utterance along with the resopnse
+        /// sentiment of the input utterance along with the response
         /// </summary>
         [JsonProperty(PropertyName = "sentimentAnalysis")]
         public bool IsSentimentAnalysisEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets setting speech as public enables speech priming in
-        /// your app
+        /// Gets or sets enables speech priming in your app
         /// </summary>
         [JsonProperty(PropertyName = "speech")]
         public bool IsSpeechEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets setting spell checker as public enables spell checking
-        /// the input utterance.
+        /// Gets or sets enables spell checking of the utterance.
         /// </summary>
         [JsonProperty(PropertyName = "spellChecker")]
         public bool IsSpellCheckerEnabled { get; set; }

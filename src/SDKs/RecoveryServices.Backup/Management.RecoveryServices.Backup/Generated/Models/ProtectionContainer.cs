@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the ProtectionContainer class.
         /// </summary>
         /// <param name="friendlyName">Friendly name of the container.</param>
-        /// <param name="backupManagementType">Type of backup managemenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the container. Possible values include: 'Invalid', 'AzureIaasVM',
         /// 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql', 'AzureStorage',
         /// 'AzureWorkload', 'DefaultBackup'</param>
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string FriendlyName { get; set; }
 
         /// <summary>
-        /// Gets or sets type of backup managemenent for the container.
-        /// Possible values include: 'Invalid', 'AzureIaasVM', 'MAB', 'DPM',
+        /// Gets or sets type of backup management for the container. Possible
+        /// values include: 'Invalid', 'AzureIaasVM', 'MAB', 'DPM',
         /// 'AzureBackupServer', 'AzureSql', 'AzureStorage', 'AzureWorkload',
         /// 'DefaultBackup'
         /// </summary>

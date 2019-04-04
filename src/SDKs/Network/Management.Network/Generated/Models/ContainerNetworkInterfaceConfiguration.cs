@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Linq;
 
     /// <summary>
-    /// Container network interface configruation child resource.
+    /// Container network interface configuration child resource.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ContainerNetworkInterfaceConfiguration : SubResource

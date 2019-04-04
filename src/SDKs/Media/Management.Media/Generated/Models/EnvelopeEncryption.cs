@@ -38,10 +38,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="contentKeys">Representing default content key for each
         /// encryption scheme and separate content keys for specific
         /// tracks</param>
-        /// <param
-        /// name="customKeyAcquisitionUrlTemplate">KeyAcquisitionUrlTemplate is
-        /// used to point to user specified service to delivery content
-        /// keys</param>
+        /// <param name="customKeyAcquisitionUrlTemplate">Template for the URL
+        /// of the custom service delivering keys to end user players.  Not
+        /// required when using Azure Media Services for issuing keys.  The
+        /// template supports replaceable tokens that the service will update
+        /// at runtime with the value specific to the request.  The currently
+        /// supported token values are {AlternativeMediaId}, which is replaced
+        /// with the value of StreamingLocatorId.AlternativeMediaId, and
+        /// {ContentKeyId}, which is replaced with the value of identifier of
+        /// the key being requested.</param>
         public EnvelopeEncryption(EnabledProtocols enabledProtocols = default(EnabledProtocols), IList<TrackSelection> clearTracks = default(IList<TrackSelection>), StreamingPolicyContentKeys contentKeys = default(StreamingPolicyContentKeys), string customKeyAcquisitionUrlTemplate = default(string))
         {
             EnabledProtocols = enabledProtocols;
@@ -76,8 +81,14 @@ namespace Microsoft.Azure.Management.Media.Models
         public StreamingPolicyContentKeys ContentKeys { get; set; }
 
         /// <summary>
-        /// Gets or sets keyAcquisitionUrlTemplate is used to point to user
-        /// specified service to delivery content keys
+        /// Gets or sets template for the URL of the custom service delivering
+        /// keys to end user players.  Not required when using Azure Media
+        /// Services for issuing keys.  The template supports replaceable
+        /// tokens that the service will update at runtime with the value
+        /// specific to the request.  The currently supported token values are
+        /// {AlternativeMediaId}, which is replaced with the value of
+        /// StreamingLocatorId.AlternativeMediaId, and {ContentKeyId}, which is
+        /// replaced with the value of identifier of the key being requested.
         /// </summary>
         [JsonProperty(PropertyName = "customKeyAcquisitionUrlTemplate")]
         public string CustomKeyAcquisitionUrlTemplate { get; set; }

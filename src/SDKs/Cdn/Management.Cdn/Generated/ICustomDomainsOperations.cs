@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<IPage<CustomDomain>>> ListByEndpointWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets an exisitng custom domain within an endpoint.
+        /// Gets an existing custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -193,6 +193,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='customDomainName'>
         /// Name of the custom domain within an endpoint.
         /// </param>
+        /// <param name='customDomainHttpsParameters'>
+        /// The configuration specifying how to enable HTTPS for the custom
+        /// domain - using CDN managed certificate or user's own certificate.
+        /// If not specified, enabling ssl uses CDN managed certificate by
+        /// default.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -208,7 +214,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CustomDomain>> EnableCustomHttpsWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CustomDomain>> EnableCustomHttpsWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, CustomDomainHttpsParameters customDomainHttpsParameters = default(CustomDomainHttpsParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new custom domain within an endpoint.
         /// </summary>

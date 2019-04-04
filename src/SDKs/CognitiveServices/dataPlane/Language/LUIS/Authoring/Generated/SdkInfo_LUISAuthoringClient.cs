@@ -20,11 +20,13 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("LUISAuthoringClient", "Apps", "2.0"),
+                new Tuple<string, string, string>("LUISAuthoringClient", "AzureAccounts", "2.0"),
                 new Tuple<string, string, string>("LUISAuthoringClient", "Examples", "2.0"),
                 new Tuple<string, string, string>("LUISAuthoringClient", "Features", "2.0"),
                 new Tuple<string, string, string>("LUISAuthoringClient", "Model", "2.0"),
                 new Tuple<string, string, string>("LUISAuthoringClient", "Pattern", "2.0"),
                 new Tuple<string, string, string>("LUISAuthoringClient", "Permissions", "2.0"),
+                new Tuple<string, string, string>("LUISAuthoringClient", "Settings", "2.0"),
                 new Tuple<string, string, string>("LUISAuthoringClient", "Train", "2.0"),
                 new Tuple<string, string, string>("LUISAuthoringClient", "Versions", "2.0"),
               }.AsEnumerable();

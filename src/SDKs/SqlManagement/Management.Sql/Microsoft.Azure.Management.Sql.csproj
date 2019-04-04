@@ -7,13 +7,14 @@
 		<PackageId>Microsoft.Azure.Management.Sql</PackageId>
 		<Description>Azure SQL Management SDK library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Sql</AssemblyName>
-		<Version>1.26.0-preview</Version>
+		<Version>1.29.0-preview</Version>
 		<PackageTags>Microsoft Azure SQL Management;SQL;SQL Management;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 New features:
-- Added support for dropped databases on Managed Instance
-- Added short term retention for dropped databases on Managed Instance
+- Added support for Virtual cluster operations.
+- Support database sensitivity labels.
+- Added two new properties (PublicDataEndpointEnabled and ProxyOverride) to managed instance.
       ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

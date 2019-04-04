@@ -32,9 +32,13 @@ namespace Sql.Tests
                 Microsoft.Azure.Management.Sql.Models.Sku sku = new Microsoft.Azure.Management.Sql.Models.Sku();
                 sku.Name = "MIGP8G4";
                 sku.Tier = "GeneralPurpose";
+                sku.Family = "Gen4";
 
                 string subnetId = "/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/StdjordjTestResourceGroup/providers/Microsoft.Network/virtualNetworks/ZiwaVirtualNetwork4/subnets/default";
                 string location = "westcentralus";
+
+                bool publicDataEndpointEnabled = true;
+                string proxyOverride = "Proxy";
 
                 //Create server 
                 var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()
@@ -58,7 +62,9 @@ namespace Sql.Tests
                     SubnetId = subnetId,
                     Tags = tags,
                     Location = location,
-                    DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1", resourceGroup.Name)
+                    DnsZonePartner = string.Format("/subscriptions/a8c9a924-06c0-4bde-9788-e7b1370969e1/resourceGroups/{0}/providers/Microsoft.Sql/managedInstances/sqlcl-crudtestswithdnszone-dotnetsdk1", resourceGroup.Name),
+                    PublicDataEndpointEnabled = publicDataEndpointEnabled,
+                    ProxyOverride = proxyOverride
                 });
                 SqlManagementTestUtilities.ValidateManagedInstance(managedInstance2, managedInstanceName2, login, tags, TestEnvironmentUtilities.DefaultLocationId);
 
@@ -72,6 +78,12 @@ namespace Sql.Tests
 
                 // Verify that dns zone value is correctly inherited from dns zone partner
                 Assert.Equal(getMI1.DnsZone, getMI2.DnsZone);
+
+                // Verify PublicDataEndpointEnabled value for second server
+                Assert.Equal(publicDataEndpointEnabled, getMI2.PublicDataEndpointEnabled);
+
+                // Verify ProxyOverride value for second server
+                Assert.Equal(proxyOverride, getMI2.ProxyOverride);
 
                 var listMI = sqlClient.ManagedInstances.ListByResourceGroup(resourceGroup.Name);
                 Assert.Equal(2, listMI.Count());

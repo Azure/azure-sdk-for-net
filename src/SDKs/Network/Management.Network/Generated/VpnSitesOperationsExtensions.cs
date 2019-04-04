@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class VpnSitesOperationsExtensions
     {
             /// <summary>
-            /// Retrieves the details of a VPNsite.
+            /// Retrieves the details of a VPN site.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// Retrieves the details of a VPNsite.
+            /// Retrieves the details of a VPN site.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

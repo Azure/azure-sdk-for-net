@@ -40,9 +40,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// AzureFileShare etc. Possible values include: 'Invalid', 'VM',
         /// 'FileFolder', 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint',
         /// 'VMwareVM', 'SystemState', 'Client', 'GenericDataSource',
-        /// 'SQLDataBase', 'AzureFileShare', 'SAPHanaDatabase'</param>
+        /// 'SQLDataBase', 'AzureFileShare', 'SAPHanaDatabase',
+        /// 'SAPAseDatabase'</param>
         /// <param name="resourceId">ARM Virtual Machine Id</param>
-        /// <param name="vaultId">ARM id of the Recovery Services Vault</param>
+        /// <param name="vaultId">Specifies the arm resource id of the
+        /// vault</param>
         /// <param name="properties">Configuration of VM if any needs to be
         /// validated like OS type etc</param>
         public PreValidateEnableBackupRequest(string resourceType = default(string), string resourceId = default(string), string vaultId = default(string), string properties = default(string))
@@ -64,7 +66,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// etc. Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase'
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
@@ -76,7 +78,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         public string ResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets ARM id of the Recovery Services Vault
+        /// Gets or sets specifies the arm resource id of the vault
         /// </summary>
         [JsonProperty(PropertyName = "vaultId")]
         public string VaultId { get; set; }

@@ -20,7 +20,8 @@
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\DataPlane</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) Batch\Support</DefaultPathTokenToIgnore>
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) LocationBasedServices</DefaultPathTokenToIgnore>
-    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) BotService\BotService.Tests</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) BotService</DefaultPathTokenToIgnore>
+    <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) TestFramework\TestFramework.Net45Tests</DefaultPathTokenToIgnore>
   </PropertyGroup>
 
   <!-- Ignore all data plane libraries following the "data-plane" naming convention -->

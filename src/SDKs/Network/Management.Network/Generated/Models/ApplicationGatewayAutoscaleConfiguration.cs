@@ -33,10 +33,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ApplicationGatewayAutoscaleConfiguration class.
         /// </summary>
         /// <param name="minCapacity">Lower bound on number of Application
-        /// Gateway instances</param>
-        public ApplicationGatewayAutoscaleConfiguration(int minCapacity)
+        /// Gateway capacity</param>
+        /// <param name="maxCapacity">Upper bound on number of Application
+        /// Gateway capacity</param>
+        public ApplicationGatewayAutoscaleConfiguration(int minCapacity, int? maxCapacity = default(int?))
         {
             MinCapacity = minCapacity;
+            MaxCapacity = maxCapacity;
             CustomInit();
         }
 
@@ -46,10 +49,16 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets lower bound on number of Application Gateway instances
+        /// Gets or sets lower bound on number of Application Gateway capacity
         /// </summary>
         [JsonProperty(PropertyName = "minCapacity")]
         public int MinCapacity { get; set; }
+
+        /// <summary>
+        /// Gets or sets upper bound on number of Application Gateway capacity
+        /// </summary>
+        [JsonProperty(PropertyName = "maxCapacity")]
+        public int? MaxCapacity { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -59,9 +68,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (MinCapacity < 2)
+            if (MinCapacity < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinCapacity", 2);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MinCapacity", 0);
+            }
+            if (MaxCapacity < 2)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxCapacity", 2);
             }
         }
     }
