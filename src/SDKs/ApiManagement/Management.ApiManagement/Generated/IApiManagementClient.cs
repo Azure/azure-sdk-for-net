@@ -172,6 +172,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         IApiManagementOperations ApiManagementOperations { get; }
 
         /// <summary>
+        /// Gets the IApiManagementServiceSkusOperations.
+        /// </summary>
+        IApiManagementServiceSkusOperations ApiManagementServiceSkus { get; }
+
+        /// <summary>
         /// Gets the IApiManagementServiceOperations.
         /// </summary>
         IApiManagementServiceOperations ApiManagementService { get; }

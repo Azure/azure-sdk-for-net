@@ -177,6 +177,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IApiManagementOperations ApiManagementOperations { get; private set; }
 
         /// <summary>
+        /// Gets the IApiManagementServiceSkusOperations.
+        /// </summary>
+        public virtual IApiManagementServiceSkusOperations ApiManagementServiceSkus { get; private set; }
+
+        /// <summary>
         /// Gets the IApiManagementServiceOperations.
         /// </summary>
         public virtual IApiManagementServiceOperations ApiManagementService { get; private set; }
@@ -632,6 +637,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             Backend = new BackendOperations(this);
             Certificate = new CertificateOperations(this);
             ApiManagementOperations = new ApiManagementOperations(this);
+            ApiManagementServiceSkus = new ApiManagementServiceSkusOperations(this);
             ApiManagementService = new ApiManagementServiceOperations(this);
             Diagnostic = new DiagnosticOperations(this);
             DiagnosticLogger = new DiagnosticLoggerOperations(this);

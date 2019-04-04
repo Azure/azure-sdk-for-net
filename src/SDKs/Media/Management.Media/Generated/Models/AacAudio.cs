@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="profile">The encoding profile to be used when encoding
         /// audio with AAC. Possible values include: 'AacLc', 'HeAacV1',
         /// 'HeAacV2'</param>
-        public AacAudio(string label = default(string), int? channels = default(int?), int? samplingRate = default(int?), int? bitrate = default(int?), string profile = default(string))
+        public AacAudio(string label = default(string), int? channels = default(int?), int? samplingRate = default(int?), int? bitrate = default(int?), AacAudioProfile? profile = default(AacAudioProfile?))
             : base(label, channels, samplingRate, bitrate)
         {
             Profile = profile;
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// with AAC. Possible values include: 'AacLc', 'HeAacV1', 'HeAacV2'
         /// </summary>
         [JsonProperty(PropertyName = "profile")]
-        public string Profile { get; set; }
+        public AacAudioProfile? Profile { get; set; }
 
     }
 }

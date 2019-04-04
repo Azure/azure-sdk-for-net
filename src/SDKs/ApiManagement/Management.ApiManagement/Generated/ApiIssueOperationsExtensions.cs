@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class ApiIssueOperationsExtensions
     {
             /// <summary>
-            /// Lists all issues assosiated with the specified API.
+            /// Lists all issues associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all issues assosiated with the specified API.
+            /// Lists all issues associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all issues assosiated with the specified API.
+            /// Lists all issues associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all issues assosiated with the specified API.
+            /// Lists all issues associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// the service uses for processing TransformOutputs. The default
         /// priority is Normal. Possible values include: 'Low', 'Normal',
         /// 'High'</param>
-        public TransformOutput(Preset preset, string onError = default(string), string relativePriority = default(string))
+        public TransformOutput(Preset preset, OnErrorType? onError = default(OnErrorType?), Priority? relativePriority = default(Priority?))
         {
             OnError = onError;
             RelativePriority = relativePriority;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'ContinueJob'
         /// </summary>
         [JsonProperty(PropertyName = "onError")]
-        public string OnError { get; set; }
+        public OnErrorType? OnError { get; set; }
 
         /// <summary>
         /// Gets or sets sets the relative priority of the TransformOutputs
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Possible values include: 'Low', 'Normal', 'High'
         /// </summary>
         [JsonProperty(PropertyName = "relativePriority")]
-        public string RelativePriority { get; set; }
+        public Priority? RelativePriority { get; set; }
 
         /// <summary>
         /// Gets or sets preset that describes the operations that will be used

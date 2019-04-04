@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Create/Update tag fescription in scope of the Api.
+            /// Create/Update tag description in scope of the Api.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Create/Update tag fescription in scope of the Api.
+            /// Create/Update tag description in scope of the Api.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

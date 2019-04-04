@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -69,7 +68,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// protection level for compressed digital audio.</param>
         /// <param name="uncompressedDigitalAudioOpl">Specifies the output
         /// protection level for uncompressed digital audio.</param>
-        public ContentKeyPolicyPlayReadyPlayRight(bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, string allowPassingVideoContentToUnknownOutput, System.TimeSpan? firstPlayExpiration = default(System.TimeSpan?), int? scmsRestriction = default(int?), int? agcAndColorStripeRestriction = default(int?), ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction = default(ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction), int? uncompressedDigitalVideoOpl = default(int?), int? compressedDigitalVideoOpl = default(int?), int? analogVideoOpl = default(int?), int? compressedDigitalAudioOpl = default(int?), int? uncompressedDigitalAudioOpl = default(int?))
+        public ContentKeyPolicyPlayReadyPlayRight(bool digitalVideoOnlyContentRestriction, bool imageConstraintForAnalogComponentVideoRestriction, bool imageConstraintForAnalogComputerMonitorRestriction, ContentKeyPolicyPlayReadyUnknownOutputPassingOption allowPassingVideoContentToUnknownOutput, System.TimeSpan? firstPlayExpiration = default(System.TimeSpan?), int? scmsRestriction = default(int?), int? agcAndColorStripeRestriction = default(int?), ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction explicitAnalogTelevisionOutputRestriction = default(ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction), int? uncompressedDigitalVideoOpl = default(int?), int? compressedDigitalVideoOpl = default(int?), int? analogVideoOpl = default(int?), int? compressedDigitalAudioOpl = default(int?), int? uncompressedDigitalAudioOpl = default(int?))
         {
             FirstPlayExpiration = firstPlayExpiration;
             ScmsRestriction = scmsRestriction;
@@ -148,7 +147,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Allowed', 'AllowedWithVideoConstriction'
         /// </summary>
         [JsonProperty(PropertyName = "allowPassingVideoContentToUnknownOutput")]
-        public string AllowPassingVideoContentToUnknownOutput { get; set; }
+        public ContentKeyPolicyPlayReadyUnknownOutputPassingOption AllowPassingVideoContentToUnknownOutput { get; set; }
 
         /// <summary>
         /// Gets or sets specifies the output protection level for uncompressed
@@ -188,15 +187,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (AllowPassingVideoContentToUnknownOutput == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AllowPassingVideoContentToUnknownOutput");
-            }
             if (ExplicitAnalogTelevisionOutputRestriction != null)
             {
                 ExplicitAnalogTelevisionOutputRestriction.Validate();

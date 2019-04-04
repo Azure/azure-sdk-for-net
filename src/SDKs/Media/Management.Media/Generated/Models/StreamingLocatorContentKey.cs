@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="policyName">ContentKeyPolicy used by Content
         /// Key</param>
         /// <param name="tracks">Tracks which use this Content Key</param>
-        public StreamingLocatorContentKey(System.Guid id, string type = default(string), string labelReferenceInStreamingPolicy = default(string), string value = default(string), string policyName = default(string), IList<TrackSelection> tracks = default(IList<TrackSelection>))
+        public StreamingLocatorContentKey(System.Guid id, StreamingLocatorContentKeyType type = default(StreamingLocatorContentKeyType), string labelReferenceInStreamingPolicy = default(string), string value = default(string), string policyName = default(string), IList<TrackSelection> tracks = default(IList<TrackSelection>))
         {
             Id = id;
             Type = type;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'EnvelopeEncryption'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; private set; }
+        public StreamingLocatorContentKeyType Type { get; private set; }
 
         /// <summary>
         /// Gets or sets label of Content Key as specified in the Streaming

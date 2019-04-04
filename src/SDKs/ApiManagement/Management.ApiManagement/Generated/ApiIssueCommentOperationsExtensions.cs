@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class ApiIssueCommentOperationsExtensions
     {
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all comments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all comments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all comments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all comments for the Issue assosiated with the specified API.
+            /// Lists all comments for the Issue associated with the specified API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

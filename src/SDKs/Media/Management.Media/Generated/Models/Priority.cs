@@ -10,24 +10,108 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for Priority.
     /// </summary>
-    public static class Priority
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(PriorityConverter))]
+    public struct Priority : System.IEquatable<Priority>
     {
+        private Priority(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Used for TransformOutputs that can be generated after Normal and
         /// High priority TransformOutputs.
         /// </summary>
-        public const string Low = "Low";
+        public static readonly Priority Low = "Low";
+
         /// <summary>
         /// Used for TransformOutputs that can be generated at Normal priority.
         /// </summary>
-        public const string Normal = "Normal";
+        public static readonly Priority Normal = "Normal";
+
         /// <summary>
         /// Used for TransformOutputs that should take precedence over others.
         /// </summary>
-        public const string High = "High";
+        public static readonly Priority High = "High";
+
+
+        /// <summary>
+        /// Underlying value of enum Priority
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for Priority
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type Priority
+        /// </summary>
+        public bool Equals(Priority e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to Priority
+        /// </summary>
+        public static implicit operator Priority(string value)
+        {
+            return new Priority(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert Priority to string
+        /// </summary>
+        public static implicit operator string(Priority e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum Priority
+        /// </summary>
+        public static bool operator == (Priority e1, Priority e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum Priority
+        /// </summary>
+        public static bool operator != (Priority e1, Priority e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for Priority
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is Priority && Equals((Priority)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode Priority
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }
