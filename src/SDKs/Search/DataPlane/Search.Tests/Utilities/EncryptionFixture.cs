@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Graph.RBAC;
+﻿
+using Microsoft.Azure.Graph.RBAC;
 using Microsoft.Azure.Graph.RBAC.Models;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Models;
@@ -10,15 +11,19 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.Search;
 using Microsoft.Azure.Management.Search.Models;
 using Microsoft.Azure.Search.Tests.Utilities;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
+using static Microsoft.Azure.KeyVault.KeyVaultClient;
 
 namespace Search.Tests.Utilities
 {
@@ -32,12 +37,16 @@ namespace Search.Tests.Utilities
 
         public string KeyVersion { get; private set; }
 
-        public string TestAADApplicationId => "872239e7-b3ab-469e-85d6-ab96f8dc2ca8";
+        public string TestAADApplicationId => "c74474ff-dae3-4e4a-be9a-6fa626a5e314";//"c74474ff-dae3-4e4a-be9a-6fa626a5e314";//"872239e7-b3ab-469e-85d6-ab96f8dc2ca8";
 
-        public string TestAADApplicationSecret => "";
+        public string TestAADApplicationObjectId => "55a05423-7beb-4a7b-8511-d355a08a28f8";
+
+        public string TestAADApplicationSecret => "G(#0i^]?[T&l?X!:p+(@>!*/.N)>*#)+_"; // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is a public secret with no assigned security role.")]
 
         protected override Microsoft.Azure.Management.Search.Models.SkuName SearchServiceSkuName => 
             Microsoft.Azure.Management.Search.Models.SkuName.Basic;
+
+        protected override string SearchServiceLocation => "EastUS";
 
         public override void Initialize(MockContext context)
         {
@@ -45,9 +54,13 @@ namespace Search.Tests.Utilities
 
             RegisterRequiredProvider(context);
 
-            Vault keyVault = CreateKeyVault(context, this.ResourceGroupName, TestEnvironmentFactory.GetTestEnvironment().Tenant, this.TestAADApplicationId);
+            Vault keyVault = CreateKeyVault(context, this.ResourceGroupName, TestEnvironmentFactory.GetTestEnvironment().Tenant, TestAADApplicationObjectId);
             this.KeyVaultUri = keyVault.Properties.VaultUri;
             this.KeyVaultName = keyVault.Name;
+
+            // Create a key
+            // This can be flaky if attempted immediately after creating the vault. Adding short sleep to improve robustness.
+            TestUtilities.Wait(TimeSpan.FromSeconds(3));
 
 
             KeyBundle key = CreateKey(context, keyVault);
@@ -73,15 +86,41 @@ namespace Search.Tests.Utilities
             Provider provider = client.Providers.Register("Microsoft.KeyVault");
         }
 
-        private static Vault CreateKeyVault(MockContext context, string resourceGroupName, string tenantId, string testApplicationId)
+        private static Vault CreateKeyVault(MockContext context, string resourceGroupName, string tenantId, string testApplicationObjectId)
         {
-            
+            string authClientId = TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+
             var accessPolicies = new List<AccessPolicyEntry>();
             accessPolicies.Add(new AccessPolicyEntry
             {
                 TenantId = System.Guid.Parse(tenantId),
-                ObjectId = testApplicationId,
-                Permissions = new Permissions(new List<string> { "wrapkey", "unwrapkey" })
+                ObjectId = testApplicationObjectId,
+                //ApplicationId = Guid.Parse(testApplicationId),
+                Permissions = new Permissions()
+                { 
+                    Keys = new List<string>()
+                    { 
+                        KeyPermissions.Get,
+                        KeyPermissions.WrapKey,
+                        KeyPermissions.UnwrapKey
+                    }
+                }
+            });
+
+            accessPolicies.Add(new AccessPolicyEntry
+            {
+                TenantId = System.Guid.Parse(tenantId),
+                ObjectId = "95d3189e-7275-447c-a3c7-ddc0162b1a6b",
+                Permissions = new Permissions()
+                {
+                    Keys = new List<string>()
+                    {
+                        KeyPermissions.Create,
+                        KeyPermissions.Delete,
+                        KeyPermissions.Get,
+                        KeyPermissions.List
+                    }
+                }
             });
 
             KeyVaultManagementClient keyVaultMgmtClient = context.GetServiceClient<KeyVaultManagementClient>();
@@ -93,10 +132,7 @@ namespace Search.Tests.Utilities
                 {
                     TenantId = System.Guid.Parse(tenantId),
                     AccessPolicies = accessPolicies,
-                    Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku(Microsoft.Azure.Management.KeyVault.Models.SkuName.Standard),
-                    EnabledForDiskEncryption = false,
-                    EnabledForDeployment = false,
-                    EnabledForTemplateDeployment = false
+                    Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku(Microsoft.Azure.Management.KeyVault.Models.SkuName.Standard)
                 }
             });
         }
@@ -104,14 +140,56 @@ namespace Search.Tests.Utilities
         private static KeyBundle CreateKey(MockContext context, Vault keyVault)
         {
             string keyName = TestUtilities.GenerateName("keyvaultkey");
-            return context.GetServiceClient<KeyVaultClient>().CreateKeyAsync(keyVault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa, 2048,
+
+            KeyVaultClient keyVaultClient = GetKeyVaultClient();
+
+            return keyVaultClient.CreateKeyAsync(keyVault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa, 2048,
                     JsonWebKeyOperation.AllOperations, new Microsoft.Azure.KeyVault.Models.KeyAttributes()).GetAwaiter().GetResult();
+        }
+
+        private static KeyVaultClient GetKeyVaultClient()
+        {
+            DelegatingHandler mockServer = HttpMockServer.CreateInstance();
+            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken)/*, handlers: mockServer*/);
+        }
+
+        private static async Task<string> GetAccessToken(string authority, string resource, string scope)
+        {
+            TestEnvironment testEnvironment = TestEnvironmentFactory.GetTestEnvironment();
+
+            var context = new AuthenticationContext(authority, null);
+            string authClientId = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+            string authSecret = testEnvironment.ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey];
+
+            var clientCredential = new ClientCredential(authClientId, authSecret);
+            var result = await context.AcquireTokenAsync(resource, clientCredential).ConfigureAwait(false);
+            return result.AccessToken;
+        }
+
+        private class TestKeyVaultCredential : KeyVaultCredential
+        {
+            public TestKeyVaultCredential(AuthenticationCallback authenticationCallback) : base(authenticationCallback)
+            {
+            }
+
+            public override Task ProcessHttpRequestAsync(HttpRequestMessage request,
+                CancellationToken cancellationToken)
+            {
+                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                {
+                    return base.ProcessHttpRequestAsync(request, cancellationToken);
+                }
+                else
+                {
+                    return Task.Run(() => { return; });
+                }
+            }
         }
 
         //private GraphRbacManagementClient GetGraphClient(MockContext context, string tenantId)
         //{
         //    var client = context.GetGraphServiceClient<GraphRbacManagementClient>(TestEnvironmentFactory.GetTestEnvironment());
-            
+
         //    client.TenantID = tenantId;
         //    return client;
         //}

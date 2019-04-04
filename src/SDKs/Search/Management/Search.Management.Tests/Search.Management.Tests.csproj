@@ -10,8 +10,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.5.0-preview" />
-    <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.0-preview" />
-    <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.2.0-preview" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.3" />
+    <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.4.3" />
     <ProjectReference Include="..\Management.Search\Microsoft.Azure.Management.Search.csproj" />
     <ProjectReference Include="..\..\DataPlane\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
   </ItemGroup>

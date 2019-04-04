@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.Search.Models;
+﻿using Microsoft.Azure.Search;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Tests;
 using Microsoft.Azure.Search.Tests.Utilities;
 using Search.Tests.Utilities;
 using System;
@@ -11,10 +13,12 @@ namespace Search.Tests.Tests
     public sealed class EncryptionWithCMKTests : SearchTestBase<EncryptionFixture>
     {
         [Fact]
-        public void CreateIndexWithCMK()
+        public void CreateIndexWithCMKUsingAccessCredentials()
         {
             Run(() =>
             {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
                 Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
                 {
                     KeyVaultUri = this.Data.KeyVaultUri,
@@ -23,11 +27,67 @@ namespace Search.Tests.Tests
                     AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
                     {
                         ApplicationId = this.Data.TestAADApplicationId,
-                        ApplicationSecret = 
+                        ApplicationSecret = this.Data.TestAADApplicationSecret
                     }
-                })
+                });
+
+                Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
+
+                AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
             });
         }
+
+        [Fact]
+        public void CreateIndexWithCMKUsingWithoutAccessCredentials()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
+                {
+                    KeyVaultUri = this.Data.KeyVaultUri,
+                    KeyVaultKeyName = this.Data.KeyName,
+                    KeyVaultKeyVersion = this.Data.KeyVersion,
+                    AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
+                    {
+                        ApplicationId = this.Data.TestAADApplicationId,
+                        ApplicationSecret = this.Data.TestAADApplicationSecret
+                    }
+                });
+
+                Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
+
+                AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
+            });
+        }
+
+        [Fact]
+        public void CreateSynonymMapWithCMKUsingWithoutAccessCredentials()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
+                {
+                    KeyVaultUri = this.Data.KeyVaultUri,
+                    KeyVaultKeyName = this.Data.KeyName,
+                    KeyVaultKeyVersion = this.Data.KeyVersion,
+                    AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
+                    {
+                        ApplicationId = this.Data.TestAADApplicationId,
+                        ApplicationSecret = this.Data.TestAADApplicationSecret
+                    }
+                });
+
+                Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
+
+                AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
+            });
+        }
+
+
         private static Index CreateEncryptedTestIndex(EncryptionKey encryptionKey)
         {
             string indexName = SearchTestUtilities.GenerateName();
@@ -45,5 +105,10 @@ namespace Search.Tests.Tests
 
             return index;
         }
-}
+
+        private static void AssertIndexesEqual(Index expected, Index actual)
+        {
+            Assert.Equal(expected, actual, new ModelComparer<Index>());
+        }
+    }
 }
