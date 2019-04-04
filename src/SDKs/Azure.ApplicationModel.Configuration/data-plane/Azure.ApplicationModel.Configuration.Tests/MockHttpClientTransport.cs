@@ -27,11 +27,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             if(responseContent != null)
             {
                 ReadOnlyMemory<byte> content = Serialize(responseContent);
-                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
-            }
-            else
-            {
-                _responseContent = null;
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray());
             }
         }
     }
@@ -46,11 +42,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             if (responseContent != null)
             {
                 ReadOnlyMemory<byte> content = Serialize(responseContent);
-                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
-            }
-            else
-            {
-                _responseContent = null;
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray());
             }
         }
     }
@@ -65,11 +57,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             if (responseContent != null)
             {
                 ReadOnlyMemory<byte> content = Serialize(responseContent);
-                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
-            }
-            else
-            {
-                _responseContent = null;
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray());
             }
         }
 
@@ -89,11 +77,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             if (responseContent != null)
             {
                 ReadOnlyMemory<byte> content = Serialize(responseContent);
-                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
-            }
-            else
-            {
-                _responseContent = null;
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray());
             }
         }
 
@@ -116,11 +100,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             if (responseContent != null)
             {
                 ReadOnlyMemory<byte> content = Serialize(responseContent);
-                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
-            }
-            else
-            {
-                _responseContent = null;
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray());
             }
         }
 
@@ -145,11 +125,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             {
                 responseContent.Locked = lockOtherwiseUnlock;
                 ReadOnlyMemory<byte> content = Serialize(responseContent);
-                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
-            }
-            else
-            {
-                _responseContent = null;
+                _responseContent = Encoding.UTF8.GetString(content.Span.ToArray());
             }
         }
     }
@@ -194,7 +170,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             }
             ReadOnlyMemory<byte> content = Serialize(bathItems);
 
-            string json = Encoding.UTF8.GetString(content.Span.ToArray()).ToLowerInvariant();
+            string json = Encoding.UTF8.GetString(content.Span.ToArray());
             response.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
             long jsonByteCount = Encoding.UTF8.GetByteCount(json);
@@ -295,7 +271,6 @@ namespace Azure.ApplicationModel.Configuration.Test
         protected virtual void WriteResponseCore(HttpResponseMessage response)
         {
             response.Content = new StringContent(_responseContent, Encoding.UTF8, "application/json");
-            
             long jsonByteCount = Encoding.UTF8.GetByteCount(_responseContent);
             response.Content.Headers.Add("Content-Length", jsonByteCount.ToString()); // TODO (pri 3): the service actually responds with chunked encoding
 
