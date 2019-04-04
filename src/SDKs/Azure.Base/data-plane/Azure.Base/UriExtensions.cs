@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 using System.Text;
 
 namespace Azure
@@ -10,6 +9,8 @@ namespace Azure
 
     public class HttpPipelineUriBuilder
     {
+        private const char QuerySeperator = '?';
+
         private readonly StringBuilder _pathAndQuery = new StringBuilder();
 
         private int _queryIndex = -1;
@@ -67,7 +68,10 @@ namespace Azure
                 if (!string.IsNullOrEmpty(value))
                 {
                     _queryIndex = _pathAndQuery.Length;
-                    _pathAndQuery.Append('?');
+                    if (value[0] != QuerySeperator)
+                    {
+                        _pathAndQuery.Append(QuerySeperator);
+                    }
                     _pathAndQuery.Append(value);
                 }
             }
@@ -122,7 +126,7 @@ namespace Azure
 
             if (!HasQuery)
             {
-                _pathAndQuery.Append('?');
+                _pathAndQuery.Append(QuerySeperator);
                 _queryIndex = _pathAndQuery.Length;
             }
             else
@@ -159,7 +163,23 @@ namespace Azure
                 stringBuilder.Append(':');
                 stringBuilder.Append(Port);
             }
-            stringBuilder.Append(_pathAndQuery);
+
+            if (_pathAndQuery.Length == 0 || _pathAndQuery[0] != '/')
+            {
+                stringBuilder.Append('/');
+            }
+
+            // TODO: Escaping can be done in-place
+            if (!HasQuery)
+            {
+                stringBuilder.Append(Uri.EscapeUriString(_pathAndQuery.ToString()));
+            }
+            else
+            {
+                stringBuilder.Append(Uri.EscapeUriString(_pathAndQuery.ToString(0, _queryIndex)));
+                stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));
+            }
+
             return stringBuilder.ToString();
         }
 

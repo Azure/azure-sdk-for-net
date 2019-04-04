@@ -1,0 +1,106 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using NUnit.Framework;
+
+namespace Azure.Base.Tests
+{
+    public class HttpPipelineUriBuilderTest
+    {
+        public static Uri[] Uris { get; } = {
+            new Uri("https://localhost:20/query?query"),
+            new Uri("https://localhost"),
+            new Uri("http://localhost"),
+            new Uri("http://localhost?query"),
+            new Uri("https://localhost:443/"),
+            new Uri("http://localhost:80/"),
+        };
+
+        [TestCaseSource(nameof(Uris))]
+        public void RoundtripWithUri(Uri uri)
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Uri = uri;
+
+            Assert.AreEqual(uri.Scheme, uriBuilder.Scheme);
+            Assert.AreEqual(uri.Host, uriBuilder.Host);
+            Assert.AreEqual(uri.Port, uriBuilder.Port);
+            Assert.AreEqual(uri.AbsolutePath, uriBuilder.Path);
+            Assert.AreEqual(uri.Query, uriBuilder.Query);
+            Assert.AreEqual(uri.ToString(), uriBuilder.ToString());
+        }
+
+        [TestCase("", "http://localhost/")]
+        [TestCase("/", "http://localhost/")]
+        [TestCase("a", "http://localhost/a")]
+        [TestCase("/a", "http://localhost/a")]
+        public void AddsLeadingSlashToPath(string path, string expected)
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.Path = path;
+
+            Assert.AreEqual(expected, uriBuilder.ToString());
+        }
+
+        [TestCase("", "http://localhost/")]
+        [TestCase("?", "http://localhost/?")]
+        [TestCase("a", "http://localhost/?a")]
+        [TestCase("?a", "http://localhost/?a")]
+        public void AddsLeadingQuestionMarkToQuery(string query, string expected)
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.Query = query;
+
+            Assert.AreEqual(expected, uriBuilder.ToString());
+        }
+
+        [TestCase(null)]
+        [TestCase("")]
+        public void SettingQueryToEmptyRemovesQuestionMark(string query)
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.Query = "a";
+
+            Assert.AreEqual("http://localhost/?a", uriBuilder.ToString());
+
+            uriBuilder.Query = query;
+
+            Assert.AreEqual("http://localhost/", uriBuilder.ToString());
+        }
+
+        [TestCase("\u1234", "%E1%88%B4")]
+        [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
+        public void PathIsEscaped(string path, string expectedPath)
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.Path = path;
+
+            Assert.AreEqual("http://localhost/" + expectedPath, uriBuilder.ToString());
+        }
+
+        [Test]
+        public void QueryIsNotEscaped()
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.Query = "\u1234";
+
+            Assert.AreEqual("http://localhost/?\u1234", uriBuilder.ToString());
+        }
+    }
+}
