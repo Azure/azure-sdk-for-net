@@ -206,7 +206,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     SettingBatch batch = response.Result;
                     for (int i = 0; i < batch.Count; i++)
                     {
-                        var value = batch[i];
+                        ConfigurationSetting value = batch[i];
                         Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
                         keyIndex++;
                     }
