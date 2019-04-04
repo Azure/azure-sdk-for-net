@@ -77,6 +77,21 @@ namespace Microsoft.Azure.Management.Security
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IRegulatoryComplianceStandardsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceControlsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceAssessmentsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; private set; }
+
+        /// <summary>
         /// Gets the IPricingsOperations.
         /// </summary>
         public virtual IPricingsOperations Pricings { get; private set; }
@@ -412,6 +427,9 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         private void Initialize()
         {
+            RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
+            RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
+            RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
             Pricings = new PricingsOperations(this);
             SecurityContacts = new SecurityContactsOperations(this);
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
