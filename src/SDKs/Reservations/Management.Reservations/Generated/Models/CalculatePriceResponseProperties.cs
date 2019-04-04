@@ -32,11 +32,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// customer will be charged in customer's local currency. Tax is not
         /// included.</param>
         /// <param name="reservationOrderId">GUID that represents reservation
-        /// order that can be placed after calculating price</param>
-        /// <param name="skuTitle">Long name for the SKU that is being
-        /// purchased</param>
-        /// <param name="skuDescription">Short name for the SKU that is being
-        /// purchased</param>
+        /// order that can be placed after calculating price.</param>
+        /// <param name="skuTitle">Title of SKU that is being
+        /// purchased.</param>
+        /// <param name="skuDescription">Description of SKU that is being
+        /// purchased.</param>
         /// <param name="pricingCurrencyTotal">Amount that Microsoft uses for
         /// record. Used during refund for calculating refund limit. Tax is not
         /// included.</param>
@@ -70,19 +70,19 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// Gets or sets GUID that represents reservation order that can be
-        /// placed after calculating price
+        /// placed after calculating price.
         /// </summary>
         [JsonProperty(PropertyName = "reservationOrderId")]
         public string ReservationOrderId { get; set; }
 
         /// <summary>
-        /// Gets or sets long name for the SKU that is being purchased
+        /// Gets or sets title of SKU that is being purchased.
         /// </summary>
         [JsonProperty(PropertyName = "skuTitle")]
         public string SkuTitle { get; set; }
 
         /// <summary>
-        /// Gets or sets short name for the SKU that is being purchased
+        /// Gets or sets description of SKU that is being purchased.
         /// </summary>
         [JsonProperty(PropertyName = "skuDescription")]
         public string SkuDescription { get; set; }

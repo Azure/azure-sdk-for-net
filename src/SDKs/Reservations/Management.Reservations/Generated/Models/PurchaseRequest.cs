@@ -39,8 +39,9 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="displayName">Friendly name of the Reservation</param>
         /// <param name="appliedScopeType">Possible values include: 'Single',
         /// 'Shared'</param>
-        /// <param name="reservedResourceProperties">properties specific to
-        /// each reserved resource type.</param>
+        /// <param name="reservedResourceProperties">Properties specific to
+        /// each reserved resource type. Not required if not
+        /// applicable.</param>
         public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default(PurchaseRequestPropertiesReservedResourceProperties))
         {
             Sku = sku;
@@ -114,6 +115,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
 
         /// <summary>
         /// Gets or sets properties specific to each reserved resource type.
+        /// Not required if not applicable.
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservedResourceProperties")]
         public PurchaseRequestPropertiesReservedResourceProperties ReservedResourceProperties { get; set; }

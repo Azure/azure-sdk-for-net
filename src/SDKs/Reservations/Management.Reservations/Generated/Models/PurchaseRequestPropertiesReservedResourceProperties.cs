@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
     using System.Linq;
 
     /// <summary>
-    /// properties specific to each reserved resource type.
+    /// Properties specific to each reserved resource type. Not required if not
+    /// applicable.
     /// </summary>
     public partial class PurchaseRequestPropertiesReservedResourceProperties
     {
