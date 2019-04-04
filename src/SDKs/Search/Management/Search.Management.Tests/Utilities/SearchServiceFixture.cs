@@ -22,6 +22,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
         public MockContext MockContext { get; private set; }
 
+        protected virtual SkuName SearchServiceSkuName => SkuName.Free;
+
         public override void Initialize(MockContext context)
         {
             base.Initialize(context);
@@ -81,7 +83,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     new SearchService()
                     {
                         Location = Location,
-                        Sku = new Sku() { Name = SkuName.Free }
+                        Sku = new Sku() { Name = SearchServiceSkuName }
                     };
 
                 client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, service);
