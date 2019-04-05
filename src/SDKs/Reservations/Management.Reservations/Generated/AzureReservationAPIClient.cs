@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Reservations
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Supported version.
+        /// Supported version for this document is 2019-04-01
         /// </summary>
         public string ApiVersion { get; private set; }
 

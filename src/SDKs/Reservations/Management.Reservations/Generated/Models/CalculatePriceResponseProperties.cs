@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="billingCurrencyTotal">Currency and amount that
         /// customer will be charged in customer's local currency. Tax is not
         /// included.</param>
+        /// <param name="isBillingPartnerManaged">True if billing is managed by
+        /// Microsoft Partner. Used only for CSP accounts.</param>
         /// <param name="reservationOrderId">GUID that represents reservation
         /// order that can be placed after calculating price.</param>
         /// <param name="skuTitle">Title of SKU that is being
@@ -64,6 +66,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public CalculatePriceResponsePropertiesBillingCurrencyTotal BillingCurrencyTotal { get; set; }
 
         /// <summary>
+        /// Gets or sets true if billing is managed by Microsoft Partner. Used
+        /// only for CSP accounts.
         /// </summary>
         [JsonProperty(PropertyName = "isBillingPartnerManaged")]
         public bool? IsBillingPartnerManaged { get; set; }
