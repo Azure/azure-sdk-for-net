@@ -277,7 +277,7 @@ namespace Azure.ApplicationModel.Configuration.Test
             response.Content.Headers.TryAddWithoutValidation("Last-Modified", "Tue, 05 Dec 2017 02:41:26 GMT");
             response.Content.Headers.TryAddWithoutValidation("Content-Type", "application/vnd.microsoft.appconfig.kv+json; charset=utf-8;");
         }
-        
+
         public bool TrySerializeConfigurationSetting(ConfigurationSetting setting, byte[] buffer, out int written)
         {
             try
@@ -360,7 +360,7 @@ namespace Azure.ApplicationModel.Configuration.Test
         {
             Assert.AreEqual(_expectedMethod, request.Method);
             _expectedUri.Verify(request.RequestUri.ToString());
-//            Assert.AreEqual(new Version(2, 0), request.Version);
+            Assert.AreEqual(new Version(2, 0), request.Version);
         }
 
         void VerifyRequestContent(HttpRequestMessage request)
