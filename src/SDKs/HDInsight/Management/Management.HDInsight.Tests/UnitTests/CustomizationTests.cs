@@ -65,42 +65,6 @@ namespace Management.HDInsight.Tests.UnitTests
         }
 
         [Fact]
-        public void TestEnableHttpCustomization()
-        {
-            TestDelegatingHandler handler = new TestDelegatingHandler();
-            HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
-
-            string username = "admin";
-            string password = "NewPassword123";
-            client.Configurations.BeginEnablingHttp(ResourceGroupName, ClusterName, username, password);
-            client.Configurations.BeginUpdate(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
-                ConfigurationsConverter.Convert(new HttpConnectivitySettings
-                {
-                    EnabledCredential = "true",
-                    Password = password,
-                    Username = username
-                }));
-
-            Assert.Equal(handler.Requests[0], handler.Requests[1]);
-        }
-
-        [Fact]
-        public void TestDisableHttpCustomization()
-        {
-            TestDelegatingHandler handler = new TestDelegatingHandler();
-            HDInsightManagementClient client = GetHDInsightUnitTestingClient(handler);
-
-            client.Configurations.BeginDisablingHttp(ResourceGroupName, ClusterName);
-            client.Configurations.BeginUpdate(ResourceGroupName, ClusterName, ConfigurationKey.Gateway,
-                ConfigurationsConverter.Convert(new HttpConnectivitySettings
-                {
-                    EnabledCredential = "False"
-                }));
-
-            Assert.Equal(handler.Requests[0], handler.Requests[1]);
-        }
-
-        [Fact]
         public void TestExecuteScriptActionsCustomizations()
         {
             TestDelegatingHandler handler = new TestDelegatingHandler();

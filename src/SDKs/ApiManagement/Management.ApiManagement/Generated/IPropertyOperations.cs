@@ -176,8 +176,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string propId, PropertyUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes specific property from the the API Management service
-        /// instance.
+        /// Deletes specific property from the API Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="managementEndpoints">The cluster management
         /// endpoint.</param>
         /// <param name="maxPartitionResolutionRetries">Maximum number of
-        /// retries while attempting resolve the parition.</param>
+        /// retries while attempting resolve the partition.</param>
         /// <param name="serverCertificateThumbprints">Thumbprints of
         /// certificates cluster management service uses for tls
         /// communication</param>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets maximum number of retries while attempting resolve the
-        /// parition.
+        /// partition.
         /// </summary>
         [JsonProperty(PropertyName = "maxPartitionResolutionRetries")]
         public int? MaxPartitionResolutionRetries { get; set; }

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="type">Resource type for API Management
         /// resource.</param>
         /// <param name="after">Duration in ISO8601 format after which
-        /// reconnect will be initiated. Minimum duration of the Reconect is
+        /// reconnect will be initiated. Minimum duration of the Reconnect is
         /// PT2M.</param>
         public BackendReconnectContract(string id = default(string), string name = default(string), string type = default(string), System.TimeSpan? after = default(System.TimeSpan?))
             : base(id, name, type)
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets duration in ISO8601 format after which reconnect will
-        /// be initiated. Minimum duration of the Reconect is PT2M.
+        /// be initiated. Minimum duration of the Reconnect is PT2M.
         /// </summary>
         [JsonProperty(PropertyName = "properties.after")]
         public System.TimeSpan? After { get; set; }

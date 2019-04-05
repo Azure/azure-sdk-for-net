@@ -1246,7 +1246,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Deletes specific property from the the API Management service instance.
+        /// Deletes specific property from the API Management service instance.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
