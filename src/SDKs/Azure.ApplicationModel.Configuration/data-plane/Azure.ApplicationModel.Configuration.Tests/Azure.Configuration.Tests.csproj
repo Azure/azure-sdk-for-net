@@ -10,6 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\Azure.ApplicationModel.Configuration\Azure.Configuration.csproj" />
+    <ProjectReference Include="..\..\..\Azure.Base\data-plane\Azure.Base.Tests\Azure.Base.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>
