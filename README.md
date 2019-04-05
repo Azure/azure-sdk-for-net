@@ -162,7 +162,7 @@ Regarding the test project, one thing that's important is to name the test proje
   - This is for improving CI performance so to find exactly one copy of your test assembly.
   - Also, due to test dependencies, the test project should build both .NET 4.5.2 and NETStandard 1.4. For example, check out "src\SDKs\Resource\Resource.tests"
 
-### Tested OSs and .NET Versions
+### Client Library Tested OSs and .NET Versions
 
 |                        | Linux (Ubuntu 16.04) | MacOS 10.13 | Windows Server 2016 |
 |------------------------|----------------------|-------------|---------------------|
