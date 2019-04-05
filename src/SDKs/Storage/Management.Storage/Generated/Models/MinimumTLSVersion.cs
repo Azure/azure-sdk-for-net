@@ -10,57 +10,14 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for MinimumTLSVersion.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum MinimumTLSVersion
+    public static class MinimumTLSVersion
     {
-        [EnumMember(Value = "TLS1_0")]
-        TLS10,
-        [EnumMember(Value = "TLS1_1")]
-        TLS11,
-        [EnumMember(Value = "TLS1_2")]
-        TLS12
-    }
-    internal static class MinimumTLSVersionEnumExtension
-    {
-        internal static string ToSerializedValue(this MinimumTLSVersion? value)
-        {
-            return value == null ? null : ((MinimumTLSVersion)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this MinimumTLSVersion value)
-        {
-            switch( value )
-            {
-                case MinimumTLSVersion.TLS10:
-                    return "TLS1_0";
-                case MinimumTLSVersion.TLS11:
-                    return "TLS1_1";
-                case MinimumTLSVersion.TLS12:
-                    return "TLS1_2";
-            }
-            return null;
-        }
-
-        internal static MinimumTLSVersion? ParseMinimumTLSVersion(this string value)
-        {
-            switch( value )
-            {
-                case "TLS1_0":
-                    return MinimumTLSVersion.TLS10;
-                case "TLS1_1":
-                    return MinimumTLSVersion.TLS11;
-                case "TLS1_2":
-                    return MinimumTLSVersion.TLS12;
-            }
-            return null;
-        }
+        public const string TLS10 = "TLS1_0";
+        public const string TLS11 = "TLS1_1";
+        public const string TLS12 = "TLS1_2";
     }
 }
