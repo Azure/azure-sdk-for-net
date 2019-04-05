@@ -19,7 +19,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Rest.Serialization;
 using Xunit;
-
+#if !FullNetFx
 namespace Microsoft.Azure.KeyVault.Tests
 {
     public class Operations : IClassFixture<KeyVaultTestFixture>
@@ -4294,3 +4294,4 @@ namespace Microsoft.Azure.KeyVault.Tests
 #endregion
     }
 }
+#endif
