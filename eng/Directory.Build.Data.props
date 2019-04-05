@@ -13,6 +13,8 @@
     <SignAssembly>true</SignAssembly>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DisableClientSdkAnalyzers>false</DisableClientSdkAnalyzers>
+    <DisableClientSdkAnalyzers Condition="'$(MSBuildProjectName)' == 'Azure.Base'">true</DisableClientSdkAnalyzers>
   </PropertyGroup>
 
   <!-- TargetFramework default properties -->
@@ -64,4 +66,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Condition="'$(DisableClientSdkAnalyzers)' != 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.0-preview1" PrivateAssets="All" />
+  </ItemGroup>
 </Project>
