@@ -11,14 +11,14 @@ namespace Azure.Base.Tests
 {
     public abstract class PolicyTestBase
     {
-        protected static async Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy)
+        protected static Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy)
         {
             using (HttpPipelineRequest request = transport.CreateRequest(null))
             {
                 request.Method = HttpPipelineMethod.Get;
                 request.Uri = new Uri("http://example.com");
-                var pipeline = new HttpPipeline(transport, new [] { ClientRequestIdPolicy.Singleton });
-                return await pipeline.SendRequestAsync(request, CancellationToken.None);
+                var pipeline = new HttpPipeline(transport, new [] { policy });
+                return pipeline.SendRequestAsync(request, CancellationToken.None);
             }
         }
     }
