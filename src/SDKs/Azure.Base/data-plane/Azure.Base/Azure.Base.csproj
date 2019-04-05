@@ -18,7 +18,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <LangVersion>7.3</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DisableClientSdkAnalyzers>true</DisableClientSdkAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>

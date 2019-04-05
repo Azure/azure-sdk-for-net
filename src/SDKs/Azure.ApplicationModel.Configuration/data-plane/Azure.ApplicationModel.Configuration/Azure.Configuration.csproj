@@ -17,6 +17,7 @@
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Azure.ApplicationModel.Configuration</AssemblyName>
+    <EnableClientSdkAnalyzers>true</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
   <ItemGroup>
