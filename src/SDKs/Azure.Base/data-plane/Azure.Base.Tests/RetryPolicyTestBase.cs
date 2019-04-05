@@ -6,10 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
-using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using Azure.Base.Testing;
 using Azure.Base.Tests.Testing;
@@ -17,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Base.Tests
 {
-    public abstract class RetryPolicyTestBase
+    public abstract class RetryPolicyTestBase: PolicyTestBase
     {
         [Test]
         public async Task DoesNotExceedRetryCount()
@@ -172,15 +170,7 @@ namespace Azure.Base.Tests
 
         protected static Task<Response> SendRequest(MockTransport mockTransport, HttpPipelinePolicy policy)
         {
-            var options = new HttpPipelineOptions(mockTransport);
-            options.RetryPolicy = policy;
-
-            var pipeline = options.Build(typeof(FixedRetryPolicyTests).Assembly);
-
-            var httpPipelineRequest = pipeline.CreateRequest();
-            httpPipelineRequest.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com/"));
-
-            return pipeline.SendRequestAsync(httpPipelineRequest, CancellationToken.None);
+            return SendGetRequest(mockTransport, policy);
         }
 
         protected abstract (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3);
