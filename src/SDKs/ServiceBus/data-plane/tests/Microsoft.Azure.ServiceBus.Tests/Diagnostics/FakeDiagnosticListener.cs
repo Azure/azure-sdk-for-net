@@ -39,7 +39,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         public FakeDiagnosticListener(Action<KeyValuePair<string, object>> writeCallback)
         {
-            this.writeCallback = writeCallback;
+            this.writeCallback = writeCallback;            
         }
 
         public void OnCompleted()
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
 
         public void Enable(Func<string, object, object, bool> writeObserverEnabled)
         {
-            this.writeObserverEnabled = writeObserverEnabled;
+            this.writeObserverEnabled = (name, arg1, arg2) => writeObserverEnabled(name, arg1, arg2);
         }
 
         public void Disable()
@@ -78,10 +78,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             this.writeObserverEnabled = (name, arg1, arg2) => false;
         }
 
-        private bool IsEnabled(string s, object arg1, object arg2)
-        {
-            return this.writeObserverEnabled.Invoke(s, arg1, arg2);
-        }
+        private bool IsEnabled(string s, object arg1, object arg2) =>
+            this.writeObserverEnabled(s, arg1, arg2);
 
         public void Dispose()
         {

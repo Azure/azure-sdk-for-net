@@ -116,8 +116,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(retryExponential.ShouldRetry(duration, retryCount, exception, out _), "We should retry, but it return false");
             Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy should be true");
 
-            System.Threading.Thread.Sleep(8000); // 3 + 8 = 11s
-            Assert.False(retryExponential.IsServerBusy, "policy1.IsServerBusy should stay false after 11s");
+            System.Threading.Thread.Sleep(9750); // 3 + 9(ish) = 12s  (base reset time is 10 seconds;  see RetryPolicy, line 19)
+            Assert.False(retryExponential.IsServerBusy, "policy1.IsServerBusy should reset to false after 11s");
 
             // Setting ServerBusy for second time.
             Assert.True(retryExponential.ShouldRetry(duration, retryCount, exception, out _), "We should retry, but it return false");
@@ -130,7 +130,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var policy = RetryPolicy.Default;
             var watch = Stopwatch.StartNew();
             await Assert.ThrowsAsync<ServiceBusException>(async () => await policy.RunOperation(
-                    () => throw new ServiceBusException(true, string.Empty), TimeSpan.FromSeconds(8)));
+                    () => throw new ServiceBusException(true, string.Empty), TimeSpan.FromSeconds(8)))
+                .ConfigureAwait(false);
 
             TestUtility.Log($"Elapsed Milliseconds: {watch.Elapsed.TotalMilliseconds}");
             Assert.True(watch.Elapsed.TotalSeconds < 7);

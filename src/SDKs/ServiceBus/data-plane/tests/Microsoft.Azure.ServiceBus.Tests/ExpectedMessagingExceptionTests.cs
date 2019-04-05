@@ -44,8 +44,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -73,8 +73,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
