@@ -50,15 +50,22 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// associated with the Batch account.</param>
         /// <param name="autoStorage">The properties and status of any
         /// auto-storage account associated with the Batch account.</param>
-        /// <param name="dedicatedCoreQuota">The dedicated core quota for this
+        /// <param name="dedicatedCoreQuota">The dedicated core quota for the
         /// Batch account.</param>
         /// <param name="lowPriorityCoreQuota">The low-priority core quota for
-        /// this Batch account.</param>
-        /// <param name="poolQuota">The pool quota for this Batch
+        /// the Batch account.</param>
+        /// <param name="dedicatedCoreQuotaPerVMFamily">A list of the dedicated
+        /// core quota per Virtual Machine family for the Batch account. For
+        /// accounts with PoolAllocationMode set to UserSubscription, quota is
+        /// managed on the subscription so this value is not returned.</param>
+        /// <param name="dedicatedCoreQuotaPerVMFamilyEnforced">A value
+        /// indicating whether the core quota for the Batch Account is enforced
+        /// per Virtual Machine family or not.</param>
+        /// <param name="poolQuota">The pool quota for the Batch
         /// account.</param>
         /// <param name="activeJobAndJobScheduleQuota">The active job and job
-        /// schedule quota for this Batch account.</param>
-        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int dedicatedCoreQuota = default(int), int lowPriorityCoreQuota = default(int), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
+        /// schedule quota for the Batch account.</param>
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int dedicatedCoreQuota = default(int), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
@@ -68,6 +75,8 @@ namespace Microsoft.Azure.Management.Batch.Models
             AutoStorage = autoStorage;
             DedicatedCoreQuota = dedicatedCoreQuota;
             LowPriorityCoreQuota = lowPriorityCoreQuota;
+            DedicatedCoreQuotaPerVMFamily = dedicatedCoreQuotaPerVMFamily;
+            DedicatedCoreQuotaPerVMFamilyEnforced = dedicatedCoreQuotaPerVMFamilyEnforced;
             PoolQuota = poolQuota;
             ActiveJobAndJobScheduleQuota = activeJobAndJobScheduleQuota;
             CustomInit();
@@ -117,25 +126,60 @@ namespace Microsoft.Azure.Management.Batch.Models
         public AutoStorageProperties AutoStorage { get; private set; }
 
         /// <summary>
-        /// Gets the dedicated core quota for this Batch account.
+        /// Gets the dedicated core quota for the Batch account.
         /// </summary>
+        /// <remarks>
+        /// For accounts with PoolAllocationMode set to UserSubscription, quota
+        /// is managed on the subscription so this value is not returned.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.dedicatedCoreQuota")]
         public int DedicatedCoreQuota { get; private set; }
 
         /// <summary>
-        /// Gets the low-priority core quota for this Batch account.
+        /// Gets the low-priority core quota for the Batch account.
         /// </summary>
+        /// <remarks>
+        /// For accounts with PoolAllocationMode set to UserSubscription, quota
+        /// is managed on the subscription so this value is not returned.
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.lowPriorityCoreQuota")]
-        public int LowPriorityCoreQuota { get; private set; }
+        public int? LowPriorityCoreQuota { get; private set; }
 
         /// <summary>
-        /// Gets the pool quota for this Batch account.
+        /// Gets a list of the dedicated core quota per Virtual Machine family
+        /// for the Batch account. For accounts with PoolAllocationMode set to
+        /// UserSubscription, quota is managed on the subscription so this
+        /// value is not returned.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dedicatedCoreQuotaPerVMFamily")]
+        public IList<VirtualMachineFamilyCoreQuota> DedicatedCoreQuotaPerVMFamily { get; private set; }
+
+        /// <summary>
+        /// Gets a value indicating whether the core quota for the Batch
+        /// Account is enforced per Virtual Machine family or not.
+        /// </summary>
+        /// <remarks>
+        /// Batch is transitioning its core quota system for dedicated cores to
+        /// be enforced per Virtual Machine family. During this transitional
+        /// phase, the dedicated core quota per Virtual Machine family may not
+        /// yet be enforced. If this flag is false, dedicated core quota is
+        /// enforced via the old dedicatedCoreQuota property on the account and
+        /// does not consider Virtual Machine family. If this flag is true,
+        /// dedicated core quota is enforced via the
+        /// dedicatedCoreQuotaPerVMFamily property on the account, and the old
+        /// dedicatedCoreQuota does not apply.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.dedicatedCoreQuotaPerVMFamilyEnforced")]
+        public bool DedicatedCoreQuotaPerVMFamilyEnforced { get; private set; }
+
+        /// <summary>
+        /// Gets the pool quota for the Batch account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.poolQuota")]
         public int PoolQuota { get; private set; }
 
         /// <summary>
-        /// Gets the active job and job schedule quota for this Batch account.
+        /// Gets the active job and job schedule quota for the Batch account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.activeJobAndJobScheduleQuota")]
         public int ActiveJobAndJobScheduleQuota { get; private set; }
