@@ -97,7 +97,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="geoReplicationStats">Geo Replication Stats</param>
         /// <param name="failoverInProgress">If the failover is in progress,
         /// the value will be true, otherwise, it will be null.</param>
-        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?))
+        /// <param name="minimumTLSVersion">TLS version control on storage
+        /// account in customer configuration, TLS v1.2 by default. Possible
+        /// values include: 'TLS1_0', 'TLS1_1', 'TLS1_2'</param>
+        /// <param name="allowBlobPublicAccess">Public access to a container is
+        /// enabled if the value is true.</param>
+        public StorageAccount(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), Identity identity = default(Identity), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?), bool? enableAzureFilesAadIntegration = default(bool?), bool? enableHttpsTrafficOnly = default(bool?), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), bool? isHnsEnabled = default(bool?), GeoReplicationStats geoReplicationStats = default(GeoReplicationStats), bool? failoverInProgress = default(bool?), MinimumTLSVersion? minimumTLSVersion = default(MinimumTLSVersion?), bool? allowBlobPublicAccess = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -121,6 +126,8 @@ namespace Microsoft.Azure.Management.Storage.Models
             IsHnsEnabled = isHnsEnabled;
             GeoReplicationStats = geoReplicationStats;
             FailoverInProgress = failoverInProgress;
+            MinimumTLSVersion = minimumTLSVersion;
+            AllowBlobPublicAccess = allowBlobPublicAccess;
             CustomInit();
         }
 
@@ -279,6 +286,21 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.failoverInProgress")]
         public bool? FailoverInProgress { get; private set; }
+
+        /// <summary>
+        /// Gets TLS version control on storage account in customer
+        /// configuration, TLS v1.2 by default. Possible values include:
+        /// 'TLS1_0', 'TLS1_1', 'TLS1_2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.minimumTLSVersion")]
+        public MinimumTLSVersion? MinimumTLSVersion { get; private set; }
+
+        /// <summary>
+        /// Gets or sets public access to a container is enabled if the value
+        /// is true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowBlobPublicAccess")]
+        public bool? AllowBlobPublicAccess { get; set; }
 
         /// <summary>
         /// Validate the object.
