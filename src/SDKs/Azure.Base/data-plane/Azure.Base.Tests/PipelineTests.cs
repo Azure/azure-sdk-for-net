@@ -66,6 +66,7 @@ namespace Azure.Base.Tests
 
             protected override bool ShouldRetryException(Exception exception, int attempted, out TimeSpan delay)
             {
+                delay = TimeSpan.Zero;
                 return false;
             }
         }
