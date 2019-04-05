@@ -1,32 +1,27 @@
-﻿
-using Microsoft.Azure.Graph.RBAC;
-using Microsoft.Azure.Graph.RBAC.Models;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.KeyVault.Models;
-using Microsoft.Azure.KeyVault.WebKey;
-using Microsoft.Azure.Management.KeyVault;
-using Microsoft.Azure.Management.KeyVault.Models;
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.Search;
-using Microsoft.Azure.Management.Search.Models;
-using Microsoft.Azure.Search.Tests.Utilities;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using Xunit;
-using static Microsoft.Azure.KeyVault.KeyVaultClient;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
-namespace Search.Tests.Utilities
+namespace Microsoft.Azure.Search.Tests.Utilities
 {
+    using Microsoft.Azure.KeyVault;
+    using Microsoft.Azure.KeyVault.Models;
+    using Microsoft.Azure.KeyVault.WebKey;
+    using Microsoft.Azure.Management.KeyVault;
+    using Microsoft.Azure.Management.KeyVault.Models;
+    using Microsoft.Azure.Management.ResourceManager;
+    using Microsoft.Azure.Management.ResourceManager.Models;
+    using Microsoft.Azure.Management.Search;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using static Microsoft.Azure.KeyVault.KeyVaultClient;
+
     public class EncryptionFixture : SearchServiceFixture
     {
         public string KeyVaultUri { get; private set; }
@@ -66,7 +61,6 @@ namespace Search.Tests.Utilities
             this.KeyName = key.KeyIdentifier.Name;
             this.KeyVersion = key.KeyIdentifier.Version;
         }
-
 
         public override void Cleanup()
         {

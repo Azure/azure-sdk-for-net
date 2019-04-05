@@ -1,15 +1,13 @@
-﻿using Microsoft.Azure.Search;
-using Microsoft.Azure.Search.Models;
-using Microsoft.Azure.Search.Tests;
-using Microsoft.Azure.Search.Tests.Utilities;
-using Search.Tests.Utilities;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Xunit;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
-namespace Search.Tests.Tests
+namespace Microsoft.Azure.Search.Tests
 {
+    using Microsoft.Azure.Search.Models;
+    using Microsoft.Azure.Search.Tests.Utilities;
+    using Xunit;
+
     public sealed class EncryptionWithCMKTests : SearchTestBase<EncryptionFixture>
     {
         [Fact]
