@@ -68,6 +68,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Condition="'$(DisableClientSdkAnalyzers)' != 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.0-preview1" PrivateAssets="All" />
+    <PackageReference Condition="'$(DisableClientSdkAnalyzers)' != 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-preview1" PrivateAssets="All" />
   </ItemGroup>
 </Project>
