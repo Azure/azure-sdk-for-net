@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets DNS subdomain for OpenShift router.
+        /// Gets DNS subdomain for OpenShift router.
         /// </summary>
         [JsonProperty(PropertyName = "publicSubdomain")]
-        public string PublicSubdomain { get; set; }
+        public string PublicSubdomain { get; private set; }
 
         /// <summary>
         /// Gets auto-allocated FQDN for the OpenShift router.
