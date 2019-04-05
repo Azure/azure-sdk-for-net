@@ -29,7 +29,7 @@ namespace Azure.Base.Tests
             var pipeline = options.Build("test", "1.0.0");
 
             var request = pipeline.CreateRequest();
-            request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
             var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
@@ -56,7 +56,7 @@ namespace Azure.Base.Tests
             var pipeline = new HttpPipelineOptions(mockTransport).Build(typeof(PipelineTests).Assembly);
 
             var request = pipeline.CreateRequest();
-            request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
             await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();

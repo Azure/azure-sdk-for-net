@@ -36,7 +36,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 for (int i = 0; i < numberOfSettings; i++) {
                     var reponse = await client.AddAsync(new ConfigurationSetting($"{testPartition}_{i}", i.ToString()));
                     Assert.AreEqual(200, reponse.Status);
-                    addedSettings.Add(reponse.Result);
+                    addedSettings.Add(reponse.Value);
                 }
 
                 var changed = new List<SettingChangedEventArgs>(); // acumulator for detected changes

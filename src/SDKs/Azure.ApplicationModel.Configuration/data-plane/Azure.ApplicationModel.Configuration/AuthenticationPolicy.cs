@@ -46,10 +46,10 @@ namespace Azure.ApplicationModel.Configuration
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 
-                string verb = HttpVerbConverter.ToString(message.Request.Method);
+                string method = HttpPipelineMethodConverter.ToString(message.Request.Method);
                 DateTimeOffset utcNow = DateTimeOffset.UtcNow;
                 var utcNowString = utcNow.ToString("r");
-                var stringToSign = $"{verb}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
+                var stringToSign = $"{method}\n{pathAndQuery}\n{utcNowString};{host};{contentHash}";
                 var signature = Convert.ToBase64String(hmac.ComputeHash(Encoding.ASCII.GetBytes(stringToSign))); // Calculate the signature
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 

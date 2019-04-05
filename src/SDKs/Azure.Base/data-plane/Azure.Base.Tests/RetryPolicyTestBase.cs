@@ -178,7 +178,7 @@ namespace Azure.Base.Tests
             var pipeline = options.Build(typeof(FixedRetryPolicyTests).Assembly);
 
             var httpPipelineRequest = pipeline.CreateRequest();
-            httpPipelineRequest.SetRequestLine(HttpVerb.Get, new Uri("http://example.com/"));
+            httpPipelineRequest.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com/"));
 
             return pipeline.SendRequestAsync(httpPipelineRequest, CancellationToken.None);
         }
