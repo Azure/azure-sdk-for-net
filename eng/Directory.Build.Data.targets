@@ -37,6 +37,11 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
+  <!-- Add Client SDK Analyzers -->
+  <ItemGroup>
+    <PackageReference Condition="'$(DisableClientSdkAnalyzers)' != 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-preview1" PrivateAssets="All" />
+  </ItemGroup>
+
   <!-- If signing is enabled for an SDK library, delay sign using the shared key -->
   <PropertyGroup Condition="'$(SignAssembly)' != 'false'">
     <SignAssembly>true</SignAssembly>
