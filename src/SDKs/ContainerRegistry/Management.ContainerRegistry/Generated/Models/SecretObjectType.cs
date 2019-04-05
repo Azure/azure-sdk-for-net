@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     public static class SecretObjectType
     {
         public const string Opaque = "Opaque";
+        public const string Vaultsecret = "Vaultsecret";
     }
 }
