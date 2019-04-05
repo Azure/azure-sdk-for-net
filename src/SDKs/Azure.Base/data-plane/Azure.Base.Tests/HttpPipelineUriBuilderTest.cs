@@ -28,7 +28,8 @@ namespace Azure.Base.Tests
             Assert.AreEqual(uri.Port, uriBuilder.Port);
             Assert.AreEqual(uri.AbsolutePath, uriBuilder.Path);
             Assert.AreEqual(uri.Query, uriBuilder.Query);
-            Assert.AreEqual(uri.ToString(), uriBuilder.ToString());
+            Assert.AreEqual(uri, uriBuilder.Uri);
+            Assert.AreSame(uri, uriBuilder.Uri);
         }
 
         [TestCase("", "http://localhost/")]
@@ -43,7 +44,7 @@ namespace Azure.Base.Tests
             uriBuilder.Port = 80;
             uriBuilder.Path = path;
 
-            Assert.AreEqual(expected, uriBuilder.ToString());
+            Assert.AreEqual(expected, uriBuilder.Uri.ToString());
         }
 
         [TestCase("", "http://localhost/")]
@@ -58,7 +59,7 @@ namespace Azure.Base.Tests
             uriBuilder.Port = 80;
             uriBuilder.Query = query;
 
-            Assert.AreEqual(expected, uriBuilder.ToString());
+            Assert.AreEqual(expected, uriBuilder.Uri.ToString());
         }
 
         [TestCase(null)]
@@ -71,11 +72,11 @@ namespace Azure.Base.Tests
             uriBuilder.Port = 80;
             uriBuilder.Query = "a";
 
-            Assert.AreEqual("http://localhost/?a", uriBuilder.ToString());
+            Assert.AreEqual("http://localhost/?a", uriBuilder.Uri.ToString());
 
             uriBuilder.Query = query;
 
-            Assert.AreEqual("http://localhost/", uriBuilder.ToString());
+            Assert.AreEqual("http://localhost/", uriBuilder.Uri.ToString());
         }
 
         [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
@@ -89,7 +90,7 @@ namespace Azure.Base.Tests
             uriBuilder.Port = 80;
             uriBuilder.Path = path;
 
-            Assert.AreEqual("http://localhost/" + expectedPath, uriBuilder.ToString());
+            Assert.AreEqual("http://localhost/" + expectedPath, uriBuilder.Uri.OriginalString);
         }
 
         [Test]
@@ -101,7 +102,7 @@ namespace Azure.Base.Tests
             uriBuilder.Port = 80;
             uriBuilder.Query = "\u1234";
 
-            Assert.AreEqual("http://localhost/?\u1234", uriBuilder.ToString());
+            Assert.AreEqual("http://localhost/?\u1234", uriBuilder.Uri.ToString());
         }
 
         [Test]
@@ -113,7 +114,7 @@ namespace Azure.Base.Tests
             uriBuilder.Port = 80;
             uriBuilder.AppendQuery("a", null);
 
-            Assert.AreEqual("http://localhost/?a=", uriBuilder.ToString());
+            Assert.AreEqual("http://localhost/?a=", uriBuilder.Uri.ToString());
         }
 
         [TestCase(null, "http://localhost/?a=b&c=d")]
@@ -131,7 +132,7 @@ namespace Azure.Base.Tests
             uriBuilder.AppendQuery("a","b");
             uriBuilder.AppendQuery("c","d");
 
-            Assert.AreEqual(expectedResult, uriBuilder.ToString());
+            Assert.AreEqual(expectedResult, uriBuilder.Uri.ToString());
         }
 
         [TestCase(null, "", "http://localhost/")]
@@ -149,7 +150,7 @@ namespace Azure.Base.Tests
             uriBuilder.Path = initialPath;
             uriBuilder.AppendPath(append);
 
-            Assert.AreEqual(expectedResult, uriBuilder.ToString());
+            Assert.AreEqual(expectedResult, uriBuilder.Uri.OriginalString);
         }
 
     }
