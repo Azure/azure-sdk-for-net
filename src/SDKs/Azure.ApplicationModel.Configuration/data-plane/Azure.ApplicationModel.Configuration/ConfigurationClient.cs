@@ -63,7 +63,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.Method = HttpVerb.Put;
+                request.Method = HttpPipelineMethod.Put;
 
                 BuildUriForKvRoute(request.UriBuilder, setting);
 
@@ -98,7 +98,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.Method = HttpVerb.Put;
+                request.Method = HttpPipelineMethod.Put;
                 BuildUriForKvRoute(request.UriBuilder, setting);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
@@ -135,7 +135,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.Method = HttpVerb.Put;
+                request.Method = HttpPipelineMethod.Put;
                 BuildUriForKvRoute(request.UriBuilder, setting);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
@@ -173,7 +173,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.Method  = HttpVerb.Delete;
+                request.Method  = HttpPipelineMethod.Delete;
                 BuildUriForKvRoute(request.UriBuilder, key, label);
 
                 if (etag != default)
@@ -197,7 +197,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.Method = HttpVerb.Put;
+                request.Method = HttpPipelineMethod.Put;
                 BuildUriForLocksRoute(request.UriBuilder, key, label);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
@@ -216,7 +216,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.Method = HttpVerb.Delete;
+                request.Method = HttpPipelineMethod.Delete;
 
                 BuildUriForLocksRoute(request.UriBuilder, key, label);
 
@@ -235,7 +235,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.Method = HttpVerb.Get;
+                request.Method = HttpPipelineMethod.Get;
                 BuildUriForKvRoute(request.UriBuilder, key, label);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
 
@@ -259,7 +259,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             using (var request = _pipeline.CreateRequest())
             {
-                request.Method = HttpVerb.Get;
+                request.Method = HttpPipelineMethod.Get;
                 BuildUriForGetBatch(request.UriBuilder, selector);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
@@ -282,7 +282,7 @@ namespace Azure.ApplicationModel.Configuration
         {
             using (var request = _pipeline.CreateRequest())
             {
-                request.Method = HttpVerb.Get;
+                request.Method = HttpPipelineMethod.Get;
                 BuildUriForRevisions(request.UriBuilder, selector);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)

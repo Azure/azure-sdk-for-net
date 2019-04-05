@@ -104,6 +104,18 @@ namespace Azure.Base.Tests
             Assert.AreEqual("http://localhost/?\u1234", uriBuilder.ToString());
         }
 
+        [Test]
+        public void AppendQueryWithEmptyValueWorks()
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.AppendQuery("a", null);
+
+            Assert.AreEqual("http://localhost/?a=", uriBuilder.ToString());
+        }
+
         [TestCase(null, "http://localhost/?a=b&c=d")]
         [TestCase("", "http://localhost/?a=b&c=d")]
         [TestCase("a", "http://localhost/?a&a=b&c=d")]
