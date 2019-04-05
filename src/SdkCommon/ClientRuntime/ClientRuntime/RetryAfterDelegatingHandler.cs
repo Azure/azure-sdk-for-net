@@ -14,7 +14,7 @@ namespace Microsoft.Rest
     /// <summary>
     /// Http retry handler.
     /// </summary>
-    public class RetryAfterDelegatingHandler : DelegatingHandler 
+    public class RetryAfterDelegatingHandler : DelegatingHandler
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="RetryAfterDelegatingHandler"/> class. 
@@ -29,7 +29,7 @@ namespace Microsoft.Rest
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
         public RetryAfterDelegatingHandler(DelegatingHandler innerHandler)
-            : this((HttpMessageHandler)innerHandler) 
+            : this((HttpMessageHandler)innerHandler)
         {
         }
 
@@ -38,13 +38,13 @@ namespace Microsoft.Rest
         /// </summary>
         /// <param name="innerHandler">Inner http handler.</param>
         public RetryAfterDelegatingHandler(HttpMessageHandler innerHandler)
-            : base(innerHandler) 
+            : base(innerHandler)
         {
         }
 
         /// <summary>
         /// Sends an HTTP request to the inner handler to send to the server as an asynchronous
-        /// operation. Retries request if a 429 is returned and there is a retry-after header.
+        /// operation. Retries request if a 429 or 503 is returned and there is a retry-after header.
         /// </summary>
         /// <param name="request">The HTTP request message to send to the server.</param>
         /// <param name="cancellationToken">A cancellation token to cancel operation.</param>
@@ -54,15 +54,16 @@ namespace Microsoft.Rest
             CancellationToken cancellationToken)
         {
             HttpResponseMessage previousResponseMessage = null;
-            do {
+            do
+            {
                 HttpResponseMessage response = null;
 
                 try
                 {
                     response = await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-                    // if they send back a 429 and there is a retry-after header
-                    if (response.StatusCode == (HttpStatusCode)429 && response.Headers.Contains("Retry-After"))
+                    // if they send back a 429 or a 503
+                    if (response.StatusCode == ((HttpStatusCode)429) || response.StatusCode == HttpStatusCode.ServiceUnavailable)
                     {
                         try
                         {
@@ -84,13 +85,13 @@ namespace Microsoft.Rest
                             {
                                 response = previousResponseMessage;
                             }
-                         }
+                        }
 
                         try
                         {
                             // and we get a number of seconds from the header
                             string retryValue = response.Headers.GetValues("Retry-After").FirstOrDefault();
-                            var retryAfter = int.Parse(retryValue, CultureInfo.InvariantCulture);
+                            var retryAfter = GetRetryAfterSeconds(retryValue);
 
                             // wait for that duration
                             await Task.Delay(TimeSpan.FromSeconds(retryAfter), cancellationToken);
@@ -115,6 +116,38 @@ namespace Microsoft.Rest
                 // if we haven't hit continue, then return the response up the stream
                 return response ?? previousResponseMessage;
             } while (true);
+        }
+
+
+        private double GetRetryAfterSeconds(string retryAfterValue)
+        {
+            // retryAfterValue can have three formats: seconds, timespan or a date.
+            bool isSeconds = double.TryParse(retryAfterValue, out double retrySeconds);
+            if (!isSeconds)
+            {
+                bool isTimeSpan = TimeSpan.TryParse(retryAfterValue, out TimeSpan span);
+
+                if (isTimeSpan)
+                {
+                    retrySeconds = span.TotalSeconds;
+                }
+                else
+                {
+                    bool isDate = DateTime.TryParse(retryAfterValue, out DateTime date);
+
+                    if (isDate)
+                    {
+                        retrySeconds = date.Subtract(DateTime.Now).TotalSeconds;
+                    }
+                    else
+                    {
+                        // Retry-After header could not be parsed. Defaulting to 60 seconds.
+                        retrySeconds = 60;
+                    }
+                }
+            }
+
+            return retrySeconds;
         }
     }
 }

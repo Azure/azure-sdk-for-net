@@ -130,20 +130,28 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Equal(2, attemptsFailed);
         }
 
-        [Fact]
-        public void RetryAfterHandleTest()
+        [Theory]
+        [InlineData(429, "Date", 1)]
+        [InlineData(503, "2", 2)]
+        [InlineData(429, "00:00:02", 1)]
+        public void RetryAfterHandleTest(int statusCode, string retryAfterValue, int numberOfTimesToFail)
         {
             var http = new FakeHttpHandler();
-            http.NumberOfTimesToFail = 2;
-            http.StatusCodeToReturn = (HttpStatusCode) 429;
-            http.TweakResponse = (response) => { response.Headers.Add("Retry-After", "10"); };
+            http.NumberOfTimesToFail = numberOfTimesToFail;
+            http.StatusCodeToReturn = (HttpStatusCode)statusCode;
+            // Workaround to get the current time, not the time at which the test run started.
+            if (retryAfterValue == "Date")
+            {
+                retryAfterValue = DateTime.Now.AddSeconds(2).ToString();
+            }
+            http.TweakResponse = (response) => response.Headers.TryAddWithoutValidation("Retry-After", retryAfterValue);
 
             var fakeClient = new FakeServiceClient(http, new RetryAfterDelegatingHandler());
-            
+
             var result = fakeClient.DoStuffSync();
 
             Assert.Equal(HttpStatusCode.OK, result.StatusCode);
-            Assert.Equal(2, http.NumberOfTimesFailedSoFar);
+            Assert.Equal(numberOfTimesToFail, http.NumberOfTimesFailedSoFar);
         }
 
         [Fact]
