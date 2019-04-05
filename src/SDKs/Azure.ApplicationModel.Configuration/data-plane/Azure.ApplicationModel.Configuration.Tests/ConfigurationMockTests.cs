@@ -203,7 +203,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 using (var response = await service.GetBatchAsync(query, CancellationToken.None))
                 {
-                    SettingBatch batch = response.Result;
+                    SettingBatch batch = response.Value;
                     for (int i = 0; i < batch.Count; i++)
                     {
                         ConfigurationSetting value = batch[i];

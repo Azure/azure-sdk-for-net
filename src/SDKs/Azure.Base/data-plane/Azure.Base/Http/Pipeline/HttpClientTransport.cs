@@ -106,9 +106,9 @@ namespace Azure.Base.Http.Pipeline
                 set => _requestMessage.RequestUri = value;
             }
 
-            public override HttpVerb Method
+            public override HttpPipelineMethod Method
             {
-                get => HttpVerbConverter.Parse(_requestMessage.Method.Method);
+                get => HttpPipelineMethodConverter.Parse(_requestMessage.Method.Method);
                 set => _requestMessage.Method = ToHttpClientMethod(value);
             }
 
@@ -176,14 +176,14 @@ namespace Azure.Base.Http.Pipeline
             public override string ToString() =>  _requestMessage.ToString();
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
-            public static HttpMethod ToHttpClientMethod(HttpVerb method)
+            public static HttpMethod ToHttpClientMethod(HttpPipelineMethod method)
             {
                 switch (method) {
-                    case HttpVerb.Get: return HttpMethod.Get;
-                    case HttpVerb.Post: return HttpMethod.Post;
-                    case HttpVerb.Put: return HttpMethod.Put;
-                    case HttpVerb.Delete: return HttpMethod.Delete;
-                    case HttpVerb.Patch: return s_patch;
+                    case HttpPipelineMethod.Get: return HttpMethod.Get;
+                    case HttpPipelineMethod.Post: return HttpMethod.Post;
+                    case HttpPipelineMethod.Put: return HttpMethod.Put;
+                    case HttpPipelineMethod.Delete: return HttpMethod.Delete;
+                    case HttpPipelineMethod.Patch: return s_patch;
 
                     default: throw new NotImplementedException();
                 }

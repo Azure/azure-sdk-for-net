@@ -12,47 +12,47 @@ namespace Azure
     {
         Response _response;
         Func<Response, T> _contentParser;
-        T _parsedContent;
+        T _value;
 
         public Response(Response response)
         {
             _response = response;
             _contentParser = null;
-            _parsedContent = default;
+            _value = default;
         }
 
         public Response(Response response, Func<Response, T> parser)
         {
             _response = response;
             _contentParser = parser;
-            _parsedContent = default;
+            _value = default;
         }
 
         public Response(Response response, T parsed)
         {
             _response = response;
             _contentParser = null;
-            _parsedContent = parsed;
+            _value = parsed;
         }
 
-        public void Deconstruct(out T result, out Response response)
+        public void Deconstruct(out T value, out Response response)
         {
-            result = Result;
+            value = Value;
             response = _response;
         }
 
         public static implicit operator T(Response<T> response)
-            => response.Result;
+            => response.Value;
 
 
-        public T Result
+        public T Value
         {
             get {
                 if (_contentParser != null) {
-                    _parsedContent = _contentParser(_response);
+                    _value = _contentParser(_response);
                     _contentParser = null;
                 }
-                return _parsedContent;
+                return _value;
             }
         }
 
