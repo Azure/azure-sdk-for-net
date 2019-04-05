@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Diagnostics;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
 using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Base.Diagnostics;
+using Azure.Base.Http;
+using Azure.Base.Http.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration
 {

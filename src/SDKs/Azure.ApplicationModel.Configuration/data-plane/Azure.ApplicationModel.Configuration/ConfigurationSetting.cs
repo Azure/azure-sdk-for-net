@@ -3,10 +3,8 @@
 // license information.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -145,65 +143,5 @@ namespace Azure.ApplicationModel.Configuration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override string ToString()
             => $"({Key},{Value})";
-    }
-
-    [DebuggerTypeProxy(typeof(SettingBatchDebugView))]
-    public class SettingBatch
-    {
-        readonly ConfigurationSetting[] _settings;
-        readonly SettingSelector _selector;
-        readonly string _link;
-
-        internal SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
-        {
-            _settings = settings;
-            _link = link;
-            _selector = selector;
-        }
-
-        public ConfigurationSetting this[int index] => _settings[index];
-
-        public int Count => _settings.Length;
-
-        public SettingSelector NextBatch
-        {
-            get
-            {
-                if (_link != null)
-                {
-                    return _selector.CloneWithBatchLink(_link);
-                }
-                return null;
-            }
-        }
-
-        #region nobody wants to see these
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
-        #endregion
-    }
-
-    class SettingBatchDebugView
-    {
-        SettingBatch _batch;
-        ConfigurationSetting[] _items;
-
-        public SettingBatchDebugView(SettingBatch batch)
-        {
-            _batch = batch;
-            _items = new ConfigurationSetting[_batch.Count];
-            for(int i=0; i<_batch.Count; i++) {
-                _items[i] = _batch[i];
-            }
-        }
-
-        [DebuggerBrowsable(DebuggerBrowsableState.RootHidden)]
-        public ConfigurationSetting[] Items => _items;        
     }
 }
