@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Monitor
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<MetricBaselinesResponse>> ListWithHttpMessagesAsync(string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IEnumerable<SingleMetricBaseline>>> ListWithHttpMessagesAsync(string resourceUri, string metricnames = default(string), string metricnamespace = default(string), string timespan = default(string), System.TimeSpan? interval = default(System.TimeSpan?), string aggregation = default(string), string sensitivities = default(string), string filter = default(string), ResultType? resultType = default(ResultType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceUri == null)
             {
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Monitor
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<MetricBaselinesResponse>();
+            var _result = new AzureOperationResponse<IEnumerable<SingleMetricBaseline>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -282,7 +282,7 @@ namespace Microsoft.Azure.Management.Monitor
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<MetricBaselinesResponse>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page1<SingleMetricBaseline>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

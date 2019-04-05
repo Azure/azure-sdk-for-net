@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="dimensions">The dimensions of this time
         /// series.</param>
         /// <param name="metadata">The baseline metadata values.</param>
-        public TimeSeriesBaseline(string aggregation, IList<System.DateTime?> timestamps, IList<Baseline> data, IList<MetricSingleDimension> dimensions = default(IList<MetricSingleDimension>), IList<BaselineMetadata> metadata = default(IList<BaselineMetadata>))
+        public TimeSeriesBaseline(string aggregation, IList<System.DateTime?> timestamps, IList<SingleBaseline> data, IList<MetricSingleDimension> dimensions = default(IList<MetricSingleDimension>), IList<BaselineMetadata> metadata = default(IList<BaselineMetadata>))
         {
             Aggregation = aggregation;
             Dimensions = dimensions;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// Gets or sets the baseline values for each sensitivity.
         /// </summary>
         [JsonProperty(PropertyName = "data")]
-        public IList<Baseline> Data { get; set; }
+        public IList<SingleBaseline> Data { get; set; }
 
         /// <summary>
         /// Gets or sets the baseline metadata values.

@@ -11,6 +11,7 @@
 namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// The baseline results of a single metric.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class SingleMetricBaseline
     {
         /// <summary>
@@ -35,14 +37,28 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="id">The metric baseline Id.</param>
         /// <param name="type">The resource type of the metric baseline
         /// resource.</param>
-        /// <param name="metricName">The name of the metric.</param>
+        /// <param name="name">The name of the metric for which the baselines
+        /// were retrieved.</param>
+        /// <param name="timespan">The timespan for which the data was
+        /// retrieved. Its value consists of two datetimes concatenated,
+        /// separated by '/'.  This may be adjusted in the future and returned
+        /// back from what was originally requested.</param>
+        /// <param name="interval">The interval (window size) for which the
+        /// metric data was returned in.  This may be adjusted in the future
+        /// and returned back from what was originally requested.  This is not
+        /// present if a metadata request was made.</param>
         /// <param name="baselines">The baseline for each time series that was
         /// queried.</param>
-        public SingleMetricBaseline(string id, string type, string metricName, IList<TimeSeriesBaseline> baselines)
+        /// <param name="namespaceProperty">The namespace of the metrics been
+        /// queried.</param>
+        public SingleMetricBaseline(string id, string type, string name, string timespan, System.TimeSpan interval, IList<TimeSeriesBaseline> baselines, string namespaceProperty = default(string))
         {
             Id = id;
             Type = type;
-            MetricName = metricName;
+            Name = name;
+            Timespan = timespan;
+            Interval = interval;
+            NamespaceProperty = namespaceProperty;
             Baselines = baselines;
             CustomInit();
         }
@@ -65,15 +81,40 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the metric.
+        /// Gets or sets the name of the metric for which the baselines were
+        /// retrieved.
         /// </summary>
-        [JsonProperty(PropertyName = "metricName")]
-        public string MetricName { get; set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the timespan for which the data was retrieved. Its
+        /// value consists of two datetimes concatenated, separated by '/'.
+        /// This may be adjusted in the future and returned back from what was
+        /// originally requested.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.timespan")]
+        public string Timespan { get; set; }
+
+        /// <summary>
+        /// Gets or sets the interval (window size) for which the metric data
+        /// was returned in.  This may be adjusted in the future and returned
+        /// back from what was originally requested.  This is not present if a
+        /// metadata request was made.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.interval")]
+        public System.TimeSpan Interval { get; set; }
+
+        /// <summary>
+        /// Gets or sets the namespace of the metrics been queried.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.namespace")]
+        public string NamespaceProperty { get; set; }
 
         /// <summary>
         /// Gets or sets the baseline for each time series that was queried.
         /// </summary>
-        [JsonProperty(PropertyName = "baselines")]
+        [JsonProperty(PropertyName = "properties.baselines")]
         public IList<TimeSeriesBaseline> Baselines { get; set; }
 
         /// <summary>
@@ -92,9 +133,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Type");
             }
-            if (MetricName == null)
+            if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MetricName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Timespan == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Timespan");
             }
             if (Baselines == null)
             {
