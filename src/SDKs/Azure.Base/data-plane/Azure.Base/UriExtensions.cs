@@ -98,6 +98,10 @@ namespace Azure
 
         private bool HasQuery => _queryIndex != -1;
 
+        private int QueryLength => HasQuery ? _pathAndQuery.Length - _queryIndex : 0;
+
+        private int PathLength => HasQuery ? _queryIndex : _pathAndQuery.Length;
+
         public string PathAndQuery => _pathAndQuery.ToString();
 
         public Uri Uri
@@ -123,13 +127,12 @@ namespace Azure
 
         public void AppendQuery(string name, string value)
         {
-
             if (!HasQuery)
             {
                 _pathAndQuery.Append(QuerySeperator);
                 _queryIndex = _pathAndQuery.Length;
             }
-            else
+            else if (!(QueryLength == 1 && _pathAndQuery[_queryIndex] == QuerySeperator))
             {
                 _pathAndQuery.Append('&');
             }
@@ -141,14 +144,24 @@ namespace Azure
 
         public void AppendPath(string value)
         {
+            if (string.IsNullOrEmpty(value))
+            {
+                return;
+            }
+
+            int startIndex = 0;
+            if (PathLength == 1 && _pathAndQuery[0] == '/' && value[0] == '/')
+            {
+                startIndex = 1;
+            }
             if (HasQuery)
             {
-                _pathAndQuery.Insert(_queryIndex, value);
+                _pathAndQuery.Insert(_queryIndex, value.Substring(startIndex, value.Length - startIndex));
                 _queryIndex += value.Length;
             }
             else
             {
-                _pathAndQuery.Append(value);
+                _pathAndQuery.Append(value, startIndex, value.Length - startIndex);
             }
         }
 

@@ -63,7 +63,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.Method = HttpVerb.Get;
+                request.Method = HttpVerb.Put;
 
                 BuildUriForKvRoute(request.UriBuilder, setting);
 

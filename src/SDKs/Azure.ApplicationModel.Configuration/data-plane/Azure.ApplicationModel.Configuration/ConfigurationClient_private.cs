@@ -18,9 +18,9 @@ namespace Azure.ApplicationModel.Configuration
         const string MediaTypeProblemApplication = "application/problem+json";
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";
-        const string KvRoute = "kv/";
-        const string LocksRoute = "locks/";
-        const string RevisionsRoute = "revisions/";
+        const string KvRoute = "/kv/";
+        const string LocksRoute = "/locks/";
+        const string RevisionsRoute = "/revisions/";
         const string KeyQueryFilter = "key";
         const string LabelQueryFilter = "label";
         const string FieldsQueryFilter = "$select";

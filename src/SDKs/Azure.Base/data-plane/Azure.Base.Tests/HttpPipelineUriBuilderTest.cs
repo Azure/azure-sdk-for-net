@@ -78,6 +78,7 @@ namespace Azure.Base.Tests
             Assert.AreEqual("http://localhost/", uriBuilder.ToString());
         }
 
+        [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
         [TestCase("\u1234", "%E1%88%B4")]
         [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
         public void PathIsEscaped(string path, string expectedPath)
@@ -102,5 +103,42 @@ namespace Azure.Base.Tests
 
             Assert.AreEqual("http://localhost/?\u1234", uriBuilder.ToString());
         }
+
+        [TestCase(null, "http://localhost/?a=b&c=d")]
+        [TestCase("", "http://localhost/?a=b&c=d")]
+        [TestCase("a", "http://localhost/?a&a=b&c=d")]
+        [TestCase("?", "http://localhost/?a=b&c=d")]
+        [TestCase("?initial", "http://localhost/?initial&a=b&c=d")]
+        public void AppendQueryWorks(string initialQuery, string expectedResult)
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.Query = initialQuery;
+            uriBuilder.AppendQuery("a","b");
+            uriBuilder.AppendQuery("c","d");
+
+            Assert.AreEqual(expectedResult, uriBuilder.ToString());
+        }
+
+        [TestCase(null, "", "http://localhost/")]
+        [TestCase("/", "/", "http://localhost/")]
+        [TestCase(null, "p", "http://localhost/p")]
+        [TestCase("/", "p", "http://localhost/p")]
+        [TestCase("/", "/p", "http://localhost/p")]
+        [TestCase("", "\u1234", "http://localhost/%E1%88%B4")]
+        public void AppendPathWorks(string initialPath, string append, string expectedResult)
+        {
+            var uriBuilder = new HttpPipelineUriBuilder();
+            uriBuilder.Scheme = "http";
+            uriBuilder.Host = "localhost";
+            uriBuilder.Port = 80;
+            uriBuilder.Path = initialPath;
+            uriBuilder.AppendPath(append);
+
+            Assert.AreEqual(expectedResult, uriBuilder.ToString());
+        }
+
     }
 }
