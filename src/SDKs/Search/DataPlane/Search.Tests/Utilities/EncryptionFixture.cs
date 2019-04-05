@@ -37,7 +37,7 @@ namespace Search.Tests.Utilities
 
         public string KeyVersion { get; private set; }
 
-        public string TestAADApplicationId => "c74474ff-dae3-4e4a-be9a-6fa626a5e314";//"c74474ff-dae3-4e4a-be9a-6fa626a5e314";//"872239e7-b3ab-469e-85d6-ab96f8dc2ca8";
+        public string TestAADApplicationId => "c74474ff-dae3-4e4a-be9a-6fa626a5e314";
 
         public string TestAADApplicationObjectId => "55a05423-7beb-4a7b-8511-d355a08a28f8";
 
@@ -61,7 +61,6 @@ namespace Search.Tests.Utilities
             // Create a key
             // This can be flaky if attempted immediately after creating the vault. Adding short sleep to improve robustness.
             TestUtilities.Wait(TimeSpan.FromSeconds(3));
-
 
             KeyBundle key = CreateKey(context, keyVault);
             this.KeyName = key.KeyIdentifier.Name;
@@ -89,17 +88,17 @@ namespace Search.Tests.Utilities
         private static Vault CreateKeyVault(MockContext context, string resourceGroupName, string tenantId, string testApplicationObjectId)
         {
             string authClientId = TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
+            string servicePrincipalObjectId = TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.AADClientIdKey];
 
             var accessPolicies = new List<AccessPolicyEntry>();
             accessPolicies.Add(new AccessPolicyEntry
             {
                 TenantId = System.Guid.Parse(tenantId),
                 ObjectId = testApplicationObjectId,
-                //ApplicationId = Guid.Parse(testApplicationId),
                 Permissions = new Permissions()
-                { 
+                {
                     Keys = new List<string>()
-                    { 
+                    {
                         KeyPermissions.Get,
                         KeyPermissions.WrapKey,
                         KeyPermissions.UnwrapKey
@@ -110,7 +109,7 @@ namespace Search.Tests.Utilities
             accessPolicies.Add(new AccessPolicyEntry
             {
                 TenantId = System.Guid.Parse(tenantId),
-                ObjectId = "95d3189e-7275-447c-a3c7-ddc0162b1a6b",
+                ObjectId = servicePrincipalObjectId,
                 Permissions = new Permissions()
                 {
                     Keys = new List<string>()
@@ -144,13 +143,18 @@ namespace Search.Tests.Utilities
             KeyVaultClient keyVaultClient = GetKeyVaultClient();
 
             return keyVaultClient.CreateKeyAsync(keyVault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa, 2048,
-                    JsonWebKeyOperation.AllOperations, new Microsoft.Azure.KeyVault.Models.KeyAttributes()).GetAwaiter().GetResult();
+                    JsonWebKeyOperation.AllOperations, new KeyAttributes()).GetAwaiter().GetResult();
+        }
+
+        private static DelegatingHandler[] GetHandlers()
+        {
+            HttpMockServer server = HttpMockServer.CreateInstance();
+            return new DelegatingHandler[] { server };
         }
 
         private static KeyVaultClient GetKeyVaultClient()
         {
-            DelegatingHandler mockServer = HttpMockServer.CreateInstance();
-            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken)/*, handlers: mockServer*/);
+            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
         }
 
         private static async Task<string> GetAccessToken(string authority, string resource, string scope)
@@ -185,48 +189,5 @@ namespace Search.Tests.Utilities
                 }
             }
         }
-
-        //private GraphRbacManagementClient GetGraphClient(MockContext context, string tenantId)
-        //{
-        //    var client = context.GetGraphServiceClient<GraphRbacManagementClient>(TestEnvironmentFactory.GetTestEnvironment());
-
-        //    client.TenantID = tenantId;
-        //    return client;
-        //}
-
-        //private static Application CreateAADApplication(MockContext context)
-        //{
-        //    GraphRbacManagementClient graphClient = context.GetGraphServiceClient<GraphRbacManagementClient>();
-
-        //    PasswordCredential applicationPassword = CreatePasswordCredential();
-
-        //    var appName = TestUtilities.GenerateName("adApplication");
-        //    string url = string.Format("http://{0}/home", appName);
-
-        //    return graphClient.Applications.Create(new ApplicationCreateParameters()
-        //    {
-        //        DisplayName = appName,
-        //        PasswordCredentials = new PasswordCredential[] { applicationPassword },
-        //        Homepage = url,
-        //        IdentifierUris = new[] { url },
-        //        ReplyUrls = new[] { url },
-        //        AvailableToOtherTenants = false,
-
-        //    });
-        //}
-
-        //private static PasswordCredential CreatePasswordCredential(string keyId = null)
-        //{
-        //    var bytes = new byte[32] { 1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
-        //                                1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
-        //                                1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
-        //                                1, 2 };
-        //    PasswordCredential cred = new PasswordCredential();
-        //    cred.StartDate = DateTime.Now;
-        //    cred.EndDate = DateTime.Now.AddMonths(12);
-        //    cred.KeyId = keyId ?? Guid.NewGuid().ToString();
-        //    cred.Value = Convert.ToBase64String(bytes);
-        //    return cred;
-        //}
     }
 }

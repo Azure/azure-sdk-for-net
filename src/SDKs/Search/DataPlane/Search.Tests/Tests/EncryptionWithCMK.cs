@@ -48,12 +48,7 @@ namespace Search.Tests.Tests
                 {
                     KeyVaultUri = this.Data.KeyVaultUri,
                     KeyVaultKeyName = this.Data.KeyName,
-                    KeyVaultKeyVersion = this.Data.KeyVersion,
-                    AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
-                    {
-                        ApplicationId = this.Data.TestAADApplicationId,
-                        ApplicationSecret = this.Data.TestAADApplicationSecret
-                    }
+                    KeyVaultKeyVersion = this.Data.KeyVersion
                 });
 
                 Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
@@ -61,32 +56,6 @@ namespace Search.Tests.Tests
                 AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
             });
         }
-
-        [Fact]
-        public void CreateSynonymMapWithCMKUsingWithoutAccessCredentials()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-
-                Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
-                {
-                    KeyVaultUri = this.Data.KeyVaultUri,
-                    KeyVaultKeyName = this.Data.KeyName,
-                    KeyVaultKeyVersion = this.Data.KeyVersion,
-                    AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
-                    {
-                        ApplicationId = this.Data.TestAADApplicationId,
-                        ApplicationSecret = this.Data.TestAADApplicationSecret
-                    }
-                });
-
-                Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
-
-                AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
-            });
-        }
-
 
         private static Index CreateEncryptedTestIndex(EncryptionKey encryptionKey)
         {
@@ -110,5 +79,50 @@ namespace Search.Tests.Tests
         {
             Assert.Equal(expected, actual, new ModelComparer<Index>());
         }
+
+        [Fact]
+        public void CreateSynonymMapWithCMKUsingAccessCredentials()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
+                {
+                    KeyVaultUri = this.Data.KeyVaultUri,
+                    KeyVaultKeyName = this.Data.KeyName,
+                    KeyVaultKeyVersion = this.Data.KeyVersion,
+                    AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
+                    {
+                        ApplicationId = this.Data.TestAADApplicationId,
+                        ApplicationSecret = this.Data.TestAADApplicationSecret
+                    }
+                });
+
+                Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
+
+                AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
+            });
+        }
+
+        [Fact]
+        public void CreateSynonymMapWithCMKUsingWithoutAccessCredentials()
+        {
+            //Run(() =>
+            //{
+            //    SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+            //    Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
+            //    {
+            //        KeyVaultUri = this.Data.KeyVaultUri,
+            //        KeyVaultKeyName = this.Data.KeyName,
+            //        KeyVaultKeyVersion = this.Data.KeyVersion
+            //    });
+
+            //    Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
+
+            //    AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
+            //});
+        }        
     }
 }
