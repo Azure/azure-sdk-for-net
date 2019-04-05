@@ -10,7 +10,7 @@ using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
-
+#if !FullNetFx
 namespace Microsoft.Azure.KeyVault.Extensions.Tests
 {
 
@@ -220,3 +220,4 @@ namespace Microsoft.Azure.KeyVault.Extensions.Tests
         }
     }
 }
+#endif
