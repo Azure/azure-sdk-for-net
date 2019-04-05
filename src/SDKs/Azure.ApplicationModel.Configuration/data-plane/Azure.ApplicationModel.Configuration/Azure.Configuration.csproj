@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Description>This is the implementation of the Azure SDK Component for Azure Application Configuration Service</Description>
-    <AssemblyTitle>Microsoft Azure.ApplicationModel.Configuration Component</AssemblyTitle>
+    <Description>This is the Microsoft Azure Application Configuration Service client library</Description>
+    <AssemblyTitle>Microsoft Azure.ApplicationModel.Configuration client library</AssemblyTitle>
     <Version>1.0.0-preview.1</Version>
     <PackageTags>Microsoft Azure Application Configuration</PackageTags>
     <PackageReleaseNotes>
