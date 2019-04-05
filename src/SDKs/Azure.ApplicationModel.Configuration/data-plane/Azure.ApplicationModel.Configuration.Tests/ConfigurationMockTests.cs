@@ -104,6 +104,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.azconfig.io/kv/test_key?label=test_label", request.Uri.ToString());
+            Assert.True(request.TryGetHeader("If-None-Match", out var ifNoneMatch));
+            Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
         }
