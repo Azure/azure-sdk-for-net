@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Storage.Models
     using System.Linq;
 
     /// <summary>
-    /// The list of blob containers.
+    /// Response schema. Contains list of blobs returned, and if paging is
+    /// requested or required, a URL to next page of containers.
     /// </summary>
     public partial class ListContainerItems
     {
@@ -31,10 +32,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Initializes a new instance of the ListContainerItems class.
         /// </summary>
-        /// <param name="value">The list of blob containers.</param>
-        public ListContainerItems(IList<ListContainerItem> value = default(IList<ListContainerItem>))
+        /// <param name="value">List of blobs containers returned.</param>
+        /// <param name="nextLink">Request URL with a skip token in query
+        /// parameters. Can be used to access next page of containers.</param>
+        public ListContainerItems(IList<ListContainerItem> value = default(IList<ListContainerItem>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -44,10 +48,17 @@ namespace Microsoft.Azure.Management.Storage.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the list of blob containers.
+        /// Gets or sets list of blobs containers returned.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ListContainerItem> Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets request URL with a skip token in query parameters. Can
+        /// be used to access next page of containers.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

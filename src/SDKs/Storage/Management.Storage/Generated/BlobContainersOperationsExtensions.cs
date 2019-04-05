@@ -39,9 +39,12 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
-            public static ListContainerItems List(this IBlobContainersOperations operations, string resourceGroupName, string accountName)
+            /// <param name='skipToken'>
+            /// Optional continuation token for the list operation.
+            /// </param>
+            public static ListContainerItems List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string))
             {
-                return operations.ListAsync(resourceGroupName, accountName).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, skipToken).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,12 +63,15 @@ namespace Microsoft.Azure.Management.Storage
             /// Storage account names must be between 3 and 24 characters in length and use
             /// numbers and lower-case letters only.
             /// </param>
+            /// <param name='skipToken'>
+            /// Optional continuation token for the list operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListContainerItems> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ListContainerItems> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

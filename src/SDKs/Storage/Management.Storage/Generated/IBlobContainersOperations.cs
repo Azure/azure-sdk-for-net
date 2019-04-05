@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.Storage
         /// group. Storage account names must be between 3 and 24 characters in
         /// length and use numbers and lower-case letters only.
         /// </param>
+        /// <param name='skipToken'>
+        /// Optional continuation token for the list operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -51,7 +54,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ListContainerItems>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ListContainerItems>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new container under the specified account as described by
         /// request body. The container resource includes metadata and
