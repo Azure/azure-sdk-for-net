@@ -39,7 +39,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="sku">SKU details</param>
         /// <param name="accessPolicies">An array of 0 to 16 identities that
         /// have access to the key vault. All identities in the array must use
-        /// the same tenant ID as the key vault's tenant ID.</param>
+        /// the same tenant ID as the key vault's tenant ID. When `createMode`
+        /// is set to `recover`, access policies are not required. Otherwise,
+        /// access policies are required.</param>
         /// <param name="vaultUri">The URI of the vault for performing
         /// operations on keys and secrets.</param>
         /// <param name="enabledForDeployment">Property to specify whether
@@ -103,7 +105,9 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Gets or sets an array of 0 to 16 identities that have access to the
         /// key vault. All identities in the array must use the same tenant ID
-        /// as the key vault's tenant ID.
+        /// as the key vault's tenant ID. When `createMode` is set to
+        /// `recover`, access policies are not required. Otherwise, access
+        /// policies are required.
         /// </summary>
         [JsonProperty(PropertyName = "accessPolicies")]
         public IList<AccessPolicyEntry> AccessPolicies { get; set; }

@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="id">The resource id of the access policy.</param>
         /// <param name="name">The resource name of the access policy.</param>
         /// <param name="type">The resource name of the access policy.</param>
-        /// <param name="location">The resource type of the the access
+        /// <param name="location">The resource type of the access
         /// policy.</param>
         public VaultAccessPolicyParameters(VaultAccessPolicyProperties properties, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets the resource type of the the access policy.
+        /// Gets the resource type of the access policy.
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; private set; }
