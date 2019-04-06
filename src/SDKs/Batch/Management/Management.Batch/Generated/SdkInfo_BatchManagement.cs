@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Batch
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Batch", "Application", "2018-12-01"),
-                new Tuple<string, string, string>("Batch", "ApplicationPackage", "2018-12-01"),
-                new Tuple<string, string, string>("Batch", "BatchAccount", "2018-12-01"),
-                new Tuple<string, string, string>("Batch", "Certificate", "2018-12-01"),
-                new Tuple<string, string, string>("Batch", "Location", "2018-12-01"),
-                new Tuple<string, string, string>("Batch", "Operations", "2018-12-01"),
-                new Tuple<string, string, string>("Batch", "Pool", "2018-12-01"),
+                new Tuple<string, string, string>("Batch", "Application", "2019-04-01"),
+                new Tuple<string, string, string>("Batch", "ApplicationPackage", "2019-04-01"),
+                new Tuple<string, string, string>("Batch", "BatchAccount", "2019-04-01"),
+                new Tuple<string, string, string>("Batch", "Certificate", "2019-04-01"),
+                new Tuple<string, string, string>("Batch", "Location", "2019-04-01"),
+                new Tuple<string, string, string>("Batch", "Operations", "2019-04-01"),
+                new Tuple<string, string, string>("Batch", "Pool", "2019-04-01"),
               }.AsEnumerable();
           }
       }

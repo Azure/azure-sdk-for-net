@@ -165,46 +165,7 @@ namespace Microsoft.Azure.Management.Network
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<string> _response =
-                await this.BeginGenerateVpnProfileWithHttpMessagesAsync(resourceGroupName,
-                    virtualNetworkGatewayName,
-                    parameters,
-                    customHeaders,
-                    cancellationToken).ConfigureAwait(false);
-
-            Uri locationResultsUrl = _response.Response.Headers.Location;
-            DateTime giveUpAt = DateTime.UtcNow.AddMinutes(3);
-            // Send the Get locationResults request for operaitonId till either we get StatusCode 200 or it time outs (3 minutes in this case)
-            while (true)
-            {
-                HttpRequestMessage newHttpRequest = new HttpRequestMessage();
-                newHttpRequest.Method = new HttpMethod("GET");
-                newHttpRequest.RequestUri = locationResultsUrl;
-
-                if (Client.Credentials != null)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await Client.Credentials.ProcessHttpRequestAsync(newHttpRequest, cancellationToken).ConfigureAwait(false);
-                }
-
-                HttpResponseMessage newHttpResponse = await Client.HttpClient.SendAsync(newHttpRequest, cancellationToken).ConfigureAwait(false);
-                if ((int)newHttpResponse.StatusCode != 200)
-                {
-                    if (DateTime.UtcNow > giveUpAt)
-                    {
-                        string newResponseContent = await newHttpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                        throw new Exception(string.Format("GenerateGatewayVpnProfileWithHttpMessagesAsync Operation returned an invalid status code '{0}' with Exception:{1} while retrieving " +
-                                                          "the Vpnclient PackageUrl!", newHttpResponse.StatusCode, string.IsNullOrEmpty(newResponseContent) ? "NotAvailable" : newResponseContent));
-                    }
-                }
-                else
-                {
-                    // Get the content i.e.VPN Client package Url from locationResults
-                    _response.Body = newHttpResponse.Content.ReadAsStringAsync().Result;
-                    return _response;
-                }
-            }
+            return await this.GenerateVpnProfileWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, customHeaders, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -239,45 +200,7 @@ namespace Microsoft.Azure.Management.Network
             Dictionary<string, List<string>> customHeaders = null,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            AzureOperationResponse<string> _response =
-                await this.BeginGetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName,
-                    virtualNetworkGatewayName,
-                    customHeaders,
-                    cancellationToken).ConfigureAwait(false);
-
-            Uri locationResultsUrl = _response.Response.Headers.Location;
-            DateTime giveUpAt = DateTime.UtcNow.AddMinutes(3);
-            // Send the Get locationResults request for operaitonId till either we get StatusCode 200 or it time outs (3 minutes in this case)
-            while (true)
-            {
-                HttpRequestMessage newHttpRequest = new HttpRequestMessage();
-                newHttpRequest.Method = new HttpMethod("GET");
-                newHttpRequest.RequestUri = locationResultsUrl;
-
-                if (Client.Credentials != null)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    await Client.Credentials.ProcessHttpRequestAsync(newHttpRequest, cancellationToken).ConfigureAwait(false);
-                }
-
-                HttpResponseMessage newHttpResponse = await Client.HttpClient.SendAsync(newHttpRequest, cancellationToken).ConfigureAwait(false);
-                if ((int)newHttpResponse.StatusCode != 200)
-                {
-                    if (DateTime.UtcNow > giveUpAt)
-                    {
-                        string newResponseContent = await newHttpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                        throw new Exception(string.Format("GetGatewayVpnProfileWithHttpMessagesAsync Operation returned an invalid status code '{0}' with Exception:{1} while retrieving " +
-                                                          "the Vpnclient PackageUrl!", newHttpResponse.StatusCode, string.IsNullOrEmpty(newResponseContent) ? "NotAvailable" : newResponseContent));
-                    }
-                }
-                else
-                {
-                    // Get the content i.e.VPN Client package Url from locationResults
-                    _response.Body = newHttpResponse.Content.ReadAsStringAsync().Result;
-                    return _response;
-                }
-            }
+            return await this.GetVpnProfilePackageUrlWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, customHeaders, cancellationToken).ConfigureAwait(false);
         }
     }
 }

@@ -39,8 +39,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -201,9 +201,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver1.CloseAsync().ConfigureAwait(false);
-                    await receiver2.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver1.CloseAsync();
+                    await receiver2.CloseAsync();
                 }
             });
         }
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await receiver.CloseAsync();
                     TestUtility.Log("Closed Receiver");
                 }
 
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
                 }
             });
         }
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
                 }
             });
         }
@@ -424,8 +424,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -466,8 +466,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -505,8 +505,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
