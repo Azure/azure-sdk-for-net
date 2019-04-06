@@ -5,6 +5,7 @@
 using Azure.Base.Diagnostics;
 using Azure.Base.Http;
 using System;
+using System.Collections;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,11 +18,11 @@ namespace Azure.ApplicationModel.Configuration
         private readonly HttpPipeline _pipeline;
 
         public ConfigurationClient(string connectionString)
-            : this(connectionString, new ConfigurationPipelineOptions())
+            : this(connectionString, new ConfigurationClientOptions())
         {
         }
 
-        public ConfigurationClient(string connectionString, ConfigurationPipelineOptions options)
+        public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
@@ -29,13 +30,10 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipeline.Build(options,
-                policies => {
-                    policies.Add(options.RetryPolicy);
-                    policies.Add(options.LoggingPolicy);
-
-                    policies.Add(ClientRequestIdPolicy.Singleton);
-                    policies.Add(new AuthenticationPolicy(credential, secret));
-                });
+                    options.RetryPolicy,
+                    ClientRequestIdPolicy.Singleton,
+                    new AuthenticationPolicy(credential, secret),
+                    options.LoggingPolicy);
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]

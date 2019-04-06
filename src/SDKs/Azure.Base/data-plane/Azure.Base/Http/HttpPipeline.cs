@@ -29,7 +29,7 @@ namespace Azure.Base.Http
             policies.CopyTo(all, 0);
 
             _pipeline = all;
-            _services = services ?? HttpPipelineOptions.EmptyServiceProvider.Singleton;
+            _services = services ?? HttpClientOptions.EmptyServiceProvider.Singleton;
         }
 
         public HttpPipelineRequest CreateRequest()
@@ -48,27 +48,27 @@ namespace Azure.Base.Http
             }
         }
 
-        public static HttpPipeline Build(HttpPipelineOptions options, Action<IList<HttpPipelinePolicy>> configurePolicies)
+        public static HttpPipeline Build(HttpClientOptions options, params HttpPipelinePolicy[] clientPolicies)
         {
             var policies = new List<HttpPipelinePolicy>();
 
-            policies.AddRange(options.PrependPolicies);
+            policies.AddRange(options.PerCallPolicies);
 
             if (!options.DisableTelemetry)
             {
                 policies.Add(CreateTelemetryPolicy(options));
             }
 
-            configurePolicies(policies);
+            policies.AddRange(clientPolicies);
 
-            policies.AddRange(options.AppendPolicies);
+            policies.AddRange(options.PerRetryPolicies);
 
             policies.RemoveAll(policy => policy == null);
 
             return new HttpPipeline(options.Transport, policies.ToArray(), options.ServiceProvider);
         }
 
-        private static AddHeadersPolicy CreateTelemetryPolicy(HttpPipelineOptions options)
+        private static AddHeadersPolicy CreateTelemetryPolicy(HttpClientOptions options)
         {
             var clientAssembly = options.GetType().Assembly;
             var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();

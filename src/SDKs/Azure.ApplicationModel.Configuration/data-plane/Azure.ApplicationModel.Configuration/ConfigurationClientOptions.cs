@@ -7,7 +7,7 @@ using Azure.Base.Http.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration
 {
-    public class ConfigurationPipelineOptions: HttpPipelineOptions
+    public class ConfigurationClientOptions: HttpClientOptions
     {
         static readonly HttpPipelinePolicy s_defaultRetryPolicy = Base.Http.Pipeline.RetryPolicy.CreateFixed(3, TimeSpan.Zero,
             //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
@@ -18,7 +18,7 @@ namespace Azure.ApplicationModel.Configuration
 
         public HttpPipelinePolicy RetryPolicy { get; set; }
 
-        public ConfigurationPipelineOptions()
+        public ConfigurationClientOptions()
         {
             LoggingPolicy = Base.Http.Pipeline.LoggingPolicy.Shared;
             RetryPolicy = s_defaultRetryPolicy;

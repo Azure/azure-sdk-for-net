@@ -43,7 +43,7 @@ namespace Azure.Base.Tests
                     return new MockResponse(200);
                 });
 
-            var pipeline = HttpPipeline.Build(new TestClientOptions() { Transport = mockTransport }, _ => { });
+            var pipeline = HttpPipeline.Build(new TestClientOptions() { Transport = mockTransport }, new HttpPipelinePolicy[0]);
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
@@ -70,7 +70,7 @@ namespace Azure.Base.Tests
             }
         }
 
-        class TestClientOptions : HttpPipelineOptions
+        class TestClientOptions : HttpClientOptions
         {
         }
 

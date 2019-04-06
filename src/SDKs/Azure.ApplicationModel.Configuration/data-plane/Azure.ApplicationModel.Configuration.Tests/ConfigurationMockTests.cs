@@ -33,7 +33,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
         {
-            var options = new ConfigurationPipelineOptions();
+            var options = new ConfigurationClientOptions();
             var testPool = new TestPool<byte>();
             options.Transport = transport;
 
@@ -222,14 +222,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task ConfiguringTheClient()
         {
-            var options = new ConfigurationPipelineOptions();
+            var options = new ConfigurationClientOptions();
             options.ApplicationId = "test_application";
             options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
             options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.RequestTimeout, HttpStatusCode.OK);
             options.RetryPolicy = RetryPolicy.CreateFixed(2, TimeSpan.FromMilliseconds(100), 408 /* RequestTimeout */);
 
             var testPolicy = new TestPolicy();
-            options.AppendPolicies.Add(testPolicy);
+            options.PerRetryPolicies.Add(testPolicy);
 
             var client = new ConfigurationClient(connectionString, options);
 

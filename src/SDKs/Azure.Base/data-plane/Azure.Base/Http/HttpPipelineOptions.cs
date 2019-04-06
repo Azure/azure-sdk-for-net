@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace Azure.Base.Http
 {
-    public class HttpPipelineOptions
+    public class HttpClientOptions
     {
         private HttpPipelineTransport _transport = HttpClientTransport.Shared;
 
@@ -23,9 +23,9 @@ namespace Azure.Base.Http
 
         public IServiceProvider ServiceProvider { get; set; } = EmptyServiceProvider.Singleton;
 
-        public IList<HttpPipelinePolicy> PrependPolicies { get; } = new List<HttpPipelinePolicy>();
+        public IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
 
-        public IList<HttpPipelinePolicy> AppendPolicies { get; } = new List<HttpPipelinePolicy>();
+        public IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
 
         public void AddService(object service, Type type = null)
         {
