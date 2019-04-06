@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class ApiDiagnosticLoggerOperationsExtensions
     {
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of an API.
+            /// Lists all loggers associated with the specified Diagnostic of an API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of an API.
+            /// Lists all loggers associated with the specified Diagnostic of an API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Attaches a logger to a dignostic for an API.
+            /// Attaches a logger to a diagnostic for an API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Attaches a logger to a dignostic for an API.
+            /// Attaches a logger to a diagnostic for an API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of an API.
+            /// Lists all loggers associated with the specified Diagnostic of an API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of an API.
+            /// Lists all loggers associated with the specified Diagnostic of an API.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

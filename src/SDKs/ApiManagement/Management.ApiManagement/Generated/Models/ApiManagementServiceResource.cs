@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// installed in the API Management service. Max supported certificates
         /// that can be installed is 10.</param>
         /// <param name="virtualNetworkType">The type of VPN in which API
-        /// Managemet service needs to be configured in. None (Default Value)
+        /// Management service needs to be configured in. None (Default Value)
         /// means the API Management service is not part of any Virtual
         /// Network, External means the API Management deployment is set up
         /// inside a Virtual Network having an Internet Facing Endpoint, and
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<CertificateConfiguration> Certificates { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of VPN in which API Managemet service needs
+        /// Gets or sets the type of VPN in which API Management service needs
         /// to be configured in. None (Default Value) means the API Management
         /// service is not part of any Virtual Network, External means the API
         /// Management deployment is set up inside a Virtual Network having an

@@ -321,7 +321,7 @@ namespace Microsoft.Azure.Management.Media
             /// The SAS URL expiration time.  This must be less than 24 hours from the
             /// current time.
             /// </param>
-            public static AssetContainerSas ListContainerSas(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName, string permissions = default(string), System.DateTime? expiryTime = default(System.DateTime?))
+            public static AssetContainerSas ListContainerSas(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName, AssetContainerPermission? permissions = default(AssetContainerPermission?), System.DateTime? expiryTime = default(System.DateTime?))
             {
                 return operations.ListContainerSasAsync(resourceGroupName, accountName, assetName, permissions, expiryTime).GetAwaiter().GetResult();
             }
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.Media
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AssetContainerSas> ListContainerSasAsync(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName, string permissions = default(string), System.DateTime? expiryTime = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AssetContainerSas> ListContainerSasAsync(this IAssetsOperations operations, string resourceGroupName, string accountName, string assetName, AssetContainerPermission? permissions = default(AssetContainerPermission?), System.DateTime? expiryTime = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListContainerSasWithHttpMessagesAsync(resourceGroupName, accountName, assetName, permissions, expiryTime, null, cancellationToken).ConfigureAwait(false))
                 {

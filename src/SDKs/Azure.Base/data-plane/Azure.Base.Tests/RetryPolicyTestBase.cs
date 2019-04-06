@@ -175,7 +175,7 @@ namespace Azure.Base.Tests
             var pipeline = new HttpPipeline(mockTransport, new []{ policy });
 
             var httpPipelineRequest = pipeline.CreateRequest();
-            httpPipelineRequest.SetRequestLine(HttpVerb.Get, new Uri("http://example.com/"));
+            httpPipelineRequest.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com/"));
 
             return pipeline.SendRequestAsync(httpPipelineRequest, CancellationToken.None);
         }

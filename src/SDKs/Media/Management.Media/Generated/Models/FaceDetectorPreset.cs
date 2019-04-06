@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// for details). However, faces that end up being too small in the
         /// resized video may not be detected. Possible values include:
         /// 'SourceResolution', 'StandardDefinition'</param>
-        public FaceDetectorPreset(string resolution = default(string))
+        public FaceDetectorPreset(AnalysisResolution? resolution = default(AnalysisResolution?))
         {
             Resolution = resolution;
             CustomInit();
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'SourceResolution', 'StandardDefinition'
         /// </summary>
         [JsonProperty(PropertyName = "resolution")]
-        public string Resolution { get; set; }
+        public AnalysisResolution? Resolution { get; set; }
 
     }
 }

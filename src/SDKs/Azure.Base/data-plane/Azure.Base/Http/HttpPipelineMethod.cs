@@ -3,7 +3,7 @@
 
 namespace Azure.Base.Http
 {
-    public enum HttpVerb : byte
+    public enum HttpPipelineMethod : byte
     {
         Get,
         Post,

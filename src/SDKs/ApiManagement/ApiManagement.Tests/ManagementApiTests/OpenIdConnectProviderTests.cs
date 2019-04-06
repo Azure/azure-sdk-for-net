@@ -101,7 +101,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                     // there should be atleast 2 openId connect Providers.
                     Assert.True(listResponse.Count() >= 2);
-                    Assert.NotNull(listResponse.NextPageLink);
+                    Assert.Null(listResponse.NextPageLink);
 
                     // list using Query
                     listResponse = testBase.client.OpenIdConnectProvider.ListByService(

@@ -10,31 +10,117 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for JobErrorCategory.
     /// </summary>
-    public static class JobErrorCategory
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(JobErrorCategoryConverter))]
+    public struct JobErrorCategory : System.IEquatable<JobErrorCategory>
     {
+        private JobErrorCategory(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The error is service related.
         /// </summary>
-        public const string Service = "Service";
+        public static readonly JobErrorCategory Service = "Service";
+
         /// <summary>
         /// The error is download related.
         /// </summary>
-        public const string Download = "Download";
+        public static readonly JobErrorCategory Download = "Download";
+
         /// <summary>
         /// The error is upload related.
         /// </summary>
-        public const string Upload = "Upload";
+        public static readonly JobErrorCategory Upload = "Upload";
+
         /// <summary>
         /// The error is configuration related.
         /// </summary>
-        public const string Configuration = "Configuration";
+        public static readonly JobErrorCategory Configuration = "Configuration";
+
         /// <summary>
         /// The error is related to data in the input files.
         /// </summary>
-        public const string Content = "Content";
+        public static readonly JobErrorCategory Content = "Content";
+
+
+        /// <summary>
+        /// Underlying value of enum JobErrorCategory
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for JobErrorCategory
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type JobErrorCategory
+        /// </summary>
+        public bool Equals(JobErrorCategory e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to JobErrorCategory
+        /// </summary>
+        public static implicit operator JobErrorCategory(string value)
+        {
+            return new JobErrorCategory(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert JobErrorCategory to string
+        /// </summary>
+        public static implicit operator string(JobErrorCategory e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum JobErrorCategory
+        /// </summary>
+        public static bool operator == (JobErrorCategory e1, JobErrorCategory e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum JobErrorCategory
+        /// </summary>
+        public static bool operator != (JobErrorCategory e1, JobErrorCategory e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for JobErrorCategory
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is JobErrorCategory && Equals((JobErrorCategory)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode JobErrorCategory
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

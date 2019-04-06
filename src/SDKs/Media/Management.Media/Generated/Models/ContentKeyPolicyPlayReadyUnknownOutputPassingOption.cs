@@ -10,31 +10,125 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ContentKeyPolicyPlayReadyUnknownOutputPassingOption.
     /// </summary>
-    public static class ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ContentKeyPolicyPlayReadyUnknownOutputPassingOptionConverter))]
+    public struct ContentKeyPolicyPlayReadyUnknownOutputPassingOption : System.IEquatable<ContentKeyPolicyPlayReadyUnknownOutputPassingOption>
     {
+        private ContentKeyPolicyPlayReadyUnknownOutputPassingOption(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Represents a ContentKeyPolicyPlayReadyUnknownOutputPassingOption
         /// that is unavailable in current API version.
         /// </summary>
-        public const string Unknown = "Unknown";
+        public static readonly ContentKeyPolicyPlayReadyUnknownOutputPassingOption Unknown = "Unknown";
+
         /// <summary>
         /// Passing the video portion of protected content to an Unknown Output
         /// is not allowed.
         /// </summary>
-        public const string NotAllowed = "NotAllowed";
+        public static readonly ContentKeyPolicyPlayReadyUnknownOutputPassingOption NotAllowed = "NotAllowed";
+
         /// <summary>
         /// Passing the video portion of protected content to an Unknown Output
         /// is allowed.
         /// </summary>
-        public const string Allowed = "Allowed";
+        public static readonly ContentKeyPolicyPlayReadyUnknownOutputPassingOption Allowed = "Allowed";
+
         /// <summary>
         /// Passing the video portion of protected content to an Unknown Output
         /// is allowed but with constrained resolution.
         /// </summary>
-        public const string AllowedWithVideoConstriction = "AllowedWithVideoConstriction";
+        public static readonly ContentKeyPolicyPlayReadyUnknownOutputPassingOption AllowedWithVideoConstriction = "AllowedWithVideoConstriction";
+
+
+        /// <summary>
+        /// Underlying value of enum
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        public bool Equals(ContentKeyPolicyPlayReadyUnknownOutputPassingOption e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        public static implicit operator ContentKeyPolicyPlayReadyUnknownOutputPassingOption(string value)
+        {
+            return new ContentKeyPolicyPlayReadyUnknownOutputPassingOption(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption to string
+        /// </summary>
+        public static implicit operator string(ContentKeyPolicyPlayReadyUnknownOutputPassingOption e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        public static bool operator == (ContentKeyPolicyPlayReadyUnknownOutputPassingOption e1, ContentKeyPolicyPlayReadyUnknownOutputPassingOption e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        public static bool operator != (ContentKeyPolicyPlayReadyUnknownOutputPassingOption e1, ContentKeyPolicyPlayReadyUnknownOutputPassingOption e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ContentKeyPolicyPlayReadyUnknownOutputPassingOption && Equals((ContentKeyPolicyPlayReadyUnknownOutputPassingOption)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode
+        /// ContentKeyPolicyPlayReadyUnknownOutputPassingOption
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="operation">Track property condition operation.
         /// Possible values include: 'Unknown', 'Equal'</param>
         /// <param name="value">Track property value</param>
-        public TrackPropertyCondition(string property, string operation, string value = default(string))
+        public TrackPropertyCondition(TrackPropertyType property, TrackPropertyCompareOperation operation, string value = default(string))
         {
             Property = property;
             Operation = operation;
@@ -53,14 +52,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Unknown', 'FourCC'
         /// </summary>
         [JsonProperty(PropertyName = "property")]
-        public string Property { get; set; }
+        public TrackPropertyType Property { get; set; }
 
         /// <summary>
         /// Gets or sets track property condition operation. Possible values
         /// include: 'Unknown', 'Equal'
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public TrackPropertyCompareOperation Operation { get; set; }
 
         /// <summary>
         /// Gets or sets track property value
@@ -71,19 +70,11 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Property == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Property");
-            }
-            if (Operation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Operation");
-            }
         }
     }
 }

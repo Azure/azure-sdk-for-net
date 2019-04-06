@@ -48,17 +48,17 @@ namespace Management.HDInsight.Tests
         }
 
         /// <summary>
-        /// Validate HTTP settings
+        /// Validate gateway settings
         /// </summary>
         /// <param name="expectedUserName"></param>
         /// <param name="expectedUserPassword"></param>
-        /// <param name="actualHttpSettings"></param>
-        public static void ValidateHttpSettings(string expectedUserName, string expectedUserPassword, IDictionary<string, string> actualHttpSettings)
+        /// <param name="actualGatewaySettings"></param>
+        public static void ValidateGatewaySettings(string expectedUserName, string expectedUserPassword, GatewaySettings actualGatewaySettings)
         {
-            Assert.NotNull(actualHttpSettings);
-            Assert.Equal("true", actualHttpSettings["restAuthCredential.isEnabled"]);
-            Assert.Equal(expectedUserName, actualHttpSettings["restAuthCredential.username"]);
-            Assert.Equal(expectedUserPassword, actualHttpSettings["restAuthCredential.password"]);
+            Assert.NotNull(actualGatewaySettings);
+            Assert.Equal("true", actualGatewaySettings.IsCredentialEnabled);
+            Assert.Equal(expectedUserName, actualGatewaySettings.UserName);
+            Assert.Equal(expectedUserPassword, actualGatewaySettings.Password);
         }
 
         /// <summary>

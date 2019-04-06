@@ -43,7 +43,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(listResponse);;
                 Assert.Equal(6, listResponse.Count());
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
                 foreach (var operationContract in listResponse)
                 {
                     Assert.Equal(api.Name, operationContract.ApiIdentifier);

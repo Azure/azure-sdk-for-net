@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class DiagnosticLoggerOperationsExtensions
     {
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of the API
+            /// Lists all loggers associated with the specified Diagnostic of the API
             /// Management service instance.
             /// </summary>
             /// <param name='operations'>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of the API
+            /// Lists all loggers associated with the specified Diagnostic of the API
             /// Management service instance.
             /// </summary>
             /// <param name='operations'>
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Attaches a logger to a dignostic.
+            /// Attaches a logger to a diagnostic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Attaches a logger to a dignostic.
+            /// Attaches a logger to a diagnostic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of the API
+            /// Lists all loggers associated with the specified Diagnostic of the API
             /// Management service instance.
             /// </summary>
             /// <param name='operations'>
@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all loggers assosiated with the specified Diagnostic of the API
+            /// Lists all loggers associated with the specified Diagnostic of the API
             /// Management service instance.
             /// </summary>
             /// <param name='operations'>

@@ -201,6 +201,16 @@ namespace Microsoft.Azure.Management.Billing
         ITransactionsByBillingAccountOperations TransactionsByBillingAccount { get; }
 
         /// <summary>
+        /// Gets the ITransactionsByBillingProfileOperations.
+        /// </summary>
+        ITransactionsByBillingProfileOperations TransactionsByBillingProfile { get; }
+
+        /// <summary>
+        /// Gets the ITransactionsByInvoiceSectionOperations.
+        /// </summary>
+        ITransactionsByInvoiceSectionOperations TransactionsByInvoiceSection { get; }
+
+        /// <summary>
         /// Gets the IPolicyOperations.
         /// </summary>
         IPolicyOperations Policy { get; }
@@ -271,34 +281,9 @@ namespace Microsoft.Azure.Management.Billing
         IBillingProfileBillingRoleAssignmentOperations BillingProfileBillingRoleAssignment { get; }
 
         /// <summary>
-        /// Lists the transactions by billingProfileName for given start date
-        /// and end date.
+        /// Gets the IAgreementsOperations.
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='startDate'>
-        /// Start date
-        /// </param>
-        /// <param name='endDate'>
-        /// End date
-        /// </param>
-        /// <param name='filter'>
-        /// May be used to filter by transaction kind. The filter supports
-        /// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
-        /// support 'ne', 'or', or 'not'. Tag filter is a key value pair string
-        /// where key and value is separated by a colon (:).
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<TransactionsListResult>> TransactionsByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        IAgreementsOperations Agreements { get; }
 
         /// <summary>
         /// Cancel product by product id

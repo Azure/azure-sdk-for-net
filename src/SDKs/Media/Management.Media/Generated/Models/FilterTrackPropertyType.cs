@@ -10,35 +10,122 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for FilterTrackPropertyType.
     /// </summary>
-    public static class FilterTrackPropertyType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(FilterTrackPropertyTypeConverter))]
+    public struct FilterTrackPropertyType : System.IEquatable<FilterTrackPropertyType>
     {
+        private FilterTrackPropertyType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// The unknown track property type.
         /// </summary>
-        public const string Unknown = "Unknown";
+        public static readonly FilterTrackPropertyType Unknown = "Unknown";
+
         /// <summary>
         /// The type.
         /// </summary>
-        public const string Type = "Type";
+        public static readonly FilterTrackPropertyType Type = "Type";
+
         /// <summary>
         /// The name.
         /// </summary>
-        public const string Name = "Name";
+        public static readonly FilterTrackPropertyType Name = "Name";
+
         /// <summary>
         /// The language.
         /// </summary>
-        public const string Language = "Language";
+        public static readonly FilterTrackPropertyType Language = "Language";
+
         /// <summary>
         /// The fourCC.
         /// </summary>
-        public const string FourCC = "FourCC";
+        public static readonly FilterTrackPropertyType FourCC = "FourCC";
+
         /// <summary>
         /// The bitrate.
         /// </summary>
-        public const string Bitrate = "Bitrate";
+        public static readonly FilterTrackPropertyType Bitrate = "Bitrate";
+
+
+        /// <summary>
+        /// Underlying value of enum FilterTrackPropertyType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for FilterTrackPropertyType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type FilterTrackPropertyType
+        /// </summary>
+        public bool Equals(FilterTrackPropertyType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to FilterTrackPropertyType
+        /// </summary>
+        public static implicit operator FilterTrackPropertyType(string value)
+        {
+            return new FilterTrackPropertyType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert FilterTrackPropertyType to string
+        /// </summary>
+        public static implicit operator string(FilterTrackPropertyType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum FilterTrackPropertyType
+        /// </summary>
+        public static bool operator == (FilterTrackPropertyType e1, FilterTrackPropertyType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum FilterTrackPropertyType
+        /// </summary>
+        public static bool operator != (FilterTrackPropertyType e1, FilterTrackPropertyType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for FilterTrackPropertyType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is FilterTrackPropertyType && Equals((FilterTrackPropertyType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode FilterTrackPropertyType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

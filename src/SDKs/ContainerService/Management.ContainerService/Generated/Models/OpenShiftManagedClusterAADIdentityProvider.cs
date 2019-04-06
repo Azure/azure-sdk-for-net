@@ -38,11 +38,14 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// provider.</param>
         /// <param name="tenantId">The tenantId associated with the
         /// provider.</param>
-        public OpenShiftManagedClusterAADIdentityProvider(string clientId = default(string), string secret = default(string), string tenantId = default(string))
+        /// <param name="customerAdminGroupId">The groupId to be granted
+        /// cluster admin role.</param>
+        public OpenShiftManagedClusterAADIdentityProvider(string clientId = default(string), string secret = default(string), string tenantId = default(string), string customerAdminGroupId = default(string))
         {
             ClientId = clientId;
             Secret = secret;
             TenantId = tenantId;
+            CustomerAdminGroupId = customerAdminGroupId;
             CustomInit();
         }
 
@@ -68,6 +71,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the groupId to be granted cluster admin role.
+        /// </summary>
+        [JsonProperty(PropertyName = "customerAdminGroupId")]
+        public string CustomerAdminGroupId { get; set; }
 
     }
 }

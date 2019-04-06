@@ -51,7 +51,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpPipelineMethod.Put, uri);
 
                 request.AddHeader(IfNoneMatch, "*");
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
@@ -86,7 +86,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpPipelineMethod.Put, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
@@ -125,7 +125,7 @@ namespace Azure.ApplicationModel.Configuration
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpPipelineMethod.Put, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
@@ -165,7 +165,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Delete, uri);
+                request.SetRequestLine(HttpPipelineMethod.Delete, uri);
 
                 if (etag != default)
                 {
@@ -190,7 +190,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Put, uri);
+                request.SetRequestLine(HttpPipelineMethod.Put, uri);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -210,7 +210,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Delete, uri);
+                request.SetRequestLine(HttpPipelineMethod.Delete, uri);
 
 
 
@@ -231,7 +231,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Get, uri);
+                request.SetRequestLine(HttpPipelineMethod.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (acceptDateTime != default)
@@ -256,7 +256,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Get, uri);
+                request.SetRequestLine(HttpPipelineMethod.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
@@ -281,7 +281,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Get, uri);
+                request.SetRequestLine(HttpPipelineMethod.Get, uri);
 
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)

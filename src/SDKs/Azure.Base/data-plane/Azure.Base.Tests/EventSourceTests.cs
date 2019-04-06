@@ -56,7 +56,7 @@ namespace Azure.Base.Tests
 
             using (var request = pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpVerb.Get, new Uri("https://contoso.a.io"));
+                request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.AddHeader("Date", "3/26/2019");
                 request.AddHeader("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });

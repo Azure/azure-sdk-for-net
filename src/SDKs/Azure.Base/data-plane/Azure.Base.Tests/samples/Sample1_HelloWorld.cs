@@ -22,7 +22,7 @@ namespace Azure.Base.Samples
             var request = pipeline.CreateRequest();
 
             var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/src/SDKs/Azure.Base/data-plane/README.md");
-            request.SetRequestLine(HttpVerb.Get, uri);
+            request.SetRequestLine(HttpPipelineMethod.Get, uri);
             request.AddHeader("Host", uri.Host);
 
             Response response = await pipeline.SendRequestAsync(request, cancellationToken: default).ConfigureAwait(false);
