@@ -7,6 +7,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Security.Authentication;
+    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -36,7 +37,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Theory]
         [MemberData(nameof(ListOfExceptions))]
-        void RetryExponentialShouldRetryTest(Exception exception, int currentRetryCount, bool expectedShouldRetry)
+        public void RetryExponentialShouldRetryTest(Exception exception, int currentRetryCount, bool expectedShouldRetry)
         {
             var retry = new RetryExponential(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(20), 5);
             var remainingTime = Constants.DefaultOperationTimeout;
@@ -46,14 +47,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void RetryPolicyDefaultShouldBeRetryExponential()
+        public void RetryPolicyDefaultShouldBeRetryExponential()
         {
             var retry = RetryPolicy.Default;
             Assert.True(retry is RetryExponential);
         }
 
         [Fact]
-        void RetryExponentialRetryIntervalShouldIncreaseTest()
+        public void RetryExponentialRetryIntervalShouldIncreaseTest()
         {
             var policy = (RetryExponential)RetryPolicy.Default;
             var retry = true;
@@ -74,7 +75,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void RetryExponentialEnsureRandomTest()
+        public void RetryExponentialEnsureRandomTest()
         {
             // We use a constant retryCount to just test randomness. We are
             // not testing increasing interval.
@@ -97,10 +98,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void RetryExponentialServerBusyShouldSelfResetTest()
+        public async Task RetryExponentialServerBusyShouldSelfResetTest()
         {
             var retryExponential = (RetryExponential)RetryPolicy.Default;
             var retryCount = 0;
+            var attempts = 0;
             var duration = Constants.DefaultOperationTimeout;
             var exception = new ServerBusyException(string.Empty);
 
@@ -109,14 +111,25 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(retryExponential.ShouldRetry(duration, retryCount, exception, out _), "We should retry, but it returned false");
             Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy should be true");
 
-            System.Threading.Thread.Sleep(3000);
+            await Task.Delay(3000);
 
             // Setting it a second time should not prolong the call.
             Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy should be true");
             Assert.True(retryExponential.ShouldRetry(duration, retryCount, exception, out _), "We should retry, but it return false");
             Assert.True(retryExponential.IsServerBusy, "policy1.IsServerBusy should be true");
 
-            System.Threading.Thread.Sleep(9750); // 3 + 9(ish) = 12s  (base reset time is 10 seconds;  see RetryPolicy, line 19)
+            // The server busy flag should reset; the basereset time is 10 seconds (see RetryPolicy, line 19).
+            // Since there was already a 3 second delay, allow for the additional time needed to reset (with some padding).
+            // This check is timing sensitive and has shown to behave differently in different build environments.  Allow for some timing
+            // variation and extend the window for rest, if needed.
+            await Task.Delay(9000);
+
+            while (retryExponential.IsServerBusy && Interlocked.Increment(ref attempts) <= TestConstants.MaxAttemptsCount)
+            {
+                await Task.Delay(2000);
+            }
+
+            // If the busy flag hasn't reset by now, consider it a failure.
             Assert.False(retryExponential.IsServerBusy, "policy1.IsServerBusy should reset to false after 11s");
 
             // Setting ServerBusy for second time.
@@ -125,7 +138,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact(Skip = "Flaky Test in Appveyor, fix and enable back")]
-        async void RunOperationShouldReturnImmediatelyIfRetryIntervalIsGreaterThanOperationTimeout()
+        public async Task RunOperationShouldReturnImmediatelyIfRetryIntervalIsGreaterThanOperationTimeout()
         {
             var policy = RetryPolicy.Default;
             var watch = Stopwatch.StartNew();
@@ -138,7 +151,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        async void RunOperationShouldWaitFor10SecondsForOperationIfServerBusy()
+        public async Task RunOperationShouldWaitFor10SecondsForOperationIfServerBusy()
         {
             var policy = RetryPolicy.Default;
             policy.SetServerBusy(Resources.DefaultServerBusyException);
@@ -153,7 +166,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        async void RunOperationShouldWaitForAllOperationsToSucceed()
+        public async Task RunOperationShouldWaitForAllOperationsToSucceed()
         {
             var policy = RetryPolicy.Default;
             var watch = Stopwatch.StartNew();
