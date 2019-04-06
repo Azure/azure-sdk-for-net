@@ -200,46 +200,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
-        public async Task Lock()
-        {
-            var response = new MockResponse(200);
-            var locked = s_testSetting.Clone();
-            locked.Locked = true;
-            response.SetContent(SerializationHelpers.Serialize(locked, SerializeSetting));
-
-            var mockTransport = new MockTransport(response);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            ConfigurationSetting setting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
-            var request = mockTransport.SingleRequest;
-
-            AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
-            Assert.AreEqual("https://contoso.azconfig.io/locks/test_key?label=test_label", request.Uri.ToString());
-            Assert.True(setting.Locked);
-        }
-
-        [Test]
-        public async Task Unlock()
-        {
-            var response = new MockResponse(200);
-            var locked = s_testSetting.Clone();
-            locked.Locked = false;
-            response.SetContent(SerializationHelpers.Serialize(locked, SerializeSetting));
-
-            var mockTransport = new MockTransport(response);
-            ConfigurationClient service = CreateTestService(mockTransport);
-
-            ConfigurationSetting setting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
-            var request = mockTransport.SingleRequest;
-
-            AssertRequestCommon(request);
-            Assert.AreEqual(HttpPipelineMethod.Delete, request.Method);
-            Assert.AreEqual("https://contoso.azconfig.io/locks/test_key?label=test_label", request.Uri.ToString());
-            Assert.False(setting.Locked);
-        }
-
-        [Test]
         public async Task GetBatch()
         {
             var response1 = new MockResponse(200);

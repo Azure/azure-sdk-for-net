@@ -196,47 +196,6 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> LockAsync(string key, string label = default, CancellationToken cancellation = default)
-        {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
-
-            Uri uri = BuildUriForLocksRoute(key, label);
-
-            using (var request = _pipeline.CreateRequest())
-            {
-                request.SetRequestLine(HttpPipelineMethod.Put, uri);
-
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
-
-                if (response.Status == 200)
-                {
-                    return await CreateResponse(response, cancellation);
-                }
-                else throw new RequestFailedException(response);
-            }
-        }
-
-        public async Task<Response<ConfigurationSetting>> UnlockAsync(string key, string label = default, CancellationToken cancellation = default)
-        {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
-
-            Uri uri = BuildUriForLocksRoute(key, label);
-
-            using (var request = _pipeline.CreateRequest())
-            {
-                request.SetRequestLine(HttpPipelineMethod.Delete, uri);
-
-
-
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
-                if (response.Status == 200)
-                {
-                    return await CreateResponse(response, cancellation);
-                }
-                else throw new RequestFailedException(response);
-            }
-        }
-
         public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
