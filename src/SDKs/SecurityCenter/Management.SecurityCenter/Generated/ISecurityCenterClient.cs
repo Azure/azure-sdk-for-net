@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Management.Security
     using Microsoft.Rest.Azure;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// API spec for Microsoft.Security (Azure Security Center) resource
@@ -180,6 +184,150 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IAdaptiveNetworkHardeningsOperations.
         /// </summary>
         IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; }
+
+        /// <summary>
+        /// Gets the vulnerability assessment status on a given resource.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VulnerabilityAssessment>> GetStatusWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Onboarding a resource for having vulnerability assessment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> OnboardWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Removing vulnerability assessment from a resource
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Gets the vulnerability assessment findings
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<VulnerabilityAssessmentFindings>> GetFindingsWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Onboarding a resource for having vulnerability assessment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginOnboardWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Removing vulnerability assessment from a resource
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='resourceNamespace'>
+        /// The Namespace of the resource.
+        /// </param>
+        /// <param name='resourceType'>
+        /// The type of the resource.
+        /// </param>
+        /// <param name='resourceName'>
+        /// Name of the resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string resourceNamespace, string resourceType, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
