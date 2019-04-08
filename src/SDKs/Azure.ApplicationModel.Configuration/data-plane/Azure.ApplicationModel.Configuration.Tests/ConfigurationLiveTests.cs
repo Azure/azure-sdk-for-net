@@ -746,65 +746,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
             }
         }
-
-        [Test]
-        public async Task LockUnlockSetting()
-        {
-            ConfigurationClient service = TestEnvironment.GetClient();
-
-            try
-            {
-                // Prepare environment
-                await service.SetAsync(s_testSetting);
-
-                // Test Lock
-                ConfigurationSetting responseLockSetting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-
-                //Test update
-                var testSettingUpdate = s_testSetting.Clone();
-                testSettingUpdate.Value = "test_value_update";
-
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-                {
-                    await service.UpdateAsync(testSettingUpdate);
-                });
-                Assert.AreEqual(409, exception.Status);
-
-                // Test Unlock
-                ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-                await service.UpdateAsync(testSettingUpdate);
-            }
-            finally
-            {
-                await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
-            }
-        }
-
-        [Test]
-        public void LockSettingNotFound()
-        {
-            ConfigurationClient service = TestEnvironment.GetClient();
-
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await service.LockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-            });
-
-            Assert.AreEqual(404, exception.Status);
-        }
-
-        [Test]
-        public void UnlockSettingNotFound()
-        {
-            ConfigurationClient service = TestEnvironment.GetClient();
-
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-            });
-
-            Assert.AreEqual(404, exception.Status);
-        }
     }
 
     public static class ConfigurationSettingExtensions

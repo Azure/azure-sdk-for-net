@@ -140,9 +140,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     var queueClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.PeekLock);
 
                     try
-                    {
-                        var maxMessageSize = (256 * 1024) - 58;     // 58 bytes is the default serialization hit.
-                        var maxPayload = Encoding.ASCII.GetBytes(new string('a', maxMessageSize));
+                    { 
+                        var maxMessageSize = (256 * 1024) - 77;     // 77 bytes is the current serialization hit.
+                        var maxPayload = Enumerable.Repeat<byte>(0x20, maxMessageSize).ToArray(); 
                         var maxSizeMessage = new Message(maxPayload);
 
                         await queueClient.SendAsync(maxSizeMessage);
@@ -150,11 +150,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                         var receivedMaxSizeMessage = await queueClient.InnerReceiver.ReceiveAsync();
                         await queueClient.CompleteAsync(receivedMaxSizeMessage.SystemProperties.LockToken);
                         Assert.Equal(maxPayload, receivedMaxSizeMessage.Body);
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                        throw;
                     }
                     finally
                     {
@@ -183,7 +178,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public async void LargeMessageShouldThrowMessageSizeExceededException()
+        public async Task LargeMessageShouldThrowMessageSizeExceededException()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {

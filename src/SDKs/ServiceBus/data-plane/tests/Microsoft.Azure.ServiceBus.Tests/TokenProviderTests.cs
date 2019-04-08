@@ -12,13 +12,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class TokenProviderTests : SenderReceiverClientTestBase
     {
-        #pragma warning disable xUnit1013 
+        #pragma warning disable xUnit1013
         /// <remarks>
-        ///   This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret and uncomment 
+        ///   This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret and uncomment
         ///   the [Fact] attribute before running.
         /// </remarks>
         //[Fact]
-        [DisplayTestMethodName]        
+        [DisplayTestMethodName]
         public async Task UseITokenProviderWithAad()
         {
             var tenantId = "";
@@ -42,12 +42,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             // Send and receive messages.
             await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, 10);
         }
-        #pragma warning restore xUnit1013 
+        #pragma warning restore xUnit1013
 
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public async void SasTokenWithLargeExpiryTimeShouldBeAccepted()
+        public async Task SasTokenWithLargeExpiryTimeShouldBeAccepted()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {

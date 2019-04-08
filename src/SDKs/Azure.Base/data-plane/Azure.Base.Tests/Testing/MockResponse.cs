@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Azure.Base.Http;
 
 namespace Azure.Base.Testing
@@ -35,6 +36,16 @@ namespace Azure.Base.Testing
         public void SetContent(Stream contentStream)
         {
             _responseContentStream = contentStream;
+        }
+
+        public void SetContent(byte[] content)
+        {
+            SetContent(new MemoryStream(content));
+        }
+
+        public void SetContent(string content)
+        {
+            SetContent(Encoding.UTF8.GetBytes(content));
         }
 
         public override bool TryGetHeader(string name, out string value)

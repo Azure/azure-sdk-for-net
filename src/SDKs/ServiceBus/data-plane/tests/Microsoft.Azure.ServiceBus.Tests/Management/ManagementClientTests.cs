@@ -11,22 +11,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
     using Microsoft.Azure.ServiceBus.Management;
     using Xunit;
 
-    public class ManagementClientTests : IDisposable
-    {
-        internal string ConnectionString = TestUtility.NamespaceConnectionString;
-        ManagementClient client;
-
-        public ManagementClientTests()
-        {
-            client = new ManagementClient(new ServiceBusConnectionStringBuilder(ConnectionString));
-        }
-
+    public class ManagementClientTests
+    {        
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task BasicQueueCrudTest()
         {
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
 
             try
             {
@@ -88,8 +81,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteQueue(queueName);
+                await SafeDeleteQueue(client, queueName);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -99,7 +96,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task BasicTopicCrudTest()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
-
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
+            
             try
             {
                 var td = new TopicDescription(topicName)
@@ -150,8 +148,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteTopic(topicName);
+                await SafeDeleteTopic(client, topicName);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -161,6 +163,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task BasicSubscriptionCrudTest()
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
 
             try
             {
@@ -214,8 +217,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteTopic(topicName);
+                await SafeDeleteTopic(client, topicName);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -226,6 +233,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
 
             try
             {
@@ -290,8 +298,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteTopic(topicName);
+                await SafeDeleteTopic(client, topicName);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -301,6 +313,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         public async Task GetQueueRuntimeInfoTest()
         {
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
+            var qClient = new QueueClient(TestUtility.NamespaceConnectionString, queueName);
 
             try
             {
@@ -313,7 +327,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 // Populating 1 active message, 1 dead letter message and 1 scheduled message
                 // Changing Last Accessed Time
-                var qClient = new QueueClient(this.ConnectionString, queueName);
+                
                 await qClient.SendAsync(new Message() { MessageId = "1" });
                 await qClient.SendAsync(new Message() { MessageId = "2" });
                 await qClient.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
@@ -332,12 +346,16 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 Assert.True(runtimeInfo.SizeInBytes > 0);
 
                 await client.DeleteQueueAsync(queueName);
-                await qClient.CloseAsync();
             }
             catch
             {
-                await SafeDeleteQueue(queueName);
+                await SafeDeleteQueue(client, queueName);
                 throw;
+            }
+            finally
+            {
+                await qClient.CloseAsync();
+                await client.CloseAsync();
             }
         }
 
@@ -348,6 +366,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, topicName);
+            var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName));
 
             try
             {
@@ -365,8 +386,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
 
                 // Populating 1 active message, 1 dead letter message and 1 scheduled message
                 // Changing Last Accessed Time
-                var sender = new MessageSender(this.ConnectionString, topicName);
-                var receiver = new MessageReceiver(this.ConnectionString, EntityNameHelper.FormatSubscriptionPath(topicName, subscriptionName));
+               
                 await sender.SendAsync(new Message() { MessageId = "1" });
                 await sender.SendAsync(new Message() { MessageId = "2" });
                 await sender.SendAsync(new Message() { MessageId = "3", ScheduledEnqueueTimeUtc = DateTime.UtcNow.AddDays(1) });
@@ -397,14 +417,18 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 Assert.True(topicRI.SizeInBytes > 0);
 
                 await client.DeleteSubscriptionAsync(topicName, subscriptionName);
-                await client.DeleteTopicAsync(topicName);
-                await sender.CloseAsync();
-                await receiver.CloseAsync();
+                await client.DeleteTopicAsync(topicName);                
             }
             catch
             {
-                await SafeDeleteTopic(topicName);
+                await SafeDeleteTopic(client, topicName);
                 throw;
+            }
+            finally
+            {
+                await sender.CloseAsync();
+                await receiver.CloseAsync();
+                await client.CloseAsync();
             }
         }
 
@@ -413,82 +437,91 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [DisplayTestMethodName]
         public async Task MessagingEntityNotFoundExceptionTest()
         {
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.GetQueueAsync("NonExistingPath");
-                });
-
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.GetSubscriptionAsync("NonExistingTopic", "NonExistingPath");
-                });
-
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.UpdateQueueAsync(new QueueDescription("NonExistingPath"));
-                });
-
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.UpdateTopicAsync(new TopicDescription("NonExistingPath"));
-                });
-
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.UpdateSubscriptionAsync(new SubscriptionDescription("NonExistingTopic", "NonExistingPath"));
-                });
-
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.DeleteQueueAsync("NonExistingPath");
-                });
-
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.DeleteTopicAsync("NonExistingPath");
-                });
-
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
-                async () =>
-                {
-                    await client.DeleteSubscriptionAsync("NonExistingTopic", "NonExistingPath");
-                });
-
-            var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
-            var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
 
             try
             {
-                await client.CreateQueueAsync(queueName);
-                await client.CreateTopicAsync(topicName);
-
                 await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
                     async () =>
                     {
-                        await client.GetQueueAsync(topicName);
+                        await client.GetQueueAsync("NonExistingPath");
                     });
 
                 await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
                     async () =>
                     {
-                        await client.GetTopicAsync(queueName);
+                        await client.GetSubscriptionAsync("NonExistingTopic", "NonExistingPath");
                     });
 
-                // Cleanup
-                await client.DeleteQueueAsync(queueName);
-                await client.DeleteTopicAsync(topicName);
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.UpdateQueueAsync(new QueueDescription("NonExistingPath"));
+                    });
+
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.UpdateTopicAsync(new TopicDescription("NonExistingPath"));
+                    });
+
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.UpdateSubscriptionAsync(new SubscriptionDescription("NonExistingTopic", "NonExistingPath"));
+                    });
+
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.DeleteQueueAsync("NonExistingPath");
+                    });
+
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.DeleteTopicAsync("NonExistingPath");
+                    });
+
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                    async () =>
+                    {
+                        await client.DeleteSubscriptionAsync("NonExistingTopic", "NonExistingPath");
+                    });
+
+                var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
+                var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
+
+                try
+                {
+                    await client.CreateQueueAsync(queueName);
+                    await client.CreateTopicAsync(topicName);
+
+                    await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                        async () =>
+                        {
+                            await client.GetQueueAsync(topicName);
+                        });
+
+                    await Assert.ThrowsAsync<MessagingEntityNotFoundException>(
+                        async () =>
+                        {
+                            await client.GetTopicAsync(queueName);
+                        });
+
+                    // Cleanup
+                    await client.DeleteQueueAsync(queueName);
+                    await client.DeleteTopicAsync(topicName);
+                }
+                catch
+                {
+                    await Task.WhenAll(SafeDeleteQueue(client, queueName), SafeDeleteTopic(client, topicName));
+                    throw;
+                }
             }
-            catch
+            finally
             {
-                await Task.WhenAll(SafeDeleteQueue(queueName), SafeDeleteTopic(topicName));
-                throw;
+                await client.CloseAsync();
             }
         }
 
@@ -500,6 +533,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
 
             try
             {
@@ -531,8 +565,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await Task.WhenAll(SafeDeleteTopic(topicName), SafeDeleteQueue(queueName));
+                await Task.WhenAll(SafeDeleteTopic(client, topicName), SafeDeleteQueue(client, queueName));
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -546,6 +584,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             new object[] {"qq?", true},
             new object[] {"qq#", true},
         };
+
         [Theory]
         [MemberData(nameof(TestData_EntityNameValidationTest))]    
         [LiveTest]
@@ -571,10 +610,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [DisplayTestMethodName]
         public async Task ForwardingEntitySetupTest()
         {
-            // queueName --Fwd to--> destinationName --fwd dlq to--> dqlDestinationName
+            // queueName --Fwd to--> destinationName --fwd dlq to--> dqlDestinationName            
             var queueName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var destinationName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var dlqDestinationName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));  
+            var sender = new MessageSender(TestUtility.NamespaceConnectionString, queueName);
 
             try
             {
@@ -591,18 +632,18 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
                 };
                 var baseQ = await client.CreateQueueAsync(qd);
 
-                var sender = new MessageSender(this.ConnectionString, queueName);
+                
                 await sender.SendAsync(new Message() { MessageId = "mid" });
                 await sender.CloseAsync();
 
-                var receiver = new MessageReceiver(this.ConnectionString, destinationName);
+                var receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, destinationName);
                 var msg = await receiver.ReceiveAsync();
                 Assert.NotNull(msg);
                 Assert.Equal("mid", msg.MessageId);
                 await receiver.DeadLetterAsync(msg.SystemProperties.LockToken);
                 await receiver.CloseAsync();
 
-                receiver = new MessageReceiver(this.ConnectionString, dlqDestinationName);
+                receiver = new MessageReceiver(TestUtility.NamespaceConnectionString, dlqDestinationName);
                 msg = await receiver.ReceiveAsync();
                 Assert.NotNull(msg);
                 Assert.Equal("mid", msg.MessageId);
@@ -615,8 +656,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await Task.WhenAll(SafeDeleteQueue(queueName), SafeDeleteQueue(destinationName), SafeDeleteQueue(dlqDestinationName));
+                await Task.WhenAll(SafeDeleteQueue(client, queueName), SafeDeleteQueue(client, destinationName), SafeDeleteQueue(client, dlqDestinationName));
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -643,6 +688,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [DisplayTestMethodName]
         public async Task QueueDescriptionParsedFromResponseEqualityCheckTest()
         {
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
             var name = Guid.NewGuid().ToString("D").Substring(0, 8);
 
             try
@@ -657,8 +703,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteQueue(name);
+                await SafeDeleteQueue(client, name);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -667,6 +717,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [DisplayTestMethodName]
         public async Task TopicDescriptionParsedFromResponseEqualityCheckTest()
         {
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
             var name = Guid.NewGuid().ToString("D").Substring(0, 8);
 
             try
@@ -681,8 +732,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteTopic(name);
+                await SafeDeleteTopic(client, name);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -691,6 +746,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [DisplayTestMethodName]
         public async Task SqlFilterParamsTest()
         {
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
 
@@ -724,8 +780,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteTopic(topicName);
+                await SafeDeleteTopic(client, topicName);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -736,13 +796,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         {
             var topicName = Guid.NewGuid().ToString("D").Substring(0, 8);
             var subscriptionName = Guid.NewGuid().ToString("D").Substring(0, 8);
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));            
 
             try
             {
                 await client.CreateTopicAsync(topicName);
                 await client.CreateSubscriptionAsync(topicName, subscriptionName);
 
-                var sClient = new SubscriptionClient(ConnectionString, topicName, subscriptionName);
+                var sClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName);
                 var filter = new CorrelationFilter();
                 filter.Properties.Add("stringKey", "stringVal");
                 filter.Properties.Add("intKey", 5);
@@ -756,8 +817,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
             catch
             {
-                await SafeDeleteTopic(topicName);
+                await SafeDeleteTopic(client, topicName);
                 throw;
+            }
+            finally
+            {
+                await client.CloseAsync();
             }
         }
 
@@ -766,22 +831,26 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
         [DisplayTestMethodName]
         public async Task GetNamespaceInfoTest()
         {
-            var nsInfo = await client.GetNamespaceInfoAsync();
-            Assert.NotNull(nsInfo);
-            Assert.Equal(MessagingSku.Standard, nsInfo.MessagingSku);    // Most CI systems generally use standard, hence this check just to ensure the API is working.
-            Assert.Equal(NamespaceType.ServiceBus, nsInfo.NamespaceType); // Common namespace type used for testing is messaging.
+            var client = new ManagementClient(new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString));
+
+            try
+            {
+                var nsInfo = await client.GetNamespaceInfoAsync();
+                Assert.NotNull(nsInfo);
+                Assert.Equal(MessagingSku.Standard, nsInfo.MessagingSku);    // Most CI systems generally use standard, hence this check just to ensure the API is working.
+                Assert.Equal(NamespaceType.ServiceBus, nsInfo.NamespaceType); // Common namespace type used for testing is messaging.
+            }
+            finally
+            {
+                await client.CloseAsync();
+            }
         }
 
-        public void Dispose()
-        {
-            client.CloseAsync().Wait();
-        }
-
-        private async Task SafeDeleteQueue(string name, [CallerMemberName] string caller = null)
+        private async Task SafeDeleteQueue(ManagementClient client, string name, [CallerMemberName] string caller = null)
         {
             try
             {
-                await client?.DeleteQueueAsync(name);
+                await (client?.DeleteQueueAsync(name) ?? Task.CompletedTask);
             }
             catch (Exception ex)
             {                
@@ -789,11 +858,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Management
             }
         }
 
-        private async Task SafeDeleteTopic(string name, [CallerMemberName] string caller = null)
+        private async Task SafeDeleteTopic(ManagementClient client, string name, [CallerMemberName] string caller = null)
         {
             try
             {
-                await client?.DeleteTopicAsync(name);
+                await (client?.DeleteTopicAsync(name) ?? Task.CompletedTask);
             }
             catch (Exception ex)
             {

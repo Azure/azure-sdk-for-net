@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task MessageReceiverAndMessageSenderCreationWorksAsExpected(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task MessageReceiverAndMessageSenderCreationWorksAsExpected(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task TopicClientPeekLockDeferTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task TopicClientPeekLockDeferTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -63,8 +63,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task PeekAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
+        public async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -109,8 +109,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiveShouldThrowForServerTimeoutZeroTest(bool partitioned, bool sessionEnabled)
+        public async Task ReceiveShouldThrowForServerTimeoutZeroTest(bool partitioned, bool sessionEnabled)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiverShouldUseTheLatestPrefetchCount()
+        public async Task ReceiverShouldUseTheLatestPrefetchCount()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -201,9 +201,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver1.CloseAsync().ConfigureAwait(false);
-                    await receiver2.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver1.CloseAsync();
+                    await receiver2.CloseAsync();
                 }
             });
         }
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await receiver.CloseAsync();
                     TestUtility.Log("Closed Receiver");
                 }
 
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
                 }
             });
         }
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
                 }
             });
         }
@@ -424,8 +424,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -466,8 +466,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -505,8 +505,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task MessageSenderShouldNotThrowWhenSendingEmptyCollection()
+        public async Task MessageSenderShouldNotThrowWhenSendingEmptyCollection()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {

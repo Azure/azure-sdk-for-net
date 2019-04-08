@@ -12,30 +12,40 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
     using System.Threading.Tasks;
     using Xunit;
 
-    public abstract class DiagnosticsTests : IDisposable
+    [CollectionDefinition(nameof(DiagnosticsTests), DisableParallelization = true)]
+    public abstract class DiagnosticsTests
     {
-        protected ConcurrentQueue<(string eventName, object payload, Activity activity)> events;
-        protected FakeDiagnosticListener listener;
-        protected IDisposable subscription;
-        protected const int maxWaitSec = 10;
+        protected const int MaxWaitSec = 10;
+        protected readonly TimeSpan DefaultTimeout = TimeSpan.FromSeconds(MaxWaitSec);
 
-        private bool disposed = false;
+        protected ConcurrentQueue<(string eventName, object payload, Activity activity)> CreateEventQueue() =>
+            new ConcurrentQueue<(string eventName, object payload, Activity activity)>();
 
-        internal DiagnosticsTests()
-        {
-            this.events = new ConcurrentQueue<(string eventName, object payload, Activity activity)>();
-            this.listener = new FakeDiagnosticListener(kvp =>
+        protected FakeDiagnosticListener CreateEventListener(string entityName, ConcurrentQueue<(string eventName, object payload, Activity activity)> eventQueue) =>
+            new FakeDiagnosticListener(kvp =>
             {
-                TestUtility.Log($"Diagnostics event: {kvp.Key}, Activity Id: {Activity.Current?.Id}");
-                if (kvp.Key.Contains("Exception"))
+                if (kvp.Key == null || kvp.Value == null)
                 {
-                    TestUtility.Log($"Exception {kvp.Value}");
+                    TestUtility.Log("Diagnostics Problem: Missing diagnostics information.  Ignoring.");
+                    return;
                 }
 
-                this.events.Enqueue((kvp.Key, kvp.Value, Activity.Current));
+                // If an entity name was provided, log those payloads where the target is explicitly not associated with the entity.
+                if (!String.IsNullOrEmpty(entityName))
+                {
+                    var targetEntity = this.GetPropertyValueFromAnonymousTypeInstance<string>(kvp.Value, "Entity", true);
+
+                    if (String.IsNullOrEmpty(targetEntity) || !String.Equals(targetEntity, entityName, StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        TestUtility.Log($"Diagnostics Mismatch: Interested in Entity [{ entityName }], received [{ kvp.Key }] for Target [{ targetEntity }].");
+                    }
+                }
+
+                eventQueue?.Enqueue((kvp.Key, kvp.Value, Activity.Current));
             });
-            this.subscription = DiagnosticListener.AllListeners.Subscribe(this.listener);
-        }
+
+        protected IDisposable SubscribeToEvents(IObserver<DiagnosticListener> listener) =>
+            DiagnosticListener.AllListeners.Subscribe(listener);
 
         #region Send
 
@@ -496,53 +506,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             object propertyValue = p.GetValue(obj);
             if (!canValueBeNull)
             {
-                Assert.NotNull(propertyValue); 
+                Assert.NotNull(propertyValue);
             }
 
             if (propertyValue != null)
             {
-                Assert.IsAssignableFrom<T>(propertyValue); 
+                Assert.IsAssignableFrom<T>(propertyValue);
             }
 
             return (T)propertyValue;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                //Thread.Sleep(90000);
-                this.listener?.Disable();
-
-                while (this.events.TryDequeue(out var evnt))
-                {
-                }
-
-                while (Activity.Current != null)
-                {
-                    Activity.Current.Stop();
-                }
-
-                this.listener?.Dispose();
-                this.subscription?.Dispose();
-
-                this.events = null;
-                this.listener = null;
-                this.subscription = null;
-            }
-
-            this.disposed = true;
         }
     }
 }

@@ -23,23 +23,13 @@ namespace Azure.Base.Tests
                 new MockResponse(500),
                 new MockResponse(1));
 
-            var options = new HttpPipelineOptions(mockTransport);
-            options.RetryPolicy = new CustomRetryPolicy();
-
-            var pipeline = options.Build("test", "1.0.0");
+            var pipeline = new HttpPipeline(mockTransport, new [] { new CustomRetryPolicy() });
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
             var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
-        }
-
-        [Test]
-        public async Task EmptyPipeline()
-        {
-            var pipeline = new HttpPipeline();
-            await pipeline.SendRequestAsync(new NullPipelineContext(), CancellationToken.None);
         }
 
         [Test]
@@ -53,7 +43,7 @@ namespace Azure.Base.Tests
                     return new MockResponse(200);
                 });
 
-            var pipeline = new HttpPipelineOptions(mockTransport).Build(typeof(PipelineTests).Assembly);
+            var pipeline = HttpPipeline.Build(new TestClientOptions() { Transport = mockTransport }, new HttpPipelinePolicy[0]);
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
@@ -78,6 +68,10 @@ namespace Azure.Base.Tests
             {
                 return false;
             }
+        }
+
+        class TestClientOptions : HttpClientOptions
+        {
         }
 
         class NullPipelineContext : HttpPipelineRequest

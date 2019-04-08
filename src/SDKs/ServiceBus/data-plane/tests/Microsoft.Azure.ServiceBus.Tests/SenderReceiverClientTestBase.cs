@@ -308,7 +308,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(count == 1);
         }
 
-        Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
+        private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
         {
             TestUtility.Log($"Exception Received: ClientId: {eventArgs.ExceptionReceivedContext.ClientId}, EntityPath: {eventArgs.ExceptionReceivedContext.EntityPath}, Exception: {eventArgs.Exception.Message}");
             return Task.CompletedTask;

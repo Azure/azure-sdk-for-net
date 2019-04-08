@@ -13,6 +13,7 @@
   <PropertyGroup>
     <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+    <EnableClientSdkAnalyzers Condition="'$(EnableClientSdkAnalyzers)' == '' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(IsTestProject)' != 'true' and '$(IsTestHelperLibrary)' != 'true'">
@@ -35,6 +36,11 @@
   -->
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
+  </ItemGroup>
+
+  <!-- Add Client SDK Analyzers -->
+  <ItemGroup>
+    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-preview1" PrivateAssets="All" />
   </ItemGroup>
 
   <!-- If signing is enabled for an SDK library, delay sign using the shared key -->

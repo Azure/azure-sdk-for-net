@@ -51,12 +51,7 @@ namespace Azure.Base.Tests
                 return Task.FromResult(response);
             });
             var transport = new HttpClientTransport(new HttpClient(handler));
-            var options = new HttpPipelineOptions(transport)
-            {
-                LoggingPolicy = LoggingPolicy.Shared
-            };
-
-            var pipeline = options.Build("test", "1.0.0");
+            var pipeline = new HttpPipeline(transport, new []{ LoggingPolicy.Shared });
             string requestId;
 
             using (var request = pipeline.CreateRequest())

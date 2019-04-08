@@ -9,94 +9,58 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
     using System.Threading.Tasks;
     using Xunit;
 
+    [Collection(nameof(DiagnosticsTests))]
     public class SubscriptionClientDiagnosticsTests : DiagnosticsTests
     {
-        private SubscriptionClient subscriptionClient;
-        private bool disposed;
-
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task AddRemoveGetFireEvents()
+        public async Task AddRemoveGetFireEvents()
         {
             await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
             {
+                var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName, ReceiveMode.ReceiveAndDelete);
+                var eventQueue = this.CreateEventQueue();
                 var entityName = $"{topicName}/Subscriptions/{subscriptionName}";
 
-                this.subscriptionClient = new SubscriptionClient(
-                    TestUtility.NamespaceConnectionString,
-                    topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
+                try
+                {
+                    using (var listener = this.CreateEventListener(entityName, eventQueue))
+                    using (var subscription = this.SubscribeToEvents(listener))
+                    {
+                        listener.Enable((name, queue, id) => name.Contains("Rule"));
 
-                this.listener.Enable((name, queue, id) => name.Contains("Rule"));
+                        var ruleName = Guid.NewGuid().ToString();
+                        await subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
+                        await subscriptionClient.GetRulesAsync();
+                        await subscriptionClient.RemoveRuleAsync(ruleName);
 
-                var ruleName = Guid.NewGuid().ToString();
-                await this.subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
-                await this.subscriptionClient.GetRulesAsync();
-                await this.subscriptionClient.RemoveRuleAsync(ruleName);
+                        Assert.True(eventQueue.TryDequeue(out var addRuleStart));
+                        AssertAddRuleStart(entityName, addRuleStart.eventName, addRuleStart.payload, addRuleStart.activity);
 
-                Assert.True(this.events.TryDequeue(out var addRuleStart));
-                AssertAddRuleStart(entityName, addRuleStart.eventName, addRuleStart.payload, addRuleStart.activity);
+                        Assert.True(eventQueue.TryDequeue(out var addRuleStop));
+                        AssertAddRuleStop(entityName, addRuleStop.eventName, addRuleStop.payload, addRuleStop.activity, addRuleStart.activity);
 
-                Assert.True(this.events.TryDequeue(out var addRuleStop));
-                AssertAddRuleStop(entityName, addRuleStop.eventName, addRuleStop.payload, addRuleStop.activity, addRuleStart.activity);
+                        Assert.True(eventQueue.TryDequeue(out var getRulesStart));
+                        AssertGetRulesStart(entityName, getRulesStart.eventName, getRulesStart.payload, getRulesStart.activity);
 
-                Assert.True(this.events.TryDequeue(out var getRulesStart));
-                AssertGetRulesStart(entityName, getRulesStart.eventName, getRulesStart.payload, getRulesStart.activity);
+                        Assert.True(eventQueue.TryDequeue(out var getRulesStop));
+                        AssertGetRulesStop(entityName, getRulesStop.eventName, getRulesStop.payload, getRulesStop.activity, getRulesStart.activity);
 
-                Assert.True(this.events.TryDequeue(out var getRulesStop));
-                AssertGetRulesStop(entityName, getRulesStop.eventName, getRulesStop.payload, getRulesStop.activity, getRulesStart.activity);
+                        Assert.True(eventQueue.TryDequeue(out var removeRuleStart));
+                        AssertRemoveRuleStart(entityName, removeRuleStart.eventName, removeRuleStart.payload, removeRuleStart.activity);
 
-                Assert.True(this.events.TryDequeue(out var removeRuleStart));
-                AssertRemoveRuleStart(entityName, removeRuleStart.eventName, removeRuleStart.payload, removeRuleStart.activity);
+                        Assert.True(eventQueue.TryDequeue(out var removeRuleStop));
+                        AssertRemoveRuleStop(entityName, removeRuleStop.eventName, removeRuleStop.payload, removeRuleStop.activity, removeRuleStart.activity);
 
-                Assert.True(this.events.TryDequeue(out var removeRuleStop));
-                AssertRemoveRuleStop(entityName, removeRuleStop.eventName, removeRuleStop.payload, removeRuleStop.activity, removeRuleStart.activity);
-
-                Assert.True(this.events.IsEmpty);
+                        Assert.True(eventQueue.IsEmpty, "There were events present when none were expected");
+                    }
+                }
+                finally
+                {
+                    await subscriptionClient.CloseAsync();
+                }
             });
-        }
-
-        [Fact]
-        [LiveTest]
-        [DisplayTestMethodName]
-        async Task EventsAreNotFiredWhenDiagnosticsIsDisabled()
-        {
-            await ServiceBusScope.UsingTopicAsync(partitioned: false, sessionEnabled: false, async (topicName, subscriptionName) =>
-            {
-                this.subscriptionClient = new SubscriptionClient(
-                    TestUtility.NamespaceConnectionString,
-                    topicName,
-                    subscriptionName,
-                    ReceiveMode.ReceiveAndDelete);
-
-                this.listener.Disable();
-
-                var ruleName = Guid.NewGuid().ToString();
-                await this.subscriptionClient.AddRuleAsync(ruleName, new TrueFilter());
-                await this.subscriptionClient.GetRulesAsync();
-                await this.subscriptionClient.RemoveRuleAsync(ruleName);
-
-                Assert.True(this.events.IsEmpty);
-            });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            if (disposing)
-            {
-                this.subscriptionClient?.CloseAsync().Wait(TimeSpan.FromSeconds(maxWaitSec));
-            }
-
-            this.disposed = true;
-
-            base.Dispose(disposing);
         }
 
         protected void AssertAddRuleStart(string entityName, string eventName, object payload, Activity activity)
@@ -131,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertGetRulesStop(string entityName, string eventName, object payload, Activity activity, Activity getRulesActivity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.GetRules.Stop", eventName);
-            
+
             AssertCommonStopPayloadProperties(entityName, payload);
             GetPropertyValueFromAnonymousTypeInstance<IEnumerable<RuleDescription>>(payload, "Rules");
 

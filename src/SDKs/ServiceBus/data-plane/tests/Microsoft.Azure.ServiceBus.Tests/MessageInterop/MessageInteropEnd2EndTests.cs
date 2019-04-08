@@ -24,7 +24,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
         [MemberData(nameof(TestEnd2EndEntityPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task RunEnd2EndSerializerTests(TransportType transportType, string sbConnectionString)
+        public async Task RunEnd2EndSerializerTests(TransportType transportType, string sbConnectionString)
         {
             await ServiceBusScope.WithQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {

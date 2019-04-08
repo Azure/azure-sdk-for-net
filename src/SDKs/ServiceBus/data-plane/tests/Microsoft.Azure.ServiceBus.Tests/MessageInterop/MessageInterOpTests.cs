@@ -5,23 +5,28 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
 {
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Runtime.Serialization;
-    using Xunit;
     using InteropExtensions;
+    using Xunit;
 
     public class MessageInteropTests
     {
-        public static IEnumerable<object[]> TestSerializerPermutations => new object[][]
+        private static IDictionary<string, XmlObjectSerializer> SerializerTestCases = new XmlObjectSerializer[]
         {
-            new object[] { new DataContractBinarySerializer(typeof(TestBook)) },
-            new object[] { new DataContractSerializer(typeof(TestBook)) }
-        };
+           new DataContractBinarySerializer(typeof(TestBook)),
+           new DataContractSerializer(typeof(TestBook))
+
+        }.ToDictionary(item => item.ToString(), item => item);
+
+        public static IEnumerable<object[]> SerializerTestCaseNames => SerializerTestCases.Select(testCase => new[] { testCase.Key });
 
         [Theory]
-        [MemberData(nameof(TestSerializerPermutations))]
+        [MemberData(nameof(SerializerTestCaseNames))]
         [DisplayTestMethodName]
-        void RunSerializerTests(XmlObjectSerializer serializer)
+        public void RunSerializerTests(string testCaseName)
         {
+            var serializer = SerializerTestCases[testCaseName];
             var book = new TestBook("contoso", 1, 5);
             var message = GetBrokeredMessage(serializer, book);
 
@@ -29,7 +34,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
             Assert.Equal(book, returned);
         }
 
-        Message GetBrokeredMessage(XmlObjectSerializer serializer, TestBook book)
+        private Message GetBrokeredMessage(XmlObjectSerializer serializer, TestBook book)
         {
             byte[] payload = null;
             using (var memoryStream = new MemoryStream(10))

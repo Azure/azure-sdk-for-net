@@ -16,7 +16,14 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     /// </summary>
     public static class BlueprintTargetScope
     {
+        /// <summary>
+        /// The blueprint targets a subscription during blueprint assignment.
+        /// </summary>
         public const string Subscription = "subscription";
+        /// <summary>
+        /// The blueprint targets a management group during blueprint
+        /// assignment. This is reserved for future use.
+        /// </summary>
         public const string ManagementGroup = "managementGroup";
     }
 }

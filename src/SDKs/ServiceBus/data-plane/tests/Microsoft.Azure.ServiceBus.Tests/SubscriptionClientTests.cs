@@ -295,22 +295,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     Assert.NotNull(correlationFilter.Properties);
                     Assert.Equal("value1", correlationFilter.Properties["key1"]);
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    throw;
-                }
                 finally
                 {
-                    try
-                    {
-                        await subscriptionClient.RemoveRuleAsync(sqlRuleName);
-                        await subscriptionClient.RemoveRuleAsync(correlationRuleName);
-                    }
-                    catch (Exception)
-                    {
-                        // Ignore the exception as we are just trying to clean up the rules that we MIGHT have added.
-                    }
+                    // Attempt to cleanup rules that may or may not exist; ignore any exceptions, as they're expected.
+                    var _ = Task.WhenAll(
+                        subscriptionClient.RemoveRuleAsync(sqlRuleName),
+                        subscriptionClient.RemoveRuleAsync(correlationRuleName)).ConfigureAwait(false);
+
                     await subscriptionClient.CloseAsync();
                 }
             });

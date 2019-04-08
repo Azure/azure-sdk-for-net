@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Microsoft.Azure.Template
+namespace Azure.Runtime
 {
     public class Class1
     {

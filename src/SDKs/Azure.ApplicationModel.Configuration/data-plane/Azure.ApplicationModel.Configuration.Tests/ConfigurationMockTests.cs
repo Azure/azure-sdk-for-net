@@ -2,18 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using NUnit.Framework;
-using System;
-using System.Net;
+using Azure.Base.Http;
+using Azure.Base.Http.Pipeline;
+using Azure.Base.Testing;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Testing;
-using Azure.Base;
-using Azure.Base.Http;
-using System.Buffers;
-using Azure.Base.Http.Pipeline;
-using Azure.ApplicationModel.Configuration.Test;
-using System.Collections.Generic;
+using NUnit.Framework;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
@@ -31,228 +29,333 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         };
 
-        private static (ConfigurationClient service, TestPool<byte> pool) CreateTestService(MockHttpClientTransport transport)
+        private static ConfigurationClient CreateTestService(HttpPipelineTransport transport)
         {
-            HttpPipelineOptions options = ConfigurationClient.CreateDefaultPipelineOptions();
-            var testPool = new TestPool<byte>();
-            options.AddService(testPool, typeof(ArrayPool<byte>));
-
+            var options = new ConfigurationClientOptions();
             options.Transport = transport;
-
-            var service = new ConfigurationClient(connectionString, options);
-
-            return (service, testPool);
-        }
-
-        private static bool TagsEqual(IDictionary<string, string> expected, IDictionary<string, string> actual)
-        {
-            if (expected == null && actual == null) return true;
-            if (expected?.Count != actual?.Count) return false;
-            foreach (var pair in expected)
-            {
-                if (!actual.TryGetValue(pair.Key, out string value)) return false;
-                if (!string.Equals(value, pair.Value, StringComparison.Ordinal)) return false;
-            }
-            return true;
+            return new ConfigurationClient(connectionString, options);
         }
 
         [Test]
         public async Task Get()
         {
-            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             ConfigurationSetting setting = await service.GetAsync(s_testSetting.Key);
 
+            MockRequest request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(HttpPipelineMethod.Get, request.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/test_key", request.Uri.ToString());
             Assert.AreEqual(s_testSetting, setting);
-            Assert.AreEqual(0, pool.CurrentlyRented);
         }
+
 
         [Test]
         public async Task GetWithLabel()
         {
-            var transport = new GetMockTransport(s_testSetting.Key, s_testSetting.Label, s_testSetting);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             ConfigurationSetting setting = await service.GetAsync(s_testSetting.Key, s_testSetting.Label);
+            var request = mockTransport.SingleRequest;
 
+            AssertRequestCommon(request);
+            Assert.AreEqual(HttpPipelineMethod.Get, request.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/test_key?label=test_label", request.Uri.ToString());
             Assert.AreEqual(s_testSetting, setting);
-            Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
         [Test]
         public void GetNotFound()
         {
-            var transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.NotFound);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.GetAsync(key: s_testSetting.Key);
             });
-            Assert.AreEqual(404, exception.Status);
 
-            Assert.AreEqual(0, pool.CurrentlyRented);
+            Assert.AreEqual(404, exception.Status);
         }
 
         [Test]
         public async Task Add()
         {
-            var transport = new AddMockTransport(s_testSetting);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
 
-            ConfigurationSetting setting = await service.AddAsync(setting: s_testSetting);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
+            ConfigurationSetting setting = await service.AddAsync(s_testSetting);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/test_key?label=test_label", request.Uri.ToString());
+            Assert.True(request.TryGetHeader("If-None-Match", out var ifNoneMatch));
+            Assert.AreEqual("*", ifNoneMatch);
+            AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
-            Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
         [Test]
         public async Task Set()
         {
-            var transport = new SetMockTransport(s_testSetting);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             ConfigurationSetting setting = await service.SetAsync(s_testSetting);
+            var request = mockTransport.SingleRequest;
 
+            AssertRequestCommon(request);
+            Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/test_key?label=test_label", request.Uri.ToString());
+            AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
-            Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
         [Test]
         public async Task Update()
         {
-            var transport = new UpdateMockTransport(s_testSetting);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             ConfigurationSetting setting = await service.UpdateAsync(s_testSetting, CancellationToken.None);
+            var request = mockTransport.SingleRequest;
 
+            AssertRequestCommon(request);
+            Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/test_key?label=test_label", request.Uri.ToString());
+            AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
-            Assert.AreEqual(0, pool.CurrentlyRented);
+            Assert.True(request.TryGetHeader("If-Match", out var ifMatch));
+            Assert.AreEqual("*", ifMatch);
         }
 
         [Test]
         public async Task Delete()
         {
-            var transport = new DeleteMockTransport(s_testSetting.Key, default, s_testSetting);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             await service.DeleteAsync(s_testSetting.Key);
-            Assert.AreEqual(0, pool.CurrentlyRented);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(HttpPipelineMethod.Delete, request.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/test_key", request.Uri.ToString());
         }
 
         [Test]
-        public async Task DeletewithLabel()
+        public async Task DeleteWithLabel()
         {
-            var transport = new DeleteMockTransport(s_testSetting.Key, s_testSetting.Label, s_testSetting);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
+
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
-            Assert.AreEqual(0, pool.CurrentlyRented);
+            var request = mockTransport.SingleRequest;
+
+            AssertRequestCommon(request);
+            Assert.AreEqual(HttpPipelineMethod.Delete, request.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/test_key?label=test_label", request.Uri.ToString());
         }
 
         [Test]
         public void DeleteNotFound()
         {
-            var transport = new DeleteMockTransport(s_testSetting.Key, default, HttpStatusCode.NotFound);
-            var (service, pool) = CreateTestService(transport);
+            var response = new MockResponse(404);
+            var mockTransport = new MockTransport(response);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
                 await service.DeleteAsync(s_testSetting.Key);
             });
+
             Assert.AreEqual(404, exception.Status);
-
-            Assert.AreEqual(0, pool.CurrentlyRented);
-        }
-
-        [Test]
-        public async Task Lock()
-        {
-            var (service, pool) = CreateTestService(new LockingMockTransport(s_testSetting, lockOtherwiseUnlock: true));
-
-            ConfigurationSetting setting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label);
-
-            Assert.True(setting.Locked);
-            Assert.AreEqual(0, pool.CurrentlyRented);
-        }
-
-        [Test]
-        public async Task Unlock()
-        {
-            var (service, pool) = CreateTestService(new LockingMockTransport(s_testSetting, lockOtherwiseUnlock: false));
-
-            ConfigurationSetting setting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label);
-
-            Assert.False(setting.Locked);
-            Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
         [Test]
         public async Task GetBatch()
         {
-            var transport = new GetBatchMockTransport(5);
-            transport.Batches.Add((0, 4));
-            transport.Batches.Add((4, 1));
+            var response1 = new MockResponse(200);
+            response1.SetContent(SerializationHelpers.Serialize(new []
+            {
+                CreateSetting(0),
+                CreateSetting(1),
+            }, SerializeBatch));
+            response1.AddHeader(new HttpHeader("Link", $"</kv?after=5>;rel=\"next\""));
 
-            var (service, pool) = CreateTestService(transport);
+            var response2 = new MockResponse(200);
+            response2.SetContent(SerializationHelpers.Serialize(new []
+            {
+                CreateSetting(2),
+                CreateSetting(3),
+                CreateSetting(4),
+            }, SerializeBatch));
+
+            var mockTransport = new MockTransport(response1, response2);
+            ConfigurationClient service = CreateTestService(mockTransport);
 
             var query = new SettingSelector();
             int keyIndex = 0;
             while (true)
             {
-                using (var response = await service.GetBatchAsync(query, CancellationToken.None))
+                using (Response<SettingBatch> response = await service.GetBatchAsync(query, CancellationToken.None))
                 {
                     SettingBatch batch = response.Value;
                     for (int i = 0; i < batch.Count; i++)
                     {
                         ConfigurationSetting value = batch[i];
-                        Assert.AreEqual("key" + keyIndex.ToString(), value.Key);
+                        Assert.AreEqual("key" + keyIndex, value.Key);
                         keyIndex++;
                     }
+
                     var nextBatch = batch.NextBatch;
 
-                    if (nextBatch == null) break;
+                    if (nextBatch == null)
+                        break;
 
                     query = nextBatch;
                 }
             }
 
-            Assert.AreEqual(0, pool.CurrentlyRented);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
+
+            MockRequest request1 = mockTransport.Requests[0];
+            Assert.AreEqual(HttpPipelineMethod.Get, request1.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/?key=*&label=*", request1.Uri.ToString());
+            AssertRequestCommon(request1);
+
+            MockRequest request2 = mockTransport.Requests[1];
+            Assert.AreEqual(HttpPipelineMethod.Get, request2.Method);
+            Assert.AreEqual("https://contoso.azconfig.io/kv/?key=*&label=*&after=5", request2.Uri.ToString());
+            AssertRequestCommon(request1);
         }
 
         [Test]
         public async Task ConfiguringTheClient()
         {
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
-            options.ApplicationId = "test_application";
-            options.AddService(ArrayPool<byte>.Create(1024 * 1024 * 4, maxArraysPerBucket: 4), typeof(ArrayPool<byte>));
-            options.Transport = new GetMockTransport(s_testSetting.Key, default, s_testSetting, HttpStatusCode.RequestTimeout, HttpStatusCode.OK);
-            options.RetryPolicy = RetryPolicy.CreateFixed(2, TimeSpan.FromMilliseconds(100), 408 /* RequestTimeout */);
+            var response = new MockResponse(200);
+            response.SetContent(SerializationHelpers.Serialize(s_testSetting, SerializeSetting));
 
-            var testPolicy = new TestPolicy();
-            options.AddPerRetryPolicy(testPolicy);
+            var mockTransport = new MockTransport(new MockResponse(503), response);
+
+            var options = new ConfigurationClientOptions();
+            options.ApplicationId = "test_application";
+            options.Transport = mockTransport;
 
             var client = new ConfigurationClient(connectionString, options);
 
             ConfigurationSetting setting = await client.GetAsync(s_testSetting.Key);
             Assert.AreEqual(s_testSetting, setting);
-            Assert.AreEqual(2, testPolicy.Retries);
+            Assert.AreEqual(2, mockTransport.Requests.Count);
         }
 
-        // TODO (pri 2): this should check the UA header, but this in turn requires the ability to read headers.
-        // TODO (pri 2): this should try to retrieve the service, but currently services are not passed to the pipeline.
-        class TestPolicy : HttpPipelinePolicy
+        private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
-            int _retries = 0;
-
-            public int Retries => _retries;
-
-            public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            using (var stream = new MemoryStream())
             {
-                _retries++;
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                request.Content.WriteTo(stream, CancellationToken.None).GetAwaiter().GetResult();
+                if (compareAsString)
+                {
+                    Assert.AreEqual(Encoding.UTF8.GetString(expected), Encoding.UTF8.GetString(stream.ToArray()));
+                }
+                else
+                {
+                    CollectionAssert.AreEqual(expected, stream.ToArray());
+                }
             }
+        }
+
+        private void AssertRequestCommon(MockRequest request)
+        {
+            var expected = HttpHeader.Common.CreateUserAgent("config", "1.0.0.0").Value;
+            Assert.True(request.TryGetHeader("User-Agent", out var value));
+            StringAssert.StartsWith(expected, value);
+        }
+
+        private static ConfigurationSetting CreateSetting(int i)
+        {
+            return new ConfigurationSetting($"key{i}", "val") {  Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
+        }
+
+        private void SerializeRequestSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
+        {
+            json.WriteStartObject();
+            json.WriteString("value", setting.Value);
+            json.WriteString("content_type", setting.ContentType);
+            if (setting.Tags != null)
+            {
+                json.WriteStartObject("tags");
+                foreach (var tag in setting.Tags)
+                {
+                    json.WriteString(tag.Key, tag.Value);
+                }
+                json.WriteEndObject();
+            }
+            if (setting.ETag != default) json.WriteString("etag", setting.ETag.ToString());
+            if (setting.LastModified.HasValue) json.WriteString("last_modified", setting.LastModified.Value.ToString());
+            if (setting.Locked.HasValue) json.WriteBoolean("locked", setting.Locked.Value);
+            json.WriteEndObject();
+        }
+
+        private void SerializeSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
+        {
+            json.WriteStartObject();
+            json.WriteString("key", setting.Key);
+            json.WriteString("label", setting.Label);
+            json.WriteString("value", setting.Value);
+            json.WriteString("content_type", setting.ContentType);
+            if (setting.Tags != null)
+            {
+                json.WriteStartObject("tags");
+                foreach (var tag in setting.Tags)
+                {
+                    json.WriteString(tag.Key, tag.Value);
+                }
+                json.WriteEndObject();
+            }
+            if (setting.ETag != default) json.WriteString("etag", setting.ETag.ToString());
+            if (setting.LastModified.HasValue) json.WriteString("last_modified", setting.LastModified.Value.ToString());
+            if (setting.Locked.HasValue) json.WriteBoolean("locked", setting.Locked.Value);
+            json.WriteEndObject();
+        }
+
+        private void SerializeBatch(ref Utf8JsonWriter json, ConfigurationSetting[] settings)
+        {
+            json.WriteStartObject();
+            json.WriteStartArray("items");
+            foreach (var item in settings)
+            {
+                SerializeSetting(ref json, item);
+            }
+            json.WriteEndArray();
+            json.WriteEndObject();
         }
     }
 }

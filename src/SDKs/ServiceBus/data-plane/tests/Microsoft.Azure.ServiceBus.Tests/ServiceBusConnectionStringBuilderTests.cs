@@ -12,7 +12,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     public class ServiceBusConnectionStringBuilderTests
     {
         [Fact]
-        void ConnectionStringBuilderShouldTakeCareOfWhitespace()
+        public void ConnectionStringBuilderShouldTakeCareOfWhitespace()
         {
             var csBuilder = new ServiceBusConnectionStringBuilder
             {
@@ -34,10 +34,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 new object[] { "ns5.servicebus.windows.net/", "amqps://ns5.servicebus.windows.net" }
             };
 
-
         [Theory]
         [MemberData(nameof(TestData_ConnectionStringBuilderEndpointShouldFormatUri))]
-        void ConnectionStringBuilderEndpointShouldFormatUri(string endpoint, string expectedFormattedEndpoint)
+        public void ConnectionStringBuilderEndpointShouldFormatUri(string endpoint, string expectedFormattedEndpoint)
         {
             var csBuilder = new ServiceBusConnectionStringBuilder
             {
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldTakeCareOfSlash()
+        public void ConnectionStringBuilderShouldTakeCareOfSlash()
         {
             var csBuilder = new ServiceBusConnectionStringBuilder
             {
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldTrimTrailingSemicolon()
+        public void ConnectionStringBuilderShouldTrimTrailingSemicolon()
         {
             var csBuilder = new ServiceBusConnectionStringBuilder
             {
@@ -78,7 +77,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldThrowForInvalidEndpoint()
+        public void ConnectionStringBuilderShouldThrowForInvalidEndpoint()
         {
             var csBuilder = new ServiceBusConnectionStringBuilder();
             Assert.Throws<ArgumentException>(() => csBuilder.Endpoint = "ns1");
@@ -86,7 +85,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldNotFailWhileParsingUnknownProperties()
+        public void ConnectionStringBuilderShouldNotFailWhileParsingUnknownProperties()
         {
             var connectionString = "Endpoint=amqps://hello.servicebus.windows.net;SecretMessage=h=llo;EntityPath=myQ;";
             var csBuilder = new ServiceBusConnectionStringBuilder(connectionString);
@@ -98,7 +97,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldOutputTransportTypeIfWebSocket()
+        public void ConnectionStringBuilderShouldOutputTransportTypeIfWebSocket()
         {
             var csBuilder = new ServiceBusConnectionStringBuilder
             {
@@ -113,21 +112,21 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldParseTransportTypeIfWebSocket()
+        public void ConnectionStringBuilderShouldParseTransportTypeIfWebSocket()
         {
             var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;TransportType=AmqpWebSockets");
             Assert.Equal(TransportType.AmqpWebSockets, csBuilder.TransportType);
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldDefaultToAmqp()
+        public void ConnectionStringBuilderShouldDefaultToAmqp()
         {
             var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key");
             Assert.Equal(TransportType.Amqp, csBuilder.TransportType);
         }
 
         [Fact]
-        void ConnectionStringBuilderShouldParseToken()
+        public void ConnectionStringBuilderShouldParseToken()
         {
             var token = "SharedAccessSignature sr=https%3a%2f%2fmynamespace.servicebus.windows.net%2fvendor-&sig=somesignature&se=64953734126&skn=PolicyName";
             var csBuilder = new ServiceBusConnectionStringBuilder("SharedAccessSignature=" + token+";Endpoint=sb://contoso.servicebus.windows.net");
