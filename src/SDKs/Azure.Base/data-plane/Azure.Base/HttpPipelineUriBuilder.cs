@@ -189,11 +189,11 @@ namespace Azure
             // TODO: Escaping can be done in-place
             if (!HasQuery)
             {
-                stringBuilder.Append(Uri.EscapeDataString(_pathAndQuery.ToString()));
+                stringBuilder.Append(Uri.EscapeUriString(_pathAndQuery.ToString()));
             }
             else
             {
-                stringBuilder.Append(Uri.EscapeDataString(_pathAndQuery.ToString(0, _queryIndex)));
+                stringBuilder.Append(Uri.EscapeUriString(_pathAndQuery.ToString(0, _queryIndex)));
                 stringBuilder.Append(_pathAndQuery.ToString(_queryIndex, _pathAndQuery.Length - _queryIndex));
             }
 

@@ -42,7 +42,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var hmac = new HMACSHA256(_secret))
             {
-                var uri = message.Request.UriBuilder;
+                var uri = message.Request.UriBuilder.Uri;
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 

@@ -84,7 +84,7 @@ namespace Azure.Base.Tests
         [TestCase("\u1234", "%E1%88%B4")]
         [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
         [TestCase(" ", "%20")]
-        [TestCase("%#?&", "%25%23%3F%26")]
+        [TestCase("%#?&", "%25#?&")]
         public void PathIsEscaped(string path, string expectedPath)
         {
             var uriBuilder = new HttpPipelineUriBuilder();
