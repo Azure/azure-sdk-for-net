@@ -162,6 +162,13 @@ Regarding the test project, one thing that's important is to name the test proje
   - This is for improving CI performance so to find exactly one copy of your test assembly.
   - Also, due to test dependencies, the test project should build both .NET 4.5.2 and NETStandard 1.4. For example, check out "src\SDKs\Resource\Resource.tests"
 
+### Client Library Tested OSs and .NET Versions
+
+|                        | Linux (Ubuntu 16.04) | MacOS 10.13 | Windows Server 2016 |
+|------------------------|----------------------|-------------|---------------------|
+| **.NET Core 2.1**  |  x                   |      x      |          x          |
+
+
 ### Issues with Generated Code
 
 Much of the SDK code is generated from metadata specs about the REST APIs. Do not submit PRs that modify generated code. Instead, 
