@@ -26,7 +26,7 @@ namespace Azure.Base.Tests
         {
             _listener.EnableEvents(HttpPipelineEventSource.Singleton, EventLevel.Verbose);
         }
-
+#if WindowsOS
         [Test]
         public void MatchesNameAndGuid()
         {
@@ -108,5 +108,6 @@ namespace Azure.Base.Tests
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
         }
+#endif
     }
 }

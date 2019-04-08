@@ -257,6 +257,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             AssertRequestCommon(request1);
         }
 
+#if WindowsOS
         [Test]
         public async Task ConfiguringTheClient()
         {
@@ -275,6 +276,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(2, mockTransport.Requests.Count);
         }
+#endif
 
         private void AssertContent(byte[] expected, MockRequest request, bool compareAsString = true)
         {
