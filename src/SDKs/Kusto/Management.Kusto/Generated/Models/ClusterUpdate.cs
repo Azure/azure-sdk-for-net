@@ -48,13 +48,15 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Deleted', 'Stopping', 'Stopped', 'Starting', 'Updating'</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
-        /// 'Deleting', 'Succeeded', 'Failed'</param>
+        /// 'Deleting', 'Succeeded', 'Failed', 'Moving'</param>
         /// <param name="uri">The cluster URI.</param>
         /// <param name="dataIngestionUri">The cluster data ingestion
         /// URI.</param>
         /// <param name="trustedExternalTenants">The cluster's external
         /// tenants.</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>))
+        /// <param name="intelligentAutoscale">Intelligent auto scale
+        /// definition.</param>
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>), IntelligentAutoscale intelligentAutoscale = default(IntelligentAutoscale))
             : base(id, name, type)
         {
             Tags = tags;
@@ -65,6 +67,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
             Uri = uri;
             DataIngestionUri = dataIngestionUri;
             TrustedExternalTenants = trustedExternalTenants;
+            IntelligentAutoscale = intelligentAutoscale;
             CustomInit();
         }
 
@@ -101,7 +104,8 @@ namespace Microsoft.Azure.Management.Kusto.Models
 
         /// <summary>
         /// Gets the provisioned state of the resource. Possible values
-        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed'
+        /// include: 'Running', 'Creating', 'Deleting', 'Succeeded', 'Failed',
+        /// 'Moving'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
@@ -125,6 +129,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public IList<TrustedExternalTenant> TrustedExternalTenants { get; set; }
 
         /// <summary>
+        /// Gets or sets intelligent auto scale definition.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.intelligentAutoscale")]
+        public IntelligentAutoscale IntelligentAutoscale { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -135,6 +145,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (IntelligentAutoscale != null)
+            {
+                IntelligentAutoscale.Validate();
             }
         }
     }
