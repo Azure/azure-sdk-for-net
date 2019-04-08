@@ -20,7 +20,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         public async Task ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new ConfigurationClientOptions();
 
             // specify custon HttpClient
             options.Transport = new HttpClientTransport(s_client);
@@ -39,10 +39,10 @@ namespace Azure.ApplicationModel.Configuration.Samples
             );
 
             // add a policy (custom behavior) that executes once per client call
-            options.AddPerCallPolicy(new AddHeaderPolicy());
+            options.PerCallPolicies.Add(new AddHeaderPolicy());
 
             // add a policy that executes once per retry
-            options.AddPerRetryPolicy(new CustomLogPolicy());
+            options.PerRetryPolicies.Add(new CustomLogPolicy());
 
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
             // pass the policy options to the client

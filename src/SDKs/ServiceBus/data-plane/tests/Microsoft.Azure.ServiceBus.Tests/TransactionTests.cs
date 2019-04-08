@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 var sender = new MessageSender(ConnectionString, queueName);
                 var receiver = new MessageReceiver(ConnectionString, queueName);
-            
+
                 try
                 {
                     string body = Guid.NewGuid().ToString("N");
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
                     Assert.NotNull(receivedMessage);
                     Assert.Equal(body, receivedMessage.Body.GetString());
-                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken); 
+                    await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
                 }
                 finally
                 {
@@ -83,7 +83,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await sender.SendAsync(message).ConfigureAwait(false);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -166,7 +165,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -213,7 +211,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -269,7 +266,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     using (var ts = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                     {
                         await receiver.CompleteAsync(deferredMessage.SystemProperties.LockToken);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -330,7 +326,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     }
 
                     transaction.Rollback();
-                
+
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
                     // Operating on the same message should not be done.
                     await Task.Delay(TimeSpan.FromSeconds(2));
@@ -454,7 +450,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     {
                         await receiver.CompleteAsync(receivedMessage.SystemProperties.LockToken);
                         await sender.SendAsync(message2).ConfigureAwait(false);
-                        ts.Dispose();
                     }
 
                     // Adding delay since transaction Commit/Rollback is an asynchronous operation.
@@ -496,7 +491,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             var destination2Receiver = default(MessageReceiver);
 
             try
-            {     
+            {
                 intermediateQueue = await ServiceBusScope.CreateQueueAsync(partitioned: true, sessionEnabled: false);
                 destination1 = await ServiceBusScope.CreateTopicAsync(partitioned: true, sessionEnabled: false);
                 destination2 = await ServiceBusScope.CreateQueueAsync(partitioned: false, sessionEnabled: false);
@@ -514,7 +509,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 destination2ViaSender = new MessageSender(connection, destination2Name, intermediateQueueName);
                 destination1Receiver = new MessageReceiver(connection, destination1ReceiverName);
                 destination2Receiver = new MessageReceiver(connection, destination2ReceiverName);
-                            
+
                 var body = Guid.NewGuid().ToString("N");
                 var message1 = new Message(body.GetBytes()) { MessageId = "1", PartitionKey = "pk1" };
                 var message2 = new Message(body.GetBytes()) { MessageId = "2", PartitionKey = "pk2", ViaPartitionKey = "pk1" };
@@ -567,11 +562,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
             finally
             {
-                // The cleanup methods will not throw and are safe to call outside of a try/catch.  They 
+                // The cleanup methods will not throw and are safe to call outside of a try/catch.  They
                 // also have no dependencies on execution order, so allowing them to run in parallel is fine.
                 await Task.WhenAll(
                     SafeCloseAllAsync(intermediateSender, intermediateReceiver, destination1Sender, destination1ViaSender, destination2ViaSender, destination1Receiver, destination2Receiver),
-                    intermediateQueue?.CleanupAsync(), 
+                    intermediateQueue?.CleanupAsync(),
                     destination1?.CleanupAsync(),
                     destination2?.CleanupAsync());
             }
@@ -586,6 +581,5 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             return Task.WhenAll(clientEntities.Select(entity => closeEntity(entity)));
         }
-
     }
 }

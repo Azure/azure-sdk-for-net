@@ -4,6 +4,8 @@
 using Azure.Base.Http;
 using Azure.Base.Http.Pipeline;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Azure.Base.Tests;
 using Azure.Base.Tests.Testing;
@@ -15,6 +17,8 @@ namespace Azure.Base.Testing
         private readonly Func<MockRequest, MockResponse> _responseFactory;
 
         public AsyncGate<MockRequest, MockResponse> RequestGate { get; }
+
+        public List<MockRequest> Requests { get; } = new List<MockRequest>();
 
         public MockTransport()
         {
@@ -40,6 +44,8 @@ namespace Azure.Base.Testing
             var request = message.Request as MockRequest;
             if (request == null) throw new InvalidOperationException("the request is not compatible with the transport");
 
+            Requests.Add(request);
+
             if (RequestGate != null)
             {
                 message.Response = await RequestGate.WaitForRelease(request);
@@ -49,5 +55,7 @@ namespace Azure.Base.Testing
                 message.Response = _responseFactory(request);
             }
         }
+
+        public MockRequest SingleRequest => Requests.Single();
     }
 }

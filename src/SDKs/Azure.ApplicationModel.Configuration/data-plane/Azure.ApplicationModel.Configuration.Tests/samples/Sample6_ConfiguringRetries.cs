@@ -17,7 +17,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         public async Task ConfiguringRetries()
         {
             // specify retry policy options
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new ConfigurationClientOptions();
             options.RetryPolicy = RetryPolicy.CreateFixed(
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),

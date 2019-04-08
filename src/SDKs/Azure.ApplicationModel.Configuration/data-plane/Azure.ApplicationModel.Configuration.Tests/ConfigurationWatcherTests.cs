@@ -18,10 +18,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task Helpers()
         {
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
-            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
-
-            var client = new ConfigurationClient(connectionString);
+            ConfigurationClient client = TestEnvironment.GetClient();
             var source = new CancellationTokenSource();
 
             const int numberOfSettings = 2;

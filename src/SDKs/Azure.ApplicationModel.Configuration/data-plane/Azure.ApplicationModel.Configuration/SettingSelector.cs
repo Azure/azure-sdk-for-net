@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,22 +9,6 @@ using System.Linq;
 
 namespace Azure.ApplicationModel.Configuration
 {
-    [Flags]
-    public enum SettingFields : uint
-    {
-        None = 0x0000,
-        Key = 0x0001,
-        Label = 0x0002,
-        Value = 0x0004,
-        ContentType = 0x0008,
-        ETag = 0x0010,
-        LastModified = 0x0020,
-        Locked = 0x0040,
-        Tags = 0x0080,
-
-        All = uint.MaxValue
-    }
-
     public class SettingSelector
     {
         public static readonly string Any = "*";

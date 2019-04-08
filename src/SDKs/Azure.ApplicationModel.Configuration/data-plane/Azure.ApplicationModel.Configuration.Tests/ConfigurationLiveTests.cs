@@ -6,7 +6,6 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -28,13 +27,6 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 { "tag2", "value2" }
             }
         };
-
-        private static string GetEnvironment()
-        {
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
-            Assert.NotNull(connectionString, "Set AZ_CONFIG_CONNECTION environment variable to the connection string");
-            return connectionString;
-        }
 
         private static bool TagsEqual(IDictionary<string, string> expected, IDictionary<string, string> actual)
         {
@@ -80,8 +72,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSettingNotFound()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             var response = await service.DeleteAsync(s_testSetting.Key);
 
@@ -92,8 +83,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -123,8 +113,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSettingWithLabel()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -154,8 +143,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task DeleteSettingWithETag()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             // Prepare environment
             await service.SetAsync(s_testSetting);
@@ -175,8 +163,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -192,8 +179,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetExistingSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -211,8 +197,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetKeyValue()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
 
@@ -233,8 +218,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task SetKeyValueLabel()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
             string value = "my_value";
@@ -257,8 +241,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetRequestId()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -276,8 +259,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddExistingSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -299,8 +281,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -317,8 +298,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddSettingNoLabel()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             var testSettingNoLabel = s_testSetting.Clone();
             testSettingNoLabel.Label = null;
@@ -338,8 +318,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddKeyValue()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
 
@@ -360,8 +339,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task AddKeyValueLabel()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
             string value = "my_value";
@@ -384,8 +362,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateKeyValue()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
             await service.SetAsync(key, "my_value");
@@ -407,8 +384,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             var testSettingDiff = s_testSetting.Clone();
             testSettingDiff.Label = "test_label_diff";
@@ -435,8 +411,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void UpdateNoExistingSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -448,8 +423,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateSettingIfETag()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             await service.SetAsync(s_testSetting);
             ConfigurationSetting responseGet = await service.GetAsync(s_testSetting.Key, s_testSetting.Label);
@@ -470,8 +444,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task UpdateSettingTags()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             await service.SetAsync(s_testSetting);
             ConfigurationSetting responseGet = await service.GetAsync(s_testSetting.Key, s_testSetting.Label);
@@ -505,8 +478,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetRevisions()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             //Prepare environment
             ConfigurationSetting setting = s_testSetting;
@@ -552,8 +524,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetSetting()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             // Prepare environment
             var testSettingNoLabel = s_testSetting.Clone();
@@ -575,8 +546,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public void GetSettingNotFound()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
             {
@@ -589,8 +559,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetSettingWithLabel()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             // Prepare environment
             var testSettingNoLabel = s_testSetting.Clone();
@@ -615,8 +584,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetWithAcceptDateTime()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -635,8 +603,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingPagination()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             const int expectedEvents = 105;
             var key = await SetMultipleKeys(service, expectedEvents);
@@ -662,8 +629,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingAny()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -689,8 +655,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingKeyLabel()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -712,8 +677,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingOnlyKey()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -734,8 +698,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingOnlyLabel()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -761,8 +724,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         [Test]
         public async Task GetBatchSettingWithFields()
         {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
+            ConfigurationClient service = TestEnvironment.GetClient();
 
             try
             {
@@ -783,208 +745,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             {
                 await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
             }
-        }
-
-        [Test]
-        public async Task LockUnlockSetting()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-
-            try
-            {
-                // Prepare environment
-                await service.SetAsync(s_testSetting);
-
-                // Test Lock
-                ConfigurationSetting responseLockSetting = await service.LockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-
-                //Test update
-                var testSettingUpdate = s_testSetting.Clone();
-                testSettingUpdate.Value = "test_value_update";
-
-                var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-                {
-                    await service.UpdateAsync(testSettingUpdate);
-                });
-                Assert.AreEqual(409, exception.Status);
-
-                // Test Unlock
-                ConfigurationSetting responseUnlockSetting = await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-                await service.UpdateAsync(testSettingUpdate);
-            }
-            finally
-            {
-                await service.DeleteAsync(s_testSetting.Key, s_testSetting.Label);
-            }
-        }
-
-        [Test]
-        public void LockSettingNotFound()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await service.LockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-            });
-
-            Assert.AreEqual(404, exception.Status);
-        }
-
-        [Test]
-        public void UnlockSettingNotFound()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-
-            var exception = Assert.ThrowsAsync<RequestFailedException>(async () =>
-            {
-                await service.UnlockAsync(s_testSetting.Key, s_testSetting.Label, CancellationToken.None);
-            });
-
-            Assert.AreEqual(404, exception.Status);
-        }
-
-        [Test]
-        public void FilterReservedCharacter()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-            var selector = new SettingSelector()
-            {
-                Keys = new List<string>() { "my_key", "key,key" },
-                Labels = new List<string>() { "my_label", "label,label" },
-            };
-
-            var builder = new HttpPipelineUriBuilder();
-            service.BuildBatchQuery(builder, selector);
-
-            Assert.AreEqual(builder.Uri.AbsoluteUri, @"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label");
-
-        }
-
-        [Test]
-        public void FilterContains()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-            var selector = new SettingSelector()
-            {
-                Keys = new List<string>() { "*key*" },
-                Labels = new List<string>() { "*label*" },
-            };
-
-            var builder = new HttpPipelineUriBuilder();
-            service.BuildBatchQuery(builder, selector);
-
-            Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*key*&label=*label*");
-        }
-
-        [Test]
-        public void FilterNullLabel()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-            var selector = new SettingSelector()
-            {
-                Labels = new List<string>() { "" },
-            };
-
-            var builder = new HttpPipelineUriBuilder();
-            service.BuildBatchQuery(builder, selector);
-
-            Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*&label=%00");
-        }
-
-        [Test]
-        public void FilterOnlyKey()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-
-            var key = "my-key";
-            var selector = new SettingSelector(key);
-
-            var builder = new HttpPipelineUriBuilder();
-            service.BuildBatchQuery(builder, selector);
-
-            Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key={key}");
-        }
-
-        [Test]
-        public void FilterOnlyLabel()
-        {
-            string connectionString = GetEnvironment();
-            var service = new ConfigurationClient(connectionString);
-
-            var label = "my-label";
-            var selector = new SettingSelector(null, label);
-
-            var builder = new HttpPipelineUriBuilder();
-            service.BuildBatchQuery(builder, selector);
-
-            Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key=*&label={label}");
-        }
-
-        [Test]
-        public void ConfigurationSettingEquals()
-        {
-            //Case tests
-            var testSettingUpperCase = s_testSetting.Clone();
-            testSettingUpperCase.Key = testSettingUpperCase.Key.ToUpper();
-
-            var testSettingLowerCase = s_testSetting.Clone();
-            testSettingLowerCase.Key = testSettingLowerCase.Key.ToLower();
-            Assert.AreNotEqual(testSettingUpperCase, testSettingLowerCase);
-
-            var testSettingsameCase = s_testSetting.Clone();
-            Assert.AreEqual(testSettingsameCase, s_testSetting);
-
-            //Etag tests
-            var testSettingEtagDiff = testSettingsameCase.Clone();
-            testSettingsameCase.ETag = new ETag(Guid.NewGuid().ToString());
-            testSettingEtagDiff.ETag = new ETag(Guid.NewGuid().ToString());
-            Assert.AreNotEqual(testSettingsameCase, testSettingEtagDiff);
-
-            // Different tags
-            var testSettingDiffTags = s_testSetting.Clone();
-            testSettingDiffTags.Tags.Add("tag3", "test_value3");
-            Assert.AreNotEqual(s_testSetting, testSettingDiffTags);
-        }
-
-        private bool SettingSelectoComparissonr(SettingSelector actual, SettingSelector other)
-        {
-            if (actual != null && other == null) return false;
-            if (!actual.Keys.SequenceEqual(other.Keys)) return false;
-            if (!actual.Labels.SequenceEqual(other.Labels)) return false;
-            if (!actual.Fields.Equals(other.Fields)) return false;
-            if (actual.AsOf != other.AsOf) return false;
-
-            return true;
-        }
-
-        [Test]
-        public void SettingSelectorCloneWithBatchLink()
-        {
-            SettingSelector selector = new SettingSelector()
-            {
-                Keys = new List<string> { "key1", "key2", "key3" },
-                Labels = { "label1" },
-                Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value,
-                AsOf = DateTimeOffset.Now
-            };
-
-            var selectorWithLink = selector.CloneWithBatchLink("someLink");
-
-            Assert.IsTrue(SettingSelectoComparissonr(selector, selectorWithLink));
-
-            selector.Keys.Add("Key4");
-            selector.Labels.Add("Label2");
-            selector.Fields = SettingFields.All;
-
-            Assert.IsFalse(SettingSelectoComparissonr(selector, selectorWithLink));
+            
         }
     }
 

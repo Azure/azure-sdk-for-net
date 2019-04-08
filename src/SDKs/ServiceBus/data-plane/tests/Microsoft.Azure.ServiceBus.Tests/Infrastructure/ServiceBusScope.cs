@@ -5,14 +5,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 {
     using System;
     using System.Runtime.CompilerServices;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.ServiceBus.Management;
     using Polly;
 
     internal static class ServiceBusScope
-    {                         
-        private static readonly Random Rng = new Random();
-        private static readonly ManagementClient ManagementClient = new ManagementClient(TestUtility.NamespaceConnectionString);
+    {   
+        private static int randomSeed = Environment.TickCount;
+
+        private static readonly ThreadLocal<Random> Rng = new ThreadLocal<Random>( () => new Random(Interlocked.Increment(ref randomSeed)), false);
+        private static readonly ManagementClient ManagementClient = new ManagementClient(TestUtility.NamespaceConnectionString);        
 
         /// <summary>
         ///   Creates a temporary Service Bus queue to be used within a given scope and then removed.
@@ -178,7 +181,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 .WaitAndRetryAsync(maxRetryAttempts, attempt => CalculateRetryDelay(attempt, exponentialBackoffSeconds, baseJitterSeconds));
 
         private static TimeSpan CalculateRetryDelay(int attempt, double exponentialBackoffSeconds, double baseJitterSeconds) =>
-            TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (Rng.NextDouble() * baseJitterSeconds));
+            TimeSpan.FromSeconds((Math.Pow(2, attempt) * exponentialBackoffSeconds) + (Rng.Value.NextDouble() * baseJitterSeconds));
 
         private static QueueDescription BuildQueueDescription(string name, bool partitioned, bool sessionEnabled) =>
             new QueueDescription(name)

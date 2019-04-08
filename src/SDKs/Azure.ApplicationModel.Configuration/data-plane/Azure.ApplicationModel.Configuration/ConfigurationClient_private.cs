@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Base.Http;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -19,7 +19,6 @@ namespace Azure.ApplicationModel.Configuration
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";
         const string KvRoute = "/kv/";
-        const string LocksRoute = "/locks/";
         const string RevisionsRoute = "/revisions/";
         const string KeyQueryFilter = "key";
         const string LabelQueryFilter = "label";
@@ -92,17 +91,6 @@ namespace Azure.ApplicationModel.Configuration
 
             if (label != null)
             {
-                builder.AppendQuery(LabelQueryFilter, label);
-            }
-        }
-
-        void BuildUriForLocksRoute(HttpPipelineUriBuilder builder, string key, string label)
-        {
-            builder.Uri = _baseUri;
-            builder.AppendPath(LocksRoute);
-            builder.AppendPath(key);
-
-            if (label != null) {
                 builder.AppendQuery(LabelQueryFilter, label);
             }
         }

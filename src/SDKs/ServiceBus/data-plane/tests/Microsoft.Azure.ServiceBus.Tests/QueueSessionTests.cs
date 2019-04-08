@@ -57,8 +57,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await sessionClient.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await sessionClient.CloseAsync();
                 }
             });
         }
@@ -120,8 +120,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await sessionClient.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await sessionClient.CloseAsync();
                 }
             });
         }
@@ -177,8 +177,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await sessionClient.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await sessionClient.CloseAsync();
                 }
             });
         }
@@ -214,8 +214,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await sessionClient.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await sessionClient.CloseAsync();
                 }
             });
         }
@@ -277,13 +277,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sessionClient.CloseAsync().ConfigureAwait(false);
+                    await sessionClient.CloseAsync();
                     await session?.CloseAsync();
                 }
             });
         }
 
-        async Task AcceptAndCompleteSessionsAsync(SessionClient sessionClient, string sessionId, string messageId)
+        private async Task AcceptAndCompleteSessionsAsync(SessionClient sessionClient, string sessionId, string messageId)
         {
             var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
             if (sessionId != null)
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await sessionReceiver.CloseAsync();
         }
 
-        async Task PeekAndDeleteMessageAsync(SessionClient sessionClient, string sessionId, string messageId)
+        private async Task PeekAndDeleteMessageAsync(SessionClient sessionClient, string sessionId, string messageId)
         {
             var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
             if (sessionId != null)

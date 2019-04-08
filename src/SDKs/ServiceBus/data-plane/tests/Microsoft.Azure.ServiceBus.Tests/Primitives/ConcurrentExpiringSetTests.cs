@@ -9,10 +9,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Primitives
     using Microsoft.Azure.ServiceBus.Primitives;
     using System;
     using Xunit;
-        
+
     public class ConcurrentExpiringSetTests
     {
-        [Fact]        
+        [Fact]
         public void Contains_returns_true_for_valid_entry()
         {
             var set = new ConcurrentExpiringSet<string>();
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Primitives
             Assert.True(set.Contains("testKey"), "The set should return true for a valid entry.");
         }
 
-        [Fact]        
+        [Fact]
         public void Contains_returns_false_for_expired_entry()
         {
             var set = new ConcurrentExpiringSet<string>();

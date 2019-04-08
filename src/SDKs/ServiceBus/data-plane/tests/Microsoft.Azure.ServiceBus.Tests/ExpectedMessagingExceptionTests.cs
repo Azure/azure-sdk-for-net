@@ -13,7 +13,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     {
         [Fact]
         [LiveTest]
-        async Task MessageLockLostExceptionTest()
+        public async Task MessageLockLostExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -44,15 +44,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
 
         [Fact]
         [LiveTest]
-        async Task CompleteOnPeekedMessagesShouldThrowTest()
+        public async Task CompleteOnPeekedMessagesShouldThrowTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -73,15 +73,15 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                 }
                 finally
                 {
-                    await sender.CloseAsync().ConfigureAwait(false);
-                    await receiver.CloseAsync().ConfigureAwait(false);
+                    await sender.CloseAsync();
+                    await receiver.CloseAsync();
                 }
             });
         }
 
         [Fact]
         [LiveTest]
-        async Task SessionLockLostExceptionTest()
+        public async Task SessionLockLostExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [LiveTest]
-        async Task OperationsOnMessageSenderReceiverAfterCloseShouldThrowObjectDisposedExceptionTest()
+        public async Task OperationsOnMessageSenderReceiverAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [LiveTest]
-        async Task OperationsOnMessageSessionAfterCloseShouldThrowObjectDisposedExceptionTest()
+        public async Task OperationsOnMessageSessionAfterCloseShouldThrowObjectDisposedExceptionTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {

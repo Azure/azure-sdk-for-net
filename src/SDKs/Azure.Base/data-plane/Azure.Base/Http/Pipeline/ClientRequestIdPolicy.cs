@@ -3,12 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.Base.Http.Pipeline
 {
-    internal class ClientRequestIdPolicy : HttpPipelinePolicy
+    public class ClientRequestIdPolicy : HttpPipelinePolicy
     {
         private const string ClientRequestIdHeader = "x-ms-client-request-id";
         private const string EchoClientRequestId = "x-ms-return-client-request-id";
@@ -17,7 +15,7 @@ namespace Azure.ApplicationModel.Configuration
 
         public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.Request.AddHeader(ClientRequestIdHeader, Guid.NewGuid().ToString());
+            message.Request.AddHeader(ClientRequestIdHeader, message.Request.RequestId);
             message.Request.AddHeader(EchoClientRequestId, "true");
 
             return ProcessNextAsync(pipeline, message);
