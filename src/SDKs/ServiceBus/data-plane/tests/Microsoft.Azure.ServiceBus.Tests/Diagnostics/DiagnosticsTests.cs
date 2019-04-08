@@ -11,7 +11,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
     using System.Reflection;
     using System.Threading.Tasks;
     using Xunit;
-        
+
     [CollectionDefinition(nameof(DiagnosticsTests), DisableParallelization = true)]
     public abstract class DiagnosticsTests
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                     var targetEntity = this.GetPropertyValueFromAnonymousTypeInstance<string>(kvp.Value, "Entity", true);
 
                     if (String.IsNullOrEmpty(targetEntity) || !String.Equals(targetEntity, entityName, StringComparison.InvariantCultureIgnoreCase))
-                    {   
+                    {
                         TestUtility.Log($"Diagnostics Mismatch: Interested in Entity [{ entityName }], received [{ kvp.Key }] for Target [{ targetEntity }].");
                     }
                 }
@@ -506,12 +506,12 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
             object propertyValue = p.GetValue(obj);
             if (!canValueBeNull)
             {
-                Assert.NotNull(propertyValue); 
+                Assert.NotNull(propertyValue);
             }
 
             if (propertyValue != null)
             {
-                Assert.IsAssignableFrom<T>(propertyValue); 
+                Assert.IsAssignableFrom<T>(propertyValue);
             }
 
             return (T)propertyValue;

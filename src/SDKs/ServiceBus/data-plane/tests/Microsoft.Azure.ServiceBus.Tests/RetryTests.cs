@@ -6,6 +6,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
     using System.Security.Authentication;
     using System.Threading;
     using System.Threading.Tasks;
@@ -13,37 +14,38 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class RetryTests
     {
-        // ExceptionType, CurrentRetryCount, ShouldRetry
-        public static IEnumerable<object[]> ListOfExceptions => new object[][]
+        private static IDictionary<string, ExceptionRetryData> RetryTestCases = new[]
         {
-            // Retry-able exceptions
-            new object[] { new ServiceBusCommunicationException(string.Empty), 0, true },
-            new object[] { new ServerBusyException(string.Empty), 0, true },
-            new object[] { new ServerBusyException(string.Empty), 5, true },
+            new ExceptionRetryData(new ServiceBusCommunicationException(string.Empty), 0, true),
+            new ExceptionRetryData(new ServerBusyException(string.Empty), 0, true),
+            new ExceptionRetryData(new ServerBusyException(string.Empty), 5, true),
 
             // Non retry-able exceptions
-            new object[] { new ServerBusyException(string.Empty), 6, false },
-            new object[] { new TimeoutException(), 0, false },
-            new object[] { new AuthenticationException(), 0, false },
-            new object[] { new ArgumentException(), 0, false },
-            new object[] { new FormatException(), 0, false },
-            new object[] { new InvalidOperationException(string.Empty), 0, false },
-            new object[] { new QuotaExceededException(string.Empty), 0, false },
-            new object[] { new MessagingEntityNotFoundException(string.Empty), 0, false },
-            new object[] { new MessageLockLostException(string.Empty), 0, false },
-            new object[] { new MessagingEntityDisabledException(string.Empty), 0, false },
-            new object[] { new SessionLockLostException(string.Empty), 0, false }
-        };
+            new ExceptionRetryData( new ServerBusyException(string.Empty), 6, false),
+            new ExceptionRetryData( new TimeoutException(), 0, false),
+            new ExceptionRetryData( new AuthenticationException(), 0, false),
+            new ExceptionRetryData( new ArgumentException(), 0, false),
+            new ExceptionRetryData( new FormatException(), 0, false),
+            new ExceptionRetryData( new InvalidOperationException(string.Empty), 0, false),
+            new ExceptionRetryData( new QuotaExceededException(string.Empty), 0, false),
+            new ExceptionRetryData( new MessagingEntityNotFoundException(string.Empty), 0, false),
+            new ExceptionRetryData( new MessageLockLostException(string.Empty), 0, false),
+            new ExceptionRetryData( new MessagingEntityDisabledException(string.Empty), 0, false),
+            new ExceptionRetryData( new SessionLockLostException(string.Empty), 0, false)
+
+        }.ToDictionary(item => item.ToString(), item => item);
+
+        public static IEnumerable<object[]> RetryTestCaseNames => RetryTestCases.Select(testCase => new[] { testCase.Key });
 
         [Theory]
-        [MemberData(nameof(ListOfExceptions))]
-        public void RetryExponentialShouldRetryTest(Exception exception, int currentRetryCount, bool expectedShouldRetry)
+        [MemberData(nameof(RetryTestCaseNames))]
+        public void RetryExponentialShouldRetryTest(string retryTestCaseName)
         {
+            var testCase = RetryTestCases[retryTestCaseName];
             var retry = new RetryExponential(TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(20), 5);
             var remainingTime = Constants.DefaultOperationTimeout;
-            TimeSpan retryInterval;
-            var shouldRetry = retry.ShouldRetry(remainingTime, currentRetryCount, exception, out retryInterval);
-            Assert.True(shouldRetry == expectedShouldRetry);
+            var shouldRetry = retry.ShouldRetry(remainingTime, testCase.RetryCount, testCase.Exception, out var _);
+            Assert.True(shouldRetry == testCase.ShouldRetry);
         }
 
         [Fact]
@@ -188,6 +190,22 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             }
             Assert.True(watch.Elapsed.TotalSeconds > 9);
             Assert.False(policy.IsServerBusy);
+        }
+
+        private sealed class ExceptionRetryData
+        {
+            public readonly Exception Exception;
+            public readonly int RetryCount;
+            public readonly bool ShouldRetry;
+
+            public ExceptionRetryData(Exception exception, int retryCount, bool shouldRetry)
+            {
+                this.Exception = exception;
+                this.RetryCount = retryCount;
+                this.ShouldRetry = shouldRetry;
+            }
+
+            public override string ToString() => $"{ Exception }/{ RetryCount }";
         }
     }
 }

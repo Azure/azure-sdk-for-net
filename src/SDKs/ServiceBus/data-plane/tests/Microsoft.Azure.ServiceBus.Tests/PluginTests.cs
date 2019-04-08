@@ -16,7 +16,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task Registering_plugin_multiple_times_should_throw()
+        public async Task Registering_plugin_multiple_times_should_throw()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -39,11 +39,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task Unregistering_plugin_should_complete_with_plugin_set()
+        public async Task Unregistering_plugin_should_complete_with_plugin_set()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
-                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);                
+                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 try
                 {
                     var firstPlugin = new FirstSendPlugin();
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task Unregistering_plugin_should_complete_without_plugin_set()
+        public async Task Unregistering_plugin_should_complete_without_plugin_set()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task Multiple_plugins_should_run_in_order()
+        public async Task Multiple_plugins_should_run_in_order()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task Multiple_plugins_should_be_able_to_manipulate_message()
+        public async Task Multiple_plugins_should_be_able_to_manipulate_message()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -152,7 +152,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task Plugin_without_ShouldContinueOnException_should_throw()
+        public async Task Plugin_without_ShouldContinueOnException_should_throw()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task Plugin_with_ShouldContinueOnException_should_continue()
+        public async Task Plugin_with_ShouldContinueOnException_should_continue()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -195,9 +195,9 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await messageSender.CloseAsync();
                 }
 
-                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);                
+                var messageReceiver = new MessageReceiver(TestUtility.NamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
                 try
-                {                    
+                {
                     await messageReceiver.ReceiveAsync();
                 }
                 finally
@@ -210,7 +210,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task QueueClientShouldPassPluginsToMessageSession()
+        public async Task QueueClientShouldPassPluginsToMessageSession()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
