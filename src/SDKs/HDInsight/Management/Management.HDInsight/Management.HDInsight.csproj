@@ -11,7 +11,14 @@
 		<PackageTags>Microsoft Azure HDInsight Management;HDInsight;HDInsight Management</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
-        This is a public stable release of the Azure HDInsight SDK.
+This release contains some important changes to allow for more fine-grained role-based access to obtain sensitive credentials. As part of these changes, ACTION MAY BE REQUIRED if you are using one of the affected methods: 
+1) ConfigurationOperationsExtensions.Get will NO LONGER RETURN SENSITIVE PARAMETERS like storage keys (core-site) or HTTP credentials (gateway). 
+- To retrieve all configurations, including sensitive parameters, use ConfigurationOperationsExtensions.List going forward.  Note that users with the 'Reader' role will not be able to use this method to allow for fine-grained control over which users can access cluster secrets. 
+- To retrieve just HTTP gateway credentials, use ClusterOperationsExtensions.GetGatewaySettings. 
+2) ConfigurationsOperationsExtensions.Update is now deprecated and has been replaced by ClusterOperationsExtensions.UpdateGatewaySettings. 
+3) ConfigurationsOperationsExtensions.EnableHttp and DisableHttp are now deprecated. Http is now always enabled, so these methods are no longer needed. 
+
+For more information, please visit https://aka.ms/hdi-config-update
       ]]>
 		</PackageReleaseNotes>
     
