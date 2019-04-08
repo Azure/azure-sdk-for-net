@@ -10,7 +10,6 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
     using Xunit;
 
     [Collection(nameof(DiagnosticsTests))]
-    [CollectionDefinition(nameof(DiagnosticsTests), DisableParallelization = true)]
     public class SubscriptionClientDiagnosticsTests : DiagnosticsTests
     {
         [Fact]
@@ -23,7 +22,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 var subscriptionClient = new SubscriptionClient(TestUtility.NamespaceConnectionString, topicName, subscriptionName, ReceiveMode.ReceiveAndDelete);
                 var eventQueue = this.CreateEventQueue();
                 var entityName = $"{topicName}/Subscriptions/{subscriptionName}";
-                
+
                 try
                 {
                     using (var listener = this.CreateEventListener(entityName, eventQueue))
@@ -96,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
         protected void AssertGetRulesStop(string entityName, string eventName, object payload, Activity activity, Activity getRulesActivity)
         {
             Assert.Equal("Microsoft.Azure.ServiceBus.GetRules.Stop", eventName);
-            
+
             AssertCommonStopPayloadProperties(entityName, payload);
             GetPropertyValueFromAnonymousTypeInstance<IEnumerable<RuleDescription>>(payload, "Rules");
 

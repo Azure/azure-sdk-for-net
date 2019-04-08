@@ -14,8 +14,8 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
     public class AmqpConverterTests
     {
         [Fact]
-        [DisplayTestMethodName]        
-        void Convert_Amqp_message_with_Amqp_value_array_segment_to_SB_message()
+        [DisplayTestMethodName]
+        public void Convert_Amqp_message_with_Amqp_value_array_segment_to_SB_message()
         {
             var messageBody = Encoding.UTF8.GetBytes("message1");
 
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void Convert_Amqp_message_with_Amqp_value_byte_array_to_SB_message()
+        public void Convert_Amqp_message_with_Amqp_value_byte_array_to_SB_message()
         {
             var messageBody = Encoding.UTF8.GetBytes("message1");
 
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void Convert_Amqp_message_with_data_value_array_segment_to_SB_message()
+        public void Convert_Amqp_message_with_data_value_array_segment_to_SB_message()
         {
             var messageBody = Encoding.UTF8.GetBytes("message1");
 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void Convert_Amqp_message_with_data_value_byte_array_to_SB_message()
+        public void Convert_Amqp_message_with_data_value_byte_array_to_SB_message()
         {
             var messageBody = Encoding.UTF8.GetBytes("message1");
 
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void Convert_SB_message_to_Amqp_message_and_back()
+        public void Convert_SB_message_to_Amqp_message_and_back()
         {
             var messageBody = Encoding.UTF8.GetBytes("hello");
             var messageId = Guid.NewGuid().ToString();
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void SB_message_with_no_TTL_results_in_empty_Ampq_TTL()
+        public void SB_message_with_no_TTL_results_in_empty_Ampq_TTL()
         {
             var sbMessage = new Message();
 
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void When_message_is_peeked_should_have_delivery_count_set_to_zero()
+        public void When_message_is_peeked_should_have_delivery_count_set_to_zero()
         {
             var messageBody = Encoding.UTF8.GetBytes("message1");
 
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
         [Fact]
         [DisplayTestMethodName]
-        void When_message_is_received_should_have_delivery_count_increased()
+        public void When_message_is_received_should_have_delivery_count_increased()
         {
             var messageBody = Encoding.UTF8.GetBytes("message1");
 

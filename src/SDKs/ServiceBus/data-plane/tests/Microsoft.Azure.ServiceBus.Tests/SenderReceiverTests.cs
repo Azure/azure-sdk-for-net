@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task MessageReceiverAndMessageSenderCreationWorksAsExpected(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task MessageReceiverAndMessageSenderCreationWorksAsExpected(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task TopicClientPeekLockDeferTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task TopicClientPeekLockDeferTestCase(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task PeekAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
+        public async Task ReceiveShouldReturnNoLaterThanServerWaitTimeTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiveShouldThrowForServerTimeoutZeroTest(bool partitioned, bool sessionEnabled)
+        public async Task ReceiveShouldThrowForServerTimeoutZeroTest(bool partitioned, bool sessionEnabled)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiverShouldUseTheLatestPrefetchCount()
+        public async Task ReceiverShouldUseTheLatestPrefetchCount()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task MessageSenderShouldNotThrowWhenSendingEmptyCollection()
+        public async Task MessageSenderShouldNotThrowWhenSendingEmptyCollection()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {

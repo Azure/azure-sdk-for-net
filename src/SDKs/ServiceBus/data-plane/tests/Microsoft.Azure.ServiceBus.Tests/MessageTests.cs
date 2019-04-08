@@ -178,7 +178,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public async void LargeMessageShouldThrowMessageSizeExceededException()
+        public async Task LargeMessageShouldThrowMessageSizeExceededException()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {

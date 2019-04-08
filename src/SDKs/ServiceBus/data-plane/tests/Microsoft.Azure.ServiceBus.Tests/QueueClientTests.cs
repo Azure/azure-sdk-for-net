@@ -21,7 +21,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockTest(bool partitioned, bool sessionEnabled,  int messageCount = 10)
+        public async Task PeekLockTest(bool partitioned, bool sessionEnabled,  int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekDeliveryCountTest(bool partitioned, bool sessionEnabled)
+        public async Task PeekDeliveryCountTest(bool partitioned, bool sessionEnabled)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockDeliveryCountTest(bool partitioned, bool sessionEnabled)
+        public async Task PeekLockDeliveryCountTest(bool partitioned, bool sessionEnabled)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ReceiveDeleteTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task ReceiveDeleteTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockWithAbandonTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task PeekLockWithAbandonTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task PeekLockWithDeadLetterTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task PeekLockWithDeadLetterTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task BasicRenewLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
+        public async Task BasicRenewLockTest(bool partitioned, bool sessionEnabled, int messageCount = 10)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
+        public async Task ScheduleMessagesAppearAfterScheduledTimeAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task CancelScheduledMessagesAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
+        public async Task CancelScheduledMessagesAsyncTest(bool partitioned, bool sessionEnabled, int messageCount = 1)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task UpdatingPrefetchCountOnQueueClientUpdatesTheReceiverPrefetchCount()
+        public async Task UpdatingPrefetchCountOnQueueClientUpdatesTheReceiverPrefetchCount()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {

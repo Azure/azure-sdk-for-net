@@ -28,27 +28,27 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                     using (var subscription = this.SubscribeToEvents(listener))
                     {
                         listener.Enable((name, queue, arg) => !name.Contains("Receive") && !name.Contains("Exception"));
-                
+
                         var parentActivity = new Activity("test").AddBaggage("k1", "v1").AddBaggage("k2", "v2");
-                
+
                         parentActivity.Start();
                         await TestUtility.SendSessionMessagesAsync(queueClient.InnerSender, 1, 1);
                         parentActivity.Stop();
-                                
-                        var exceptionCalled = false;                
+
+                        var exceptionCalled = false;
                         var tcs = new TaskCompletionSource<Activity>(TaskCreationOptions.RunContinuationsAsynchronously);
 
                         queueClient.RegisterMessageHandler((msg, ct) =>
                         {
-                            tcs.TrySetResult(Activity.Current);                    
+                            tcs.TrySetResult(Activity.Current);
                             return Task.CompletedTask;
                         },
                         exArgs =>
                         {
-                            // Do not set the completion source exception to avoid throwing 
+                            // Do not set the completion source exception to avoid throwing
                             // when the task is awaited.  The sentinal variable is checked to detect
                             // exception cases.
-                            exceptionCalled = true;                    
+                            exceptionCalled = true;
                             return Task.CompletedTask;
                         });
 
@@ -110,11 +110,11 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                     {
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
                         listener.Enable((name, queue, arg) => !name.EndsWith(".Start") && !name.Contains("Receive") );
-                                
+
                         var count = 0;
                         var exceptionCalled = false;
                         var tcs = new TaskCompletionSource<int>(TaskCreationOptions.RunContinuationsAsynchronously);
-                
+
                         queueClient.RegisterMessageHandler((msg, ct) =>
                         {
                             if (count++ == 0)
@@ -126,13 +126,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                         },
                         exArgs =>
                         {
-                            // Do not set the completion source exception to avoid throwing 
+                            // Do not set the completion source exception to avoid throwing
                             // when the task is awaited.  The sentinal variable is checked to detect
                             // exception cases.
                             exceptionCalled = true;
                             return Task.CompletedTask;
                         });
-                
+
                         await tcs.Task.WithTimeout(DefaultTimeout);
                         Assert.True(exceptionCalled);
 
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                 {
                     using (var listener = this.CreateEventListener(queueName, eventQueue))
                     using (var subscription = this.SubscribeToEvents(listener))
-                    {                
+                    {
                         await TestUtility.SendMessagesAsync(queueClient.InnerSender, 1);
                         var messages = await TestUtility.ReceiveMessagesAsync(queueClient.InnerReceiver, 1);
 
@@ -304,10 +304,10 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.Diagnostics
                             var startCount = AssertReceiveStart(queueName, receiveStart.eventName, receiveStart.payload, receiveStart.activity, -1);
 
                             Assert.True(eventQueue.TryDequeue(out var receiveStop));
-                            
-                            receivedStopCount += 
+
+                            receivedStopCount +=
                                 AssertReceiveStop(queueName, receiveStop.eventName, receiveStop.payload, receiveStop.activity, receiveStart.activity, null, startCount, -1);
-                            
+
                             relatedTo += receiveStop.activity.Tags.Single(t => t.Key == "RelatedTo").Value;
                         }
 

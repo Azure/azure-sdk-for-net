@@ -31,7 +31,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteTrue(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
+        public Task OnSessionPeekLockWithAutoCompleteTrue(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
             return this.OnSessionTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.PeekLock, true);
         }
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnSessionPeekLockWithAutoCompleteFalse(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
+        public Task OnSessionPeekLockWithAutoCompleteFalse(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
             return this.OnSessionTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.PeekLock, false);
         }
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [MemberData(nameof(PartitionedNonPartitionedTestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        Task OnSessionReceiveDelete(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
+        public Task OnSessionReceiveDelete(bool partitioned, bool sessionEnabled, int maxConcurrentCalls)
         {
             return this.OnSessionTestAsync(partitioned, sessionEnabled, maxConcurrentCalls, ReceiveMode.ReceiveAndDelete, false);
         }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task OnSessionCanStartWithNullMessageButReturnSessionLater()
+        public async Task OnSessionCanStartWithNullMessageButReturnSessionLater()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: true, async queueName =>
             {
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulQueue()
+        public async Task OnSessionExceptionHandlerCalledWhenRegisteredOnNonSessionFulQueue()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        async Task OnSessionTestAsync(bool partitioned, bool sessionEnabled, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
+        private async Task OnSessionTestAsync(bool partitioned, bool sessionEnabled, int maxConcurrentCalls, ReceiveMode mode, bool autoComplete)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
+        private Task ExceptionReceivedHandler(ExceptionReceivedEventArgs eventArgs)
         {
             TestUtility.Log($"Exception Received: ClientId: {eventArgs.ExceptionReceivedContext.ClientId}, EntityPath: {eventArgs.ExceptionReceivedContext.EntityPath}, Exception: {eventArgs.Exception.Message}");
             return Task.CompletedTask;

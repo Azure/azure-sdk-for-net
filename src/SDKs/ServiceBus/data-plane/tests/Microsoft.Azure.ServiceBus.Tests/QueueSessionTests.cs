@@ -283,7 +283,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             });
         }
 
-        async Task AcceptAndCompleteSessionsAsync(SessionClient sessionClient, string sessionId, string messageId)
+        private async Task AcceptAndCompleteSessionsAsync(SessionClient sessionClient, string sessionId, string messageId)
         {
             var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
             if (sessionId != null)
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             await sessionReceiver.CloseAsync();
         }
 
-        async Task PeekAndDeleteMessageAsync(SessionClient sessionClient, string sessionId, string messageId)
+        private async Task PeekAndDeleteMessageAsync(SessionClient sessionClient, string sessionId, string messageId)
         {
             var sessionReceiver = await sessionClient.AcceptMessageSessionAsync(sessionId);
             if (sessionId != null)

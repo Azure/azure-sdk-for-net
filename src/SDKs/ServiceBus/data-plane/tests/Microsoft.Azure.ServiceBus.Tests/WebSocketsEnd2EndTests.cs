@@ -9,17 +9,17 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public sealed class WebSocketsEnd2EndTests
     {
-        static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
+        private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
 
         [Fact]
         [LiveTest]
-        async Task SendAndReceiveWithWebSocketsTest()
+        public async Task SendAndReceiveWithWebSocketsTest()
         {
             await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 var tcs = new TaskCompletionSource<Message>(TaskCreationOptions.RunContinuationsAsynchronously);
                 var queueClient = new QueueClient(TestUtility.WebSocketsNamespaceConnectionString, queueName, ReceiveMode.ReceiveAndDelete);
-                
+
                 try
                 {
                     var random = new Random();
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     });
 
                     await queueClient.SendAsync(new Message(contentAsBytes));
-                    
+
                     var receivedMessage = await tcs.Task.WithTimeout(Timeout);
                     Assert.Equal(contentAsBytes, receivedMessage.Body);
                 }
