@@ -51,16 +51,16 @@ namespace Microsoft.Azure.Management.IotHub
         public IotHubClient Client { get; private set; }
 
         /// <summary>
-        /// Customer Initiated Fail over
+        /// Manual Failover Fail over
         /// </summary>
         /// <remarks>
-        /// Perform customer initiated fail over of given hub
+        /// Perform manual fail over of given hub
         /// </remarks>
         /// <param name='iotHubName'>
         /// IotHub to fail over
         /// </param>
         /// <param name='failoverInput'>
-        /// Region it will failover to
+        /// Region to failover to. Must be a azure DR pair
         /// </param>
         /// <param name='resourceGroupName'>
         /// resource group which Iot Hub belongs to
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IotHubDescription>> CustomerInitiatedFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IotHubDescription>> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (iotHubName == null)
             {
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.IotHub
                 tracingParameters.Add("failoverInput", failoverInput);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CustomerInitiatedFailover", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ManualFailover", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;

@@ -24,16 +24,16 @@ namespace Microsoft.Azure.Management.IotHub
     public partial interface IIotHubOperations
     {
         /// <summary>
-        /// Customer Initiated Fail over
+        /// Manual Failover Fail over
         /// </summary>
         /// <remarks>
-        /// Perform customer initiated fail over of given hub
+        /// Perform manual fail over of given hub
         /// </remarks>
         /// <param name='iotHubName'>
         /// IotHub to fail over
         /// </param>
         /// <param name='failoverInput'>
-        /// Region it will failover to
+        /// Region to failover to. Must be a azure DR pair
         /// </param>
         /// <param name='resourceGroupName'>
         /// resource group which Iot Hub belongs to
@@ -53,6 +53,6 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotHubDescription>> CustomerInitiatedFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IotHubDescription>> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

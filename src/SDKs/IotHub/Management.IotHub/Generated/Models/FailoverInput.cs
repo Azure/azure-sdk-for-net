@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
     using System.Linq;
 
     /// <summary>
-    /// Use to provide failover region when requesting Customer Initiated Fail
-    /// over for a hub.
+    /// Use to provide failover region when requesting manual Failover for a
+    /// hub.
     /// </summary>
     public partial class FailoverInput
     {

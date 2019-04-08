@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.IotHub
     public static partial class IotHubOperationsExtensions
     {
             /// <summary>
-            /// Customer Initiated Fail over
+            /// Manual Failover Fail over
             /// </summary>
             /// <remarks>
-            /// Perform customer initiated fail over of given hub
+            /// Perform manual fail over of given hub
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,21 +34,21 @@ namespace Microsoft.Azure.Management.IotHub
             /// IotHub to fail over
             /// </param>
             /// <param name='failoverInput'>
-            /// Region it will failover to
+            /// Region to failover to. Must be a azure DR pair
             /// </param>
             /// <param name='resourceGroupName'>
             /// resource group which Iot Hub belongs to
             /// </param>
-            public static IotHubDescription CustomerInitiatedFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
+            public static IotHubDescription ManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
             {
-                return operations.CustomerInitiatedFailoverAsync(iotHubName, failoverInput, resourceGroupName).GetAwaiter().GetResult();
+                return operations.ManualFailoverAsync(iotHubName, failoverInput, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Customer Initiated Fail over
+            /// Manual Failover Fail over
             /// </summary>
             /// <remarks>
-            /// Perform customer initiated fail over of given hub
+            /// Perform manual fail over of given hub
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.IotHub
             /// IotHub to fail over
             /// </param>
             /// <param name='failoverInput'>
-            /// Region it will failover to
+            /// Region to failover to. Must be a azure DR pair
             /// </param>
             /// <param name='resourceGroupName'>
             /// resource group which Iot Hub belongs to
@@ -65,9 +65,9 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IotHubDescription> CustomerInitiatedFailoverAsync(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IotHubDescription> ManualFailoverAsync(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CustomerInitiatedFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
