@@ -42,11 +42,16 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// this property is not set, the messages which do not meet any of the
         /// conditions specified in the 'routes' section get routed to the
         /// built-in eventhub endpoint.</param>
-        public RoutingProperties(RoutingEndpoints endpoints = default(RoutingEndpoints), IList<RouteProperties> routes = default(IList<RouteProperties>), FallbackRouteProperties fallbackRoute = default(FallbackRouteProperties))
+        /// <param name="enrichments">The list of user-provided enrichments
+        /// that the IoT hub applies to messages to be delivered to built-in
+        /// and custom endpoints. See:
+        /// https://aka.ms/telemetryoneventgrid</param>
+        public RoutingProperties(RoutingEndpoints endpoints = default(RoutingEndpoints), IList<RouteProperties> routes = default(IList<RouteProperties>), FallbackRouteProperties fallbackRoute = default(FallbackRouteProperties), IList<EnrichmentProperties> enrichments = default(IList<EnrichmentProperties>))
         {
             Endpoints = endpoints;
             Routes = routes;
             FallbackRoute = fallbackRoute;
+            Enrichments = enrichments;
             CustomInit();
         }
 
@@ -81,6 +86,14 @@ namespace Microsoft.Azure.Management.IotHub.Models
         public FallbackRouteProperties FallbackRoute { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of user-provided enrichments that the IoT hub
+        /// applies to messages to be delivered to built-in and custom
+        /// endpoints. See: https://aka.ms/telemetryoneventgrid
+        /// </summary>
+        [JsonProperty(PropertyName = "enrichments")]
+        public IList<EnrichmentProperties> Enrichments { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -101,6 +114,16 @@ namespace Microsoft.Azure.Management.IotHub.Models
             if (FallbackRoute != null)
             {
                 FallbackRoute.Validate();
+            }
+            if (Enrichments != null)
+            {
+                foreach (var element1 in Enrichments)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
+                    }
+                }
             }
         }
     }
