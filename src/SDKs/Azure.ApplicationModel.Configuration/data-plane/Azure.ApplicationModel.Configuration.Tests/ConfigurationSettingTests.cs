@@ -34,9 +34,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
             };
 
             var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, @"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label");
+            Assert.AreEqual(@"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label", builder.Uri.AbsoluteUri);
 
         }
 
@@ -51,9 +52,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
             };
 
             var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*key*&label=*label*");
+            Assert.AreEqual("http://localhost/?key=*key*&label=*label*", builder.Uri.AbsoluteUri);
         }
 
         [Test]
@@ -66,9 +68,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
             };
 
             var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*&label=%00");
+            Assert.AreEqual("http://localhost/?key=*&label=%00", builder.Uri.AbsoluteUri);
         }
 
         [Test]
@@ -80,9 +83,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var selector = new SettingSelector(key);
 
             var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key={key}");
+            Assert.AreEqual($"http://localhost/?key={key}", builder.Uri.AbsoluteUri);
         }
 
         [Test]
@@ -94,9 +98,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var selector = new SettingSelector(null, label);
 
             var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key=*&label={label}");
+            Assert.AreEqual($"http://localhost/?key=*&label={label}", builder.Uri.AbsoluteUri);
         }
 
         [Test]

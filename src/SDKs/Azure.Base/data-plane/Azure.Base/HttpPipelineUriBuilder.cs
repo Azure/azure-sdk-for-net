@@ -129,6 +129,7 @@ namespace Azure
 
         public void AppendQuery(string name, string value)
         {
+            ResetUri();
             if (!HasQuery)
             {
                 _pathAndQuery.Append(QuerySeparator);
@@ -151,6 +152,7 @@ namespace Azure
                 return;
             }
 
+            ResetUri();
             int startIndex = 0;
             if (PathLength == 1 && _pathAndQuery[0] == PathSeparator && value[0] == PathSeparator)
             {
