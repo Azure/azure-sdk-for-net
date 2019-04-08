@@ -19,7 +19,6 @@ namespace Azure.ApplicationModel.Configuration
         const string AcceptDateTimeFormat = "ddd, dd MMM yyy HH:mm:ss 'GMT'";
         const string AcceptDatetimeHeader = "Accept-Datetime";
         const string KvRoute = "/kv/";
-        const string LocksRoute = "/locks/";
         const string RevisionsRoute = "/revisions/";
         const string KeyQueryFilter = "key";
         const string LabelQueryFilter = "label";
@@ -91,18 +90,6 @@ namespace Azure.ApplicationModel.Configuration
 
             if (label != null)
             {
-                builder.AppendQuery(LabelQueryFilter, label);
-            }
-
-            return builder.Uri;
-        }
-
-        Uri BuildUriForLocksRoute(string key, string label)
-        {
-            var builder = new UriBuilder(_baseUri);
-            builder.Path = LocksRoute + key;
-
-            if (label != null) {
                 builder.AppendQuery(LabelQueryFilter, label);
             }
 
