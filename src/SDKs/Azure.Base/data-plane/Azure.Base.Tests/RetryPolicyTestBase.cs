@@ -136,6 +136,7 @@ namespace Azure.Base.Tests
             CollectionAssert.AreEqual(new[] {1, 500, 0}, codes);
         }
 
+#if WindowsOS
         [Test]
         [NonParallelizable]
         public async Task RetryingEmitsEventSourceEvent()
@@ -160,6 +161,7 @@ namespace Azure.Base.Tests
             AssertRetryEvent(listener, request, 1);
             AssertRetryEvent(listener, request, 2);
         }
+#endif
 
         private static void AssertRetryEvent(TestEventListener listener, MockRequest request, int retryNumber)
         {

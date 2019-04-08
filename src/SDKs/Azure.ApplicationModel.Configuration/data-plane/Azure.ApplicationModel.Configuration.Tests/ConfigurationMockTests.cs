@@ -221,6 +221,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(0, pool.CurrentlyRented);
         }
 
+#if WindowsOS
         [Test]
         public async Task ConfiguringTheClient()
         {
@@ -239,6 +240,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(s_testSetting, setting);
             Assert.AreEqual(2, testPolicy.Retries);
         }
+#endif
 
         // TODO (pri 2): this should check the UA header, but this in turn requires the ability to read headers.
         // TODO (pri 2): this should try to retrieve the service, but currently services are not passed to the pipeline.
