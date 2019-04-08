@@ -33,7 +33,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "my_label", "label,label" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, @"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label");
@@ -50,7 +50,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "*label*" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*key*&label=*label*");
@@ -65,7 +65,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*&label=%00");
@@ -79,7 +79,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var key = "my-key";
             var selector = new SettingSelector(key);
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key={key}");
@@ -93,7 +93,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var label = "my-label";
             var selector = new SettingSelector(null, label);
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
             service.BuildBatchQuery(builder, selector);
 
             Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key=*&label={label}");
