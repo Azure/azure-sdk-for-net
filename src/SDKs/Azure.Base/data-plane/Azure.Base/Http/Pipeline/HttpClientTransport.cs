@@ -29,19 +29,35 @@ namespace Azure.Base.Http.Pipeline
 
         public sealed override async Task ProcessAsync(HttpPipelineMessage message)
         {
-            var pipelineRequest = message.Request as PipelineRequest;
-            if (pipelineRequest == null) throw new InvalidOperationException("the request is not compatible with the transport");
-
-            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
+            using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
-                HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
-                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
+                SetResponse(message, await _client.SendAsync(httpRequest, message.Cancellation).ConfigureAwait(false));
             }
         }
 
-        protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
-            => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
+        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
+            {
+                var client = new SyncHttpClientHandler();
+                SetResponse(message, client.Send(httpRequest, message.Cancellation));
+            }
+        }
 
+        private HttpRequestMessage BuildRequestMessage(HttpPipelineMessage message)
+        {
+            if (!(message.Request is PipelineRequest pipelineRequest))
+            {
+                throw new InvalidOperationException("the request is not compatible with the transport");
+            }
+
+            return pipelineRequest.BuildRequestMessage(message.Cancellation);
+        }
+
+        private void SetResponse(HttpPipelineMessage message, HttpResponseMessage httpResponseMessage)
+        {
+            message.Response = new PipelineResponse(message.Request.RequestId, httpResponseMessage);
+        }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
         {
@@ -206,7 +222,7 @@ namespace Azure.Base.Http.Pipeline
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
                 {
                     Debug.Assert(PipelineContent != null);
-                    await PipelineContent.WriteTo(stream, CancellationToken).ConfigureAwait(false);
+                    await PipelineContent.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
                 }
 
                 protected override bool TryComputeLength(out long length)
@@ -253,6 +269,14 @@ namespace Azure.Base.Http.Pipeline
             }
 
             public override string ToString() => _responseMessage.ToString();
+        }
+
+        private class SyncHttpClientHandler : HttpClientHandler
+        {
+            public HttpResponseMessage Send(HttpRequestMessage message, CancellationToken cancellationToken)
+            {
+                return SendAsync(message, cancellationToken).GetAwaiter().GetResult();
+            }
         }
     }
 }

@@ -237,7 +237,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.DeleteAsync(key, label);
             }
         }
-        
+
         [Test]
         public async Task GetRequestId()
         {

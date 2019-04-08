@@ -173,7 +173,17 @@ namespace Azure.Base.Diagnostics
         {
             using (var memoryStream = new MemoryStream())
             {
-                await requestContent.WriteTo(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+                await requestContent.WriteToAsync(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+
+                return FormatContent(memoryStream.ToArray());
+            }
+        }
+
+        private static byte[] FormatContent(HttpPipelineRequestContent requestContent, CancellationToken cancellationToken)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                requestContent.WriteTo(memoryStream, cancellation: cancellationToken);
 
                 return FormatContent(memoryStream.ToArray());
             }

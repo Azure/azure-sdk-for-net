@@ -61,5 +61,9 @@ namespace Azure.Base.Http.Pipeline
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
             }
         }
+
+        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     if (message.Request.Content != null)
                     {
-                        await message.Request.Content.WriteTo(contentHashStream, message.Cancellation);
+                        await message.Request.Content.WriteToAsync(contentHashStream, message.Cancellation);
                     }
                 }
 

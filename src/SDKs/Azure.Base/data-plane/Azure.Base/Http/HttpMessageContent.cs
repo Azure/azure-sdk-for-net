@@ -21,7 +21,12 @@ namespace Azure.Base.Http
 
         public static HttpPipelineRequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
 
-        public abstract Task WriteTo(Stream stream, CancellationToken cancellation);
+        public abstract Task WriteToAsync(Stream stream, CancellationToken cancellation);
+
+        public virtual void WriteTo(Stream stream, CancellationToken cancellation)
+        {
+            WriteToAsync(stream, cancellation).GetAwaiter().GetResult();
+        }
 
         public abstract bool TryComputeLength(out long length);
 
@@ -50,7 +55,7 @@ namespace Azure.Base.Http
                 return false;
             }
 
-            public sealed async override Task WriteTo(Stream stream, CancellationToken cancellation)
+            public sealed async override Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 _stream.Seek(_origin, SeekOrigin.Begin);
                 await _stream.CopyToAsync(stream, 81920, cancellation).ConfigureAwait(false);
@@ -87,7 +92,7 @@ namespace Azure.Base.Http
                 return true;
             }
 
-            public async override Task WriteTo(Stream stream, CancellationToken cancellation)
+            public async override Task WriteToAsync(Stream stream, CancellationToken cancellation)
                 => await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
         }
 
@@ -108,7 +113,7 @@ namespace Azure.Base.Http
                 return true;
             }
 
-            public async override Task WriteTo(Stream stream, CancellationToken cancellation)
+            public async override Task WriteToAsync(Stream stream, CancellationToken cancellation)
                 => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
         }
 
@@ -129,7 +134,7 @@ namespace Azure.Base.Http
                 return true;
             }
 
-            public async override Task WriteTo(Stream stream, CancellationToken cancellation)
+            public async override Task WriteToAsync(Stream stream, CancellationToken cancellation)
                 => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
         }
     }
