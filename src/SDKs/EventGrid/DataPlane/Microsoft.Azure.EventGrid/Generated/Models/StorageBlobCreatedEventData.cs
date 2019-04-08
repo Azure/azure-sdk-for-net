@@ -56,7 +56,7 @@ namespace Microsoft.Azure.EventGrid.Models
         /// <param name="storageDiagnostics">For service use only. Diagnostic
         /// data occasionally included by the Azure Storage service. This
         /// property should be ignored by event consumers.</param>
-        public StorageBlobCreatedEventData(string api = default(string), string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), string contentType = default(string), int? contentLength = default(int?), string blobType = default(string), string url = default(string), string sequencer = default(string), object storageDiagnostics = default(object))
+        public StorageBlobCreatedEventData(string api = default(string), string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), string contentType = default(string), long? contentLength = default(long?), string blobType = default(string), string url = default(string), string sequencer = default(string), object storageDiagnostics = default(object))
         {
             Api = api;
             ClientRequestId = clientRequestId;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.EventGrid.Models
         /// what would be returned in the Content-Length header from the blob.
         /// </summary>
         [JsonProperty(PropertyName = "contentLength")]
-        public int? ContentLength { get; set; }
+        public long? ContentLength { get; set; }
 
         /// <summary>
         /// Gets or sets the type of blob.
