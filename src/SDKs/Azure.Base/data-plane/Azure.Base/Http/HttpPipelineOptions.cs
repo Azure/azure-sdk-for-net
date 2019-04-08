@@ -5,131 +5,38 @@ using Azure.Base.Http.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
-using Azure.Base.Attributes;
 
 namespace Azure.Base.Http
 {
-    public class HttpPipelineOptions
+    public class HttpClientOptions
     {
-        ServiceProvider _container;
-
-        HttpPipelineTransport _transport;
-        List<HttpPipelinePolicy> _perCallPolicies;
-        List<HttpPipelinePolicy> _perRetryPolicies;
+        private HttpPipelineTransport _transport = HttpClientTransport.Shared;
 
         public HttpPipelineTransport Transport {
             get => _transport;
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(value));
-                _transport = value;
-            }
+            set => _transport = value ?? throw new ArgumentNullException(nameof(value));
         }
-
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
-
-        public HttpPipelinePolicy RetryPolicy { get; set; }
 
         public bool DisableTelemetry { get; set; } = false;
 
         public string ApplicationId { get; set; }
 
-        public HttpPipelineOptions(HttpPipelineTransport transport)
-            => _transport = transport;
+        public IServiceProvider ServiceProvider { get; set; } = EmptyServiceProvider.Singleton;
 
-        public HttpPipelineOptions() : this( HttpClientTransport.Shared)
-        { }
+        public IList<HttpPipelinePolicy> PerCallPolicies { get; } = new List<HttpPipelinePolicy>();
 
-        public void AddPerCallPolicy(HttpPipelinePolicy policy)
-        {
-            if (policy == null) throw new ArgumentNullException(nameof(policy));
-
-            if (_perCallPolicies == null) _perCallPolicies = new List<HttpPipelinePolicy>();
-            _perCallPolicies.Add(policy);
-        }
-
-        public void AddPerRetryPolicy(HttpPipelinePolicy policy)
-        {
-            if (policy == null) throw new ArgumentNullException(nameof(policy));
-
-            if (_perRetryPolicies == null) _perRetryPolicies = new List<HttpPipelinePolicy>();
-            _perRetryPolicies.Add(policy);
-        }
+        public IList<HttpPipelinePolicy> PerRetryPolicies { get; } = new List<HttpPipelinePolicy>();
 
         public void AddService(object service, Type type = null)
         {
             if (service == null) throw new ArgumentNullException(nameof(service));
 
-            if (_container == null) _container = new ServiceProvider();
-            _container.Add(service, type != null ? type : service.GetType());
-        }
-
-        int PolicyCount {
-            get {
-                int numberOfPolicies = 1; // HttpPipelineTransport
-                if (DisableTelemetry == false) numberOfPolicies++; // AddHeadersPolicy
-
-                if (LoggingPolicy != null) numberOfPolicies++;
-                if (RetryPolicy != null) numberOfPolicies++;
-
-                if (_perCallPolicies != null) numberOfPolicies += _perCallPolicies.Count;
-                if (_perRetryPolicies != null) numberOfPolicies += _perRetryPolicies.Count;
-
-                return numberOfPolicies;
-            }
-        }
-
-        public HttpPipeline Build(Assembly clientAssembly)
-        {
-            if (clientAssembly == null)
+            if (!(ServiceProvider is DictionaryServiceProvider dictionaryServiceProvider))
             {
-                throw new ArgumentNullException(nameof(clientAssembly));
+                ServiceProvider = dictionaryServiceProvider = new DictionaryServiceProvider();
             }
 
-            var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
-            if (componentAttribute == null)
-            {
-                throw new InvalidOperationException($"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
-            }
-
-            var assemblyVersion = clientAssembly.GetName().Version.ToString();
-
-            return Build(componentAttribute.ComponentName, assemblyVersion);
-        }
-
-        public HttpPipeline Build(string componentName, string componentVersion)
-        {
-            HttpPipelinePolicy[] policies = new HttpPipelinePolicy[PolicyCount];
-            int index = 0;
-
-            if (DisableTelemetry == false) {
-                var addHeadersPolicy = new AddHeadersPolicy();
-                policies[index++] = addHeadersPolicy;
-
-                var ua = HttpHeader.Common.CreateUserAgent(componentName, componentVersion, ApplicationId);
-                addHeadersPolicy.AddHeader(ua);
-            }
-            if (_perCallPolicies != null) {
-                foreach (var policy in _perCallPolicies) {
-                    policies[index++] = policy;
-                }
-            }
-            if (RetryPolicy != null) {
-                policies[index++] = RetryPolicy;
-            }
-            if (_perRetryPolicies != null) {
-                foreach (var policy in _perRetryPolicies) {
-                    policies[index++] = policy;
-                }
-            }
-            if (LoggingPolicy != null) {
-                policies[index++] = LoggingPolicy;
-            }
-            policies[index++] = _transport;
-
-            var container = _container == null ? EmptyServiceProvider.Singleton : _container;
-            var pipeline = new HttpPipeline(policies, container);
-            return pipeline;
+            dictionaryServiceProvider.Add(service, type != null ? type : service.GetType());
         }
 
         #region nobody wants to see these
@@ -143,7 +50,7 @@ namespace Azure.Base.Http
         public override string ToString() => base.ToString();
         #endregion
 
-        sealed class ServiceProvider : IServiceProvider
+        private sealed class DictionaryServiceProvider : IServiceProvider
         {
             Dictionary<Type, object> _services = new Dictionary<Type, object>();
 

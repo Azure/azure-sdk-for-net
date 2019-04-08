@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,40 +15,26 @@ namespace Azure.ApplicationModel.Configuration
 {
     public partial class ConfigurationClient
     {
-        static readonly HttpPipelinePolicy s_defaultRetryPolicy = RetryPolicy.CreateFixed(3, TimeSpan.Zero,
-            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
-            500, // Internal Server Error
-            503, // Service Unavailable
-            504  // Gateway Timeout
-        );
-
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
 
-        public static HttpPipelineOptions CreateDefaultPipelineOptions()
-        {
-            var options = new HttpPipelineOptions(HttpClientTransport.Shared);
-            options.LoggingPolicy = LoggingPolicy.Shared;
-            options.RetryPolicy = s_defaultRetryPolicy;
-            return options;
-        }
-
         public ConfigurationClient(string connectionString)
-            : this(connectionString, CreateDefaultPipelineOptions())
+            : this(connectionString, new ConfigurationClientOptions())
         {
         }
 
-        public ConfigurationClient(string connectionString, HttpPipelineOptions options)
+        public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
             if (options == null) throw new ArgumentNullException(nameof(options));
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
-            options.AddPerCallPolicy(ClientRequestIdPolicy.Singleton);
-            options.AddPerCallPolicy(new AuthenticationPolicy(credential, secret));
-
-            _pipeline = options.Build(typeof(ConfigurationClient).Assembly);
+            _pipeline = HttpPipeline.Build(options,
+                    options.RetryPolicy,
+                    ClientRequestIdPolicy.Singleton,
+                    new AuthenticationPolicy(credential, secret),
+                    options.LoggingPolicy);
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]

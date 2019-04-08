@@ -31,7 +31,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static ConfigurationClient CreateTestService(HttpPipelineTransport transport)
         {
-            HttpPipelineOptions options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new ConfigurationClientOptions();
             options.Transport = transport;
             return new ConfigurationClient(connectionString, options);
         }
@@ -305,7 +305,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             var mockTransport = new MockTransport(new MockResponse(503), response);
 
-            var options = ConfigurationClient.CreateDefaultPipelineOptions();
+            var options = new ConfigurationClientOptions();
             options.ApplicationId = "test_application";
             options.Transport = mockTransport;
 
