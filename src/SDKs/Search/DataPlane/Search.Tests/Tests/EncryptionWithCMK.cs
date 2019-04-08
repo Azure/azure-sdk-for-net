@@ -50,7 +50,6 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
                 Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
-
                 AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
             });
         }
@@ -84,8 +83,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-
-                Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
+                SynonymMap encryptedSynonymMap = CreatedEncryptedSynonymMap(new EncryptionKey()
                 {
                     KeyVaultUri = this.Data.KeyVaultUri,
                     KeyVaultKeyName = this.Data.KeyName,
@@ -97,30 +95,38 @@ namespace Microsoft.Azure.Search.Tests
                     }
                 });
 
-                Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
-
-                AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
+                SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
+                AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
             });
         }
 
         [Fact]
         public void CreateSynonymMapWithCMKUsingWithoutAccessCredentials()
         {
-            //Run(() =>
-            //{
-            //    SearchServiceClient searchClient = Data.GetSearchServiceClient();
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                SynonymMap encryptedSynonymMap = CreatedEncryptedSynonymMap(new EncryptionKey()
+                {
+                    KeyVaultUri = this.Data.KeyVaultUri,
+                    KeyVaultKeyName = this.Data.KeyName,
+                    KeyVaultKeyVersion = this.Data.KeyVersion
+                });
 
-            //    Index encryptedIndex = CreateEncryptedTestIndex(new EncryptionKey()
-            //    {
-            //        KeyVaultUri = this.Data.KeyVaultUri,
-            //        KeyVaultKeyName = this.Data.KeyName,
-            //        KeyVaultKeyVersion = this.Data.KeyVersion
-            //    });
-
-            //    Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
-
-            //    AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
-            //});
+                SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
+                AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
+            });
         }        
+
+        private static SynonymMap CreatedEncryptedSynonymMap(EncryptionKey encryptionKey)
+        {
+            string synonymMapName = SearchTestUtilities.GenerateName();
+            return new SynonymMap(synonymMapName, "word1,word2", encryptionKey);
+        }
+
+        private static void AssertSynonymMapsEqual(SynonymMap expected, SynonymMap actual)
+        {
+            Assert.Equal(expected, actual, new ModelComparer<SynonymMap>());
+        }
     }
 }

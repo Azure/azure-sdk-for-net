@@ -43,19 +43,28 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
         protected override string SearchServiceLocation => "EastUS";
 
+        protected override Microsoft.Azure.Management.Search.Models.Identity SearchServiceIdentity => 
+            new Microsoft.Azure.Management.Search.Models.Identity(Management.Search.Models.IdentityType.SystemAssigned);
+
         public override void Initialize(MockContext context)
         {
             base.Initialize(context);
 
             RegisterRequiredProvider(context);
 
-            Vault keyVault = CreateKeyVault(context, this.ResourceGroupName, TestEnvironmentFactory.GetTestEnvironment().Tenant, TestAADApplicationObjectId);
+            SearchManagementClient searchManagementClient = context.GetServiceClient<SearchManagementClient>();
+            string searchServicePrincipalId = searchManagementClient.Services.Get(this.ResourceGroupName, this.SearchServiceName).Identity.PrincipalId;
+            string[] servicePrincipalIdsWithReadAccess = new string[] { TestAADApplicationObjectId, searchServicePrincipalId };
+
+            Vault keyVault = CreateKeyVault(context, this.ResourceGroupName, TestEnvironmentFactory.GetTestEnvironment().Tenant, servicePrincipalIdsWithReadAccess);
             this.KeyVaultUri = keyVault.Properties.VaultUri;
             this.KeyVaultName = keyVault.Name;
 
-            // Create a key
-            // This can be flaky if attempted immediately after creating the vault. Adding short sleep to improve robustness.
-            TestUtilities.Wait(TimeSpan.FromSeconds(3));
+            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            {
+                // it may take a second before we can create a key in a freshly created KeyVault
+                TestUtilities.Wait(TimeSpan.FromSeconds(3));
+            }
 
             KeyBundle key = CreateKey(context, keyVault);
             this.KeyName = key.KeyIdentifier.Name;
@@ -79,27 +88,31 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             Provider provider = client.Providers.Register("Microsoft.KeyVault");
         }
 
-        private static Vault CreateKeyVault(MockContext context, string resourceGroupName, string tenantId, string testApplicationObjectId)
+        private static Vault CreateKeyVault(MockContext context, string resourceGroupName, string tenantId, string[] servicePrincipalIdsWithReadAccess)
         {
-            string authClientId = TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey];
-            string servicePrincipalObjectId = TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.AADClientIdKey];
-
             var accessPolicies = new List<AccessPolicyEntry>();
-            accessPolicies.Add(new AccessPolicyEntry
+
+            // we add an access policy for each service principal that requires read access to the key vault. 
+            foreach (string servicePrincipalId in servicePrincipalIdsWithReadAccess)
             {
-                TenantId = System.Guid.Parse(tenantId),
-                ObjectId = testApplicationObjectId,
-                Permissions = new Permissions()
+                accessPolicies.Add(new AccessPolicyEntry
                 {
-                    Keys = new List<string>()
+                    TenantId = System.Guid.Parse(tenantId),
+                    ObjectId = servicePrincipalId,
+                    Permissions = new Permissions()
+                    {
+                        Keys = new List<string>()
                     {
                         KeyPermissions.Get,
                         KeyPermissions.WrapKey,
                         KeyPermissions.UnwrapKey
                     }
-                }
-            });
+                    }
+                });
+            }
 
+            string servicePrincipalObjectId = TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.AADClientIdKey];
+            // we also add an access policy for the sdk test account itself with full management permission to create and delete keys
             accessPolicies.Add(new AccessPolicyEntry
             {
                 TenantId = System.Guid.Parse(tenantId),

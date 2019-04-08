@@ -26,6 +26,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
         protected virtual string SearchServiceLocation => this.Location;
 
+        protected virtual Identity SearchServiceIdentity => null;
+
         public override void Initialize(MockContext context)
         {
             base.Initialize(context);
@@ -85,7 +87,8 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     new SearchService()
                     {
                         Location = SearchServiceLocation,
-                        Sku = new Sku() { Name = SearchServiceSkuName }
+                        Sku = new Sku() { Name = SearchServiceSkuName },
+                        Identity = SearchServiceIdentity
                     };
 
                 client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, service);
