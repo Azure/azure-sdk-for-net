@@ -15,6 +15,7 @@ namespace Azure.Base.Tests
             new Uri("http://localhost?query"),
             new Uri("https://localhost:443/"),
             new Uri("http://localhost:80/"),
+            new Uri("http://localhost:80/ ? "),
         };
 
         [TestCaseSource(nameof(Uris))]
@@ -82,6 +83,7 @@ namespace Azure.Base.Tests
         [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
         [TestCase("\u1234", "%E1%88%B4")]
         [TestCase("\u1234\u2345", "%E1%88%B4%E2%8D%85")]
+        [TestCase(" ", "%20")]
         public void PathIsEscaped(string path, string expectedPath)
         {
             var uriBuilder = new HttpPipelineUriBuilder();

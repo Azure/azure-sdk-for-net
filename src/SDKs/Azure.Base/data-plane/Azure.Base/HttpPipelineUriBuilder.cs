@@ -9,7 +9,9 @@ namespace Azure
 
     public class HttpPipelineUriBuilder
     {
-        private const char QuerySeperator = '?';
+        private const char QuerySeparator = '?';
+
+        private const char PathSeparator = '/';
 
         private readonly StringBuilder _pathAndQuery = new StringBuilder();
 
@@ -68,9 +70,9 @@ namespace Azure
                 if (!string.IsNullOrEmpty(value))
                 {
                     _queryIndex = _pathAndQuery.Length;
-                    if (value[0] != QuerySeperator)
+                    if (value[0] != QuerySeparator)
                     {
-                        _pathAndQuery.Append(QuerySeperator);
+                        _pathAndQuery.Append(QuerySeparator);
                     }
                     _pathAndQuery.Append(value);
                 }
@@ -129,10 +131,10 @@ namespace Azure
         {
             if (!HasQuery)
             {
-                _pathAndQuery.Append(QuerySeperator);
+                _pathAndQuery.Append(QuerySeparator);
                 _queryIndex = _pathAndQuery.Length;
             }
-            else if (!(QueryLength == 1 && _pathAndQuery[_queryIndex] == QuerySeperator))
+            else if (!(QueryLength == 1 && _pathAndQuery[_queryIndex] == QuerySeparator))
             {
                 _pathAndQuery.Append('&');
             }
@@ -150,7 +152,7 @@ namespace Azure
             }
 
             int startIndex = 0;
-            if (PathLength == 1 && _pathAndQuery[0] == '/' && value[0] == '/')
+            if (PathLength == 1 && _pathAndQuery[0] == PathSeparator && value[0] == PathSeparator)
             {
                 startIndex = 1;
             }
@@ -177,9 +179,9 @@ namespace Azure
                 stringBuilder.Append(Port);
             }
 
-            if (_pathAndQuery.Length == 0 || _pathAndQuery[0] != '/')
+            if (_pathAndQuery.Length == 0 || _pathAndQuery[0] != PathSeparator)
             {
-                stringBuilder.Append('/');
+                stringBuilder.Append(PathSeparator);
             }
 
             // TODO: Escaping can be done in-place
