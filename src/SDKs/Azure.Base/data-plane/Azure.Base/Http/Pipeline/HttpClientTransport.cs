@@ -30,7 +30,8 @@ namespace Azure.Base.Http.Pipeline
         public sealed override async Task ProcessAsync(HttpPipelineMessage message)
         {
             var pipelineRequest = message.Request as PipelineRequest;
-            if (pipelineRequest == null) throw new InvalidOperationException("the request is not compatible with the transport");
+            if (pipelineRequest == null)
+                throw new InvalidOperationException("the request is not compatible with the transport");
 
             using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
             {
@@ -40,7 +41,7 @@ namespace Azure.Base.Http.Pipeline
         }
 
         protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
-            => await _client.SendAsync(httpRequest, cancellation).ConfigureAwait(false);
+            => await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellation).ConfigureAwait(false);
 
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
@@ -167,19 +168,26 @@ namespace Azure.Base.Http.Pipeline
                 _requestMessage.Dispose();
             }
 
-            public override string ToString() =>  _requestMessage.ToString();
+            public override string ToString() => _requestMessage.ToString();
 
             readonly static HttpMethod s_patch = new HttpMethod("PATCH");
             public static HttpMethod ToHttpClientMethod(HttpPipelineMethod method)
             {
-                switch (method) {
-                    case HttpPipelineMethod.Get: return HttpMethod.Get;
-                    case HttpPipelineMethod.Post: return HttpMethod.Post;
-                    case HttpPipelineMethod.Put: return HttpMethod.Put;
-                    case HttpPipelineMethod.Delete: return HttpMethod.Delete;
-                    case HttpPipelineMethod.Patch: return s_patch;
+                switch (method)
+                {
+                    case HttpPipelineMethod.Get:
+                        return HttpMethod.Get;
+                    case HttpPipelineMethod.Post:
+                        return HttpMethod.Post;
+                    case HttpPipelineMethod.Put:
+                        return HttpMethod.Put;
+                    case HttpPipelineMethod.Delete:
+                        return HttpMethod.Delete;
+                    case HttpPipelineMethod.Patch:
+                        return s_patch;
 
-                    default: throw new NotImplementedException();
+                    default:
+                        throw new NotImplementedException();
                 }
             }
 
@@ -225,15 +233,31 @@ namespace Azure.Base.Http.Pipeline
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
-                RequestId = requestId;
-                _responseMessage = responseMessage;
+                RequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
+                _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
             }
 
             public override int Status => (int)_responseMessage.StatusCode;
 
-            // TODO (pri 1): is it ok to just call GetResult here?
             public override Stream ResponseContentStream
-                => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            {
+                get
+                {
+                    if (_responseMessage.Content == null)
+                    {
+                        return null;
+                    }
+
+                    Task<Stream> contentTask = _responseMessage.Content.ReadAsStreamAsync();
+
+                    if (contentTask.IsCompleted)
+                    {
+                        return contentTask.GetAwaiter().GetResult();
+                    }
+
+                    return new ContentStream(contentTask);
+                }
+            }
 
             public override string RequestId { get; set; }
 
@@ -247,6 +271,111 @@ namespace Azure.Base.Http.Pipeline
             }
 
             public override string ToString() => _responseMessage.ToString();
+        }
+
+        private class ContentStream : Stream
+        {
+            private readonly Task<Stream> _contentTask;
+            private Stream _contentStream;
+
+            public ContentStream(Task<Stream> contentTask)
+            {
+                _contentTask = contentTask;
+            }
+
+            public override void Flush()
+            {
+                throw new NotSupportedException();
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                EnsureStream();
+                return _contentStream.Seek(offset, origin);
+            }
+
+            public override void SetLength(long value)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+            {
+                await EnsureStreamAsync();
+                return await _contentStream.ReadAsync(buffer, offset, count, cancellationToken);
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                EnsureStream();
+                return _contentStream.Read(buffer, offset, count);
+            }
+
+            public override void Write(byte[] buffer, int offset, int count)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override bool CanRead
+            {
+                get
+                {
+                    EnsureStream();
+                    return _contentStream.CanRead;
+                }
+            }
+
+            public override bool CanSeek
+            {
+                get
+                {
+                    EnsureStream();
+                    return _contentStream.CanSeek;
+                }
+            }
+
+            public override bool CanWrite => false;
+
+            public override long Length
+            {
+                get
+                {
+                    EnsureStream();
+                    return _contentStream.Length;
+                }
+            }
+
+            public override long Position
+            {
+                get
+                {
+                    EnsureStream();
+                    return _contentStream.Position;
+                }
+                set
+                {
+                    EnsureStream();
+                    _contentStream.Position = value;
+                }
+            }
+
+            private void EnsureStream()
+            {
+                if (_contentStream != null)
+                {
+                    EnsureStreamAsync().GetAwaiter().GetResult();
+                }
+            }
+
+            private Task EnsureStreamAsync()
+            {
+                async Task EnsureStreamAsyncImpl()
+                {
+                    _contentStream = await _contentTask;
+                }
+
+                return _contentStream == null ? EnsureStreamAsyncImpl() : Task.CompletedTask;
+            }
         }
     }
 }
