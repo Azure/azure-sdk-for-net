@@ -316,7 +316,8 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new EntityRecognitionSkill(inputs1, outputs1, "Tested Entity Recognition skill", RootPathString)
             {
                 Categories = categories,
-                DefaultLanguageCode = "en"
+                DefaultLanguageCode = "en",
+                MinimumPrecision = 0.5
             });
 
             return new Skillset("testskillset", "Skillset for testing", skills);
