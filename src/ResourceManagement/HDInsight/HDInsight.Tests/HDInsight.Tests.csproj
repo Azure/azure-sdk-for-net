@@ -1,148 +1,41 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{033442D6-65E4-4A90-A6C0-9608B821A13B}</ProjectGuid>
-    <RootNamespace>HDInsight.Tests</RootNamespace>
-    <AssemblyName>HDInsight.Tests</AssemblyName>
-    <NuGetPackageImportStamp>c7e9322a</NuGetPackageImportStamp>
+    <PackageId>Microsoft.Azure.Management.HDInsight.Tests</PackageId>
+    <Description>HDInsight.Tests Class Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.HDInsight.Tests</AssemblyName>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
-  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
-  <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0</TargetFrameworks>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Compile Include="Helpers\GetClusterSpecHelpers.cs" />
-    <Compile Include="Helpers\HDInsightManagementTestUtilities.cs" />
-    <Compile Include="Helpers\RecordedDelegatingHandler.cs" />
-    <Compile Include="ScenarioTests\CreateClusterTests.cs" />
-    <Compile Include="ScenarioTests\DataLakeTests.cs" />
-    <Compile Include="ScenarioTests\GetCapabilitiesTests.cs" />
-    <Compile Include="ScenarioTests\RdpTests.cs" />
-    <Compile Include="ScenarioTests\GetConfigurationTests.cs" />
-    <Compile Include="ScenarioTests\ResizeTests.cs" />
-    <Compile Include="ScenarioTests\HttpTests.cs" />
-    <Compile Include="ScenarioTests\ListClusterTests.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScenarioTests\ScriptActionsOnRunningCluster.cs" />
-    <Compile Include="UnitTests\ClusterCreateTests.cs" />
-    <Compile Include="UnitTests\StorageAccountTests.cs" />
-    <Compile Include="UnitTests\ClusterCreateDefaultVmTypeTests.cs" />
-    <Compile Include="UnitTests\MetastoreTests.cs" />
+    <PackageReference Include="Hyak.Common" Version="1.2.2" />
+    <PackageReference Include="Microsoft.Azure.Common" Version="2.2.1" />
+    <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="1.13.3" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.6" />    
+    <PackageReference Include="WindowsAzure.Storage" Version="8.1.1" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.4.0-preview" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <!--<PackageReference Include="Newtonsoft.Json" Version="10.0.0" />-->
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestAdJoinedIaasCreateGetDeleteCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateDuplicateCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithCustomVMSizes.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateHumboldtClusterWithSshUsernamePassword.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxClusterWithPremiumTier.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxClusterWithStandardTier.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWindowsClusterWithPremiumTier.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWindowsClusterWithStandardTier.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxSparkClusterWithComponentVersion.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyParameters.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestIaasCreateGetDeleteCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestPaasCreateGetDeleteCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDataLakeClusterUsingClusterCreateParametersExtended.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDataLakeClusterUsingClusterParameters.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.DataLakeTests\TestCreateDefaultFsDataLakeClusterUsingClusterParameters.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.GetCapabilitiesTests\TestGetCapabilities.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.GetConfigurationTests\TestGetConfigCoreSiteCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.HttpTests\TestDisableEnableHttp.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.HttpTests\TestDisableEnableHttpCustomCode.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.HttpTests\TestEnableDisableDisableHttp.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.HttpTests\TestEnableEnableHttp.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.ListClusterTests\TestGetNonexistentCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.ListClusterTests\TestListClustersInSubscription.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.ListClusterTests\TestListEmptyResourceGroup.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.ListClusterTests\TestListNonexistentResourceGroup.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.RdpTests\TestDisableEnableRdp.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.RdpTests\TestDisableEnableRdpCustomCode.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.ScriptActionsOnRunningCluster\TestScriptActionsAPIOnNonExistentCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="SessionRecords\HDInsight.Tests.ScriptActionsOnRunningCluster\TestScriptActionsOnRunningCluster.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestData\FailingScriptAction.sh">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <ProjectReference Include="..\Microsoft.Azure.Management.HDInsight\Management.HDInsight.csproj" />
   </ItemGroup>
+
   <ItemGroup>
-    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
-  </ItemGroup>
-  <ItemGroup />
+    <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
+  </ItemGroup>  
+  
   <ItemGroup>
-    <Reference Include="Hyak.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(LibraryNugetPackageFolder)\Hyak.Common.1.0.2\lib\net45\Hyak.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Azure.Common, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Common.2.1.0\lib\net45\Microsoft.Azure.Common.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Microsoft.Azure.ResourceManager">
-      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.Management.Resources.2.18.0-preview\lib\net40\Microsoft.Azure.ResourceManager.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HDInsight\HDInsightManagement.csproj">
-      <Project>{cd0dbc3c-f1ba-4152-9a96-d23cb756b4d9}</Project>
-      <Name>HDInsightManagement</Name>
-    </ProjectReference>
+    <None Update="*settings.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
