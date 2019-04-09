@@ -9,14 +9,17 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Testing
 {
-    public class TestLoggingPolicy : HttpPipelinePolicy
+    public class TestLoggingPolicy : HttpPipelineIOAgnosticPolicy
     {
         StringBuilder _logged = new StringBuilder();
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void OnSendingRequest(HttpPipelineMessage message)
         {
             _logged.Append($"REQUEST: {message.ToString()}\n");
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+        }
+
+        public override void OnReceivedResponse(HttpPipelineMessage message)
+        {
             _logged.Append($"RESPONSE: {message.Response.Status}\n");
         }
 

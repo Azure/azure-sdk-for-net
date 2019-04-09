@@ -52,21 +52,19 @@ namespace Azure.ApplicationModel.Configuration.Samples
             await client.DeleteAsync("some_key");
         }
 
-        class AddHeaderPolicy : HttpPipelinePolicy
+        class AddHeaderPolicy : HttpPipelineIOAgnosticPolicy
         {
-            public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override void OnSendingRequest(HttpPipelineMessage message)
             {
                 message.Request.AddHeader("User-Agent", "ConfiguraingPipelineSample");
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
         }
 
-        class CustomLogPolicy : HttpPipelinePolicy
+        class CustomLogPolicy : HttpPipelineIOAgnosticPolicy
         {
-            public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            public override void OnSendingRequest(HttpPipelineMessage message)
             {
                 Console.WriteLine(message.ToString());
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
         }
     }

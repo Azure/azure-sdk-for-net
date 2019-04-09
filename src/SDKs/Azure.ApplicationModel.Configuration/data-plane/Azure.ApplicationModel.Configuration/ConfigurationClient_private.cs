@@ -33,10 +33,15 @@ namespace Azure.ApplicationModel.Configuration
             "application/vnd.microsoft.appconfig.kv+json"
         );
 
-        static async Task<Response<ConfigurationSetting>> CreateResponse(Response response, CancellationToken cancellation)
+        static async Task<Response<ConfigurationSetting>> CreateResponseAsync(Response response, CancellationToken cancellation)
         {
             ConfigurationSetting result = await ConfigurationServiceSerializer.DeserializeSettingAsync(response.ContentStream, cancellation);
             return new Response<ConfigurationSetting>(response, result);
+        }
+
+        static Response<ConfigurationSetting> CreateResponse(Response response, CancellationToken cancellation)
+        {
+            return new Response<ConfigurationSetting>(response, ConfigurationServiceSerializer.DeserializeSetting(response.ContentStream, cancellation));
         }
 
         static void ParseConnectionString(string connectionString, out Uri uri, out string credential, out byte[] secret)

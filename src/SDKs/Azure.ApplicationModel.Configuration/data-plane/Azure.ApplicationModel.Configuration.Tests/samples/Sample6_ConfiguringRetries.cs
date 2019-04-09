@@ -22,7 +22,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
                 maxRetries: 10,
                 delay: TimeSpan.FromSeconds(1),
                 retriableCodes: new int[] {
-                    500, // Internal Server Error 
+                    500, // Internal Server Error
                     504  // Gateway Timeout
                 }
             );

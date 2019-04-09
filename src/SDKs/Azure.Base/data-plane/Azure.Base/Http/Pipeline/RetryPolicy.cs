@@ -18,10 +18,15 @@ namespace Azure.Base.Http.Pipeline
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-
+            ProcessAsync(message, pipeline, false).GetAwaiter().GetResult();
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            return ProcessAsync(message, pipeline, true);
+        }
+
+        private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             int attempt = 0;
             List<Exception> exceptions = null;
@@ -31,7 +36,14 @@ namespace Azure.Base.Http.Pipeline
 
                 try
                 {
-                    await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        ProcessNext(pipeline, message);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -39,6 +51,7 @@ namespace Azure.Base.Http.Pipeline
                     {
                         exceptions = new List<Exception>();
                     }
+
                     exceptions.Add(ex);
 
                     lastException = ex;
@@ -68,16 +81,28 @@ namespace Azure.Base.Http.Pipeline
 
                 if (delay > TimeSpan.Zero)
                 {
-                    await Delay(delay, message.Cancellation);
+                    if (async)
+                    {
+                        await DelayAsync(delay, message.Cancellation);
+                    }
+                    else
+                    {
+                        Delay(delay, message.Cancellation);
+                    }
                 }
 
                 HttpPipelineEventSource.Singleton.RequestRetrying(message.Request, attempt);
             }
         }
 
-        internal virtual async Task Delay(TimeSpan time, CancellationToken cancellationToken)
+        internal virtual async Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
         {
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
+        }
+
+        internal virtual void Delay(TimeSpan time, CancellationToken cancellationToken)
+        {
+            cancellationToken.WaitHandle.WaitOne(time);
         }
 
         protected abstract bool ShouldRetryResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay);

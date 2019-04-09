@@ -27,7 +27,7 @@ namespace Azure.Base.Http.Pipeline
         public sealed override HttpPipelineRequest CreateRequest(IServiceProvider services)
             => new PipelineRequest();
 
-        public sealed override async Task ProcessAsync(HttpPipelineMessage message)
+        public override async Task ProcessAsync(HttpPipelineMessage message)
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
@@ -35,7 +35,7 @@ namespace Azure.Base.Http.Pipeline
             }
         }
 
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void Process(HttpPipelineMessage message)
         {
             using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {

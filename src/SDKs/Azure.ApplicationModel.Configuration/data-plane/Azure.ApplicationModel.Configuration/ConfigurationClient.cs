@@ -25,8 +25,10 @@ namespace Azure.ApplicationModel.Configuration
 
         public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
         {
-            if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
-            if (options == null) throw new ArgumentNullException(nameof(options));
+            if (connectionString == null)
+                throw new ArgumentNullException(nameof(connectionString));
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
 
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
@@ -43,43 +45,71 @@ namespace Azure.ApplicationModel.Configuration
         [UsageErrors(typeof(RequestFailedException), 401, 409, 408, 500, 502, 503, 504)]
         public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
-            if (setting == null) throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-
-            Uri uri = BuildUriForKvRoute(setting);
-
-            using (var request = _pipeline.CreateRequest())
+            using (var request = CreateGetRequest(setting))
             {
-                ReadOnlyMemory<byte> content = Serialize(setting);
-
-                request.SetRequestLine(HttpPipelineMethod.Put, uri);
-
-                request.AddHeader(IfNoneMatch, "*");
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                request.AddHeader(HttpHeader.Common.JsonContentType);
-
-                request.Content = HttpPipelineRequestContent.Create(content);
-
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 201)
                 {
-                    return await CreateResponse(response, cancellation);
+                    return await CreateResponseAsync(response, cancellation);
                 }
-                else throw new RequestFailedException(response);
+                else
+                {
+                    throw new RequestFailedException(response);
+                }
             }
+        }
+
+        public Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellation = default)
+        {
+            using (var request = CreateGetRequest(setting))
+            {
+                var response = _pipeline.SendRequest(request, cancellation);
+
+                if (response.Status == 200 || response.Status == 201)
+                {
+                    return CreateResponse(response, cancellation);
+                }
+                else
+                    throw new RequestFailedException(response);
+            }
+        }
+
+        private HttpPipelineRequest CreateGetRequest(ConfigurationSetting setting)
+        {
+            if (setting == null)
+                throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key))
+                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+
+            var request = _pipeline.CreateRequest();
+            Uri uri = BuildUriForKvRoute(setting);
+
+            ReadOnlyMemory<byte> content = Serialize(setting);
+
+            request.SetRequestLine(HttpPipelineMethod.Put, uri);
+
+            request.AddHeader(IfNoneMatch, "*");
+            request.AddHeader(MediaTypeKeyValueApplicationHeader);
+            request.AddHeader(HttpHeader.Common.JsonContentType);
+
+            request.Content = HttpPipelineRequestContent.Create(content);
+            return request;
         }
 
         public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
         public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
-            if (setting == null) throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            if (setting == null)
+                throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key))
+                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
             Uri uri = BuildUriForKvRoute(setting);
 
@@ -101,24 +131,30 @@ namespace Azure.ApplicationModel.Configuration
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                if (response.Status == 200) {
-                    return await CreateResponse(response, cancellation);
+                if (response.Status == 200)
+                {
+                    return await CreateResponseAsync(response, cancellation);
                 }
-                if (response.Status == 409) throw new RequestFailedException(response, "the item is locked");
-                else throw new RequestFailedException(response);
+                if (response.Status == 409)
+                    throw new RequestFailedException(response, "the item is locked");
+                else
+                    throw new RequestFailedException(response);
             }
         }
 
         public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
             return await SetAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
         public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
-            if (setting == null) throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+            if (setting == null)
+                throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key))
+                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
             Uri uri = BuildUriForKvRoute(setting);
 
@@ -146,21 +182,24 @@ namespace Azure.ApplicationModel.Configuration
 
                 if (response.Status == 200)
                 {
-                    return await CreateResponse(response, cancellation);
+                    return await CreateResponseAsync(response, cancellation);
                 }
-                else throw new RequestFailedException(response);
+                else
+                    throw new RequestFailedException(response);
             }
         }
 
         public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
         public async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException(nameof(key));
 
             Uri uri = BuildUriForKvRoute(key, label);
 
@@ -179,13 +218,15 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     return response;
                 }
-                else throw new RequestFailedException(response);
+                else
+                    throw new RequestFailedException(response);
             }
         }
 
         public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
         {
-            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            if (string.IsNullOrEmpty(key))
+                throw new ArgumentNullException($"{nameof(key)}");
 
             Uri uri = BuildUriForKvRoute(key, label);
 
@@ -203,10 +244,12 @@ namespace Azure.ApplicationModel.Configuration
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                if (response.Status == 200) {
-                    return await CreateResponse(response, cancellation);
+                if (response.Status == 200)
+                {
+                    return await CreateResponseAsync(response, cancellation);
                 }
-                else throw new RequestFailedException(response);
+                else
+                    throw new RequestFailedException(response);
             }
         }
 
@@ -231,7 +274,8 @@ namespace Azure.ApplicationModel.Configuration
                     var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation);
                     return new Response<SettingBatch>(response, batch);
                 }
-                else throw new RequestFailedException(response);
+                else
+                    throw new RequestFailedException(response);
             }
         }
 
@@ -256,7 +300,8 @@ namespace Azure.ApplicationModel.Configuration
                     var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation);
                     return new Response<SettingBatch>(response, batch);
                 }
-                else throw new RequestFailedException(response);
+                else
+                    throw new RequestFailedException(response);
             }
         }
     }

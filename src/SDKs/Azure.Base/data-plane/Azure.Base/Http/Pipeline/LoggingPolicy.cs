@@ -16,7 +16,7 @@ namespace Azure.Base.Http.Pipeline
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
 
-        private int[] _excludeErrors = Array.Empty<int>();
+        private readonly int[] _excludeErrors = Array.Empty<int>();
 
         public static readonly LoggingPolicy Shared = new LoggingPolicy();
 
@@ -26,15 +26,35 @@ namespace Azure.Base.Http.Pipeline
         // TODO (pri 1): we should remove sensitive information, e.g. keys
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            await ProcessAsync(message, pipeline, async: true);
+        }
+
+        private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        {
             s_eventSource.Request(message.Request);
 
             if (message.Request.Content != null)
             {
-                await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                if (async)
+                {
+                    await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                }
+                else
+                {
+                    s_eventSource.RequestContent(message.Request, message.Cancellation);
+                }
             }
 
             var before = Stopwatch.GetTimestamp();
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            if (async)
+            {
+                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(pipeline, message);
+            }
+
             var after = Stopwatch.GetTimestamp();
 
             var status = message.Response.Status;
@@ -45,7 +65,14 @@ namespace Azure.Base.Http.Pipeline
 
                 if (message.Response.ResponseContentStream != null)
                 {
-                    await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        s_eventSource.ErrorResponseContent(message.Response, message.Cancellation);
+                    }
                 }
             }
 
@@ -53,17 +80,26 @@ namespace Azure.Base.Http.Pipeline
 
             if (message.Response.ResponseContentStream != null)
             {
-                await s_eventSource.ResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                if (async)
+                {
+                    await s_eventSource.ResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                }
+                else
+                {
+                    s_eventSource.ResponseContent(message.Response, message.Cancellation);
+                }
             }
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
-            if (elapsedMilliseconds > s_delayWarningThreshold) {
+            if (elapsedMilliseconds > s_delayWarningThreshold)
+            {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
             }
         }
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            ProcessAsync(message, pipeline, async: false).GetAwaiter().GetResult();
         }
     }
 }

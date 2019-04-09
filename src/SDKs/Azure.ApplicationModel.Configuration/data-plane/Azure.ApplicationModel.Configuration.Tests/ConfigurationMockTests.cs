@@ -280,7 +280,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             using (var stream = new MemoryStream())
             {
-                request.Content.WriteTo(stream, CancellationToken.None).GetAwaiter().GetResult();
+                request.Content.WriteTo(stream, CancellationToken.None);
                 if (compareAsString)
                 {
                     Assert.AreEqual(Encoding.UTF8.GetString(expected), Encoding.UTF8.GetString(stream.ToArray()));

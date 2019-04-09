@@ -48,6 +48,22 @@ namespace Azure.Base.Http
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public Response SendRequest(HttpPipelineRequest request, CancellationToken cancellationToken)
+        {
+            if (_pipeline.IsEmpty)
+            {
+                return default;
+            }
+
+            using (var message = new HttpPipelineMessage(cancellationToken))
+            {
+                message.Request = request;
+                _pipeline.Span[0].Process(message, _pipeline.Slice(1));
+                return new Response(message.Response);
+            }
+        }
+
         public static HttpPipeline Build(HttpClientOptions options, params HttpPipelinePolicy[] clientPolicies)
         {
             var policies = new List<HttpPipelinePolicy>();

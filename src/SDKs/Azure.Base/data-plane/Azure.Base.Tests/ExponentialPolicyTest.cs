@@ -96,7 +96,7 @@ namespace Azure.Base.Tests
             {
             }
 
-            internal override Task Delay(TimeSpan time, CancellationToken cancellationToken)
+            internal override Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
             {
                 return DelayGate.WaitForRelease(time);
             }

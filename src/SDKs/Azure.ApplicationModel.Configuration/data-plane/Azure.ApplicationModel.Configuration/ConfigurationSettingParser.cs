@@ -91,6 +91,15 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        public static ConfigurationSetting DeserializeSetting(Stream content, CancellationToken cancellation)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content, default))
+            {
+                JsonElement root = json.RootElement;
+                return ReadSetting(root);
+            }
+        }
+
         public static async Task<SettingBatch> ParseBatchAsync(Response response, SettingSelector selector, CancellationToken cancellation)
         {
             TryGetNextAfterValue(ref response, out string nextBatchUri);

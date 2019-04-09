@@ -39,6 +39,11 @@ namespace Azure.Base.Testing
         public override HttpPipelineRequest CreateRequest(IServiceProvider services)
             => new MockRequest();
 
+        public override void Process(HttpPipelineMessage message)
+        {
+            ProcessAsync(message).GetAwaiter().GetResult();
+        }
+
         public override async Task ProcessAsync(HttpPipelineMessage message)
         {
             var request = message.Request as MockRequest;
