@@ -205,17 +205,17 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var response1 = new MockResponse(200);
             response1.SetContent(SerializationHelpers.Serialize(new []
             {
-                CreateSetting(0),
-                CreateSetting(1),
+                CreateResponseSetting(0),
+                CreateResponseSetting(1),
             }, SerializeBatch));
             response1.AddHeader(new HttpHeader("Link", $"</kv?after=5>;rel=\"next\""));
 
             var response2 = new MockResponse(200);
             response2.SetContent(SerializationHelpers.Serialize(new []
             {
-                CreateSetting(2),
-                CreateSetting(3),
-                CreateSetting(4),
+                CreateResponseSetting(2),
+                CreateResponseSetting(3),
+                CreateResponseSetting(4),
             }, SerializeBatch));
 
             var mockTransport = new MockTransport(response1, response2);
@@ -255,6 +255,76 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual(HttpPipelineMethod.Get, request2.Method);
             Assert.AreEqual("https://contoso.azconfig.io/kv/?key=*&label=*&after=5", request2.UriBuilder.ToString());
             AssertRequestCommon(request1);
+        }
+
+        [Test]
+        public async Task GetBatchWithfilters()
+        {
+            var selector = new SettingSelector()
+            {
+                Fields = SettingFields.Key | SettingFields.Label | SettingFields.ETag
+            };
+
+            var response1 = new MockResponse(200);
+            response1.SetContent(SerializationHelpers.Serialize(new[]
+            {
+                CreateResponseSetting(0, selector),
+                CreateResponseSetting(1, selector),
+            }, SerializeBatch));
+
+            var mockTransport = new MockTransport(response1);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            int keyIndex = 0;
+            using (Response<SettingBatch> response = await service.GetBatchAsync(selector, CancellationToken.None))
+            {
+                SettingBatch batch = response.Value;
+                for (int i = 0; i < batch.Count; i++)
+                {
+                    ConfigurationSetting value = batch[i];
+                    Assert.AreEqual("key" + keyIndex, value.Key);
+                    Assert.IsNotNull(value.Label);
+                    Assert.IsNotNull(value.ETag);
+                    Assert.IsNull(value.Value);
+                    keyIndex++;
+                }
+            }
+        }
+
+        [Test]
+        public async Task GetBatchWithAllfilters()
+        {
+            var selector = new SettingSelector()
+            {
+                Fields = SettingFields.All
+            };
+
+            var response1 = new MockResponse(200);
+            response1.SetContent(SerializationHelpers.Serialize(new[]
+            {
+                CreateResponseSetting(0, selector),
+                CreateResponseSetting(1, selector),
+            }, SerializeBatch));
+
+            var mockTransport = new MockTransport(response1);
+            ConfigurationClient service = CreateTestService(mockTransport);
+
+            int keyIndex = 0;
+            using (Response<SettingBatch> response = await service.GetBatchAsync(selector, CancellationToken.None))
+            {
+                SettingBatch batch = response.Value;
+                for (int i = 0; i < batch.Count; i++)
+                {
+                    ConfigurationSetting value = batch[i];
+                    Assert.AreEqual("key" + keyIndex, value.Key);
+                    Assert.IsNotNull(value.Label);
+                    Assert.IsNotNull(value.Value);
+                    Assert.IsNotNull(value.ContentType);
+                    Assert.IsNotNull(value.ETag);
+                    
+                    keyIndex++;
+                }
+            }
         }
 
         [Test]
@@ -299,9 +369,26 @@ namespace Azure.ApplicationModel.Configuration.Tests
             StringAssert.StartsWith(expected, value);
         }
 
-        private static ConfigurationSetting CreateSetting(int i)
+        private static ConfigurationSetting CreateResponseSetting(int i, SettingSelector selector = null)
         {
-            return new ConfigurationSetting($"key{i}", "val") {  Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
+            if(selector == null)
+            {
+                return new ConfigurationSetting($"key{i}", "val") { Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
+            }
+
+            var setting = new ConfigurationSetting();
+            if ((selector.Fields & SettingFields.Key) != 0)
+                setting.Key = $"key{i}";
+            if ((selector.Fields & SettingFields.Value) != 0 )
+                setting.Value = "val";
+            if ((selector.Fields & SettingFields.Label) != 0)
+                setting.Label = "label";
+            if ((selector.Fields & SettingFields.ETag) != 0)
+                setting.ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1");
+            if ((selector.Fields & SettingFields.ContentType) != 0)
+                setting.ContentType = "text";
+
+            return setting;
         }
 
         private void SerializeRequestSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
@@ -327,10 +414,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
         private void SerializeSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
         {
             json.WriteStartObject();
-            json.WriteString("key", setting.Key);
-            json.WriteString("label", setting.Label);
-            json.WriteString("value", setting.Value);
-            json.WriteString("content_type", setting.ContentType);
+            if(setting.Key != null)
+                json.WriteString("key", setting.Key);
+            if (setting.Label != null)
+                json.WriteString("label", setting.Label);
+            if (setting.Value != null)
+                json.WriteString("value", setting.Value);
+            if (setting.ContentType != null)
+                json.WriteString("content_type", setting.ContentType);
             if (setting.Tags != null)
             {
                 json.WriteStartObject("tags");
