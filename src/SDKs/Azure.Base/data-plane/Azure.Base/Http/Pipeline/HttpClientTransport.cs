@@ -100,12 +100,6 @@ namespace Azure.Base.Http.Pipeline
                 RequestId = Guid.NewGuid().ToString();
             }
 
-            public override Uri Uri
-            {
-                get => _requestMessage.RequestUri;
-                set => _requestMessage.RequestUri = value;
-            }
-
             public override HttpPipelineMethod Method
             {
                 get => HttpPipelineMethodConverter.Parse(_requestMessage.Method.Method);
@@ -151,7 +145,7 @@ namespace Azure.Base.Http.Pipeline
             {
                 // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
                 // and so the retry logic fails.
-                var request = new HttpRequestMessage(_requestMessage.Method, _requestMessage.RequestUri);
+                var request = new HttpRequestMessage(_requestMessage.Method, UriBuilder.ToString());
 
                 CopyHeaders(_requestMessage.Headers, request.Headers);
 

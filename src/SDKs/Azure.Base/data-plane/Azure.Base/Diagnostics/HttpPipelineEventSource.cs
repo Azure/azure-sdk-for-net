@@ -42,7 +42,7 @@ namespace Azure.Base.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                Request(request.RequestId, request.Method.ToString().ToUpperInvariant(), request.Uri.ToString(), FormatHeaders(request.Headers));
+                Request(request.RequestId, request.Method.ToString().ToUpperInvariant(), request.UriBuilder.ToString(), FormatHeaders(request.Headers));
             }
         }
 

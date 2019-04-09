@@ -80,20 +80,19 @@ namespace Azure.ApplicationModel.Configuration
             };
         }
 
-        Uri BuildUriForKvRoute(ConfigurationSetting keyValue)
-            => BuildUriForKvRoute(keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
+        void BuildUriForKvRoute(HttpPipelineUriBuilder builder, ConfigurationSetting keyValue)
+            => BuildUriForKvRoute(builder, keyValue.Key, keyValue.Label); // TODO (pri 2) : does this need to filter ETag?
 
-        Uri BuildUriForKvRoute(string key, string label)
+        void BuildUriForKvRoute(HttpPipelineUriBuilder builder, string key, string label)
         {
-            var builder = new UriBuilder(_baseUri);
-            builder.Path = KvRoute + key;
+            builder.Uri = _baseUri;
+            builder.AppendPath(KvRoute);
+            builder.AppendPath(key);
 
             if (label != null)
             {
                 builder.AppendQuery(LabelQueryFilter, label);
             }
-
-            return builder.Uri;
         }
 
         private string EscapeReservedCharacters(string input)
@@ -113,7 +112,7 @@ namespace Azure.ApplicationModel.Configuration
             return resp;
         }
 
-        internal void BuildBatchQuery(UriBuilder builder, SettingSelector selector)
+        internal void BuildBatchQuery(HttpPipelineUriBuilder builder, SettingSelector selector)
         {
             if (selector.Keys.Count > 0)
             {
@@ -163,22 +162,18 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        Uri BuildUriForGetBatch(SettingSelector selector)
+        void BuildUriForGetBatch(HttpPipelineUriBuilder builder, SettingSelector selector)
         {
-            var builder = new UriBuilder(_baseUri);
-            builder.Path = KvRoute;
+            builder.Uri = _baseUri;
+            builder.AppendPath(KvRoute);
             BuildBatchQuery(builder, selector);
-
-            return builder.Uri;
         }
 
-        Uri BuildUriForRevisions(SettingSelector selector)
+        void BuildUriForRevisions(HttpPipelineUriBuilder builder, SettingSelector selector)
         {
-            var builder = new UriBuilder(_baseUri);
-            builder.Path = RevisionsRoute;
+            builder.Uri = _baseUri;
+            builder.AppendPath(RevisionsRoute);
             BuildBatchQuery(builder, selector);
-
-            return builder.Uri;
         }
 
         static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)

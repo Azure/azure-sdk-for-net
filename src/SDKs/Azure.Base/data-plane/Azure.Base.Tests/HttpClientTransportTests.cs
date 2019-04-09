@@ -80,7 +80,7 @@ namespace Azure.Base.Tests
 
             await ExecuteRequest(request, transport);
 
-            // HttpClientHandler would correctly set Host header from Uri when it's not set explicitly
+            // HttpClientHandler would correctly set Host header from UriBuilder when it's not set explicitly
             Assert.AreEqual("http://example.com:340/", uri.ToString());
             Assert.Null(host);
         }
@@ -142,7 +142,7 @@ namespace Azure.Base.Tests
             var request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, expectedUri);
 
-            Assert.AreEqual(expectedUri, request.Uri);
+            Assert.AreEqual(expectedUri.ToString(), request.UriBuilder.ToString());
 
             await ExecuteRequest(request, transport);
 

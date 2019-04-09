@@ -16,7 +16,7 @@ namespace Azure.Base.Tests
             using (HttpPipelineRequest request = transport.CreateRequest(null))
             {
                 request.Method = HttpPipelineMethod.Get;
-                request.Uri = new Uri("http://example.com");
+                request.UriBuilder.Uri = new Uri("http://example.com");
                 var pipeline = new HttpPipeline(transport, new [] { policy });
                 return pipeline.SendRequestAsync(request, CancellationToken.None);
             }

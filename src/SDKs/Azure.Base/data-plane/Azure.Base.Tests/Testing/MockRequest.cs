@@ -40,7 +40,7 @@ namespace Azure.Base.Testing
 
         public override string RequestId { get; set; }
 
-        public override string ToString() => $"{Method} {Uri}";
+        public override string ToString() => $"{Method} {UriBuilder}";
 
         public override void Dispose()
         {
