@@ -48,7 +48,7 @@ namespace HDInsight.Tests
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
                 Assert.Equal(cluster.Location, createresponse.Cluster.Location);
                 Assert.Equal(cluster.Properties.OperatingSystemType, createresponse.Cluster.Properties.OperatingSystemType);
-                Assert.Equal(createresponse.Cluster.Properties.ErrorInfos.Count, 0);
+                Assert.Equal(0, createresponse.Cluster.Properties.ErrorInfos.Count);
                 Assert.Equal(cluster.Properties.ClusterDefinition.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
                 Assert.Equal(cluster.Properties.ClusterVersion, createresponse.Cluster.Properties.ClusterVersion.Substring(0, 3));
 
@@ -59,12 +59,12 @@ namespace HDInsight.Tests
                 Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal(HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
-        //[Fact]
+        [Fact(Skip = "This test case will be skipped.")]
         public void TestIaasCreateGetDeleteCluster()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};
@@ -83,15 +83,15 @@ namespace HDInsight.Tests
                 Assert.Equal(cluster.Properties.ClusterDefinition.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
                 //Assert.Equal(cluster.Properties.ClusterVersion, createresponse.Cluster.Properties.ClusterVersion);
                 Assert.Null(createresponse.Cluster.Properties.ClusterDefinition.Configurations);
-                Assert.Equal(createresponse.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(HttpStatusCode.OK, createresponse.StatusCode);
 
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.Equal(createresponse.Cluster.Properties.ComputeProfile.Roles.Count, getresponse.Cluster.Properties.ComputeProfile.Roles.Count);
                 Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -113,9 +113,9 @@ namespace HDInsight.Tests
                 Assert.Equal(cluster.Location, createresponse.Cluster.Location);
                 Assert.Equal(cluster.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
                 Assert.Null(createresponse.Cluster.Properties.ClusterDefinition.Configurations);
-                Assert.Equal(createresponse.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(createresponse.Cluster.Properties.ProvisioningState, HDInsightClusterProvisioningState.Succeeded);
-                Assert.Equal(createresponse.Cluster.Properties.ClusterState, "Running");
+                Assert.Equal(HttpStatusCode.OK, createresponse.StatusCode);
+                Assert.Equal(HDInsightClusterProvisioningState.Succeeded, createresponse.Cluster.Properties.ProvisioningState);
+                Assert.Equal("Running", createresponse.Cluster.Properties.ClusterState);
 
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.Equal(createresponse.Cluster.Properties.ComputeProfile.Roles.Count, getresponse.Cluster.Properties.ComputeProfile.Roles.Count);
@@ -127,8 +127,8 @@ namespace HDInsight.Tests
                 Assert.Equal(createresponse.Cluster.Properties.SecurityProfile.DirectoryType, getresponse.Cluster.Properties.SecurityProfile.DirectoryType);
                 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -149,7 +149,7 @@ namespace HDInsight.Tests
                 }
                 catch (CloudException ex)
                 {
-                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.BadRequest);
+                    Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
                 }
             }
         }
@@ -177,17 +177,17 @@ namespace HDInsight.Tests
                 }
                 catch (CloudException ex)
                 {
-                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.Conflict);
+                    Assert.Equal(HttpStatusCode.Conflict, ex.Response.StatusCode);
                 }
 
                 OperationResource result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);               
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);               
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
                 
             }
         }
 
-        //[Fact]
+        [Fact(Skip = "This test case will be skipped.")]
         public void TestCustomCreateEnableDisableConnectivity()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -213,8 +213,8 @@ namespace HDInsight.Tests
                 getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
 
             }
         }
@@ -239,11 +239,11 @@ namespace HDInsight.Tests
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
 
                 var clusterResponse = client.Clusters.Get(resourceGroup, dnsname);
-                Assert.Equal(createresponse.Cluster.Properties.ClusterTier , Tier.Premium);
+                Assert.Equal(Tier.Premium, createresponse.Cluster.Properties.ClusterTier);
                 HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -266,11 +266,11 @@ namespace HDInsight.Tests
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
 
                 var clusterResponse = client.Clusters.Get(resourceGroup, dnsname);
-                Assert.Equal(createresponse.Cluster.Properties.ClusterTier, Tier.Standard);
+                Assert.Equal(Tier.Standard, createresponse.Cluster.Properties.ClusterTier);
                 HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -293,11 +293,11 @@ namespace HDInsight.Tests
 
                 Assert.Equal(dnsname, createresponse.Cluster.Name);
                 var clusterResponse = client.Clusters.Get(resourceGroup, dnsname);
-                Assert.Equal(createresponse.Cluster.Properties.ClusterTier, Tier.Standard);
+                Assert.Equal(Tier.Standard, createresponse.Cluster.Properties.ClusterTier);
                 HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -319,7 +319,7 @@ namespace HDInsight.Tests
                 }
                 catch (CloudException ex)
                 {
-                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.BadRequest);
+                    Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
                 }
             }
         }
@@ -344,8 +344,8 @@ namespace HDInsight.Tests
                 client.Clusters.Get(resourceGroup, dnsname);
                 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
 
             }
         }
@@ -370,8 +370,8 @@ namespace HDInsight.Tests
                 client.Clusters.Get(resourceGroup, dnsname);
 
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
 
             }
         }
@@ -399,8 +399,8 @@ namespace HDInsight.Tests
                 
                 HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -427,8 +427,8 @@ namespace HDInsight.Tests
 
                 HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -456,8 +456,8 @@ namespace HDInsight.Tests
                 HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
                 var getresult = client.Clusters.Get(resourceGroup, dnsname);
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
 
             }
         }

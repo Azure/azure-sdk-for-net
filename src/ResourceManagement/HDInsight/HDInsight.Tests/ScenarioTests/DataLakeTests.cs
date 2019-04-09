@@ -115,13 +115,13 @@ namespace HDInsight.Tests
                 Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
 
                 // Assert cluster state
-                Assert.Equal(createresponse.Cluster.Properties.ClusterState, "Error"); // due to invalid script action
-                Assert.Equal(createresponse.Cluster.Properties.ErrorInfos.Count, 1);
+                Assert.Equal("Error", createresponse.Cluster.Properties.ClusterState); // due to invalid script action
+                Assert.Equal(1, createresponse.Cluster.Properties.ErrorInfos.Count);
 
                 // delete the cluster
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 
@@ -154,8 +154,8 @@ namespace HDInsight.Tests
 
                 // delete the cluster
                 var result = client.Clusters.Delete(resourceGroup, dnsname);
-                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+                Assert.Equal( HttpStatusCode.OK, result.StatusCode);
+                Assert.Equal(AsyncOperationState.Succeeded, result.State);
             }
         }
 

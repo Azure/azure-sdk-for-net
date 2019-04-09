@@ -84,15 +84,11 @@ namespace HDInsight.Tests
 
                 client.Clusters.ConfigureRdpSettings(resourceGroup, dnsname, rdpdisable);
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
-                Assert.False(
-                    cluster.Cluster.Properties.ConnectivityEndpoints.Any(
-                        c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
+                Assert.DoesNotContain(cluster.Cluster.Properties.ConnectivityEndpoints, c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase));
 
                 client.Clusters.ConfigureRdpSettings(resourceGroup, dnsname, rdpenable);
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
-                Assert.True(
-                    cluster.Cluster.Properties.ConnectivityEndpoints.Any(
-                        c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(cluster.Cluster.Properties.ConnectivityEndpoints, c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase));
                 
                 client.Clusters.Delete(resourceGroup, dnsname);
             }
@@ -119,23 +115,17 @@ namespace HDInsight.Tests
 
                 //test
                 var cluster = client.Clusters.Create(resourceGroup, dnsname, spec);
-                Assert.True(
-                    cluster.Cluster.Properties.ConnectivityEndpoints.Any(
-                        c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(cluster.Cluster.Properties.ConnectivityEndpoints, c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase));
 
                 HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
 
                 client.Clusters.DisableRdp(resourceGroup, dnsname);
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
-                Assert.False(
-                    cluster.Cluster.Properties.ConnectivityEndpoints.Any(
-                        c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
+                Assert.DoesNotContain(cluster.Cluster.Properties.ConnectivityEndpoints, c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase));
 
                 client.Clusters.EnableRdp(resourceGroup, dnsname, "rdpuser", "Password1!", new DateTime(2018, 10, 12));
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
-                Assert.True(
-                    cluster.Cluster.Properties.ConnectivityEndpoints.Any(
-                        c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
+                Assert.Contains(cluster.Cluster.Properties.ConnectivityEndpoints, c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase));
 
                 client.Clusters.Delete(resourceGroup, dnsname);
             }

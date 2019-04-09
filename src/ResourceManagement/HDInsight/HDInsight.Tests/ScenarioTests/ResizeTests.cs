@@ -96,7 +96,7 @@ namespace HDInsight.Tests
             }
             catch (CloudException ex)
             {
-                Assert.Equal(ex.Response.StatusCode, HttpStatusCode.BadRequest);
+                Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
             }
         }
 
