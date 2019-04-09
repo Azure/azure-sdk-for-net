@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.EventGrid.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -39,7 +41,7 @@ namespace Microsoft.Azure.EventGrid.Models
         /// optional.</param>
         /// <param name="systemProperties">System properties help identify
         /// contents and source of the messages.</param>
-        public DeviceTelemetryEventProperties(object body = default(object), object properties = default(object), object systemProperties = default(object))
+        public DeviceTelemetryEventProperties(object body = default(object), IDictionary<string, string> properties = default(IDictionary<string, string>), IDictionary<string, string> systemProperties = default(IDictionary<string, string>))
         {
             Body = body;
             Properties = properties;
@@ -63,14 +65,14 @@ namespace Microsoft.Azure.EventGrid.Models
         /// can be added to the message. These fields are optional.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
-        public object Properties { get; set; }
+        public IDictionary<string, string> Properties { get; set; }
 
         /// <summary>
         /// Gets or sets system properties help identify contents and source of
         /// the messages.
         /// </summary>
         [JsonProperty(PropertyName = "systemProperties")]
-        public object SystemProperties { get; set; }
+        public IDictionary<string, string> SystemProperties { get; set; }
 
     }
 }

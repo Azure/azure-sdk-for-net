@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.EventGrid.Models
 {
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -37,7 +39,7 @@ namespace Microsoft.Azure.EventGrid.Models
         /// optional.</param>
         /// <param name="systemProperties">System properties help identify
         /// contents and source of the messages.</param>
-        public IotHubDeviceTelemetryEventData(object body = default(object), object properties = default(object), object systemProperties = default(object))
+        public IotHubDeviceTelemetryEventData(object body = default(object), IDictionary<string, string> properties = default(IDictionary<string, string>), IDictionary<string, string> systemProperties = default(IDictionary<string, string>))
             : base(body, properties, systemProperties)
         {
             CustomInit();
