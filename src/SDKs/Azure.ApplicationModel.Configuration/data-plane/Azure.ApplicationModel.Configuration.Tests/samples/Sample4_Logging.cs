@@ -65,7 +65,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
+#if !FullNetFx
             base.OnEventWritten(eventData);
+#endif
             if (eventData.EventSource.Name == SOURCE_NAME) {
                 var formatted = eventData.EventName + " : " + eventData.Payload[0].ToString();
                 Console.WriteLine(formatted);
