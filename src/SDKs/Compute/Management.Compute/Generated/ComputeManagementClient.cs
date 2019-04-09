@@ -82,6 +82,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
 
         /// <summary>
+        /// Gets the IProximityPlacementGroupsOperations.
+        /// </summary>
+        public virtual IProximityPlacementGroupsOperations ProximityPlacementGroups { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
@@ -424,6 +429,7 @@ namespace Microsoft.Azure.Management.Compute
         {
             Operations = new Operations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
+            ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
