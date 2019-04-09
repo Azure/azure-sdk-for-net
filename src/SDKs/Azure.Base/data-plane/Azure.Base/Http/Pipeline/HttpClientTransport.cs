@@ -279,7 +279,7 @@ namespace Azure.Base.Http.Pipeline
             public override string ToString() => _responseMessage.ToString();
         }
 
-        internal class ContentStream : Stream
+        private class ContentStream : Stream
         {
             private readonly Task<Stream> _contentTask;
             private Stream _contentStream;
