@@ -98,6 +98,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
                 }
             });
         }
+        */
         
         internal static string GetSbConnectionString(TransportType transportType)
         {
