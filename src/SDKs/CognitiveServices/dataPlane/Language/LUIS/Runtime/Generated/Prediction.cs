@@ -73,7 +73,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// Enable spell checking.
         /// </param>
         /// <param name='bingSpellCheckSubscriptionKey'>
-        /// The subscription key to use when enabling bing spell check
+        /// The subscription key to use when enabling Bing spell check
         /// </param>
         /// <param name='log'>
         /// Log query (default is true)
@@ -99,15 +99,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(System.Guid appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
-            }
-            if (appId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "appId");
             }
             if (query == null)
             {
@@ -142,7 +138,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "apps/{appId}";
             _url = _url.Replace("{Endpoint}", Client.Endpoint);
-            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(appId));
+            _url = _url.Replace("{appId}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(appId, Client.SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (timezoneOffset != null)
             {
