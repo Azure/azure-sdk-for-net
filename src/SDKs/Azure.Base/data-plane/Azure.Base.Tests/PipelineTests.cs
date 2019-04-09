@@ -16,6 +16,8 @@ namespace Azure.Base.Tests
 {
     public class PipelineTests
     {
+
+#if !FullNetFx
         [Test]
         public async Task Basics()
         {
@@ -31,6 +33,7 @@ namespace Azure.Base.Tests
 
             Assert.AreEqual(1, response.Status);
         }
+#endif
 
         [Test]
         public async Task ComponentNameAndVersionReadFromAssembly()
@@ -54,6 +57,7 @@ namespace Azure.Base.Tests
             Assert.AreEqual(userAgent, $"azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
 
+#if !FullNetFx
         class CustomRetryPolicy : RetryPolicy
         {
             protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
@@ -69,6 +73,7 @@ namespace Azure.Base.Tests
                 return false;
             }
         }
+#endif
 
         class TestClientOptions : HttpClientOptions
         {
