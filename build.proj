@@ -145,12 +145,14 @@
 			<SdkNuGetPackage Remove="@(SdkNuGetPackage)" />
 			<SdkNuGetPackage Include="@(SdkNuGetPackageItem)" />
 		</ItemGroup>
+		<!--
 		<Message Text="SdkNugetPackages After Filter: @(SdkNuGetPackage)" />
 		<Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />     
 		<Message Text="Ensure 7zip is available" />
 		<Exec
 		  Command="$(LibraryToolsFolder)\AzCopy\AzCopy.exe /Source:https://azuresdktools.blob.core.windows.net/7-zip  /S /Dest:$(ZipExeFolder) /Y"
 		  Condition="!Exists('$(ZipExe)')" />
+		  -->
 	</Target>
   
 	<Target Name="Build" DependsOnTargets="BuildClientRuntime;BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
