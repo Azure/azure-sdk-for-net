@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Base.Tests
 {
-    internal class MockHttpClientHandler : HttpMessageHandler
+    internal class MockHttpClientHandler : HttpClientHandler
     {
         private readonly Func<HttpRequestMessage, Task<HttpResponseMessage>> _onSend;
 

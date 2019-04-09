@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication.ExtendedProtection;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Base.Http;
@@ -304,6 +305,87 @@ namespace Azure.Base.Tests
 
             var response =  await ExecuteRequest(request, transport);
             Assert.AreEqual(request.RequestId, response.RequestId);
+        }
+
+        [Test]
+        public async Task ContentStreamIsReturnedSynchronously()
+        {
+            var content = new AsyncContent()
+            {
+                MemoryStream = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 })
+            };
+            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = content
+            };
+            var mockHandler = new MockHttpClientHandler(httpRequestMessage => Task.FromResult(httpResponseMessage));
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            HttpPipelineRequest request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
+
+            HttpPipelineResponse response = await ExecuteRequest(request, transport);
+
+            byte[] data = new byte[5];
+            Stream stream = response.ResponseContentStream;
+            Task<int> firstRead = stream.ReadAsync(data, 0, 5);
+
+            Assert.False(firstRead.IsCompleted);
+
+            content.CreateContentReadStreamAsyncCompletionSource.SetResult(null);
+            Assert.AreEqual(5, await firstRead);
+        }
+
+        [Test]
+        public async Task OriginalContentStreamIsReturnedIfNotAsync()
+        {
+            var content = new AsyncContent()
+            {
+                MemoryStream = new MemoryStream(new byte[] { 1, 2, 3, 4, 5 })
+            };
+            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = content
+            };
+            var mockHandler = new MockHttpClientHandler(httpRequestMessage => Task.FromResult(httpResponseMessage));
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            HttpPipelineRequest request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
+
+            HttpPipelineResponse response = await ExecuteRequest(request, transport);
+
+            byte[] data = new byte[5];
+
+            content.CreateContentReadStreamAsyncCompletionSource.SetResult(null);
+            Stream stream = response.ResponseContentStream;
+
+            Assert.AreSame(content.MemoryStream, stream);
+        }
+
+        private class AsyncContent : HttpContent
+        {
+            public TaskCompletionSource<object> CreateContentReadStreamAsyncCompletionSource = new TaskCompletionSource<object>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            public MemoryStream MemoryStream { get; set; }
+
+            protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
+            {
+                await CreateContentReadStreamAsyncCompletionSource.Task;
+                await MemoryStream.CopyToAsync(stream);
+            }
+
+            protected override async Task<Stream> CreateContentReadStreamAsync()
+            {
+                await CreateContentReadStreamAsyncCompletionSource.Task;
+                return MemoryStream;
+            }
+
+            protected override bool TryComputeLength(out long length)
+            {
+                length = -1;
+                return false;
+            }
         }
     }
 }
