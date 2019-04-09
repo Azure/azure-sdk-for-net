@@ -1,0 +1,22 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
+using System.IO;
+using System.Threading.Tasks;
+
+namespace Azure.Base.Http.Pipeline
+{
+    public class BufferResponsePolicy: HttpPipelinePolicy
+    {
+        public static HttpPipelinePolicy Singleton { get; set; } = new BufferResponsePolicy();
+
+        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            Stream responseContentStream = message.Response.ResponseContentStream;
+            var bufferedStream = new MemoryStream();
+            await responseContentStream.CopyToAsync(bufferedStream);
+            message.Response.ResponseContentStream = bufferedStream;
+        }
+    }
+}

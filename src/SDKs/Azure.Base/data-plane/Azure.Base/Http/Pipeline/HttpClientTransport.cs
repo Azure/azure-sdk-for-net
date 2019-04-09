@@ -232,8 +232,7 @@ namespace Azure.Base.Http.Pipeline
             public override int Status => (int)_responseMessage.StatusCode;
 
             // TODO (pri 1): is it ok to just call GetResult here?
-            public override Stream ResponseContentStream
-                => _responseMessage?.Content?.ReadAsStreamAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+            public override Stream ResponseContentStream { get; }
 
             public override string RequestId { get; set; }
 
