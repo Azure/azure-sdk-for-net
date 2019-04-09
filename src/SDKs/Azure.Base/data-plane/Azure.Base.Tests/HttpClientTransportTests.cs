@@ -333,6 +333,18 @@ namespace Azure.Base.Tests
 
             content.CreateContentReadStreamAsyncCompletionSource.SetResult(null);
             Assert.AreEqual(5, await firstRead);
+
+            // Exercise stream features
+            stream.Position = 3;
+            stream.Seek(-1, SeekOrigin.Current);
+            var secondReadLength = await stream.ReadAsync(data, 0, 5);
+
+            Assert.AreEqual(3, secondReadLength);
+            Assert.False(stream.CanWrite);
+            Assert.True(stream.CanSeek);
+            Assert.True(stream.CanRead);
+            Assert.Throws<NotSupportedException>(() => stream.Write(null, 0, 0));
+            Assert.Throws<NotSupportedException>(() => stream.SetLength(5));
         }
 
         [Test]
