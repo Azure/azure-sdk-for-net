@@ -51,16 +51,21 @@ namespace Microsoft.Azure.Search.Models
         /// code to use. Default is en. Possible values include: 'de', 'en',
         /// 'es', 'fr', 'it'</param>
         /// <param name="includeTypelessEntities">Determines whether or not to
-        /// include entities which are well known but don't conform to a type.
-        /// If this configuration is not set (default), set to null or set to
-        /// false, entities which don't have a type will not be
-        /// surfaced.</param>
-        public EntityRecognitionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), IList<EntityCategory> categories = default(IList<EntityCategory>), EntityRecognitionSkillLanguage? defaultLanguageCode = default(EntityRecognitionSkillLanguage?), bool? includeTypelessEntities = default(bool?))
+        /// include entities which are well known but don't conform to a
+        /// pre-defined type. If this configuration is not set (default), set
+        /// to null or set to false, entities which don't conform to one of the
+        /// pre-defined types will not be surfaced.</param>
+        /// <param name="minimumPrecision">A value between 0 and 1 that be used
+        /// to only include entities whose confidence score is greater than the
+        /// value specified. If not set (default), or if explicitly set to
+        /// null, all entities will be included.</param>
+        public EntityRecognitionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), IList<EntityCategory> categories = default(IList<EntityCategory>), EntityRecognitionSkillLanguage? defaultLanguageCode = default(EntityRecognitionSkillLanguage?), bool? includeTypelessEntities = default(bool?), double? minimumPrecision = default(double?))
             : base(inputs, outputs, description, context)
         {
             Categories = categories;
             DefaultLanguageCode = defaultLanguageCode;
             IncludeTypelessEntities = includeTypelessEntities;
+            MinimumPrecision = minimumPrecision;
             CustomInit();
         }
 
@@ -84,12 +89,22 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets determines whether or not to include entities which
-        /// are well known but don't conform to a type. If this configuration
-        /// is not set (default), set to null or set to false, entities which
-        /// don't have a type will not be surfaced.
+        /// are well known but don't conform to a pre-defined type. If this
+        /// configuration is not set (default), set to null or set to false,
+        /// entities which don't conform to one of the pre-defined types will
+        /// not be surfaced.
         /// </summary>
         [JsonProperty(PropertyName = "includeTypelessEntities")]
         public bool? IncludeTypelessEntities { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value between 0 and 1 that be used to only include
+        /// entities whose confidence score is greater than the value
+        /// specified. If not set (default), or if explicitly set to null, all
+        /// entities will be included.
+        /// </summary>
+        [JsonProperty(PropertyName = "minimumPrecision")]
+        public double? MinimumPrecision { get; set; }
 
         /// <summary>
         /// Validate the object.
