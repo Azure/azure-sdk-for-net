@@ -17,7 +17,7 @@ namespace Azure.Base.Tests
         {
             MockResponse mockResponse = new MockResponse(200);
             var readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
-            mockResponse.SetContent(readTrackingStream);
+            mockResponse.ResponseContentStream = readTrackingStream;
 
             var mockTransport = new MockTransport(mockResponse);
             var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
@@ -36,12 +36,13 @@ namespace Azure.Base.Tests
         [Test]
         public void SurfacesStreamReadingExceptions()
         {
-            MockResponse mockResponse = new MockResponse(200);
-            var readTrackingStream = new ReadTrackingStream(128, 64);
-            mockResponse.SetContent(readTrackingStream);
+            MockResponse mockResponse = new MockResponse(200)
+            {
+                ResponseContentStream = new ReadTrackingStream(128, 64)
+            };
 
             var mockTransport = new MockTransport(mockResponse);
-            Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, ClientRequestIdPolicy.Singleton));
+            Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton));
         }
 
         private class ReadTrackingStream : Stream

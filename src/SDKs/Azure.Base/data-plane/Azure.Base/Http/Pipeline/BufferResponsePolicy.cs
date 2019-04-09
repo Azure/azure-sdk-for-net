@@ -13,6 +13,8 @@ namespace Azure.Base.Http.Pipeline
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            await ProcessNextAsync(pipeline, message);
+
             Stream responseContentStream = message.Response.ResponseContentStream;
             var bufferedStream = new MemoryStream();
             await responseContentStream.CopyToAsync(bufferedStream);

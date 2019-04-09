@@ -34,6 +34,7 @@ namespace Azure.ApplicationModel.Configuration
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
                     new AuthenticationPolicy(credential, secret),
+                    BufferResponsePolicy.Singleton,
                     options.LoggingPolicy);
         }
 
