@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// string (or Expression with resultType string).</param>
         /// <param name="accessCredential">The package execution log access
         /// credential.</param>
-        public SSISLogLocation(object logPath = default(object), SSISAccessCredential accessCredential = default(SSISAccessCredential))
+        public SSISLogLocation(object logPath, SSISAccessCredential accessCredential = default(SSISAccessCredential))
         {
             LogPath = logPath;
             AccessCredential = accessCredential;
@@ -82,6 +82,10 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (LogPath == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "LogPath");
+            }
             if (AccessCredential != null)
             {
                 AccessCredential.Validate();
