@@ -105,6 +105,17 @@ jobs:
           version: '$(DotNetCoreVersion)'
 
       - task: DotNetCoreCLI@2
+        displayName: 'Restore'
+        condition: eq(variables['System.TeamProject'], 'playground')
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+        inputs:
+          command: restore
+          projects: '$(ProjectFile)'
+  
+      - task: DotNetCoreCLI@2
         displayName: 'Build & Test (no live tests)'
         condition: eq(variables['System.TeamProject'], 'playground')
         env:
