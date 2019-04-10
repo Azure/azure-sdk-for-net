@@ -332,13 +332,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (sid != null)
             {
-                if (sid.Length > 80)
+                if (sid.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "sid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "sid", 256);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "sid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "sid", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -554,13 +554,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (sid != null)
             {
-                if (sid.Length > 80)
+                if (sid.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "sid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "sid", 256);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "sid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "sid", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -777,7 +777,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionContract,SubscriptionCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string sid, SubscriptionCreateParameters parameters, bool? notify = default(bool?), string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -808,13 +808,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (sid != null)
             {
-                if (sid.Length > 80)
+                if (sid.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "sid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "sid", 256);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "sid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "sid", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -967,7 +967,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionContract>();
+            var _result = new AzureOperationResponse<SubscriptionContract,SubscriptionCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1009,6 +1009,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<SubscriptionCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -1093,13 +1106,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (sid != null)
             {
-                if (sid.Length > 80)
+                if (sid.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "sid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "sid", 256);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "sid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "sid", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1333,13 +1346,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (sid != null)
             {
-                if (sid.Length > 80)
+                if (sid.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "sid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "sid", 256);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "sid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "sid", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)
@@ -1553,13 +1566,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (sid != null)
             {
-                if (sid.Length > 80)
+                if (sid.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "sid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "sid", 256);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "sid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "sid", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -1760,13 +1773,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (sid != null)
             {
-                if (sid.Length > 80)
+                if (sid.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "sid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "sid", 256);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(sid, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "sid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "sid", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)

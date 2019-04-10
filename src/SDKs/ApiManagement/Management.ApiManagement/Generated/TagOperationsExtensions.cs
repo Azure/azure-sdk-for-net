@@ -23,621 +23,6 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class TagOperationsExtensions
     {
             /// <summary>
-            /// Lists a collection of tags defined within a service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<TagContract> ListByService(this ITagOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>))
-            {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists a collection of tags defined within a service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TagContract>> ListByServiceAsync(this ITagOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the entity state version of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            public static TagGetEntityStateHeaders GetEntityState(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId)
-            {
-                return operations.GetEntityStateAsync(resourceGroupName, serviceName, tagId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the entity state version of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TagGetEntityStateHeaders> GetEntityStateAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetEntityStateWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Headers;
-                }
-            }
-
-            /// <summary>
-            /// Gets the details of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            public static TagContract Get(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId)
-            {
-                return operations.GetAsync(resourceGroupName, serviceName, tagId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the details of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TagContract> GetAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates a tag.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='parameters'>
-            /// Create parameters.
-            /// </param>
-            public static TagContract CreateOrUpdate(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters)
-            {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, tagId, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates a tag.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='parameters'>
-            /// Create parameters.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TagContract> CreateOrUpdateAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates the details of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='parameters'>
-            /// Update parameters.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            public static void Update(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch)
-            {
-                operations.UpdateAsync(resourceGroupName, serviceName, tagId, parameters, ifMatch).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the details of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='parameters'>
-            /// Update parameters.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task UpdateAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Deletes specific tag of the API Management service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            public static void Delete(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, string ifMatch)
-            {
-                operations.DeleteAsync(resourceGroupName, serviceName, tagId, ifMatch).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes specific tag of the API Management service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DeleteAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Lists all Tags associated with the API.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static IPage<TagContract> ListByApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>))
-            {
-                return operations.ListByApiAsync(resourceGroupName, serviceName, apiId, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all Tags associated with the API.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TagContract>> ListByApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets the entity state version of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            public static TagGetEntityStateByApiHeaders GetEntityStateByApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
-            {
-                return operations.GetEntityStateByApiAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets the entity state version of the tag specified by its identifier.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TagGetEntityStateByApiHeaders> GetEntityStateByApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetEntityStateByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Headers;
-                }
-            }
-
-            /// <summary>
-            /// Get tag associated with the API.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            public static TagContract GetByApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
-            {
-                return operations.GetByApiAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get tag associated with the API.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TagContract> GetByApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Assign tag to the Api.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. Not required when creating an entity, but required when
-            /// updating an entity.
-            /// </param>
-            public static TagContract AssignToApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch = default(string))
-            {
-                return operations.AssignToApiAsync(resourceGroupName, serviceName, apiId, tagId, ifMatch).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Assign tag to the Api.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. Not required when creating an entity, but required when
-            /// updating an entity.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<TagContract> AssignToApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.AssignToApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Detach the tag from the Api.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            public static void DetachFromApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch)
-            {
-                operations.DetachFromApiAsync(resourceGroupName, serviceName, apiId, tagId, ifMatch).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Detach the tag from the Api.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='apiId'>
-            /// API revision identifier. Must be unique in the current API Management
-            /// service instance. Non-current revision has ;rev=n as a suffix where n is
-            /// the revision number.
-            /// </param>
-            /// <param name='tagId'>
-            /// Tag identifier. Must be unique in the current API Management service
-            /// instance.
-            /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task DetachFromApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.DetachFromApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
             /// Lists all Tags associated with the Operation.
             /// </summary>
             /// <param name='operations'>
@@ -858,13 +243,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. Not required when creating an entity, but required when
-            /// updating an entity.
-            /// </param>
-            public static TagContract AssignToOperation(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, string ifMatch = default(string))
+            public static TagContract AssignToOperation(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId)
             {
-                return operations.AssignToOperationAsync(resourceGroupName, serviceName, apiId, operationId, tagId, ifMatch).GetAwaiter().GetResult();
+                return operations.AssignToOperationAsync(resourceGroupName, serviceName, apiId, operationId, tagId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -892,16 +273,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. Not required when creating an entity, but required when
-            /// updating an entity.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagContract> AssignToOperationAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagContract> AssignToOperationAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AssignToOperationWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AssignToOperationWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, tagId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -932,14 +309,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            public static void DetachFromOperation(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, string ifMatch)
+            public static void DetachFromOperation(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId)
             {
-                operations.DetachFromOperationAsync(resourceGroupName, serviceName, apiId, operationId, tagId, ifMatch).GetAwaiter().GetResult();
+                operations.DetachFromOperationAsync(resourceGroupName, serviceName, apiId, operationId, tagId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -967,17 +339,297 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DetachFromOperationAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DetachFromOperationWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, tagId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists all Tags associated with the API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            public static IPage<TagContract> ListByApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>))
+            {
+                return operations.ListByApiAsync(resourceGroupName, serviceName, apiId, odataQuery).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all Tags associated with the API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DetachFromOperationAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string tagId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TagContract>> ListByApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DetachFromOperationWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.ListByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the entity state version of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            public static TagGetEntityStateByApiHeaders GetEntityStateByApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
+            {
+                return operations.GetEntityStateByApiAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the entity state version of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagGetEntityStateByApiHeaders> GetEntityStateByApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEntityStateByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Get tag associated with the API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            public static TagContract GetByApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
+            {
+                return operations.GetByApiAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get tag associated with the API.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagContract> GetByApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Assign tag to the Api.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            public static TagContract AssignToApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
+            {
+                return operations.AssignToApiAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Assign tag to the Api.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagContract> AssignToApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AssignToApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detach the tag from the Api.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            public static void DetachFromApi(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId)
+            {
+                operations.DetachFromApiAsync(resourceGroupName, serviceName, apiId, tagId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detach the tag from the Api.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DetachFromApiAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string apiId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DetachFromApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, tagId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -1166,13 +818,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. Not required when creating an entity, but required when
-            /// updating an entity.
-            /// </param>
-            public static TagContract AssignToProduct(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId, string ifMatch = default(string))
+            public static TagContract AssignToProduct(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId)
             {
-                return operations.AssignToProductAsync(resourceGroupName, serviceName, productId, tagId, ifMatch).GetAwaiter().GetResult();
+                return operations.AssignToProductAsync(resourceGroupName, serviceName, productId, tagId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1195,16 +843,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. Not required when creating an entity, but required when
-            /// updating an entity.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagContract> AssignToProductAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TagContract> AssignToProductAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AssignToProductWithHttpMessagesAsync(resourceGroupName, serviceName, productId, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AssignToProductWithHttpMessagesAsync(resourceGroupName, serviceName, productId, tagId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1230,14 +874,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='ifMatch'>
-            /// ETag of the Entity. ETag should match the current entity state from the
-            /// header response of the GET request or it should be * for unconditional
-            /// update.
-            /// </param>
-            public static void DetachFromProduct(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId, string ifMatch)
+            public static void DetachFromProduct(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId)
             {
-                operations.DetachFromProductAsync(resourceGroupName, serviceName, productId, tagId, ifMatch).GetAwaiter().GetResult();
+                operations.DetachFromProductAsync(resourceGroupName, serviceName, productId, tagId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1260,6 +899,272 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Tag identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DetachFromProductAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DetachFromProductWithHttpMessagesAsync(resourceGroupName, serviceName, productId, tagId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists a collection of tags defined within a service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope like 'apis', 'products' or 'apis/{apiId}
+            /// </param>
+            public static IPage<TagContract> ListByService(this ITagOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), string scope = default(string))
+            {
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, scope).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists a collection of tags defined within a service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope like 'apis', 'products' or 'apis/{apiId}
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<TagContract>> ListByServiceAsync(this ITagOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagContract> odataQuery = default(ODataQuery<TagContract>), string scope = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, scope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the entity state version of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            public static TagGetEntityStateHeaders GetEntityState(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId)
+            {
+                return operations.GetEntityStateAsync(resourceGroupName, serviceName, tagId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the entity state version of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagGetEntityStateHeaders> GetEntityStateAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEntityStateWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Gets the details of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            public static TagContract Get(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId)
+            {
+                return operations.GetAsync(resourceGroupName, serviceName, tagId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the details of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagContract> GetAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates a tag.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static TagContract CreateOrUpdate(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch = default(string))
+            {
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, tagId, parameters, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates a tag.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TagContract> CreateOrUpdateAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates the details of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            public static void Update(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch)
+            {
+                operations.UpdateAsync(resourceGroupName, serviceName, tagId, parameters, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates the details of the tag specified by its identifier.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='parameters'>
+            /// Update parameters.
+            /// </param>
             /// <param name='ifMatch'>
             /// ETag of the Entity. ETag should match the current entity state from the
             /// header response of the GET request or it should be * for unconditional
@@ -1268,13 +1173,68 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DetachFromProductAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string productId, string tagId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, TagCreateUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DetachFromProductWithHttpMessagesAsync(resourceGroupName, serviceName, productId, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Lists a collection of tags defined within a service instance.
+            /// Deletes specific tag of the API Management service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            public static void Delete(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, string ifMatch)
+            {
+                operations.DeleteAsync(resourceGroupName, serviceName, tagId, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes specific tag of the API Management service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='tagId'>
+            /// Tag identifier. Must be unique in the current API Management service
+            /// instance.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this ITagOperations operations, string resourceGroupName, string serviceName, string tagId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, tagId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Lists all Tags associated with the Operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1282,13 +1242,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TagContract> ListByServiceNext(this ITagOperations operations, string nextPageLink)
+            public static IPage<TagContract> ListByOperationNext(this ITagOperations operations, string nextPageLink)
             {
-                return operations.ListByServiceNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByOperationNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists a collection of tags defined within a service instance.
+            /// Lists all Tags associated with the Operation.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -1299,9 +1259,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TagContract>> ListByServiceNextAsync(this ITagOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TagContract>> ListByOperationNextAsync(this ITagOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByOperationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1342,40 +1302,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all Tags associated with the Operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<TagContract> ListByOperationNext(this ITagOperations operations, string nextPageLink)
-            {
-                return operations.ListByOperationNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists all Tags associated with the Operation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<TagContract>> ListByOperationNextAsync(this ITagOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByOperationNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Lists all Tags associated with the Product.
             /// </summary>
             /// <param name='operations'>
@@ -1404,6 +1330,40 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task<IPage<TagContract>> ListByProductNextAsync(this ITagOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByProductNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists a collection of tags defined within a service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<TagContract> ListByServiceNext(this ITagOperations operations, string nextPageLink)
+            {
+                return operations.ListByServiceNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists a collection of tags defined within a service instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<TagContract>> ListByServiceNextAsync(this ITagOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByServiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
         /// 'QuotaLimitApproachingPublisherNotificationMessage'
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -340,23 +340,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "notificationName");
             }
-            if (uid == null)
+            if (userId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "uid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "userId");
             }
-            if (uid != null)
+            if (userId != null)
             {
-                if (uid.Length > 80)
+                if (userId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "uid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "userId", 80);
                 }
-                if (uid.Length < 1)
+                if (userId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "uid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "userId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(uid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "uid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -377,17 +377,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("notificationName", notificationName);
-                tracingParameters.Add("uid", uid);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckEntityExists", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}/recipientUsers/{uid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}/recipientUsers/{userId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{notificationName}", System.Uri.EscapeDataString(notificationName));
-            _url = _url.Replace("{uid}", System.Uri.EscapeDataString(uid));
+            _url = _url.Replace("{userId}", System.Uri.EscapeDataString(userId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -452,7 +452,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204 && (int)_statusCode != 404)
+            if ((int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -482,10 +482,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<bool>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
-            _result.Body = _statusCode == System.Net.HttpStatusCode.NoContent;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -515,7 +514,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
         /// 'QuotaLimitApproachingPublisherNotificationMessage'
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
@@ -540,7 +539,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RecipientUserContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RecipientUserContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -569,23 +568,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "notificationName");
             }
-            if (uid == null)
+            if (userId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "uid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "userId");
             }
-            if (uid != null)
+            if (userId != null)
             {
-                if (uid.Length > 80)
+                if (userId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "uid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "userId", 80);
                 }
-                if (uid.Length < 1)
+                if (userId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "uid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "userId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(uid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "uid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -606,17 +605,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("notificationName", notificationName);
-                tracingParameters.Add("uid", uid);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}/recipientUsers/{uid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}/recipientUsers/{userId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{notificationName}", System.Uri.EscapeDataString(notificationName));
-            _url = _url.Replace("{uid}", System.Uri.EscapeDataString(uid));
+            _url = _url.Replace("{userId}", System.Uri.EscapeDataString(userId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -778,7 +777,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
         /// 'QuotaLimitApproachingPublisherNotificationMessage'
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
@@ -800,7 +799,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -829,23 +828,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "notificationName");
             }
-            if (uid == null)
+            if (userId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "uid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "userId");
             }
-            if (uid != null)
+            if (userId != null)
             {
-                if (uid.Length > 80)
+                if (userId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "uid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "userId", 80);
                 }
-                if (uid.Length < 1)
+                if (userId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "uid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "userId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(uid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "uid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -866,17 +865,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("notificationName", notificationName);
-                tracingParameters.Add("uid", uid);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}/recipientUsers/{uid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/notifications/{notificationName}/recipientUsers/{userId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{notificationName}", System.Uri.EscapeDataString(notificationName));
-            _url = _url.Replace("{uid}", System.Uri.EscapeDataString(uid));
+            _url = _url.Replace("{userId}", System.Uri.EscapeDataString(userId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)

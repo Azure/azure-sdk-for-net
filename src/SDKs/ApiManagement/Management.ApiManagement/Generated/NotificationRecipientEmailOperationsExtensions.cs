@@ -102,9 +102,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='email'>
             /// Email identifier.
             /// </param>
-            public static bool CheckEntityExists(this INotificationRecipientEmailOperations operations, string resourceGroupName, string serviceName, string notificationName, string email)
+            public static void CheckEntityExists(this INotificationRecipientEmailOperations operations, string resourceGroupName, string serviceName, string notificationName, string email)
             {
-                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, notificationName, email).GetAwaiter().GetResult();
+                operations.CheckEntityExistsAsync(resourceGroupName, serviceName, notificationName, email).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -133,12 +133,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckEntityExistsAsync(this INotificationRecipientEmailOperations operations, string resourceGroupName, string serviceName, string notificationName, string email, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CheckEntityExistsAsync(this INotificationRecipientEmailOperations operations, string resourceGroupName, string serviceName, string notificationName, string email, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, email, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, email, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

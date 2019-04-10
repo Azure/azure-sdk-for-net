@@ -41,9 +41,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// When set to true, the response contains an array of groups that have
             /// visibility to the product. The default is false.
             /// </param>
-            public static IPage<ProductContract> ListByService(this IProductOperations operations, string resourceGroupName, string serviceName, ODataQuery<ProductContract> odataQuery = default(ODataQuery<ProductContract>), bool? expandGroups = default(bool?))
+            /// <param name='tags'>
+            /// Products which are part of a specific tag.
+            /// </param>
+            public static IPage<ProductContract> ListByService(this IProductOperations operations, string resourceGroupName, string serviceName, ODataQuery<ProductContract> odataQuery = default(ODataQuery<ProductContract>), bool? expandGroups = default(bool?), string tags = default(string))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, expandGroups).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, expandGroups, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -65,12 +68,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// When set to true, the response contains an array of groups that have
             /// visibility to the product. The default is false.
             /// </param>
+            /// <param name='tags'>
+            /// Products which are part of a specific tag.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ProductContract>> ListByServiceAsync(this IProductOperations operations, string resourceGroupName, string serviceName, ODataQuery<ProductContract> odataQuery = default(ODataQuery<ProductContract>), bool? expandGroups = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ProductContract>> ListByServiceAsync(this IProductOperations operations, string resourceGroupName, string serviceName, ODataQuery<ProductContract> odataQuery = default(ODataQuery<ProductContract>), bool? expandGroups = default(bool?), string tags = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, expandGroups, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, expandGroups, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -237,7 +243,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Update product.
+            /// Update existing product details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -266,7 +272,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Update product.
+            /// Update existing product details.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -359,6 +365,58 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Lists a collection of products associated with tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='includeNotTaggedProducts'>
+            /// Include not tagged Products.
+            /// </param>
+            public static IPage<TagResourceContract> ListByTags(this IProductOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedProducts = default(bool?))
+            {
+                return operations.ListByTagsAsync(resourceGroupName, serviceName, odataQuery, includeNotTaggedProducts).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists a collection of products associated with tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='includeNotTaggedProducts'>
+            /// Include not tagged Products.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<TagResourceContract>> ListByTagsAsync(this IProductOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedProducts = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByTagsWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, includeNotTaggedProducts, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists a collection of products in the specified service instance.
             /// </summary>
             /// <param name='operations'>
@@ -387,6 +445,40 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task<IPage<ProductContract>> ListByServiceNextAsync(this IProductOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByServiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists a collection of products associated with tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<TagResourceContract> ListByTagsNext(this IProductOperations operations, string nextPageLink)
+            {
+                return operations.ListByTagsNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists a collection of products associated with tags.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<TagResourceContract>> ListByTagsNextAsync(this IProductOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByTagsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -10,57 +10,23 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ResourceSkuCapacityScaleType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum ResourceSkuCapacityScaleType
+    public static class ResourceSkuCapacityScaleType
     {
-        [EnumMember(Value = "automatic")]
-        Automatic,
-        [EnumMember(Value = "manual")]
-        Manual,
-        [EnumMember(Value = "none")]
-        None
-    }
-    internal static class ResourceSkuCapacityScaleTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this ResourceSkuCapacityScaleType? value)
-        {
-            return value == null ? null : ((ResourceSkuCapacityScaleType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this ResourceSkuCapacityScaleType value)
-        {
-            switch( value )
-            {
-                case ResourceSkuCapacityScaleType.Automatic:
-                    return "automatic";
-                case ResourceSkuCapacityScaleType.Manual:
-                    return "manual";
-                case ResourceSkuCapacityScaleType.None:
-                    return "none";
-            }
-            return null;
-        }
-
-        internal static ResourceSkuCapacityScaleType? ParseResourceSkuCapacityScaleType(this string value)
-        {
-            switch( value )
-            {
-                case "automatic":
-                    return ResourceSkuCapacityScaleType.Automatic;
-                case "manual":
-                    return ResourceSkuCapacityScaleType.Manual;
-                case "none":
-                    return ResourceSkuCapacityScaleType.None;
-            }
-            return null;
-        }
+        /// <summary>
+        /// Supported scale type automatic.
+        /// </summary>
+        public const string Automatic = "automatic";
+        /// <summary>
+        /// Supported scale type manual.
+        /// </summary>
+        public const string Manual = "manual";
+        /// <summary>
+        /// Scaling not supported.
+        /// </summary>
+        public const string None = "none";
     }
 }

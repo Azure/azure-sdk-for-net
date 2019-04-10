@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='format'>
         /// Format in which to export the Api Details to the Storage Blob with
         /// Sas Key valid for 5 minutes. Possible values include: 'Swagger',
-        /// 'Wsdl', 'Wadl'
+        /// 'Wsdl', 'Wadl', 'OpenApi3'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

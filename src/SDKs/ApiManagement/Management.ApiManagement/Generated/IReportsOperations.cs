@@ -139,14 +139,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <summary>
         /// Lists report records by geography.
         /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -163,18 +163,18 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByGeoWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByGeoWithHttpMessagesAsync(ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists report records by subscription.
         /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='serviceName'>
         /// The name of the API Management service.
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -191,10 +191,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListBySubscriptionWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListBySubscriptionWithHttpMessagesAsync(ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists report records by Time.
         /// </summary>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -206,10 +209,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// not be zero. The value should be in ISO  8601 format
         /// (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be
         /// used to convert TimeSpan to a valid interval string:
-        /// XmlConvert.ToString(new TimeSpan(hours, minutes, seconds))
-        /// </param>
-        /// <param name='odataQuery'>
-        /// OData parameters to apply to the operation.
+        /// XmlConvert.ToString(new TimeSpan(hours, minutes, seconds)).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByTimeWithHttpMessagesAsync(string resourceGroupName, string serviceName, System.TimeSpan interval, ODataQuery<ReportRecordContract> odataQuery = default(ODataQuery<ReportRecordContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByTimeWithHttpMessagesAsync(ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, System.TimeSpan interval, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists report records by Request.
         /// </summary>

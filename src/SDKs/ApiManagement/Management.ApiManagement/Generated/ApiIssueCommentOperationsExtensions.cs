@@ -239,9 +239,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Create parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
-            /// update.
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
             /// </param>
             public static IssueCommentContract CreateOrUpdate(this IApiIssueCommentOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, IssueCommentContract parameters, string ifMatch = default(string))
             {
@@ -275,9 +274,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Create parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
-            /// update.
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -314,8 +312,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Comment identifier within an Issue. Must be unique in the current Issue.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
             public static void Delete(this IApiIssueCommentOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, string ifMatch)
@@ -347,8 +345,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Comment identifier within an Issue. Must be unique in the current Issue.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
             /// <param name='cancellationToken'>
