@@ -301,7 +301,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private static ConfigurationSetting CreateSetting(int i)
         {
-            return new ConfigurationSetting($"key{i}", "val") {  Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
+            return new ConfigurationSetting($"key{i}", "val") { Label = "label", ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1"), ContentType = "text" };
         }
 
         private void SerializeRequestSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
@@ -340,9 +340,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 }
                 json.WriteEndObject();
             }
-            if (setting.ETag != default) json.WriteString("etag", setting.ETag.ToString());
-            if (setting.LastModified.HasValue) json.WriteString("last_modified", setting.LastModified.Value.ToString());
-            if (setting.Locked.HasValue) json.WriteBoolean("locked", setting.Locked.Value);
+            if (setting.ETag != default)
+                json.WriteString("etag", setting.ETag.ToString());
+            if (setting.LastModified.HasValue)
+                json.WriteString("last_modified", setting.LastModified.Value.ToString());
+            if (setting.Locked.HasValue)
+                json.WriteBoolean("locked", setting.Locked.Value);
             json.WriteEndObject();
         }
 

@@ -105,6 +105,40 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         [Test]
+        public void SettingSomeFields()
+        {
+            var service = new ConfigurationClient(s_connectionString);
+
+            var selector = new SettingSelector("key")
+            {
+                Fields = SettingFields.Key | SettingFields.Value
+            };
+
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
+            service.BuildBatchQuery(builder, selector);
+
+            Assert.AreEqual($"http://localhost/?key=key&$select=key,%20value", builder.Uri.AbsoluteUri);
+        }
+
+        [Test]
+        public void SettingAllFields()
+        {
+            var service = new ConfigurationClient(s_connectionString);
+
+            var selector = new SettingSelector("key")
+            {
+                Fields = SettingFields.All
+            };
+
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
+            service.BuildBatchQuery(builder, selector);
+
+            Assert.AreEqual($"http://localhost/?key=key", builder.Uri.AbsoluteUri);
+        }
+
+        [Test]
         public void ConfigurationSettingEquals()
         {
             //Case tests
@@ -116,7 +150,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreNotEqual(testSettingUpperCase, testSettingLowerCase);
 
             var testSettingsameCase = s_testSetting.Clone();
-            Assert.AreEqual(testSettingsameCase, s_testSetting);
+            Assert.AreEqual(s_testSetting, testSettingsameCase);
 
             //Etag tests
             var testSettingEtagDiff = testSettingsameCase.Clone();
