@@ -106,7 +106,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (no live tests)'
-        condition: eq(variables['System.TeamProject'], 'playground')
+        condition: eq(variables['System.TeamProject'], 'public')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -119,7 +119,7 @@ jobs:
 
       - task: DotNetCoreCLI@2
         displayName: 'Build & Test (with live tests)'
-        condition: ne(variables['System.TeamProject'], 'playground')
+        condition: ne(variables['System.TeamProject'], 'public')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
