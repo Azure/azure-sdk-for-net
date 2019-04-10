@@ -14,7 +14,7 @@ namespace Microsoft.Azure.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Ingest fragment dropped event event data.
+    /// Ingest fragment dropped event data.
     /// </summary>
     public partial class MediaLiveEventIngestHeartbeatEventData
     {
