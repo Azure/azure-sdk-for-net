@@ -15,11 +15,14 @@ namespace Azure.Base.Http.Pipeline
         {
             await ProcessNextAsync(pipeline, message);
 
-            Stream responseContentStream = message.Response.ResponseContentStream;
-            var bufferedStream = new MemoryStream();
-            await responseContentStream.CopyToAsync(bufferedStream);
-            bufferedStream.Position = 0;
-            message.Response.ResponseContentStream = bufferedStream;
+            if (message.Response.ResponseContentStream != null)
+            {
+                Stream responseContentStream = message.Response.ResponseContentStream;
+                var bufferedStream = new MemoryStream();
+                await responseContentStream.CopyToAsync(bufferedStream);
+                bufferedStream.Position = 0;
+                message.Response.ResponseContentStream = bufferedStream;
+            }
         }
     }
 }
