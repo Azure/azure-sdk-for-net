@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
     using System.Linq;
 
     /// <summary>
-    /// SSIS package exection log location
+    /// SSIS package execution log location
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class SSISLogLocation
