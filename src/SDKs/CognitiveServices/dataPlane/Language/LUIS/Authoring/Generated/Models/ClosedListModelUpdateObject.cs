@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Object model for updating a closed list.
+    /// Object model for updating a list entity.
     /// </summary>
     public partial class ClosedListModelUpdateObject
     {
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// class.
         /// </summary>
         /// <param name="subLists">The new sublists for the feature.</param>
-        /// <param name="name">The new name of the closed list feature.</param>
+        /// <param name="name">The new name of the list entity.</param>
         public ClosedListModelUpdateObject(IList<WordListObject> subLists = default(IList<WordListObject>), string name = default(string))
         {
             SubLists = subLists;
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public IList<WordListObject> SubLists { get; set; }
 
         /// <summary>
-        /// Gets or sets the new name of the closed list feature.
+        /// Gets or sets the new name of the list entity.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

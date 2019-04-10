@@ -46,14 +46,15 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string msiSecret = Environment.GetEnvironmentVariable("MSI_SECRET");
                 var isAppServicesMsiAvailable = !string.IsNullOrWhiteSpace(msiEndpoint) && !string.IsNullOrWhiteSpace(msiSecret);
 
-                // If managed identity is specified, include client_id parameter in request
+                // If managed identity is specified, include client ID parameter in request
+                string clientIdParameterName = isAppServicesMsiAvailable ? "clientid" : "client_id";
                 string clientIdParameter = _managedIdentityClientId != default(string)
-                    ? $"&client_id={_managedIdentityClientId}"
+                    ? $"&{clientIdParameterName}={_managedIdentityClientId}"
                     : string.Empty;
 
                 // Craft request as per the MSI protocol
                 var requestUrl = isAppServicesMsiAvailable
-                    ? $"{msiEndpoint}?resource={resource}&api-version=2017-09-01"
+                    ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2017-09-01"
                     : $"{AzureVmIdmsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
 
                 // Use the httpClient specified in the constructor. If it was not specified in the constructor, use the default httpclient. 

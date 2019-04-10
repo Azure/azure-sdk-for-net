@@ -225,9 +225,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IEnumerable<Topic> ListBySubscription(this ITopicsOperations operations)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            public static IPage<Topic> ListBySubscription(this ITopicsOperations operations, string filter = default(string), int? top = default(int?))
             {
-                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync(filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -239,12 +245,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Topic>> ListBySubscriptionAsync(this ITopicsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Topic>> ListBySubscriptionAsync(this ITopicsOperations operations, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -262,9 +274,15 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
-            public static IEnumerable<Topic> ListByResourceGroup(this ITopicsOperations operations, string resourceGroupName)
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
+            public static IPage<Topic> ListByResourceGroup(this ITopicsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?))
             {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
+                return operations.ListByResourceGroupAsync(resourceGroupName, filter, top).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -279,12 +297,18 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='resourceGroupName'>
             /// The name of the resource group within the user's subscription.
             /// </param>
+            /// <param name='filter'>
+            /// Filter the results using OData syntax.
+            /// </param>
+            /// <param name='top'>
+            /// The number of results to return.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<Topic>> ListByResourceGroupAsync(this ITopicsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Topic>> ListByResourceGroupAsync(this ITopicsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, filter, top, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -588,6 +612,86 @@ namespace Microsoft.Azure.Management.EventGrid
             public static async Task<Topic> BeginUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string topicName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, topicName, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List topics under an Azure subscription
+            /// </summary>
+            /// <remarks>
+            /// List all the topics under an Azure subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Topic> ListBySubscriptionNext(this ITopicsOperations operations, string nextPageLink)
+            {
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List topics under an Azure subscription
+            /// </summary>
+            /// <remarks>
+            /// List all the topics under an Azure subscription
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Topic>> ListBySubscriptionNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// List topics under a resource group
+            /// </summary>
+            /// <remarks>
+            /// List all the topics under a resource group
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Topic> ListByResourceGroupNext(this ITopicsOperations operations, string nextPageLink)
+            {
+                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// List topics under a resource group
+            /// </summary>
+            /// <remarks>
+            /// List all the topics under a resource group
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Topic>> ListByResourceGroupNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

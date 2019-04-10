@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
     /// <summary>
     /// The payload for a Configure HTTP settings request.
     /// </summary>
+    [System.Obsolete("This type is deprecated. Please use GatewaySettings instead.")]
     public partial class HttpConnectivitySettings
     {
         /// <summary>

@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
                     connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};{thumbprintOrSubjectName};CertificateStoreLocation={Constants.CurrentUserStore};";
                     break;
                 case CertIdentifierType.KeyVaultCertificateSecretIdentifier:
-                    connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};CertificateKeyVaultCertificateSecretIdentifier={testCertUrl};";
+                    connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};KeyVaultSecretIdentifier={testCertUrl};";
                     break;
             }
             

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// The status of the last successfull slot swap operation.
+    /// The status of the last successful slot swap operation.
     /// </summary>
     public partial class SlotSwapStatus
     {

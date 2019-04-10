@@ -43,10 +43,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// rules.</param>
         /// <param name="frontendEndpoints">Frontend endpoints available to
         /// routing rules.</param>
+        /// <param name="backendPoolsSettings">Settings for all
+        /// backendPools</param>
         /// <param name="enabledState">Operational status of the Front Door
         /// load balancer. Permitted values are 'Enabled' or 'Disabled'.
         /// Possible values include: 'Enabled', 'Disabled'</param>
-        public FrontDoorUpdateParameters(string friendlyName = default(string), IList<RoutingRule> routingRules = default(IList<RoutingRule>), IList<LoadBalancingSettingsModel> loadBalancingSettings = default(IList<LoadBalancingSettingsModel>), IList<HealthProbeSettingsModel> healthProbeSettings = default(IList<HealthProbeSettingsModel>), IList<BackendPool> backendPools = default(IList<BackendPool>), IList<FrontendEndpoint> frontendEndpoints = default(IList<FrontendEndpoint>), string enabledState = default(string))
+        public FrontDoorUpdateParameters(string friendlyName = default(string), IList<RoutingRule> routingRules = default(IList<RoutingRule>), IList<LoadBalancingSettingsModel> loadBalancingSettings = default(IList<LoadBalancingSettingsModel>), IList<HealthProbeSettingsModel> healthProbeSettings = default(IList<HealthProbeSettingsModel>), IList<BackendPool> backendPools = default(IList<BackendPool>), IList<FrontendEndpoint> frontendEndpoints = default(IList<FrontendEndpoint>), BackendPoolsSettings backendPoolsSettings = default(BackendPoolsSettings), string enabledState = default(string))
         {
             FriendlyName = friendlyName;
             RoutingRules = routingRules;
@@ -54,6 +56,7 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
             HealthProbeSettings = healthProbeSettings;
             BackendPools = backendPools;
             FrontendEndpoints = frontendEndpoints;
+            BackendPoolsSettings = backendPoolsSettings;
             EnabledState = enabledState;
             CustomInit();
         }
@@ -100,6 +103,12 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// </summary>
         [JsonProperty(PropertyName = "frontendEndpoints")]
         public IList<FrontendEndpoint> FrontendEndpoints { get; set; }
+
+        /// <summary>
+        /// Gets or sets settings for all backendPools
+        /// </summary>
+        [JsonProperty(PropertyName = "backendPoolsSettings")]
+        public BackendPoolsSettings BackendPoolsSettings { get; set; }
 
         /// <summary>
         /// Gets or sets operational status of the Front Door load balancer.

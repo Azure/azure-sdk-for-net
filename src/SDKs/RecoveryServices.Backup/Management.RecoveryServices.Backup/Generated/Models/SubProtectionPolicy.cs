@@ -29,7 +29,9 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Initializes a new instance of the SubProtectionPolicy class.
         /// </summary>
-        /// <param name="policyType">Type of backup policy type</param>
+        /// <param name="policyType">Type of backup policy type. Possible
+        /// values include: 'Invalid', 'Full', 'Differential', 'Log',
+        /// 'CopyOnlyFull'</param>
         /// <param name="schedulePolicy">Backup schedule specified as part of
         /// backup policy.</param>
         /// <param name="retentionPolicy">Retention policy with the details on
@@ -48,7 +50,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of backup policy type
+        /// Gets or sets type of backup policy type. Possible values include:
+        /// 'Invalid', 'Full', 'Differential', 'Log', 'CopyOnlyFull'
         /// </summary>
         [JsonProperty(PropertyName = "policyType")]
         public string PolicyType { get; set; }

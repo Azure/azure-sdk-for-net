@@ -58,6 +58,55 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
 
 
         /// <summary>
+        /// The API returns the detected language and a numeric score between 0
+        /// and 1.
+        /// </summary>
+        /// <remarks>
+        /// Scores close to 1 indicate 100% certainty that the identified
+        /// language is true. A total of 120 languages are supported.
+        /// </remarks>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document
+        /// level statistics.
+        /// </param>
+        /// <param name='languageBatchInput'>
+        /// Collection of documents to analyze.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<LanguageBatchResult>> DetectLanguageWithHttpMessagesAsync(bool? showStats = default(bool?), LanguageBatchInput languageBatchInput = default(LanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// The API returns a list of recognized entities in a given document.
+        /// </summary>
+        /// <remarks>
+        /// To get even more information on each recognized entity we recommend
+        /// using the Bing Entity Search API by querying for the recognized
+        /// entities names. See the &lt;a
+        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
+        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
+        /// languages.
+        /// </remarks>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document
+        /// level statistics.
+        /// </param>
+        /// <param name='multiLanguageBatchInput'>
+        /// Collection of documents to analyze.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<EntitiesBatchResult>> EntitiesWithHttpMessagesAsync(bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
         /// The API returns a list of strings denoting the key talking points
         /// in the input text.
         /// </summary>
@@ -67,7 +116,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// Analytics Documentation&lt;/a&gt; for details about the languages
         /// that are supported by key phrase extraction.
         /// </remarks>
-        /// <param name='input'>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document
+        /// level statistics.
+        /// </param>
+        /// <param name='multiLanguageBatchInput'>
         /// Collection of documents to analyze. Documents can now contain a
         /// language field to indicate the text language
         /// </param>
@@ -77,26 +130,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<KeyPhraseBatchResult>> KeyPhrasesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// The API returns the detected language and a numeric score between 0
-        /// and 1.
-        /// </summary>
-        /// <remarks>
-        /// Scores close to 1 indicate 100% certainty that the identified
-        /// language is true. A total of 120 languages are supported.
-        /// </remarks>
-        /// <param name='input'>
-        /// Collection of documents to analyze.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<LanguageBatchResult>> DetectLanguageWithHttpMessagesAsync(BatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<KeyPhraseBatchResult>> KeyPhrasesWithHttpMessagesAsync(bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// The API returns a numeric score between 0 and 1.
@@ -109,7 +143,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// Analytics Documentation&lt;/a&gt; for details about the languages
         /// that are supported by sentiment analysis.
         /// </remarks>
-        /// <param name='input'>
+        /// <param name='showStats'>
+        /// (optional) if set to true, response will contain input and document
+        /// level statistics.
+        /// </param>
+        /// <param name='multiLanguageBatchInput'>
         /// Collection of documents to analyze.
         /// </param>
         /// <param name='customHeaders'>
@@ -118,43 +156,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<SentimentBatchResult>> SentimentWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <summary>
-        /// The API returns a list of recognized entities in a given document.
-        /// </summary>
-        /// <remarks>
-        /// The API returns a list of recognized entities in a given document.
-        /// To get even more information on each recognized entity we recommend
-        /// using the Bing Entity Search API by querying for the recognized
-        /// entities names. See the &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
-        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
-        /// languages.The API returns a list of known entities and general
-        /// named entities ("Person", "Location", "Organization" etc) in a
-        /// given document. Known entities are returned with Wikipedia Id and
-        /// Wikipedia link, and also Bing Id which can be used in Bing Entity
-        /// Search API. General named entities are returned with entity types.
-        /// If a general named entity is also a known entity, then all
-        /// information regarding it (Wikipedia Id, Bing Id, entity type etc)
-        /// will be returned. See the &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/how-tos/text-analytics-how-to-entity-linking#supported-types-for-named-entity-recognition"&gt;Supported
-        /// Entity Types in Text Analytics API&lt;/a&gt; for the list of
-        /// supported Entity Types. See the &lt;a
-        /// href="https://docs.microsoft.com/en-us/azure/cognitive-services/text-analytics/text-analytics-supported-languages"&gt;Supported
-        /// languages in Text Analytics API&lt;/a&gt; for the list of enabled
-        /// languages.
-        /// </remarks>
-        /// <param name='input'>
-        /// Collection of documents to analyze.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<EntitiesBatchResultV2dot1>> EntitiesWithHttpMessagesAsync(MultiLanguageBatchInput input, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<SentimentBatchResult>> SentimentWithHttpMessagesAsync(bool? showStats = default(bool?), MultiLanguageBatchInput multiLanguageBatchInput = default(MultiLanguageBatchInput), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

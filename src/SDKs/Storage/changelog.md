@@ -1,5 +1,40 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 11.0.0
+
+- Upgrade to rest api version 2019-04-01
+- Support Revoke UserDelegationKeys on a specified Storage account
+- Support Enable/Disable Automatic Snapshot Policy on Blob Service Properties of a specified Storage account 
+
+**Breaking changes**
+
+- Change the type of StorageAccount.Kind, StorageAccountCreateParameters.Kind, StorageAccountUpdateParameters.Kind, from enum to string.
+- Change the type of StorageAccount.Sku.Name, StorageAccountCreateParameters.Sku.Name, StorageAccountUpdateParameters.Sku.Name, from enum to string.
+
+### Changes in 10.0.0
+
+- Microsoft.Azure.Management.Storage SDK is GA
+- Upgrade to rest api version 2018-11-01
+
+**Breaking changes**
+
+- Change input parameter of StorageManagementClient.ManagementPolicies.CreateOrUpdate(), the input policy change from Json to ManagementPolicySchema object
+- Change output of StorageManagementClient.StorageAccounts.GetManagementPolicies(), the output policy change from Json to ManagementPolicySchema object
+
+### Changes in 9.2.0-preview
+
+- Add "CanFailover" to Storage Account Expend Property GeoReplicationStats
+
+**Breaking changes**
+
+- Change StorageAccountCreateParameters.CustomDomain.UseSubDomain to StorageAccountCreateParameters.CustomDomain.UseSubDomainName
+- Change StorageAccountUpdateParameters.CustomDomain.UseSubDomain to StorageAccountUpdateParameters.CustomDomain.UseSubDomainName
+
+### Changes in 9.1.0-preview
+
+- Support trigger Storage Account Failover on RA-GRS accounts, in case of availability issues.
+- Support expand the properties of get Storage Accounts, to get Account geoReplicationStats.
+
 ### Changes in 9.0.0-preview
 
 - Upgrade to rest api version 2018-07-01 (ManagementPolicies API still use 2018-03-01-preview)

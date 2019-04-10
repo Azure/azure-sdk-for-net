@@ -42,10 +42,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
         /// <param name="usageThreshold">usageThreshold</param>
+        /// <param name="exportPolicy">Export policy rule</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="subnetId">The Azure Resource URI for a delegated
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
-        public Volume(string location, string creationToken, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), long? usageThreshold = default(long?), string provisioningState = default(string), string subnetId = default(string))
+        public Volume(string location, string creationToken, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), long? usageThreshold = default(long?), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), string provisioningState = default(string), string subnetId = default(string))
         {
             Location = location;
             Id = id;
@@ -56,6 +57,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             CreationToken = creationToken;
             ServiceLevel = serviceLevel;
             UsageThreshold = usageThreshold;
+            ExportPolicy = exportPolicy;
             ProvisioningState = provisioningState;
             SubnetId = subnetId;
             CustomInit();
@@ -119,7 +121,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <remarks>
         /// The service level of the file system. Possible values include:
-        /// 'Standard', 'Premium', 'Extreme'
+        /// 'Standard', 'Premium', 'Ultra'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.serviceLevel")]
         public string ServiceLevel { get; set; }
@@ -134,6 +136,12 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.usageThreshold")]
         public long? UsageThreshold { get; set; }
+
+        /// <summary>
+        /// Gets or sets export policy rule
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.exportPolicy")]
+        public VolumePropertiesExportPolicy ExportPolicy { get; set; }
 
         /// <summary>
         /// Gets azure lifecycle management

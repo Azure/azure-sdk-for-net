@@ -1,6 +1,8 @@
 ﻿namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Tests
 {
     using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training;
+    using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Tests;
     using System;
     using System.IO;
     using System.Net.Http;
@@ -9,13 +11,18 @@
     public abstract class BaseTests
     {
         private static readonly string PredictionKey = string.Empty;
-        protected static readonly Guid ProjectId;
+        private const string Endpoint = "https://southcentralus.api.cognitive.microsoft.com";
+
+        protected static readonly Guid ClassificationProjectId = Guid.Parse("eac7b96a-c848-4b83-a920-c834407c4f80");
+        protected static readonly Guid ObjectDetectionProjectId = Guid.Parse("7bbd16f5-6511-424e-81ac-e06bb54348d1");
+
+        protected static readonly string ClassificationPublishedName = ProjectBuilderHelper.ClassificationPublishName;
+        protected static readonly string ObjDetectionPublishedName = ProjectBuilderHelper.ObjDetectionPublishName;
+
         protected static HttpRecorderMode RecorderMode = HttpRecorderMode.Playback;
 
         static BaseTests()
         {
-            ProjectId = Guid.Parse("32cb8dd6-19f8-4f08-afef-360b2e46274e");
-
 #if RECORD_MODE
             PredictionKey = "";
 
@@ -24,6 +31,16 @@
 
             var executingAssemblyPath = new Uri(typeof(BaseTests).GetTypeInfo().Assembly.CodeBase);
             HttpMockServer.RecordsDirectory = Path.Combine(Path.GetDirectoryName(executingAssemblyPath.AbsolutePath), @"..\..\..\SessionRecords");
+
+            ICustomVisionTrainingClient trainingClient = new CustomVisionTrainingClient();
+            trainingClient.ApiKey = "";
+            trainingClient.Endpoint = Endpoint;
+
+            HttpMockServer.Initialize(typeof(BaseTests).Name, "Unused", RecorderMode);
+
+            var predictionResourceId = "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.CognitiveServices/accounts/{predictionResourceName}";
+            ClassificationProjectId = ProjectBuilderHelper.CreateTrainedImageClassificationProject(trainingClient, predictionResourceId).ProjectId;
+            ObjectDetectionProjectId = ProjectBuilderHelper.CreateTrainedObjDetectionProject(trainingClient, predictionResourceId).ProjectId;
 #endif
         }
 
@@ -32,7 +49,7 @@
             ICustomVisionPredictionClient client = new CustomVisionPredictionClient(handlers: HttpMockServer.CreateInstance())
             {
                 ApiKey = PredictionKey,
-                Endpoint = "https://southcentralus.api.cognitive.microsoft.com"
+                Endpoint = Endpoint
             };
 
             return client;

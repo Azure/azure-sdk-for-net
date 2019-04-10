@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
@@ -22,19 +24,20 @@ namespace Compute.Tests.DiskRPTests
         /// a valid keyvault is needed for this test
         /// encrypted disk will be retrievable through the encryptionkeyuri
         /// </summary>
-        [Fact(Skip = "skipping positive test")]
+        [Fact]
         public void DiskEncryptionPositiveTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 EnsureClientsInitialized(context);
-                string testVaultId = @"/subscriptions/" + m_CrpClient.SubscriptionId + "/resourceGroups/diskrplonglived/providers/Microsoft.KeyVault/vaults/swaggerkeyvault";
-                string encryptionKeyUri = @"https://swaggerkeyvault.vault.azure.net/secrets/swaggersecret/5684fd3915004bf39bda23df2d21b088";
+                string testVaultId = @"/subscriptions/" + m_CrpClient.SubscriptionId + "/resourceGroups/24/providers/Microsoft.KeyVault/vaults/swagger";
+                string encryptionKeyUri = @"https://swagger.vault.azure.net/keys/swagger-key/9b47c354b4fe4f24a1059a97ad1c5727";
+                string secretUri = @"https://swagger.vault.azure.net/secrets/swagger-secret/95112a1a98c04e7eaba960265fc54897";
 
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
-                disk.EncryptionSettings = GetDiskEncryptionSettings(testVaultId, encryptionKeyUri);
+                disk.EncryptionSettingsCollection = GetDiskEncryptionSettings(testVaultId, encryptionKeyUri, secretUri);
                 disk.Location = DiskRPLocation;
 
                 try
@@ -45,8 +48,10 @@ namespace Compute.Tests.DiskRPTests
                     Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
 
                     Validate(disk, diskOut, disk.Location);
-                    Assert.Equal(disk.EncryptionSettings.DiskEncryptionKey.SecretUrl, diskOut.EncryptionSettings.DiskEncryptionKey.SecretUrl);
-                    Assert.Equal(disk.EncryptionSettings.DiskEncryptionKey.SourceVault.Id, diskOut.EncryptionSettings.DiskEncryptionKey.SourceVault.Id);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SecretUrl, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SecretUrl);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SourceVault.Id, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SourceVault.Id);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.KeyUrl, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.KeyUrl);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.SourceVault.Id, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.SourceVault.Id);
                     m_CrpClient.Disks.Delete(rgName, diskName);
                 }
                 finally
@@ -69,7 +74,7 @@ namespace Compute.Tests.DiskRPTests
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateDefaultDisk(DiskCreateOption.Empty, rgName, 10);
-                disk.EncryptionSettings = GetDiskEncryptionSettings(fakeTestVaultId, fakeEncryptionKeyUri);
+                disk.EncryptionSettingsCollection = GetDiskEncryptionSettings(fakeTestVaultId, fakeEncryptionKeyUri, fakeEncryptionKeyUri);
                 disk.Location = DiskRPLocation;
 
                 try
@@ -81,8 +86,10 @@ namespace Compute.Tests.DiskRPTests
                     Disk diskOut = m_CrpClient.Disks.Get(rgName, diskName);
 
                     Validate(disk, diskOut, disk.Location);
-                    Assert.Equal(disk.EncryptionSettings.DiskEncryptionKey.SecretUrl, diskOut.EncryptionSettings.DiskEncryptionKey.SecretUrl);
-                    Assert.Equal(disk.EncryptionSettings.DiskEncryptionKey.SourceVault.Id, diskOut.EncryptionSettings.DiskEncryptionKey.SourceVault.Id);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SecretUrl, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SecretUrl);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SourceVault.Id, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().DiskEncryptionKey.SourceVault.Id);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.KeyUrl, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.KeyUrl);
+                    Assert.Equal(disk.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.SourceVault.Id, diskOut.EncryptionSettingsCollection.EncryptionSettings.First().KeyEncryptionKey.SourceVault.Id);
                     m_CrpClient.Disks.Delete(rgName, diskName);
                 }
                 catch(CloudException ex)
@@ -99,17 +106,31 @@ namespace Compute.Tests.DiskRPTests
             }
         }
 
-        private EncryptionSettings GetDiskEncryptionSettings(string testVaultId, string encryptionKeyUri, bool setEnabled = true)
+        private EncryptionSettingsCollection GetDiskEncryptionSettings(string testVaultId, string encryptionKeyUri, string secretUri, bool setEnabled = true)
         {
-            EncryptionSettings diskEncryptionSettings = new EncryptionSettings
+            EncryptionSettingsCollection diskEncryptionSettings = new EncryptionSettingsCollection
             {
                 Enabled = true,
-                DiskEncryptionKey = new KeyVaultAndSecretReference
+                EncryptionSettings = new List<EncryptionSettingsElement>
                 {
-                    SecretUrl = encryptionKeyUri,
-                    SourceVault = new SourceVault
+                    new EncryptionSettingsElement
                     {
-                        Id = testVaultId
+                        DiskEncryptionKey = new KeyVaultAndSecretReference
+                        {
+                            SecretUrl = secretUri,
+                            SourceVault = new SourceVault
+                            {
+                                Id = testVaultId
+                            }
+                        },
+                        KeyEncryptionKey = new KeyVaultAndKeyReference
+                        {
+                            KeyUrl = encryptionKeyUri,
+                            SourceVault = new SourceVault
+                            {
+                                Id = testVaultId
+                            }
+                        }
                     }
                 }
             };

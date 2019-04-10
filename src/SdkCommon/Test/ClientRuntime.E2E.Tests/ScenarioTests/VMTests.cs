@@ -11,15 +11,10 @@ namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Rest.ClientRuntime.E2E.Tests.TestAssets;
     using Rest.Azure;
-    using System.Net;
-    using Xunit;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
     using System;
-    using System.Net.Http;
-    using Microsoft.Azure.Test.HttpRecorder;
-    using System.Reflection;
-    using System.IO;
+    using System.Diagnostics;
+    using System.Threading.Tasks;
+    using Xunit;
 
     public class VMTests : E2ETestBase
     {

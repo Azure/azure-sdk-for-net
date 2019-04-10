@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting. Possible values include: 'MCAS', 'WDATP'
+            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
             /// </param>
             public static Setting Get(this ISettingsOperations operations, string settingName)
             {
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting. Possible values include: 'MCAS', 'WDATP'
+            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -90,14 +90,15 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting. Possible values include: 'MCAS', 'WDATP'
+            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
             /// </param>
-            /// <param name='setting'>
-            /// Setting object
+            /// <param name='kind'>
+            /// the kind of the settings string (DataExportSetting). Possible values
+            /// include: 'DataExportSetting', 'AlertSuppressionSetting'
             /// </param>
-            public static Setting Update(this ISettingsOperations operations, string settingName, Setting setting)
+            public static Setting Update(this ISettingsOperations operations, string settingName, string kind)
             {
-                return operations.UpdateAsync(settingName, setting).GetAwaiter().GetResult();
+                return operations.UpdateAsync(settingName, kind).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,17 +108,18 @@ namespace Microsoft.Azure.Management.Security
             /// The operations group for this extension method.
             /// </param>
             /// <param name='settingName'>
-            /// Name of setting. Possible values include: 'MCAS', 'WDATP'
+            /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
             /// </param>
-            /// <param name='setting'>
-            /// Setting object
+            /// <param name='kind'>
+            /// the kind of the settings string (DataExportSetting). Possible values
+            /// include: 'DataExportSetting', 'AlertSuppressionSetting'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Setting> UpdateAsync(this ISettingsOperations operations, string settingName, Setting setting, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Setting> UpdateAsync(this ISettingsOperations operations, string settingName, string kind, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(settingName, setting, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(settingName, kind, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

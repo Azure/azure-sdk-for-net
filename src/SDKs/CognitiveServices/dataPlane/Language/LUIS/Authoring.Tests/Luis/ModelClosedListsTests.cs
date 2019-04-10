@@ -16,9 +16,9 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
-                var result = await client.Model.ListClosedListsAsync(appId, versionId);
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
+                var result = await client.Model.ListClosedListsAsync(GlobalAppId, versionId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 Assert.NotEmpty(result);
             });
@@ -29,8 +29,8 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 Assert.True(listId != Guid.Empty);
             });
@@ -41,9 +41,9 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
-                var list = await client.Model.GetClosedListAsync(appId, versionId, listId);
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
+                var list = await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 // Assert
                 Assert.Equal("States", list.Name);
@@ -56,7 +56,7 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
                 var update = new ClosedListModelUpdateObject()
                 {
                     Name = "New States",
@@ -70,10 +70,10 @@
                     }
                 };
 
-                await client.Model.UpdateClosedListAsync(appId, versionId, listId, update);
-                var updated = await client.Model.GetClosedListAsync(appId, versionId, listId);
+                await client.Model.UpdateClosedListAsync(GlobalAppId, versionId, listId, update);
+                var updated = await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId);
 
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 Assert.Equal("New States", updated.Name);
                 Assert.Equal(1, updated.SubLists.Count);
@@ -86,10 +86,10 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
-                var lists = await client.Model.ListClosedListsAsync(appId, versionId);
+                var lists = await client.Model.ListClosedListsAsync(GlobalAppId, versionId);
 
                 Assert.DoesNotContain(lists, o => o.Id == listId);
             });
@@ -100,9 +100,9 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
 
-                await client.Model.PatchClosedListAsync(appId, versionId, listId, new ClosedListModelPatchObject
+                await client.Model.PatchClosedListAsync(GlobalAppId, versionId, listId, new ClosedListModelPatchObject
                 {
                     SubLists = new List<WordListObject>()
                     {
@@ -119,8 +119,8 @@
                     }
                 });
 
-                var list = await client.Model.GetClosedListAsync(appId, versionId, listId);
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var list = await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 Assert.Equal(5, list.SubLists.Count);
                 Assert.Contains(list.SubLists, o => o.CanonicalForm == "Texas" && o.List.Contains("tx") && o.List.Contains("texas"));
@@ -133,16 +133,16 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
 
-                var sublistId = await client.Model.AddSubListAsync(appId, versionId, listId, new WordListObject()
+                var sublistId = await client.Model.AddSubListAsync(GlobalAppId, versionId, listId, new WordListObject()
                 {
                     CanonicalForm = "Texas",
                     List = new List<string>() { "tx", "texas" }
                 });
 
-                var list = await client.Model.GetClosedListAsync(appId, versionId, listId);
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var list = await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 Assert.Equal(4, list.SubLists.Count);
                 Assert.Contains(list.SubLists, o => o.CanonicalForm == "Texas" && o.List.Contains("tx") && o.List.Contains("texas"));
@@ -154,13 +154,13 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
-                var sublistId = (await client.Model.GetClosedListAsync(appId, versionId, listId)).SubLists.Single(o => o.CanonicalForm == "New York").Id;
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
+                var sublistId = (await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId)).SubLists.Single(o => o.CanonicalForm == "New York").Id;
 
-                await client.Model.DeleteSubListAsync(appId, versionId, listId, sublistId);
+                await client.Model.DeleteSubListAsync(GlobalAppId, versionId, listId, sublistId);
 
-                var list = await client.Model.GetClosedListAsync(appId, versionId, listId);
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var list = await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 Assert.Equal(2, list.SubLists.Count);
                 Assert.DoesNotContain(list.SubLists, o => o.CanonicalForm == "New York");
@@ -172,17 +172,17 @@
         {
             UseClientFor(async client =>
             {
-                var listId = await client.Model.AddClosedListAsync(appId, versionId, GetClosedListSample());
-                var sublistId = (await client.Model.GetClosedListAsync(appId, versionId, listId)).SubLists.Single(o => o.CanonicalForm == "New York").Id;
+                var listId = await client.Model.AddClosedListAsync(GlobalAppId, versionId, GetClosedListSample());
+                var sublistId = (await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId)).SubLists.Single(o => o.CanonicalForm == "New York").Id;
 
-                await client.Model.UpdateSubListAsync(appId, versionId, listId, sublistId, new WordListBaseUpdateObject()
+                await client.Model.UpdateSubListAsync(GlobalAppId, versionId, listId, sublistId, new WordListBaseUpdateObject()
                 {
                     CanonicalForm = "New Yorkers",
                     List = new List<string>() { "NYC", "NY", "New York" },
                 });
 
-                var list = await client.Model.GetClosedListAsync(appId, versionId, listId);
-                await client.Model.DeleteClosedListAsync(appId, versionId, listId);
+                var list = await client.Model.GetClosedListAsync(GlobalAppId, versionId, listId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, versionId, listId);
 
                 Assert.Equal(3, list.SubLists.Count);
                 Assert.DoesNotContain(list.SubLists, o => o.CanonicalForm == "New York");

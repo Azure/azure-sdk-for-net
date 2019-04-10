@@ -37,13 +37,15 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <param name="endDate">End date.</param>
         /// <param name="keyId">Key ID.</param>
         /// <param name="value">Key value.</param>
-        public PasswordCredential(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string keyId = default(string), string value = default(string))
+        /// <param name="customKeyIdentifier">Custom Key Identifier</param>
+        public PasswordCredential(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string keyId = default(string), string value = default(string), byte[] customKeyIdentifier = default(byte[]))
         {
             AdditionalProperties = additionalProperties;
             StartDate = startDate;
             EndDate = endDate;
             KeyId = keyId;
             Value = value;
+            CustomKeyIdentifier = customKeyIdentifier;
             CustomInit();
         }
 
@@ -82,6 +84,12 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets custom Key Identifier
+        /// </summary>
+        [JsonProperty(PropertyName = "customKeyIdentifier")]
+        public byte[] CustomKeyIdentifier { get; set; }
 
     }
 }

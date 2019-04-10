@@ -23,8 +23,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public partial interface IVersions
     {
         /// <summary>
-        /// Creates a new version using the current snapshot of the selected
-        /// application version.
+        /// Creates a new version from the selected version.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -50,9 +49,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<string>> CloneWithHttpMessagesAsync(System.Guid appId, string versionId, TaskUpdateObject versionCloneObject = default(TaskUpdateObject), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<string>> CloneWithHttpMessagesAsync(System.Guid appId, string versionId, TaskUpdateObject versionCloneObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the application versions info.
+        /// Gets a list of versions for this application ID.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -81,7 +80,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<IList<VersionInfo>>> ListWithHttpMessagesAsync(System.Guid appId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the version info.
+        /// Gets the version information such as date created, last modified
+        /// date, endpoint URL, count of intents and entities, training and
+        /// publishing status.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -213,7 +214,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<string>> ImportWithHttpMessagesAsync(System.Guid appId, LuisApp luisApp, string versionId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deleted an unlabelled utterance.
+        /// Deleted an unlabelled utterance in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.

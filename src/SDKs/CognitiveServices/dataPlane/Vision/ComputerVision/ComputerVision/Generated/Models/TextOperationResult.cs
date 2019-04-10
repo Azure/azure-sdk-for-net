@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Result of recognition text operation.
+    /// </summary>
     public partial class TextOperationResult
     {
         /// <summary>
@@ -28,7 +31,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="status">Status of the text operation. Possible values
         /// include: 'Not Started', 'Running', 'Failed', 'Succeeded'</param>
-        public TextOperationResult(TextOperationStatusCodes status = default(TextOperationStatusCodes), RecognitionResult recognitionResult = default(RecognitionResult))
+        /// <param name="recognitionResult">Text recognition result of the text
+        /// operation.</param>
+        public TextOperationResult(TextOperationStatusCodes status = default(TextOperationStatusCodes), TextRecognitionResult recognitionResult = default(TextRecognitionResult))
         {
             Status = status;
             RecognitionResult = recognitionResult;
@@ -48,9 +53,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public TextOperationStatusCodes Status { get; set; }
 
         /// <summary>
+        /// Gets or sets text recognition result of the text operation.
         /// </summary>
         [JsonProperty(PropertyName = "recognitionResult")]
-        public RecognitionResult RecognitionResult { get; set; }
+        public TextRecognitionResult RecognitionResult { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (RecognitionResult != null)
+            {
+                RecognitionResult.Validate();
+            }
+        }
     }
 }

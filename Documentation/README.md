@@ -60,3 +60,6 @@ These SDKs depend on Microsoft.Rest.ClientRuntime.Azure
 Please see at [Azure documentation](https://azure.microsoft.com/en-us/documentation/api/) for more details
 
 
+
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2FDocumentation%2FREADME.png)

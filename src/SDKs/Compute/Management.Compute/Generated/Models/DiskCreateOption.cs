@@ -22,5 +22,6 @@ namespace Microsoft.Azure.Management.Compute.Models
         public const string Import = "Import";
         public const string Copy = "Copy";
         public const string Restore = "Restore";
+        public const string Upload = "Upload";
     }
 }

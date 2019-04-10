@@ -34,16 +34,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureWorkloadSAPHanaPointInTimeRestoreRequest class.
         /// </summary>
-        /// <param name="targetInfo">Details of target database</param>
         /// <param name="recoveryType">OLR/ALR, RestoreDisks is invalid option.
         /// Possible values include: 'Invalid', 'OriginalLocation',
         /// 'AlternateLocation', 'RestoreDisks'</param>
         /// <param name="sourceResourceId">Fully qualified ARM ID of the VM on
         /// which workload that was running is being recovered.</param>
         /// <param name="propertyBag">Workload specific property bag.</param>
+        /// <param name="targetInfo">Details of target database</param>
         /// <param name="pointInTime">PointInTime value</param>
-        public AzureWorkloadSAPHanaPointInTimeRestoreRequest(TargetRestoreInfo targetInfo = default(TargetRestoreInfo), string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), System.DateTime? pointInTime = default(System.DateTime?))
-            : base(targetInfo, recoveryType, sourceResourceId, propertyBag)
+        public AzureWorkloadSAPHanaPointInTimeRestoreRequest(string recoveryType = default(string), string sourceResourceId = default(string), IDictionary<string, string> propertyBag = default(IDictionary<string, string>), TargetRestoreInfo targetInfo = default(TargetRestoreInfo), System.DateTime? pointInTime = default(System.DateTime?))
+            : base(recoveryType, sourceResourceId, propertyBag, targetInfo)
         {
             PointInTime = pointInTime;
             CustomInit();

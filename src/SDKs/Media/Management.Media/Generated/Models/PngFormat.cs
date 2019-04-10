@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// audio/video bitrate. Not applicable to thumbnails. {Codec} - The
         /// type of the audio/video codec. Any unsubstituted macros will be
         /// collapsed and removed from the filename.</param>
-        public PngFormat(string filenamePattern = default(string))
+        public PngFormat(string filenamePattern)
             : base(filenamePattern)
         {
             CustomInit();
@@ -50,5 +50,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         partial void CustomInit();
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

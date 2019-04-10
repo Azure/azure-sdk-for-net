@@ -39,6 +39,7 @@
                 Assert.NotNull(getResult.UpdateConfiguration.Targets.AzureQueries);
                 Assert.Equal(1, getResult.UpdateConfiguration.Targets.AzureQueries.Count);
                 Assert.Equal(2, getResult.UpdateConfiguration.Targets.AzureQueries.First().Scope.Count);
+                Assert.Equal(2, getResult.UpdateConfiguration.Targets.NonAzureQueries.Count);
                 Assert.NotNull(getResult.Tasks);
                 Assert.NotNull(getResult.Tasks.PreTask);
                 Assert.Equal("preScript", getResult.Tasks.PreTask.Source);
@@ -52,14 +53,14 @@
                 var listResult = this.automationClient.SoftwareUpdateConfigurations.List(ResourceGroupName, AutomationAccountName);
                 Assert.NotNull(listResult);
                 Assert.NotNull(listResult.Value);
-                Assert.Equal(3, listResult.Value.Count);
+                Assert.Equal(5, listResult.Value.Count);
 
 
                 // List for specific VM
                 listResult = this.automationClient.SoftwareUpdateConfigurations.ListByAzureVirtualMachine(ResourceGroupName, AutomationAccountName, VM_01);
                 Assert.NotNull(listResult);
                 Assert.NotNull(listResult.Value);
-                Assert.Equal(3, listResult.Value.Count);
+                Assert.Equal(5, listResult.Value.Count);
                 var suc = listResult.Value.Where(v => v.Name.Equals(updateConfigurationName_01, StringComparison.OrdinalIgnoreCase)).Single();
                 Assert.Equal(updateConfigurationName_01, suc.Name);
 
@@ -70,7 +71,7 @@
                 {
                     this.automationClient.SoftwareUpdateConfigurations.GetByName(ResourceGroupName, AutomationAccountName, updateConfigurationName_01);
                 });
-                
+
                 this.automationClient.SoftwareUpdateConfigurations.Delete(ResourceGroupName, AutomationAccountName, updateConfigurationName_02);
 
                 Assert.Throws<ErrorResponseException>(() =>
@@ -129,6 +130,19 @@
                                 },
                                 FilterOperator = TagOperators.All
                             }
+                        }
+                    },
+                    NonAzureQueries = new List<NonAzureQueryProperties>
+                    {
+                        new NonAzureQueryProperties
+                        {
+                            FunctionAlias = "SavedSearch1",
+                            WorkspaceId = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01"
+                        },
+                        new NonAzureQueryProperties
+                        {
+                            FunctionAlias = "SavedSearch2",
+                            WorkspaceId = "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01"
                         }
                     }
                 }

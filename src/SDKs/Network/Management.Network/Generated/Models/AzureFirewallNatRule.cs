@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="sourceAddresses">List of source IP addresses for this
         /// rule.</param>
         /// <param name="destinationAddresses">List of destination IP addresses
-        /// for this rule.</param>
+        /// for this rule. Supports IP ranges, prefixes, and service
+        /// tags.</param>
         /// <param name="destinationPorts">List of destination ports.</param>
         /// <param name="protocols">Array of AzureFirewallNetworkRuleProtocols
         /// applicable to this NAT rule.</param>
@@ -82,6 +83,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets list of destination IP addresses for this rule.
+        /// Supports IP ranges, prefixes, and service tags.
         /// </summary>
         [JsonProperty(PropertyName = "destinationAddresses")]
         public IList<string> DestinationAddresses { get; set; }

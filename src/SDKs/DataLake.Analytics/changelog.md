@@ -1,5 +1,11 @@
 ## Microsoft.Azure.Management.DataLake.Analytics release notes
 
+### Changes in 3.5.3-preview
+
+**Notes**
+
+- Added a property, StreamPath of type string to USqlTableFragment class
+
 ### Changes in 3.5.2-preview
 
 **Notes**

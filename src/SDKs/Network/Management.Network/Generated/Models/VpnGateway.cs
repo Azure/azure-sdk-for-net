@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="tags">Resource tags.</param>
         /// <param name="virtualHub">The VirtualHub to which the gateway
         /// belongs</param>
-        /// <param name="connections">list of all vpn connections to the
+        /// <param name="connections">List of all vpn connections to the
         /// gateway.</param>
         /// <param name="bgpSettings">Local network gateway's BGP speaker
         /// settings.</param>

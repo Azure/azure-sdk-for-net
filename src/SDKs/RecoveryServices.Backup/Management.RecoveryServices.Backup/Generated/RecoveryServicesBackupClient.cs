@@ -115,6 +115,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         public virtual IBackupProtectedItemsOperations BackupProtectedItems { get; private set; }
 
         /// <summary>
+        /// Gets the IBackupProtectionIntentOperations.
+        /// </summary>
+        public virtual IBackupProtectionIntentOperations BackupProtectionIntent { get; private set; }
+
+        /// <summary>
         /// Gets the IBackupUsageSummariesOperations.
         /// </summary>
         public virtual IBackupUsageSummariesOperations BackupUsageSummaries { get; private set; }
@@ -504,6 +509,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             Jobs = new JobsOperations(this);
             BackupPolicies = new BackupPoliciesOperations(this);
             BackupProtectedItems = new BackupProtectedItemsOperations(this);
+            BackupProtectionIntent = new BackupProtectionIntentOperations(this);
             BackupUsageSummaries = new BackupUsageSummariesOperations(this);
             Operation = new OperationOperations(this);
             BackupResourceVaultConfigs = new BackupResourceVaultConfigsOperations(this);

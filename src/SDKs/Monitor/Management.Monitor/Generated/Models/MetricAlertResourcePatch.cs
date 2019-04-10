@@ -49,6 +49,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="scopes">the list of resource id's that this metric
         /// alert is scoped to.</param>
+        /// <param name="targetResourceType">the resource type of the target
+        /// resource(s) on which the alert is created/updated. Mandatory for
+        /// MultipleResourceMultipleMetricCriteria.</param>
+        /// <param name="targetResourceRegion">the region of the target
+        /// resource(s) on which the alert is created/updated. Mandatory for
+        /// MultipleResourceMultipleMetricCriteria.</param>
         /// <param name="autoMitigate">the flag that indicates whether the
         /// alert should be auto resolved or not.</param>
         /// <param name="actions">the array of actions that are performed when
@@ -56,7 +62,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// resolved.</param>
         /// <param name="lastUpdatedTime">Last time the rule was updated in
         /// ISO8601 format.</param>
-        public MetricAlertResourcePatch(string description, int severity, bool enabled, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, MetricAlertCriteria criteria, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> scopes = default(IList<string>), bool? autoMitigate = default(bool?), IList<MetricAlertAction> actions = default(IList<MetricAlertAction>), System.DateTime? lastUpdatedTime = default(System.DateTime?))
+        public MetricAlertResourcePatch(string description, int severity, bool enabled, System.TimeSpan evaluationFrequency, System.TimeSpan windowSize, MetricAlertCriteria criteria, IDictionary<string, string> tags = default(IDictionary<string, string>), IList<string> scopes = default(IList<string>), string targetResourceType = default(string), string targetResourceRegion = default(string), bool? autoMitigate = default(bool?), IList<MetricAlertAction> actions = default(IList<MetricAlertAction>), System.DateTime? lastUpdatedTime = default(System.DateTime?))
         {
             Tags = tags;
             Description = description;
@@ -65,6 +71,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
             Scopes = scopes;
             EvaluationFrequency = evaluationFrequency;
             WindowSize = windowSize;
+            TargetResourceType = targetResourceType;
+            TargetResourceRegion = targetResourceRegion;
             Criteria = criteria;
             AutoMitigate = autoMitigate;
             Actions = actions;
@@ -123,6 +131,22 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.windowSize")]
         public System.TimeSpan WindowSize { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource type of the target resource(s) on which
+        /// the alert is created/updated. Mandatory for
+        /// MultipleResourceMultipleMetricCriteria.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetResourceType")]
+        public string TargetResourceType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the region of the target resource(s) on which the
+        /// alert is created/updated. Mandatory for
+        /// MultipleResourceMultipleMetricCriteria.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.targetResourceRegion")]
+        public string TargetResourceRegion { get; set; }
 
         /// <summary>
         /// Gets or sets defines the specific alert criteria information.

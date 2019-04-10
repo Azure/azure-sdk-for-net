@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the
         /// AzureWorkloadSQLAutoProtectionIntent class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the backed up item. Possible values include: 'Invalid',
         /// 'AzureIaasVM', 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql',
         /// 'AzureStorage', 'AzureWorkload', 'DefaultBackup'</param>
@@ -46,8 +46,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// 'Protected', 'ProtectionFailed'</param>
         /// <param name="workloadItemType">Workload item type of the item for
         /// which intent is to be set. Possible values include: 'Invalid',
-        /// 'SQLInstance', 'SQLDataBase', 'SAPHanaSystem',
-        /// 'SAPHanaDatabase'</param>
+        /// 'SQLInstance', 'SQLDataBase', 'SAPHanaSystem', 'SAPHanaDatabase',
+        /// 'SAPAseSystem', 'SAPAseDatabase'</param>
         public AzureWorkloadSQLAutoProtectionIntent(string backupManagementType = default(string), string sourceResourceId = default(string), string itemId = default(string), string policyId = default(string), string protectionState = default(string), string workloadItemType = default(string))
             : base(backupManagementType, sourceResourceId, itemId, policyId, protectionState)
         {
@@ -63,7 +63,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Gets or sets workload item type of the item for which intent is to
         /// be set. Possible values include: 'Invalid', 'SQLInstance',
-        /// 'SQLDataBase', 'SAPHanaSystem', 'SAPHanaDatabase'
+        /// 'SQLDataBase', 'SAPHanaSystem', 'SAPHanaDatabase', 'SAPAseSystem',
+        /// 'SAPAseDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadItemType")]
         public string WorkloadItemType { get; set; }

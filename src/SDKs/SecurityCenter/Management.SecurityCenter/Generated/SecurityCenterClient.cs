@@ -82,14 +82,59 @@ namespace Microsoft.Azure.Management.Security
         public virtual IPricingsOperations Pricings { get; private set; }
 
         /// <summary>
-        /// Gets the ISecurityContactsOperations.
+        /// Gets the IAlertsOperations.
         /// </summary>
-        public virtual ISecurityContactsOperations SecurityContacts { get; private set; }
+        public virtual IAlertsOperations Alerts { get; private set; }
 
         /// <summary>
-        /// Gets the IWorkspaceSettingsOperations.
+        /// Gets the ISettingsOperations.
         /// </summary>
-        public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
+        public virtual ISettingsOperations Settings { get; private set; }
+
+        /// <summary>
+        /// Gets the IAllowedConnectionsOperations.
+        /// </summary>
+        public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
+
+        /// <summary>
+        /// Gets the IDiscoveredSecuritySolutionsOperations.
+        /// </summary>
+        public virtual IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the IExternalSecuritySolutionsOperations.
+        /// </summary>
+        public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
+
+        /// <summary>
+        /// Gets the IJitNetworkAccessPoliciesOperations.
+        /// </summary>
+        public virtual IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; private set; }
+
+        /// <summary>
+        /// Gets the ILocationsOperations.
+        /// </summary>
+        public virtual ILocationsOperations Locations { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the ITasksOperations.
+        /// </summary>
+        public virtual ITasksOperations Tasks { get; private set; }
+
+        /// <summary>
+        /// Gets the ITopologyOperations.
+        /// </summary>
+        public virtual ITopologyOperations Topology { get; private set; }
+
+        /// <summary>
+        /// Gets the IAdvancedThreatProtectionOperations.
+        /// </summary>
+        public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
 
         /// <summary>
         /// Gets the IAutoProvisioningSettingsOperations.
@@ -102,64 +147,19 @@ namespace Microsoft.Azure.Management.Security
         public virtual ICompliancesOperations Compliances { get; private set; }
 
         /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        public virtual IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; private set; }
-
-        /// <summary>
-        /// Gets the ISettingsOperations.
-        /// </summary>
-        public virtual ISettingsOperations Settings { get; private set; }
-
-        /// <summary>
         /// Gets the IInformationProtectionPoliciesOperations.
         /// </summary>
         public virtual IInformationProtectionPoliciesOperations InformationProtectionPolicies { get; private set; }
 
         /// <summary>
-        /// Gets the IOperations.
+        /// Gets the ISecurityContactsOperations.
         /// </summary>
-        public virtual IOperations Operations { get; private set; }
+        public virtual ISecurityContactsOperations SecurityContacts { get; private set; }
 
         /// <summary>
-        /// Gets the ILocationsOperations.
+        /// Gets the IWorkspaceSettingsOperations.
         /// </summary>
-        public virtual ILocationsOperations Locations { get; private set; }
-
-        /// <summary>
-        /// Gets the ITasksOperations.
-        /// </summary>
-        public virtual ITasksOperations Tasks { get; private set; }
-
-        /// <summary>
-        /// Gets the IAlertsOperations.
-        /// </summary>
-        public virtual IAlertsOperations Alerts { get; private set; }
-
-        /// <summary>
-        /// Gets the IDiscoveredSecuritySolutionsOperations.
-        /// </summary>
-        public virtual IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; private set; }
-
-        /// <summary>
-        /// Gets the IJitNetworkAccessPoliciesOperations.
-        /// </summary>
-        public virtual IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; private set; }
-
-        /// <summary>
-        /// Gets the IExternalSecuritySolutionsOperations.
-        /// </summary>
-        public virtual IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; private set; }
-
-        /// <summary>
-        /// Gets the ITopologyOperations.
-        /// </summary>
-        public virtual ITopologyOperations Topology { get; private set; }
-
-        /// <summary>
-        /// Gets the IAllowedConnectionsOperations.
-        /// </summary>
-        public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
+        public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -403,22 +403,22 @@ namespace Microsoft.Azure.Management.Security
         private void Initialize()
         {
             Pricings = new PricingsOperations(this);
-            SecurityContacts = new SecurityContactsOperations(this);
-            WorkspaceSettings = new WorkspaceSettingsOperations(this);
+            Alerts = new AlertsOperations(this);
+            Settings = new SettingsOperations(this);
+            AllowedConnections = new AllowedConnectionsOperations(this);
+            DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
+            ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
+            JitNetworkAccessPolicies = new JitNetworkAccessPoliciesOperations(this);
+            Locations = new LocationsOperations(this);
+            Operations = new Operations(this);
+            Tasks = new TasksOperations(this);
+            Topology = new TopologyOperations(this);
+            AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
             AutoProvisioningSettings = new AutoProvisioningSettingsOperations(this);
             Compliances = new CompliancesOperations(this);
-            AdvancedThreatProtection = new AdvancedThreatProtectionOperations(this);
-            Settings = new SettingsOperations(this);
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
-            Operations = new Operations(this);
-            Locations = new LocationsOperations(this);
-            Tasks = new TasksOperations(this);
-            Alerts = new AlertsOperations(this);
-            DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
-            JitNetworkAccessPolicies = new JitNetworkAccessPoliciesOperations(this);
-            ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
-            Topology = new TopologyOperations(this);
-            AllowedConnections = new AllowedConnectionsOperations(this);
+            SecurityContacts = new SecurityContactsOperations(this);
+            WorkspaceSettings = new WorkspaceSettingsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -449,8 +449,6 @@ namespace Microsoft.Azure.Management.Security
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Setting>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Setting>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
             CustomInitialize();

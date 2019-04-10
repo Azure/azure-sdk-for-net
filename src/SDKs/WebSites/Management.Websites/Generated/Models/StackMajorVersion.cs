@@ -40,12 +40,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// &lt;code&gt;false&lt;/code&gt;.</param>
         /// <param name="minorVersions">Minor versions associated with the
         /// major version.</param>
-        public StackMajorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), IList<StackMinorVersion> minorVersions = default(IList<StackMinorVersion>))
+        /// <param name="applicationInsights">&lt;code&gt;true&lt;/code&gt; if
+        /// this supports Application Insights; otherwise,
+        /// &lt;code&gt;false&lt;/code&gt;.</param>
+        public StackMajorVersion(string displayVersion = default(string), string runtimeVersion = default(string), bool? isDefault = default(bool?), IList<StackMinorVersion> minorVersions = default(IList<StackMinorVersion>), bool? applicationInsights = default(bool?))
         {
             DisplayVersion = displayVersion;
             RuntimeVersion = runtimeVersion;
             IsDefault = isDefault;
             MinorVersions = minorVersions;
+            ApplicationInsights = applicationInsights;
             CustomInit();
         }
 
@@ -79,6 +83,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "minorVersions")]
         public IList<StackMinorVersion> MinorVersions { get; set; }
+
+        /// <summary>
+        /// Gets or sets &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt; if this
+        /// supports Application Insights; otherwise,
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt;.
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationInsights")]
+        public bool? ApplicationInsights { get; set; }
 
     }
 }

@@ -32,8 +32,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// Initializes a new instance of the LabeledUtterance class.
         /// </summary>
         /// <param name="id">ID of Labeled Utterance.</param>
-        /// <param name="text">The utterance. E.g.: what's the weather like in
-        /// seattle?</param>
+        /// <param name="text">The utterance. For example, "What's the weather
+        /// like in seattle?"</param>
         /// <param name="tokenizedText">The utterance tokenized.</param>
         /// <param name="intentLabel">The intent matching the example.</param>
         /// <param name="entityLabels">The entities matching the
@@ -64,8 +64,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         public int? Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the utterance. E.g.: what's the weather like in
-        /// seattle?
+        /// Gets or sets the utterance. For example, "What's the weather like
+        /// in seattle?"
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }

@@ -6,10 +6,10 @@
 	<PropertyGroup>
 		<Description>Microsoft Azure Monitor Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Monitor</AssemblyName>
-		<Version>0.21.0-preview</Version>
+		<Version>0.22.0-preview</Version>
 		<PackageId>Microsoft.Azure.Management.Monitor</PackageId>
 		<PackageTags>Management.Monitor;Management.Monitoring;metrics;alerts;autoscale;activityLogs;events;operations;logs;</PackageTags>
-		<PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added Multi Resource Alert changes for Metric Alert API  and their Unit tests and Scenario Tests.</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
 		<TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>

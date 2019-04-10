@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the ParameterValue class.
         /// </summary>
-        /// <param name="value">actual value.</param>
-        /// <param name="description">Optional property, just to establish
+        /// <param name="value">Actual value.</param>
+        /// <param name="description">Optional property. Establishes
         /// ParameterValueBase as a BaseClass.</param>
         public ParameterValue(object value, string description = default(string))
             : base(description)

@@ -38,6 +38,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sourceRetryWait">Source retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the source data store. Type: integer (or
+        /// Expression with resultType integer).</param>
         /// <param name="sqlReaderQuery">SQL reader query. Type: string (or
         /// Expression with resultType string).</param>
         /// <param name="sqlReaderStoredProcedureName">Name of the stored
@@ -47,8 +50,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="storedProcedureParameters">Value and type setting for
         /// stored procedure parameters. Example: "{Parameter1: {value: "1",
         /// type: "int"}}".</param>
-        public SqlSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>))
-            : base(additionalProperties, sourceRetryCount, sourceRetryWait)
+        public SqlSource(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object sourceRetryCount = default(object), object sourceRetryWait = default(object), object maxConcurrentConnections = default(object), object sqlReaderQuery = default(object), object sqlReaderStoredProcedureName = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>))
+            : base(additionalProperties, sourceRetryCount, sourceRetryWait, maxConcurrentConnections)
         {
             SqlReaderQuery = sqlReaderQuery;
             SqlReaderStoredProcedureName = sqlReaderStoredProcedureName;

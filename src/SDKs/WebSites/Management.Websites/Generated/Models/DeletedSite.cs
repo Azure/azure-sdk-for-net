@@ -46,7 +46,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="deletedSiteName">Name of the deleted site</param>
         /// <param name="slot">Slot of the deleted site</param>
         /// <param name="deletedSiteKind">Kind of site that was deleted</param>
-        public DeletedSite(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? deletedSiteId = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string deletedSiteName = default(string), string slot = default(string), string deletedSiteKind = default(string))
+        /// <param name="geoRegionName">Geo Region of the deleted site</param>
+        public DeletedSite(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), int? deletedSiteId = default(int?), string deletedTimestamp = default(string), string subscription = default(string), string resourceGroup = default(string), string deletedSiteName = default(string), string slot = default(string), string deletedSiteKind = default(string), string geoRegionName = default(string))
             : base(id, name, kind, type)
         {
             DeletedSiteId = deletedSiteId;
@@ -56,6 +57,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             DeletedSiteName = deletedSiteName;
             Slot = slot;
             DeletedSiteKind = deletedSiteKind;
+            GeoRegionName = geoRegionName;
             CustomInit();
         }
 
@@ -105,6 +107,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.kind")]
         public string DeletedSiteKind { get; private set; }
+
+        /// <summary>
+        /// Gets geo Region of the deleted site
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.geoRegionName")]
+        public string GeoRegionName { get; private set; }
 
     }
 }

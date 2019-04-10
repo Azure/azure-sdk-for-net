@@ -5,28 +5,25 @@
     using System.IO;
     using System.Reflection;
     using System.Text;
+    using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training;
+    using Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models;
+    using Microsoft.Rest.Serialization;
+    using Newtonsoft.Json;
 
     public class ProjectIdFixture : IDisposable
     {
         private const string idFilename = "ids.txt";
+        public readonly Dictionary<string, Iteration> TestToIterationMapping = new Dictionary<string, Iteration>();
 
-        public readonly Dictionary<string, Guid> ProjectToGuidMapping = new Dictionary<string, Guid>();
-        public Guid ObjectDetectionProjectId = Guid.Parse("dfaa6389-4b8e-4890-b36c-26773b9e17f3");
-        
         public ProjectIdFixture()
         {
             try
             {
                 var lines = File.ReadAllLines(GetIdsFileName());
-
-                // First line is the object detection project id
-                ObjectDetectionProjectId = Guid.Parse(lines[0]);
-
-                // The rest are comma delimited test, project
-                for (var i = 1; i < lines.Length; i++)
+                for (var i = 0; i < lines.Length; i++)
                 {
                     var parts = lines[i].Split(',');
-                    ProjectToGuidMapping.Add(parts[0], Guid.Parse(parts[1]));
+                    TestToIterationMapping.Add(parts[0], new Iteration("ut iteration place holder", Guid.Parse(parts[2]), default(string), default(System.DateTime), default(System.DateTime), default(System.DateTime), Guid.Parse(parts[1])));
                 }
             }
             catch (System.IO.FileNotFoundException)
@@ -40,10 +37,9 @@
 #if RECORD_MODE
             // Write out project ids so they are available during playback.
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine(ObjectDetectionProjectId.ToString());
-            foreach(var kvp in ProjectToGuidMapping)
+            foreach(var kvp in TestToIterationMapping)
             {
-                sb.AppendLine($"{kvp.Key}, {kvp.Value.ToString()}");
+                sb.AppendLine($"{kvp.Key}, {kvp.Value.ProjectId}, {kvp.Value.Id}");
             }
 
             // Write the info back into the project ids.txt

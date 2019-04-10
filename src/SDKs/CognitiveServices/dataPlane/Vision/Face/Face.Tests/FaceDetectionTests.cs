@@ -10,6 +10,8 @@ namespace FaceSDK.Tests
 {
     public class FaceDetectionTests : BaseTests
     {
+        private static readonly string recognitionModel = RecognitionModel.Recognition02;
+
         [Fact]
         public void FaceDetectionWithAttributes()
         {
@@ -40,7 +42,9 @@ namespace FaceSDK.Tests
                             FaceAttributeType.Noise,
                             FaceAttributeType.Occlusion,
                             FaceAttributeType.Smile
-                            }
+                            },
+                        recognitionModel: recognitionModel,
+                        returnRecognitionModel: true
                         ).Result;
 
                     Assert.Equal(1, faceList.Count);
@@ -135,6 +139,9 @@ namespace FaceSDK.Tests
                     Assert.True(landMarks.UnderLipTop.Y > 0);
                     Assert.True(landMarks.UnderLipBottom.X > 0);
                     Assert.True(landMarks.UnderLipBottom.Y > 0);
+
+                    // Ensure recognitionModel return correctly.
+                    Assert.Equal(face.RecognitionModel, recognitionModel);
                 }
             }
         }
@@ -149,7 +156,7 @@ namespace FaceSDK.Tests
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "NoFace.jpg"), FileMode.Open))
                 {
-                    IList<DetectedFace> faceList = client.Face.DetectWithStreamAsync(stream).Result;
+                    IList<DetectedFace> faceList = client.Face.DetectWithStreamAsync(stream, recognitionModel: recognitionModel).Result;
                     Assert.Equal(0, faceList.Count);
                 }
             }

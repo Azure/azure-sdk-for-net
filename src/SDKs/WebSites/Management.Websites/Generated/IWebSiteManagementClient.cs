@@ -51,11 +51,6 @@ namespace Microsoft.Azure.Management.WebSites
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// API Version
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -296,7 +291,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='sku'>
         /// Name of SKU used to filter the regions. Possible values include:
         /// 'Free', 'Shared', 'Basic', 'Standard', 'Premium', 'Dynamic',
-        /// 'Isolated', 'PremiumV2'
+        /// 'Isolated', 'PremiumV2', 'ElasticPremium', 'ElasticIsolated'
         /// </param>
         /// <param name='linuxWorkersEnabled'>
         /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only
@@ -306,13 +301,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only
         /// regions that support Xenon workers.
         /// </param>
+        /// <param name='linuxDynamicWorkersEnabled'>
+        /// Specify &lt;code&gt;true&lt;/code&gt; if you want to filter to only
+        /// regions that support Linux Consumption Workers.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<GeoRegion>>> ListGeoRegionsWithHttpMessagesAsync(string sku = default(string), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GeoRegion>>> ListGeoRegionsWithHttpMessagesAsync(string sku = default(string), bool? linuxWorkersEnabled = default(bool?), bool? xenonWorkersEnabled = default(bool?), bool? linuxDynamicWorkersEnabled = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// List all apps that are assigned to a hostname.
@@ -417,6 +416,25 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<ValidateResponse>> ValidateWithHttpMessagesAsync(string resourceGroupName, ValidateRequest validateRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <summary>
+        /// Validate if the container settings are correct.
+        /// </summary>
+        /// <remarks>
+        /// Validate if the container settings are correct.
+        /// </remarks>
+        /// <param name='validateContainerSettingsRequest'>
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group to which the resource belongs.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> ValidateContainerSettingsWithHttpMessagesAsync(ValidateContainerSettingsRequest validateContainerSettingsRequest, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Validate whether a resource can be moved.

@@ -15,10 +15,21 @@
         {
             UseClientFor(async client =>
             {
+                var appId = await client.Apps.AddAsync(new ApplicationCreateObject
+                {
+                    Name = "LUIS App to be exported",
+                    Description = "New LUIS App",
+                    Culture = "en-us",
+                    Domain = "Comics",
+                    UsageScenario = "IoT"
+                });
+
                 var app = await client.Versions.ExportAsync(appId, versionId);
 
+                await client.Apps.DeleteAsync(appId);
+
                 Assert.NotNull(app);
-                Assert.Equal("LUIS BOT", app.Name);
+                Assert.Equal("LUIS App to be exported", app.Name);
             });
         }
 

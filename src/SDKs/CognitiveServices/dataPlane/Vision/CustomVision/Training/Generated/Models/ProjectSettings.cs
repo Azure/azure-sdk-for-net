@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,10 +36,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <param name="classificationType">Gets or sets the classification
         /// type of the project. Possible values include: 'Multiclass',
         /// 'Multilabel'</param>
-        public ProjectSettings(System.Guid domainId = default(System.Guid), string classificationType = default(string))
+        /// <param name="targetExportPlatforms">A list of ExportPlatform that
+        /// the trained model should be able to support.</param>
+        public ProjectSettings(System.Guid domainId = default(System.Guid), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>))
         {
             DomainId = domainId;
             ClassificationType = classificationType;
+            TargetExportPlatforms = targetExportPlatforms;
             CustomInit();
         }
 
@@ -58,6 +63,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// </summary>
         [JsonProperty(PropertyName = "classificationType")]
         public string ClassificationType { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of ExportPlatform that the trained model should
+        /// be able to support.
+        /// </summary>
+        [JsonProperty(PropertyName = "targetExportPlatforms")]
+        public IList<string> TargetExportPlatforms { get; set; }
 
     }
 }

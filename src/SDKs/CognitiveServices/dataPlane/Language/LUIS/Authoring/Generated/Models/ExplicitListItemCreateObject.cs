@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Object model for creating an explicit list item.
+    /// Object model for creating an explicit (exception) list item.
     /// </summary>
     public partial class ExplicitListItemCreateObject
     {

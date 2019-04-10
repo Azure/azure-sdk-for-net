@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// plan is for Spot instances; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
         /// <param name="capacity">Target capacity of the App Service plan
-        /// (number of VM's).</param>
+        /// (number of VMs).</param>
         /// <param name="hostingEnvironment">Name of App Service Environment
         /// where app or App Service plan should be created.</param>
         /// <param name="isXenon">&lt;code&gt;true&lt;/code&gt; if App Service
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Gets or sets target capacity of the App Service plan (number of
-        /// VM's).
+        /// VMs).
         /// </summary>
         [JsonProperty(PropertyName = "properties.capacity")]
         public int? Capacity { get; set; }

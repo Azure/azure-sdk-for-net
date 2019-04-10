@@ -6,13 +6,14 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services ComputerVision APIs.</Description>
-    <Version>3.3.0</Version>
+    <Version>4.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Vision.ComputerVision</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;REST HTTP client;Computer Vision;Computer Vision API;Computer Vision SDK;Vision;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
-    1) Detect objects - Object detection is similar to tagging, but the API returns the bounding box coordinates for each object detected. For example, if an image contains a dog, cat and person, the Detect operation will list those objects along with their coordinates in the image. You can use this functionality to process further relationships between the objects in an image. It also lets you know when there are multiple instances of the same object in an image.
-    2) Get the area of interest - Analyze the contents of an image to return the coordinates of the area of interest. This is the same function that is used to generate a thumbnail, but instead of cropping the image, Computer Vision returns the bounding box coordinates of the region, so the calling application can modify the original image as desired.
+    Changes in this release:
+    1. Support new OCR operations, `BatchReadFile` and `GetReadOperationResult`.
+    2. Change class name `RecognitionResult` to `TextRecognitionResult.`
     ]]>
     </PackageReleaseNotes>
   </PropertyGroup>

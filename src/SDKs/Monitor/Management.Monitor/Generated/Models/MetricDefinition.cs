@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// dimension is required.</param>
         /// <param name="resourceId">the resource identifier of the resource
         /// that emitted the metric.</param>
-        /// <param name="namespaceProperty">the namespace the metric blongs
+        /// <param name="namespaceProperty">the namespace the metric belongs
         /// to.</param>
         /// <param name="name">the name and the display name of the metric,
         /// i.e. it is a localizable string.</param>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string ResourceId { get; set; }
 
         /// <summary>
-        /// Gets or sets the namespace the metric blongs to.
+        /// Gets or sets the namespace the metric belongs to.
         /// </summary>
         [JsonProperty(PropertyName = "namespace")]
         public string NamespaceProperty { get; set; }

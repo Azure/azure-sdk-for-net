@@ -8,8 +8,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft Azure NetApp Management Library")]
 [assembly: AssemblyDescription("Provides management functionality for Azure NetApp Storage.")]
 
-[assembly: AssemblyVersion("0.9.0.0")]
-[assembly: AssemblyFileVersion("0.9.0.0")]
+[assembly: AssemblyVersion("0.9.1.0")]
+[assembly: AssemblyFileVersion("0.9.1.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]

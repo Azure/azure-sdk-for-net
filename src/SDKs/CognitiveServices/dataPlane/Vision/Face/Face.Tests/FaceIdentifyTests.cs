@@ -12,6 +12,8 @@ namespace FaceSDK.Tests
 {
     public class FaceIdentifyTests : BaseTests
     {
+        private static readonly string recognitionModel = RecognitionModel.Recognition02;
+
         [Fact]
         public void FaceIdentificationPersonGroupPositive()
         {
@@ -22,7 +24,7 @@ namespace FaceSDK.Tests
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId1 = null;
                 string personGroupId = "person-group-id";
-                client.PersonGroup.CreateAsync(personGroupId, "fakePersonGroup").Wait();
+                client.PersonGroup.CreateAsync(personGroupId, "fakePersonGroup", recognitionModel: recognitionModel).Wait();
                 try
                 {
                     Person satyaPerson = client.PersonGroupPerson.CreateAsync(personGroupId, "Satya").Result;
@@ -36,7 +38,7 @@ namespace FaceSDK.Tests
 
                     using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                     {
-                        faceId1 = client.Face.DetectWithStreamAsync(stream, true).Result[0].FaceId;
+                        faceId1 = client.Face.DetectWithStreamAsync(stream, true, recognitionModel: recognitionModel).Result[0].FaceId;
                         Assert.NotNull(faceId1);
                     }
 
@@ -62,7 +64,7 @@ namespace FaceSDK.Tests
                 IFaceClient client = GetFaceClient(HttpMockServer.CreateInstance());
                 Guid? faceId1 = null;
                 string largePersonGroupId = "large-person-group-id";
-                client.LargePersonGroup.CreateAsync(largePersonGroupId, "fakeLargePersonGroup").Wait();
+                client.LargePersonGroup.CreateAsync(largePersonGroupId, "fakeLargePersonGroup", recognitionModel: recognitionModel).Wait();
                 try
                 {
                     Person satyaPerson = client.LargePersonGroupPerson.CreateAsync(largePersonGroupId, "Satya").Result;
@@ -76,7 +78,7 @@ namespace FaceSDK.Tests
 
                     using (FileStream stream = new FileStream(Path.Combine("TestImages", "Satya4.jpg"), FileMode.Open))
                     {
-                        faceId1 = client.Face.DetectWithStreamAsync(stream, true).Result[0].FaceId;
+                        faceId1 = client.Face.DetectWithStreamAsync(stream, true, recognitionModel: recognitionModel).Result[0].FaceId;
                         Assert.NotNull(faceId1);
                     }
 
@@ -99,7 +101,7 @@ namespace FaceSDK.Tests
                 DetectedFace face = null;
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
                 {
-                    face = client.Face.DetectWithStreamAsync(stream, true).Result[0];
+                    face = client.Face.DetectWithStreamAsync(stream, true, recognitionModel: recognitionModel).Result[0];
                 }
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
@@ -120,7 +122,7 @@ namespace FaceSDK.Tests
                 DetectedFace face = null;
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))
                 {
-                    face = client.Face.DetectWithStreamAsync(stream, true).Result[0];
+                    face = client.Face.DetectWithStreamAsync(stream, true, recognitionModel: recognitionModel).Result[0];
                 }
 
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", fileName + i + ".jpg"), FileMode.Open))

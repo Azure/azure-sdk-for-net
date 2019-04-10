@@ -19,7 +19,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
     /// <summary>
     /// Face list object.
     /// </summary>
-    public partial class FaceList : NameAndUserDataContract
+    public partial class FaceList : MetaDataContract
     {
         /// <summary>
         /// Initializes a new instance of the FaceList class.
@@ -38,10 +38,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// 128.</param>
         /// <param name="userData">User specified data. Length should not
         /// exceed 16KB.</param>
+        /// <param name="recognitionModel">Possible values include:
+        /// 'recognition_01', 'recognition_02'</param>
         /// <param name="persistedFaces">Persisted faces within the face
         /// list.</param>
-        public FaceList(string faceListId, string name = default(string), string userData = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))
-            : base(name, userData)
+        public FaceList(string faceListId, string name = default(string), string userData = default(string), string recognitionModel = default(string), IList<PersistedFace> persistedFaces = default(IList<PersistedFace>))
+            : base(name, userData, recognitionModel)
         {
             FaceListId = faceListId;
             PersistedFaces = persistedFaces;

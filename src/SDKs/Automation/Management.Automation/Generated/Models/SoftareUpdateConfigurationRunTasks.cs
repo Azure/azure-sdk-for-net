@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// SoftareUpdateConfigurationRunTasks class.
         /// </summary>
         /// <param name="preTask">Pre task properties.</param>
-        /// <param name="postTask">Post task object.</param>
+        /// <param name="postTask">Post task properties.</param>
         public SoftareUpdateConfigurationRunTasks(SoftareUpdateConfigurationRunTaskProperties preTask = default(SoftareUpdateConfigurationRunTaskProperties), SoftareUpdateConfigurationRunTaskProperties postTask = default(SoftareUpdateConfigurationRunTaskProperties))
         {
             PreTask = preTask;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public SoftareUpdateConfigurationRunTaskProperties PreTask { get; set; }
 
         /// <summary>
-        /// Gets or sets post task object.
+        /// Gets or sets post task properties.
         /// </summary>
         [JsonProperty(PropertyName = "postTask")]
         public SoftareUpdateConfigurationRunTaskProperties PostTask { get; set; }

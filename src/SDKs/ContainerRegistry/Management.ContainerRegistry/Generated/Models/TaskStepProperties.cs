@@ -35,10 +35,14 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// for a step.</param>
         /// <param name="contextPath">The URL(absolute or relative) of the
         /// source context for the task step.</param>
-        public TaskStepProperties(IList<BaseImageDependency> baseImageDependencies = default(IList<BaseImageDependency>), string contextPath = default(string))
+        /// <param name="contextAccessToken">The token (git PAT or SAS token of
+        /// storage account blob) associated with the context for a
+        /// step.</param>
+        public TaskStepProperties(IList<BaseImageDependency> baseImageDependencies = default(IList<BaseImageDependency>), string contextPath = default(string), string contextAccessToken = default(string))
         {
             BaseImageDependencies = baseImageDependencies;
             ContextPath = contextPath;
+            ContextAccessToken = contextAccessToken;
             CustomInit();
         }
 
@@ -59,6 +63,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "contextPath")]
         public string ContextPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the token (git PAT or SAS token of storage account
+        /// blob) associated with the context for a step.
+        /// </summary>
+        [JsonProperty(PropertyName = "contextAccessToken")]
+        public string ContextAccessToken { get; set; }
 
     }
 }

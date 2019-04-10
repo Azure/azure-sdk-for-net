@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the CertificateConfiguration class.
         /// </summary>
         /// <param name="storeName">The
-        /// System.Security.Cryptography.x509certificates.Storename certificate
+        /// System.Security.Cryptography.x509certificates.StoreName certificate
         /// store location. Only Root and CertificateAuthority are valid
         /// locations. Possible values include: 'CertificateAuthority',
         /// 'Root'</param>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets the
-        /// System.Security.Cryptography.x509certificates.Storename certificate
+        /// System.Security.Cryptography.x509certificates.StoreName certificate
         /// store location. Only Root and CertificateAuthority are valid
         /// locations. Possible values include: 'CertificateAuthority', 'Root'
         /// </summary>

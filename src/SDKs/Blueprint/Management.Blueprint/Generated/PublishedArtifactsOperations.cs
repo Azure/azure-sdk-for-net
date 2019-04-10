@@ -51,21 +51,22 @@ namespace Microsoft.Azure.Management.Blueprint
         public BlueprintManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get an artifact for a published Blueprint.
+        /// Get an artifact for a published blueprint definition.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+        /// assignments management group scope is reserved for future use.
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='versionId'>
-        /// version of the published blueprint.
+        /// Version of the published blueprint definition.
         /// </param>
         /// <param name='artifactName'>
-        /// name of the artifact.
+        /// Name of the blueprint artifact.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -262,18 +263,19 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// List artifacts for a published Blueprint.
+        /// List artifacts for a version of a published blueprint definition.
         /// </summary>
         /// <param name='scope'>
         /// The scope of the resource. Valid scopes are: management group (format:
         /// '/providers/Microsoft.Management/managementGroups/{managementGroup}'),
-        /// subscription (format: '/subscriptions/{subscriptionId}').
+        /// subscription (format: '/subscriptions/{subscriptionId}'). For blueprint
+        /// assignments management group scope is reserved for future use.
         /// </param>
         /// <param name='blueprintName'>
-        /// name of the blueprint.
+        /// Name of the blueprint definition.
         /// </param>
         /// <param name='versionId'>
-        /// version of the published blueprint.
+        /// Version of the published blueprint definition.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -464,7 +466,7 @@ namespace Microsoft.Azure.Management.Blueprint
         }
 
         /// <summary>
-        /// List artifacts for a published Blueprint.
+        /// List artifacts for a version of a published blueprint definition.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

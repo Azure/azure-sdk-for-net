@@ -6,17 +6,17 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Language.TextAnalytics</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Language APIs.</Description>
-    <Version>2.8.0-preview</Version>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.TextAnalytics</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Text Analytics API;Text Analytics;REST HTTP client;netcore451511</PackageTags>
     <PackageReleaseNotes>
     <![CDATA[
     Microsoft Cognitive Services Text Analytics SDK.
     
-    This is a preview package which calls the API version "v2.1-Preview"
+    This package calls the API version "v2.1"
 
     Changes in this release:
-    1. Add support for v2.1-Preview API version which includes improvements to the /Entities endpoint.
+    1. Add support for v2.1 API version which includes Entity Type and Wikipedia confidence score to the /Entities endpoint.
     
     ]]></PackageReleaseNotes>
   </PropertyGroup>

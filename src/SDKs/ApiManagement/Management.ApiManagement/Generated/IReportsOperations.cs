@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByProductWithHttpMessagesAsync(ODataQuery<ReportRecordContract> odataQuery, string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists report records by GeoGraphy.
+        /// Lists report records by geography.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// not be zero. The value should be in ISO  8601 format
         /// (http://en.wikipedia.org/wiki/ISO_8601#Durations).This code can be
         /// used to convert TimeSpan to a valid interval string:
-        /// XmlConvert.ToString(new TimeSpan(hours, minutes, secconds))
+        /// XmlConvert.ToString(new TimeSpan(hours, minutes, seconds))
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -344,7 +344,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<IPage<ReportRecordContract>>> ListByProductNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists report records by GeoGraphy.
+        /// Lists report records by geography.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

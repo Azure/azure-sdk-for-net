@@ -28,10 +28,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// <summary>
         /// Initializes a new instance of the KeyPhraseBatchResult class.
         /// </summary>
-        public KeyPhraseBatchResult(IList<KeyPhraseBatchResultItem> documents = default(IList<KeyPhraseBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>))
+        /// <param name="documents">Response by document</param>
+        /// <param name="errors">Errors and Warnings by document</param>
+        /// <param name="statistics">=(Optional) if showStats=true was
+        /// specified in the request this field will contain information about
+        /// the request payload.</param>
+        public KeyPhraseBatchResult(IList<KeyPhraseBatchResultItem> documents = default(IList<KeyPhraseBatchResultItem>), IList<ErrorRecord> errors = default(IList<ErrorRecord>), RequestStatistics statistics = default(RequestStatistics))
         {
             Documents = documents;
             Errors = errors;
+            Statistics = statistics;
             CustomInit();
         }
 
@@ -41,14 +47,23 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets response by document
         /// </summary>
         [JsonProperty(PropertyName = "documents")]
         public IList<KeyPhraseBatchResultItem> Documents { get; private set; }
 
         /// <summary>
+        /// Gets errors and Warnings by document
         /// </summary>
         [JsonProperty(PropertyName = "errors")]
         public IList<ErrorRecord> Errors { get; private set; }
+
+        /// <summary>
+        /// Gets =(Optional) if showStats=true was specified in the request
+        /// this field will contain information about the request payload.
+        /// </summary>
+        [JsonProperty(PropertyName = "statistics")]
+        public RequestStatistics Statistics { get; private set; }
 
     }
 }

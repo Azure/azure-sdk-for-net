@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the CsmUsageQuota class.
         /// </summary>
         /// <param name="unit">Units of measurement for the quota
-        /// resourse.</param>
+        /// resource.</param>
         /// <param name="nextResetTime">Next reset time for the resource
         /// counter.</param>
         /// <param name="currentValue">The current value of the resource
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets units of measurement for the quota resourse.
+        /// Gets or sets units of measurement for the quota resource.
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
         public string Unit { get; set; }

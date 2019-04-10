@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The result returned from a check name availability request.
+    /// </summary>
     public partial class CheckNameResult
     {
         /// <summary>

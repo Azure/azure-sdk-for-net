@@ -52,6 +52,11 @@ namespace Microsoft.Azure.Management.Storage
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// The API version to use for this operation.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -90,6 +95,11 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IUsagesOperations Usages { get; private set; }
 
         /// <summary>
+        /// Gets the IManagementPoliciesOperations.
+        /// </summary>
+        public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
+
+        /// <summary>
         /// Gets the IBlobServicesOperations.
         /// </summary>
         public virtual IBlobServicesOperations BlobServices { get; private set; }
@@ -100,9 +110,17 @@ namespace Microsoft.Azure.Management.Storage
         public virtual IBlobContainersOperations BlobContainers { get; private set; }
 
         /// <summary>
-        /// Gets the IManagementPoliciesOperations.
+        /// Initializes a new instance of the StorageManagementClient class.
         /// </summary>
-        public virtual IManagementPoliciesOperations ManagementPolicies { get; private set; }
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling StorageManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected StorageManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the StorageManagementClient class.
@@ -187,6 +205,33 @@ namespace Microsoft.Azure.Management.Storage
         /// Thrown when a required parameter is null
         /// </exception>
         public StorageManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the StorageManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling StorageManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public StorageManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -309,10 +354,11 @@ namespace Microsoft.Azure.Management.Storage
             Skus = new SkusOperations(this);
             StorageAccounts = new StorageAccountsOperations(this);
             Usages = new UsagesOperations(this);
+            ManagementPolicies = new ManagementPoliciesOperations(this);
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
-            ManagementPolicies = new ManagementPoliciesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2019-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

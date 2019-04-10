@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="accessKey">The Azure Batch account access key.</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration

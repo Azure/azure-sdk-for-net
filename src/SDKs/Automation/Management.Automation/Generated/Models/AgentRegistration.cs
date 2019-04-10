@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// Definition of the agent registration infomration type.
+    /// Definition of the agent registration information type.
     /// </summary>
     public partial class AgentRegistration
     {

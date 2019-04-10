@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <param name="progressPercentage">Progress of the task.</param>
         /// <param name="taskExecutionDetails">Details about execution of the
         /// task.
-        /// eg: number of bytes transfered etc</param>
+        /// eg: number of bytes transferred etc</param>
         public AzureIaaSVMJobTaskDetails(string taskId = default(string), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string instanceId = default(string), System.TimeSpan? duration = default(System.TimeSpan?), string status = default(string), double? progressPercentage = default(double?), string taskExecutionDetails = default(string))
         {
             TaskId = taskId;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 
         /// <summary>
         /// Gets or sets details about execution of the task.
-        /// eg: number of bytes transfered etc
+        /// eg: number of bytes transferred etc
         /// </summary>
         [JsonProperty(PropertyName = "taskExecutionDetails")]
         public string TaskExecutionDetails { get; set; }

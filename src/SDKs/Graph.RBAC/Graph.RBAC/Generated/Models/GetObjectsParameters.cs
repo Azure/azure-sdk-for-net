@@ -31,13 +31,13 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <summary>
         /// Initializes a new instance of the GetObjectsParameters class.
         /// </summary>
-        /// <param name="includeDirectoryObjectReferences">If true, also
-        /// searches for object IDs in the partner tenant.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="objectIds">The requested object IDs.</param>
         /// <param name="types">The requested object types.</param>
-        public GetObjectsParameters(bool includeDirectoryObjectReferences, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<string> objectIds = default(IList<string>), IList<string> types = default(IList<string>))
+        /// <param name="includeDirectoryObjectReferences">If true, also
+        /// searches for object IDs in the partner tenant.</param>
+        public GetObjectsParameters(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<string> objectIds = default(IList<string>), IList<string> types = default(IList<string>), bool? includeDirectoryObjectReferences = default(bool?))
         {
             AdditionalProperties = additionalProperties;
             ObjectIds = objectIds;
@@ -75,16 +75,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// tenant.
         /// </summary>
         [JsonProperty(PropertyName = "includeDirectoryObjectReferences")]
-        public bool IncludeDirectoryObjectReferences { get; set; }
+        public bool? IncludeDirectoryObjectReferences { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-        }
     }
 }

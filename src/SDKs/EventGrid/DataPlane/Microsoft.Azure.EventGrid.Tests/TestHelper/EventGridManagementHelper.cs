@@ -14,6 +14,8 @@ namespace Microsoft.Azure.EventGrid.Tests.TestHelper
     public static class EventGridManagementHelper
     {
         internal const string TopicPrefix = "sdk-Topic-";
+        internal const string DomainPrefix = "sdk-Domain-";
+        internal const string DomainTopicPrefix = "sdk-DomainTopic-";
         internal const string EventGridPrefix = "sdk-EventGrid-";
         internal const string ResourceGroupPrefix = "sdk-EventGrid-RG-";
 
@@ -34,7 +36,7 @@ namespace Microsoft.Azure.EventGrid.Tests.TestHelper
             return null;
         }
 
-        public static EventGridClient GetEventGridClient(MockContext context, TopicCredentials credentials, RecordedDelegatingHandler handler)
+        public static EventGridClient GetEventGridClient(MockContext context, ResourceCredentials credentials, RecordedDelegatingHandler handler)
         {
             if (handler != null)
             {
@@ -84,9 +86,9 @@ namespace Microsoft.Azure.EventGrid.Tests.TestHelper
 
         public static string GetLocationFromProvider(this ResourceManagementClient resourceManagementClient)
         {
-            // West Central US is one of our early deployment regions
+            // Central US EUAP is one of our early deployment regions
             // so we typically record tests targeting this region.
-            return "westcentralus";
+            return "centraluseuap";
         }
     }
 }

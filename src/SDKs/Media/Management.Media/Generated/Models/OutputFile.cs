@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// '[v1, a1]' tells the encoder to produce an output file with the
         /// video track represented by v1 and the audio track represented by
         /// a1.</param>
-        public OutputFile(IList<string> labels = default(IList<string>))
+        public OutputFile(IList<string> labels)
         {
             Labels = labels;
             CustomInit();
@@ -60,5 +61,18 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "labels")]
         public IList<string> Labels { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Labels == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Labels");
+            }
+        }
     }
 }

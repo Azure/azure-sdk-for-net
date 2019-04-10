@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the
         /// ProtectionContainerFabricSpecificDetails class.
         /// </summary>
-        /// <param name="instanceType">Gets the class type. Overriden in
+        /// <param name="instanceType">Gets the class type. Overridden in
         /// derived classes.</param>
         public ProtectionContainerFabricSpecificDetails(string instanceType = default(string))
         {
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the class type. Overriden in derived classes.
+        /// Gets the class type. Overridden in derived classes.
         /// </summary>
         [JsonProperty(PropertyName = "instanceType")]
         public string InstanceType { get; private set; }

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// Information regarding availbility of a resource name.
+    /// Information regarding availability of a resource name.
     /// </summary>
     public partial class ResourceNameAvailability
     {

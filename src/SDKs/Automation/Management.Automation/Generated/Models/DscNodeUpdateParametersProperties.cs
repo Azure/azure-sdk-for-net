@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// Initializes a new instance of the DscNodeUpdateParametersProperties
         /// class.
         /// </summary>
-        /// <param name="name">Gets or sets the name of the dsc
-        /// nodeconfiguration.</param>
+        /// <param name="name">Gets or sets the name of the dsc node
+        /// configuration.</param>
         public DscNodeUpdateParametersProperties(string name = default(string))
         {
             Name = name;
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the dsc nodeconfiguration.
+        /// Gets or sets the name of the dsc node configuration.
         /// </summary>
         [JsonProperty(PropertyName = "nodeConfiguration.name")]
         public string Name { get; set; }

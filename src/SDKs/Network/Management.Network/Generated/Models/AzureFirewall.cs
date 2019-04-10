@@ -50,9 +50,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// resource. Possible values include: 'Succeeded', 'Updating',
         /// 'Deleting', 'Failed'</param>
+        /// <param name="threatIntelMode">The operation mode for Threat
+        /// Intelligence. Possible values include: 'Alert', 'Deny',
+        /// 'Off'</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
-        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string etag = default(string))
+        public AzureFirewall(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AzureFirewallApplicationRuleCollection> applicationRuleCollections = default(IList<AzureFirewallApplicationRuleCollection>), IList<AzureFirewallNatRuleCollection> natRuleCollections = default(IList<AzureFirewallNatRuleCollection>), IList<AzureFirewallNetworkRuleCollection> networkRuleCollections = default(IList<AzureFirewallNetworkRuleCollection>), IList<AzureFirewallIPConfiguration> ipConfigurations = default(IList<AzureFirewallIPConfiguration>), string provisioningState = default(string), string threatIntelMode = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             ApplicationRuleCollections = applicationRuleCollections;
@@ -60,6 +63,7 @@ namespace Microsoft.Azure.Management.Network.Models
             NetworkRuleCollections = networkRuleCollections;
             IpConfigurations = ipConfigurations;
             ProvisioningState = provisioningState;
+            ThreatIntelMode = threatIntelMode;
             Etag = etag;
             CustomInit();
         }
@@ -102,6 +106,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the operation mode for Threat Intelligence. Possible
+        /// values include: 'Alert', 'Deny', 'Off'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.threatIntelMode")]
+        public string ThreatIntelMode { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

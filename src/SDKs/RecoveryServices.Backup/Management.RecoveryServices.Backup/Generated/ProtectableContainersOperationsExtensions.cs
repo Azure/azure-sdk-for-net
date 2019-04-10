@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public static partial class ProtectableContainersOperationsExtensions
     {
             /// <summary>
-            /// Lists the containers registered to Recovery Services Vault.
+            /// Lists the containers that can be registered to Recovery Services Vault.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,7 +36,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// present.
             /// </param>
             /// <param name='fabricName'>
-            /// Fabric name associated with the container.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Lists the containers registered to Recovery Services Vault.
+            /// Lists the containers that can be registered to Recovery Services Vault.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,7 +59,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             /// present.
             /// </param>
             /// <param name='fabricName'>
-            /// Fabric name associated with the container.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
@@ -77,7 +75,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Lists the containers registered to Recovery Services Vault.
+            /// Lists the containers that can be registered to Recovery Services Vault.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -91,7 +89,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             }
 
             /// <summary>
-            /// Lists the containers registered to Recovery Services Vault.
+            /// Lists the containers that can be registered to Recovery Services Vault.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

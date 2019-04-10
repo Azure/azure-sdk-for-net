@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// ARM resource for a app service enviroment.
+    /// ARM resource for a app service environment.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AppServiceEnvironmentPatchResource : ProxyOnlyResource

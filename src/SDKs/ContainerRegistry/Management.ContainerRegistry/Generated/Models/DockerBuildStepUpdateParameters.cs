@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="contextPath">The URL(absolute or relative) of the
         /// source context for the task step.</param>
+        /// <param name="contextAccessToken">The token (git PAT or SAS token of
+        /// storage account blob) associated with the context for a
+        /// step.</param>
         /// <param name="imageNames">The fully qualified image names including
         /// the repository and tag.</param>
         /// <param name="isPushEnabled">The value of this property indicates
@@ -47,14 +50,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// source context.</param>
         /// <param name="arguments">The collection of override arguments to be
         /// used when executing this build step.</param>
-        public DockerBuildStepUpdateParameters(string contextPath = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = default(string), IList<Argument> arguments = default(IList<Argument>))
-            : base(contextPath)
+        /// <param name="target">The name of the target build stage for the
+        /// docker build.</param>
+        public DockerBuildStepUpdateParameters(string contextPath = default(string), string contextAccessToken = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = default(string), IList<Argument> arguments = default(IList<Argument>), string target = default(string))
+            : base(contextPath, contextAccessToken)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;
             NoCache = noCache;
             DockerFilePath = dockerFilePath;
             Arguments = arguments;
+            Target = target;
             CustomInit();
         }
 
@@ -96,6 +102,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "arguments")]
         public IList<Argument> Arguments { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the target build stage for the docker
+        /// build.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; set; }
 
     }
 }

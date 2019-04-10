@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Model object for creating a regex entity model.
+    /// Model object for creating a regular expression entity model.
     /// </summary>
     public partial class RegexModelCreateObject
     {
@@ -29,7 +29,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <summary>
         /// Initializes a new instance of the RegexModelCreateObject class.
         /// </summary>
-        /// <param name="regexPattern">The regex entity pattern.</param>
+        /// <param name="regexPattern">The regular expression entity
+        /// pattern.</param>
         /// <param name="name">The model name.</param>
         public RegexModelCreateObject(string regexPattern = default(string), string name = default(string))
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the regex entity pattern.
+        /// Gets or sets the regular expression entity pattern.
         /// </summary>
         [JsonProperty(PropertyName = "regexPattern")]
         public string RegexPattern { get; set; }

@@ -54,8 +54,8 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// update configuration run.</param>
         /// <param name="failedCount">Number of computers with failed
         /// status.</param>
-        /// <param name="creationTime">Creation time of theresource, which only
-        /// appears in the response.</param>
+        /// <param name="creationTime">Creation time of the resource, which
+        /// only appears in the response.</param>
         /// <param name="createdBy">CreatedBy property, which only appears in
         /// the response.</param>
         /// <param name="lastModifiedTime">Last time resource was modified,
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public int? FailedCount { get; private set; }
 
         /// <summary>
-        /// Gets creation time of theresource, which only appears in the
+        /// Gets creation time of the resource, which only appears in the
         /// response.
         /// </summary>
         [JsonProperty(PropertyName = "properties.creationTime")]

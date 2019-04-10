@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase'</param>
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
         /// <param name="policyName">Backup policy name associated with the
         /// backup item.</param>
         /// <param name="containerName">Name of the container.</param>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb', 'SQLDB',
         /// 'Exchange', 'Sharepoint', 'VMwareVM', 'SystemState', 'Client',
         /// 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
-        /// 'SAPHanaDatabase'
+        /// 'SAPHanaDatabase', 'SAPAseDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "itemType")]
         public string ItemType { get; set; }

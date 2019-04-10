@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Explicit list item
+    /// Explicit (exception) list item
     /// </summary>
     public partial class ExplicitListItem
     {

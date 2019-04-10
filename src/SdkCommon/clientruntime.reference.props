@@ -1,18 +1,10 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 	<Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.props'))" />	
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.18, 3.0.0)" />		
+		<PackageReference Include="Microsoft.Rest.ClientRuntime" Version="[2.3.19, 3.0.0)" />		
 	</ItemGroup>
   
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
-  
-	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
 	  <Reference Include="System.Net.Http.WebRequest" />
@@ -29,4 +21,13 @@
 	  <Reference Include="System.Runtime.Serialization" />
 	  <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
+
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
+		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+  
+	<ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+		<PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>  
 </Project>

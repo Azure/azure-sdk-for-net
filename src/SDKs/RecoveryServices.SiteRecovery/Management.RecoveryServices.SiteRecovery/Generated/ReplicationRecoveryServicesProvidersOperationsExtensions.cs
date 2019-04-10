@@ -108,6 +108,58 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             }
 
             /// <summary>
+            /// Adds a recovery services provider.
+            /// </summary>
+            /// <remarks>
+            /// The operation to add a recovery services provider.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            /// <param name='addProviderInput'>
+            /// Add provider input.
+            /// </param>
+            public static RecoveryServicesProvider Create(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput)
+            {
+                return operations.CreateAsync(fabricName, providerName, addProviderInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Adds a recovery services provider.
+            /// </summary>
+            /// <remarks>
+            /// The operation to add a recovery services provider.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            /// <param name='addProviderInput'>
+            /// Add provider input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RecoveryServicesProvider> CreateAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateWithHttpMessagesAsync(fabricName, providerName, addProviderInput, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Purges recovery service provider from fabric
             /// </summary>
             /// <remarks>
@@ -282,6 +334,58 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             public static async Task<IPage<RecoveryServicesProvider>> ListAsync(this IReplicationRecoveryServicesProvidersOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Adds a recovery services provider.
+            /// </summary>
+            /// <remarks>
+            /// The operation to add a recovery services provider.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            /// <param name='addProviderInput'>
+            /// Add provider input.
+            /// </param>
+            public static RecoveryServicesProvider BeginCreate(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput)
+            {
+                return operations.BeginCreateAsync(fabricName, providerName, addProviderInput).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Adds a recovery services provider.
+            /// </summary>
+            /// <remarks>
+            /// The operation to add a recovery services provider.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='fabricName'>
+            /// Fabric name.
+            /// </param>
+            /// <param name='providerName'>
+            /// Recovery services provider name.
+            /// </param>
+            /// <param name='addProviderInput'>
+            /// Add provider input.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RecoveryServicesProvider> BeginCreateAsync(this IReplicationRecoveryServicesProvidersOperations operations, string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(fabricName, providerName, addProviderInput, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

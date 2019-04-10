@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
 {
-    using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
@@ -18,7 +17,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
     /// <summary>
     /// AzureBackupServer (DPMVenus) workload-specific protection container.
     /// </summary>
-    public partial class AzureBackupServerContainer : ProtectionContainer
+    public partial class AzureBackupServerContainer : DpmContainer
     {
         /// <summary>
         /// Initializes a new instance of the AzureBackupServerContainer class.
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the AzureBackupServerContainer class.
         /// </summary>
         /// <param name="friendlyName">Friendly name of the container.</param>
-        /// <param name="backupManagementType">Type of backup managemenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the container. Possible values include: 'Invalid', 'AzureIaasVM',
         /// 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql', 'AzureStorage',
         /// 'AzureWorkload', 'DefaultBackup'</param>
@@ -54,16 +53,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// container.</param>
         /// <param name="extendedInfo">Extended Info of the container.</param>
         public AzureBackupServerContainer(string friendlyName = default(string), string backupManagementType = default(string), string registrationStatus = default(string), string healthStatus = default(string), bool? canReRegister = default(bool?), string containerId = default(string), long? protectedItemCount = default(long?), string dpmAgentVersion = default(string), IList<string> dpmServers = default(IList<string>), bool? upgradeAvailable = default(bool?), string protectionStatus = default(string), DPMContainerExtendedInfo extendedInfo = default(DPMContainerExtendedInfo))
-            : base(friendlyName, backupManagementType, registrationStatus, healthStatus)
+            : base(friendlyName, backupManagementType, registrationStatus, healthStatus, canReRegister, containerId, protectedItemCount, dpmAgentVersion, dpmServers, upgradeAvailable, protectionStatus, extendedInfo)
         {
-            CanReRegister = canReRegister;
-            ContainerId = containerId;
-            ProtectedItemCount = protectedItemCount;
-            DpmAgentVersion = dpmAgentVersion;
-            DpmServers = dpmServers;
-            UpgradeAvailable = upgradeAvailable;
-            ProtectionStatus = protectionStatus;
-            ExtendedInfo = extendedInfo;
             CustomInit();
         }
 
@@ -71,54 +62,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets specifies whether the container is re-registrable.
-        /// </summary>
-        [JsonProperty(PropertyName = "canReRegister")]
-        public bool? CanReRegister { get; set; }
-
-        /// <summary>
-        /// Gets or sets ID of container.
-        /// </summary>
-        [JsonProperty(PropertyName = "containerId")]
-        public string ContainerId { get; set; }
-
-        /// <summary>
-        /// Gets or sets number of protected items in the BackupEngine
-        /// </summary>
-        [JsonProperty(PropertyName = "protectedItemCount")]
-        public long? ProtectedItemCount { get; set; }
-
-        /// <summary>
-        /// Gets or sets backup engine Agent version
-        /// </summary>
-        [JsonProperty(PropertyName = "dpmAgentVersion")]
-        public string DpmAgentVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets list of BackupEngines protecting the container
-        /// </summary>
-        [JsonProperty(PropertyName = "dpmServers")]
-        public IList<string> DpmServers { get; set; }
-
-        /// <summary>
-        /// Gets or sets to check if upgrade available
-        /// </summary>
-        [JsonProperty(PropertyName = "upgradeAvailable")]
-        public bool? UpgradeAvailable { get; set; }
-
-        /// <summary>
-        /// Gets or sets protection status of the container.
-        /// </summary>
-        [JsonProperty(PropertyName = "protectionStatus")]
-        public string ProtectionStatus { get; set; }
-
-        /// <summary>
-        /// Gets or sets extended Info of the container.
-        /// </summary>
-        [JsonProperty(PropertyName = "extendedInfo")]
-        public DPMContainerExtendedInfo ExtendedInfo { get; set; }
 
     }
 }

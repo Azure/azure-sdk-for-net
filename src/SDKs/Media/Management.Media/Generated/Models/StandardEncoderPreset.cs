@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -33,13 +34,13 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <summary>
         /// Initializes a new instance of the StandardEncoderPreset class.
         /// </summary>
-        /// <param name="filters">One or more filtering operations that are
-        /// applied to the input media before encoding.</param>
         /// <param name="codecs">The list of codecs to be used when encoding
         /// the input video.</param>
         /// <param name="formats">The list of outputs to be produced by the
         /// encoder.</param>
-        public StandardEncoderPreset(Filters filters = default(Filters), IList<Codec> codecs = default(IList<Codec>), IList<Format> formats = default(IList<Format>))
+        /// <param name="filters">One or more filtering operations that are
+        /// applied to the input media before encoding.</param>
+        public StandardEncoderPreset(IList<Codec> codecs, IList<Format> formats, Filters filters = default(Filters))
         {
             Filters = filters;
             Codecs = codecs;
@@ -72,5 +73,32 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "formats")]
         public IList<Format> Formats { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Codecs == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Codecs");
+            }
+            if (Formats == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Formats");
+            }
+            if (Formats != null)
+            {
+                foreach (var element in Formats)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }

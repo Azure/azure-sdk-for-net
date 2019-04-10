@@ -17,20 +17,20 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "Pattern.Any entity",
                     ExplicitList = new[] { "item" }
                 });
 
-                var results = await client.Model.GetPatternAnyEntityInfosAsync(appId, versionId);
+                var results = await client.Model.ListPatternAnyEntityInfosAsync(GlobalAppId, versionId);
 
                 var model = results.FirstOrDefault(r => r.Name == "Pattern.Any entity");
                 Assert.NotNull(model);
                 Assert.Equal("Pattern.Any entity", model.Name);
                 Assert.Equal("item", model.ExplicitList.Single().ExplicitListItemProperty);
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -39,20 +39,20 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new[] { "item" }
                 });
 
-                var result = await client.Model.GetPatternAnyEntityInfoAsync(appId, versionId, entityId);
+                var result = await client.Model.GetPatternAnyEntityInfoAsync(GlobalAppId, versionId, entityId);
 
                 Assert.NotNull(result);
                 Assert.Equal("New Entity Test", result.Name);
                 Assert.Equal("Pattern.Any Entity Extractor", result.ReadableType);
                 Assert.Equal("item", result.ExplicitList.Single().ExplicitListItemProperty);
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -61,20 +61,20 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new[] { "item" }
                 });
 
-                var result = await client.Model.GetPatternAnyEntityInfoAsync(appId, versionId, entityId);
+                var result = await client.Model.GetPatternAnyEntityInfoAsync(GlobalAppId, versionId, entityId);
 
                 Assert.NotNull(result);
                 Assert.Equal("New Entity Test", result.Name);
                 Assert.Equal("Pattern.Any Entity Extractor", result.ReadableType);
                 Assert.Equal("item", result.ExplicitList.Single().ExplicitListItemProperty);
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -83,26 +83,26 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new[] { "item" }
                 });
 
-                await client.Model.UpdatePatternAnyEntityModelAsync(appId, versionId, entityId, new PatternAnyModelUpdateObject
+                await client.Model.UpdatePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId, new PatternAnyModelUpdateObject
                 {
                     Name = "Entity Test Renamed",
                     ExplicitList = new[] { "item1" }
                 });
 
-                var result = await client.Model.GetPatternAnyEntityInfoAsync(appId, versionId, entityId);
+                var result = await client.Model.GetPatternAnyEntityInfoAsync(GlobalAppId, versionId, entityId);
 
                 Assert.NotNull(result);
                 Assert.Equal("Entity Test Renamed", result.Name);
                 Assert.Equal("Pattern.Any Entity Extractor", result.ReadableType);
                 Assert.Equal("item1", result.ExplicitList.Single().ExplicitListItemProperty);
 
-                await client.Model.DeleteEntityAsync(appId, versionId, entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -111,15 +111,15 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new[] { "item" }
                 });
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
 
-                var results = await client.Model.GetPatternAnyEntityInfosAsync(appId, versionId);
+                var results = await client.Model.ListPatternAnyEntityInfosAsync(GlobalAppId, versionId);
 
                 Assert.DoesNotContain(results, o => o.Id == entityId);
             });
@@ -130,19 +130,19 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new[] { "item1", "item2" }
                 });
 
-                var result = await client.Model.GetExplicitListAsync(appId, versionId, entityId);
+                var result = await client.Model.GetExplicitListAsync(GlobalAppId, versionId, entityId);
 
                 Assert.NotNull(result);
                 Assert.Contains(result, r => r.ExplicitListItemProperty == "item1");
                 Assert.Contains(result, r => r.ExplicitListItemProperty == "item2");
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -151,23 +151,23 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new[] { "item1" }
                 });
 
-                var result = await client.Model.AddExplicitListItemAsync(appId, versionId, entityId, new ExplicitListItemCreateObject
+                var result = await client.Model.AddExplicitListItemAsync(GlobalAppId, versionId, entityId, new ExplicitListItemCreateObject
                 {
                     ExplicitListItem = "item2"
                 });
 
-                var item = await client.Model.GetExplicitListItemAsync(appId, versionId, entityId, result.Value);
+                var item = await client.Model.GetExplicitListItemAsync(GlobalAppId, versionId, entityId, result.Value);
 
                 Assert.NotNull(item);
                 Assert.Equal("item2", item.ExplicitListItemProperty);
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -176,23 +176,23 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new List<string>()
                 });
 
-                var result = await client.Model.AddExplicitListItemAsync(appId, versionId, entityId, new ExplicitListItemCreateObject
+                var result = await client.Model.AddExplicitListItemAsync(GlobalAppId, versionId, entityId, new ExplicitListItemCreateObject
                 {
                     ExplicitListItem = "item"
                 });
 
-                var item = await client.Model.GetExplicitListItemAsync(appId, versionId, entityId, result.Value);
+                var item = await client.Model.GetExplicitListItemAsync(GlobalAppId, versionId, entityId, result.Value);
 
                 Assert.NotNull(item);
                 Assert.Equal("item", item.ExplicitListItemProperty);
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -201,28 +201,28 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new List<string>()
                 });
 
-                var result = await client.Model.AddExplicitListItemAsync(appId, versionId, entityId, new ExplicitListItemCreateObject
+                var result = await client.Model.AddExplicitListItemAsync(GlobalAppId, versionId, entityId, new ExplicitListItemCreateObject
                 {
                     ExplicitListItem = "item"
                 });
 
-                await client.Model.UpdateExplicitListItemAsync(appId, versionId, entityId, result.Value, new ExplicitListItemUpdateObject
+                await client.Model.UpdateExplicitListItemAsync(GlobalAppId, versionId, entityId, result.Value, new ExplicitListItemUpdateObject
                 {
                     ExplicitListItem = "item1"
                 });
 
-                var item = await client.Model.GetExplicitListItemAsync(appId, versionId, entityId, result.Value);
+                var item = await client.Model.GetExplicitListItemAsync(GlobalAppId, versionId, entityId, result.Value);
 
                 Assert.NotNull(item);
                 Assert.Equal("item1", item.ExplicitListItemProperty);
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
 
@@ -231,24 +231,24 @@
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, versionId, new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, versionId, new PatternAnyModelCreateObject
                 {
                     Name = "New Entity Test",
                     ExplicitList = new List<string>()
                 });
 
-                var result = await client.Model.AddExplicitListItemAsync(appId, versionId, entityId, new ExplicitListItemCreateObject
+                var result = await client.Model.AddExplicitListItemAsync(GlobalAppId, versionId, entityId, new ExplicitListItemCreateObject
                 {
                     ExplicitListItem = "item"
                 });
 
-                await client.Model.DeleteExplicitListItemAsync(appId, versionId, entityId, result.Value);
-                var list = await client.Model.GetExplicitListAsync(appId, versionId, entityId);
+                await client.Model.DeleteExplicitListItemAsync(GlobalAppId, versionId, entityId, result.Value);
+                var list = await client.Model.GetExplicitListAsync(GlobalAppId, versionId, entityId);
 
                 Assert.NotNull(list);
                 Assert.Empty(list);
 
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, versionId, entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, versionId, entityId);
             });
         }
     }

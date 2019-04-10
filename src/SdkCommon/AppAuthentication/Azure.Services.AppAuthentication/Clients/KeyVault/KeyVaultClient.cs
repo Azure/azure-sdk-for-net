@@ -174,6 +174,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 string azureAdInstance = UriHelper.GetAzureAdInstanceByAuthority(authority);
                 tokenProviders = new List<NonInteractiveAzureServiceTokenProviderBase>
                 {
+                    new MsiAccessTokenProvider(),
                     new VisualStudioAccessTokenProvider(new ProcessManager()),
                     new AzureCliAccessTokenProvider(new ProcessManager()),
 #if FullNetFx

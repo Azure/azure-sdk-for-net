@@ -24,327 +24,645 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction
     public static partial class CustomVisionPredictionClientExtensions
     {
             /// <summary>
-            /// Predict an image url and saves the result
+            /// Classify an image url and saves the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
-            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// An ImageUrl that contains the url of the image to be evaluated.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
-            public static ImagePrediction PredictImageUrl(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction ClassifyImageUrl(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string))
             {
-                return operations.PredictImageUrlAsync(projectId, imageUrl, iterationId, application).GetAwaiter().GetResult();
+                return operations.ClassifyImageUrlAsync(projectId, publishedName, imageUrl, application).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Predict an image url and saves the result
+            /// Classify an image url and saves the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
-            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// An ImageUrl that contains the url of the image to be evaluated.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageUrlAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> ClassifyImageUrlAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PredictImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ClassifyImageUrlWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Predict an image url and saves the result
+            /// Classify an image url and saves the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
-            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// An ImageUrl that contains the url of the image to be evaluated.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> ClassifyImageUrlWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.PredictImageUrlWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.ClassifyImageUrlWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Predict an image and saves the result
+            /// Classify an image and saves the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageData'>
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 4MB.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
-            public static ImagePrediction PredictImage(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction ClassifyImage(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string))
             {
-                return operations.PredictImageAsync(projectId, imageData, iterationId, application).GetAwaiter().GetResult();
+                return operations.ClassifyImageAsync(projectId, publishedName, imageData, application).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Predict an image and saves the result
+            /// Classify an image and saves the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageData'>
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 4MB.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> ClassifyImageAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PredictImageWithHttpMessagesAsync(projectId, imageData, iterationId, application, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ClassifyImageWithHttpMessagesAsync(projectId, publishedName, imageData, application, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Predict an image and saves the result
+            /// Classify an image and saves the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageData'>
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 4MB.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> ClassifyImageWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.PredictImageWithHttpMessagesAsync(projectId, imageData, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.ClassifyImageWithHttpMessagesAsync(projectId, publishedName, imageData, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Predict an image url without saving the result
+            /// Classify an image url without saving the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
             /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// evaluated.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
-            public static ImagePrediction PredictImageUrlWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction ClassifyImageUrlWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string))
             {
-                return operations.PredictImageUrlWithNoStoreAsync(projectId, imageUrl, iterationId, application).GetAwaiter().GetResult();
+                return operations.ClassifyImageUrlWithNoStoreAsync(projectId, publishedName, imageUrl, application).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Predict an image url without saving the result
+            /// Classify an image url without saving the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
             /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// evaluated.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageUrlWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> ClassifyImageUrlWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PredictImageUrlWithNoStoreWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ClassifyImageUrlWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Predict an image url without saving the result
+            /// Classify an image url without saving the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
             /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// evaluated.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageUrlWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, ImageUrl imageUrl, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> ClassifyImageUrlWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.PredictImageUrlWithNoStoreWithHttpMessagesAsync(projectId, imageUrl, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.ClassifyImageUrlWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Predict an image without saving the result
+            /// Classify an image without saving the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageData'>
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 0MB.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
-            public static ImagePrediction PredictImageWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string))
+            public static ImagePrediction ClassifyImageWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string))
             {
-                return operations.PredictImageWithNoStoreAsync(projectId, imageData, iterationId, application).GetAwaiter().GetResult();
+                return operations.ClassifyImageWithNoStoreAsync(projectId, publishedName, imageData, application).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Predict an image without saving the result
+            /// Classify an image without saving the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageData'>
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 0MB.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImagePrediction> PredictImageWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImagePrediction> ClassifyImageWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.PredictImageWithNoStoreWithHttpMessagesAsync(projectId, imageData, iterationId, application, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ClassifyImageWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageData, application, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Predict an image without saving the result
+            /// Classify an image without saving the result.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
-            /// The project id
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
             /// </param>
             /// <param name='imageData'>
-            /// </param>
-            /// <param name='iterationId'>
-            /// Optional. Specifies the id of a particular iteration to evaluate against.
-            /// The default iteration for the project will be used when not specified
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 0MB.
             /// </param>
             /// <param name='application'>
-            /// Optional. Specifies the name of application using the endpoint
+            /// Optional. Specifies the name of application using the endpoint.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImagePrediction> PredictImageWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, Stream imageData, System.Guid? iterationId = default(System.Guid?), string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImagePrediction> ClassifyImageWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.PredictImageWithNoStoreWithHttpMessagesAsync(projectId, imageData, iterationId, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.ClassifyImageWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageData, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image url and saves the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An ImageUrl that contains the url of the image to be evaluated.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            public static ImagePrediction DetectImageUrl(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string))
+            {
+                return operations.DetectImageUrlAsync(projectId, publishedName, imageUrl, application).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image url and saves the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An ImageUrl that contains the url of the image to be evaluated.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImagePrediction> DetectImageUrlAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DetectImageUrlWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detect objects in an image url and saves the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An ImageUrl that contains the url of the image to be evaluated.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> DetectImageUrlWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DetectImageUrlWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image and saves the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageData'>
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 4MB.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            public static ImagePrediction DetectImage(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string))
+            {
+                return operations.DetectImageAsync(projectId, publishedName, imageData, application).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image and saves the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageData'>
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 4MB.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImagePrediction> DetectImageAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DetectImageWithHttpMessagesAsync(projectId, publishedName, imageData, application, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detect objects in an image and saves the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageData'>
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 4MB.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> DetectImageWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DetectImageWithHttpMessagesAsync(projectId, publishedName, imageData, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image url without saving the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            public static ImagePrediction DetectImageUrlWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string))
+            {
+                return operations.DetectImageUrlWithNoStoreAsync(projectId, publishedName, imageUrl, application).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image url without saving the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImagePrediction> DetectImageUrlWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DetectImageUrlWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detect objects in an image url without saving the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageUrl'>
+            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
+            /// evaluated.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> DetectImageUrlWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, ImageUrl imageUrl, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DetectImageUrlWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageUrl, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image without saving the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageData'>
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 0MB.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            public static ImagePrediction DetectImageWithNoStore(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string))
+            {
+                return operations.DetectImageWithNoStoreAsync(projectId, publishedName, imageData, application).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Detect objects in an image without saving the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageData'>
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 0MB.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ImagePrediction> DetectImageWithNoStoreAsync(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DetectImageWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageData, application, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Detect objects in an image without saving the result.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='publishedName'>
+            /// Specifies the name of the model to evaluate against.
+            /// </param>
+            /// <param name='imageData'>
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 0MB.
+            /// </param>
+            /// <param name='application'>
+            /// Optional. Specifies the name of application using the endpoint.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<ImagePrediction> DetectImageWithNoStoreWithHttpMessages(this ICustomVisionPredictionClient operations, System.Guid projectId, string publishedName, Stream imageData, string application = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.DetectImageWithNoStoreWithHttpMessagesAsync(projectId, publishedName, imageData, application, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

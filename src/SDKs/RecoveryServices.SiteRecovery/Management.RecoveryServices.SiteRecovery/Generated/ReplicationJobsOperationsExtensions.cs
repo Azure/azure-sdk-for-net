@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobName'>
-            /// Job indentifier.
+            /// Job identifier.
             /// </param>
             public static Job Cancel(this IReplicationJobsOperations operations, string jobName)
             {
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobName'>
-            /// Job indentifier.
+            /// Job identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobName'>
-            /// Job indentifier.
+            /// Job identifier.
             /// </param>
             public static Job BeginCancel(this IReplicationJobsOperations operations, string jobName)
             {
@@ -297,7 +297,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
             /// The operations group for this extension method.
             /// </param>
             /// <param name='jobName'>
-            /// Job indentifier.
+            /// Job identifier.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

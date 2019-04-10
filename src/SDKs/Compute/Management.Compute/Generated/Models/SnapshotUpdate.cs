@@ -42,14 +42,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// options, it indicates a resize. Resizes are only allowed if the
         /// disk is not attached to a running VM, and can only increase the
         /// disk's size.</param>
-        /// <param name="encryptionSettings">Encryption settings for disk or
-        /// snapshot</param>
+        /// <param name="encryptionSettingsCollection">Encryption settings
+        /// collection used be Azure Disk Encryption, can contain multiple
+        /// encryption settings per disk or snapshot.</param>
         /// <param name="tags">Resource tags</param>
-        public SnapshotUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettings encryptionSettings = default(EncryptionSettings), IDictionary<string, string> tags = default(IDictionary<string, string>), SnapshotSku sku = default(SnapshotSku))
+        public SnapshotUpdate(OperatingSystemTypes? osType = default(OperatingSystemTypes?), int? diskSizeGB = default(int?), EncryptionSettingsCollection encryptionSettingsCollection = default(EncryptionSettingsCollection), IDictionary<string, string> tags = default(IDictionary<string, string>), SnapshotSku sku = default(SnapshotSku))
         {
             OsType = osType;
             DiskSizeGB = diskSizeGB;
-            EncryptionSettings = encryptionSettings;
+            EncryptionSettingsCollection = encryptionSettingsCollection;
             Tags = tags;
             Sku = sku;
             CustomInit();
@@ -78,10 +79,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         public int? DiskSizeGB { get; set; }
 
         /// <summary>
-        /// Gets or sets encryption settings for disk or snapshot
+        /// Gets or sets encryption settings collection used be Azure Disk
+        /// Encryption, can contain multiple encryption settings per disk or
+        /// snapshot.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.encryptionSettings")]
-        public EncryptionSettings EncryptionSettings { get; set; }
+        [JsonProperty(PropertyName = "properties.encryptionSettingsCollection")]
+        public EncryptionSettingsCollection EncryptionSettingsCollection { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags
@@ -102,9 +105,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (EncryptionSettings != null)
+            if (EncryptionSettingsCollection != null)
             {
-                EncryptionSettings.Validate();
+                EncryptionSettingsCollection.Validate();
             }
         }
     }

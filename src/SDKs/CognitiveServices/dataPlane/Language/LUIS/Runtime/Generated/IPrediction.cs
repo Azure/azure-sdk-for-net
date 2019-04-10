@@ -45,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// Enable spell checking.
         /// </param>
         /// <param name='bingSpellCheckSubscriptionKey'>
-        /// The subscription key to use when enabling bing spell check
+        /// The subscription key to use when enabling Bing spell check
         /// </param>
         /// <param name='log'>
         /// Log query (default is true)
@@ -65,6 +65,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<LuisResult>> ResolveWithHttpMessagesAsync(System.Guid appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

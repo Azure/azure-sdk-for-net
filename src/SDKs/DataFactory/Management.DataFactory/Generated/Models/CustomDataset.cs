@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Management.DataFactory.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -34,7 +33,6 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Initializes a new instance of the CustomDataset class.
         /// </summary>
         /// <param name="linkedServiceName">Linked service reference.</param>
-        /// <param name="typeProperties">Custom dataset properties.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="description">Dataset description.</param>
@@ -49,7 +47,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// describing the Dataset.</param>
         /// <param name="folder">The folder that this Dataset is in. If not
         /// specified, Dataset will appear at the root level.</param>
-        public CustomDataset(LinkedServiceReference linkedServiceName, object typeProperties, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder))
+        /// <param name="typeProperties">Custom dataset properties.</param>
+        public CustomDataset(LinkedServiceReference linkedServiceName, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string description = default(string), object structure = default(object), object schema = default(object), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), DatasetFolder folder = default(DatasetFolder), object typeProperties = default(object))
             : base(linkedServiceName, additionalProperties, description, structure, schema, parameters, annotations, folder)
         {
             TypeProperties = typeProperties;
@@ -70,16 +69,12 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
-            if (TypeProperties == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TypeProperties");
-            }
         }
     }
 }

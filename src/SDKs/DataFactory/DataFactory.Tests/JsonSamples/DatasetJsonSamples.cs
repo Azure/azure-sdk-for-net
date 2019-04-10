@@ -872,5 +872,47 @@ namespace DataFactory.Tests.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string SapOpenHubDataset = @"
+{
+     ""name"": ""SAPBWOpenHubDataset"",
+    ""properties"": {
+        ""type"": ""SapOpenHubTable"",
+        ""linkedServiceName"": {
+            ""referenceName"": ""OpenHubLinkedService"",
+            ""type"": ""LinkedServiceReference""
+        },
+        ""typeProperties"": {
+            ""openHubDestinationName"": ""fakeOhdName"",
+            ""excludeLastRequest"": true,
+            ""baseRequestId"": 231
+        }
+    }
+}
+";
+
+        [JsonSample]
+        public const string RestDataset = @"
+{
+    ""name"": ""RESTDataset"",
+    ""properties"": {
+        ""type"": ""RestResource"",
+        ""linkedServiceName"": {
+            ""referenceName"": ""RestLinkedService"",
+            ""type"": ""LinkedServiceReference""
+        },
+        ""typeProperties"": {
+            ""relativeUrl"": ""https://fakeurl/"",
+            ""additionalHeaders"": {
+                ""x-user-defined"": ""helloworld""
+            },
+            ""paginationRules"": {
+                ""AbsoluteUrl"": ""$.paging.next""
+            }
+        }
+    }
+}
+";
+
     }
 }

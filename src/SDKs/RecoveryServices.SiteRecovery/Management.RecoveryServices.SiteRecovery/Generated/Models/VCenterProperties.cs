@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <param name="friendlyName">Friendly name of the vCenter.</param>
         /// <param name="internalId">VCenter internal ID.</param>
         /// <param name="lastHeartbeat">The time when the last heartbeat was
-        /// reveived by vCenter.</param>
+        /// received by vCenter.</param>
         /// <param name="discoveryStatus">The VCenter discovery status.</param>
         /// <param name="processServerId">The process server Id.</param>
         /// <param name="ipAddress">The IP address of the vCenter.</param>
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         public string InternalId { get; set; }
 
         /// <summary>
-        /// Gets or sets the time when the last heartbeat was reveived by
+        /// Gets or sets the time when the last heartbeat was received by
         /// vCenter.
         /// </summary>
         [JsonProperty(PropertyName = "lastHeartbeat")]

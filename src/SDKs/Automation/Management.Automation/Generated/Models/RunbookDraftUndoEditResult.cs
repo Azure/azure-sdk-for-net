@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// The response model for the undoedit runbook operation.
+    /// The response model for the undo edit runbook operation.
     /// </summary>
     public partial class RunbookDraftUndoEditResult
     {

@@ -154,5 +154,15 @@ namespace Microsoft.Azure.Management.Monitor
         /// </summary>
         IScheduledQueryRulesOperations ScheduledQueryRules { get; }
 
+        /// <summary>
+        /// Gets the IMetricNamespacesOperations.
+        /// </summary>
+        IMetricNamespacesOperations MetricNamespaces { get; }
+
+        /// <summary>
+        /// Gets the IVMInsightsOperations.
+        /// </summary>
+        IVMInsightsOperations VMInsights { get; }
+
     }
 }

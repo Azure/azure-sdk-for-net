@@ -41,11 +41,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// API key.
         /// </summary>
         public string ApiKey { get; set; }
 
         /// <summary>
-        /// Supported Cognitive Services endpoints
+        /// Supported Cognitive Services endpoints.
         /// </summary>
         public string Endpoint { get; set; }
 
@@ -96,7 +97,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/customvision/v2.2/Training";
+            BaseUri = "{Endpoint}/customvision/v3.0/training";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -218,12 +219,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -279,7 +287,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -366,12 +374,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -439,7 +454,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -454,7 +469,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<int?>> GetTaggedImageCountWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<int?>> GetTaggedImageCountWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -541,12 +556,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -610,7 +632,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -707,12 +729,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -771,7 +800,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -869,12 +898,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -928,7 +964,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// Image ids. Limited to 64 images.
         /// </param>
         /// <param name='tagIds'>
-        /// Tags to be deleted from the specified images. Limted to 20 tags.
+        /// Tags to be deleted from the specified images. Limited to 20 tags.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -936,7 +972,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -948,7 +984,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteImageTagsWithHttpMessagesAsync(System.Guid projectId, IList<string> imageIds, IList<string> tagIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteImageTagsWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> imageIds, IList<System.Guid> tagIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -958,9 +994,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageIds");
             }
+            if (imageIds != null)
+            {
+                if (imageIds.Count > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "imageIds", 64);
+                }
+                if (imageIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "imageIds", 0);
+                }
+            }
             if (tagIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "tagIds");
+            }
+            if (tagIds != null)
+            {
+                if (tagIds.Count > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "tagIds", 20);
+                }
+                if (tagIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "tagIds", 0);
+                }
             }
             if (ApiKey == null)
             {
@@ -1043,12 +1101,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1094,7 +1159,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1192,12 +1257,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1256,7 +1328,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1268,7 +1340,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteImageRegionsWithHttpMessagesAsync(System.Guid projectId, IList<string> regionIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteImageRegionsWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> regionIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -1277,6 +1349,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (regionIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "regionIds");
+            }
+            if (regionIds != null)
+            {
+                if (regionIds.Count > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "regionIds", 64);
+                }
+                if (regionIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "regionIds", 0);
+                }
             }
             if (ApiKey == null)
             {
@@ -1354,12 +1437,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1423,7 +1513,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1438,11 +1528,30 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<Image>>> GetTaggedImagesWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<Image>>> GetTaggedImagesWithHttpMessagesAsync(System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (tagIds != null)
+            {
+                if (tagIds.Count > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "tagIds", 20);
+                }
+                if (tagIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "tagIds", 0);
+                }
+            }
+            if (take > 256)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 256);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             if (ApiKey == null)
             {
@@ -1540,12 +1649,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1620,7 +1736,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1640,6 +1756,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (take > 256)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 256);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             if (ApiKey == null)
             {
@@ -1732,12 +1856,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1804,7 +1935,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1819,11 +1950,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<Image>>> GetImagesByIdsWithHttpMessagesAsync(System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<Image>>> GetImagesByIdsWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> imageIds = default(IList<System.Guid>), System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (imageIds != null)
+            {
+                if (imageIds.Count > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "imageIds", 256);
+                }
+                if (imageIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "imageIds", 0);
+                }
             }
             if (ApiKey == null)
             {
@@ -1906,12 +2048,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -1967,7 +2116,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='imageData'>
-        /// Binary image data.
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+        /// images up to 6MB.
         /// </param>
         /// <param name='tagIds'>
         /// The tags ids with which to tag each image. Limited to 20.
@@ -1978,7 +2128,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1993,11 +2143,22 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ImageCreateSummary>> CreateImagesFromDataWithHttpMessagesAsync(System.Guid projectId, Stream imageData, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ImageCreateSummary>> CreateImagesFromDataWithHttpMessagesAsync(System.Guid projectId, Stream imageData, IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (tagIds != null)
+            {
+                if (tagIds.Count > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "tagIds", 20);
+                }
+                if (tagIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "tagIds", 0);
+                }
             }
             if (imageData == null)
             {
@@ -2104,12 +2265,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2160,7 +2328,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='imageIds'>
-        /// Ids of the images to be deleted. Limted to 256 images per batch.
+        /// Ids of the images to be deleted. Limited to 256 images per batch.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2168,7 +2336,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2180,7 +2348,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteImagesWithHttpMessagesAsync(System.Guid projectId, IList<string> imageIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteImagesWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> imageIds, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2189,6 +2357,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (imageIds == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageIds");
+            }
+            if (imageIds != null)
+            {
+                if (imageIds.Count > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "imageIds", 256);
+                }
+                if (imageIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "imageIds", 0);
+                }
             }
             if (ApiKey == null)
             {
@@ -2266,12 +2445,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2317,7 +2503,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2415,12 +2601,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2483,7 +2676,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2581,12 +2774,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2641,7 +2841,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='batch'>
-        /// Image and tag ids. Limted to 64 images and 20 tags per batch.
+        /// Image and tag ids. Limited to 64 images and 20 tags per batch.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2649,7 +2849,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2747,12 +2947,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2816,7 +3023,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -2855,7 +3062,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{projectId}/images/{imageId}/regionproposals";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/images/{imageId}/regionproposals";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
             _url = _url.Replace("{imageId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(imageId, SerializationSettings).Trim('"')));
@@ -2905,12 +3112,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -2969,7 +3183,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -2981,7 +3195,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeletePredictionWithHttpMessagesAsync(System.Guid projectId, IList<string> ids, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeletePredictionWithHttpMessagesAsync(System.Guid projectId, IList<System.Guid> ids, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -2990,6 +3204,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (ids == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ids");
+            }
+            if (ids != null)
+            {
+                if (ids.Count > 64)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "ids", 64);
+                }
+                if (ids.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "ids", 0);
+                }
             }
             if (ApiKey == null)
             {
@@ -3067,12 +3292,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3105,8 +3337,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project to evaluate against.
         /// </param>
         /// <param name='imageUrl'>
-        /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-        /// evaluated.
+        /// An ImageUrl that contains the url of the image to be evaluated.
         /// </param>
         /// <param name='iterationId'>
         /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -3118,7 +3349,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3142,6 +3373,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (imageUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "imageUrl");
+            }
+            if (imageUrl != null)
+            {
+                imageUrl.Validate();
             }
             if (ApiKey == null)
             {
@@ -3226,12 +3461,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3282,7 +3524,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The project id.
         /// </param>
         /// <param name='imageData'>
-        /// Binary image data.
+        /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+        /// images up to 6MB.
         /// </param>
         /// <param name='iterationId'>
         /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -3294,7 +3537,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3420,12 +3663,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3484,7 +3734,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3582,12 +3832,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3653,7 +3910,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3757,12 +4014,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -3844,7 +4108,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -3859,11 +4123,30 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ImagePerformance>>> GetImagePerformancesWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<ImagePerformance>>> GetImagePerformancesWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (tagIds != null)
+            {
+                if (tagIds.Count > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxItems, "tagIds", 20);
+                }
+                if (tagIds.Count < 0)
+                {
+                    throw new ValidationException(ValidationRules.MinItems, "tagIds", 0);
+                }
+            }
+            if (take > 256)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "take", 256);
+            }
+            if (take < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "take", 0);
             }
             if (ApiKey == null)
             {
@@ -3958,12 +4241,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4033,7 +4323,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -4048,7 +4338,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<int?>> GetImagePerformanceCountWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<int?>> GetImagePerformanceCountWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -4132,12 +4422,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4190,7 +4487,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -4275,12 +4572,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4340,13 +4644,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// The type of classifier to create for this project. Possible values include:
         /// 'Multiclass', 'Multilabel'
         /// </param>
+        /// <param name='targetExportPlatforms'>
+        /// List of platforms the trained model is intending exporting to.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -4361,7 +4668,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Project>> CreateProjectWithHttpMessagesAsync(string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -4386,6 +4693,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 tracingParameters.Add("description", description);
                 tracingParameters.Add("domainId", domainId);
                 tracingParameters.Add("classificationType", classificationType);
+                tracingParameters.Add("targetExportPlatforms", targetExportPlatforms);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateProject", tracingParameters);
             }
@@ -4409,6 +4717,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             if (classificationType != null)
             {
                 _queryParameters.Add(string.Format("classificationType={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(classificationType, SerializationSettings).Trim('"'))));
+            }
+            if (targetExportPlatforms != null)
+            {
+                _queryParameters.Add(string.Format("targetExportPlatforms={0}", System.Uri.EscapeDataString(string.Join(",", targetExportPlatforms))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4460,12 +4772,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4521,7 +4840,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -4608,12 +4927,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4669,7 +4995,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -4753,12 +5079,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4799,7 +5132,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -4897,12 +5230,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -4947,6 +5287,201 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         }
 
         /// <summary>
+        /// Queues project for training.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='trainingType'>
+        /// The type of training to use to train the project (default: Regular).
+        /// Possible values include: 'Regular', 'Advanced'
+        /// </param>
+        /// <param name='reservedBudgetInHours'>
+        /// The number of hours reserved as budget for training (if applicable).
+        /// </param>
+        /// <param name='forceTrain'>
+        /// Whether to force train even if dataset and configuration does not change
+        /// (default: false).
+        /// </param>
+        /// <param name='notificationEmailAddress'>
+        /// The email address to send notification to when training finishes (default:
+        /// null).
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CustomVisionErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (ApiKey == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("trainingType", trainingType);
+                tracingParameters.Add("reservedBudgetInHours", reservedBudgetInHours);
+                tracingParameters.Add("forceTrain", forceTrain);
+                tracingParameters.Add("notificationEmailAddress", notificationEmailAddress);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "TrainProject", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/train";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (trainingType != null)
+            {
+                _queryParameters.Add(string.Format("trainingType={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(trainingType, SerializationSettings).Trim('"'))));
+            }
+            if (reservedBudgetInHours != null)
+            {
+                _queryParameters.Add(string.Format("reservedBudgetInHours={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(reservedBudgetInHours, SerializationSettings).Trim('"'))));
+            }
+            if (forceTrain != null)
+            {
+                _queryParameters.Add(string.Format("forceTrain={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(forceTrain, SerializationSettings).Trim('"'))));
+            }
+            if (notificationEmailAddress != null)
+            {
+                _queryParameters.Add(string.Format("notificationEmailAddress={0}", System.Uri.EscapeDataString(notificationEmailAddress)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (ApiKey != null)
+            {
+                if (_httpRequest.Headers.Contains("Training-Key"))
+                {
+                    _httpRequest.Headers.Remove("Training-Key");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<Iteration>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Iteration>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Get iterations for the project.
         /// </summary>
         /// <param name='projectId'>
@@ -4958,7 +5493,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -5045,12 +5580,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5109,7 +5651,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -5198,12 +5740,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5262,7 +5811,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -5348,12 +5897,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5397,7 +5953,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -5497,12 +6053,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5547,10 +6110,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         }
 
         /// <summary>
-        /// Queues project for training.
+        /// Publish a specific iteration.
         /// </summary>
         /// <param name='projectId'>
         /// The project id.
+        /// </param>
+        /// <param name='iterationId'>
+        /// The iteration id.
+        /// </param>
+        /// <param name='publishName'>
+        /// The name to give the published iteration.
+        /// </param>
+        /// <param name='predictionId'>
+        /// The id of the prediction resource to publish to.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5558,7 +6130,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -5573,11 +6145,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Iteration>> TrainProjectWithHttpMessagesAsync(System.Guid projectId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<bool?>> PublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (publishName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "publishName");
+            }
+            if (predictionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "predictionId");
             }
             if (ApiKey == null)
             {
@@ -5591,14 +6171,31 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("iterationId", iterationId);
+                tracingParameters.Add("publishName", publishName);
+                tracingParameters.Add("predictionId", predictionId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "TrainProject", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "PublishIteration", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/train";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/iterations/{iterationId}/publish";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
+            List<string> _queryParameters = new List<string>();
+            if (publishName != null)
+            {
+                _queryParameters.Add(string.Format("publishName={0}", System.Uri.EscapeDataString(publishName)));
+            }
+            if (predictionId != null)
+            {
+                _queryParameters.Add(string.Format("predictionId={0}", System.Uri.EscapeDataString(predictionId)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -5645,12 +6242,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5666,7 +6270,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<Iteration>();
+            var _result = new HttpOperationResponse<bool?>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -5675,7 +6279,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Iteration>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<bool?>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -5687,6 +6291,145 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Unpublish a specific iteration.
+        /// </summary>
+        /// <param name='projectId'>
+        /// The project id.
+        /// </param>
+        /// <param name='iterationId'>
+        /// The iteration id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CustomVisionErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse> UnpublishIterationWithHttpMessagesAsync(System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (ApiKey == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiKey");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("projectId", projectId);
+                tracingParameters.Add("iterationId", iterationId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UnpublishIteration", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "projects/{projectId}/iterations/{iterationId}/publish";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{projectId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(projectId, SerializationSettings).Trim('"')));
+            _url = _url.Replace("{iterationId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(iterationId, SerializationSettings).Trim('"')));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (ApiKey != null)
+            {
+                if (_httpRequest.Headers.Contains("Training-Key"))
+                {
+                    _httpRequest.Headers.Remove("Training-Key");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("Training-Key", ApiKey);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 204)
+            {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -5709,7 +6452,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -5798,12 +6541,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -5858,11 +6608,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// </param>
         /// <param name='platform'>
         /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-        /// 'DockerFile', 'ONNX'
+        /// 'DockerFile', 'ONNX', 'VAIDK'
         /// </param>
         /// <param name='flavor'>
         /// The flavor of the target platform. Possible values include: 'Linux',
-        /// 'Windows', 'ONNX10', 'ONNX12'
+        /// 'Windows', 'ONNX10', 'ONNX12', 'ARM'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5870,7 +6620,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -5978,12 +6728,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -6046,7 +6803,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -6145,12 +6902,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -6209,7 +6973,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -6295,12 +7059,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 204)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -6344,7 +7115,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -6444,12 +7215,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -6508,7 +7286,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -6605,12 +7383,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -6675,7 +7460,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="CustomVisionErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -6786,12 +7571,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new CustomVisionErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CustomVisionError _errorBody =  SafeJsonConvert.DeserializeObject<CustomVisionError>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);

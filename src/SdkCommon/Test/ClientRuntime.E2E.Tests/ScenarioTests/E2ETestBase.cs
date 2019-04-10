@@ -7,8 +7,6 @@ namespace Microsoft.Rest.ClientRuntime.E2E.Tests.ScenarioTests
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.Network;
     using Microsoft.Azure.Management.Network.Models;
-    //using Microsoft.Azure.Management.ResourceManager;
-    //using Microsoft.Azure.Management.ResourceManager.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Azure.Management.Storage;

@@ -45,9 +45,9 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// should be added. The specified certificate store is implicitly in
         /// the LocalMachine account. &lt;br&gt;&lt;br&gt;For Linux VMs, the
         /// certificate file is placed under the /var/lib/waagent directory,
-        /// with the file name &lt;UppercaseThumbprint&gt;.crt for the X509
-        /// certificate file and &lt;UppercaseThumbprint&gt;.prv for private
-        /// key. Both of these files are .pem formatted.</param>
+        /// with the file name &amp;lt;UppercaseThumbprint&amp;gt;.crt for the
+        /// X509 certificate file and &amp;lt;UppercaseThumbprint&amp;gt;.prv
+        /// for private key. Both of these files are .pem formatted.</param>
         public VaultCertificate(string certificateUrl = default(string), string certificateStore = default(string))
         {
             CertificateUrl = certificateUrl;
@@ -81,9 +81,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// specified certificate store is implicitly in the LocalMachine
         /// account. &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;For Linux VMs, the
         /// certificate file is placed under the /var/lib/waagent directory,
-        /// with the file name &amp;lt;UppercaseThumbprint&amp;gt;.crt for the
-        /// X509 certificate file and &amp;lt;UppercaseThumbprint&amp;gt;.prv
-        /// for private key. Both of these files are .pem formatted.
+        /// with the file name &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.crt
+        /// for the X509 certificate file and
+        /// &amp;amp;lt;UppercaseThumbprint&amp;amp;gt;.prv for private key.
+        /// Both of these files are .pem formatted.
         /// </summary>
         [JsonProperty(PropertyName = "certificateStore")]
         public string CertificateStore { get; set; }

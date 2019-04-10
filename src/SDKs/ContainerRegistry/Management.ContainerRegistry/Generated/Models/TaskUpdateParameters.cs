@@ -44,8 +44,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="step">The properties for updating a task step.</param>
         /// <param name="trigger">The properties for updating trigger
         /// properties.</param>
+        /// <param name="credentials">The parameters that describes a set of
+        /// credentials that will be used when this run is invoked.</param>
         /// <param name="tags">The ARM resource tags.</param>
-        public TaskUpdateParameters(string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TaskUpdateParameters(string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Status = status;
             Platform = platform;
@@ -53,6 +55,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Timeout = timeout;
             Step = step;
             Trigger = trigger;
+            Credentials = credentials;
             Tags = tags;
             CustomInit();
         }
@@ -99,6 +102,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.trigger")]
         public TriggerUpdateParameters Trigger { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parameters that describes a set of credentials
+        /// that will be used when this run is invoked.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.credentials")]
+        public Credentials Credentials { get; set; }
 
         /// <summary>
         /// Gets or sets the ARM resource tags.

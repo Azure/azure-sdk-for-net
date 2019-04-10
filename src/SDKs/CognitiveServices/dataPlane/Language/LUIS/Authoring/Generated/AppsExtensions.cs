@@ -29,10 +29,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// The operations group for this extension method.
             /// </param>
             /// <param name='applicationCreateObject'>
-            /// A model containing Name, Description (optional), Culture, Usage Scenario
-            /// (optional), Domain (optional) and initial version ID (optional) of the
-            /// application. Default value for the version ID is 0.1. Note: the culture
-            /// cannot be changed after the app is created.
+            /// An application containing Name, Description (optional), Culture, Usage
+            /// Scenario (optional), Domain (optional) and initial version ID (optional) of
+            /// the application. Default value for the version ID is "0.1". Note: the
+            /// culture cannot be changed after the app is created.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Lists all of the user applications.
+            /// Lists all of the user's applications.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -69,8 +69,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Imports an application to LUIS, the application's structure should be
-            /// included in in the request body.
+            /// Imports an application to LUIS, the application's structure is included in
+            /// the request body.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -80,7 +80,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// </param>
             /// <param name='appName'>
             /// The application name to create. If not specified, the application name will
-            /// be read from the imported object.
+            /// be read from the imported object. If the application name already exists,
+            /// an error is returned.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -145,7 +146,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets the supported application cultures.
+            /// Gets a list of supported cultures. Cultures are equivalent to the written
+            /// language and locale. For example,"en-us" represents the U.S. variation of
+            /// English.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -162,7 +165,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets the query logs of the past month for the application.
+            /// Gets the logs of the past month's endpoint queries for the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,12 +235,15 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='appId'>
             /// The application ID.
             /// </param>
+            /// <param name='force'>
+            /// A flag to indicate whether to force an operation.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<OperationStatus> DeleteAsync(this IApps operations, System.Guid appId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<OperationStatus> DeleteAsync(this IApps operations, System.Guid appId, bool? force = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(appId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(appId, force, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -268,7 +274,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get the application settings.
+            /// Get the application settings including 'UseAllTrainingData'.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -288,7 +294,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the application settings.
+            /// Updates the application settings including 'UseAllTrainingData'.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -311,7 +317,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Get the application publish settings.
+            /// Get the application publish settings including 'UseAllTrainingData'.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -331,7 +337,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates the application publish settings.
+            /// Updates the application publish settings including 'UseAllTrainingData'.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -391,7 +397,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a prebuilt domain along with its models as a new application.
+            /// Adds a prebuilt domain along with its intent and entity models as a new
+            /// application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -412,7 +419,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Gets all the available custom prebuilt domains for a specific culture.
+            /// Gets all the available prebuilt domains for a specific culture.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -429,6 +436,60 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// package - Gets published LUIS application package in binary stream GZip
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Packages a published LUIS application as a GZip file to be used in the LUIS
+            /// container.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='slotName'>
+            /// The publishing slot name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> PackagePublishedApplicationAsGzipAsync(this IApps operations, System.Guid appId, string slotName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.PackagePublishedApplicationAsGzipWithHttpMessagesAsync(appId, slotName, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
+            }
+
+            /// <summary>
+            /// package - Gets trained LUIS application package in binary stream GZip
+            /// format
+            /// </summary>
+            /// <remarks>
+            /// Packages trained LUIS application as GZip file to be used in the LUIS
+            /// container.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='appId'>
+            /// The application ID.
+            /// </param>
+            /// <param name='versionId'>
+            /// The version ID.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Stream> PackageTrainedApplicationAsGzipAsync(this IApps operations, System.Guid appId, string versionId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                var _result = await operations.PackageTrainedApplicationAsGzipWithHttpMessagesAsync(appId, versionId, null, cancellationToken).ConfigureAwait(false);
+                _result.Request.Dispose();
+                return _result.Body;
             }
 
     }

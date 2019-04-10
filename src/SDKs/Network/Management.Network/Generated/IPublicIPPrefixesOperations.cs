@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='publicIpPrefixName'>
-        /// The name of the PublicIPPrefix.
+        /// The name of the public IP prefix.
         /// </param>
         /// <param name='expand'>
         /// Expands referenced resources.

@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="existingClusterId">The id of an existing cluster that
         /// will be used for all runs of this job. Type: string (or Expression
         /// with resultType string).</param>
@@ -68,11 +68,20 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// user-specified Spark environment variables key-value pairs.</param>
         /// <param name="newClusterCustomTags">Additional tags for cluster
         /// resources.</param>
+        /// <param name="newClusterDriverNodeType">The driver node type for the
+        /// new cluster. Type: string (or Expression with resultType
+        /// string).</param>
+        /// <param name="newClusterInitScripts">User-defined initialization
+        /// scripts for the new cluster. Type: array of strings (or Expression
+        /// with resultType array of strings).</param>
+        /// <param name="newClusterEnableElasticDisk">Enable the elastic disk
+        /// on the new cluster. Type: boolean (or Expression with resultType
+        /// boolean).</param>
         /// <param name="encryptedCredential">The encrypted credential used for
         /// authentication. Credentials are encrypted using the integration
         /// runtime credential manager. Type: string (or Expression with
         /// resultType string).</param>
-        public AzureDatabricksLinkedService(object domain, SecretBase accessToken, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object existingClusterId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object encryptedCredential = default(object))
+        public AzureDatabricksLinkedService(object domain, SecretBase accessToken, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IntegrationRuntimeReference connectVia = default(IntegrationRuntimeReference), string description = default(string), IDictionary<string, ParameterSpecification> parameters = default(IDictionary<string, ParameterSpecification>), IList<object> annotations = default(IList<object>), object existingClusterId = default(object), object newClusterVersion = default(object), object newClusterNumOfWorker = default(object), object newClusterNodeType = default(object), IDictionary<string, object> newClusterSparkConf = default(IDictionary<string, object>), IDictionary<string, object> newClusterSparkEnvVars = default(IDictionary<string, object>), IDictionary<string, object> newClusterCustomTags = default(IDictionary<string, object>), object newClusterDriverNodeType = default(object), object newClusterInitScripts = default(object), object newClusterEnableElasticDisk = default(object), object encryptedCredential = default(object))
             : base(additionalProperties, connectVia, description, parameters, annotations)
         {
             Domain = domain;
@@ -84,6 +93,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
             NewClusterSparkConf = newClusterSparkConf;
             NewClusterSparkEnvVars = newClusterSparkEnvVars;
             NewClusterCustomTags = newClusterCustomTags;
+            NewClusterDriverNodeType = newClusterDriverNodeType;
+            NewClusterInitScripts = newClusterInitScripts;
+            NewClusterEnableElasticDisk = newClusterEnableElasticDisk;
             EncryptedCredential = encryptedCredential;
             CustomInit();
         }
@@ -159,6 +171,28 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "typeProperties.newClusterCustomTags")]
         public IDictionary<string, object> NewClusterCustomTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the driver node type for the new cluster. Type: string
+        /// (or Expression with resultType string).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.newClusterDriverNodeType")]
+        public object NewClusterDriverNodeType { get; set; }
+
+        /// <summary>
+        /// Gets or sets user-defined initialization scripts for the new
+        /// cluster. Type: array of strings (or Expression with resultType
+        /// array of strings).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.newClusterInitScripts")]
+        public object NewClusterInitScripts { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable the elastic disk on the new cluster. Type:
+        /// boolean (or Expression with resultType boolean).
+        /// </summary>
+        [JsonProperty(PropertyName = "typeProperties.newClusterEnableElasticDisk")]
+        public object NewClusterEnableElasticDisk { get; set; }
 
         /// <summary>
         /// Gets or sets the encrypted credential used for authentication.

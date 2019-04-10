@@ -16,16 +16,16 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
                 {
                     Name = "simple entity"
                 });
-                var roleId = await client.Model.CreateEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
             });
@@ -36,13 +36,13 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = (await client.Model.AddPrebuiltAsync(appId, "0.1", new[] { "money" })).First().Id;
-                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var entityId = (await client.Model.AddPrebuiltAsync(GlobalAppId, "0.1", new[] { "money" })).First().Id;
+                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPrebuiltEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeletePrebuiltAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
             });
@@ -53,7 +53,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddClosedListAsync(appId, "0.1", new ClosedListModelCreateObject
+                var entityId = await client.Model.AddClosedListAsync(GlobalAppId, "0.1", new ClosedListModelCreateObject
                 {
                     Name = "closed list model",
                     SubLists = new[]
@@ -61,12 +61,12 @@ namespace LUIS.Authoring.Tests.Luis
                         new WordListObject { CanonicalForm = "test", List = new List<string>() }
                     }
                 });
-                var roleId = await client.Model.CreateClosedListEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetClosedListEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteClosedListAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
             });
@@ -77,17 +77,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreateRegexEntityModelAsync(appId, "0.1", new RegexModelCreateObject
+                var entityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, "0.1", new RegexModelCreateObject
                 {
                     Name = "regex model",
                     RegexPattern = "a+"
                 });
-                var roleId = await client.Model.CreateRegexEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetRegexEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteRegexEntityModelAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
             });
@@ -103,21 +103,21 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     "datetimeV2"
                 };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(appId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(appId, "0.1", new CompositeEntityModel
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
+                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
                 {
                     Name = "composite model",
                     Children = new[] { "datetimeV2" }
                 });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCompositeEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
-                    await client.Model.DeletePrebuiltAsync(appId, version, added.Id);
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
                 }
 
                 Assert.Contains(roles, r => r.Name == "simple role");
@@ -129,17 +129,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, "0.1", new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, "0.1", new PatternAnyModelCreateObject
                 {
                     Name = "Pattern.Any model",
                     ExplicitList = new List<string>()
                 });
-                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPatternAnyEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
             });
@@ -150,18 +150,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(appId, "0.1", new HierarchicalEntityModel
+                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
                 {
                     Name = "Pattern.Any model",
                     Children = new[] { "child1" }
                 });
 
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetHierarchicalEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteHierarchicalEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
             });
@@ -172,18 +172,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(appId, "0.1", new PrebuiltDomainModelCreateObject
+                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(GlobalAppId, "0.1", new PrebuiltDomainModelCreateObject
                 {
                     ModelName = "ContactName",
                     DomainName = "Communication"
                 });
 
-                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCustomPrebuiltEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Contains(roles, r => r.Name == "simple role");
             });
@@ -194,16 +194,16 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
                 {
                     Name = "simple entity"
                 });
-                var roleId = await client.Model.CreateEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", role.Name);
             });
@@ -214,13 +214,13 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = (await client.Model.AddPrebuiltAsync(appId, "0.1", new[] { "money" })).First().Id;
-                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var entityId = (await client.Model.AddPrebuiltAsync(GlobalAppId, "0.1", new[] { "money" })).First().Id;
+                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetPrebuiltEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeletePrebuiltAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", role.Name);
             });
@@ -231,7 +231,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddClosedListAsync(appId, "0.1", new ClosedListModelCreateObject
+                var entityId = await client.Model.AddClosedListAsync(GlobalAppId, "0.1", new ClosedListModelCreateObject
                 {
                     Name = "closed list model",
                     SubLists = new[]
@@ -239,12 +239,12 @@ namespace LUIS.Authoring.Tests.Luis
                         new WordListObject { CanonicalForm = "test", List = new List<string>() }
                     }
                 });
-                var roleId = await client.Model.CreateClosedListEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetClosedListEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteClosedListAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", role.Name);
             });
@@ -255,17 +255,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreateRegexEntityModelAsync(appId, "0.1", new RegexModelCreateObject
+                var entityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, "0.1", new RegexModelCreateObject
                 {
                     Name = "regex model",
                     RegexPattern = "a+"
                 });
-                var roleId = await client.Model.CreateRegexEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetRegexEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteRegexEntityModelAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", role.Name);
             });
@@ -281,21 +281,21 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     "datetimeV2"
                 };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(appId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(appId, "0.1", new CompositeEntityModel
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
+                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
                 {
                     Name = "composite model",
                     Children = new[] { "datetimeV2" }
                 });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetCompositeEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteCompositeEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
-                    await client.Model.DeletePrebuiltAsync(appId, version, added.Id);
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
                 }
 
                 Assert.Equal("simple role", role.Name);
@@ -307,17 +307,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, "0.1", new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, "0.1", new PatternAnyModelCreateObject
                 {
                     Name = "Pattern.Any model",
                     ExplicitList = new List<string>()
                 });
-                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetPatternAnyEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetPatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", role.Name);
             });
@@ -328,18 +328,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(appId, "0.1", new HierarchicalEntityModel
+                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
                 {
                     Name = "Pattern.Any model",
                     Children = new[] { "child1" }
                 });
 
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetHierarchicalEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteHierarchicalEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", role.Name);
             });
@@ -350,18 +350,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(appId, "0.1", new PrebuiltDomainModelCreateObject
+                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(GlobalAppId, "0.1", new PrebuiltDomainModelCreateObject
                 {
                     ModelName = "ContactName",
                     DomainName = "Communication"
                 });
 
-                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var role = await client.Model.GetCustomEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetCustomEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", role.Name);
             });
@@ -372,16 +372,16 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
                 {
                     Name = "simple entity"
                 });
-                var roleId = await client.Model.CreateEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
             });
@@ -392,13 +392,13 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = (await client.Model.AddPrebuiltAsync(appId, "0.1", new[] { "money" })).First().Id;
-                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var entityId = (await client.Model.AddPrebuiltAsync(GlobalAppId, "0.1", new[] { "money" })).First().Id;
+                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPrebuiltEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeletePrebuiltAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
             });
@@ -409,7 +409,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddClosedListAsync(appId, "0.1", new ClosedListModelCreateObject
+                var entityId = await client.Model.AddClosedListAsync(GlobalAppId, "0.1", new ClosedListModelCreateObject
                 {
                     Name = "closed list model",
                     SubLists = new[]
@@ -417,12 +417,12 @@ namespace LUIS.Authoring.Tests.Luis
                         new WordListObject { CanonicalForm = "test", List = new List<string>() }
                     }
                 });
-                var roleId = await client.Model.CreateClosedListEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetClosedListEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteClosedListAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
             });
@@ -433,17 +433,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreateRegexEntityModelAsync(appId, "0.1", new RegexModelCreateObject
+                var entityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, "0.1", new RegexModelCreateObject
                 {
                     Name = "regex model",
                     RegexPattern = "a+"
                 });
-                var roleId = await client.Model.CreateRegexEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetRegexEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteRegexEntityModelAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
             });
@@ -459,21 +459,21 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     "datetimeV2"
                 };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(appId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(appId, "0.1", new CompositeEntityModel
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
+                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
                 {
                     Name = "composite model",
                     Children = new[] { "datetimeV2" }
                 });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCompositeEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
-                    await client.Model.DeletePrebuiltAsync(appId, version, added.Id);
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
                 }
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
@@ -485,17 +485,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, "0.1", new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, "0.1", new PatternAnyModelCreateObject
                 {
                     Name = "Pattern.Any model",
                     ExplicitList = new List<string>()
                 });
-                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetPatternAnyEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
             });
@@ -506,18 +506,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(appId, "0.1", new HierarchicalEntityModel
+                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
                 {
                     Name = "Pattern.Any model",
                     Children = new[] { "child1" }
                 });
 
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetHierarchicalEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteHierarchicalEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
             });
@@ -528,18 +528,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(appId, "0.1", new PrebuiltDomainModelCreateObject
+                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(GlobalAppId, "0.1", new PrebuiltDomainModelCreateObject
                 {
                     ModelName = "ContactName",
                     DomainName = "Communication"
                 });
 
-                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                var roles = await client.Model.GetCustomPrebuiltEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var roles = await client.Model.ListCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role", Assert.Single(roles).Name);
             });
@@ -550,20 +550,20 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
                 {
                     Name = "simple entity"
                 });
-                var roleId = await client.Model.CreateEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdateEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdateEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role 2", role.Name);
             });
@@ -574,17 +574,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = (await client.Model.AddPrebuiltAsync(appId, "0.1", new[] { "money" })).First().Id;
-                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var entityId = (await client.Model.AddPrebuiltAsync(GlobalAppId, "0.1", new[] { "money" })).First().Id;
+                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdatePrebuiltEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdatePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetPrebuiltEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeletePrebuiltAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role 2", role.Name);
             });
@@ -595,7 +595,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddClosedListAsync(appId, "0.1", new ClosedListModelCreateObject
+                var entityId = await client.Model.AddClosedListAsync(GlobalAppId, "0.1", new ClosedListModelCreateObject
                 {
                     Name = "closed list model",
                     SubLists = new[]
@@ -603,16 +603,16 @@ namespace LUIS.Authoring.Tests.Luis
                         new WordListObject { CanonicalForm = "test", List = new List<string>() }
                     }
                 });
-                var roleId = await client.Model.CreateClosedListEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdateClosedListEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdateClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetClosedListEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteClosedListAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role 2", role.Name);
             });
@@ -623,21 +623,21 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreateRegexEntityModelAsync(appId, "0.1", new RegexModelCreateObject
+                var entityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, "0.1", new RegexModelCreateObject
                 {
                     Name = "regex model",
                     RegexPattern = "a+"
                 });
-                var roleId = await client.Model.CreateRegexEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdateRegexEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdateRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetRegexEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteRegexEntityModelAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role 2", role.Name);
             });
@@ -653,25 +653,25 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     "datetimeV2"
                 };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(appId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(appId, "0.1", new CompositeEntityModel
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
+                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
                 {
                     Name = "composite model",
                     Children = new[] { "datetimeV2" }
                 });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdateCompositeEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetCompositeEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteCompositeEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
-                    await client.Model.DeletePrebuiltAsync(appId, version, added.Id);
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
                 }
 
                 Assert.Equal("simple role 2", role.Name);
@@ -683,21 +683,21 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, "0.1", new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, "0.1", new PatternAnyModelCreateObject
                 {
                     Name = "Pattern.Any model",
                     ExplicitList = new List<string>()
                 });
-                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdatePatternAnyEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdatePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetPatternAnyEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetPatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role 2", role.Name);
             });
@@ -708,22 +708,22 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(appId, "0.1", new HierarchicalEntityModel
+                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
                 {
                     Name = "Pattern.Any model",
                     Children = new[] { "child1" }
                 });
 
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdateHierarchicalEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetHierarchicalEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteHierarchicalEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role 2", role.Name);
             });
@@ -734,22 +734,22 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(appId, "0.1", new PrebuiltDomainModelCreateObject
+                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(GlobalAppId, "0.1", new PrebuiltDomainModelCreateObject
                 {
                     ModelName = "ContactName",
                     DomainName = "Communication"
                 });
 
-                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.UpdateCustomPrebuiltEntityRoleAsync(appId, "0.1", entityId, roleId, new EntityRoleUpdateObject
+                await client.Model.UpdateCustomPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId, new EntityRoleUpdateObject
                 {
                     Name = "simple role 2"
                 });
-                var role = await client.Model.GetCustomEntityRoleAsync(appId, "0.1", entityId, roleId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                var role = await client.Model.GetCustomEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Equal("simple role 2", role.Name);
             });
@@ -760,17 +760,17 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddEntityAsync(appId, "0.1", new ModelCreateObject
+                var entityId = await client.Model.AddEntityAsync(GlobalAppId, "0.1", new ModelCreateObject
                 {
                     Name = "simple entity"
                 });
-                var roleId = await client.Model.CreateEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeleteEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                await client.Model.DeleteEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
             });
@@ -781,14 +781,14 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = (await client.Model.AddPrebuiltAsync(appId, "0.1", new[] { "money" })).First().Id;
-                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var entityId = (await client.Model.AddPrebuiltAsync(GlobalAppId, "0.1", new[] { "money" })).First().Id;
+                var roleId = await client.Model.CreatePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeletePrebuiltEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetPrebuiltEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeletePrebuiltAsync(appId, "0.1", entityId);
+                await client.Model.DeletePrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeletePrebuiltAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
             });
@@ -799,7 +799,7 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddClosedListAsync(appId, "0.1", new ClosedListModelCreateObject
+                var entityId = await client.Model.AddClosedListAsync(GlobalAppId, "0.1", new ClosedListModelCreateObject
                 {
                     Name = "closed list model",
                     SubLists = new[]
@@ -807,13 +807,13 @@ namespace LUIS.Authoring.Tests.Luis
                         new WordListObject { CanonicalForm = "test", List = new List<string>() }
                     }
                 });
-                var roleId = await client.Model.CreateClosedListEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeleteClosedListEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetClosedListEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteClosedListAsync(appId, "0.1", entityId);
+                await client.Model.DeleteClosedListEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListClosedListEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteClosedListAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
             });
@@ -824,18 +824,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreateRegexEntityModelAsync(appId, "0.1", new RegexModelCreateObject
+                var entityId = await client.Model.CreateRegexEntityModelAsync(GlobalAppId, "0.1", new RegexModelCreateObject
                 {
                     Name = "regex model",
                     RegexPattern = "a+"
                 });
-                var roleId = await client.Model.CreateRegexEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeleteRegexEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetRegexEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteRegexEntityModelAsync(appId, "0.1", entityId);
+                await client.Model.DeleteRegexEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListRegexEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteRegexEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
             });
@@ -851,22 +851,22 @@ namespace LUIS.Authoring.Tests.Luis
                 {
                     "datetimeV2"
                 };
-                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(appId, version, prebuiltEntitiesToAdd);
-                var entityId = await client.Model.AddCompositeEntityAsync(appId, "0.1", new CompositeEntityModel
+                var prebuiltEntitiesAdded = await client.Model.AddPrebuiltAsync(GlobalAppId, version, prebuiltEntitiesToAdd);
+                var entityId = await client.Model.AddCompositeEntityAsync(GlobalAppId, "0.1", new CompositeEntityModel
                 {
                     Name = "composite model",
                     Children = new[] { "datetimeV2" }
                 });
-                var roleId = await client.Model.CreateCompositeEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeleteCompositeEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetCompositeEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteCompositeEntityAsync(appId, "0.1", entityId);
+                await client.Model.DeleteCompositeEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListCompositeEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteCompositeEntityAsync(GlobalAppId, "0.1", entityId);
                 foreach (var added in prebuiltEntitiesAdded)
                 {
-                    await client.Model.DeletePrebuiltAsync(appId, version, added.Id);
+                    await client.Model.DeletePrebuiltAsync(GlobalAppId, version, added.Id);
                 }
 
                 Assert.Empty(roles);
@@ -878,18 +878,18 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(appId, "0.1", new PatternAnyModelCreateObject
+                var entityId = await client.Model.CreatePatternAnyEntityModelAsync(GlobalAppId, "0.1", new PatternAnyModelCreateObject
                 {
                     Name = "Pattern.Any model",
                     ExplicitList = new List<string>()
                 });
-                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreatePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeletePatternAnyEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetPatternAnyEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeletePatternAnyEntityModelAsync(appId, "0.1", entityId);
+                await client.Model.DeletePatternAnyEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListPatternAnyEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeletePatternAnyEntityModelAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
             });
@@ -900,19 +900,19 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddHierarchicalEntityAsync(appId, "0.1", new HierarchicalEntityModel
+                var entityId = await client.Model.AddHierarchicalEntityAsync(GlobalAppId, "0.1", new HierarchicalEntityModel
                 {
                     Name = "Pattern.Any model",
                     Children = new[] { "child1" }
                 });
 
-                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeleteHierarchicalEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetHierarchicalEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteHierarchicalEntityAsync(appId, "0.1", entityId);
+                await client.Model.DeleteHierarchicalEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListHierarchicalEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteHierarchicalEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
             });
@@ -923,19 +923,19 @@ namespace LUIS.Authoring.Tests.Luis
         {
             UseClientFor(async client =>
             {
-                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(appId, "0.1", new PrebuiltDomainModelCreateObject
+                var entityId = await client.Model.AddCustomPrebuiltEntityAsync(GlobalAppId, "0.1", new PrebuiltDomainModelCreateObject
                 {
                     ModelName = "ContactName",
                     DomainName = "Communication"
                 });
 
-                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(appId, "0.1", entityId, new EntityRoleCreateObject
+                var roleId = await client.Model.CreateCustomPrebuiltEntityRoleAsync(GlobalAppId, "0.1", entityId, new EntityRoleCreateObject
                 {
                     Name = "simple role"
                 });
-                await client.Model.DeleteCustomEntityRoleAsync(appId, "0.1", entityId, roleId);
-                var roles = await client.Model.GetCustomPrebuiltEntityRolesAsync(appId, "0.1", entityId);
-                await client.Model.DeleteEntityAsync(appId, "0.1", entityId);
+                await client.Model.DeleteCustomEntityRoleAsync(GlobalAppId, "0.1", entityId, roleId);
+                var roles = await client.Model.ListCustomPrebuiltEntityRolesAsync(GlobalAppId, "0.1", entityId);
+                await client.Model.DeleteEntityAsync(GlobalAppId, "0.1", entityId);
 
                 Assert.Empty(roles);
             });

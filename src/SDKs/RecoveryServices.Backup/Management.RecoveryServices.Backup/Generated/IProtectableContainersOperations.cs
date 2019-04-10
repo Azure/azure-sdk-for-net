@@ -25,7 +25,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
     public partial interface IProtectableContainersOperations
     {
         /// <summary>
-        /// Lists the containers registered to Recovery Services Vault.
+        /// Lists the containers that can be registered to Recovery Services
+        /// Vault.
         /// </summary>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.
@@ -35,7 +36,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// present.
         /// </param>
         /// <param name='fabricName'>
-        /// Fabric name associated with the container.
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
@@ -57,7 +57,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// </exception>
         Task<AzureOperationResponse<IPage<ProtectableContainerResource>>> ListWithHttpMessagesAsync(string vaultName, string resourceGroupName, string fabricName, ODataQuery<BMSContainerQueryObject> odataQuery = default(ODataQuery<BMSContainerQueryObject>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists the containers registered to Recovery Services Vault.
+        /// Lists the containers that can be registered to Recovery Services
+        /// Vault.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

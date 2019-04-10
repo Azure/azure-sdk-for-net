@@ -19,7 +19,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// <summary>
     /// Criterion to filter metrics.
     /// </summary>
-    public partial class MetricCriteria
+    [Newtonsoft.Json.JsonObject("StaticThresholdCriterion")]
+    public partial class MetricCriteria : MultiMetricCriteria
     {
         /// <summary>
         /// Initializes a new instance of the MetricCriteria class.
@@ -39,9 +40,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// types.</param>
         /// <param name="threshold">the criteria threshold value that activates
         /// the alert.</param>
+        /// <param name="additionalProperties">Unmatched properties from the
+        /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
-        public MetricCriteria(string name, string metricName, object operatorProperty, object timeAggregation, double threshold, string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        public MetricCriteria(string name, string metricName, object operatorProperty, object timeAggregation, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+            : base(additionalProperties)
         {
             Name = name;
             MetricName = metricName;

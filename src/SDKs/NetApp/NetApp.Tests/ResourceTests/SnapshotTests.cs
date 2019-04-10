@@ -143,8 +143,15 @@ namespace NetApp.Tests.ResourceTests
                     Tags = dict
                 };
 
-                var resource = netAppMgmtClient.Snapshots.Update(snapshotPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName1);
-                Assert.True(resource.Tags.ToString().Contains("Tag1") && resource.Tags.ToString().Contains("Value1"));
+                try
+                {
+                    netAppMgmtClient.Snapshots.Update(snapshotPatch, ResourceUtils.resourceGroup, ResourceUtils.accountName1, ResourceUtils.poolName1, ResourceUtils.volumeName1, ResourceUtils.snapshotName1);
+                    Assert.True(false);
+                }
+                catch (Exception ex)
+                {
+                    Assert.Contains("MethodNotAllowed", ex.Message);
+                }
 
                 // cleanup - remove the account
                 ResourceUtils.DeleteSnapshot(netAppMgmtClient);

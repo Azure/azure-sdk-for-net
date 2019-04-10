@@ -158,6 +158,15 @@ namespace Microsoft.Azure.Management.DataFactory
         /// The pipeline run identifier. If run ID is specified the parameters
         /// of the specified run will be used to create a new run.
         /// </param>
+        /// <param name='isRecovery'>
+        /// Recovery mode flag. If recovery mode is set to true, the specified
+        /// referenced pipeline run and the new run will be grouped under the
+        /// same groupId.
+        /// </param>
+        /// <param name='startActivityName'>
+        /// In recovery mode, the rerun will start from this activity. If not
+        /// specified, all activities will run.
+        /// </param>
         /// <param name='parameters'>
         /// Parameters of the pipeline run. These parameters will be used only
         /// if the runId is not specified.
@@ -177,7 +186,7 @@ namespace Microsoft.Azure.Management.DataFactory
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<CreateRunResponse>> CreateRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CreateRunResponse>> CreateRunWithHttpMessagesAsync(string resourceGroupName, string factoryName, string pipelineName, string referencePipelineRunId = default(string), bool? isRecovery = default(bool?), string startActivityName = default(string), IDictionary<string, object> parameters = default(IDictionary<string, object>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists pipelines.
         /// </summary>

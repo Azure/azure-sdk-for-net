@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Apps, Blob Storage, and Cloud Services require this host header
         /// value to match the origin hostname by default.</param>
         /// <param name="originPath">A directory path on the origin that CDN
-        /// can use to retreive content from, e.g.
+        /// can use to retrieve content from, e.g.
         /// contoso.cloudapp.net/originpath.</param>
         /// <param name="contentTypesToCompress">List of content types on which
         /// compression applies. The value should be a valid MIME type.</param>
@@ -75,8 +75,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// most optimal routes for the CDN. This is relative to the origin
         /// path.</param>
         /// <param name="geoFilters">List of rules defining the user's geo
-        /// access within a CDN endpoint. Each geo filter defines an acess rule
-        /// to a specified path or content, e.g. block APAC for path
+        /// access within a CDN endpoint. Each geo filter defines an access
+        /// rule to a specified path or content, e.g. block APAC for path
         /// /pictures/</param>
         /// <param name="deliveryPolicy">A policy that specifies the delivery
         /// rules to be used for an endpoint.</param>
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets a directory path on the origin that CDN can use to
-        /// retreive content from, e.g. contoso.cloudapp.net/originpath.
+        /// retrieve content from, e.g. contoso.cloudapp.net/originpath.
         /// </summary>
         [JsonProperty(PropertyName = "properties.originPath")]
         public string OriginPath { get; set; }
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets list of rules defining the user's geo access within a
-        /// CDN endpoint. Each geo filter defines an acess rule to a specified
+        /// CDN endpoint. Each geo filter defines an access rule to a specified
         /// path or content, e.g. block APAC for path /pictures/
         /// </summary>
         [JsonProperty(PropertyName = "properties.geoFilters")]

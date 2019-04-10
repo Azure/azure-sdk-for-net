@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Initializes a new instance of the AzureSqlContainer class.
         /// </summary>
         /// <param name="friendlyName">Friendly name of the container.</param>
-        /// <param name="backupManagementType">Type of backup managemenent for
+        /// <param name="backupManagementType">Type of backup management for
         /// the container. Possible values include: 'Invalid', 'AzureIaasVM',
         /// 'MAB', 'DPM', 'AzureBackupServer', 'AzureSql', 'AzureStorage',
         /// 'AzureWorkload', 'DefaultBackup'</param>

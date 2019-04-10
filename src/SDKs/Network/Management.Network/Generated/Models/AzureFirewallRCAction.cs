@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the AzureFirewallRCAction class.
         /// </summary>
         /// <param name="type">The type of action. Possible values include:
-        /// 'Allow', 'Deny'</param>
+        /// 'Allow', 'Deny', 'Alert'</param>
         public AzureFirewallRCAction(string type = default(string))
         {
             Type = type;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the type of action. Possible values include: 'Allow',
-        /// 'Deny'
+        /// 'Deny', 'Alert'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }

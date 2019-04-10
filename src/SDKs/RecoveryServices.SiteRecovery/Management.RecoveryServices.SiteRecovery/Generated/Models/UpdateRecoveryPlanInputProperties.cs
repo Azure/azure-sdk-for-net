@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// Recovery plan updation properties.
+    /// Recovery plan update properties.
     /// </summary>
     public partial class UpdateRecoveryPlanInputProperties
     {
