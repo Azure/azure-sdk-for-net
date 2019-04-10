@@ -128,7 +128,7 @@ namespace Azure.ApplicationModel.Configuration
                         keysCopy.Add(key);
                     }
                 }
-                var keys = string.Join(",", keysCopy).ToLower();
+                var keys = string.Join(",", keysCopy);
                 builder.AppendQuery(KeyQueryFilter, keys);
             }
 
@@ -146,7 +146,7 @@ namespace Azure.ApplicationModel.Configuration
                         labelsCopy.Add(EscapeReservedCharacters(label));
                     }
                 }
-                var labels = string.Join(",", labelsCopy).ToLower();
+                var labels = string.Join(",", labelsCopy);
                 builder.AppendQuery(LabelQueryFilter, labels);
             }
 

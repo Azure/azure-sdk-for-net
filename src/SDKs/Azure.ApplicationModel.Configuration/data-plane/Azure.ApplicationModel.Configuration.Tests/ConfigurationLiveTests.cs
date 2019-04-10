@@ -14,11 +14,16 @@ namespace Azure.ApplicationModel.Configuration.Tests
     [Category("Live")]
     public class ConfigurationLiveTests
     {
+        private string GenerateKeyId(string prefix = null)
+        {
+            return prefix + Guid.NewGuid().ToString("N");
+        }
+
         private ConfigurationSetting CreateSetting()
         {
             return new ConfigurationSetting()
             {
-                Key = string.Concat("key-", Guid.NewGuid().ToString("N")),
+                Key = GenerateKeyId("key-"),
                 Value = "test_value",
                 Label = "test_label",
                 ContentType = "test_content_type",
@@ -44,7 +49,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
         {
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            string key = GenerateKeyId("key-");
 
             /*
              * The configuration store contains a KV with the Key
@@ -207,7 +212,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             ConfigurationClient service = TestEnvironment.GetClient();
 
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            string key = GenerateKeyId("key-");
 
             try
             {
@@ -228,7 +233,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             ConfigurationClient service = TestEnvironment.GetClient();
 
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            string key = GenerateKeyId("key-");
             string value = "my_value";
             string label = "my_label";
 
@@ -332,7 +337,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             ConfigurationClient service = TestEnvironment.GetClient();
             
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            string key = GenerateKeyId("key-");
 
             try
             {
@@ -353,7 +358,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             ConfigurationClient service = TestEnvironment.GetClient();
             
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            string key = GenerateKeyId("key-");
             string value = "my_value";
             string label = "my_label";
 
@@ -376,7 +381,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             ConfigurationClient service = TestEnvironment.GetClient();
 
-            string key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            string key = GenerateKeyId("key-");
             await service.SetAsync(key, "my_value");
 
             try
@@ -499,7 +504,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             //Prepare environment
             ConfigurationSetting setting = testSetting;
-            setting.Key = string.Concat("key-", Guid.NewGuid().ToString("N"));
+            setting.Key = GenerateKeyId("key-");
             var testSettingUpdate = setting.Clone();
             testSettingUpdate.Label = "test_label_update";
             int expectedEvents = 2;
@@ -751,15 +756,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             ConfigurationClient service = TestEnvironment.GetClient();
 
-            string key = string.Concat("keyFields-", Guid.NewGuid().ToString("N"));
-            string value = "my_value";
-            string label = "my_label";
-            ConfigurationSetting setting = await service.AddAsync(key, value, label);
-
-            string key2 = string.Concat("keyFields-", Guid.NewGuid().ToString("N"));
-            string value2 = "my_value_2";
-            string label2 = "my_label_2";
-            ConfigurationSetting setting2 = await service.AddAsync(key2, value2, label2);
+            string key = GenerateKeyId("keyFields-");
+            ConfigurationSetting setting = await service.AddAsync(key, "my_value", "my_label");
 
             try
             {
@@ -771,20 +769,19 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
                 int resultsReturned = batch.Count;
 
-                Assert.GreaterOrEqual(2, resultsReturned);
+                Assert.AreEqual(1, resultsReturned);
 
-                for (int i = 0; i < resultsReturned; i++)
-                {
-                    Assert.IsNotNull(batch[i].Key);
-                    Assert.IsNotNull(batch[i].Label);
-                    Assert.IsNotNull(batch[i].ETag);
-                    Assert.IsNull(batch[i].Value);
-                }
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].ETag);
+                Assert.IsNull(batch[0].Value);
+                Assert.IsNull(batch[0].ContentType);
+                Assert.IsNull(batch[0].LastModified);
+                Assert.IsNull(batch[0].Locked);
             }
             finally
             {
                 await service.DeleteAsync(setting.Key, setting.Label);
-                await service.DeleteAsync(setting2.Key, setting2.Label);
             }
         }
 
@@ -792,16 +789,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
         public async Task GetBatchSettingWithAllFields()
         {
             ConfigurationClient service = TestEnvironment.GetClient();
-
-            string key = string.Concat("keyFields-", Guid.NewGuid().ToString("N"));
-            string value = "my_value";
-            string label = "my_label";
-            ConfigurationSetting setting = await service.AddAsync(key, value, label);
-
-            string key2 = string.Concat("keyFields-", Guid.NewGuid().ToString("N"));
-            string value2 = "my_value_2";
-            string label2 = "my_label_2";
-            ConfigurationSetting setting2 = await service.AddAsync(key2, value2, label2);
+            string key = GenerateKeyId("keyFields-");
+            ConfigurationSetting setting = await service.AddAsync(key, "my_value", "my_label");
 
             try
             {
@@ -809,29 +798,22 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 {
                     Fields = SettingFields.All
                 };
-
                 SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
-                int resultsReturned = batch.Count;
 
-                Assert.GreaterOrEqual(2, resultsReturned);
+                Assert.AreEqual(1, batch.Count);
 
-                for (int i = 0; i < resultsReturned; i++)
-                {
-                    Assert.IsNotNull(batch[i].Key);
-                    Assert.IsNotNull(batch[i].Label);
-                    Assert.IsNotNull(batch[i].Value);
-                    Assert.IsNotNull(batch[i].ContentType);
-                    Assert.IsNotNull(batch[i].ETag);
-                    Assert.IsNotNull(batch[i].LastModified);
-                    Assert.IsNotNull(batch[i].Locked);
-                }
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].Value);
+                Assert.IsNotNull(batch[0].ContentType);
+                Assert.IsNotNull(batch[0].ETag);
+                Assert.IsNotNull(batch[0].LastModified);
+                Assert.IsNotNull(batch[0].Locked);
             }
             finally
             {
                 await service.DeleteAsync(setting.Key, setting.Label);
-                await service.DeleteAsync(setting2.Key, setting2.Label);
             }
-            
         }
     }
 

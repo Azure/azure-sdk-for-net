@@ -377,15 +377,15 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
 
             var setting = new ConfigurationSetting();
-            if ((selector.Fields & SettingFields.Key) != 0)
+            if (selector.Fields.HasFlag(SettingFields.Key))
                 setting.Key = $"key{i}";
-            if ((selector.Fields & SettingFields.Value) != 0 )
+            if (selector.Fields.HasFlag(SettingFields.Value))
                 setting.Value = "val";
-            if ((selector.Fields & SettingFields.Label) != 0)
+            if (selector.Fields.HasFlag(SettingFields.Label))
                 setting.Label = "label";
-            if ((selector.Fields & SettingFields.ETag) != 0)
+            if (selector.Fields.HasFlag(SettingFields.ETag))
                 setting.ETag = new ETag("c3c231fd-39a0-4cb6-3237-4614474b92c1");
-            if ((selector.Fields & SettingFields.ContentType) != 0)
+            if (selector.Fields.HasFlag(SettingFields.ContentType))
                 setting.ContentType = "text";
 
             return setting;
@@ -414,7 +414,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         private void SerializeSetting(ref Utf8JsonWriter json, ConfigurationSetting setting)
         {
             json.WriteStartObject();
-            if(setting.Key != null)
+            if (setting.Key != null)
                 json.WriteString("key", setting.Key);
             if (setting.Label != null)
                 json.WriteString("label", setting.Label);
@@ -431,9 +431,12 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 }
                 json.WriteEndObject();
             }
-            if (setting.ETag != default) json.WriteString("etag", setting.ETag.ToString());
-            if (setting.LastModified.HasValue) json.WriteString("last_modified", setting.LastModified.Value.ToString());
-            if (setting.Locked.HasValue) json.WriteBoolean("locked", setting.Locked.Value);
+            if (setting.ETag != default)
+                json.WriteString("etag", setting.ETag.ToString());
+            if (setting.LastModified.HasValue)
+                json.WriteString("last_modified", setting.LastModified.Value.ToString());
+            if (setting.Locked.HasValue)
+                json.WriteBoolean("locked", setting.Locked.Value);
             json.WriteEndObject();
         }
 
