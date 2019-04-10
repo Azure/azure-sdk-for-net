@@ -28,9 +28,10 @@ namespace Azure.Base.Tests
             Assert.AreEqual(128, ms.Length);
             foreach (var b in ms.ToArray())
             {
-                Assert.AreEqual(223, b);
+                Assert.AreEqual(ReadTrackingStream.ContentByteValue, b);
             }
             Assert.AreEqual(128, readTrackingStream.BytesRead);
+            Assert.AreEqual(0, ms.Position);
         }
 
         [Test]
@@ -47,6 +48,8 @@ namespace Azure.Base.Tests
 
         private class ReadTrackingStream : Stream
         {
+            public const int ContentByteValue = 233;
+
             private readonly int _size;
 
             private readonly int _throwAfter;
@@ -76,7 +79,7 @@ namespace Azure.Base.Tests
 
                 for (int i = 0; i < span.Length; i++)
                 {
-                    span[i] = 223;
+                    span[i] = ContentByteValue;
                 }
 
                 BytesRead += left;
