@@ -5,10 +5,14 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Azure.Base.Http.Pipeline
+namespace Azure.Base.Pipeline.Policies
 {
     public class BufferResponsePolicy: HttpPipelinePolicy
     {
+        protected BufferResponsePolicy()
+        {
+        }
+
         public static HttpPipelinePolicy Singleton { get; set; } = new BufferResponsePolicy();
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Azure.Base.Http;
+using Azure.Base.Pipeline;
 
 namespace Azure.Base.Testing
 {

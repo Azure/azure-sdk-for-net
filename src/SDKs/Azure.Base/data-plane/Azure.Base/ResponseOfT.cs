@@ -3,8 +3,6 @@
 
 using System;
 using System.ComponentModel;
-using System.Text;
-using Azure.Base.Http;
 
 namespace Azure
 {

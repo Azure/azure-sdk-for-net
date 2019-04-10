@@ -2,25 +2,31 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
+using Azure.Base.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
     public class ConfigurationClientOptions: HttpClientOptions
     {
-        static readonly HttpPipelinePolicy s_defaultRetryPolicy = Base.Http.Pipeline.RetryPolicy.CreateFixed(3, TimeSpan.Zero,
-            //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
-            500, // Internal Server Error
-            503, // Service Unavailable
-            504  // Gateway Timeout
-        );
+        static readonly HttpPipelinePolicy s_defaultRetryPolicy = new FixedRetryPolicy()
+        {
+            Delay =  TimeSpan.Zero,
+            RetriableCodes = new[]
+            {
+                //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
+                500, // Internal Server Error
+                503, // Service Unavailable
+                504  // Gateway Timeout
+            },
+            MaxRetries = 3
+        };
 
         public HttpPipelinePolicy RetryPolicy { get; set; }
 
         public ConfigurationClientOptions()
         {
-            LoggingPolicy = Base.Http.Pipeline.LoggingPolicy.Shared;
+            LoggingPolicy = Base.Pipeline.Policies.LoggingPolicy.Shared;
             RetryPolicy = s_defaultRetryPolicy;
         }
 
