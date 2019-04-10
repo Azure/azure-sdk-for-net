@@ -10,13 +10,15 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Tenant access information update parameters of the API Management
-    /// service
+    /// Tenant access information update parameters.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class AccessInformationUpdateParameters
     {
         /// <summary>
@@ -48,7 +50,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets determines whether direct access is enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "enabled")]
+        [JsonProperty(PropertyName = "properties.enabled")]
         public bool? Enabled { get; set; }
 
     }

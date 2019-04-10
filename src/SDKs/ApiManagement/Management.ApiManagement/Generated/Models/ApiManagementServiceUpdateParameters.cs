@@ -91,9 +91,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// that can be installed is 10.</param>
         /// <param name="enableClientCertificate">Property only meant to be
         /// used for Consumption SKU Service. This enforces a client
-        /// certificate to be presented on each request to the gateway and
-        /// enabled ability to authenticate the certificate in the
-        /// policy.</param>
+        /// certificate to be presented on each request to the gateway. This
+        /// also enables the ability to authenticate the certificate in the
+        /// policy on the gateway.</param>
         /// <param name="virtualNetworkType">The type of VPN in which API
         /// Management service needs to be configured in. None (Default Value)
         /// means the API Management service is not part of any Virtual
@@ -267,8 +267,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets property only meant to be used for Consumption SKU
         /// Service. This enforces a client certificate to be presented on each
-        /// request to the gateway and enabled ability to authenticate the
-        /// certificate in the policy.
+        /// request to the gateway. This also enables the ability to
+        /// authenticate the certificate in the policy on the gateway.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableClientCertificate")]
         public bool? EnableClientCertificate { get; set; }

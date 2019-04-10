@@ -104,9 +104,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static void CheckEntityExists(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId)
+            public static bool CheckEntityExists(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId)
             {
-                operations.CheckEntityExistsAsync(resourceGroupName, serviceName, notificationName, userId).GetAwaiter().GetResult();
+                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, notificationName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -137,9 +137,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckEntityExistsAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckEntityExistsAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, userId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, userId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>

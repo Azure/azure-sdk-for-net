@@ -47,8 +47,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
                     {
                         Path = path,
-                        ContentFormat = ContentFormat.SwaggerJson,
-                        ContentValue = swaggerApiContent
+                        Format = ContentFormat.SwaggerJson,
+                        Value = swaggerApiContent
                     };
 
                     var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
@@ -87,18 +87,22 @@ namespace ApiManagement.Tests.ManagementApiTests
                     // add an api revision
                     string revisionNumber = "2";
 
-                    // create a revision of Petstore
+                    // create a revision of Petstore. 
+                    // Please note we can change the following properties when creating a revision
+                    // DisplayName, Description, Path, Protocols, ApiVersion, ApiVersionDescription and ApiVersionSetId
                     var revisionDescription = "Petstore second revision";
                     var petstoreRevisionContract = new ApiCreateOrUpdateParameter()
                     {
-                        Path = petstoreApiContract.Path + revisionNumber,
-                        DisplayName = petstoreApiContract.DisplayName + revisionNumber,
+                        Path = petstoreApiContract.Path,
+                        DisplayName = petstoreApiContract.DisplayName,
                         ServiceUrl = petstoreApiContract.ServiceUrl + revisionNumber,
                         Protocols = petstoreApiContract.Protocols,
                         SubscriptionKeyParameterNames = petstoreApiContract.SubscriptionKeyParameterNames,
                         AuthenticationSettings = petstoreApiContract.AuthenticationSettings,
                         Description = petstoreApiContract.Description,
-                        ApiRevisionDescription = revisionDescription
+                        ApiRevisionDescription = revisionDescription,
+                        IsCurrent = false,
+                        SourceApiId = petstoreApiContract.Id // with this we ensure to copy all operations, tags, product association.
                     };
 
                     var petStoreSecondRevision = await testBase.client.Api.CreateOrUpdateAsync(
@@ -107,12 +111,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newApiId.ApiRevisionIdentifier(revisionNumber),
                         petstoreRevisionContract);
                     Assert.NotNull(petStoreSecondRevision);
-                    Assert.Equal(petstoreRevisionContract.Path, petStoreSecondRevision.Path);
+                    Assert.Equal(petstoreApiContract.Path, petStoreSecondRevision.Path);
                     Assert.Equal(petstoreRevisionContract.ServiceUrl, petStoreSecondRevision.ServiceUrl);
                     Assert.Equal(revisionNumber, petStoreSecondRevision.ApiRevision);
+                    Assert.Equal(petstoreApiContract.DisplayName, petStoreSecondRevision.DisplayName);
+                    Assert.Equal(petstoreApiContract.Description, petStoreSecondRevision.Description);
                     Assert.Equal(revisionDescription, petStoreSecondRevision.ApiRevisionDescription);
 
-                    // add couple of operation to this revision
+                    // add an operation to this revision
                     var newOperationId = TestUtilities.GenerateName("firstOpRev");
                     var firstOperationContract = testBase.CreateOperationContract("POST");
                     var firstOperation = await testBase.client.ApiOperation.CreateOrUpdateAsync(
@@ -124,16 +130,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(firstOperation);
                     Assert.Equal("POST", firstOperation.Method);
 
-                    var secondOperationId = TestUtilities.GenerateName("secondOpName");
-                    var secondOperationContract = testBase.CreateOperationContract("GET");
-                    var secondOperation = await testBase.client.ApiOperation.CreateOrUpdateAsync(
+                    // now test out list operation on the revision api
+                    var allRevisionOperations = await testBase.client.ApiOperation.ListByApiAsync(
                         testBase.rgName,
                         testBase.serviceName,
-                        newApiId.ApiRevisionIdentifier(revisionNumber),
-                        secondOperationId,
-                        secondOperationContract);
-                    Assert.NotNull(secondOperation);
-                    Assert.Equal("GET", secondOperation.Method);
+                        newApiId.ApiRevisionIdentifier(revisionNumber));
+                    Assert.NotNull(allRevisionOperations);
+                    // we copied the revision and added an extra "POST" operation to second revision
+                    Assert.Equal(allRevisionOperations.Count(), petstoreApiOperations.Count() + 1);
 
                     // now test out list operation on the revision api
                     var firstOperationOfSecondRevision = await testBase.client.ApiOperation.ListByApiAsync(
@@ -153,10 +157,10 @@ namespace ApiManagement.Tests.ManagementApiTests
                         firstOperationOfSecondRevision.NextPageLink);
                     Assert.NotNull(secondOperationOfSecondRevision);
                     Assert.Single(secondOperationOfSecondRevision);
-                    Assert.Empty(secondOperationOfSecondRevision.NextPageLink);
+                    Assert.NotEmpty(secondOperationOfSecondRevision.NextPageLink);
 
                     // list apiRevision
-                    IPage<ApiRevisionContract> apiRevisions = await testBase.client.ApiRevisions.ListAsync(
+                    IPage<ApiRevisionContract> apiRevisions = await testBase.client.ApiRevision.ListByServiceAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newApiId);
@@ -181,19 +185,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotEqual(apiOnlineRevisionTag.ETag, apiSecondRevisionTag.ETag);
 
                     //there should be no release intially
-                    var apiReleases = await testBase.client.ApiRelease.ListAsync(
+                    var apiReleases = await testBase.client.ApiRelease.ListByServiceAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newApiId);
                     Assert.Empty(apiReleases);
 
-                    // lets create a release now
+                    // lets create a release now and make the second revision as current
                     var apiReleaseContract = new ApiReleaseContract()
                     {
                         ApiId = newApiId.ApiRevisionIdentifierFullPath(revisionNumber),
                         Notes = TestUtilities.GenerateName("revision_description")
                     };
-                    var newapiBackendRelease = await testBase.client.ApiRelease.CreateAsync(
+                    var newapiBackendRelease = await testBase.client.ApiRelease.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newApiId,
@@ -231,7 +235,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Equal(newapiBackendRelease.Notes, apiReleaseContract.Notes);
 
                     // list the revision
-                    apiReleases = await testBase.client.ApiRelease.ListAsync(
+                    apiReleases = await testBase.client.ApiRelease.ListByServiceAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         newApiId);
@@ -239,6 +243,14 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Single(apiReleases);
 
                     // find the revision which is not online
+                    var revisions = await testBase.client.ApiRevision.ListByServiceAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        new Microsoft.Rest.Azure.OData.ODataQuery<ApiRevisionContract> { Top = 1 });
+
+                    Assert.NotNull(revisions);
+                    Assert.Single(revisions);
 
                     // delete the api
                     await testBase.client.Api.DeleteAsync(
@@ -268,6 +280,13 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newApiId,
                         "*",
                         deleteRevisions: true);
+
+                    testBase.client.ApiRelease.Delete(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        newApiId,
+                        newReleaseId,
+                        "*");
                 }
             }
         }

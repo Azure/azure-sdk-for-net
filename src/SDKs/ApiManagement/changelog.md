@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 5.0.0-preview
+
+- Switch the .NET client to use api-version `2019-01-01`
+
 ### Changes in 4.0.6-preview
 
 - Added support of OpenId authentication in ApiContract
