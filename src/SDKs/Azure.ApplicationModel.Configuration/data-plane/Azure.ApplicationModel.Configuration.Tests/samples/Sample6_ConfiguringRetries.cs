@@ -24,7 +24,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
                 RetriableCodes = new [] {
                     500, // Internal Server Error
                     504  // Gateway Timeout
-                 }
+                }
             };
 
             var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");

@@ -8,7 +8,6 @@ using NUnit.Framework;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Azure.Base.Tests;
 
 namespace Azure.ApplicationModel.Configuration.Samples
 {
