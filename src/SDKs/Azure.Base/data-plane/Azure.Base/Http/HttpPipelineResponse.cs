@@ -13,7 +13,7 @@ namespace Azure.Base.Http
 
         public abstract bool TryGetHeader(string name, out string value);
 
-        public abstract Stream ResponseContentStream { get; }
+        public abstract Stream ResponseContentStream { get; set; }
 
         public abstract string RequestId { get; set; }
 

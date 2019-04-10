@@ -13,8 +13,6 @@ namespace Azure.Base.Testing
     {
         private readonly List<HttpHeader> _headers = new List<HttpHeader>();
 
-        private Stream _responseContentStream;
-
         public MockResponse(int status)
         {
             Status = status;
@@ -22,7 +20,7 @@ namespace Azure.Base.Testing
 
         public override int Status { get; }
 
-        public override Stream ResponseContentStream => _responseContentStream;
+        public override Stream ResponseContentStream { get; set; }
 
         public override string RequestId { get; set; }
 
@@ -33,14 +31,9 @@ namespace Azure.Base.Testing
             _headers.Add(header);
         }
 
-        public void SetContent(Stream contentStream)
-        {
-            _responseContentStream = contentStream;
-        }
-
         public void SetContent(byte[] content)
         {
-            SetContent(new MemoryStream(content));
+            ResponseContentStream = new MemoryStream(content);
         }
 
         public void SetContent(string content)

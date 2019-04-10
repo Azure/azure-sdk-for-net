@@ -229,7 +229,9 @@ namespace Azure.Base.Http.Pipeline
 
         sealed class PipelineResponse : HttpPipelineResponse
         {
-            readonly HttpResponseMessage _responseMessage;
+            private readonly HttpResponseMessage _responseMessage;
+
+            private Stream _contentStream;
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
@@ -243,6 +245,11 @@ namespace Azure.Base.Http.Pipeline
             {
                 get
                 {
+                    if (_contentStream != null)
+                    {
+                        return _contentStream;
+                    }
+
                     if (_responseMessage.Content == null)
                     {
                         return null;
@@ -252,10 +259,18 @@ namespace Azure.Base.Http.Pipeline
 
                     if (contentTask.IsCompleted)
                     {
-                        return contentTask.GetAwaiter().GetResult();
+                        _contentStream = contentTask.GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        _contentStream = new ContentStream(contentTask);
                     }
 
-                    return new ContentStream(contentTask);
+                    return _contentStream;
+                }
+                set
+                {
+                    _contentStream = value;
                 }
             }
 
