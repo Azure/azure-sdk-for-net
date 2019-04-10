@@ -761,7 +761,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector("keyFields-*")
+                SettingSelector selector = new SettingSelector(key)
                 {
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.ETag
                 };
@@ -794,7 +794,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             try
             {
-                SettingSelector selector = new SettingSelector("keyFields-*")
+                SettingSelector selector = new SettingSelector(key)
                 {
                     Fields = SettingFields.All
                 };
