@@ -5,8 +5,6 @@ using System;
 using System.Diagnostics.Tracing;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
@@ -61,7 +59,7 @@ namespace Azure.Base.Tests
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
-            using (var request = pipeline.CreateRequest())
+            using (HttpPipelineRequest request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.AddHeader("Date", "3/26/2019");
@@ -125,14 +123,13 @@ namespace Azure.Base.Tests
             string requestId;
             var buffer = new byte[10];
 
-            using (var request = pipeline.CreateRequest())
+            using (HttpPipelineRequest request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.RequestId;
 
-                var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
-
+                Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
                 Assert.AreEqual(3, await response.ContentStream.ReadAsync(buffer, 5, 3));
                 Assert.AreEqual(2, await response.ContentStream.ReadAsync(buffer, 8, 2));
