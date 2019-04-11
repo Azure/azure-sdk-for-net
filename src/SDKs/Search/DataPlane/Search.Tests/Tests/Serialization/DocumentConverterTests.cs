@@ -14,6 +14,10 @@ namespace Microsoft.Azure.Search.Tests
 {
     public sealed class DocumentConverterTests
     {
+        private const string TestDateString = "2016-10-10T17:41:05.123-07:00";
+
+        private static readonly DateTimeOffset TestDate = new DateTimeOffset(2016, 10, 10, 17, 41, 5, 123, TimeSpan.FromHours(-7));
+
         // Use the same deserialization settings as JsonUtility so we're getting the right behavior for deserializing field values.
         private static readonly JsonSerializerSettings Settings =
             new JsonSerializerSettings()
@@ -86,18 +90,36 @@ namespace Microsoft.Azure.Search.Tests
                 AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
-            [Fact]
-            public void CanReadArraysOfStrings()
+            [Theory]
+            [InlineData("123", 123L)]
+            [InlineData("9999999999999", 9_999_999_999_999L)]
+            [InlineData("3.14", 3.14)]
+            [InlineData(@"""hello""", "hello")]
+            [InlineData("true", true)]
+            [InlineData("false", false)]
+            public void CanReadPrimitiveTypes(string jsonValue, object expectedObject)
             {
-                const string Json = @"{ ""field"": [""hello"", ""goodbye""] }";
+                string json = $@"{{ ""field"": {jsonValue} }}";
+                var expectedDoc = new Document() { ["field"] = expectedObject };
+
+                Document actualDoc = Deserialize(json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
+            }
+
+            [Theory]
+            [InlineData(@"[""hello"", ""goodbye""]", new string[] { "hello", "goodbye" })]
+            public void CanReadArraysOfPrimitiveTypes(string jsonArray, object[] expectedArray)
+            {
+                string json = $@"{{ ""field"": {jsonArray} }}";
 
                 var expectedDoc =
                     new Document()
                     {
-                        ["field"] = new[] { "hello", "goodbye" }
+                        ["field"] = expectedArray
                     };
 
-                Document actualDoc = Deserialize(Json);
+                Document actualDoc = Deserialize(json);
 
                 AssertDocumentsEqual(expectedDoc, actualDoc);
             }
@@ -117,15 +139,25 @@ namespace Microsoft.Azure.Search.Tests
 
                 AssertDocumentsEqual(expectedDoc, actualDoc);
             }
+
+            // This is not quite a pinning test in the sense that it actually is correct behavior if the field is defined
+            // as Edm.DateTimeOffset. What's notable is that this is how such values deserialize, even when the field is not that type.
+            [Fact]
+            public void DateTimeStringsAreReadAsDateTime()
+            {
+                string json = $@"{{ ""field"": ""{TestDateString}"" }}";
+
+                var expectedDoc = new Document() { ["field"] = TestDate };
+
+                Document actualDoc = Deserialize(json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
+            }
         }
 
         // These are all pinning tests. These tests don't exemplify ideal behavior, but it's the best we can do without type information.
         public sealed class Pinning
         {
-            private const string TestDateString = "2016-10-10T17:41:05.123-07:00";
-
-            private static readonly DateTimeOffset TestDate = new DateTimeOffset(2016, 10, 10, 17, 41, 5, 123, TimeSpan.FromHours(-7));
-
             [Fact]
             public void SpecialDoublesAreReadAsStrings()
             {
@@ -145,18 +177,6 @@ namespace Microsoft.Azure.Search.Tests
                     };
 
                 Document actualDoc = Deserialize(Json);
-
-                AssertDocumentsEqual(expectedDoc, actualDoc);
-            }
-
-            [Fact]
-            public void DateTimeStringsAreReadAsDateTime()
-            {
-                string json = $@"{{ ""field"": ""{TestDateString}"" }}";
-
-                var expectedDoc = new Document() { ["field"] = TestDate };
-
-                Document actualDoc = Deserialize(json);
 
                 AssertDocumentsEqual(expectedDoc, actualDoc);
             }
