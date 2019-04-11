@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.HDInsight.Models;
@@ -47,6 +48,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static OperationResource EnableHttp(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string username, string password)
         {
@@ -82,6 +84,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static Task<OperationResource> EnableHttpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string username, string password)
         {
@@ -110,6 +113,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static HDInsightOperationResponse BeginEnablingHttp(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string username, string password)
         {
@@ -143,6 +147,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static Task<HDInsightOperationResponse> BeginEnablingHttpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName, string username, string password)
         {
@@ -166,6 +171,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static OperationResource DisableHttp(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
@@ -194,6 +200,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static Task<OperationResource> DisableHttpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
@@ -216,6 +223,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static HDInsightOperationResponse BeginDisablingHttp(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
@@ -244,6 +252,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [Obsolete("This method has been deprecated and will stop working.")]
         public static Task<HDInsightOperationResponse> BeginDisablingHttpAsync(this IClusterOperations operations,
             string resourceGroupName, string clusterName)
         {
