@@ -132,6 +132,11 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; private set; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetOperations VirtualMachineScaleSet { get; private set; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; private set; }
@@ -434,6 +439,7 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
+            VirtualMachineScaleSet = new VirtualMachineScaleSetOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);

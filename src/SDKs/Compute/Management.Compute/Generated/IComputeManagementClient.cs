@@ -127,6 +127,11 @@ namespace Microsoft.Azure.Management.Compute
         IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; }
 
         /// <summary>
+        /// Gets the IVirtualMachineScaleSetOperations.
+        /// </summary>
+        IVirtualMachineScaleSetOperations VirtualMachineScaleSet { get; }
+
+        /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
         /// </summary>
         IVirtualMachineScaleSetVMsOperations VirtualMachineScaleSetVMs { get; }
