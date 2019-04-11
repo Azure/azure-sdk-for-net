@@ -121,16 +121,15 @@ namespace Azure.Base.Tests
 
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
-            var buffer = new byte[10];
 
             using (HttpPipelineRequest request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
-                request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.RequestId;
 
                 Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
+                var buffer = new byte[10];
                 Assert.AreEqual(3, await response.ContentStream.ReadAsync(buffer, 5, 3));
                 Assert.AreEqual(2, await response.ContentStream.ReadAsync(buffer, 8, 2));
                 Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
@@ -152,6 +151,33 @@ namespace Azure.Base.Tests
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 9, 0 }, contentEvents[1].GetProperty<byte[]>("content"));
 
+            // No ResponseContent and ErrorResponseContent events
+            CollectionAssert.IsEmpty(_listener.EventsById(6));
+        }
+
+        [Test]
+        public async Task NonSeekableResponsesErrorsAreLoggedInBlocks()
+        {
+            var mockResponse = new MockResponse(500);
+            mockResponse.ResponseContentStream = new NonSeekableMemoryStream(new byte[] { 6, 7, 8, 9, 0 });
+            var mockTransport = new MockTransport(mockResponse);
+
+            var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
+            string requestId;
+
+            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            {
+                request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
+                requestId = request.RequestId;
+
+                Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+
+                var buffer = new byte[10];
+                Assert.AreEqual(3, await response.ContentStream.ReadAsync(buffer, 5, 3));
+                Assert.AreEqual(2, await response.ContentStream.ReadAsync(buffer, 8, 2));
+                Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
+            }
+
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(12).ToArray();
 
             Assert.AreEqual(2, errorContentEvents.Length);
@@ -169,7 +195,6 @@ namespace Azure.Base.Tests
             CollectionAssert.AreEqual(new byte[] { 9, 0 }, errorContentEvents[1].GetProperty<byte[]>("content"));
 
             // No ResponseContent and ErrorResponseContent events
-            CollectionAssert.IsEmpty(_listener.EventsById(6));
             CollectionAssert.IsEmpty(_listener.EventsById(9));
         }
 
@@ -180,6 +205,17 @@ namespace Azure.Base.Tests
             }
 
             public override bool CanSeek => false;
+
+            public override long Seek(long offset, SeekOrigin loc)
+            {
+                throw new NotImplementedException();
+            }
+
+            public override long Position
+            {
+                get => throw new NotImplementedException();
+                set => throw new NotImplementedException();
+            }
         }
     }
 }
