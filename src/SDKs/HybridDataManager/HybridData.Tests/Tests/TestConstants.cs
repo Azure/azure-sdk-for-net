@@ -4,9 +4,7 @@
     {
         #region Default Strings
         public const string DefaultResourceGroupName = "ResourceGroupForSDKTest";
-        //public const string DefaultResourceGroupName = "dmsbvtrg";
-        //public const string DefaultDataManagerName = "AzureSDKOperations";
-        public const string DefaultDataManagerName = "AzureSDKOperationsTest";
+        public const string DefaultDataManagerName = "TestAzureSDKOperations";
         public const string DefaultLocation = "westus";
         public const string DefaultDataServiceName = "DataTransformation";
         public const string DefaultDataSinkType = "AzureStorageAccount";

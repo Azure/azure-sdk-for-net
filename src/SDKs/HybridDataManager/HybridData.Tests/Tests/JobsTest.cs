@@ -22,7 +22,7 @@
         {
             try
             {
-                JobId = "af59807d-f32b-4f1f-b797-83c551af1348";
+                JobId = "1fc3cf96-a62f-47b4-ae6b-add6d6543f7a";
                 var job = Client.Jobs.Get(dataServiceName: DataServiceName,
                     jobDefinitionName: JobDefinitionName,
                     jobId: JobId,
@@ -41,7 +41,7 @@
         {
             try
             {
-                JobId = "26fbcf29-53fc-45c1-b33f-c0d587330cea";
+                JobId = "1fc3cf96-a62f-47b4-ae6b-add6d6543f7a";
                 Client.Jobs.BeginCancel(dataServiceName: DataServiceName,
                     jobDefinitionName: JobDefinitionName,
                     jobId: JobId,
@@ -64,7 +64,7 @@
         [Fact]
         public void Jobs_Resume()
         {
-            JobId = "af59807d-f32b-4f1f-b797-83c551af1348";
+            JobId = "8ae39e0e-df7b-453e-8599-db47a277e543";
             try
             {
                 Client.Jobs.BeginResume(dataServiceName: DataServiceName,

@@ -63,9 +63,8 @@ namespace HybridData.Tests.Tests
             this.Client = this.Context.GetServiceClient<HybridDataManagementClient>();
             //this.Client.BaseUri = new Uri("http://localhost:81");
             this.SubscriptionId = testEnv.SubscriptionId;
-            //SubscriptionId = "3c66da21-607e-49b4-8bdf-f25fbb8f705f";
-            StorSimpleDeviceServiceEncryptionKey = testEnv.ConnectionString.KeyValuePairs["ServiceEncryptionKey"];
-            AzureStorageAccountAccessKey = testEnv.ConnectionString.KeyValuePairs["StorageAccountKey"];
+            StorSimpleDeviceServiceEncryptionKey = Environment.GetEnvironmentVariable("ServiceEncryptionKey");
+            AzureStorageAccountAccessKey = Environment.GetEnvironmentVariable("StorageAccountKey");
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
