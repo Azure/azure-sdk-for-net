@@ -2,15 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Azure.Search.Serialization;
+using Microsoft.Azure.Search.Tests.Utilities;
+using Microsoft.Spatial;
+using Newtonsoft.Json;
+using Xunit;
+
 namespace Microsoft.Azure.Search.Tests
 {
-    using Serialization;
-    using Models;
-    using Newtonsoft.Json;
-    using Xunit;
-    using Spatial;
-    using System;
-
     public sealed class DocumentConverterTests
     {
         // Use the same deserialization settings as JsonUtility so we're getting the right behavior for deserializing field values.
@@ -31,6 +32,11 @@ namespace Microsoft.Azure.Search.Tests
                 NullValueHandling = NullValueHandling.Include
             };
 
+        private static Document Deserialize(string json) => JsonConvert.DeserializeObject<Document>(json, Settings);
+
+        private static void AssertDocumentsEqual(Document expectedDoc, Document actualDoc) =>
+            Assert.Equal(expectedDoc, actualDoc, new ModelComparer<Document>());
+
         // Functional tests that ensure expected behavior of DocumentConverter.
         public sealed class Functional
         {
@@ -46,12 +52,17 @@ namespace Microsoft.Azure.Search.Tests
     ""field3"": 2.78
 }";
 
-                Document doc = JsonConvert.DeserializeObject<Document>(Json, Settings);
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field1"] = "value1",
+                        ["field2"] = 123L,
+                        ["field3"] = 2.78
+                    };
 
-                Assert.Equal(3, doc.Count);
-                Assert.Equal("value1", doc["field1"]);
-                Assert.Equal(123L, doc["field2"]);
-                Assert.Equal(2.78, doc["field3"]);
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
@@ -63,40 +74,48 @@ namespace Microsoft.Azure.Search.Tests
     ""field2"": [ ""hello"", null ]
 }";
 
-                Document doc = JsonConvert.DeserializeObject<Document>(Json, Settings);
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field1"] = null,
+                        ["field2"] = new[] { "hello", null }
+                    };
 
-                Assert.Equal(2, doc.Count);
-                Assert.Null(doc["field1"]);
+                Document actualDoc = Deserialize(Json);
 
-                string[] field2Values = Assert.IsType<string[]>(doc["field2"]);
-
-                Assert.Equal(2, field2Values.Length);
-                Assert.Equal("hello", field2Values[0]);
-                Assert.Null(field2Values[1]);
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
             public void CanReadArraysOfStrings()
             {
-                Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [""hello"", ""goodbye""] }", Settings);
+                const string Json = @"{ ""field"": [""hello"", ""goodbye""] }";
 
-                Assert.Single(doc);
-                string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
-                Assert.Equal(2, fieldValues.Length);
-                Assert.Equal("hello", fieldValues[0]);
-                Assert.Equal("goodbye", fieldValues[1]);
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field"] = new[] { "hello", "goodbye" }
+                    };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
             public void CanReadGeoPoint()
             {
                 const string Json = @"{ ""field"": { ""type"": ""Point"", ""coordinates"": [-122.131577, 47.678581] } }";
-                Document doc = JsonConvert.DeserializeObject<Document>(Json, Settings);
 
-                Assert.Single(doc);
-                GeographyPoint fieldValue = Assert.IsAssignableFrom<GeographyPoint>(doc["field"]);
-                Assert.Equal(-122.131577, fieldValue.Longitude);
-                Assert.Equal(47.678581, fieldValue.Latitude);
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field"] = GeographyPoint.Create(latitude: 47.678581, longitude: -122.131577)
+                    };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
         }
 
@@ -117,12 +136,17 @@ namespace Microsoft.Azure.Search.Tests
     ""field3"": ""-INF""
 }";
 
-                Document doc = JsonConvert.DeserializeObject<Document>(Json, Settings);
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field1"] = "NaN",
+                        ["field2"] = "INF",
+                        ["field3"] = "-INF"
+                    };
 
-                Assert.Equal(3, doc.Count);
-                Assert.Equal("NaN", doc["field1"]);
-                Assert.Equal("INF", doc["field2"]);
-                Assert.Equal("-INF", doc["field3"]);
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
@@ -130,24 +154,28 @@ namespace Microsoft.Azure.Search.Tests
             {
                 string json = $@"{{ ""field"": ""{TestDateString}"" }}";
 
-                Document doc = JsonConvert.DeserializeObject<Document>(json, Settings);
+                var expectedDoc = new Document() { ["field"] = TestDate };
 
-                Assert.Single(doc);
-                Assert.Equal(TestDate, doc["field"]);
+                Document actualDoc = Deserialize(json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
             public void CanReadArraysOfMixedTypes()
             {
                 // Azure Search won't return payloads like this; This test is only for pinning purposes.
-                Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [""hello"", 123, 3.14] }", Settings);
+                const string Json = @"{ ""field"": [""hello"", 123, 3.14] }";
 
-                Assert.Single(doc);
-                object[] fieldValues = Assert.IsType<object[]>(doc["field"]);
-                Assert.Equal(3, fieldValues.Length);
-                Assert.Equal("hello", fieldValues[0]);
-                Assert.Equal(123L, fieldValues[1]);
-                Assert.Equal(3.14, fieldValues[2]);
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field"] = new object[] { "hello", 123L, 3.14 }
+                    };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
@@ -155,36 +183,41 @@ namespace Microsoft.Azure.Search.Tests
             {
                 string json = $@"{{ ""field"": [ ""hello"", ""{TestDateString}"", ""123"" ] }}";
 
-                Document doc = JsonConvert.DeserializeObject<Document>(json, Settings);
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field"] = new object[] { "hello", TestDate, "123" }
+                    };
 
-                Assert.Single(doc);
-                object[] fieldValues = Assert.IsType<object[]>(doc["field"]);
-                Assert.Equal(3, fieldValues.Length);
-                Assert.Equal("hello", fieldValues[0]);
-                Assert.Equal(TestDate, fieldValues[1]);
-                Assert.Equal("123", fieldValues[2]);
+                Document actualDoc = Deserialize(json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
             public void EmptyArraysReadAsStringArrays()
             {
-                Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [] }", Settings);
+                const string Json = @"{ ""field"": [] }";
 
                 // With no elements, we can't tell what type of collection it is. For backward compatibility, we assume type string.
-                Assert.Single(doc);
-                string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
-                Assert.Empty(fieldValues);
+                var expectedDoc = new Document() { ["field"] = new string[0] };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
             [Fact]
             public void ArraysWithOnlyNullsReadAsStringArrays()
             {
-                Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [null, null] }", Settings);
+                const string Json = @"{ ""field"": [null, null] }";
 
                 // With only null elements, we can't tell what type of collection it is. For backward compatibility, we assume type string.
-                Assert.Single(doc);
-                string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
-                Assert.Collection(fieldValues, Assert.Null, Assert.Null);
+                var expectedDoc = new Document() { ["field"] = new string[] { null, null } };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
             }
         }
     }
