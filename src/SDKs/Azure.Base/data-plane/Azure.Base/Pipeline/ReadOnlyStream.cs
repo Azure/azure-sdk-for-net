@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 
-namespace Azure.Base.Http.Pipeline
+namespace Azure.Base.Pipeline
 {
     internal abstract class ReadOnlyStream : Stream
     {

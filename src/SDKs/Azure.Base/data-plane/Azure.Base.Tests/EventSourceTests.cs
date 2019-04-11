@@ -3,6 +3,8 @@
 
 using System;
 using System.Diagnostics.Tracing;
+using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
@@ -19,11 +21,19 @@ namespace Azure.Base.Tests
     [NonParallelizable]
     public class EventSourceTests
     {
-        private readonly TestEventListener _listener = new TestEventListener();
+        private TestEventListener _listener;
 
-        public EventSourceTests()
+        [SetUp]
+        public void Setup()
         {
+            _listener = new TestEventListener();
             _listener.EnableEvents(HttpPipelineEventSource.Singleton, EventLevel.Verbose);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _listener.Dispose();
         }
 
         [Test]
