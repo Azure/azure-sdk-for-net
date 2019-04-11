@@ -162,6 +162,11 @@ namespace Microsoft.Azure.Management.Security
         public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
 
         /// <summary>
+        /// Gets the IServerVulnerabilityAssessmentOperations.
+        /// </summary>
+        public virtual IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -419,6 +424,7 @@ namespace Microsoft.Azure.Management.Security
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             SecurityContacts = new SecurityContactsOperations(this);
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
+            ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
