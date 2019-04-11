@@ -52,6 +52,8 @@ namespace Azure.Base.Testing
             {
                 message.Response = _responseFactory(request);
             }
+
+            message.Response.RequestId = request.RequestId;
         }
 
         public MockRequest SingleRequest => Requests.Single();

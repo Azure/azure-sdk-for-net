@@ -27,9 +27,11 @@ namespace Azure.Base.Diagnostics
         private const int RequestContentEvent = 2;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
+        private const int ResponseContentBlockEvent = 11;
         private const int RequestDelayEvent = 7;
         private const int ErrorResponseEvent = 8;
         private const int ErrorResponseContentEvent = 9;
+        private const int ErrorResponseContentBlockEvent = 12;
         private const int RequestRetryingEvent = 10;
 
         private HttpPipelineEventSource() : base(EventSourceName) { }
@@ -74,6 +76,15 @@ namespace Azure.Base.Diagnostics
         }
 
         [NonEvent]
+        public void ResponseContentBlock(string responseId, int blockNumber, byte[] data, int offset, int length)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                ResponseContentBlock(responseId, blockNumber, FormatContent(data, offset, length));
+            }
+        }
+
+        [NonEvent]
         public void ErrorResponse(HttpPipelineResponse response)
         {
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
@@ -88,6 +99,15 @@ namespace Azure.Base.Diagnostics
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream).ConfigureAwait(false));
+            }
+        }
+
+        [NonEvent]
+        public void ErrorResponseContentBlock(string responseId, int blockNumber, byte[] data, int offset, int length)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                ErrorResponseContentBlock(responseId, blockNumber, FormatContent(data, offset, length));
             }
         }
 
@@ -122,11 +142,16 @@ namespace Azure.Base.Diagnostics
             WriteEvent(ResponseEvent, requestId, status, headers);
         }
 
-
         [Event(ResponseContentEvent, Level = EventLevel.Verbose)]
         private void ResponseContent(string requestId, byte[] content)
         {
             WriteEvent(ResponseContentEvent, requestId, content);
+        }
+
+        [Event(ResponseContentBlockEvent, Level = EventLevel.Verbose)]
+        private void ResponseContentBlock(string requestId, int blockNumber, byte[] content)
+        {
+            WriteEvent(ResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(ErrorResponseEvent, Level = EventLevel.Error)]
@@ -139,6 +164,12 @@ namespace Azure.Base.Diagnostics
         private void ErrorResponseContent(string requestId, byte[] content)
         {
             WriteEvent(ErrorResponseContentEvent, requestId, content);
+        }
+
+        [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational)]
+        private void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content)
+        {
+            WriteEvent(ErrorResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(RequestDelayEvent, Level = EventLevel.Warning)]
@@ -154,6 +185,12 @@ namespace Azure.Base.Diagnostics
         private void RequestRetrying(string requestId, int retryNumber)
         {
             WriteEvent(RequestRetryingEvent, requestId, retryNumber);
+        }
+
+        public bool ShouldLogContent(bool isError)
+        {
+            return (isError && IsEnabled(EventLevel.Informational, EventKeywords.None)) ||
+                   IsEnabled(EventLevel.Verbose, EventKeywords.None);
         }
 
         private static async Task<byte[]> FormatContentAsync(Stream responseContent)
@@ -181,13 +218,18 @@ namespace Azure.Base.Diagnostics
 
         private static byte[] FormatContent(byte[] buffer)
         {
-            int count = Math.Min(buffer.Length, MaxEventPayloadSize);
+            return FormatContent(buffer, 0, buffer.Length);
+        }
+
+        private static byte[] FormatContent(byte[] buffer, int offset, int length)
+        {
+            int count = Math.Min(length, MaxEventPayloadSize);
 
             byte[] slice = buffer;
-            if (count != buffer.Length)
+            if (count != length || offset != 0)
             {
                 slice = new byte[count];
-                Buffer.BlockCopy(buffer, 0, slice, 0, count);
+                Buffer.BlockCopy(buffer, offset, slice, 0, count);
             }
 
             return slice;

@@ -4,6 +4,7 @@
 
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
 
@@ -37,12 +38,19 @@ namespace Azure.Base.Pipeline.Policies
             var after = Stopwatch.GetTimestamp();
 
             var status = message.Response.Status;
-            // if error status
-            if (status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1))
+            bool isError = status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1);
+            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ResponseContentStream?.CanSeek == false;
+
+            if (wrapResponseStream)
+            {
+                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError);
+            }
+
+            if (isError)
             {
                 s_eventSource.ErrorResponse(message.Response);
 
-                if (message.Response.ResponseContentStream != null)
+                if (!wrapResponseStream && message.Response.ResponseContentStream != null)
                 {
                     await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
                 }
@@ -50,7 +58,7 @@ namespace Azure.Base.Pipeline.Policies
 
             s_eventSource.Response(message.Response);
 
-            if (message.Response.ResponseContentStream != null)
+            if (!wrapResponseStream && message.Response.ResponseContentStream != null)
             {
                 await s_eventSource.ResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
             }
@@ -58,6 +66,63 @@ namespace Azure.Base.Pipeline.Policies
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
             if (elapsedMilliseconds > s_delayWarningThreshold) {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
+            }
+        }
+
+        private class LoggingStream : ReadOnlyStream
+        {
+            private readonly string _requestId;
+
+            private readonly HttpPipelineEventSource _eventSource;
+
+            private readonly Stream _originalStream;
+
+            private readonly bool _error;
+
+            private int _blockNumber;
+
+            public LoggingStream(string requestId, HttpPipelineEventSource eventSource, Stream originalStream, bool error)
+            {
+                // Should only wrap non-seekable streams
+                Debug.Assert(!originalStream.CanSeek);
+                _requestId = requestId;
+                _eventSource = eventSource;
+                _originalStream = originalStream;
+                _error = error;
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                return _originalStream.Seek(offset, origin);
+            }
+
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                var result = _originalStream.Read(buffer, offset, count);
+                if (result == 0)
+                {
+                    return result;
+                }
+
+                _eventSource.ResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
+
+                if (_error)
+                {
+                    _eventSource.ErrorResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
+                }
+
+                _blockNumber++;
+
+                return result;
+            }
+
+            public override bool CanRead => _originalStream.CanRead;
+            public override bool CanSeek => _originalStream.CanSeek;
+            public override long Length => _originalStream.Length;
+            public override long Position
+            {
+                get => _originalStream.Position;
+                set => _originalStream.Position = value;
             }
         }
     }
