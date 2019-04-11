@@ -10,7 +10,6 @@
       SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
     -->
     <NoWarn>$(NoWarn);NU5105</NoWarn>
-    <SignAssembly>true</SignAssembly>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
@@ -63,5 +62,20 @@
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <NeutralLanguage>en-US</NeutralLanguage>
+  </PropertyGroup>
+
+  <!-- Signing properties -->
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+
+    <!--
+      In order to be able to run our tests on .NET Framework we should use public signing by default so
+      we don't have to disable strong name validation for things that are delay signed.
+    -->
+    <PublicSign Condition="'$(PublicSign)' == ''">true</PublicSign>
+    <DelaySign Condition="'$(PublicSign)' == 'true'">false</DelaySign>
+    <DelaySign Condition="'$(PublicSign)' != 'true'">true</DelaySign>
+
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 </Project>
