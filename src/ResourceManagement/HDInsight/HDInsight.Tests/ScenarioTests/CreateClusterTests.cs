@@ -13,6 +13,7 @@
 // limitations under the License.
 //
 
+using System;
 using System.Net;
 using HDInsight.Tests.Helpers;
 using Hyak.Common;
@@ -188,6 +189,7 @@ namespace HDInsight.Tests
         }
 
         [Fact(Skip = "This test case will be skipped.")]
+        [Obsolete]
         public void TestCustomCreateEnableDisableConnectivity()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

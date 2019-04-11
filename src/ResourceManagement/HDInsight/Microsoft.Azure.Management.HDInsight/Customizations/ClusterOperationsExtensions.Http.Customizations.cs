@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.HDInsight
     public static partial class ClusterOperationsExtensions
     {
         /// <summary>
-        /// Enables HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Enables HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Enables HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Enables HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Begins enabling HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Begins enabling HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Begins enabling HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Begins enabling HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Disables HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Disables HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Disables HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Disables HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -208,7 +208,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Begins disabling HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Begins disabling HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.HDInsight
         }
 
         /// <summary>
-        /// Begins disabling HTTP on the specified cluster.
+        /// This method has been deprecated and will stop working. Begins disabling HTTP on the specified cluster.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
