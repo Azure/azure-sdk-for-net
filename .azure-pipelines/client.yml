@@ -22,7 +22,7 @@ jobs:
         inputs:
           version: '$(DotNetCoreVersion)'
 
-      - script: 'dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror'
+      - script: 'dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false'
         displayName: 'Build and Package'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
