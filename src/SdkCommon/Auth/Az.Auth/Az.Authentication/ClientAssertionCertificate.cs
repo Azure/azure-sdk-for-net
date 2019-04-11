@@ -2,14 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 #if !net452
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-
 namespace Microsoft.Rest.Azure.Authentication
 {
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using Microsoft.IdentityModel.Tokens;
+    using System.Security.Cryptography;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Text;
     public class ClientAssertionCertificate : IClientAssertionCertificate
     {
         private X509Certificate2 certificate;
@@ -31,15 +30,19 @@ namespace Microsoft.Rest.Azure.Authentication
         }
 
         public ClientAssertionCertificate(string clientId, byte[] rawCertificate, string password)
-            : this(clientId, new X509Certificate2(rawCertificate, password))
-        {
-        }
+            : this(clientId, new X509Certificate2(rawCertificate, password)) { }
+
+        public ClientAssertionCertificate(string clientId, byte[] rawCertificate) 
+            : this(clientId, new X509Certificate2(rawCertificate)) { }
+
+        public ClientAssertionCertificate(string clientId, string certificateFilePath) 
+            : this(clientId, new X509Certificate2(certificateFilePath)) { }
 
         public byte[] Sign(string message)
         {
             using (var key = certificate.GetRSAPrivateKey())
             {
-                if(key == null)
+                if (key == null)
                 {
                     throw new CryptographicException("No valid private RSA key found for X509Certificate2.");
                 }

@@ -43,7 +43,7 @@ namespace Az.Auth.FullDesktop.Test
             Assert.Equal(5, userLoginApis.Count<MethodInfo>());
             Assert.Equal(0, interactiveLoginApis.Count<MethodInfo>());
             Assert.Equal(5, deviceAuthApis.Count<MethodInfo>());
-            Assert.Equal(20, appLoginApis.Count<MethodInfo>());
+            Assert.Equal(22, appLoginApis.Count<MethodInfo>());
         }
     }
 }
