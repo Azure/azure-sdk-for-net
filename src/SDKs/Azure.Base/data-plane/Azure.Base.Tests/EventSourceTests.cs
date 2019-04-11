@@ -19,6 +19,15 @@ namespace Azure.Base.Tests
     [NonParallelizable]
     public class EventSourceTests
     {
+        private const int RequestEvent = 1;
+        private const int RequestContentEvent = 2;
+        private const int ResponseEvent = 5;
+        private const int ResponseContentEvent = 6;
+        private const int ResponseContentBlockEvent = 11;
+        private const int ErrorResponseEvent = 8;
+        private const int ErrorResponseContentEvent = 9;
+        private const int ErrorResponseContentBlockEvent = 12;
+
         private TestEventListener _listener;
 
         [SetUp]
@@ -70,7 +79,7 @@ namespace Azure.Base.Tests
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
 
-            var e = _listener.SingleEventById(1);
+            var e = _listener.SingleEventById(RequestEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Request", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
@@ -79,33 +88,33 @@ namespace Azure.Base.Tests
             StringAssert.Contains($"Date:3/26/2019{Environment.NewLine}", e.GetProperty<string>("headers"));
             StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", e.GetProperty<string>("headers"));
 
-            e = _listener.SingleEventById(2);
+            e = _listener.SingleEventById(RequestContentEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("RequestContent", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual(new byte[] { 1, 2, 3, 4, 5 }, e.GetProperty<byte[]>("content"));
 
-            e = _listener.SingleEventById(5);
+            e = _listener.SingleEventById(ResponseEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("Response", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 500);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
 
-            e = _listener.SingleEventById(6);
+            e = _listener.SingleEventById(ResponseContentEvent);
             Assert.AreEqual(EventLevel.Verbose, e.Level);
             Assert.AreEqual("ResponseContent", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             CollectionAssert.AreEqual(new byte[] { 6, 7, 8, 9, 0 }, e.GetProperty<byte[]>("content"));
 
-            e = _listener.SingleEventById(8);
+            e = _listener.SingleEventById(ErrorResponseEvent);
             Assert.AreEqual(EventLevel.Error, e.Level);
             Assert.AreEqual("ErrorResponse", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
             Assert.AreEqual(e.GetProperty<int>("status"), 500);
             StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", e.GetProperty<string>("headers"));
 
-            e = _listener.SingleEventById(9);
+            e = _listener.SingleEventById(ErrorResponseContentEvent);
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("ErrorResponseContent", e.EventName);
             Assert.AreEqual(requestId, e.GetProperty<string>("requestId"));
@@ -135,7 +144,7 @@ namespace Azure.Base.Tests
                 Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
             }
 
-            EventWrittenEventArgs[] contentEvents = _listener.EventsById(11).ToArray();
+            EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
 
             Assert.AreEqual(2, contentEvents.Length);
 
@@ -151,8 +160,7 @@ namespace Azure.Base.Tests
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 9, 0 }, contentEvents[1].GetProperty<byte[]>("content"));
 
-            // No ResponseContent and ErrorResponseContent events
-            CollectionAssert.IsEmpty(_listener.EventsById(6));
+            CollectionAssert.IsEmpty(_listener.EventsById(ResponseContentEvent));
         }
 
         [Test]
@@ -178,7 +186,7 @@ namespace Azure.Base.Tests
                 Assert.AreEqual(0, await response.ContentStream.ReadAsync(buffer, 0, 5));
             }
 
-            EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(12).ToArray();
+            EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentBlockEvent).ToArray();
 
             Assert.AreEqual(2, errorContentEvents.Length);
 
@@ -194,8 +202,7 @@ namespace Azure.Base.Tests
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 9, 0 }, errorContentEvents[1].GetProperty<byte[]>("content"));
 
-            // No ResponseContent and ErrorResponseContent events
-            CollectionAssert.IsEmpty(_listener.EventsById(9));
+            CollectionAssert.IsEmpty(_listener.EventsById(ErrorResponseContentEvent));
         }
 
         private class NonSeekableMemoryStream: MemoryStream
