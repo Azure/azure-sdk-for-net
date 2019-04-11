@@ -4,7 +4,6 @@
     <Description>Microsoft Azure Key Vault Extensions tests</Description>
     <Version>1.0.0</Version>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <AssemblyOriginatorKeyFile>C:\Git\azure-sdk-for-net\eng\AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <None Update="appsettings.json">
