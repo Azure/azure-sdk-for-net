@@ -76,16 +76,6 @@ namespace Microsoft.Azure.Search.Tests
             }
 
             [Fact]
-            public void CanReadEmptyArrays()
-            {
-                Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [] }", Settings);
-
-                Assert.Single(doc);
-                string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
-                Assert.Empty(fieldValues);
-            }
-
-            [Fact]
             public void CanReadArraysOfStrings()
             {
                 Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [""hello"", ""goodbye""] }", Settings);
@@ -173,6 +163,28 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Equal("hello", fieldValues[0]);
                 Assert.Equal(TestDate, fieldValues[1]);
                 Assert.Equal("123", fieldValues[2]);
+            }
+
+            [Fact]
+            public void EmptyArraysReadAsStringArrays()
+            {
+                Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [] }", Settings);
+
+                // With no elements, we can't tell what type of collection it is. For backward compatibility, we assume type string.
+                Assert.Single(doc);
+                string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
+                Assert.Empty(fieldValues);
+            }
+
+            [Fact]
+            public void ArraysWithOnlyNullsReadAsStringArrays()
+            {
+                Document doc = JsonConvert.DeserializeObject<Document>(@"{ ""field"": [null, null] }", Settings);
+
+                // With only null elements, we can't tell what type of collection it is. For backward compatibility, we assume type string.
+                Assert.Single(doc);
+                string[] fieldValues = Assert.IsType<string[]>(doc["field"]);
+                Assert.Collection(fieldValues, Assert.Null, Assert.Null);
             }
         }
     }
