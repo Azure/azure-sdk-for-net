@@ -2,16 +2,16 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Linq;
+using System.Reflection;
+using Microsoft.Azure.Search.Models;
+using Microsoft.Spatial;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.Search.Serialization
 {
-    using System;
-    using System.Linq;
-    using System.Reflection;
-    using Models;
-    using Spatial;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-
     /// <summary>
     /// Deserializes JSON objects and arrays to .NET types instead of JObject and JArray.
     /// </summary>
@@ -19,26 +19,14 @@ namespace Microsoft.Azure.Search.Serialization
     {
         private static readonly string[] EmptyStringArray = new string[0];
 
-        public override bool CanRead
-        {
-            get { return true; }
-        }
+        public override bool CanRead => true;
 
-        public override bool CanWrite
-        {
-            get { return false; }
-        }
+        public override bool CanWrite => false;
 
-        public override bool CanConvert(Type objectType)
-        {
-            return typeof(Document).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
-        }
+        public override bool CanConvert(Type objectType) =>
+            typeof(Document).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
 
-        public override object ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object existingValue,
-            JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var result = new Document();
             JObject bag = serializer.Deserialize<JObject>(reader);
@@ -52,34 +40,26 @@ namespace Microsoft.Azure.Search.Serialization
                 }
 
                 object value;
-                if (field.Value == null)
+                switch (field.Value)
                 {
-                    value = null;
-                }
-                else if (field.Value is JArray)
-                {
-                    JArray array = (JArray)field.Value;
+                    case null:
+                        value = null;
+                        break;
 
-                    if (array.Count == 0)
-                    {
-                        // Assume string arrays for now.
-                        value = EmptyStringArray;
-                    }
-                    else
-                    {
+                    case JArray array:
                         value = ConvertArray(array, serializer);
-                    }
-                }
-                else if (field.Value is JObject)
-                {
-                    var tokenReader = new JTokenReader(field.Value);
-                    
-                    // Assume GeoPoint for now.
-                    value = serializer.Deserialize<GeographyPoint>(tokenReader);
-                }
-                else
-                {
-                    value = field.Value.ToObject(typeof(object), serializer);
+                        break;
+
+                    case JObject _:
+                        var tokenReader = new JTokenReader(field.Value);
+
+                        // Assume GeoPoint for now.
+                        value = serializer.Deserialize<GeographyPoint>(tokenReader);
+                        break;
+
+                    default:
+                        value = field.Value.ToObject(typeof(object), serializer);
+                        break;
                 }
 
                 result[field.Name] = value;
@@ -88,13 +68,16 @@ namespace Microsoft.Azure.Search.Serialization
             return result;
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
 
         private static object[] ConvertArray(JArray array, JsonSerializer serializer)
         {
+            if (array.Count == 0)
+            {
+                // Assume string arrays for now.
+                return EmptyStringArray;
+            }
+
             // There are two cases to consider: Either everything is a string, or it's not. If not, don't attempt
             // any conversions and return everything in an object array.
             return array.All(t => t.Type == JTokenType.String || t.Type == JTokenType.Null) ? 
