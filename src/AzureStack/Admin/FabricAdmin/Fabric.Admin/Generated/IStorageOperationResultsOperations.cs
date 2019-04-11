@@ -20,12 +20,12 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
     using System.Threading.Tasks;
 
     /// <summary>
-    /// InfraRolesOperations operations.
+    /// StorageOperationResultsOperations operations.
     /// </summary>
-    public partial interface IInfraRolesOperations
+    public partial interface IStorageOperationResultsOperations
     {
         /// <summary>
-        /// Returns the requested infrastructure role description.
+        /// Returns the status of a storage operation.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -33,8 +33,8 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <param name='location'>
         /// Location of the resource.
         /// </param>
-        /// <param name='infraRole'>
-        /// Infrastructure role name.
+        /// <param name='operation'>
+        /// Operation identifier.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -51,9 +51,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<InfraRole>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<StorageOperationResult>> GetWithHttpMessagesAsync(string resourceGroupName, string location, string operation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns a list of all infrastructure roles at a location.
+        /// Returns a list of all storage operation results at a location.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -79,59 +79,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<InfraRole>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, ODataQuery<InfraRole> odataQuery = default(ODataQuery<InfraRole>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<StorageOperationResult>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, ODataQuery<StorageOperationResult> odataQuery = default(ODataQuery<StorageOperationResult>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Restarts the requested infrastructure role.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group.
-        /// </param>
-        /// <param name='location'>
-        /// Location of the resource.
-        /// </param>
-        /// <param name='infraRole'>
-        /// Infrastructure role name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Restarts the requested infrastructure role.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group.
-        /// </param>
-        /// <param name='location'>
-        /// Location of the resource.
-        /// </param>
-        /// <param name='infraRole'>
-        /// Infrastructure role name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse> BeginRestartWithHttpMessagesAsync(string resourceGroupName, string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns a list of all infrastructure roles at a location.
+        /// Returns a list of all storage operation results at a location.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -151,6 +101,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<InfraRole>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<StorageOperationResult>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
