@@ -9,19 +9,20 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="1.6.0-preview" />
     <ProjectReference Include="..\Prediction\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.csproj" />
+    <ProjectReference Include="..\Training\Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Update="TestImages\*.jpg">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="TestImages\*.png">
+    <None Include="..\Training.Tests\TestImages\**\*.*" LinkBase="TestImages">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="testsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Compile Include="..\Training.Tests\ProjectBuilderHelper.cs">
+      <Link>ProjectBuilderHelper.cs</Link>
+    </Compile>
   </ItemGroup>
 </Project>

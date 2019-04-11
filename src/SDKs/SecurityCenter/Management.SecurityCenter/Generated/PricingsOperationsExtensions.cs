@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<Pricing> List(this IPricingsOperations operations)
+            public static PricingList List(this IPricingsOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Pricing>> ListAsync(this IPricingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PricingList> ListAsync(this IPricingsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -50,44 +50,7 @@ namespace Microsoft.Azure.Management.Security
             }
 
             /// <summary>
-            /// Security pricing configurations in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            public static IPage<Pricing> ListByResourceGroup(this IPricingsOperations operations, string resourceGroupName)
-            {
-                return operations.ListByResourceGroupAsync(resourceGroupName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Security pricing configurations in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Pricing>> ListByResourceGroupAsync(this IPricingsOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Security pricing configuration in the subscriptionSecurity pricing
-            /// configuration in the subscription
+            /// Security pricing configuration in the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -95,14 +58,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='pricingName'>
             /// name of the pricing configuration
             /// </param>
-            public static Pricing GetSubscriptionPricing(this IPricingsOperations operations, string pricingName)
+            public static Pricing Get(this IPricingsOperations operations, string pricingName)
             {
-                return operations.GetSubscriptionPricingAsync(pricingName).GetAwaiter().GetResult();
+                return operations.GetAsync(pricingName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Security pricing configuration in the subscriptionSecurity pricing
-            /// configuration in the subscription
+            /// Security pricing configuration in the subscription
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -113,9 +75,9 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Pricing> GetSubscriptionPricingAsync(this IPricingsOperations operations, string pricingName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Pricing> GetAsync(this IPricingsOperations operations, string pricingName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSubscriptionPricingWithHttpMessagesAsync(pricingName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(pricingName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -131,11 +93,11 @@ namespace Microsoft.Azure.Management.Security
             /// name of the pricing configuration
             /// </param>
             /// <param name='pricingTier'>
-            /// Pricing tier type. Possible values include: 'Free', 'Standard'
+            /// The pricing tier value. Possible values include: 'Free', 'Standard'
             /// </param>
-            public static Pricing UpdateSubscriptionPricing(this IPricingsOperations operations, string pricingName, string pricingTier)
+            public static Pricing Update(this IPricingsOperations operations, string pricingName, string pricingTier)
             {
-                return operations.UpdateSubscriptionPricingAsync(pricingName, pricingTier).GetAwaiter().GetResult();
+                return operations.UpdateAsync(pricingName, pricingTier).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,172 +110,14 @@ namespace Microsoft.Azure.Management.Security
             /// name of the pricing configuration
             /// </param>
             /// <param name='pricingTier'>
-            /// Pricing tier type. Possible values include: 'Free', 'Standard'
+            /// The pricing tier value. Possible values include: 'Free', 'Standard'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Pricing> UpdateSubscriptionPricingAsync(this IPricingsOperations operations, string pricingName, string pricingTier, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Pricing> UpdateAsync(this IPricingsOperations operations, string pricingName, string pricingTier, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateSubscriptionPricingWithHttpMessagesAsync(pricingName, pricingTier, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Security pricing configuration in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='pricingName'>
-            /// name of the pricing configuration
-            /// </param>
-            public static Pricing GetResourceGroupPricing(this IPricingsOperations operations, string resourceGroupName, string pricingName)
-            {
-                return operations.GetResourceGroupPricingAsync(resourceGroupName, pricingName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Security pricing configuration in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='pricingName'>
-            /// name of the pricing configuration
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Pricing> GetResourceGroupPricingAsync(this IPricingsOperations operations, string resourceGroupName, string pricingName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetResourceGroupPricingWithHttpMessagesAsync(resourceGroupName, pricingName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Security pricing configuration in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='pricingName'>
-            /// name of the pricing configuration
-            /// </param>
-            /// <param name='pricingTier'>
-            /// Pricing tier type. Possible values include: 'Free', 'Standard'
-            /// </param>
-            public static Pricing CreateOrUpdateResourceGroupPricing(this IPricingsOperations operations, string resourceGroupName, string pricingName, string pricingTier)
-            {
-                return operations.CreateOrUpdateResourceGroupPricingAsync(resourceGroupName, pricingName, pricingTier).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Security pricing configuration in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
-            /// <param name='pricingName'>
-            /// name of the pricing configuration
-            /// </param>
-            /// <param name='pricingTier'>
-            /// Pricing tier type. Possible values include: 'Free', 'Standard'
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Pricing> CreateOrUpdateResourceGroupPricingAsync(this IPricingsOperations operations, string resourceGroupName, string pricingName, string pricingTier, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateOrUpdateResourceGroupPricingWithHttpMessagesAsync(resourceGroupName, pricingName, pricingTier, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Security pricing configurations in the subscription
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Pricing> ListNext(this IPricingsOperations operations, string nextPageLink)
-            {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Security pricing configurations in the subscription
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Pricing>> ListNextAsync(this IPricingsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Security pricing configurations in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Pricing> ListByResourceGroupNext(this IPricingsOperations operations, string nextPageLink)
-            {
-                return operations.ListByResourceGroupNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Security pricing configurations in the resource group
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Pricing>> ListByResourceGroupNextAsync(this IPricingsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(pricingName, pricingTier, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

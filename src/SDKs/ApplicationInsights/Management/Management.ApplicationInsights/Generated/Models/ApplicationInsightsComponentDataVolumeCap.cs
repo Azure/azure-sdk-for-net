@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
     using System.Linq;
 
     /// <summary>
-    /// An Application Insights component daily data volumne cap
+    /// An Application Insights component daily data volume cap
     /// </summary>
     public partial class ApplicationInsightsComponentDataVolumeCap
     {

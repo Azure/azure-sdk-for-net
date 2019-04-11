@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
 
     /// <summary>
     /// Represents underlying deployment detail for each update to the
-    /// assignment.
+    /// blueprint assignment.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class AssignmentOperation : AzureResourceBase
@@ -39,17 +39,18 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// Azure.</param>
         /// <param name="type">Type of this resource.</param>
         /// <param name="name">Name of this resource.</param>
-        /// <param name="blueprintVersion">The blueprint version used for the
-        /// assignment operation.</param>
-        /// <param name="assignmentState">State of this assignment
+        /// <param name="blueprintVersion">The published version of the
+        /// blueprint definition used for the blueprint assignment
         /// operation.</param>
-        /// <param name="timeCreated">Create time of this Assignment
-        /// Operation.</param>
+        /// <param name="assignmentState">State of this blueprint assignment
+        /// operation.</param>
+        /// <param name="timeCreated">Create time of this blueprint assignment
+        /// operation.</param>
         /// <param name="timeStarted">Start time of the underlying
         /// deployment.</param>
         /// <param name="timeFinished">Finish time of the overall underlying
         /// deployments.</param>
-        /// <param name="deployments">List of jobs in this assignment
+        /// <param name="deployments">List of jobs in this blueprint assignment
         /// operation.</param>
         public AssignmentOperation(string id = default(string), string type = default(string), string name = default(string), string blueprintVersion = default(string), string assignmentState = default(string), string timeCreated = default(string), string timeStarted = default(string), string timeFinished = default(string), IList<AssignmentDeploymentJob> deployments = default(IList<AssignmentDeploymentJob>))
             : base(id, type, name)
@@ -69,20 +70,20 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the blueprint version used for the assignment
-        /// operation.
+        /// Gets or sets the published version of the blueprint definition used
+        /// for the blueprint assignment operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.blueprintVersion")]
         public string BlueprintVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets state of this assignment operation.
+        /// Gets or sets state of this blueprint assignment operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.assignmentState")]
         public string AssignmentState { get; set; }
 
         /// <summary>
-        /// Gets or sets create time of this Assignment Operation.
+        /// Gets or sets create time of this blueprint assignment operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeCreated")]
         public string TimeCreated { get; set; }
@@ -100,7 +101,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public string TimeFinished { get; set; }
 
         /// <summary>
-        /// Gets or sets list of jobs in this assignment operation.
+        /// Gets or sets list of jobs in this blueprint assignment operation.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deployments")]
         public IList<AssignmentDeploymentJob> Deployments { get; set; }

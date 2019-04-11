@@ -29,6 +29,31 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureStorageLinkedServiceWithAccountKeyInAKV = @"
+{
+    name: ""Test-Windows-Azure-storage-account-linkedService-with-AccountKey-in-AKV"",
+    properties:
+    {
+        type: ""AzureStorage"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            accountKey: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureStorageLinkedServiceWithSasUri = @"
 {
     name: ""Test-Windows-Azure-storage-linkedService-with-SasUri"",
@@ -41,6 +66,31 @@ namespace DataFactory.Tests.JsonSamples
                 value : ""fakeSasUri"",
                 type : ""SecureString""
             },
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureStorageLinkedServiceWithSasUriAndSasTokenInAKV = @"
+{
+    name: ""Test-Windows-Azure-storage-linkedService-with-SasUri-and-SasToken-in-AKV"",
+    properties:
+    {
+        type: ""AzureStorage"",
+        typeProperties:
+        {
+            sasUri: {
+                value : ""fakeSasUri"",
+                type : ""SecureString""
+            },
+            sasToken: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
         }
     }
 }";
@@ -89,6 +139,31 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string AzureSqlLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""Test-Windows-Azure-SQL-LinkedService-with-Password-in-AKV"",
+    properties:
+    {
+        type: ""AzureSqlDatabase"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            password: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
+        [JsonSample]
         public const string AzureSqlDataWarehouseLinkedService = @"
 {
     name: ""Test-Windows-Azure-SQLDW-LinkedService"",
@@ -100,6 +175,31 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 value : ""fakeConnString"",
                 type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AzureSqlDataWarehouseLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""Test-Windows-Azure-SQLDW-LinkedService-with-Password-in-AKV"",
+    properties:
+    {
+        type: ""AzureSqlDW"",
+        typeProperties:
+        {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            password: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }
@@ -316,6 +416,35 @@ namespace DataFactory.Tests.JsonSamples
 }";
 
         [JsonSample]
+        public const string OracleLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""LinkedService-OracleDB-with-Password-in-AKV"",
+    properties:
+    {
+        type: ""Oracle"",
+        connectVia: {
+            referenceName : ""CherryAgent-01"",
+            type : ""IntegrationRuntimeReference""
+        },
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            password: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            },
+            encryptedCredential: ""MyEncryptedCredentials""
+        }
+    }
+}";
+
+        [JsonSample]
         public const string FileSystemLinkedService = @"
 {
     name: ""LinkedService-FileSystem"",
@@ -349,6 +478,30 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 value : ""fakeConnString"",
                 type : ""SecureString""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string CosmosDbLinkedServiceWithAccountKeyInAKV = @"
+{
+    name: ""LinkedService-CosmosDb-with-AccountKey-in-AKV"",
+    properties:
+    {
+        type: ""CosmosDb"",
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            accountKey: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }
@@ -911,6 +1064,31 @@ namespace DataFactory.Tests.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AzureMySqlLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""LinkedService-AzureMySQLDB-with-Password-in-AKV"",
+    properties:
+    {
+        type: ""AzureMySql"",
+        typeProperties: {
+            connectionString: {
+                value : ""fakeConnString"",
+                type : ""SecureString""
+            },
+            password: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}";
+
         [JsonSample]
         public const string AmazonMWSLinkedService = @"
 {
@@ -957,6 +1135,33 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string AzurePostgreSqlLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""AzurePostgreSqlLinkedServiceWithPasswordInAKV"",
+    properties: {
+        type: ""AzurePostgreSql"",
+        typeProperties: {
+            connectionString: {
+                type: ""AzureKeyVaultSecret"",
+                secretName: ""postgreSqlConnectionString"",
+                store: {
+                    type: ""LinkedServiceReference"",
+                    referenceName: ""AKVLinkedService""
+                }
+            },
+            password: { 
+                type: ""AzureKeyVaultSecret"", 
+                secretName: ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}
+";
+        [JsonSample]
         public const string ConcurLinkedService = @"
 {
     name: ""ConcurLinkedService"",
@@ -992,6 +1197,29 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string CouchbaseLinkedServiceWithCredStringInAKV = @"
+{
+    name: ""CouchbaseLinkedServiceWithCredStringInAKV"",
+    properties: {
+        type: ""Couchbase"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            credString: { 
+                type: ""AzureKeyVaultSecret"", 
+                secretName: ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}
+";
+        [JsonSample]
         public const string DrillLinkedService = @"
 {
     name: ""DrillLinkedService"",
@@ -1001,6 +1229,29 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 type: ""SecureString"",
                 value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string DrillLinkedServiceWithPwdInAKV = @"
+{
+    name: ""DrillLinkedServiceWithPwdInAKV"",
+    properties: {
+        type: ""Drill"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            pwd: { 
+                type: ""AzureKeyVaultSecret"", 
+                secretName: ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }
@@ -1063,6 +1314,29 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 type: ""SecureString"",
                 value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string GreenplumLinkedServiceWithPwdInAKV = @"
+{
+    name: ""GreenplumLinkedServiceWithPwdInAKV"",
+    properties: {
+        type: ""Greenplum"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            pwd: { 
+                type: ""AzureKeyVaultSecret"", 
+                secretName: ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }
@@ -1209,6 +1483,29 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 type: ""SecureString"",
                 value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string MariaDBLinkedServiceWithPwdInAKV = @"
+{
+    name: ""MariaDBLinkedServiceWithPwdInAKV"",
+    properties: {
+        type: ""MariaDB"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            pwd: { 
+                type: ""AzureKeyVaultSecret"", 
+                secretName: ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }
@@ -1471,6 +1768,29 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string NetezzaLinkedServiceWithPwdInAKV = @"
+{
+    name: ""NetezzaLinkedServiceWithPwdInAKV"",
+    properties: {
+        type: ""Netezza"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            pwd: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}
+";
+        [JsonSample]
         public const string VerticaLinkedService = @"
 {
     name: ""VerticaLinkedService"",
@@ -1480,6 +1800,29 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 type: ""SecureString"",
                 value: ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string VerticaLinkedServiceWithPwdInAKV = @"
+{
+    name: ""VerticaLinkedServiceWithPwdInAKV"",
+    properties: {
+        type: ""Vertica"",
+        typeProperties: {
+            connectionString: {
+                type: ""SecureString"",
+                value: ""some connection string""
+            },
+            pwd: { 
+                type : ""AzureKeyVaultSecret"", 
+                secretName : ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }
@@ -1517,6 +1860,11 @@ namespace DataFactory.Tests.JsonSamples
             newClusterVersion: ""3.4.x-scala2.11"",
             newClusterNumOfWorker: ""1"",
             newClusterNodeType: ""Standard_DS3_v2"",
+            newClusterDriverNodeType: ""Standard_DS3_v2"",
+            newClusterInitScripts: [
+                ""someScript""
+            ],
+            newClusterEnableElasticDisk: true,
             newClusterSparkConf: {
                 ""spark.speculation"": true
             }
@@ -1565,6 +1913,29 @@ namespace DataFactory.Tests.JsonSamples
 }
 ";
         [JsonSample]
+        public const string MySqlLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""MySqlLinkedServiceWithPasswordInAKV"",
+    properties: {
+        type: ""MySql"",
+        typeProperties: {
+            connectionString: {
+                type : ""SecureString"",
+                value : ""some connection string""
+            },
+            password: { 
+                type: ""AzureKeyVaultSecret"", 
+                secretName: ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
+            }
+        }
+    }
+}
+";
+        [JsonSample]
         public const string PostgreSqlLinkedService = @"
 {
     name: ""PostgreSqlLinkedService"",
@@ -1574,6 +1945,29 @@ namespace DataFactory.Tests.JsonSamples
             connectionString: {
                 type : ""SecureString"",
                 value : ""some connection string""
+            }
+        }
+    }
+}
+";
+        [JsonSample]
+        public const string PostgreSqlLinkedServiceWithPasswordInAKV = @"
+{
+    name: ""PostgreSqlLinkedServiceWithPasswordInAKV"",
+    properties: {
+        type: ""PostgreSql"",
+        typeProperties: {
+            connectionString: {
+                type : ""SecureString"",
+                value : ""some connection string""
+            },
+            password: { 
+                type: ""AzureKeyVaultSecret"", 
+                secretName: ""fakeSecretName"", 
+                store: { 
+                    type : ""LinkedServiceReference"", 
+                    referenceName : ""AKVLinkedService"" 
+                } 
             }
         }
     }
@@ -1598,6 +1992,43 @@ namespace DataFactory.Tests.JsonSamples
             password : {
                 type : ""SecureString"",
                 value : ""some password""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string SapOpenHubLinkedService = @"
+{
+    ""name"": ""SapBwOpenHubLinkedService"",
+    ""properties"": {
+        ""type"": ""SapOpenHub"",
+        ""typeProperties"": {
+            ""server"": ""fakeserver"",
+            ""systemNumber"": ""00"",
+            ""clientId"": ""800"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
+            }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string RestLinkedService = @"
+{
+    ""name"": ""RESTLinkedService"",
+    ""properties"": {
+        ""type"": ""RestService"",
+        ""typeProperties"": {
+            ""authenticationType"": ""Basic"",
+            ""url"" : ""https://fakeurl/"",
+            ""userName"": ""fakeusr"",
+            ""password"": {
+                ""type"": ""SecureString"",
+                ""value"": ""fakepsw""
             }
         }
     }

@@ -36,10 +36,12 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// published to.</param>
         /// <param name="assignedEndpointKey">The endpoint key.</param>
         /// <param name="endpointRegion">The endpoint's region.</param>
+        /// <param name="failedRegions">Regions where publishing
+        /// failed.</param>
         /// <param name="publishedDateTime">Timestamp when was last
         /// published.</param>
-        public ProductionOrStagingEndpointInfo(string versionId = default(string), bool? isStaging = default(bool?), string endpointUrl = default(string), string region = default(string), string assignedEndpointKey = default(string), string endpointRegion = default(string), string publishedDateTime = default(string))
-            : base(versionId, isStaging, endpointUrl, region, assignedEndpointKey, endpointRegion, publishedDateTime)
+        public ProductionOrStagingEndpointInfo(string versionId = default(string), bool? isStaging = default(bool?), string endpointUrl = default(string), string region = default(string), string assignedEndpointKey = default(string), string endpointRegion = default(string), string failedRegions = default(string), string publishedDateTime = default(string))
+            : base(versionId, isStaging, endpointUrl, region, assignedEndpointKey, endpointRegion, failedRegions, publishedDateTime)
         {
             CustomInit();
         }

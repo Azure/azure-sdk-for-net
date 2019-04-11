@@ -19,29 +19,19 @@ namespace Microsoft.Azure.Management.FrontDoor
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Network", "BackendPools", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "CheckFrontDoorNameAvailability", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "CheckFrontDoorNameAvailabilityWithSubscription", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "Endpoints", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "FrontDoors", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "FrontendEndpoints", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "HealthProbeSettings", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "LoadBalancingSettings", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "Policies", "2018-08-01"),
-                new Tuple<string, string, string>("Network", "RoutingRules", "2018-08-01"),
+                new Tuple<string, string, string>("Network", "BackendPools", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "CheckFrontDoorNameAvailability", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "CheckFrontDoorNameAvailabilityWithSubscription", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "Endpoints", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "FrontDoors", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "FrontendEndpoints", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "HealthProbeSettings", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "LoadBalancingSettings", "2019-04-01"),
+                new Tuple<string, string, string>("Network", "ManagedRuleSets", "2019-03-01"),
+                new Tuple<string, string, string>("Network", "Policies", "2019-03-01"),
+                new Tuple<string, string, string>("Network", "RoutingRules", "2019-04-01"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/frontdoor/resource-manager/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "fa9839b5a4bebe000cda492071d490347839ddbd";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

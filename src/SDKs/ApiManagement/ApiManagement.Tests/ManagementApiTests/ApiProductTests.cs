@@ -44,7 +44,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(listResponse);
                 Assert.Equal(2, listResponse.Count());
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 // list paged 
                 listResponse = testBase.client.ApiProduct.ListByApis(
@@ -74,7 +74,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(listByApiResponse);
                 Assert.Single(listByApiResponse);
                 Assert.Equal("Unlimited", listByApiResponse.First().DisplayName);
-                Assert.Empty(listByApiResponse.NextPageLink);
+                Assert.Null(listByApiResponse.NextPageLink);
             }
         }
     }

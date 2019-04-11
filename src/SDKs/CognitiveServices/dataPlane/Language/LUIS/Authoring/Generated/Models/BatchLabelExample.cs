@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Response when adding a batch of labeled examples.
+    /// Response when adding a batch of labeled example utterances.
     /// </summary>
     public partial class BatchLabelExample
     {

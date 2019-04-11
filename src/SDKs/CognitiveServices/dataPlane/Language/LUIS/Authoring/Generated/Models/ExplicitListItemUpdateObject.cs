@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// Model object for updating an explicit list item.
+    /// Model object for updating an explicit (exception) list item.
     /// </summary>
     public partial class ExplicitListItemUpdateObject
     {

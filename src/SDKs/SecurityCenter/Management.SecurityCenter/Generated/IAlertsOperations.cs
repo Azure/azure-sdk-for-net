@@ -52,8 +52,7 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse<IPage<Alert>>> ListWithHttpMessagesAsync(string filter = default(string), string select = default(string), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all the alerts alerts that are associated with the resource
-        /// group
+        /// List all the alerts that are associated with the resource group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription. The
@@ -268,8 +267,7 @@ namespace Microsoft.Azure.Management.Security
         /// </exception>
         Task<AzureOperationResponse<IPage<Alert>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all the alerts alerts that are associated with the resource
-        /// group
+        /// List all the alerts that are associated with the resource group
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

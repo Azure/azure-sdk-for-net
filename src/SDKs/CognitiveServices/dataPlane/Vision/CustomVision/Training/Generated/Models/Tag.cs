@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -29,15 +30,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Tag class.
         /// </summary>
-        /// <param name="id">Gets the Tag ID.</param>
         /// <param name="name">Gets or sets the name of the tag.</param>
         /// <param name="description">Gets or sets the description of the
         /// tag.</param>
         /// <param name="type">Gets or sets the type of the tag. Possible
         /// values include: 'Regular', 'Negative'</param>
+        /// <param name="id">Gets the Tag ID.</param>
         /// <param name="imageCount">Gets the number of images with this
         /// tag.</param>
-        public Tag(System.Guid id = default(System.Guid), string name = default(string), string description = default(string), string type = default(string), int imageCount = default(int))
+        public Tag(string name, string description, string type, System.Guid id = default(System.Guid), int imageCount = default(int))
         {
             Id = id;
             Name = name;
@@ -83,5 +84,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         [JsonProperty(PropertyName = "imageCount")]
         public int ImageCount { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (Description == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
+            }
+            if (Type == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
+            }
+        }
     }
 }

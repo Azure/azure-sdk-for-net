@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <param name="emailSubject">Custom subject override for all email
         /// ids in Azure action group</param>
         /// <param name="customWebhookPayload">Custom payload to be sent for
-        /// all webook URI in Azure action group</param>
+        /// all webhook URI in Azure action group</param>
         public AzNsActionGroup(IList<string> actionGroup = default(IList<string>), string emailSubject = default(string), string customWebhookPayload = default(string))
         {
             ActionGroup = actionGroup;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public string EmailSubject { get; set; }
 
         /// <summary>
-        /// Gets or sets custom payload to be sent for all webook URI in Azure
+        /// Gets or sets custom payload to be sent for all webhook URI in Azure
         /// action group
         /// </summary>
         [JsonProperty(PropertyName = "customWebhookPayload")]

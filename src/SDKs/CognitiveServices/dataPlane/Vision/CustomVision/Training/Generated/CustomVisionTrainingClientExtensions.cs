@@ -137,7 +137,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// A list of tags ids to filter the images to count. Defaults to all tags when
             /// null.
             /// </param>
-            public static int? GetTaggedImageCount(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>))
+            public static int? GetTaggedImageCount(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>))
             {
                 return operations.GetTaggedImageCountAsync(projectId, iterationId, tagIds).GetAwaiter().GetResult();
             }
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<int?> GetTaggedImageCountAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<int?> GetTaggedImageCountAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTaggedImageCountWithHttpMessagesAsync(projectId, iterationId, tagIds, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<int?> GetTaggedImageCountWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<int?> GetTaggedImageCountWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.GetTaggedImageCountWithHttpMessagesAsync(projectId, iterationId, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -351,9 +351,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// Image ids. Limited to 64 images.
             /// </param>
             /// <param name='tagIds'>
-            /// Tags to be deleted from the specified images. Limted to 20 tags.
+            /// Tags to be deleted from the specified images. Limited to 20 tags.
             /// </param>
-            public static void DeleteImageTags(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds, IList<string> tagIds)
+            public static void DeleteImageTags(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, IList<System.Guid> tagIds)
             {
                 operations.DeleteImageTagsAsync(projectId, imageIds, tagIds).GetAwaiter().GetResult();
             }
@@ -371,12 +371,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// Image ids. Limited to 64 images.
             /// </param>
             /// <param name='tagIds'>
-            /// Tags to be deleted from the specified images. Limted to 20 tags.
+            /// Tags to be deleted from the specified images. Limited to 20 tags.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteImageTagsAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds, IList<string> tagIds, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteImageTagsAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, IList<System.Guid> tagIds, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteImageTagsWithHttpMessagesAsync(projectId, imageIds, tagIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -394,12 +394,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// Image ids. Limited to 64 images.
             /// </param>
             /// <param name='tagIds'>
-            /// Tags to be deleted from the specified images. Limted to 20 tags.
+            /// Tags to be deleted from the specified images. Limited to 20 tags.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse DeleteImageTagsWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds, IList<string> tagIds, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse DeleteImageTagsWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, IList<System.Guid> tagIds, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.DeleteImageTagsWithHttpMessagesAsync(projectId, imageIds, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -491,7 +491,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='regionIds'>
             /// Regions to delete. Limited to 64.
             /// </param>
-            public static void DeleteImageRegions(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> regionIds)
+            public static void DeleteImageRegions(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> regionIds)
             {
                 operations.DeleteImageRegionsAsync(projectId, regionIds).GetAwaiter().GetResult();
             }
@@ -511,7 +511,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteImageRegionsAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> regionIds, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteImageRegionsAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> regionIds, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteImageRegionsWithHttpMessagesAsync(projectId, regionIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -531,7 +531,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse DeleteImageRegionsWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> regionIds, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse DeleteImageRegionsWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> regionIds, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.DeleteImageRegionsWithHttpMessagesAsync(projectId, regionIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -571,7 +571,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='skip'>
             /// Number of images to skip before beginning the image batch. Defaults to 0.
             /// </param>
-            public static IList<Image> GetTaggedImages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0)
+            public static IList<Image> GetTaggedImages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0)
             {
                 return operations.GetTaggedImagesAsync(projectId, iterationId, tagIds, orderBy, take, skip).GetAwaiter().GetResult();
             }
@@ -614,7 +614,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Image>> GetTaggedImagesAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Image>> GetTaggedImagesAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTaggedImagesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -660,7 +660,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<IList<Image>> GetTaggedImagesWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<IList<Image>> GetTaggedImagesWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid? iterationId = default(System.Guid?), IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.GetTaggedImagesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -793,7 +793,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='iterationId'>
             /// The iteration id. Defaults to workspace.
             /// </param>
-            public static IList<Image> GetImagesByIds(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?))
+            public static IList<Image> GetImagesByIds(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds = default(IList<System.Guid>), System.Guid? iterationId = default(System.Guid?))
             {
                 return operations.GetImagesByIdsAsync(projectId, imageIds, iterationId).GetAwaiter().GetResult();
             }
@@ -821,7 +821,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Image>> GetImagesByIdsAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Image>> GetImagesByIdsAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds = default(IList<System.Guid>), System.Guid? iterationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetImagesByIdsWithHttpMessagesAsync(projectId, imageIds, iterationId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -852,7 +852,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<IList<Image>> GetImagesByIdsWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds = default(IList<string>), System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<IList<Image>> GetImagesByIdsWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds = default(IList<System.Guid>), System.Guid? iterationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.GetImagesByIdsWithHttpMessagesAsync(projectId, imageIds, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -872,12 +872,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageData'>
-            /// Binary image data.
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 6MB.
             /// </param>
             /// <param name='tagIds'>
             /// The tags ids with which to tag each image. Limited to 20.
             /// </param>
-            public static ImageCreateSummary CreateImagesFromData(this ICustomVisionTrainingClient operations, System.Guid projectId, Stream imageData, IList<string> tagIds = default(IList<string>))
+            public static ImageCreateSummary CreateImagesFromData(this ICustomVisionTrainingClient operations, System.Guid projectId, Stream imageData, IList<System.Guid> tagIds = default(IList<System.Guid>))
             {
                 return operations.CreateImagesFromDataAsync(projectId, imageData, tagIds).GetAwaiter().GetResult();
             }
@@ -897,7 +898,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageData'>
-            /// Binary image data.
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 6MB.
             /// </param>
             /// <param name='tagIds'>
             /// The tags ids with which to tag each image. Limited to 20.
@@ -905,7 +907,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ImageCreateSummary> CreateImagesFromDataAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, Stream imageData, IList<string> tagIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ImageCreateSummary> CreateImagesFromDataAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, Stream imageData, IList<System.Guid> tagIds = default(IList<System.Guid>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateImagesFromDataWithHttpMessagesAsync(projectId, imageData, tagIds, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -928,7 +930,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageData'>
-            /// Binary image data.
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 6MB.
             /// </param>
             /// <param name='tagIds'>
             /// The tags ids with which to tag each image. Limited to 20.
@@ -936,7 +939,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<ImageCreateSummary> CreateImagesFromDataWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, Stream imageData, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<ImageCreateSummary> CreateImagesFromDataWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, Stream imageData, IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.CreateImagesFromDataWithHttpMessagesAsync(projectId, imageData, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -951,9 +954,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageIds'>
-            /// Ids of the images to be deleted. Limted to 256 images per batch.
+            /// Ids of the images to be deleted. Limited to 256 images per batch.
             /// </param>
-            public static void DeleteImages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds)
+            public static void DeleteImages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds)
             {
                 operations.DeleteImagesAsync(projectId, imageIds).GetAwaiter().GetResult();
             }
@@ -968,12 +971,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageIds'>
-            /// Ids of the images to be deleted. Limted to 256 images per batch.
+            /// Ids of the images to be deleted. Limited to 256 images per batch.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteImagesAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteImagesAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteImagesWithHttpMessagesAsync(projectId, imageIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -988,12 +991,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageIds'>
-            /// Ids of the images to be deleted. Limted to 256 images per batch.
+            /// Ids of the images to be deleted. Limited to 256 images per batch.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse DeleteImagesWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> imageIds, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse DeleteImagesWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> imageIds, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.DeleteImagesWithHttpMessagesAsync(projectId, imageIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -1159,7 +1162,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image and tag ids. Limted to 64 images and 20 tags per batch.
+            /// Image and tag ids. Limited to 64 images and 20 tags per batch.
             /// </param>
             public static ImageCreateSummary CreateImagesFromPredictions(this ICustomVisionTrainingClient operations, System.Guid projectId, ImageIdCreateBatch batch)
             {
@@ -1180,7 +1183,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image and tag ids. Limted to 64 images and 20 tags per batch.
+            /// Image and tag ids. Limited to 64 images and 20 tags per batch.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1207,7 +1210,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='batch'>
-            /// Image and tag ids. Limted to 64 images and 20 tags per batch.
+            /// Image and tag ids. Limited to 64 images and 20 tags per batch.
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
@@ -1304,7 +1307,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='ids'>
             /// The prediction ids. Limited to 64.
             /// </param>
-            public static void DeletePrediction(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> ids)
+            public static void DeletePrediction(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> ids)
             {
                 operations.DeletePredictionAsync(projectId, ids).GetAwaiter().GetResult();
             }
@@ -1324,7 +1327,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeletePredictionAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> ids, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeletePredictionAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> ids, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeletePredictionWithHttpMessagesAsync(projectId, ids, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -1344,7 +1347,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse DeletePredictionWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<string> ids, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse DeletePredictionWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, IList<System.Guid> ids, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.DeletePredictionWithHttpMessagesAsync(projectId, ids, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -1359,8 +1362,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
-            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated.
+            /// An ImageUrl that contains the url of the image to be evaluated.
             /// </param>
             /// <param name='iterationId'>
             /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -1381,8 +1383,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
-            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated.
+            /// An ImageUrl that contains the url of the image to be evaluated.
             /// </param>
             /// <param name='iterationId'>
             /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -1409,8 +1410,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project to evaluate against.
             /// </param>
             /// <param name='imageUrl'>
-            /// An {Iris.Web.Api.Models.ImageUrl} that contains the url of the image to be
-            /// evaluated.
+            /// An ImageUrl that contains the url of the image to be evaluated.
             /// </param>
             /// <param name='iterationId'>
             /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -1434,7 +1434,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageData'>
-            /// Binary image data.
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 6MB.
             /// </param>
             /// <param name='iterationId'>
             /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -1455,7 +1456,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageData'>
-            /// Binary image data.
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 6MB.
             /// </param>
             /// <param name='iterationId'>
             /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -1482,7 +1484,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The project id.
             /// </param>
             /// <param name='imageData'>
-            /// Binary image data.
+            /// Binary image data. Supported formats are JPEG, GIF, PNG, and BMP. Supports
+            /// images up to 6MB.
             /// </param>
             /// <param name='iterationId'>
             /// Optional. Specifies the id of a particular iteration to evaluate against.
@@ -1672,7 +1675,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='skip'>
             /// Number of images to skip before beginning the image batch. Defaults to 0.
             /// </param>
-            public static IList<ImagePerformance> GetImagePerformances(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0)
+            public static IList<ImagePerformance> GetImagePerformances(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0)
             {
                 return operations.GetImagePerformancesAsync(projectId, iterationId, tagIds, orderBy, take, skip).GetAwaiter().GetResult();
             }
@@ -1715,7 +1718,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ImagePerformance>> GetImagePerformancesAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ImagePerformance>> GetImagePerformancesAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetImagePerformancesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1761,7 +1764,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<IList<ImagePerformance>> GetImagePerformancesWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<IList<ImagePerformance>> GetImagePerformancesWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), string orderBy = default(string), int? take = 50, int? skip = 0, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.GetImagePerformancesWithHttpMessagesAsync(projectId, iterationId, tagIds, orderBy, take, skip, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -1789,7 +1792,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// A list of tags ids to filter the images to count. Defaults to all tags when
             /// null.
             /// </param>
-            public static int? GetImagePerformanceCount(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>))
+            public static int? GetImagePerformanceCount(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>))
             {
                 return operations.GetImagePerformanceCountAsync(projectId, iterationId, tagIds).GetAwaiter().GetResult();
             }
@@ -1820,7 +1823,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<int?> GetImagePerformanceCountAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<int?> GetImagePerformanceCountAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetImagePerformanceCountWithHttpMessagesAsync(projectId, iterationId, tagIds, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1854,7 +1857,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<int?> GetImagePerformanceCountWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<string> tagIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<int?> GetImagePerformanceCountWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, IList<System.Guid> tagIds = default(IList<System.Guid>), Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.GetImagePerformanceCountWithHttpMessagesAsync(projectId, iterationId, tagIds, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
@@ -1920,9 +1923,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The type of classifier to create for this project. Possible values include:
             /// 'Multiclass', 'Multilabel'
             /// </param>
-            public static Project CreateProject(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string))
+            /// <param name='targetExportPlatforms'>
+            /// List of platforms the trained model is intending exporting to.
+            /// </param>
+            public static Project CreateProject(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>))
             {
-                return operations.CreateProjectAsync(name, description, domainId, classificationType).GetAwaiter().GetResult();
+                return operations.CreateProjectAsync(name, description, domainId, classificationType, targetExportPlatforms).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1944,12 +1950,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The type of classifier to create for this project. Possible values include:
             /// 'Multiclass', 'Multilabel'
             /// </param>
+            /// <param name='targetExportPlatforms'>
+            /// List of platforms the trained model is intending exporting to.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Project> CreateProjectAsync(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Project> CreateProjectAsync(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, targetExportPlatforms, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1974,12 +1983,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// The type of classifier to create for this project. Possible values include:
             /// 'Multiclass', 'Multilabel'
             /// </param>
+            /// <param name='targetExportPlatforms'>
+            /// List of platforms the trained model is intending exporting to.
+            /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<Project> CreateProjectWithHttpMessages(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<Project> CreateProjectWithHttpMessages(this ICustomVisionTrainingClient operations, string name, string description = default(string), System.Guid? domainId = default(System.Guid?), string classificationType = default(string), IList<string> targetExportPlatforms = default(IList<string>), Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.CreateProjectWithHttpMessagesAsync(name, description, domainId, classificationType, targetExportPlatforms, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2139,6 +2151,102 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             public static HttpOperationResponse<Project> UpdateProjectWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, Project updatedProject, Dictionary<string, List<string>> customHeaders = null)
             {
                 return operations.UpdateProjectWithHttpMessagesAsync(projectId, updatedProject, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queues project for training.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='trainingType'>
+            /// The type of training to use to train the project (default: Regular).
+            /// Possible values include: 'Regular', 'Advanced'
+            /// </param>
+            /// <param name='reservedBudgetInHours'>
+            /// The number of hours reserved as budget for training (if applicable).
+            /// </param>
+            /// <param name='forceTrain'>
+            /// Whether to force train even if dataset and configuration does not change
+            /// (default: false).
+            /// </param>
+            /// <param name='notificationEmailAddress'>
+            /// The email address to send notification to when training finishes (default:
+            /// null).
+            /// </param>
+            public static Iteration TrainProject(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string))
+            {
+                return operations.TrainProjectAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Queues project for training.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='trainingType'>
+            /// The type of training to use to train the project (default: Regular).
+            /// Possible values include: 'Regular', 'Advanced'
+            /// </param>
+            /// <param name='reservedBudgetInHours'>
+            /// The number of hours reserved as budget for training (if applicable).
+            /// </param>
+            /// <param name='forceTrain'>
+            /// Whether to force train even if dataset and configuration does not change
+            /// (default: false).
+            /// </param>
+            /// <param name='notificationEmailAddress'>
+            /// The email address to send notification to when training finishes (default:
+            /// null).
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Iteration> TrainProjectAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TrainProjectWithHttpMessagesAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Queues project for training.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='trainingType'>
+            /// The type of training to use to train the project (default: Regular).
+            /// Possible values include: 'Regular', 'Advanced'
+            /// </param>
+            /// <param name='reservedBudgetInHours'>
+            /// The number of hours reserved as budget for training (if applicable).
+            /// </param>
+            /// <param name='forceTrain'>
+            /// Whether to force train even if dataset and configuration does not change
+            /// (default: false).
+            /// </param>
+            /// <param name='notificationEmailAddress'>
+            /// The email address to send notification to when training finishes (default:
+            /// null).
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse<Iteration> TrainProjectWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, string trainingType = default(string), int? reservedBudgetInHours = 0, bool? forceTrain = false, string notificationEmailAddress = default(string), Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.TrainProjectWithHttpMessagesAsync(projectId, trainingType, reservedBudgetInHours, forceTrain, notificationEmailAddress, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2379,7 +2487,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             }
 
             /// <summary>
-            /// Queues project for training.
+            /// Publish a specific iteration.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2387,33 +2495,51 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='projectId'>
             /// The project id.
             /// </param>
-            public static Iteration TrainProject(this ICustomVisionTrainingClient operations, System.Guid projectId)
+            /// <param name='iterationId'>
+            /// The iteration id.
+            /// </param>
+            /// <param name='publishName'>
+            /// The name to give the published iteration.
+            /// </param>
+            /// <param name='predictionId'>
+            /// The id of the prediction resource to publish to.
+            /// </param>
+            public static bool? PublishIteration(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId)
             {
-                return operations.TrainProjectAsync(projectId).GetAwaiter().GetResult();
+                return operations.PublishIterationAsync(projectId, iterationId, publishName, predictionId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Queues project for training.
+            /// Publish a specific iteration.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='projectId'>
             /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id.
+            /// </param>
+            /// <param name='publishName'>
+            /// The name to give the published iteration.
+            /// </param>
+            /// <param name='predictionId'>
+            /// The id of the prediction resource to publish to.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Iteration> TrainProjectAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool?> PublishIterationAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TrainProjectWithHttpMessagesAsync(projectId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PublishIterationWithHttpMessagesAsync(projectId, iterationId, publishName, predictionId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Queues project for training.
+            /// Publish a specific iteration.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -2421,12 +2547,78 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// <param name='projectId'>
             /// The project id.
             /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id.
+            /// </param>
+            /// <param name='publishName'>
+            /// The name to give the published iteration.
+            /// </param>
+            /// <param name='predictionId'>
+            /// The id of the prediction resource to publish to.
+            /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.
             /// </param>
-            public static HttpOperationResponse<Iteration> TrainProjectWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, Dictionary<string, List<string>> customHeaders = null)
+            public static HttpOperationResponse<bool?> PublishIterationWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string publishName, string predictionId, Dictionary<string, List<string>> customHeaders = null)
             {
-                return operations.TrainProjectWithHttpMessagesAsync(projectId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+                return operations.PublishIterationWithHttpMessagesAsync(projectId, iterationId, publishName, predictionId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Unpublish a specific iteration.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id.
+            /// </param>
+            public static void UnpublishIteration(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId)
+            {
+                operations.UnpublishIterationAsync(projectId, iterationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Unpublish a specific iteration.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task UnpublishIterationAsync(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.UnpublishIterationWithHttpMessagesAsync(projectId, iterationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Unpublish a specific iteration.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='projectId'>
+            /// The project id.
+            /// </param>
+            /// <param name='iterationId'>
+            /// The iteration id.
+            /// </param>
+            /// <param name='customHeaders'>
+            /// Headers that will be added to request.
+            /// </param>
+            public static HttpOperationResponse UnpublishIterationWithHttpMessages(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, Dictionary<string, List<string>> customHeaders = null)
+            {
+                return operations.UnpublishIterationWithHttpMessagesAsync(projectId, iterationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2503,11 +2695,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// </param>
             /// <param name='platform'>
             /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-            /// 'DockerFile', 'ONNX'
+            /// 'DockerFile', 'ONNX', 'VAIDK'
             /// </param>
             /// <param name='flavor'>
             /// The flavor of the target platform. Possible values include: 'Linux',
-            /// 'Windows', 'ONNX10', 'ONNX12'
+            /// 'Windows', 'ONNX10', 'ONNX12', 'ARM'
             /// </param>
             public static Export ExportIteration(this ICustomVisionTrainingClient operations, System.Guid projectId, System.Guid iterationId, string platform, string flavor = default(string))
             {
@@ -2528,11 +2720,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// </param>
             /// <param name='platform'>
             /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-            /// 'DockerFile', 'ONNX'
+            /// 'DockerFile', 'ONNX', 'VAIDK'
             /// </param>
             /// <param name='flavor'>
             /// The flavor of the target platform. Possible values include: 'Linux',
-            /// 'Windows', 'ONNX10', 'ONNX12'
+            /// 'Windows', 'ONNX10', 'ONNX12', 'ARM'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -2559,11 +2751,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training
             /// </param>
             /// <param name='platform'>
             /// The target platform. Possible values include: 'CoreML', 'TensorFlow',
-            /// 'DockerFile', 'ONNX'
+            /// 'DockerFile', 'ONNX', 'VAIDK'
             /// </param>
             /// <param name='flavor'>
             /// The flavor of the target platform. Possible values include: 'Linux',
-            /// 'Windows', 'ONNX10', 'ONNX12'
+            /// 'Windows', 'ONNX10', 'ONNX12', 'ARM'
             /// </param>
             /// <param name='customHeaders'>
             /// Headers that will be added to request.

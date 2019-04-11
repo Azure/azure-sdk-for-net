@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         /// </summary>
         /// <param name="type">Gets or sets the type of the parameter.</param>
         /// <param name="isMandatory">Gets or sets a Boolean value to indicate
-        /// whether the parameter is madatory or not.</param>
+        /// whether the parameter is mandatory or not.</param>
         /// <param name="position">Get or sets the position of the
         /// parameter.</param>
         /// <param name="defaultValue">Gets or sets the default value of
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Automation.Models
 
         /// <summary>
         /// Gets or sets a Boolean value to indicate whether the parameter is
-        /// madatory or not.
+        /// mandatory or not.
         /// </summary>
         [JsonProperty(PropertyName = "isMandatory")]
         public bool? IsMandatory { get; set; }

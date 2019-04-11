@@ -45,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
             /// Enable spell checking.
             /// </param>
             /// <param name='bingSpellCheckSubscriptionKey'>
-            /// The subscription key to use when enabling bing spell check
+            /// The subscription key to use when enabling Bing spell check
             /// </param>
             /// <param name='log'>
             /// Log query (default is true)
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<LuisResult> ResolveAsync(this IPrediction operations, string appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LuisResult> ResolveAsync(this IPrediction operations, System.Guid appId, string query, double? timezoneOffset = default(double?), bool? verbose = default(bool?), bool? staging = default(bool?), bool? spellCheck = default(bool?), string bingSpellCheckSubscriptionKey = default(string), bool? log = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ResolveWithHttpMessagesAsync(appId, query, timezoneOffset, verbose, staging, spellCheck, bingSpellCheckSubscriptionKey, log, null, cancellationToken).ConfigureAwait(false))
                 {

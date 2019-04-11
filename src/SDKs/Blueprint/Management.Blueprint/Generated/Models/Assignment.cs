@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents a Blueprint assignment.
+    /// Represents a blueprint assignment.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Assignment : TrackedResource
@@ -34,11 +34,12 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <summary>
         /// Initializes a new instance of the Assignment class.
         /// </summary>
-        /// <param name="location">The location of this Blueprint
+        /// <param name="location">The location of this blueprint
         /// assignment.</param>
-        /// <param name="identity">Managed Service Identity for this Blueprint
-        /// assignment</param>
-        /// <param name="parameters">Blueprint parameter values.</param>
+        /// <param name="identity">Managed identity for this blueprint
+        /// assignment.</param>
+        /// <param name="parameters">Blueprint assignment parameter
+        /// values.</param>
         /// <param name="resourceGroups">Names and locations of resource group
         /// placeholders.</param>
         /// <param name="id">String Id used to locate any resource on
@@ -48,16 +49,16 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// <param name="displayName">One-liner string explain this
         /// resource.</param>
         /// <param name="description">Multi-line explain this resource.</param>
-        /// <param name="blueprintId">ID of the Blueprint definition
-        /// resource.</param>
-        /// <param name="status">Status of Blueprint assignment. This field is
+        /// <param name="blueprintId">ID of the published version of a
+        /// blueprint definition.</param>
+        /// <param name="status">Status of blueprint assignment. This field is
         /// readonly.</param>
-        /// <param name="locks">Defines how Blueprint-managed resources will be
-        /// locked.</param>
-        /// <param name="provisioningState">State of the assignment. Possible
-        /// values include: 'creating', 'validating', 'waiting', 'deploying',
-        /// 'cancelling', 'locking', 'succeeded', 'failed', 'canceled',
-        /// 'deleting'</param>
+        /// <param name="locks">Defines how resources deployed by a blueprint
+        /// assignment are locked.</param>
+        /// <param name="provisioningState">State of the blueprint assignment.
+        /// Possible values include: 'creating', 'validating', 'waiting',
+        /// 'deploying', 'cancelling', 'locking', 'succeeded', 'failed',
+        /// 'canceled', 'deleting'</param>
         public Assignment(string location, ManagedServiceIdentity identity, IDictionary<string, ParameterValueBase> parameters, IDictionary<string, ResourceGroupValue> resourceGroups, string id = default(string), string type = default(string), string name = default(string), string displayName = default(string), string description = default(string), string blueprintId = default(string), AssignmentStatus status = default(AssignmentStatus), AssignmentLockSettings locks = default(AssignmentLockSettings), string provisioningState = default(string))
             : base(location, id, type, name)
         {
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets managed Service Identity for this Blueprint assignment
+        /// Gets or sets managed identity for this blueprint assignment.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public ManagedServiceIdentity Identity { get; set; }
@@ -97,13 +98,13 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets ID of the Blueprint definition resource.
+        /// Gets or sets ID of the published version of a blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "properties.blueprintId")]
         public string BlueprintId { get; set; }
 
         /// <summary>
-        /// Gets or sets blueprint parameter values.
+        /// Gets or sets blueprint assignment parameter values.
         /// </summary>
         [JsonProperty(PropertyName = "properties.parameters")]
         public IDictionary<string, ParameterValueBase> Parameters { get; set; }
@@ -115,22 +116,22 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         public IDictionary<string, ResourceGroupValue> ResourceGroups { get; set; }
 
         /// <summary>
-        /// Gets status of Blueprint assignment. This field is readonly.
+        /// Gets status of blueprint assignment. This field is readonly.
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public AssignmentStatus Status { get; private set; }
 
         /// <summary>
-        /// Gets or sets defines how Blueprint-managed resources will be
-        /// locked.
+        /// Gets or sets defines how resources deployed by a blueprint
+        /// assignment are locked.
         /// </summary>
         [JsonProperty(PropertyName = "properties.locks")]
         public AssignmentLockSettings Locks { get; set; }
 
         /// <summary>
-        /// Gets state of the assignment. Possible values include: 'creating',
-        /// 'validating', 'waiting', 'deploying', 'cancelling', 'locking',
-        /// 'succeeded', 'failed', 'canceled', 'deleting'
+        /// Gets state of the blueprint assignment. Possible values include:
+        /// 'creating', 'validating', 'waiting', 'deploying', 'cancelling',
+        /// 'locking', 'succeeded', 'failed', 'canceled', 'deleting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

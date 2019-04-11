@@ -110,6 +110,8 @@ Ensure that the `HttpRecorderMode` in the `TEST_CSM_ORGID_AUTHENTICATION` enviro
 	* RawGraphToken
 	* HttpRecorderMode={Record | Playback}
 	* AADAuthEndpoint
+	* OptimizeRecordedFile={true | false:default}  
+	true: will trim recorded files when long running operations are detected.
 	
 	* GraphTokenAudienceUri
 	* BaseUri

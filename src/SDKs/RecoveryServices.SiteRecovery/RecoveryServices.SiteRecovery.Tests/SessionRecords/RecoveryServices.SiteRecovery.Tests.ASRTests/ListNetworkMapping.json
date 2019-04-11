@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationNetworkMappings?api-version=2018-01-10",
-      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25OZXR3b3JrTWFwcGluZ3M/YXBpLXZlcnNpb249MjAxOC0wMS0xMA==",
+      "RequestUri": "/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryprod1/providers/Microsoft.RecoveryServices/vaults/SDKVault/replicationNetworkMappings?api-version=2018-07-10",
+      "EncodedRequestUri": "L1N1YnNjcmlwdGlvbnMvYzE4Mzg2NWUtNjA3Ny00NmYyLWEzYjEtZGViMGY0ZjQ2NTBhL3Jlc291cmNlR3JvdXBzL3NpdGVyZWNvdmVyeXByb2QxL3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVjb3ZlcnlTZXJ2aWNlcy92YXVsdHMvU0RLVmF1bHQvcmVwbGljYXRpb25OZXR3b3JrTWFwcGluZ3M/YXBpLXZlcnNpb249MjAxOC0wNy0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {

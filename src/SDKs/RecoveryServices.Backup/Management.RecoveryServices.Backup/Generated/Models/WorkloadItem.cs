@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// <summary>
         /// Initializes a new instance of the WorkloadItem class.
         /// </summary>
-        /// <param name="backupManagementType">Type of backup managemenent to
+        /// <param name="backupManagementType">Type of backup management to
         /// backup an item.</param>
         /// <param name="workloadType">Type of workload for the backup
         /// management</param>
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of backup managemenent to backup an item.
+        /// Gets or sets type of backup management to backup an item.
         /// </summary>
         [JsonProperty(PropertyName = "backupManagementType")]
         public string BackupManagementType { get; set; }

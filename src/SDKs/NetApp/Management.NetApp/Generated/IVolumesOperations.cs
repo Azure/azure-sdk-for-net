@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// List volumes
         /// </summary>
-        /// <param name='resourceGroup'>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -50,11 +50,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<Volume>>> ListWithHttpMessagesAsync(string resourceGroup, string accountName, string poolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get a volume
         /// </summary>
-        /// <param name='resourceGroup'>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -81,14 +81,14 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroup, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a volume
         /// </summary>
         /// <param name='body'>
         /// Volume object supplied in the body of the operation.
         /// </param>
-        /// <param name='resourceGroup'>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -115,14 +115,14 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Volume>> CreateOrUpdateWithHttpMessagesAsync(Volume body, string resourceGroup, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Volume>> CreateOrUpdateWithHttpMessagesAsync(Volume body, string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Patch a volume
         /// </summary>
         /// <param name='body'>
         /// Volume object supplied in the body of the operation.
         /// </param>
-        /// <param name='resourceGroup'>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -149,11 +149,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Volume>> UpdateWithHttpMessagesAsync(VolumePatch body, string resourceGroup, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Volume>> UpdateWithHttpMessagesAsync(VolumePatch body, string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a volume
         /// </summary>
-        /// <param name='resourceGroup'>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -177,14 +177,14 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroup, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update a volume
         /// </summary>
         /// <param name='body'>
         /// Volume object supplied in the body of the operation.
         /// </param>
-        /// <param name='resourceGroup'>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -211,11 +211,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Volume>> BeginCreateOrUpdateWithHttpMessagesAsync(Volume body, string resourceGroup, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Volume>> BeginCreateOrUpdateWithHttpMessagesAsync(Volume body, string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Delete a volume
         /// </summary>
-        /// <param name='resourceGroup'>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -239,6 +239,6 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroup, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

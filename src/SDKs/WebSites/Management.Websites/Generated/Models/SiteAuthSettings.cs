@@ -87,6 +87,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// authenticate end users.
         /// More information on OpenID Connect:
         /// http://openid.net/specs/openid-connect-core-1_0.html</param>
+        /// <param name="clientSecretCertificateThumbprint">An alternative to
+        /// the client secret, that is the thumbprint of a certificate used for
+        /// signing purposes. This property acts as
+        /// a replacement for the Client Secret. It is also optional.</param>
         /// <param name="issuer">The OpenID Connect Issuer URI that represents
         /// the entity which issues access tokens for this application.
         /// When using Azure Active Directory, this value is the URI of the
@@ -165,7 +169,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// the default scope.
         /// Microsoft Account Scopes and permissions documentation:
         /// https://msdn.microsoft.com/en-us/library/dn631845.aspx</param>
-        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string issuer = default(string), bool? validateIssuer = default(bool?), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
+        public SiteAuthSettings(string id = default(string), string name = default(string), string kind = default(string), string type = default(string), bool? enabled = default(bool?), string runtimeVersion = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string clientSecretCertificateThumbprint = default(string), string issuer = default(string), bool? validateIssuer = default(bool?), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
             : base(id, name, kind, type)
         {
             Enabled = enabled;
@@ -177,6 +181,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             ClientId = clientId;
             ClientSecret = clientSecret;
+            ClientSecretCertificateThumbprint = clientSecretCertificateThumbprint;
             Issuer = issuer;
             ValidateIssuer = validateIssuer;
             AllowedAudiences = allowedAudiences;
@@ -292,6 +297,15 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientSecret")]
         public string ClientSecret { get; set; }
+
+        /// <summary>
+        /// Gets or sets an alternative to the client secret, that is the
+        /// thumbprint of a certificate used for signing purposes. This
+        /// property acts as
+        /// a replacement for the Client Secret. It is also optional.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clientSecretCertificateThumbprint")]
+        public string ClientSecretCertificateThumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets the OpenID Connect Issuer URI that represents the

@@ -98,7 +98,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(System.Guid appId, UserCollaborator userToDelete, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Replaces the current users access list with the one sent in the
+        /// Replaces the current user access list with the new list sent in the
         /// body. If an empty list is sent, all access to other users will be
         /// removed.
         /// </summary>
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The application ID.
         /// </param>
         /// <param name='collaborators'>
-        /// A model containing a list of user's email addresses.
+        /// A model containing a list of user email addresses.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

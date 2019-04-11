@@ -10,9 +10,13 @@
 
 namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Image url.
+    /// </summary>
     public partial class ImageUrl
     {
         /// <summary>
@@ -26,7 +30,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         /// <summary>
         /// Initializes a new instance of the ImageUrl class.
         /// </summary>
-        public ImageUrl(string url = default(string))
+        /// <param name="url">Url of the image.</param>
+        public ImageUrl(string url)
         {
             Url = url;
             CustomInit();
@@ -38,9 +43,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Prediction.Model
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets url of the image.
         /// </summary>
         [JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Url == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Url");
+            }
+        }
     }
 }

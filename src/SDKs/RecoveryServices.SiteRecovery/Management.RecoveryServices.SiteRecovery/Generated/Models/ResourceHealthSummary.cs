@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// <summary>
         /// Initializes a new instance of the ResourceHealthSummary class.
         /// </summary>
-        /// <param name="resourceCount">The count of total resources umder the
+        /// <param name="resourceCount">The count of total resources under the
         /// container.</param>
         /// <param name="issues">The list of summary of health errors across
         /// the resources under the container.</param>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the count of total resources umder the container.
+        /// Gets or sets the count of total resources under the container.
         /// </summary>
         [JsonProperty(PropertyName = "resourceCount")]
         public int? ResourceCount { get; set; }

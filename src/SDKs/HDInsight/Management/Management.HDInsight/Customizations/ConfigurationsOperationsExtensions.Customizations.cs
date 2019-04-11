@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static void EnableHttp(this IConfigurationsOperations operations,string resourceGroupName, string clusterName, string username, string password)
         {
             operations.EnableHttpAsync(resourceGroupName, clusterName, username, password).GetAwaiter().GetResult();
@@ -65,6 +66,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static async Task EnableHttpAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string username, string password,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -93,6 +95,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static void BeginEnablingHttp(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string username, string password)
         {
             operations.BeginEnablingHttpAsync(resourceGroupName, clusterName, username, password).GetAwaiter().GetResult();
@@ -120,6 +123,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static async Task BeginEnablingHttpAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName, string username, string password,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -142,6 +146,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static void DisableHttp(this IConfigurationsOperations operations, string resourceGroupName, string clusterName)
         {
             operations.DisableHttpAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
@@ -163,6 +168,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static async Task DisableHttpAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName,
             CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -185,6 +191,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static void BeginDisablingHttp(this IConfigurationsOperations operations, string resourceGroupName, string clusterName)
         {
             operations.BeginDisablingHttpAsync(resourceGroupName, clusterName).GetAwaiter().GetResult();
@@ -206,6 +213,7 @@ namespace Microsoft.Azure.Management.HDInsight
         /// <returns>
         /// The cluster long running operation response.
         /// </returns>
+        [System.Obsolete("This operation is deprecated. Please do not use it any longer.")]
         public static async Task BeginDisablingHttpAsync(this IConfigurationsOperations operations, string resourceGroupName, string clusterName,
             CancellationToken cancellationToken = default(CancellationToken))
         {

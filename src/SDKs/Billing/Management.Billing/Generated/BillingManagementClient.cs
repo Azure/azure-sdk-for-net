@@ -20,6 +20,8 @@ namespace Microsoft.Azure.Management.Billing
     using System.Linq;
     using System.Net;
     using System.Net.Http;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Billing client provides access to billing resources for Azure
@@ -49,7 +51,7 @@ namespace Microsoft.Azure.Management.Billing
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
-        /// is 2018-03-01-preview.
+        /// is 2018-11-01-preview.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -59,21 +61,82 @@ namespace Microsoft.Azure.Management.Billing
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountsOperations.
+        /// </summary>
+        public virtual IBillingAccountsOperations BillingAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountsWithCreateInvoiceSectionPermissionOperations.
+        /// </summary>
+        public virtual IBillingAccountsWithCreateInvoiceSectionPermissionOperations BillingAccountsWithCreateInvoiceSectionPermission { get; private set; }
+
+        /// <summary>
+        /// Gets the IAvailableBalanceByBillingProfileOperations.
+        /// </summary>
+        public virtual IAvailableBalanceByBillingProfileOperations AvailableBalanceByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the IPaymentMethodsByBillingProfileOperations.
+        /// </summary>
+        public virtual IPaymentMethodsByBillingProfileOperations PaymentMethodsByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfilesByBillingAccountNameOperations.
+        /// </summary>
+        public virtual IBillingProfilesByBillingAccountNameOperations BillingProfilesByBillingAccountName { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfilesOperations.
+        /// </summary>
+        public virtual IBillingProfilesOperations BillingProfiles { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsByBillingAccountNameOperations.
+        /// </summary>
+        public virtual IInvoiceSectionsByBillingAccountNameOperations InvoiceSectionsByBillingAccountName { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsOperations.
+        /// </summary>
+        public virtual IInvoiceSectionsOperations InvoiceSections { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsWithCreateSubscriptionPermissionOperations.
+        /// </summary>
+        public virtual IInvoiceSectionsWithCreateSubscriptionPermissionOperations InvoiceSectionsWithCreateSubscriptionPermission { get; private set; }
+
+        /// <summary>
+        /// Gets the IDepartmentsByBillingAccountNameOperations.
+        /// </summary>
+        public virtual IDepartmentsByBillingAccountNameOperations DepartmentsByBillingAccountName { get; private set; }
+
+        /// <summary>
+        /// Gets the IDepartmentsOperations.
+        /// </summary>
+        public virtual IDepartmentsOperations Departments { get; private set; }
+
+        /// <summary>
+        /// Gets the IEnrollmentAccountsByBillingAccountNameOperations.
+        /// </summary>
+        public virtual IEnrollmentAccountsByBillingAccountNameOperations EnrollmentAccountsByBillingAccountName { get; private set; }
 
         /// <summary>
         /// Gets the IEnrollmentAccountsOperations.
@@ -81,19 +144,162 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IEnrollmentAccountsOperations EnrollmentAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingPeriodsOperations.
+        /// Gets the IInvoicesByBillingAccountOperations.
         /// </summary>
-        public virtual IBillingPeriodsOperations BillingPeriods { get; private set; }
+        public virtual IInvoicesByBillingAccountOperations InvoicesByBillingAccount { get; private set; }
 
         /// <summary>
-        /// Gets the IInvoicesOperations.
+        /// Gets the IInvoicePricesheetOperations.
         /// </summary>
-        public virtual IInvoicesOperations Invoices { get; private set; }
+        public virtual IInvoicePricesheetOperations InvoicePricesheet { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoicesByBillingProfileOperations.
+        /// </summary>
+        public virtual IInvoicesByBillingProfileOperations InvoicesByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceOperations.
+        /// </summary>
+        public virtual IInvoiceOperations Invoice { get; private set; }
+
+        /// <summary>
+        /// Gets the IProductsByBillingSubscriptionsOperations.
+        /// </summary>
+        public virtual IProductsByBillingSubscriptionsOperations ProductsByBillingSubscriptions { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingSubscriptionsByBillingProfileOperations.
+        /// </summary>
+        public virtual IBillingSubscriptionsByBillingProfileOperations BillingSubscriptionsByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingSubscriptionsByInvoiceSectionOperations.
+        /// </summary>
+        public virtual IBillingSubscriptionsByInvoiceSectionOperations BillingSubscriptionsByInvoiceSection { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingSubscriptionOperations.
+        /// </summary>
+        public virtual IBillingSubscriptionOperations BillingSubscription { get; private set; }
+
+        /// <summary>
+        /// Gets the IProductsByBillingAccountOperations.
+        /// </summary>
+        public virtual IProductsByBillingAccountOperations ProductsByBillingAccount { get; private set; }
+
+        /// <summary>
+        /// Gets the IProductsByInvoiceSectionOperations.
+        /// </summary>
+        public virtual IProductsByInvoiceSectionOperations ProductsByInvoiceSection { get; private set; }
+
+        /// <summary>
+        /// Gets the IProductsOperations.
+        /// </summary>
+        public virtual IProductsOperations Products { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransactionsByBillingAccountOperations.
+        /// </summary>
+        public virtual ITransactionsByBillingAccountOperations TransactionsByBillingAccount { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransactionsByBillingProfileOperations.
+        /// </summary>
+        public virtual ITransactionsByBillingProfileOperations TransactionsByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransactionsByInvoiceSectionOperations.
+        /// </summary>
+        public virtual ITransactionsByInvoiceSectionOperations TransactionsByInvoiceSection { get; private set; }
+
+        /// <summary>
+        /// Gets the IPolicyOperations.
+        /// </summary>
+        public virtual IPolicyOperations Policy { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingPropertyOperations.
+        /// </summary>
+        public virtual IBillingPropertyOperations BillingProperty { get; private set; }
+
+        /// <summary>
+        /// Gets the ITransfersOperations.
+        /// </summary>
+        public virtual ITransfersOperations Transfers { get; private set; }
+
+        /// <summary>
+        /// Gets the IRecipientTransfersOperations.
+        /// </summary>
+        public virtual IRecipientTransfersOperations RecipientTransfers { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountBillingPermissionsOperations.
+        /// </summary>
+        public virtual IBillingAccountBillingPermissionsOperations BillingAccountBillingPermissions { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionsBillingPermissionsOperations.
+        /// </summary>
+        public virtual IInvoiceSectionsBillingPermissionsOperations InvoiceSectionsBillingPermissions { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfileBillingPermissionsOperations.
+        /// </summary>
+        public virtual IBillingProfileBillingPermissionsOperations BillingProfileBillingPermissions { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountBillingRoleDefinitionOperations.
+        /// </summary>
+        public virtual IBillingAccountBillingRoleDefinitionOperations BillingAccountBillingRoleDefinition { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionBillingRoleDefinitionOperations.
+        /// </summary>
+        public virtual IInvoiceSectionBillingRoleDefinitionOperations InvoiceSectionBillingRoleDefinition { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfileBillingRoleDefinitionOperations.
+        /// </summary>
+        public virtual IBillingProfileBillingRoleDefinitionOperations BillingProfileBillingRoleDefinition { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingAccountBillingRoleAssignmentOperations.
+        /// </summary>
+        public virtual IBillingAccountBillingRoleAssignmentOperations BillingAccountBillingRoleAssignment { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoiceSectionBillingRoleAssignmentOperations.
+        /// </summary>
+        public virtual IInvoiceSectionBillingRoleAssignmentOperations InvoiceSectionBillingRoleAssignment { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfileBillingRoleAssignmentOperations.
+        /// </summary>
+        public virtual IBillingProfileBillingRoleAssignmentOperations BillingProfileBillingRoleAssignment { get; private set; }
+
+        /// <summary>
+        /// Gets the IAgreementsOperations.
+        /// </summary>
+        public virtual IAgreementsOperations Agreements { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the BillingManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling BillingManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected BillingManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the BillingManagementClient class.
@@ -178,6 +384,33 @@ namespace Microsoft.Azure.Management.Billing
         /// Thrown when a required parameter is null
         /// </exception>
         public BillingManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the BillingManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling BillingManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public BillingManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -296,12 +529,50 @@ namespace Microsoft.Azure.Management.Billing
         /// </summary>
         private void Initialize()
         {
+            BillingAccounts = new BillingAccountsOperations(this);
+            BillingAccountsWithCreateInvoiceSectionPermission = new BillingAccountsWithCreateInvoiceSectionPermissionOperations(this);
+            AvailableBalanceByBillingProfile = new AvailableBalanceByBillingProfileOperations(this);
+            PaymentMethodsByBillingProfile = new PaymentMethodsByBillingProfileOperations(this);
+            BillingProfilesByBillingAccountName = new BillingProfilesByBillingAccountNameOperations(this);
+            BillingProfiles = new BillingProfilesOperations(this);
+            InvoiceSectionsByBillingAccountName = new InvoiceSectionsByBillingAccountNameOperations(this);
+            InvoiceSections = new InvoiceSectionsOperations(this);
+            InvoiceSectionsWithCreateSubscriptionPermission = new InvoiceSectionsWithCreateSubscriptionPermissionOperations(this);
+            DepartmentsByBillingAccountName = new DepartmentsByBillingAccountNameOperations(this);
+            Departments = new DepartmentsOperations(this);
+            EnrollmentAccountsByBillingAccountName = new EnrollmentAccountsByBillingAccountNameOperations(this);
             EnrollmentAccounts = new EnrollmentAccountsOperations(this);
-            BillingPeriods = new BillingPeriodsOperations(this);
-            Invoices = new InvoicesOperations(this);
+            InvoicesByBillingAccount = new InvoicesByBillingAccountOperations(this);
+            InvoicePricesheet = new InvoicePricesheetOperations(this);
+            InvoicesByBillingProfile = new InvoicesByBillingProfileOperations(this);
+            Invoice = new InvoiceOperations(this);
+            ProductsByBillingSubscriptions = new ProductsByBillingSubscriptionsOperations(this);
+            BillingSubscriptionsByBillingProfile = new BillingSubscriptionsByBillingProfileOperations(this);
+            BillingSubscriptionsByInvoiceSection = new BillingSubscriptionsByInvoiceSectionOperations(this);
+            BillingSubscription = new BillingSubscriptionOperations(this);
+            ProductsByBillingAccount = new ProductsByBillingAccountOperations(this);
+            ProductsByInvoiceSection = new ProductsByInvoiceSectionOperations(this);
+            Products = new ProductsOperations(this);
+            TransactionsByBillingAccount = new TransactionsByBillingAccountOperations(this);
+            TransactionsByBillingProfile = new TransactionsByBillingProfileOperations(this);
+            TransactionsByInvoiceSection = new TransactionsByInvoiceSectionOperations(this);
+            Policy = new PolicyOperations(this);
+            BillingProperty = new BillingPropertyOperations(this);
+            Transfers = new TransfersOperations(this);
+            RecipientTransfers = new RecipientTransfersOperations(this);
             Operations = new Operations(this);
+            BillingAccountBillingPermissions = new BillingAccountBillingPermissionsOperations(this);
+            InvoiceSectionsBillingPermissions = new InvoiceSectionsBillingPermissionsOperations(this);
+            BillingProfileBillingPermissions = new BillingProfileBillingPermissionsOperations(this);
+            BillingAccountBillingRoleDefinition = new BillingAccountBillingRoleDefinitionOperations(this);
+            InvoiceSectionBillingRoleDefinition = new InvoiceSectionBillingRoleDefinitionOperations(this);
+            BillingProfileBillingRoleDefinition = new BillingProfileBillingRoleDefinitionOperations(this);
+            BillingAccountBillingRoleAssignment = new BillingAccountBillingRoleAssignmentOperations(this);
+            InvoiceSectionBillingRoleAssignment = new InvoiceSectionBillingRoleAssignmentOperations(this);
+            BillingProfileBillingRoleAssignment = new BillingProfileBillingRoleAssignmentOperations(this);
+            Agreements = new AgreementsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-03-01-preview";
+            ApiVersion = "2018-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -335,5 +606,414 @@ namespace Microsoft.Azure.Management.Billing
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }
+        /// <summary>
+        /// Cancel product by product id
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='productName'>
+        /// Invoice Id.
+        /// </param>
+        /// <param name='body'>
+        /// Update auto renew request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForBillingAccountWithHttpMessagesAsync(string billingAccountName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (billingAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+            }
+            if (productName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "productName");
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (body == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("productName", productName);
+                tracingParameters.Add("body", body);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateAutoRenewForBillingAccount", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/products/{productName}/updateAutoRenew").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{productName}", System.Uri.EscapeDataString(productName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(body != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<UpdateAutoRenewOperationSummary>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<UpdateAutoRenewOperationSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Cancel auto renew for product by product id
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
+        /// </param>
+        /// <param name='productName'>
+        /// Invoice Id.
+        /// </param>
+        /// <param name='body'>
+        /// Update auto renew request parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<UpdateAutoRenewOperationSummary>> UpdateAutoRenewForInvoiceSectionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string productName, UpdateAutoRenewRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (billingAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+            }
+            if (invoiceSectionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
+            }
+            if (productName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "productName");
+            }
+            if (ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (body == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "body");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
+                tracingParameters.Add("productName", productName);
+                tracingParameters.Add("body", body);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateAutoRenewForInvoiceSection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/products/{productName}/updateAutoRenew").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
+            _url = _url.Replace("{productName}", System.Uri.EscapeDataString(productName));
+            List<string> _queryParameters = new List<string>();
+            if (ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (GenerateClientRequestId != null && GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            if(body != null)
+            {
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<UpdateAutoRenewOperationSummary>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<UpdateAutoRenewOperationSummary>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
     }
 }

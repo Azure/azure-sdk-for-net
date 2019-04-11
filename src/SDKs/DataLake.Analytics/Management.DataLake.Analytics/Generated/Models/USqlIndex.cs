@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// index</param>
         /// <param name="partitionFunction">partition function ID for the
         /// index.</param>
-        /// <param name="partitionKeyList">the list of partion keys in the
+        /// <param name="partitionKeyList">the list of partition keys in the
         /// index</param>
         /// <param name="streamNames">the list of full paths to the streams
         /// that contain this index in the DataLake account.</param>
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         public System.Guid? PartitionFunction { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of partion keys in the index
+        /// Gets or sets the list of partition keys in the index
         /// </summary>
         [JsonProperty(PropertyName = "partitionKeyList")]
         public IList<string> PartitionKeyList { get; set; }

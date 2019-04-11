@@ -212,14 +212,14 @@ namespace Compute.Tests
 
                 try
                 {
-                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "southcentralus");
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "westus2");
                     InitializeCommon(context);
                     instanceId = "0";
 
                     var storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
 
                     VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(
-                        rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+                        rgName, vmssName, storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true, machineSizeType: VirtualMachineSizeTypes.StandardA1V2);
 
                     VirtualMachineScaleSetVM vmssVM = m_CrpClient.VirtualMachineScaleSetVMs.Get(rgName, vmScaleSet.Name, instanceId);
 

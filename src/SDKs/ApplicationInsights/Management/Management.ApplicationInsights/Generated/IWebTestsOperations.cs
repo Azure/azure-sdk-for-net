@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Get a specific Application Insights web test definition.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='webTestName'>
         /// The name of the Application Insights webtest resource.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Creates or updates an Application Insights web test definition.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='webTestName'>
         /// The name of the Application Insights webtest resource.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Creates or updates an Application Insights web test definition.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='webTestName'>
         /// The name of the Application Insights webtest resource.
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Deletes an Application Insights web test.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='webTestName'>
         /// The name of the Application Insights webtest resource.
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string webTestName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all Application Insights web test alerts definitioned within a
+        /// Get all Application Insights web test alerts definitions within a
         /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -170,6 +170,32 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<WebTest>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get all Application Insights web tests defined for the specified
+        /// component.
+        /// </summary>
+        /// <param name='componentName'>
+        /// The name of the Application Insights component resource.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<WebTest>>> ListByComponentWithHttpMessagesAsync(string componentName, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get all Application Insights web tests defined within a specified
         /// resource group.
@@ -194,7 +220,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// </exception>
         Task<AzureOperationResponse<IPage<WebTest>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all Application Insights web test alerts definitioned within a
+        /// Get all Application Insights web test alerts definitions within a
         /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -216,5 +242,28 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<WebTest>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get all Application Insights web tests defined for the specified
+        /// component.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<WebTest>>> ListByComponentNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

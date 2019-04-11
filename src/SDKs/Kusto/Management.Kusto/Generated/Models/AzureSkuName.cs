@@ -16,13 +16,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
     /// </summary>
     public static class AzureSkuName
     {
-        public const string KC8 = "KC8";
-        public const string KC16 = "KC16";
-        public const string KS8 = "KS8";
-        public const string KS16 = "KS16";
         public const string D13V2 = "D13_v2";
         public const string D14V2 = "D14_v2";
         public const string L8 = "L8";
         public const string L16 = "L16";
+        public const string D11V2 = "D11_v2";
+        public const string D12V2 = "D12_v2";
+        public const string L4 = "L4";
     }
 }

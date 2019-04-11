@@ -43,13 +43,17 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sinkRetryWait">Sink retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
-        public CopySink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object))
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the sink data store. Type: integer (or
+        /// Expression with resultType integer).</param>
+        public CopySink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object))
         {
             AdditionalProperties = additionalProperties;
             WriteBatchSize = writeBatchSize;
             WriteBatchTimeout = writeBatchTimeout;
             SinkRetryCount = sinkRetryCount;
             SinkRetryWait = sinkRetryWait;
+            MaxConcurrentConnections = maxConcurrentConnections;
             CustomInit();
         }
 
@@ -94,6 +98,13 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// </summary>
         [JsonProperty(PropertyName = "sinkRetryWait")]
         public object SinkRetryWait { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum concurrent connection count for the sink
+        /// data store. Type: integer (or Expression with resultType integer).
+        /// </summary>
+        [JsonProperty(PropertyName = "maxConcurrentConnections")]
+        public object MaxConcurrentConnections { get; set; }
 
     }
 }

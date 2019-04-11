@@ -163,6 +163,359 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='resourceGroupName'>
             /// Name of the resource group to which the resource belongs.
             /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// Name of the hosting environment.
+            /// </param>
+            /// <param name='expiredOnly'>
+            /// Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The
+            /// default is &lt;code&gt;true&lt;/code&gt;, which returns only expired
+            /// recommendations.
+            /// </param>
+            /// <param name='filter'>
+            /// Filter is specified by using OData syntax. Example: $filter=channel eq
+            /// 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z
+            /// and endTime eq 2014-12-31T23:59:59Z and timeGrain eq
+            /// duration'[PT1H|PT1M|P1D]
+            /// </param>
+            public static IPage<Recommendation> ListHistoryForHostingEnvironment(this IRecommendationsOperations operations, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = default(bool?), string filter = default(string))
+            {
+                return operations.ListHistoryForHostingEnvironmentAsync(resourceGroupName, hostingEnvironmentName, expiredOnly, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </summary>
+            /// <remarks>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// Name of the hosting environment.
+            /// </param>
+            /// <param name='expiredOnly'>
+            /// Specify &lt;code&gt;false&lt;/code&gt; to return all recommendations. The
+            /// default is &lt;code&gt;true&lt;/code&gt;, which returns only expired
+            /// recommendations.
+            /// </param>
+            /// <param name='filter'>
+            /// Filter is specified by using OData syntax. Example: $filter=channel eq
+            /// 'Api' or channel eq 'Notification' and startTime eq 2014-01-01T00:00:00Z
+            /// and endTime eq 2014-12-31T23:59:59Z and timeGrain eq
+            /// duration'[PT1H|PT1M|P1D]
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Recommendation>> ListHistoryForHostingEnvironmentAsync(this IRecommendationsOperations operations, string resourceGroupName, string hostingEnvironmentName, bool? expiredOnly = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListHistoryForHostingEnvironmentWithHttpMessagesAsync(resourceGroupName, hostingEnvironmentName, expiredOnly, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='featured'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical
+            /// recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which
+            /// returns all recommendations.
+            /// </param>
+            /// <param name='filter'>
+            /// Return only channels specified in the filter. Filter is specified by using
+            /// OData syntax. Example: $filter=channel eq 'Api' or channel eq
+            /// 'Notification'
+            /// </param>
+            public static IPage<Recommendation> ListRecommendedRulesForHostingEnvironment(this IRecommendationsOperations operations, string resourceGroupName, string hostingEnvironmentName, bool? featured = default(bool?), string filter = default(string))
+            {
+                return operations.ListRecommendedRulesForHostingEnvironmentAsync(resourceGroupName, hostingEnvironmentName, featured, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='featured'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical
+            /// recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which
+            /// returns all recommendations.
+            /// </param>
+            /// <param name='filter'>
+            /// Return only channels specified in the filter. Filter is specified by using
+            /// OData syntax. Example: $filter=channel eq 'Api' or channel eq
+            /// 'Notification'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Recommendation>> ListRecommendedRulesForHostingEnvironmentAsync(this IRecommendationsOperations operations, string resourceGroupName, string hostingEnvironmentName, bool? featured = default(bool?), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRecommendedRulesForHostingEnvironmentWithHttpMessagesAsync(resourceGroupName, hostingEnvironmentName, featured, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Disable all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Disable all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// </param>
+            public static void DisableAllForHostingEnvironment(this IRecommendationsOperations operations, string resourceGroupName, string environmentName, string hostingEnvironmentName)
+            {
+                operations.DisableAllForHostingEnvironmentAsync(resourceGroupName, environmentName, hostingEnvironmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disable all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Disable all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisableAllForHostingEnvironmentAsync(this IRecommendationsOperations operations, string resourceGroupName, string environmentName, string hostingEnvironmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisableAllForHostingEnvironmentWithHttpMessagesAsync(resourceGroupName, environmentName, hostingEnvironmentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Reset all recommendation opt-out settings for an app.
+            /// </summary>
+            /// <remarks>
+            /// Reset all recommendation opt-out settings for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// </param>
+            public static void ResetAllFiltersForHostingEnvironment(this IRecommendationsOperations operations, string resourceGroupName, string environmentName, string hostingEnvironmentName)
+            {
+                operations.ResetAllFiltersForHostingEnvironmentAsync(resourceGroupName, environmentName, hostingEnvironmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reset all recommendation opt-out settings for an app.
+            /// </summary>
+            /// <remarks>
+            /// Reset all recommendation opt-out settings for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Name of the app.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ResetAllFiltersForHostingEnvironmentAsync(this IRecommendationsOperations operations, string resourceGroupName, string environmentName, string hostingEnvironmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ResetAllFiltersForHostingEnvironmentWithHttpMessagesAsync(resourceGroupName, environmentName, hostingEnvironmentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get a recommendation rule for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get a recommendation rule for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// Name of the hosting environment.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the recommendation.
+            /// </param>
+            /// <param name='updateSeen'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of
+            /// the recommendation object.
+            /// </param>
+            /// <param name='recommendationId'>
+            /// The GUID of the recommendation object if you query an expired one. You
+            /// don't need to specify it to query an active entry.
+            /// </param>
+            public static RecommendationRule GetRuleDetailsByHostingEnvironment(this IRecommendationsOperations operations, string resourceGroupName, string hostingEnvironmentName, string name, bool? updateSeen = default(bool?), string recommendationId = default(string))
+            {
+                return operations.GetRuleDetailsByHostingEnvironmentAsync(resourceGroupName, hostingEnvironmentName, name, updateSeen, recommendationId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get a recommendation rule for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get a recommendation rule for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// Name of the hosting environment.
+            /// </param>
+            /// <param name='name'>
+            /// Name of the recommendation.
+            /// </param>
+            /// <param name='updateSeen'>
+            /// Specify &lt;code&gt;true&lt;/code&gt; to update the last-seen timestamp of
+            /// the recommendation object.
+            /// </param>
+            /// <param name='recommendationId'>
+            /// The GUID of the recommendation object if you query an expired one. You
+            /// don't need to specify it to query an active entry.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RecommendationRule> GetRuleDetailsByHostingEnvironmentAsync(this IRecommendationsOperations operations, string resourceGroupName, string hostingEnvironmentName, string name, bool? updateSeen = default(bool?), string recommendationId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetRuleDetailsByHostingEnvironmentWithHttpMessagesAsync(resourceGroupName, hostingEnvironmentName, name, updateSeen, recommendationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Disables the specific rule for a web site permanently.
+            /// </summary>
+            /// <remarks>
+            /// Disables the specific rule for a web site permanently.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Site name
+            /// </param>
+            /// <param name='name'>
+            /// Rule name
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// </param>
+            public static void DisableRecommendationForHostingEnvironment(this IRecommendationsOperations operations, string resourceGroupName, string environmentName, string name, string hostingEnvironmentName)
+            {
+                operations.DisableRecommendationForHostingEnvironmentAsync(resourceGroupName, environmentName, name, hostingEnvironmentName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Disables the specific rule for a web site permanently.
+            /// </summary>
+            /// <remarks>
+            /// Disables the specific rule for a web site permanently.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
+            /// <param name='environmentName'>
+            /// Site name
+            /// </param>
+            /// <param name='name'>
+            /// Rule name
+            /// </param>
+            /// <param name='hostingEnvironmentName'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DisableRecommendationForHostingEnvironmentAsync(this IRecommendationsOperations operations, string resourceGroupName, string environmentName, string name, string hostingEnvironmentName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DisableRecommendationForHostingEnvironmentWithHttpMessagesAsync(resourceGroupName, environmentName, name, hostingEnvironmentName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </summary>
+            /// <remarks>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group to which the resource belongs.
+            /// </param>
             /// <param name='siteName'>
             /// Name of the app.
             /// </param>
@@ -396,8 +749,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the recommendation object.
             /// </param>
             /// <param name='recommendationId'>
-            /// The GUID of the recommedation object if you query an expired one. You don't
-            /// need to specify it to query an active entry.
+            /// The GUID of the recommendation object if you query an expired one. You
+            /// don't need to specify it to query an active entry.
             /// </param>
             public static RecommendationRule GetRuleDetailsByWebApp(this IRecommendationsOperations operations, string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?), string recommendationId = default(string))
             {
@@ -427,8 +780,8 @@ namespace Microsoft.Azure.Management.WebSites
             /// the recommendation object.
             /// </param>
             /// <param name='recommendationId'>
-            /// The GUID of the recommedation object if you query an expired one. You don't
-            /// need to specify it to query an active entry.
+            /// The GUID of the recommendation object if you query an expired one. You
+            /// don't need to specify it to query an active entry.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -525,6 +878,90 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<IPage<Recommendation>> ListNextAsync(this IRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </summary>
+            /// <remarks>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Recommendation> ListHistoryForHostingEnvironmentNext(this IRecommendationsOperations operations, string nextPageLink)
+            {
+                return operations.ListHistoryForHostingEnvironmentNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </summary>
+            /// <remarks>
+            /// Get past recommendations for an app, optionally specified by the time
+            /// range.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Recommendation>> ListHistoryForHostingEnvironmentNextAsync(this IRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListHistoryForHostingEnvironmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<Recommendation> ListRecommendedRulesForHostingEnvironmentNext(this IRecommendationsOperations operations, string nextPageLink)
+            {
+                return operations.ListRecommendedRulesForHostingEnvironmentNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all recommendations for an app.
+            /// </summary>
+            /// <remarks>
+            /// Get all recommendations for an app.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<Recommendation>> ListRecommendedRulesForHostingEnvironmentNextAsync(this IRecommendationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListRecommendedRulesForHostingEnvironmentNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

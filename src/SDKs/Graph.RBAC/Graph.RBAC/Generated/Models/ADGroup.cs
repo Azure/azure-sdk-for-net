@@ -38,13 +38,19 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <param name="deletionTimestamp">The time at which the directory
         /// object was deleted.</param>
         /// <param name="displayName">The display name of the group.</param>
+        /// <param name="mailEnabled">Whether the group is mail-enabled. Must
+        /// be false. This is because only pure security groups can be created
+        /// using the Graph API.</param>
+        /// <param name="mailNickname">The mail alias for the group. </param>
         /// <param name="securityEnabled">Whether the group is
         /// security-enable.</param>
         /// <param name="mail">The primary email address of the group.</param>
-        public ADGroup(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string objectId = default(string), System.DateTime? deletionTimestamp = default(System.DateTime?), string displayName = default(string), bool? securityEnabled = default(bool?), string mail = default(string))
+        public ADGroup(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string objectId = default(string), System.DateTime? deletionTimestamp = default(System.DateTime?), string displayName = default(string), bool? mailEnabled = default(bool?), string mailNickname = default(string), bool? securityEnabled = default(bool?), string mail = default(string))
             : base(additionalProperties, objectId, deletionTimestamp)
         {
             DisplayName = displayName;
+            MailEnabled = mailEnabled;
+            MailNickname = mailNickname;
             SecurityEnabled = securityEnabled;
             Mail = mail;
             CustomInit();
@@ -60,6 +66,20 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         [JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether the group is mail-enabled. Must be false. This
+        /// is because only pure security groups can be created using the Graph
+        /// API.
+        /// </summary>
+        [JsonProperty(PropertyName = "mailEnabled")]
+        public bool? MailEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the mail alias for the group.
+        /// </summary>
+        [JsonProperty(PropertyName = "mailNickname")]
+        public string MailNickname { get; set; }
 
         /// <summary>
         /// Gets or sets whether the group is security-enable.

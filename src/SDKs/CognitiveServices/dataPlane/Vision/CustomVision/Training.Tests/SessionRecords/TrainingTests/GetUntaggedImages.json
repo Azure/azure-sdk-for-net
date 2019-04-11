@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/customvision/v2.2/Training/projects/89edfdab-f6e7-441d-b015-1f276d228b76/images/untagged?take=50&skip=0",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzg5ZWRmZGFiLWY2ZTctNDQxZC1iMDE1LTFmMjc2ZDIyOGI3Ni9pbWFnZXMvdW50YWdnZWQ/dGFrZT01MCZza2lwPTA=",
+      "RequestUri": "//customvision/v3.0/training/projects/f8d625c9-f253-49f4-a6fd-1fc930f9caca/images/untagged?take=50&skip=0",
+      "EncodedRequestUri": "Ly9jdXN0b212aXNpb24vdjMuMC90cmFpbmluZy9wcm9qZWN0cy9mOGQ2MjVjOS1mMjUzLTQ5ZjQtYTZmZC0xZmM5MzBmOWNhY2EvaW1hZ2VzL3VudGFnZ2VkP3Rha2U9NTAmc2tpcD0w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,24 +10,24 @@
           ""
         ],
         "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17134.",
+          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/1.0.0.0"
         ]
       },
       "ResponseHeaders": {
+        "Date": [
+          "Thu, 21 Mar 2019 01:34:13 GMT"
+        ],
         "apim-request-id": [
-          "2e127c34-5b90-4e92-85ea-244fa46b5c0b"
+          "fb4463cf-30d2-48f7-b233-e4473e6d5a34"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
         ],
         "x-content-type-options": [
           "nosniff"
-        ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:14:11 GMT"
         ],
         "Content-Length": [
           "2"
@@ -38,42 +38,6 @@
       },
       "ResponseBody": "[]",
       "StatusCode": 200
-    },
-    {
-      "RequestUri": "/customvision/v2.2/Training/projects/89edfdab-f6e7-441d-b015-1f276d228b76",
-      "EncodedRequestUri": "L2N1c3RvbXZpc2lvbi92Mi4yL1RyYWluaW5nL3Byb2plY3RzLzg5ZWRmZGFiLWY2ZTctNDQxZC1iMDE1LTFmMjc2ZDIyOGI3Ng==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "Training-Key": [
-          ""
-        ],
-        "User-Agent": [
-          "FxVersion/4.7.2671.0",
-          "OSName/WindowsServer2016Datacenter",
-          "OSVersion/6.3.14393",
-          "Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.CustomVisionTrainingClient/0.12.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "apim-request-id": [
-          "6c10467e-e475-4294-83a5-233859846864"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains; preload"
-        ],
-        "x-content-type-options": [
-          "nosniff"
-        ],
-        "Date": [
-          "Thu, 18 Oct 2018 17:14:14 GMT"
-        ],
-        "Content-Length": [
-          "0"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
     }
   ],
   "Names": {},

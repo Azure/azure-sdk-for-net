@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// Definition of runas credential to use for hybrid worker.
+    /// Definition of RunAs credential to use for hybrid worker.
     /// </summary>
     public partial class RunAsCredentialAssociationProperty
     {

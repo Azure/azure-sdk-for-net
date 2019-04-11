@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// The proprties of an alert.
+    /// The properties of an alert.
     /// </summary>
     public partial class AlertProperties
     {

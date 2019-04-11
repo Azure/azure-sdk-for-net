@@ -79,6 +79,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </exception>
         Task<AzureOperationResponse<RecoveryServicesProvider>> GetWithHttpMessagesAsync(string fabricName, string providerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Adds a recovery services provider.
+        /// </summary>
+        /// <remarks>
+        /// The operation to add a recovery services provider.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='providerName'>
+        /// Recovery services provider name.
+        /// </param>
+        /// <param name='addProviderInput'>
+        /// Add provider input.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RecoveryServicesProvider>> CreateWithHttpMessagesAsync(string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Purges recovery service provider from fabric
         /// </summary>
         /// <remarks>
@@ -186,6 +217,37 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<RecoveryServicesProvider>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Adds a recovery services provider.
+        /// </summary>
+        /// <remarks>
+        /// The operation to add a recovery services provider.
+        /// </remarks>
+        /// <param name='fabricName'>
+        /// Fabric name.
+        /// </param>
+        /// <param name='providerName'>
+        /// Recovery services provider name.
+        /// </param>
+        /// <param name='addProviderInput'>
+        /// Add provider input.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<RecoveryServicesProvider>> BeginCreateWithHttpMessagesAsync(string fabricName, string providerName, AddRecoveryServicesProviderInput addProviderInput, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Purges recovery service provider from fabric
         /// </summary>

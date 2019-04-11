@@ -63,9 +63,9 @@ namespace EventGrid.Tests.TestHelper
 
         public static string GetLocationFromProvider(this ResourceManagementClient resourceManagementClient)
         {
-            // West Central US is one of our early deployment regions
+            // Central US EUAP is one of our early deployment regions
             // so we typically record tests targeting this region.
-            return "westcentralus";
+            return "centraluseuap";
         }
     }
 }

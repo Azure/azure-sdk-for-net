@@ -31,7 +31,7 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(listResponse);
                 Assert.Equal(2, listResponse.Count());// there are 2 product Starter and Unlimited created by default
-                Assert.NotNull(listResponse.NextPageLink);
+                Assert.Null(listResponse.NextPageLink);
 
                 string productId = TestUtilities.GenerateName("newproduct");
 
@@ -136,7 +136,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.Single(pagedProducts);
                     // finally the Unlimited product due to alphabetical order of name
                     Assert.Equal("Unlimited", pagedProducts.First().DisplayName);
-                    Assert.Empty(pagedProducts.NextPageLink); // it should be empty now.
+                    Assert.Null(pagedProducts.NextPageLink); // it should be empty now.
 
                     // get the entity tag
                     productTag = await testBase.client.Product.GetEntityTagAsync(

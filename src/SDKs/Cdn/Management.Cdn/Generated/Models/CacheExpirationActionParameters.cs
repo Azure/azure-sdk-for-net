@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="cacheBehavior">Caching behavior for the requests that
         /// include query strings. Possible values include: 'BypassCache',
         /// 'Override', 'SetIfMissing'</param>
-        /// <param name="cacheDuration">The duration for which the the content
+        /// <param name="cacheDuration">The duration for which the content
         /// needs to be cached. Allowed format is [d.]hh:mm:ss</param>
         public CacheExpirationActionParameters(string cacheBehavior, string cacheDuration = default(string))
         {
@@ -66,8 +66,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string CacheBehavior { get; set; }
 
         /// <summary>
-        /// Gets or sets the duration for which the the content needs to be
-        /// cached. Allowed format is [d.]hh:mm:ss
+        /// Gets or sets the duration for which the content needs to be cached.
+        /// Allowed format is [d.]hh:mm:ss
         /// </summary>
         [JsonProperty(PropertyName = "cacheDuration")]
         public string CacheDuration { get; set; }

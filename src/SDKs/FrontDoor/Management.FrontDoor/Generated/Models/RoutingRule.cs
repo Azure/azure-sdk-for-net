@@ -42,35 +42,24 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         /// rule</param>
         /// <param name="patternsToMatch">The route patterns of the
         /// rule.</param>
-        /// <param name="customForwardingPath">A custom path used to rewrite
-        /// resource paths matched by this rule. Leave empty to use incoming
-        /// path.</param>
-        /// <param name="forwardingProtocol">Protocol this rule will use when
-        /// forwarding traffic to backends. Possible values include:
-        /// 'HttpOnly', 'HttpsOnly', 'MatchRequest'</param>
-        /// <param name="cacheConfiguration">The caching configuration
-        /// associated with this rule.</param>
-        /// <param name="backendPool">A reference to the BackendPool which this
-        /// rule routes to.</param>
         /// <param name="enabledState">Whether to enable use of this rule.
         /// Permitted values are 'Enabled' or 'Disabled'. Possible values
         /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="routeConfiguration">A reference to the routing
+        /// configuration.</param>
         /// <param name="resourceState">Resource status. Possible values
         /// include: 'Creating', 'Enabling', 'Enabled', 'Disabling',
         /// 'Disabled', 'Deleting'</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        public RoutingRule(string id = default(string), IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string customForwardingPath = default(string), string forwardingProtocol = default(string), CacheConfiguration cacheConfiguration = default(CacheConfiguration), SubResource backendPool = default(SubResource), string enabledState = default(string), string resourceState = default(string), string name = default(string), string type = default(string))
+        public RoutingRule(string id = default(string), IList<SubResource> frontendEndpoints = default(IList<SubResource>), IList<string> acceptedProtocols = default(IList<string>), IList<string> patternsToMatch = default(IList<string>), string enabledState = default(string), RouteConfiguration routeConfiguration = default(RouteConfiguration), string resourceState = default(string), string name = default(string), string type = default(string))
             : base(id)
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;
             PatternsToMatch = patternsToMatch;
-            CustomForwardingPath = customForwardingPath;
-            ForwardingProtocol = forwardingProtocol;
-            CacheConfiguration = cacheConfiguration;
-            BackendPool = backendPool;
             EnabledState = enabledState;
+            RouteConfiguration = routeConfiguration;
             ResourceState = resourceState;
             Name = name;
             Type = type;
@@ -101,40 +90,18 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public IList<string> PatternsToMatch { get; set; }
 
         /// <summary>
-        /// Gets or sets a custom path used to rewrite resource paths matched
-        /// by this rule. Leave empty to use incoming path.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.customForwardingPath")]
-        public string CustomForwardingPath { get; set; }
-
-        /// <summary>
-        /// Gets or sets protocol this rule will use when forwarding traffic to
-        /// backends. Possible values include: 'HttpOnly', 'HttpsOnly',
-        /// 'MatchRequest'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.forwardingProtocol")]
-        public string ForwardingProtocol { get; set; }
-
-        /// <summary>
-        /// Gets or sets the caching configuration associated with this rule.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.cacheConfiguration")]
-        public CacheConfiguration CacheConfiguration { get; set; }
-
-        /// <summary>
-        /// Gets or sets a reference to the BackendPool which this rule routes
-        /// to.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.backendPool")]
-        public SubResource BackendPool { get; set; }
-
-        /// <summary>
         /// Gets or sets whether to enable use of this rule. Permitted values
         /// are 'Enabled' or 'Disabled'. Possible values include: 'Enabled',
         /// 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.enabledState")]
         public string EnabledState { get; set; }
+
+        /// <summary>
+        /// Gets or sets a reference to the routing configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.routeConfiguration")]
+        public RouteConfiguration RouteConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets resource status. Possible values include: 'Creating',

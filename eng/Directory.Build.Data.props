@@ -4,6 +4,12 @@
     <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
     <Platform Condition="'$(Platform)' == ''">AnyCPU</Platform>
     <PlatformName Condition="'$(PlatformName)' == ''">$(Platform)</PlatformName>
+    <LangVersion>latest</LangVersion>
+    <!--
+      Disable NuGet Pack warning that the version is SemVer 2.0.
+      SemVer 2.0 is supported by NuGet since 3.0.0 (July 2015) in some capacity, and fully since 3.5.0 (October 2016).
+    -->
+    <NoWarn>$(NoWarn);NU5105</NoWarn>
     <SignAssembly>true</SignAssembly>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -11,7 +17,12 @@
 
   <!-- TargetFramework default properties -->
   <PropertyGroup>
+    <!-- Client libraries are moving forward to NS 2.0 and Net 4.6.1 as the min supported versions -->
+    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == '' and '$(IsClientLibrary)' == 'true'">true</SupportsNetStandard20>
+    <SupportsNetStandard20 Condition="'$(SupportsNetStandard20)' == ''">false</SupportsNetStandard20>
+
     <RequiredTargetFrameworks>net452;netstandard1.4</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">net461;netstandard2.0</RequiredTargetFrameworks>
 
     <IsTargetingNetFx Condition="$(TargetFramework.StartsWith('net4'))">true</IsTargetingNetFx>
     <IsTargetingNetStandard Condition="$(TargetFramework.StartsWith('netstandard'))">true</IsTargetingNetStandard>
@@ -46,6 +57,11 @@
     <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
     <Authors>Microsoft</Authors>
     <Product>Azure .NET SDK</Product>
+    <PackageIconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</PackageIconUrl>
+    <RepositoryUrl>https://github.com/Azure/azure-sdk-for-net</RepositoryUrl>
+    <PackageProjectUrl>$(RepositoryUrl)</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <NeutralLanguage>en-US</NeutralLanguage>
   </PropertyGroup>
 </Project>

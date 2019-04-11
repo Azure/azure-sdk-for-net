@@ -22,7 +22,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
     public static partial class PatternExtensions
     {
             /// <summary>
-            /// Adds one pattern to the specified application.
+            /// Adds a pattern to a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Returns an application version's patterns.
+            /// Gets patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -68,16 +68,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternRuleInfo>> GetPatternsAsync(this IPattern operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternRuleInfo>> ListPatternsAsync(this IPattern operations, System.Guid appId, string versionId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetPatternsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListPatternsWithHttpMessagesAsync(appId, versionId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates patterns
+            /// Updates patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Adds a batch of patterns to the specified application.
+            /// Adds a batch of patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes the patterns with the specified IDs.
+            /// Deletes a list of patterns in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Updates a pattern
+            /// Updates a pattern in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -184,7 +184,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Deletes the pattern with the specified ID.
+            /// Deletes the pattern with the specified ID from a version of the
+            /// application..
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -210,7 +211,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             }
 
             /// <summary>
-            /// Returns patterns to be retrieved for the specific intent.
+            /// Returns patterns for the specific intent in a version of the application.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -233,9 +234,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<PatternRuleInfo>> GetIntentPatternsAsync(this IPattern operations, System.Guid appId, string versionId, System.Guid intentId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<PatternRuleInfo>> ListIntentPatternsAsync(this IPattern operations, System.Guid appId, string versionId, System.Guid intentId, int? skip = 0, int? take = 100, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetIntentPatternsWithHttpMessagesAsync(appId, versionId, intentId, skip, take, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListIntentPatternsWithHttpMessagesAsync(appId, versionId, intentId, skip, take, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

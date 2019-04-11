@@ -32,13 +32,10 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="versionId">The version ID to publish.</param>
         /// <param name="isStaging">Indicates if the staging slot should be
         /// used, instead of the Production one.</param>
-        /// <param name="region">The target region that the application is
-        /// published to.</param>
-        public ApplicationPublishObject(string versionId = default(string), bool? isStaging = default(bool?), string region = default(string))
+        public ApplicationPublishObject(string versionId = default(string), bool? isStaging = default(bool?))
         {
             VersionId = versionId;
             IsStaging = isStaging;
-            Region = region;
             CustomInit();
         }
 
@@ -59,13 +56,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// </summary>
         [JsonProperty(PropertyName = "isStaging")]
         public bool? IsStaging { get; set; }
-
-        /// <summary>
-        /// Gets or sets the target region that the application is published
-        /// to.
-        /// </summary>
-        [JsonProperty(PropertyName = "region")]
-        public string Region { get; set; }
 
     }
 }

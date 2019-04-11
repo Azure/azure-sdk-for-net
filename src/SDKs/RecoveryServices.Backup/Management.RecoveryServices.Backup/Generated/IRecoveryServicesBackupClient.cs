@@ -110,6 +110,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         IBackupProtectedItemsOperations BackupProtectedItems { get; }
 
         /// <summary>
+        /// Gets the IBackupProtectionIntentOperations.
+        /// </summary>
+        IBackupProtectionIntentOperations BackupProtectionIntent { get; }
+
+        /// <summary>
         /// Gets the IBackupUsageSummariesOperations.
         /// </summary>
         IBackupUsageSummariesOperations BackupUsageSummaries { get; }

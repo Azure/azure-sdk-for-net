@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string Allow = "Allow";
         public const string Deny = "Deny";
+        public const string Alert = "Alert";
     }
 }

@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring</PackageId>
     <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Authoring API.</Description>
-    <Version>2.0.0</Version>
+    <Version>3.0.0</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;REST HTTP client</PackageTags>
     <PackageReleaseNotes>
@@ -14,7 +14,12 @@
     This is a public release of the Cognitive Services LUIS Authoring SDK.
 
     Changes in this release:
-    1. Supported customizing service endpoints by assigning the endpoint string to LUISAuthoringClient.Endpoint. The endpoint string can be found on Azure Portal, it should contain only protocol and hostname, for example: https://westus.api.cognitive.microsoft.com.
+    1. Add packaging APIs to export applications for the runtime container. For more info, check out our container documentation: https://docs.microsoft.com/en-us/azure/cognitive-services/luis/luis-container-howto
+    2. Add app version settings APIs.
+    3. Add azure account APIs to programmatically assign, get and remove azure subscriptions to a LUIS application. Previously, this was only supported via the LUIS portal.
+    4. Remove region parameter from publish, LUIS now automatically publishes to the regions in which the user has assigned Azure keys.
+    5. Add failed regions in partial success response of the publish API.
+    5. Fix some spelling mistakes in the API documentation.
     ]]>
     </PackageReleaseNotes>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>

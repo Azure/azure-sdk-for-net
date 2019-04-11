@@ -36,14 +36,17 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         /// <param name="contextPath">The URL(absolute or relative) of the
         /// source context for the task step.</param>
+        /// <param name="contextAccessToken">The token (git PAT or SAS token of
+        /// storage account blob) associated with the context for a
+        /// step.</param>
         /// <param name="taskFilePath">The task template/definition file path
         /// relative to the source context.</param>
         /// <param name="valuesFilePath">The values/parameters file path
         /// relative to the source context.</param>
         /// <param name="values">The collection of overridable values that can
         /// be passed when running a task.</param>
-        public FileTaskStepUpdateParameters(string contextPath = default(string), string taskFilePath = default(string), string valuesFilePath = default(string), IList<SetValue> values = default(IList<SetValue>))
-            : base(contextPath)
+        public FileTaskStepUpdateParameters(string contextPath = default(string), string contextAccessToken = default(string), string taskFilePath = default(string), string valuesFilePath = default(string), IList<SetValue> values = default(IList<SetValue>))
+            : base(contextPath, contextAccessToken)
         {
             TaskFilePath = taskFilePath;
             ValuesFilePath = valuesFilePath;

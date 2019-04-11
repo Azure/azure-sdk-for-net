@@ -121,7 +121,8 @@ namespace DeviceProvisioningServices.Tests.ScenarioTests
 
             }
         }
-        [Fact]
+        [Fact(Skip = "Needs re-recording")]
+        //[Fact]
         public void CreateFailure()
         {
             using (var context = MockContext.Start(this.GetType().FullName))

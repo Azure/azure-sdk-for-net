@@ -49,56 +49,27 @@ namespace Microsoft.Azure.Management.Consumption
 
         /// <summary>
         /// Version of the API to be used with the client request. The current version
-        /// is 2018-01-31.
+        /// is 2018-11-01-preview.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// Azure Subscription ID.
-        /// </summary>
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IUsageDetailsOperations.
-        /// </summary>
-        public virtual IUsageDetailsOperations UsageDetails { get; private set; }
-
-        /// <summary>
-        /// Gets the IMarketplacesOperations.
-        /// </summary>
-        public virtual IMarketplacesOperations Marketplaces { get; private set; }
-
-        /// <summary>
-        /// Gets the IReservationsSummariesOperations.
-        /// </summary>
-        public virtual IReservationsSummariesOperations ReservationsSummaries { get; private set; }
-
-        /// <summary>
-        /// Gets the IReservationsDetailsOperations.
-        /// </summary>
-        public virtual IReservationsDetailsOperations ReservationsDetails { get; private set; }
-
-        /// <summary>
-        /// Gets the IBudgetsOperations.
-        /// </summary>
-        public virtual IBudgetsOperations Budgets { get; private set; }
 
         /// <summary>
         /// Gets the IOperations.
@@ -106,9 +77,57 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IPriceSheetOperations.
+        /// Gets the ICreditSummaryByBillingProfileOperations.
         /// </summary>
-        public virtual IPriceSheetOperations PriceSheet { get; private set; }
+        public virtual ICreditSummaryByBillingProfileOperations CreditSummaryByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the IEventsByBillingProfileOperations.
+        /// </summary>
+        public virtual IEventsByBillingProfileOperations EventsByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the ILotsByBillingProfileOperations.
+        /// </summary>
+        public virtual ILotsByBillingProfileOperations LotsByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the IInvoicePricesheetOperations.
+        /// </summary>
+        public virtual IInvoicePricesheetOperations InvoicePricesheet { get; private set; }
+
+        /// <summary>
+        /// Gets the IBillingProfilePricesheetOperations.
+        /// </summary>
+        public virtual IBillingProfilePricesheetOperations BillingProfilePricesheet { get; private set; }
+
+        /// <summary>
+        /// Gets the IChargesByBillingAccountOperations.
+        /// </summary>
+        public virtual IChargesByBillingAccountOperations ChargesByBillingAccount { get; private set; }
+
+        /// <summary>
+        /// Gets the IChargesByBillingProfileOperations.
+        /// </summary>
+        public virtual IChargesByBillingProfileOperations ChargesByBillingProfile { get; private set; }
+
+        /// <summary>
+        /// Gets the IChargesByInvoiceSectionOperations.
+        /// </summary>
+        public virtual IChargesByInvoiceSectionOperations ChargesByInvoiceSection { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the ConsumptionManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ConsumptionManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ConsumptionManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ConsumptionManagementClient class.
@@ -193,6 +212,33 @@ namespace Microsoft.Azure.Management.Consumption
         /// Thrown when a required parameter is null
         /// </exception>
         public ConsumptionManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ConsumptionManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ConsumptionManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ConsumptionManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -311,15 +357,17 @@ namespace Microsoft.Azure.Management.Consumption
         /// </summary>
         private void Initialize()
         {
-            UsageDetails = new UsageDetailsOperations(this);
-            Marketplaces = new MarketplacesOperations(this);
-            ReservationsSummaries = new ReservationsSummariesOperations(this);
-            ReservationsDetails = new ReservationsDetailsOperations(this);
-            Budgets = new BudgetsOperations(this);
             Operations = new Operations(this);
-            PriceSheet = new PriceSheetOperations(this);
+            CreditSummaryByBillingProfile = new CreditSummaryByBillingProfileOperations(this);
+            EventsByBillingProfile = new EventsByBillingProfileOperations(this);
+            LotsByBillingProfile = new LotsByBillingProfileOperations(this);
+            InvoicePricesheet = new InvoicePricesheetOperations(this);
+            BillingProfilePricesheet = new BillingProfilePricesheetOperations(this);
+            ChargesByBillingAccount = new ChargesByBillingAccountOperations(this);
+            ChargesByBillingProfile = new ChargesByBillingProfileOperations(this);
+            ChargesByInvoiceSection = new ChargesByInvoiceSectionOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-01-31";
+            ApiVersion = "2018-11-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

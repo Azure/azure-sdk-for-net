@@ -92,6 +92,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (registryName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "registryName");
@@ -409,6 +416,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (registryName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "registryName");
@@ -628,6 +642,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (registryName == null)
             {
@@ -894,6 +915,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (registryName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "registryName");
@@ -1112,6 +1140,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
             }
             if (registryName == null)
             {

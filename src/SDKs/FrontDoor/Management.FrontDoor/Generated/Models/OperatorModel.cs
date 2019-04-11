@@ -27,5 +27,6 @@ namespace Microsoft.Azure.Management.FrontDoor.Models
         public const string GreaterThanOrEqual = "GreaterThanOrEqual";
         public const string BeginsWith = "BeginsWith";
         public const string EndsWith = "EndsWith";
+        public const string RegEx = "RegEx";
     }
 }

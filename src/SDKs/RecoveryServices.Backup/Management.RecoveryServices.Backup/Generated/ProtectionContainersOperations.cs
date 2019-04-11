@@ -692,12 +692,11 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         }
 
         /// <summary>
-        /// Inquires all the protectable item in the given container that can be
-        /// protected.
+        /// Inquires all the protectable items under the given container.
         /// </summary>
         /// <remarks>
-        /// Inquires all the protectable items that are protectable under the given
-        /// container.
+        /// This is an async operation and the results should be tracked using location
+        /// header or Azure-async-url.
         /// </remarks>
         /// <param name='vaultName'>
         /// The name of the recovery services vault.

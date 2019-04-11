@@ -266,7 +266,7 @@ namespace Microsoft.Azure.Management.Cdn
         }
 
         /// <summary>
-        /// Gets an exisitng custom domain within an endpoint.
+        /// Gets an existing custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -772,6 +772,28 @@ namespace Microsoft.Azure.Management.Cdn
             return _result;
         }
 
+        public async Task<AzureOperationResponse<CustomDomain>> EnableCustomHttpsWithHttpMessagesAsync(
+            string resourceGroupName,
+            string profileName,
+            string endpointName,
+            string customDomainName,
+            CustomDomainHttpsParameters customDomainHttpsParameters = default(CustomDomainHttpsParameters), 
+            Dictionary<string, List<string>> customHeaders = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<CustomDomain> _response = await BeginEnableCustomHttpsWithHttpMessagesAsync(
+                resourceGroupName, 
+                profileName, 
+                endpointName,
+                customDomainName,
+                customDomainHttpsParameters,
+                customHeaders,
+                cancellationToken)
+                .ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary>
         /// Enable https delivery of the custom domain.
         /// </summary>
@@ -786,6 +808,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// </param>
         /// <param name='customDomainName'>
         /// Name of the custom domain within an endpoint.
+        /// </param>
+        /// <param name='customDomainHttpsParameters'>
+        /// The configuration specifying how to enable HTTPS for the custom domain -
+        /// using CDN managed certificate or user's own certificate. If not specified,
+        /// enabling ssl uses CDN managed certificate by default.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -808,7 +835,14 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CustomDomain>> EnableCustomHttpsWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CustomDomain>> BeginEnableCustomHttpsWithHttpMessagesAsync(
+            string resourceGroupName, 
+            string profileName,
+            string endpointName, 
+            string customDomainName,
+            CustomDomainHttpsParameters customDomainHttpsParameters = default(CustomDomainHttpsParameters), 
+            Dictionary<string, List<string>> customHeaders = null, 
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -841,6 +875,10 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "customDomainName");
             }
+            if (customDomainHttpsParameters != null)
+            {
+                customDomainHttpsParameters.Validate();
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -860,6 +898,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
                 tracingParameters.Add("customDomainName", customDomainName);
+                tracingParameters.Add("customDomainHttpsParameters", customDomainHttpsParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "EnableCustomHttps", tracingParameters);
             }
@@ -914,6 +953,12 @@ namespace Microsoft.Azure.Management.Cdn
 
             // Serialize Request
             string _requestContent = null;
+            if(customDomainHttpsParameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(customDomainHttpsParameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

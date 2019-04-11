@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Automation.Models
     using System.Linq;
 
     /// <summary>
-    /// Update specifc properties of the software update configuration.
+    /// Update specific properties of the software update configuration.
     /// </summary>
     public partial class UpdateConfiguration
     {

@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// Possible values include: 'Invalid', 'VM', 'FileFolder',
         /// 'AzureSqlDb', 'SQLDB', 'Exchange', 'Sharepoint', 'VMwareVM',
         /// 'SystemState', 'Client', 'GenericDataSource', 'SQLDataBase',
-        /// 'AzureFileShare', 'SAPHanaDatabase'</param>
+        /// 'AzureFileShare', 'SAPHanaDatabase', 'SAPAseDatabase'</param>
         public ProtectionPolicyQueryObject(string backupManagementType = default(string), string fabricName = default(string), string workloadType = default(string))
         {
             BackupManagementType = backupManagementType;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup.Models
         /// include: 'Invalid', 'VM', 'FileFolder', 'AzureSqlDb', 'SQLDB',
         /// 'Exchange', 'Sharepoint', 'VMwareVM', 'SystemState', 'Client',
         /// 'GenericDataSource', 'SQLDataBase', 'AzureFileShare',
-        /// 'SAPHanaDatabase'
+        /// 'SAPHanaDatabase', 'SAPAseDatabase'
         /// </summary>
         [JsonProperty(PropertyName = "workloadType")]
         public string WorkloadType { get; set; }

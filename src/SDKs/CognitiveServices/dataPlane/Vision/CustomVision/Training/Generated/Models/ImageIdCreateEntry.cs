@@ -28,6 +28,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the ImageIdCreateEntry class.
         /// </summary>
+        /// <param name="id">Id of the image.</param>
         public ImageIdCreateEntry(System.Guid id = default(System.Guid), IList<System.Guid> tagIds = default(IList<System.Guid>), IList<Region> regions = default(IList<Region>))
         {
             Id = id;
@@ -42,6 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets id of the image.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid Id { get; set; }

@@ -32,12 +32,15 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <summary>
         /// Initializes a new instance of the DataExportSetting class.
         /// </summary>
+        /// <param name="kind">the kind of the settings string
+        /// (DataExportSetting). Possible values include: 'DataExportSetting',
+        /// 'AlertSuppressionSetting'</param>
         /// <param name="enabled">Is the data export setting is enabled</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
-        public DataExportSetting(bool enabled, string id = default(string), string name = default(string), string type = default(string))
-            : base(id, name, type)
+        public DataExportSetting(string kind, bool enabled, string id = default(string), string name = default(string), string type = default(string))
+            : base(kind, id, name, type)
         {
             Enabled = enabled;
             CustomInit();
@@ -60,9 +63,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            //Nothing to validate
+            base.Validate();
         }
     }
 }

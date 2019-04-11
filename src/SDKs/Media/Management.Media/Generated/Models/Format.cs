@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// audio/video bitrate. Not applicable to thumbnails. {Codec} - The
         /// type of the audio/video codec. Any unsubstituted macros will be
         /// collapsed and removed from the filename.</param>
-        public Format(string filenamePattern = default(string))
+        public Format(string filenamePattern)
         {
             FilenamePattern = filenamePattern;
             CustomInit();
@@ -63,5 +64,18 @@ namespace Microsoft.Azure.Management.Media.Models
         [JsonProperty(PropertyName = "filenamePattern")]
         public string FilenamePattern { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (FilenamePattern == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FilenamePattern");
+            }
+        }
     }
 }

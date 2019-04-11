@@ -32,25 +32,27 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteProject", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-                var newProject = client.CreateProjectAsync(projName, projDescription).Result;
-
-                Assert.Contains(projName, newProject.Name);
-                Assert.Equal(projDescription, newProject.Description);
-                Assert.NotEqual(Guid.Empty, newProject.Id);
-
-                var updatedProject = client.UpdateProjectAsync(newProject.Id, new Project()
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
-                    Name = updatedProjName,
-                    Description = updatedProjDescription,
-                }).Result;
+                    var newProject = client.CreateProjectAsync(projName, projDescription).Result;
 
-                Assert.Equal(updatedProjName, updatedProject.Name);
-                Assert.Equal(updatedProjDescription, updatedProject.Description);
-                Assert.Equal(newProject.Id, updatedProject.Id);
-                Assert.Equal(newProject.Settings.DomainId, updatedProject.Settings.DomainId);
+                    Assert.Contains(projName, newProject.Name);
+                    Assert.Equal(projDescription, newProject.Description);
+                    Assert.NotEqual(Guid.Empty, newProject.Id);
 
-                await client.DeleteProjectAsync(newProject.Id);
+                    var updatedProject = client.UpdateProjectAsync(newProject.Id, new Project()
+                    {
+                        Name = updatedProjName,
+                        Description = updatedProjDescription,
+                    }).Result;
+
+                    Assert.Equal(updatedProjName, updatedProject.Name);
+                    Assert.Equal(updatedProjDescription, updatedProject.Description);
+                    Assert.Equal(newProject.Id, updatedProject.Id);
+                    Assert.Equal(newProject.Settings.DomainId, updatedProject.Settings.DomainId);
+
+                    await client.DeleteProjectAsync(newProject.Id);
+                }
             }
         }
 
@@ -61,18 +63,19 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateDeleteProjectWithDomain", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-                var newProject = await client.CreateProjectAsync(projName, projDescription, FoodDomain);
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
+                {
+                    var newProject = await client.CreateProjectAsync(projName, projDescription, ProjectBuilderHelper.FoodDomain);
 
-                Assert.Contains(projName, newProject.Name);
-                Assert.Equal(projDescription, newProject.Description);
-                Assert.Equal(FoodDomain, newProject.Settings.DomainId);
-                Assert.NotEqual(Guid.Empty, newProject.Id);
+                    Assert.Contains(projName, newProject.Name);
+                    Assert.Equal(projDescription, newProject.Description);
+                    Assert.Equal(ProjectBuilderHelper.FoodDomain, newProject.Settings.DomainId);
+                    Assert.NotEqual(Guid.Empty, newProject.Id);
 
-                await client.DeleteProjectAsync(newProject.Id);
+                    await client.DeleteProjectAsync(newProject.Id);
+                }
             }
         }
-
 
         [Fact]
         public async void CreateImageFromUrl()
@@ -83,25 +86,27 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImageFromUrl", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-                var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
-                var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
-                var urlImages = new ImageUrlCreateEntry[] { new ImageUrlCreateEntry(imageUrl) };
-                var tags = new Guid[] { tag.Id };
-                var imageCreatedFromUrl = client.CreateImagesFromUrlsAsync(newProject.Id, new ImageUrlCreateBatch(urlImages, tags)).Result;
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
+                {
+                    var newProject = client.CreateProjectAsync(projName, projDescription, ProjectBuilderHelper.FoodDomain).Result;
+                    var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
+                    var urlImages = new ImageUrlCreateEntry[] { new ImageUrlCreateEntry(imageUrl) };
+                    var tags = new Guid[] { tag.Id };
+                    var imageCreatedFromUrl = client.CreateImagesFromUrlsAsync(newProject.Id, new ImageUrlCreateBatch(urlImages, tags)).Result;
 
-                Assert.True(imageCreatedFromUrl.IsBatchSuccessful);
-                Assert.Equal(1, imageCreatedFromUrl.Images.Count);
-                Assert.Equal(imageUrl, imageCreatedFromUrl.Images[0].SourceUrl);
-                Assert.Equal("OK", imageCreatedFromUrl.Images[0].Status);
-                Assert.NotEqual(Guid.Empty, imageCreatedFromUrl.Images[0].Image.Id);
-                Assert.NotEqual(0, imageCreatedFromUrl.Images[0].Image.Width);
-                Assert.NotEqual(0, imageCreatedFromUrl.Images[0].Image.Height);
-                Assert.NotEmpty(imageCreatedFromUrl.Images[0].Image.OriginalImageUri);
-                Assert.NotEmpty(imageCreatedFromUrl.Images[0].Image.ResizedImageUri);
-                Assert.NotEmpty(imageCreatedFromUrl.Images[0].Image.ThumbnailUri);
+                    Assert.True(imageCreatedFromUrl.IsBatchSuccessful);
+                    Assert.Equal(1, imageCreatedFromUrl.Images.Count);
+                    Assert.Equal(imageUrl, imageCreatedFromUrl.Images[0].SourceUrl);
+                    Assert.Equal("OK", imageCreatedFromUrl.Images[0].Status);
+                    Assert.NotEqual(Guid.Empty, imageCreatedFromUrl.Images[0].Image.Id);
+                    Assert.NotEqual(0, imageCreatedFromUrl.Images[0].Image.Width);
+                    Assert.NotEqual(0, imageCreatedFromUrl.Images[0].Image.Height);
+                    Assert.NotEmpty(imageCreatedFromUrl.Images[0].Image.OriginalImageUri);
+                    Assert.NotEmpty(imageCreatedFromUrl.Images[0].Image.ResizedImageUri);
+                    Assert.NotEmpty(imageCreatedFromUrl.Images[0].Image.ThumbnailUri);
 
-                await client.DeleteProjectAsync(newProject.Id);
+                    await client.DeleteProjectAsync(newProject.Id);
+                }
             }
         }
 
@@ -114,26 +119,28 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromFiles", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-                var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
-                var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
-                var fileName = Path.Combine("TestImages", "tag1", dataFileName);
-                var fileImages = new ImageFileCreateEntry[] { new ImageFileCreateEntry(dataFileName, File.ReadAllBytes(fileName)) };
-                var tags = new Guid[] { tag.Id };
-                var imageCreatedFromFile = client.CreateImagesFromFilesAsync(newProject.Id, new ImageFileCreateBatch(fileImages, tags)).Result;
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
+                {
+                    var newProject = client.CreateProjectAsync(projName, projDescription, ProjectBuilderHelper.FoodDomain).Result;
+                    var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
+                    var fileName = Path.Combine("TestImages", "tag1", dataFileName);
+                    var fileImages = new ImageFileCreateEntry[] { new ImageFileCreateEntry(dataFileName, File.ReadAllBytes(fileName)) };
+                    var tags = new Guid[] { tag.Id };
+                    var imageCreatedFromFile = client.CreateImagesFromFilesAsync(newProject.Id, new ImageFileCreateBatch(fileImages, tags)).Result;
 
-                Assert.True(imageCreatedFromFile.IsBatchSuccessful);
-                Assert.Equal(1, imageCreatedFromFile.Images.Count);
-                Assert.Contains(dataFileName, imageCreatedFromFile.Images[0].SourceUrl);
-                Assert.Equal("OK", imageCreatedFromFile.Images[0].Status);
-                Assert.NotEqual(Guid.Empty, imageCreatedFromFile.Images[0].Image.Id);
-                Assert.NotEqual(0, imageCreatedFromFile.Images[0].Image.Width);
-                Assert.NotEqual(0, imageCreatedFromFile.Images[0].Image.Height);
-                Assert.NotEmpty(imageCreatedFromFile.Images[0].Image.OriginalImageUri);
-                Assert.NotEmpty(imageCreatedFromFile.Images[0].Image.ResizedImageUri);
-                Assert.NotEmpty(imageCreatedFromFile.Images[0].Image.ThumbnailUri);
+                    Assert.True(imageCreatedFromFile.IsBatchSuccessful);
+                    Assert.Equal(1, imageCreatedFromFile.Images.Count);
+                    Assert.Contains(dataFileName, imageCreatedFromFile.Images[0].SourceUrl);
+                    Assert.Equal("OK", imageCreatedFromFile.Images[0].Status);
+                    Assert.NotEqual(Guid.Empty, imageCreatedFromFile.Images[0].Image.Id);
+                    Assert.NotEqual(0, imageCreatedFromFile.Images[0].Image.Width);
+                    Assert.NotEqual(0, imageCreatedFromFile.Images[0].Image.Height);
+                    Assert.NotEmpty(imageCreatedFromFile.Images[0].Image.OriginalImageUri);
+                    Assert.NotEmpty(imageCreatedFromFile.Images[0].Image.ResizedImageUri);
+                    Assert.NotEmpty(imageCreatedFromFile.Images[0].Image.ThumbnailUri);
 
-                await client.DeleteProjectAsync(newProject.Id);
+                    await client.DeleteProjectAsync(newProject.Id);
+                }
             }
         }
 
@@ -146,27 +153,30 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromData", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-                var newProject = client.CreateProjectAsync(projName, projDescription, FoodDomain).Result;
-                var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", "tag1", dataFileName), FileMode.Open))
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
-                    var imageCreatedFromData = client.CreateImagesFromDataAsync(newProject.Id, stream, new string[] { tag.Id.ToString() }).Result;
+                    var newProject = client.CreateProjectAsync(projName, projDescription, ProjectBuilderHelper.FoodDomain).Result;
+                    var tag = client.CreateTagAsync(newProject.Id, tagName).Result;
+                    using (FileStream stream = new FileStream(Path.Combine("TestImages", "tag1", dataFileName), FileMode.Open))
+                    {
+                        var imageCreatedFromData = client.CreateImagesFromDataAsync(newProject.Id, stream, new Guid[] { tag.Id }).Result;
 
-                    Assert.True(imageCreatedFromData.IsBatchSuccessful);
-                    Assert.Equal(1, imageCreatedFromData.Images.Count);
-                    Assert.Contains(dataFileName, imageCreatedFromData.Images[0].SourceUrl);
-                    Assert.Equal("OK", imageCreatedFromData.Images[0].Status);
-                    Assert.NotEqual(Guid.Empty, imageCreatedFromData.Images[0].Image.Id);
-                    Assert.NotEqual(0, imageCreatedFromData.Images[0].Image.Width);
-                    Assert.NotEqual(0, imageCreatedFromData.Images[0].Image.Height);
-                    Assert.NotEmpty(imageCreatedFromData.Images[0].Image.OriginalImageUri);
-                    Assert.NotEmpty(imageCreatedFromData.Images[0].Image.ResizedImageUri);
-                    Assert.NotEmpty(imageCreatedFromData.Images[0].Image.ThumbnailUri);
+                        Assert.True(imageCreatedFromData.IsBatchSuccessful);
+                        Assert.Equal(1, imageCreatedFromData.Images.Count);
+                        Assert.Contains(dataFileName, imageCreatedFromData.Images[0].SourceUrl);
+                        Assert.Equal("OK", imageCreatedFromData.Images[0].Status);
+                        Assert.NotEqual(Guid.Empty, imageCreatedFromData.Images[0].Image.Id);
+                        Assert.NotEqual(0, imageCreatedFromData.Images[0].Image.Width);
+                        Assert.NotEqual(0, imageCreatedFromData.Images[0].Image.Height);
+                        Assert.NotEmpty(imageCreatedFromData.Images[0].Image.OriginalImageUri);
+                        Assert.NotEmpty(imageCreatedFromData.Images[0].Image.ResizedImageUri);
+                        Assert.NotEmpty(imageCreatedFromData.Images[0].Image.ThumbnailUri);
+                    }
+                    await client.DeleteProjectAsync(newProject.Id);
                 }
-                await client.DeleteProjectAsync(newProject.Id);
             }
         }
+
         [Fact]
         public async void ProjectRetrieval()
         {
@@ -174,22 +184,25 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ProjectRetrieval", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
+                {
+                    var newProject = await client.CreateProjectAsync(projName, projDescription, ProjectBuilderHelper.FoodDomain);
+                    var projects = await client.GetProjectsAsync();
 
-                var newProject = await client.CreateProjectAsync(projName, projDescription, FoodDomain);
-                var projects = await client.GetProjectsAsync();
+                    Assert.True(projects.Count > 0);
+                    Assert.Contains(projects, p => p.Id == newProject.Id);
 
-                Assert.True(projects.Count > 0);
-                Assert.Contains(projects, p => p.Id == newProject.Id);
+                    var firstProject = await client.GetProjectAsync(projects[0].Id);
 
-                var firstProject = await client.GetProjectAsync(projects[0].Id);
+                    Assert.Equal(projects[0].Id, firstProject.Id);
+                    Assert.Equal(projects[0].Name, firstProject.Name);
+                    Assert.Equal(projects[0].Description, firstProject.Description);
+                    Assert.Equal(projects[0].Settings.DomainId, firstProject.Settings.DomainId);
+                    Assert.Equal(projects[0].Settings.TargetExportPlatforms.Count, firstProject.Settings.TargetExportPlatforms.Count);
+                    Assert.Equal(projects[0].DrModeEnabled, firstProject.DrModeEnabled);
 
-                Assert.Equal(projects[0].Id, firstProject.Id);
-                Assert.Equal(projects[0].Name, firstProject.Name);
-                Assert.Equal(projects[0].Description, firstProject.Description);
-                Assert.Equal(projects[0].Settings.DomainId, firstProject.Settings.DomainId);
-
-                await client.DeleteProjectAsync(newProject.Id);
+                    await client.DeleteProjectAsync(newProject.Id);
+                }
             }
         }
 
@@ -200,29 +213,30 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "TagRetrieval", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var newProject = await client.CreateProjectAsync("TagRetrievalTest", projDescription, GeneralDomain);
-                var numTags = 4;
-
-                for (var i = 0; i < numTags; i++)
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
-                    await client.CreateTagAsync(newProject.Id, "Tag #" + i.ToString(), string.Empty);
+                    var newProject = await client.CreateProjectAsync("TagRetrievalTest", projDescription, ProjectBuilderHelper.GeneralDomain);
+                    var numTags = 4;
+
+                    for (var i = 0; i < numTags; i++)
+                    {
+                        await client.CreateTagAsync(newProject.Id, "Tag #" + i.ToString(), string.Empty);
+                    }
+
+                    var tagList = await client.GetTagsAsync(newProject.Id);
+
+                    Assert.Equal(numTags, tagList.Count);
+
+                    foreach (var tag in tagList)
+                    {
+                        Assert.NotEqual(Guid.Empty, tag.Id);
+                        Assert.Contains("Tag #", tag.Name);
+                        Assert.Null(tag.Description);
+                        Assert.Equal(0, tag.ImageCount);
+                    }
+
+                    await client.DeleteProjectAsync(newProject.Id);
                 }
-
-                var tagList = await client.GetTagsAsync(newProject.Id);
-
-                Assert.Equal(numTags, tagList.Count);
-
-                foreach (var tag in tagList)
-                {
-                    Assert.NotEqual(Guid.Empty, tag.Id);
-                    Assert.Contains("Tag #", tag.Name);
-                    Assert.Null(tag.Description);
-                    Assert.Equal(0, tag.ImageCount);
-                }
-
-                await client.DeleteProjectAsync(newProject.Id);
             }
         }
 
@@ -233,20 +247,21 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DomainsApiTests", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
+                {
+                    var domains = client.GetDomainsAsync().Result;
+                    Assert.Equal(12, domains.Count);
 
-                var domains = client.GetDomainsAsync().Result;
-                Assert.Equal(9, domains.Count);
+                    var foodDomain = domains.FirstOrDefault(d => d.Id == ProjectBuilderHelper.FoodDomain);
+                    Assert.NotNull(foodDomain);
+                    Assert.False(foodDomain.Exportable);
+                    Assert.Contains("food", foodDomain.Name.ToLowerInvariant());
 
-                var foodDomain = domains.FirstOrDefault(d => d.Id == FoodDomain);
-                Assert.NotNull(foodDomain);
-                Assert.False(foodDomain.Exportable);
-                Assert.Contains("food", foodDomain.Name.ToLowerInvariant());
-
-                var generalDomain = client.GetDomainAsync(GeneralDomain).Result;
-                Assert.Equal(GeneralDomain, generalDomain.Id);
-                Assert.False(generalDomain.Exportable);
-                Assert.Contains("general", generalDomain.Name.ToLowerInvariant());
+                    var generalDomain = client.GetDomainAsync(ProjectBuilderHelper.GeneralDomain).Result;
+                    Assert.Equal(ProjectBuilderHelper.GeneralDomain, generalDomain.Id);
+                    Assert.False(generalDomain.Exportable);
+                    Assert.Contains("general", generalDomain.Name.ToLowerInvariant());
+                }
             }
         }
 
@@ -260,32 +275,32 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateUpdateDeleteTag", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var projectId = (await client.CreateProjectAsync(projName)).Id;
-
-                var tag = await client.CreateTagAsync(projectId, tagName, tagDescription);
-
-                Assert.Equal(tagName, tag.Name);
-                Assert.Equal(tagDescription, tag.Description);
-                Assert.Equal(0, tag.ImageCount);
-                Assert.NotEqual(Guid.Empty, tag.Id);
-
-
-                var updatedTag = await client.UpdateTagAsync(projectId, tag.Id, new Tag()
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
-                    Name = updatedName,
-                    Description = updatedDescription
-                });
+                    var projectId = (await client.CreateProjectAsync(projName)).Id;
 
-                Assert.Equal(updatedName, updatedTag.Name);
-                Assert.Equal(updatedDescription, updatedTag.Description);
-                Assert.Equal(tag.ImageCount, updatedTag.ImageCount);
-                Assert.Equal(tag.Id, updatedTag.Id);
+                    var tag = await client.CreateTagAsync(projectId, tagName, tagDescription);
+
+                    Assert.Equal(tagName, tag.Name);
+                    Assert.Equal(tagDescription, tag.Description);
+                    Assert.Equal(0, tag.ImageCount);
+                    Assert.NotEqual(Guid.Empty, tag.Id);
 
 
-                await client.DeleteTagAsync(projectId, tag.Id);
-                await client.DeleteProjectAsync(projectId);
+                    var updatedTag = await client.UpdateTagAsync(projectId, tag.Id, new Tag()
+                    {
+                        Name = updatedName,
+                        Description = updatedDescription
+                    });
+
+                    Assert.Equal(updatedName, updatedTag.Name);
+                    Assert.Equal(updatedDescription, updatedTag.Description);
+                    Assert.Equal(tag.ImageCount, updatedTag.ImageCount);
+                    Assert.Equal(tag.Id, updatedTag.Id);
+
+                    await client.DeleteTagAsync(projectId, tag.Id);
+                    await client.DeleteProjectAsync(projectId);
+                }
             }
         }
 
@@ -298,36 +313,36 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetIterations", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var iterations = await client.GetIterationsAsync(projectId);
-
-                Assert.Equal(1, iterations.Count);
-                Assert.NotEmpty(iterations[0].Name);
-                Assert.NotEqual(Guid.Empty, iterations[0].DomainId);
-                Assert.NotEqual(Guid.Empty, iterations[0].Id);
-                Assert.Equal(projectId, iterations[0].ProjectId);
-                Assert.True(iterations[0].IsDefault);
-                Assert.Equal("Completed", iterations[0].Status);
-                Assert.False(iterations[0].Exportable);
-
-                var iteration = await client.GetIterationAsync(projectId, iterations[0].Id);
-                Assert.Equal(iteration.Name, iterations[0].Name);
-                Assert.Equal(iteration.Id, iterations[0].Id);
-                Assert.True(iterations[0].IsDefault);
-
-                var updatedIteration = await client.UpdateIterationAsync(projectId, iteration.Id, new Iteration()
+                using (var project = CreateTrainedImageClassificationProject())
                 {
-                    Name = updatedName,
-                    IsDefault = !iterations[0].IsDefault,
-                });
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                Assert.Equal(updatedName, updatedIteration.Name);
-                Assert.Equal(!iteration.IsDefault, updatedIteration.IsDefault);
+                    var iterations = await client.GetIterationsAsync(project.ProjectId);
 
-                await client.DeleteProjectAsync(projectId);
+                    Assert.Equal(1, iterations.Count);
+                    Assert.NotEmpty(iterations[0].Name);
+                    Assert.NotEqual(Guid.Empty, iterations[0].DomainId);
+                    Assert.NotEqual(Guid.Empty, iterations[0].Id);
+                    Assert.Equal(project.ProjectId, iterations[0].ProjectId);
+                    Assert.Equal("Completed", iterations[0].Status);
+                    Assert.False(iterations[0].Exportable);
+
+                    var iteration = await client.GetIterationAsync(project.ProjectId, iterations[0].Id);
+                    Assert.Equal(iteration.Name, iterations[0].Name);
+                    Assert.Equal(iteration.Id, iterations[0].Id);
+                    Assert.Equal(TrainingType.Regular, iteration.TrainingType);
+                    Assert.Equal(0, iteration.ReservedBudgetInHours);
+                    Assert.NotEmpty(iteration.PublishName);
+                    Assert.Equal(BaseTests.PredictionResourceId, iteration.OriginalPublishResourceId);
+
+                    var updatedIteration = await client.UpdateIterationAsync(project.ProjectId, iteration.Id, new Iteration()
+                    {
+                        Name = updatedName
+                    });
+
+                    Assert.Equal(updatedName, updatedIteration.Name);
+
+                }
             }
         }
 
@@ -338,32 +353,31 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetIterationPerformance", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
+                using (var project = CreateTrainedImageClassificationProject())
+                {
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                    var iterations = await client.GetIterationsAsync(project.ProjectId);
 
-                var iterations = client.GetIterationsAsync(projectId).Result;
+                    Assert.True(iterations.Count > 0);
 
-                Assert.True(iterations.Count > 0);
-
-                var iterationPerf = client.GetIterationPerformanceAsync(projectId, iterations[iterations.Count - 1].Id, 0.9).Result;
-                Assert.Equal(1, iterationPerf.Recall);
-                Assert.Equal(0, iterationPerf.RecallStdDeviation);
-                Assert.Equal(1, iterationPerf.Precision);
-                Assert.Equal(0, iterationPerf.PrecisionStdDeviation);
-                Assert.Equal(2, iterationPerf.PerTagPerformance.Count);
-                Assert.Equal("Tag1", iterationPerf.PerTagPerformance[0].Name);
-                Assert.Equal(1, iterationPerf.PerTagPerformance[0].Recall);
-                Assert.Equal(0, iterationPerf.PerTagPerformance[0].RecallStdDeviation);
-                Assert.Equal(1, iterationPerf.PerTagPerformance[0].Precision);
-                Assert.Equal(0, iterationPerf.PerTagPerformance[0].PrecisionStdDeviation);
-                Assert.Equal("Tag2", iterationPerf.PerTagPerformance[1].Name);
-                Assert.Equal(1, iterationPerf.PerTagPerformance[1].Recall);
-                Assert.Equal(0, iterationPerf.PerTagPerformance[1].RecallStdDeviation);
-                Assert.Equal(1, iterationPerf.PerTagPerformance[1].Precision);
-                Assert.Equal(0, iterationPerf.PerTagPerformance[1].PrecisionStdDeviation);
-
-                await client.DeleteProjectAsync(projectId);
+                    var iterationPerf = await client.GetIterationPerformanceAsync(project.ProjectId, iterations[iterations.Count - 1].Id, 0.9);
+                    Assert.Equal(1, iterationPerf.Recall);
+                    Assert.Equal(0, iterationPerf.RecallStdDeviation);
+                    Assert.Equal(1, iterationPerf.Precision);
+                    Assert.Equal(0, iterationPerf.PrecisionStdDeviation);
+                    Assert.Equal(2, iterationPerf.PerTagPerformance.Count);
+                    Assert.Equal("Tag1", iterationPerf.PerTagPerformance[0].Name);
+                    Assert.Equal(1, iterationPerf.PerTagPerformance[0].Recall);
+                    Assert.Equal(0, iterationPerf.PerTagPerformance[0].RecallStdDeviation);
+                    Assert.Equal(1, iterationPerf.PerTagPerformance[0].Precision);
+                    Assert.Equal(0, iterationPerf.PerTagPerformance[0].PrecisionStdDeviation);
+                    Assert.Equal("Tag2", iterationPerf.PerTagPerformance[1].Name);
+                    Assert.Equal(1, iterationPerf.PerTagPerformance[1].Recall);
+                    Assert.Equal(0, iterationPerf.PerTagPerformance[1].RecallStdDeviation);
+                    Assert.Equal(1, iterationPerf.PerTagPerformance[1].Precision);
+                    Assert.Equal(0, iterationPerf.PerTagPerformance[1].PrecisionStdDeviation);
+                }
             }
         }
 
@@ -374,66 +388,75 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ExportTests", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject(ExportableDomain);
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var iterations = await client.GetIterationsAsync(projectId);
-                var exportableIteration = iterations.FirstOrDefault(e => e.Exportable);
-                Assert.NotNull(exportableIteration);
-
-                var export = await client.ExportIterationAsync(projectId, exportableIteration.Id, "TensorFlow");
-
-                Assert.Equal("Exporting", export.Status);
-                Assert.Null(export.DownloadUri);
-                Assert.Equal("TensorFlow", export.Platform);
-                Assert.False(export.NewerVersionAvailable);
-
-                while (export.Status != "Done")
+                using (var project = CreateTrainedImageClassificationProject(ProjectBuilderHelper.ExportableDomain))
                 {
-                    var exports = await client.GetExportsAsync(projectId, exportableIteration.Id);
-                    Assert.Equal(1, exports.Count);
-                    export = exports.Where(e => e.Platform == "TensorFlow").FirstOrDefault();
-                    Assert.NotNull(export);
-                    Thread.Sleep(1000);
-                }
-                Assert.NotEmpty(export.DownloadUri);
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                await client.DeleteProjectAsync(projectId);
+                    var iterations = await client.GetIterationsAsync(project.ProjectId);
+                    var exportableIteration = iterations.FirstOrDefault(e => e.Exportable);
+                    Assert.NotNull(exportableIteration);
+
+                    var export = await client.ExportIterationAsync(project.ProjectId, exportableIteration.Id, ExportPlatform.TensorFlow);
+
+                    Assert.Equal("Exporting", export.Status);
+                    Assert.Null(export.DownloadUri);
+                    Assert.Equal(ExportPlatform.TensorFlow, export.Platform);
+                    Assert.False(export.NewerVersionAvailable);
+
+                    while (export.Status != "Done")
+                    {
+                        var exports = await client.GetExportsAsync(project.ProjectId, exportableIteration.Id);
+                        Assert.Equal(1, exports.Count);
+                        export = exports.Where(e => e.Platform == ExportPlatform.TensorFlow).FirstOrDefault();
+                        Assert.NotNull(export);
+                        Thread.Sleep(1000);
+                    }
+                    Assert.NotEmpty(export.DownloadUri);
+                }
             }
         }
 
         [Fact]
-        public async void TrainProject()
+        public async void TrainAndPublishProject()
         {
             using (MockContext context = MockContext.Start(this.GetType().Name))
             {
-                HttpMockServer.Initialize(this.GetType().Name, "TrainProject", RecorderMode);
+                HttpMockServer.Initialize(this.GetType().Name, "TrainAndPublishProject", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
+                using (var project = CreateTrainedImageClassificationProject())
+                {
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                    // Remove the last trained iteration so we can retrain
+                    var iterationToDelete = client.GetIteration(project.ProjectId, project.IterationId);
 
-                // Remove the last iteration so we can retrain
-                var iterations = await client.GetIterationsAsync(projectId);
-                var iterationToDelete = iterations[iterations.Count - 1];
-                iterationToDelete.IsDefault = false;
-                await client.UpdateIterationAsync(projectId, iterationToDelete.Id, iterationToDelete);
-                await client.DeleteIterationAsync(projectId, iterationToDelete.Id);
+                    var originalPublishName = iterationToDelete.PublishName;
+                    await client.UnpublishIterationAsync(project.ProjectId, iterationToDelete.Id);
+                    await client.DeleteIterationAsync(project.ProjectId, iterationToDelete.Id);
 
-                // Need to ensure we wait 1 second between training calls from the previous project. Or
-                // We get 429s.
-                Thread.Sleep(1000);
-                var trainedIteration = await client.TrainProjectAsync(projectId);
+                    // Need to ensure we wait 1 second between training calls from the previous project.Or
+                    // We get 429s.
+                    Thread.Sleep(1000);
+                    var trainedIteration = await client.TrainProjectAsync(project.ProjectId);
 
-                Assert.NotEqual(iterationToDelete.Name, trainedIteration.Name);
-                Assert.NotEqual(iterationToDelete.Id, trainedIteration.Id);
-                Assert.NotEqual(Guid.Empty, trainedIteration.Id);
-                Assert.False(trainedIteration.IsDefault);
-                Assert.True("Staging" == trainedIteration.Status || "Training" == trainedIteration.Status);
-                Assert.False(trainedIteration.Exportable);
+                    Assert.NotEqual(iterationToDelete.Name, trainedIteration.Name);
+                    Assert.NotEqual(iterationToDelete.Id, trainedIteration.Id);
+                    Assert.NotEqual(Guid.Empty, trainedIteration.Id);
+                    Assert.True("Staging" == trainedIteration.Status || "Training" == trainedIteration.Status);
+                    Assert.False(trainedIteration.Exportable);
+                    Assert.Null(trainedIteration.PublishName);
 
-                await client.DeleteProjectAsync(projectId);
+                    // Wait for training to complete.
+                    while (trainedIteration.Status != "Completed")
+                    {
+                        Thread.Sleep(1000);
+                        trainedIteration = client.GetIteration(project.ProjectId, trainedIteration.Id);
+                    }
+
+                    // Verify we can republish using same name
+                    Assert.True(client.PublishIteration(project.ProjectId, trainedIteration.Id, originalPublishName, BaseTests.PredictionResourceId));
+                    project.IterationId = trainedIteration.Id;
+                }
             }
         }
 
@@ -444,33 +467,31 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetTaggedImages", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var images = client.GetTaggedImagesAsync(projectId).Result;
-                var tag1 = images[0].Tags[0].TagId;
-
-                var imagesWithTag1 = 0;
-
-                Assert.Equal(10, images.Count);
-                foreach (var image in images)
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = GetTrainingClient())
                 {
-                    Assert.NotEqual(Guid.Empty, image.Id);
-                    Assert.NotEmpty(image.OriginalImageUri);
-                    Assert.NotEmpty(image.ResizedImageUri);
-                    Assert.NotEmpty(image.ThumbnailUri);
-                    Assert.NotEqual(0, image.Width);
-                    Assert.NotEqual(0, image.Height);
-                    Assert.Equal(1, image.Tags.Count);
-                    if (image.Tags[0].TagId == tag1)
-                        imagesWithTag1++;
+                    var images = await client.GetTaggedImagesAsync(project.ProjectId);
+                    var tag1 = images[0].Tags[0].TagId;
+
+                    var imagesWithTag1 = 0;
+
+                    Assert.Equal(10, images.Count);
+                    foreach (var image in images)
+                    {
+                        Assert.NotEqual(Guid.Empty, image.Id);
+                        Assert.NotEmpty(image.OriginalImageUri);
+                        Assert.NotEmpty(image.ResizedImageUri);
+                        Assert.NotEmpty(image.ThumbnailUri);
+                        Assert.NotEqual(0, image.Width);
+                        Assert.NotEqual(0, image.Height);
+                        Assert.Equal(1, image.Tags.Count);
+                        if (image.Tags[0].TagId == tag1)
+                            imagesWithTag1++;
+                    }
+
+                    var tag1Images = await client.GetTaggedImagesAsync(project.ProjectId, null, new Guid[] { tag1 });
+                    Assert.Equal(imagesWithTag1, tag1Images.Count);
                 }
-
-                var tag1Images = client.GetTaggedImagesAsync(projectId, null, new string[] { tag1.ToString() }).Result;
-                Assert.Equal(imagesWithTag1, tag1Images.Count);
-
-                await client.DeleteProjectAsync(projectId);
             }
         }
 
@@ -481,14 +502,13 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetUntaggedImages", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
+                using (var project = CreateTrainedImageClassificationProject())
+                {
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var images = client.GetUntaggedImagesAsync(projectId).Result;
-                Assert.Equal(0, images.Count);
-
-                await client.DeleteProjectAsync(projectId);
+                    var images = await client.GetUntaggedImagesAsync(project.ProjectId);
+                    Assert.Equal(0, images.Count);
+                }
             }
         }
 
@@ -499,32 +519,31 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ImageTagManipulation", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
+                using (var project = CreateTrainedImageClassificationProject())
+                {
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                    var untaggedImages = client.GetUntaggedImagesAsync(project.ProjectId).Result;
+                    Assert.Equal(0, untaggedImages.Count);
 
-                var untaggedImages = client.GetUntaggedImagesAsync(projectId).Result;
-                Assert.Equal(0, untaggedImages.Count);
+                    var taggedImages = client.GetTaggedImagesAsync(project.ProjectId).Result;
+                    Assert.Equal(10, taggedImages.Count);
 
-                var taggedImages = client.GetTaggedImagesAsync(projectId).Result;
-                Assert.Equal(10, taggedImages.Count);
+                    var imageToBeModified = taggedImages[0].Id;
+                    var tagToBeModified = taggedImages[0].Tags[0].TagId;
 
-                var imageToBeModified = taggedImages[0].Id;
-                var tagToBeModified = taggedImages[0].Tags[0].TagId;
+                    await client.DeleteImageTagsAsync(project.ProjectId, new Guid[] { imageToBeModified }, new Guid[] { tagToBeModified });
 
-                await client.DeleteImageTagsAsync(projectId, new string[] { imageToBeModified.ToString() }, new string[] { tagToBeModified.ToString() });
+                    untaggedImages = client.GetUntaggedImagesAsync(project.ProjectId).Result;
+                    Assert.Equal(1, untaggedImages.Count);
 
-                untaggedImages = client.GetUntaggedImagesAsync(projectId).Result;
-                Assert.Equal(1, untaggedImages.Count);
+                    var imageTags = new ImageTagCreateEntry(imageToBeModified, tagToBeModified);
+                    var result = client.CreateImageTagsAsync(project.ProjectId, new ImageTagCreateBatch(new ImageTagCreateEntry[] { imageTags })).Result;
 
-                var imageTags = new ImageTagCreateEntry(imageToBeModified, tagToBeModified);
-                var result = client.CreateImageTagsAsync(projectId, new ImageTagCreateBatch(new ImageTagCreateEntry[] { imageTags })).Result;
-
-                Assert.Equal(1, result.Created.Count);
-                Assert.Equal(imageToBeModified, result.Created[0].ImageId);
-                Assert.Equal(tagToBeModified, result.Created[0].TagId);
-
-                await client.DeleteProjectAsync(projectId);
+                    Assert.Equal(1, result.Created.Count);
+                    Assert.Equal(imageToBeModified, result.Created[0].ImageId);
+                    Assert.Equal(tagToBeModified, result.Created[0].TagId);
+                }
             }
         }
 
@@ -535,18 +554,19 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DeleteImages", RecorderMode);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var projectId = (await client.CreateProjectAsync(projName)).Id;
 
-                var projectId = (await client.CreateProjectAsync(projName)).Id;
+                    string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
+                    var urlImages = new ImageUrlCreateEntry[] { new ImageUrlCreateEntry(imageUrl) };
+                    var result = client.CreateImagesFromUrlsAsync(projectId, new ImageUrlCreateBatch(urlImages)).Result;
+                    Assert.True(result.IsBatchSuccessful);
+                    Assert.Equal(1, result.Images.Count);
 
-                string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-                var urlImages = new ImageUrlCreateEntry[] { new ImageUrlCreateEntry(imageUrl) };
-                var result = client.CreateImagesFromUrlsAsync(projectId, new ImageUrlCreateBatch(urlImages)).Result;
-                Assert.True(result.IsBatchSuccessful);
-                Assert.Equal(1, result.Images.Count);
-
-                await client.DeleteImagesAsync(projectId, new string[] { result.Images[0].Image.Id.ToString() });
-                await client.DeleteProjectAsync(projectId);
+                    await client.DeleteImagesAsync(projectId, new Guid[] { result.Images[0].Image.Id });
+                    await client.DeleteProjectAsync(projectId);
+                }
             }
         }
 
@@ -559,31 +579,29 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "QuickTests", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                using (FileStream stream = new FileStream(Path.Combine("TestImages", dataFileName), FileMode.Open))
+                using (var project = CreateTrainedImageClassificationProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
                 {
-                    var imageResult = await client.QuickTestImageAsync(projectId, stream);
-                    Assert.NotEqual(Guid.Empty, imageResult.Id);
-                    Assert.NotEqual(Guid.Empty, imageResult.Iteration);
-                    Assert.Equal(projectId, imageResult.Project);
-                    Assert.NotEqual(0, imageResult.Predictions.Count);
-                    Assert.InRange(imageResult.Predictions[0].Probability, 0.9, 1);
-                    Assert.Equal("Tag1", imageResult.Predictions[0].TagName);
+                    using (FileStream stream = new FileStream(Path.Combine("TestImages", dataFileName), FileMode.Open))
+                    {
+                        var imageResult = await client.QuickTestImageAsync(project.ProjectId, stream, project.IterationId);
+                        Assert.NotEqual(Guid.Empty, imageResult.Id);
+                        Assert.NotEqual(Guid.Empty, imageResult.Iteration);
+                        Assert.Equal(project.ProjectId, imageResult.Project);
+                        Assert.NotEqual(0, imageResult.Predictions.Count);
+                        Assert.InRange(imageResult.Predictions[0].Probability, 0.9, 1);
+                        Assert.Equal("Tag1", imageResult.Predictions[0].TagName);
+                    }
+
+                    string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
+                    var urlResult = await client.QuickTestImageUrlAsync(project.ProjectId, new ImageUrl(imageUrl), project.IterationId);
+                    Assert.NotEqual(Guid.Empty, urlResult.Id);
+                    Assert.NotEqual(Guid.Empty, urlResult.Iteration);
+                    Assert.Equal(project.ProjectId, urlResult.Project);
+                    Assert.NotEqual(0, urlResult.Predictions.Count);
+                    Assert.InRange(urlResult.Predictions[0].Probability, 0.9, 1);
+                    Assert.Equal("Tag1", urlResult.Predictions[0].TagName);
                 }
-
-                string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-                var urlResult = await client.QuickTestImageUrlAsync(projectId, new ImageUrl(imageUrl));
-                Assert.NotEqual(Guid.Empty, urlResult.Id);
-                Assert.NotEqual(Guid.Empty, urlResult.Iteration);
-                Assert.Equal(projectId, urlResult.Project);
-                Assert.NotEqual(0, urlResult.Predictions.Count);
-                Assert.InRange(urlResult.Predictions[0].Probability, 0.9, 1);
-                Assert.Equal("Tag1", urlResult.Predictions[0].TagName);
-
-                await client.DeleteProjectAsync(projectId);
             }
         }
 
@@ -594,20 +612,19 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "CreateImagesFromPredictions", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
+                using (var project = CreateTrainedImageClassificationProject())
+                {
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                    string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
+                    var predictionResult = await client.QuickTestImageUrlAsync(project.ProjectId, new ImageUrl(imageUrl), project.IterationId);
 
-                string imageUrl = "https://raw.githubusercontent.com/Microsoft/Cognitive-CustomVision-Windows/master/Samples/Images/Test/test_image.jpg";
-                var predictionResult = client.QuickTestImageUrlAsync(projectId, new ImageUrl(imageUrl)).Result;
+                    var i = new ImageIdCreateEntry[] { new ImageIdCreateEntry(predictionResult.Id) };
+                    var result = await client.CreateImagesFromPredictionsAsync(project.ProjectId, new ImageIdCreateBatch(i));
 
-                var i = new ImageIdCreateEntry[] { new ImageIdCreateEntry(predictionResult.Id) };
-                var result = client.CreateImagesFromPredictionsAsync(projectId, new ImageIdCreateBatch(i)).Result;
-
-                Assert.Equal(1, result.Images.Count);
-                Assert.NotEmpty(result.Images[0].SourceUrl);
-
-                await client.DeleteProjectAsync(projectId);
+                    Assert.Equal(1, result.Images.Count);
+                    Assert.NotEmpty(result.Images[0].SourceUrl);
+                }
             }
         }
 
@@ -618,29 +635,28 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "QueryPredictionResults", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var token = new PredictionQueryToken()
+                using (var project = CreateTrainedImageClassificationProject())
                 {
-                    OrderBy = "Newest",
-                };
-                var result = client.QueryPredictionsAsync(projectId, token).Result;
-                Assert.NotEqual(0, result.Results.Count);
-                foreach (var prediction in result.Results)
-                {
-                    Assert.Equal(projectId, prediction.Project);
-                    Assert.NotEqual(Guid.Empty, prediction.Id);
-                    Assert.NotEqual(Guid.Empty, prediction.Iteration);
-                    Assert.NotEmpty(prediction.ThumbnailUri);
-                    Assert.NotEmpty(prediction.OriginalImageUri);
-                    Assert.NotEmpty(prediction.ResizedImageUri);
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                    Assert.NotEqual(0, prediction.Predictions.Count);
+                    var token = new PredictionQueryToken()
+                    {
+                        OrderBy = "Newest",
+                    };
+                    var result = await client.QueryPredictionsAsync(project.ProjectId, token);
+                    Assert.NotEqual(0, result.Results.Count);
+                    foreach (var prediction in result.Results)
+                    {
+                        Assert.Equal(project.ProjectId, prediction.Project);
+                        Assert.NotEqual(Guid.Empty, prediction.Id);
+                        Assert.NotEqual(Guid.Empty, prediction.Iteration);
+                        Assert.NotEmpty(prediction.ThumbnailUri);
+                        Assert.NotEmpty(prediction.OriginalImageUri);
+                        Assert.NotEmpty(prediction.ResizedImageUri);
+
+                        Assert.NotEqual(0, prediction.Predictions.Count);
+                    }
                 }
-
-                await client.DeleteProjectAsync(projectId);
             }
         }
 
@@ -651,19 +667,19 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DeletePrediction", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var token = new PredictionQueryToken()
+                using (var project = CreateTrainedImageClassificationProject())
                 {
-                    OrderBy = "Newest",
-                };
-                var result = client.QueryPredictionsAsync(projectId, token).Result;
-                Assert.NotEqual(0, result.Results.Count);
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                await client.DeletePredictionAsync(projectId, new string[] { result.Results[result.Results.Count - 1].Id.ToString() });
-                await client.DeleteProjectAsync(projectId);
+                    var token = new PredictionQueryToken()
+                    {
+                        OrderBy = "Newest",
+                    };
+                    var result = client.QueryPredictionsAsync(project.ProjectId, token).Result;
+                    Assert.NotEqual(0, result.Results.Count);
+
+                    await client.DeletePredictionAsync(project.ProjectId, new Guid[] { result.Results[result.Results.Count - 1].Id });
+                }
             }
         }
 
@@ -674,31 +690,30 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "GetImagesByIds", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var tags = await client.GetTagsAsync(projectId);
-                var imagesForTag = await client.GetTaggedImagesAsync(projectId, null, new List<string>(new string[] { tags[0].Id.ToString() }));
-                Assert.Equal(5, imagesForTag.Count);
-
-                var images = await client.GetImagesByIdsAsync(projectId, imagesForTag.Select(img => img.Id.ToString()).ToList());
-                Assert.Equal(5, images.Count);
-
-                foreach (var image in images)
+                using (var project = CreateTrainedImageClassificationProject())
                 {
-                    Assert.Equal(1, image.Tags.Count);
-                    var tag = image.Tags[0];
-                    Assert.Equal(tags[0].Id, tag.TagId);
-                    Assert.Equal(tags[0].Name, tag.TagName);
-                    Assert.NotNull(image.ThumbnailUri);
-                    Assert.NotEmpty(image.OriginalImageUri);
-                    Assert.NotEmpty(image.ResizedImageUri);
-                    Assert.True(image.Width > 0);
-                    Assert.True(image.Height > 0);
-                }
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                await client.DeleteProjectAsync(projectId);
+                    var tags = await client.GetTagsAsync(project.ProjectId);
+                    var imagesForTag = await client.GetTaggedImagesAsync(project.ProjectId, null, new List<Guid>(new Guid[] { tags[0].Id }));
+                    Assert.Equal(5, imagesForTag.Count);
+
+                    var images = await client.GetImagesByIdsAsync(project.ProjectId, imagesForTag.Select(img => img.Id).ToList());
+                    Assert.Equal(5, images.Count);
+
+                    foreach (var image in images)
+                    {
+                        Assert.Equal(1, image.Tags.Count);
+                        var tag = image.Tags[0];
+                        Assert.Equal(tags[0].Id, tag.TagId);
+                        Assert.Equal(tags[0].Name, tag.TagName);
+                        Assert.NotNull(image.ThumbnailUri);
+                        Assert.NotEmpty(image.OriginalImageUri);
+                        Assert.NotEmpty(image.ResizedImageUri);
+                        Assert.True(image.Width > 0);
+                        Assert.True(image.Height > 0);
+                    }
+                }
             }
         }
 
@@ -709,21 +724,20 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ImageCounts", RecorderMode);
 
-                var projectId = CreateTrainedImageClassificationProject();
+                using (var project = CreateTrainedImageClassificationProject())
+                {
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                    var taggedImageCount = await client.GetTaggedImageCountAsync(project.ProjectId);
+                    Assert.Equal(10, taggedImageCount);
 
-                var taggedImageCount = await client.GetTaggedImageCountAsync(projectId);
-                Assert.Equal(10, taggedImageCount);
+                    var untaggedImageCount = await client.GetUntaggedImageCountAsync(project.ProjectId);
+                    Assert.Equal(0, untaggedImageCount);
 
-                var untaggedImageCount = await client.GetUntaggedImageCountAsync(projectId);
-                Assert.Equal(0, untaggedImageCount);
-
-                var iterationId = (await client.GetIterationsAsync(projectId))[0].Id;
-                var imagePerfCount = await client.GetImagePerformanceCountAsync(projectId, iterationId);
-                Assert.Equal(10, imagePerfCount);
-
-                await client.DeleteProjectAsync(projectId);
+                    var iterationId = (await client.GetIterationsAsync(project.ProjectId))[0].Id;
+                    var imagePerfCount = await client.GetImagePerformanceCountAsync(project.ProjectId, iterationId);
+                    Assert.Equal(2, imagePerfCount);
+                }
             }
         }
 
@@ -734,19 +748,20 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "DownloadRegions", RecorderMode);
 
-                var projectId = CreateTrainedObjDetectionProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
-                var images = await client.GetTaggedImagesAsync(projectId);
-                foreach (var img in images)
+                using (var project = CreateTrainedObjDetectionProject())
                 {
-                    Assert.NotNull(img.Regions);
-                    Assert.Equal(1, img.Regions.Count);
-                    Assert.InRange(img.Regions[0].Left, 0, 1);
-                    Assert.InRange(img.Regions[0].Top, 0, 1);
-                    Assert.InRange(img.Regions[0].Width, 0, 1);
-                    Assert.InRange(img.Regions[0].Height, 0, 1);
+                    ICustomVisionTrainingClient client = BaseTests.GetTrainingClient();
+
+                    var images = await client.GetTaggedImagesAsync(project.ProjectId);
+                    foreach (var img in images)
+                    {
+                        Assert.NotNull(img.Regions);
+                        Assert.Equal(1, img.Regions.Count);
+                        Assert.InRange(img.Regions[0].Left, 0, 1);
+                        Assert.InRange(img.Regions[0].Top, 0, 1);
+                        Assert.InRange(img.Regions[0].Width, 0, 1);
+                        Assert.InRange(img.Regions[0].Height, 0, 1);
+                    }
                 }
             }
         }
@@ -758,48 +773,48 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "RegionManipulation", RecorderMode);
 
-                var projectId = CreateTrainedObjDetectionProject();
+                using (var project = CreateTrainedObjDetectionProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
+                {
+                    var existingImage = (await client.GetTaggedImagesAsync(project.ProjectId)).First();
+                    Assert.NotNull(existingImage);
 
-                ICustomVisionTrainingClient client = GetTrainingClient();
+                    var testTag = await client.CreateTagAsync(project.ProjectId, tagName);
 
-                var existingImage = (await client.GetTaggedImagesAsync(projectId)).First();
-                Assert.NotNull(existingImage);
+                    var proposal = await client.GetImageRegionProposalsAsync(project.ProjectId, existingImage.Id);
+                    Assert.True(proposal.Proposals.Count > 0);
+                    Assert.Equal(project.ProjectId, proposal.ProjectId);
+                    Assert.Equal(existingImage.Id, proposal.ImageId);
+                    Assert.InRange(proposal.Proposals[0].Confidence, 0, 1);
 
-                var testTag = await client.CreateTagAsync(projectId, tagName);
+                    var bbox = proposal.Proposals[0].BoundingBox;
+                    List<ImageRegionCreateEntry> newRegions = new List<ImageRegionCreateEntry>();
+                    newRegions.Add(new ImageRegionCreateEntry(existingImage.Id, testTag.Id, bbox.Left, bbox.Top, bbox.Width, bbox.Height));
 
-                var proposal = await client.GetImageRegionProposalsAsync(projectId, existingImage.Id);
-                Assert.True(proposal.Proposals.Count > 0);
-                Assert.Equal(projectId, proposal.ProjectId);
-                Assert.Equal(existingImage.Id, proposal.ImageId);
-                Assert.InRange(proposal.Proposals[0].Confidence, 0, 1);
+                    var regions = await client.CreateImageRegionsAsync(project.ProjectId, new ImageRegionCreateBatch(newRegions));
+                    Assert.Equal(1, regions.Created.Count);
+                    Assert.Equal(0, regions.Duplicated.Count);
+                    Assert.Equal(0, regions.Exceeded.Count);
+                    Assert.Equal(bbox.Top, regions.Created[0].Top);
+                    Assert.Equal(bbox.Left, regions.Created[0].Left);
+                    Assert.Equal(bbox.Width, regions.Created[0].Width);
+                    Assert.Equal(bbox.Height, regions.Created[0].Height);
+                    Assert.Equal(existingImage.Id, regions.Created[0].ImageId);
+                    Assert.Equal(testTag.Id, regions.Created[0].TagId);
+                    Assert.NotEqual(Guid.Empty, regions.Created[0].RegionId);
 
-                var bbox = proposal.Proposals[0].BoundingBox;
-                List<ImageRegionCreateEntry> newRegions = new List<ImageRegionCreateEntry>();
-                newRegions.Add(new ImageRegionCreateEntry(existingImage.Id, testTag.Id, bbox.Left, bbox.Top, bbox.Width, bbox.Height));
+                    var image = await client.GetImagesByIdsAsync(project.ProjectId, new List<Guid>(new Guid[] { existingImage.Id }));
+                    Assert.Equal(1, image.Count);
+                    Assert.Equal(2, image[0].Regions.Count);
 
-                var regions = await client.CreateImageRegionsAsync(projectId, new ImageRegionCreateBatch(newRegions));
-                Assert.Equal(1, regions.Created.Count);
-                Assert.Equal(0, regions.Duplicated.Count);
-                Assert.Equal(0, regions.Exceeded.Count);
-                Assert.Equal(bbox.Top, regions.Created[0].Top);
-                Assert.Equal(bbox.Left, regions.Created[0].Left);
-                Assert.Equal(bbox.Width, regions.Created[0].Width);
-                Assert.Equal(bbox.Height, regions.Created[0].Height);
-                Assert.Equal(existingImage.Id, regions.Created[0].ImageId);
-                Assert.Equal(testTag.Id, regions.Created[0].TagId);
-                Assert.NotEqual(Guid.Empty, regions.Created[0].RegionId);
+                    await client.DeleteImageRegionsAsync(project.ProjectId, new List<Guid>(new Guid[] { regions.Created[0].RegionId }));
 
-                var image = await client.GetImagesByIdsAsync(projectId, new List<string>(new string[] { existingImage.Id.ToString() }));
-                Assert.Equal(1, image.Count);
-                Assert.Equal(2, image[0].Regions.Count);
+                    image = await client.GetImagesByIdsAsync(project.ProjectId, new List<Guid>(new Guid[] { existingImage.Id }));
+                    Assert.Equal(1, image.Count);
+                    Assert.Equal(1, image[0].Regions.Count);
 
-                await client.DeleteImageRegionsAsync(projectId, new List<string>(new string[] { regions.Created[0].RegionId.ToString() }));
-
-                image = await client.GetImagesByIdsAsync(projectId, new List<string>(new string[] { existingImage.Id.ToString() }));
-                Assert.Equal(1, image.Count);
-                Assert.Equal(1, image[0].Regions.Count);
-
-                await client.DeleteTagAsync(projectId, testTag.Id);
+                    await client.DeleteTagAsync(project.ProjectId, testTag.Id);
+                }
             }
         }
 
@@ -810,16 +825,14 @@
             {
                 HttpMockServer.Initialize(this.GetType().Name, "ObjDetectionPrediction", RecorderMode);
 
-                var projectId = CreateTrainedObjDetectionProject();
-
-                ICustomVisionTrainingClient client = GetTrainingClient();
-
+                using (var project = CreateTrainedObjDetectionProject())
+                using (ICustomVisionTrainingClient client = BaseTests.GetTrainingClient())
                 using (FileStream stream = new FileStream(Path.Combine("TestImages", "od_test_image.jpg"), FileMode.Open))
                 {
-                    var imageResult = await client.QuickTestImageAsync(projectId, stream);
+                    var imageResult = await client.QuickTestImageAsync(project.ProjectId, stream, project.IterationId);
                     Assert.NotEqual(Guid.Empty, imageResult.Id);
                     Assert.NotEqual(Guid.Empty, imageResult.Iteration);
-                    Assert.Equal(projectId, imageResult.Project);
+                    Assert.Equal(project.ProjectId, imageResult.Project);
                     Assert.NotEqual(0, imageResult.Predictions.Count);
                     Assert.InRange(imageResult.Predictions[0].Probability, 0.5, 1);
                     Assert.NotNull(imageResult.Predictions[0].BoundingBox);

@@ -43,6 +43,9 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sinkRetryWait">Sink retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the sink data store. Type: integer (or
+        /// Expression with resultType integer).</param>
         /// <param name="sqlWriterStoredProcedureName">SQL writer stored
         /// procedure name. Type: string (or Expression with resultType
         /// string).</param>
@@ -52,8 +55,8 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// Expression with resultType string).</param>
         /// <param name="storedProcedureParameters">SQL stored procedure
         /// parameters.</param>
-        public SqlSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait)
+        public SqlSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object sqlWriterStoredProcedureName = default(object), object sqlWriterTableType = default(object), object preCopyScript = default(object), IDictionary<string, StoredProcedureParameter> storedProcedureParameters = default(IDictionary<string, StoredProcedureParameter>))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             SqlWriterStoredProcedureName = sqlWriterStoredProcedureName;
             SqlWriterTableType = sqlWriterTableType;

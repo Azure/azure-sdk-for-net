@@ -51,7 +51,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         public LUISAuthoringClient Client { get; private set; }
 
         /// <summary>
-        /// Adds one pattern to the specified application.
+        /// Adds a pattern to a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Returns an application version's patterns.
+        /// Gets patterns in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<PatternRuleInfo>>> GetPatternsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<PatternRuleInfo>>> ListPatternsWithHttpMessagesAsync(System.Guid appId, string versionId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetPatterns", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListPatterns", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
@@ -414,7 +414,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Updates patterns
+        /// Updates patterns in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -586,7 +586,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Adds a batch of patterns to the specified application.
+        /// Adds a batch of patterns in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -758,7 +758,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Deletes the patterns with the specified IDs.
+        /// Deletes a list of patterns in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -930,7 +930,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Updates a pattern
+        /// Updates a pattern in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -1107,7 +1107,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Deletes the pattern with the specified ID.
+        /// Deletes the pattern with the specified ID from a version of the
+        /// application..
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -1270,7 +1271,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Returns patterns to be retrieved for the specific intent.
+        /// Returns patterns for the specific intent in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -1308,7 +1309,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<PatternRuleInfo>>> GetIntentPatternsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<PatternRuleInfo>>> ListIntentPatternsWithHttpMessagesAsync(System.Guid appId, string versionId, System.Guid intentId, int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.Endpoint == null)
             {
@@ -1343,7 +1344,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
                 tracingParameters.Add("skip", skip);
                 tracingParameters.Add("take", take);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetIntentPatterns", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListIntentPatterns", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;

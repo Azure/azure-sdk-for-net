@@ -1,4 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
     <PackageId>Common</PackageId>
     <Description>Azure Batch test common library</Description>
@@ -13,7 +14,8 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    <!-- TODO: Correct this back to $(SdkTargetFx) once management plane is updated to support net461 and netstandard2.0 -->
+    <TargetFrameworks>net452;netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>

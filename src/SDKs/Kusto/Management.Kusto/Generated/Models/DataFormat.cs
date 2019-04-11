@@ -19,5 +19,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public const string MULTIJSON = "MULTIJSON";
         public const string JSON = "JSON";
         public const string CSV = "CSV";
+        public const string TSV = "TSV";
+        public const string SCSV = "SCSV";
+        public const string SOHSV = "SOHSV";
+        public const string PSV = "PSV";
+        public const string TXT = "TXT";
+        public const string RAW = "RAW";
+        public const string SINGLEJSON = "SINGLEJSON";
+        public const string AVRO = "AVRO";
     }
 }

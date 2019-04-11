@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
     using System.Linq;
 
     /// <summary>
-    /// VMwareV2 fabric Specific Details.
+    /// VMwareV2 fabric specific details.
     /// </summary>
     [Newtonsoft.Json.JsonObject("VMwareV2")]
     public partial class VMwareV2FabricSpecificDetails : FabricSpecificDetails
@@ -32,18 +32,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// Initializes a new instance of the VMwareV2FabricSpecificDetails
         /// class.
         /// </summary>
-        /// <param name="srsServiceEndpoint">The endpoint for making requests
-        /// to the SRS Service.</param>
-        /// <param name="rcmServiceEndpoint">The endpoint for making requests
-        /// to the RCM Service.</param>
-        /// <param name="keyVaultUrl">The Key Vault URL.</param>
-        /// <param name="keyVaultResourceArmId">The Key Vault ARM Id.</param>
-        public VMwareV2FabricSpecificDetails(string srsServiceEndpoint = default(string), string rcmServiceEndpoint = default(string), string keyVaultUrl = default(string), string keyVaultResourceArmId = default(string))
+        /// <param name="vmwareSiteId">The ARM Id of the VMware site.</param>
+        /// <param name="migrationSolutionId">The Migration solution ARM
+        /// Id.</param>
+        /// <param name="serviceEndpoint">The service endpoint.</param>
+        public VMwareV2FabricSpecificDetails(string vmwareSiteId = default(string), string migrationSolutionId = default(string), string serviceEndpoint = default(string))
         {
-            SrsServiceEndpoint = srsServiceEndpoint;
-            RcmServiceEndpoint = rcmServiceEndpoint;
-            KeyVaultUrl = keyVaultUrl;
-            KeyVaultResourceArmId = keyVaultResourceArmId;
+            VmwareSiteId = vmwareSiteId;
+            MigrationSolutionId = migrationSolutionId;
+            ServiceEndpoint = serviceEndpoint;
             CustomInit();
         }
 
@@ -53,28 +50,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the endpoint for making requests to the SRS Service.
+        /// Gets the ARM Id of the VMware site.
         /// </summary>
-        [JsonProperty(PropertyName = "srsServiceEndpoint")]
-        public string SrsServiceEndpoint { get; set; }
+        [JsonProperty(PropertyName = "vmwareSiteId")]
+        public string VmwareSiteId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the endpoint for making requests to the RCM Service.
+        /// Gets the Migration solution ARM Id.
         /// </summary>
-        [JsonProperty(PropertyName = "rcmServiceEndpoint")]
-        public string RcmServiceEndpoint { get; set; }
+        [JsonProperty(PropertyName = "migrationSolutionId")]
+        public string MigrationSolutionId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the Key Vault URL.
+        /// Gets the service endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVaultUrl")]
-        public string KeyVaultUrl { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Key Vault ARM Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "keyVaultResourceArmId")]
-        public string KeyVaultResourceArmId { get; set; }
+        [JsonProperty(PropertyName = "serviceEndpoint")]
+        public string ServiceEndpoint { get; private set; }
 
     }
 }

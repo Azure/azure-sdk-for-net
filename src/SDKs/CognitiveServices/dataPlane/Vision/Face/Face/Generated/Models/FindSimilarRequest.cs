@@ -40,7 +40,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// candidate face list, created in Face List - Create a Face List.
         /// Face list contains a set of persistedFaceIds which are persisted
         /// and will never expire. Parameter faceListId, largeFaceListId and
-        /// faceIds should not be provided at the same time。</param>
+        /// faceIds should not be provided at the same time.</param>
         /// <param name="largeFaceListId">An existing user-specified unique
         /// candidate large face list, created in LargeFaceList - Create. Large
         /// face list contains a set of persistedFaceIds which are persisted
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// created in Face List - Create a Face List. Face list contains a set
         /// of persistedFaceIds which are persisted and will never expire.
         /// Parameter faceListId, largeFaceListId and faceIds should not be
-        /// provided at the same time。
+        /// provided at the same time.
         /// </summary>
         [JsonProperty(PropertyName = "faceListId")]
         public string FaceListId { get; set; }

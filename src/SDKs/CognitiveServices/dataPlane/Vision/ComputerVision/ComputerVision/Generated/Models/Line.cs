@@ -15,6 +15,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Json object representing a recognized text line.
+    /// </summary>
     public partial class Line
     {
         /// <summary>
@@ -28,6 +31,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <summary>
         /// Initializes a new instance of the Line class.
         /// </summary>
+        /// <param name="boundingBox">Bounding box of a recognized
+        /// line.</param>
+        /// <param name="text">The text content of the line.</param>
+        /// <param name="words">List of words in the text line.</param>
         public Line(IList<int> boundingBox = default(IList<int>), string text = default(string), IList<Word> words = default(IList<Word>))
         {
             BoundingBox = boundingBox;
@@ -42,16 +49,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets bounding box of a recognized line.
         /// </summary>
         [JsonProperty(PropertyName = "boundingBox")]
         public IList<int> BoundingBox { get; set; }
 
         /// <summary>
+        /// Gets or sets the text content of the line.
         /// </summary>
         [JsonProperty(PropertyName = "text")]
         public string Text { get; set; }
 
         /// <summary>
+        /// Gets or sets list of words in the text line.
         /// </summary>
         [JsonProperty(PropertyName = "words")]
         public IList<Word> Words { get; set; }

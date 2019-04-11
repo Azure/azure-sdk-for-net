@@ -20,18 +20,9 @@ namespace Kusto.Tests.ScenarioTests
         private const string LocationKey = "location";
         private const string SubIdKey = "SubId";
         private const string ApplicationIdKey = "ApplicationId";
-        public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubForClients/eventhubs/eventhubtest";
-        public string consumerGroupName = "consumergrouptest";
-        public string databaseForNestedResourceName = "testDbForClients";
-        public string clusterForNestedResourceName = "kustoclusterforclients";
-        public string resourceGroupForNestedResourcesName = "ofertestgroup";
-        public string locationForNestedResources = "Central US";
-        public string tableNameForNestedResources1 = "TestTableForClients";
-        public string tableNameForNestedResources2 = "TestTableForClients2";
-        public string MappingNameForNestedResources1 = "TestIngestionMappingForTable1";
-        public string MappingNameForNestedResources2 = "TestIngestionMappingForTable2";
-        public string dataFormat = "CSV";
-
+        public string eventHubResourceId = "/subscriptions/11d5f159-a21d-4a6c-8053-c3aae30057cf/resourceGroups/ofertestgroup/providers/Microsoft.EventHub/namespaces/eventHubNamespaceForClients/eventhubs/eventhubtest";
+        public string dBprincipalMail = "oflipman@microsoft.com";
+        public string consumerGroupName = "$Default";
 
 
         public string tenantId { get; set; }
@@ -46,15 +37,19 @@ namespace Kusto.Tests.ScenarioTests
         public Dictionary<string, string> tags { get; internal set; }
         public AzureSku sku1 { get; set; }
         public AzureSku sku2 { get; set; }
-        public int softDeletePeriodInDays1 { get; set; }
-        public int hotCachePeriodInDays1 { get; set; }
-        public int softDeletePeriodInDays2 { get; set; }
-        public int hotCachePeriodInDays2 { get; set; }
+        public TimeSpan? softDeletePeriod1 { get; set; }
+        public TimeSpan? hotCachePeriod1 { get; set; }
+        public TimeSpan? softDeletePeriod2 { get; set; }
+        public TimeSpan? hotCachePeriod2 { get; set; }
         public string eventHubName { get; set; }
         public Cluster cluster { get; set; }
         public Database database { get; set; }
-        public EventHubConnection eventhubConnection { get; set; }
+        public EventHubDataConnection eventhubConnection { get; set; }
         public List<TrustedExternalTenant> trustedExternalTenants { get; set; }
+        public string dataFormat { get; set; }
+        public List<DatabasePrincipal> databasePrincipals { get; set; }
+        public DatabasePrincipal databasePrincipal { get; set; }
+
 
         public KustoTestBase(MockContext context)
         {
@@ -103,17 +98,35 @@ namespace Kusto.Tests.ScenarioTests
             sku1 = new AzureSku(name: "D13_v2", capacity: 2);
             sku2 = new AzureSku(name: "D14_v2", capacity: 2);
 
-            trustedExternalTenants = new List<TrustedExternalTenant>(1) {new TrustedExternalTenant(this.tenantId)};
+            trustedExternalTenants = new List<TrustedExternalTenant>(1) { new TrustedExternalTenant(this.tenantId) };
 
-            hotCachePeriodInDays1 = 2;
-            softDeletePeriodInDays1 = 4;
+            hotCachePeriod1 = TimeSpan.FromDays(2);
+            softDeletePeriod1 = TimeSpan.FromDays(4);
 
-            hotCachePeriodInDays2 = 3;
-            softDeletePeriodInDays2 = 6;
+            hotCachePeriod2 = TimeSpan.FromDays(3);
+            softDeletePeriod2 = TimeSpan.FromDays(6);
+            dataFormat = "CSV";
 
             cluster = new Cluster(sku: new AzureSku(name: "D13_v2"), location: this.location, trustedExternalTenants: trustedExternalTenants);
-            database = new Database(this.location, softDeletePeriodInDays1, hotCachePeriodInDays: hotCachePeriodInDays1);
-            eventhubConnection = new EventHubConnection(eventHubResourceId, consumerGroupName, location: this.location, tableName: tableNameForNestedResources1, mappingRuleName: MappingNameForNestedResources1, dataFormat: dataFormat);
+            database = new Database(location: this.location, softDeletePeriod: softDeletePeriod1, hotCachePeriod: hotCachePeriod1);
+            eventhubConnection = new EventHubDataConnection(eventHubResourceId, consumerGroupName, location: this.location);
+
+            databasePrincipal = GetDatabasePrincipalList(dBprincipalMail, "Admin");
+            databasePrincipals = new List<DatabasePrincipal> {databasePrincipal};
         }
+
+        private DatabasePrincipal GetDatabasePrincipalList(string userEmail, string role)
+        {
+            return new DatabasePrincipal()
+            {
+                Name = "User1",
+                Email = userEmail,
+                Fqn = $"aaduser={userEmail}",
+                Role = role,
+                Type = "User",
+                AppId = ""
+            };
+        }
+
     }
 }

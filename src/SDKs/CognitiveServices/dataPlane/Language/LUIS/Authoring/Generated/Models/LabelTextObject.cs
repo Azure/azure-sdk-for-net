@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
     using System.Linq;
 
     /// <summary>
-    /// An object containing the example's text.
+    /// An object containing the example utterance's text.
     /// </summary>
     public partial class LabelTextObject
     {

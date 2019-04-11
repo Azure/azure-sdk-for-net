@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Linq;
 
     /// <summary>
-    /// User crendentials used for publishing activity.
+    /// User credentials used for publishing activity.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class Deployment : ProxyOnlyResource

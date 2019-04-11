@@ -4,23 +4,25 @@
       "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001?api-version=2017-05-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL3RvLWRlbGV0ZS0wMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dG9tYXRpb24vYXV0b21hdGlvbkFjY291bnRzL2Zicy1hYS0wMS9zb2Z0d2FyZVVwZGF0ZUNvbmZpZ3VyYXRpb25zL3Rlc3Qtc3VjLTAwMT9hcGktdmVyc2lvbj0yMDE3LTA1LTE1LXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical,Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n      ],\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n            ],\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"expiryTimeOffsetMinutes\": 0.0,\r\n      \"nextRunOffsetMinutes\": 0.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\"\r\n    },\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\"\r\n      },\r\n      \"postTask\": {\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        },\r\n        \"source\": \"postScript\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical,Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n      ],\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n            ],\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            }\r\n          }\r\n        ],\r\n        \"nonAzureQueries\": [\r\n          {\r\n            \"functionAlias\": \"SavedSearch1\",\r\n            \"workspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          },\r\n          {\r\n            \"functionAlias\": \"SavedSearch2\",\r\n            \"workspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"expiryTimeOffsetMinutes\": 0.0,\r\n      \"nextRunOffsetMinutes\": 0.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\"\r\n    },\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\"\r\n      },\r\n      \"postTask\": {\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        },\r\n        \"source\": \"postScript\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "83f9fb67-aaa5-4ff1-a36e-3659ce9e225d"
+          "3b52cc75-df3c-4979-abbc-66ffd6ce36e2"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1801"
+          "2330"
         ]
       },
       "ResponseHeaders": {
@@ -34,7 +36,7 @@
           "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001?api-version=2017-05-15-preview"
         ],
         "x-ms-request-id": [
-          "83f9fb67-aaa5-4ff1-a36e-3659ce9e225d"
+          "3b52cc75-df3c-4979-abbc-66ffd6ce36e2"
         ],
         "x-ms-location": [
           "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001?api-version=2017-05-15-preview"
@@ -46,7 +48,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -58,19 +60,19 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "adeaf443-26a0-4754-9c11-a8390659156e"
+          "3143a08e-9056-422e-a2cd-4897d1676f0d"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201122Z:adeaf443-26a0-4754-9c11-a8390659156e"
+          "WESTUS2:20190203T230236Z:3143a08e-9056-422e-a2cd-4897d1676f0d"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:22 GMT"
+          "Sun, 03 Feb 2019 23:02:36 GMT"
         ],
         "Content-Length": [
-          "1786"
+          "2185"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -79,7 +81,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n  \"name\": \"test-suc-001\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2018-10-23T13:10:14.95-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2018-10-23T13:11:22.343-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n  \"name\": \"test-suc-001\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ],\r\n        \"nonAzureQueries\": [\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch1\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          },\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch2\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2019-02-03T15:01:37.78-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2019-02-03T15:02:36.31-08:00\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -89,14 +91,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d0ec94da-a194-428e-ad21-31f31415acab"
+          "113f79f5-e989-44dd-9720-a34e0f8516dd"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -107,13 +111,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d0ec94da-a194-428e-ad21-31f31415acab"
+          "113f79f5-e989-44dd-9720-a34e0f8516dd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -122,22 +126,22 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11982"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "cabd8659-046a-4bc1-ad6e-d3a169d7a8d5"
+          "a6bfeb0d-d1e7-4ce2-a5ce-1adb6b6b4ec1"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201123Z:cabd8659-046a-4bc1-ad6e-d3a169d7a8d5"
+          "WESTUS2:20190203T230238Z:a6bfeb0d-d1e7-4ce2-a5ce-1adb6b6b4ec1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:23 GMT"
+          "Sun, 03 Feb 2019 23:02:38 GMT"
         ],
         "Content-Length": [
-          "1790"
+          "2189"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -146,7 +150,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n  \"name\": \"test-suc-001\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"2018-10-23T13:10:14.903-07:00\",\r\n      \"lastModifiedTime\": \"2018-10-23T13:11:22.28-07:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2018-10-23T13:10:14.95-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2018-10-23T13:11:22.343-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n  \"name\": \"test-suc-001\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ],\r\n        \"nonAzureQueries\": [\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch1\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          },\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch2\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"2019-02-03T15:01:37.59-08:00\",\r\n      \"lastModifiedTime\": \"2019-02-03T15:02:35.983-08:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2019-02-03T15:01:37.78-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2019-02-03T15:02:36.31-08:00\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -156,14 +160,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a1b5a2b2-5548-4678-b30e-d93a780bb6bc"
+          "fdefb7d0-8d1b-4972-b5c9-1b0f7b76b8db"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -174,13 +180,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a1b5a2b2-5548-4678-b30e-d93a780bb6bc"
+          "fdefb7d0-8d1b-4972-b5c9-1b0f7b76b8db"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -189,19 +195,19 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11978"
+          "11995"
         ],
         "x-ms-correlation-request-id": [
-          "8ae11b50-90b8-4540-bcab-89e7d799a3d6"
+          "2c1d32c8-ca36-4071-b55a-7031a5e4178c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201143Z:8ae11b50-90b8-4540-bcab-89e7d799a3d6"
+          "WESTUS2:20190203T230338Z:2c1d32c8-ca36-4071-b55a-7031a5e4178c"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:42 GMT"
+          "Sun, 03 Feb 2019 23:03:37 GMT"
         ],
         "Content-Length": [
           "71"
@@ -220,23 +226,25 @@
       "RequestUri": "/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002?api-version=2017-05-15-preview",
       "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvNDIyYjZjNjEtOTViMC00MjEzLWIzYmUtNzI4MjMxNWRmNzFkL3Jlc291cmNlR3JvdXBzL3RvLWRlbGV0ZS0wMS9wcm92aWRlcnMvTWljcm9zb2Z0LkF1dG9tYXRpb24vYXV0b21hdGlvbkFjY291bnRzL2Zicy1hYS0wMS9zb2Z0d2FyZVVwZGF0ZUNvbmZpZ3VyYXRpb25zL3Rlc3Qtc3VjLTAwMj9hcGktdmVyc2lvbj0yMDE3LTA1LTE1LXByZXZpZXc=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical,Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n      ],\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n            ],\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            }\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"expiryTimeOffsetMinutes\": 0.0,\r\n      \"nextRunOffsetMinutes\": 0.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\"\r\n    },\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\"\r\n      },\r\n      \"postTask\": {\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        },\r\n        \"source\": \"postScript\"\r\n      }\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical,Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n      ],\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n            ],\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            }\r\n          }\r\n        ],\r\n        \"nonAzureQueries\": [\r\n          {\r\n            \"functionAlias\": \"SavedSearch1\",\r\n            \"workspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          },\r\n          {\r\n            \"functionAlias\": \"SavedSearch2\",\r\n            \"workspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          }\r\n        ]\r\n      }\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"expiryTimeOffsetMinutes\": 0.0,\r\n      \"nextRunOffsetMinutes\": 0.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\"\r\n    },\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\"\r\n      },\r\n      \"postTask\": {\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        },\r\n        \"source\": \"postScript\"\r\n      }\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4848f24a-0d03-4851-bbd5-804d38046eed"
+          "9c17ec5d-4d22-4727-a2c0-a243b8a853df"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1948"
+          "2477"
         ]
       },
       "ResponseHeaders": {
@@ -250,7 +258,7 @@
           "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002?api-version=2017-05-15-preview"
         ],
         "x-ms-request-id": [
-          "4848f24a-0d03-4851-bbd5-804d38046eed"
+          "9c17ec5d-4d22-4727-a2c0-a243b8a853df"
         ],
         "x-ms-location": [
           "https://management.azure.com/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002?api-version=2017-05-15-preview"
@@ -262,7 +270,7 @@
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -274,19 +282,19 @@
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "031dd271-bfda-4895-b78f-2caef32f731a"
+          "4a0c5758-b006-4af9-ac08-1748644f4809"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201126Z:031dd271-bfda-4895-b78f-2caef32f731a"
+          "WESTUS2:20190203T230243Z:4a0c5758-b006-4af9-ac08-1748644f4809"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:25 GMT"
+          "Sun, 03 Feb 2019 23:02:42 GMT"
         ],
         "Content-Length": [
-          "1920"
+          "2322"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -295,7 +303,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n  \"name\": \"test-suc-002\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2018-10-23T13:10:15.983-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2018-10-23T13:11:26-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n  \"name\": \"test-suc-002\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ],\r\n        \"nonAzureQueries\": [\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch1\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          },\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch2\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"lastModifiedTime\": \"0001-01-01T00:00:00-08:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2019-02-03T15:01:39.2-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2019-02-03T15:02:42.907-08:00\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -305,14 +313,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "703e78b3-bd22-46dd-b25a-771f455fbdd2"
+          "f2a94d04-5fe1-47b0-8f48-19a1e1c01e94"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -323,13 +333,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "703e78b3-bd22-46dd-b25a-771f455fbdd2"
+          "f2a94d04-5fe1-47b0-8f48-19a1e1c01e94"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -338,22 +348,22 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11981"
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "f40dc528-cb40-4a64-950d-3e7a37cbb8f2"
+          "10f93cd6-222d-46d9-8a55-ecd972f10f56"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201127Z:f40dc528-cb40-4a64-950d-3e7a37cbb8f2"
+          "WESTUS2:20190203T230244Z:10f93cd6-222d-46d9-8a55-ecd972f10f56"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:27 GMT"
+          "Sun, 03 Feb 2019 23:02:44 GMT"
         ],
         "Content-Length": [
-          "1927"
+          "2329"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -362,7 +372,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n  \"name\": \"test-suc-002\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"2018-10-23T13:10:15.42-07:00\",\r\n      \"lastModifiedTime\": \"2018-10-23T13:11:25.453-07:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2018-10-23T13:10:15.983-07:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2018-10-23T13:11:26-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n  \"name\": \"test-suc-002\",\r\n  \"type\": null,\r\n  \"properties\": {\r\n    \"updateConfiguration\": {\r\n      \"operatingSystem\": \"Windows\",\r\n      \"windows\": {\r\n        \"includedUpdateClassifications\": \"Critical, Security\",\r\n        \"excludedKbNumbers\": [\r\n          \"KB123\",\r\n          \"KB123\"\r\n        ],\r\n        \"includedKbNumbers\": null,\r\n        \"rebootSetting\": \"IfRequired\",\r\n        \"IsInvalidKbNumbers\": false\r\n      },\r\n      \"linux\": null,\r\n      \"targets\": {\r\n        \"azureQueries\": [\r\n          {\r\n            \"scope\": [\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n              \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n            ],\r\n            \"tagSettings\": {\r\n              \"tags\": {\r\n                \"tag1\": [\r\n                  \"tag1Value1\",\r\n                  \"tag1Value2\"\r\n                ],\r\n                \"tag2\": [\r\n                  \"tag2Value1\",\r\n                  \"tag2Value2\"\r\n                ]\r\n              },\r\n              \"filterOperator\": \"All\"\r\n            },\r\n            \"locations\": [\r\n              \"Japan East\",\r\n              \"UK South\"\r\n            ]\r\n          }\r\n        ],\r\n        \"nonAzureQueries\": [\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch1\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          },\r\n          {\r\n            \"FunctionAlias\": \"SavedSearch2\",\r\n            \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n          }\r\n        ]\r\n      },\r\n      \"duration\": \"PT3H\",\r\n      \"azureVirtualMachines\": [\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n        \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n      ],\r\n      \"nonAzureComputerNames\": null\r\n    },\r\n    \"scheduleInfo\": {\r\n      \"description\": null,\r\n      \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n      \"startTimeOffsetMinutes\": -420.0,\r\n      \"expiryTime\": \"9999-12-31T15:59:00-08:00\",\r\n      \"expiryTimeOffsetMinutes\": -480.0,\r\n      \"isEnabled\": true,\r\n      \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n      \"nextRunOffsetMinutes\": -420.0,\r\n      \"interval\": 1,\r\n      \"frequency\": \"Day\",\r\n      \"creationTime\": \"2019-02-03T15:01:38.45-08:00\",\r\n      \"lastModifiedTime\": \"2019-02-03T15:02:42.047-08:00\",\r\n      \"timeZone\": \"America/Los_Angeles\",\r\n      \"advancedSchedule\": null\r\n    },\r\n    \"provisioningState\": \"Provisioning\",\r\n    \"createdBy\": \"{scrubbed}\",\r\n    \"error\": null,\r\n    \"tasks\": {\r\n      \"preTask\": {\r\n        \"source\": \"preScript\",\r\n        \"parameters\": {}\r\n      },\r\n      \"postTask\": {\r\n        \"source\": \"postScript\",\r\n        \"parameters\": {\r\n          \"Num\": \"4\"\r\n        }\r\n      }\r\n    },\r\n    \"creationTime\": \"2019-02-03T15:01:39.2-08:00\",\r\n    \"lastModifiedBy\": null,\r\n    \"lastModifiedTime\": \"2019-02-03T15:02:42.907-08:00\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
@@ -372,14 +382,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "cdae63d3-81c3-480a-b831-dbdfaca5e5e5"
+          "6949cb3c-8cb4-4509-9f2f-2706d2b4b8be"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -390,13 +402,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "cdae63d3-81c3-480a-b831-dbdfaca5e5e5"
+          "6949cb3c-8cb4-4509-9f2f-2706d2b4b8be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -405,19 +417,19 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11977"
+          "11994"
         ],
         "x-ms-correlation-request-id": [
-          "4b960dc7-ce2d-4250-ba2c-e2ee24ea2991"
+          "0c4511f2-f20f-49a0-9572-ce34ee590160"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201145Z:4b960dc7-ce2d-4250-ba2c-e2ee24ea2991"
+          "WESTUS2:20190203T230342Z:0c4511f2-f20f-49a0-9572-ce34ee590160"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:44 GMT"
+          "Sun, 03 Feb 2019 23:03:42 GMT"
         ],
         "Content-Length": [
           "71"
@@ -439,14 +451,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a3e979e5-2501-4d43-8df9-a86570daab04"
+          "a3670d52-994d-4f68-8da4-f290a1781e10"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -457,13 +471,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a3e979e5-2501-4d43-8df9-a86570daab04"
+          "a3670d52-994d-4f68-8da4-f290a1781e10"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -472,22 +486,22 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11980"
+          "11997"
         ],
         "x-ms-correlation-request-id": [
-          "701400f4-2f1c-4f6b-b8dd-bb5aa36876f6"
+          "a83a925f-e93f-4400-a138-3f113d22fc8b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201135Z:701400f4-2f1c-4f6b-b8dd-bb5aa36876f6"
+          "WESTUS2:20190203T230305Z:a83a925f-e93f-4400-a138-3f113d22fc8b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:34 GMT"
+          "Sun, 03 Feb 2019 23:03:04 GMT"
         ],
         "Content-Length": [
-          "4074"
+          "7992"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -496,7 +510,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/all-01\",\r\n      \"name\": \"all-01\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security, UpdateRollup, FeaturePack, ServicePack, Definition, Tools, Updates\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": null,\r\n          \"duration\": \"PT2H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-02\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Hour\",\r\n        \"startTime\": \"2018-10-23T12:02:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T11:54:17.86-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T11:54:28.58-07:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2018-10-23T14:02:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"NUM\": \"32\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n      \"name\": \"test-suc-002\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T13:10:15.983-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T13:11:26-07:00\",\r\n        \"provisioningState\": \"Provisioning\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n      \"name\": \"test-suc-001\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T13:10:14.95-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T13:11:22.343-07:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/all-01\",\r\n      \"name\": \"all-01\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security, UpdateRollup, FeaturePack, ServicePack, Definition, Tools, Updates\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": null,\r\n          \"duration\": \"PT2H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-02\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Hour\",\r\n        \"startTime\": \"2018-10-23T12:02:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T11:54:17.86-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T11:54:28.58-07:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-02-03T16:02:00-08:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"NUM\": \"32\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n      \"name\": \"test-suc-002\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": [\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch1\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              },\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch2\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2019-02-03T15:01:39.2-08:00\",\r\n        \"lastModifiedTime\": \"2019-02-03T15:02:42.907-08:00\",\r\n        \"provisioningState\": \"Provisioning\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n      \"name\": \"test-suc-001\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": [\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch1\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              },\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch2\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2019-02-03T15:01:37.78-08:00\",\r\n        \"lastModifiedTime\": \"2019-02-03T15:02:36.31-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/testJemal\",\r\n      \"name\": \"testJemal\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": [\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch1\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              },\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch2\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2019-01-28T19:05:30.95-08:00\",\r\n        \"lastModifiedTime\": \"2019-01-28T19:05:30.983-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-006\",\r\n      \"name\": \"test-suc-006\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": null\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2018-12-27T14:17:21.987-08:00\",\r\n        \"lastModifiedTime\": \"2018-12-27T14:17:22.11-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -506,14 +520,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9c76ab74-1952-4eac-8137-708ed937e6e9"
+          "bafc257f-3271-4984-a2dd-bccb4ed9ee7d"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -524,13 +540,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9c76ab74-1952-4eac-8137-708ed937e6e9"
+          "bafc257f-3271-4984-a2dd-bccb4ed9ee7d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11996"
+        ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -538,23 +557,20 @@
         "X-Powered-By": [
           "ASP.NET"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "11979"
-        ],
         "x-ms-correlation-request-id": [
-          "033ce2ea-a319-4830-817e-d82950e04039"
+          "a3068375-ede9-4e06-b87f-c8482965d52b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201137Z:033ce2ea-a319-4830-817e-d82950e04039"
+          "WESTUS2:20190203T230320Z:a3068375-ede9-4e06-b87f-c8482965d52b"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:36 GMT"
+          "Sun, 03 Feb 2019 23:03:19 GMT"
         ],
         "Content-Length": [
-          "4074"
+          "7992"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -563,7 +579,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/all-01\",\r\n      \"name\": \"all-01\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security, UpdateRollup, FeaturePack, ServicePack, Definition, Tools, Updates\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": null,\r\n          \"duration\": \"PT2H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-02\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Hour\",\r\n        \"startTime\": \"2018-10-23T12:02:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T11:54:17.86-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T11:54:28.58-07:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2018-10-23T14:02:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"NUM\": \"32\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n      \"name\": \"test-suc-002\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T13:10:15.983-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T13:11:26-07:00\",\r\n        \"provisioningState\": \"Provisioning\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n      \"name\": \"test-suc-001\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T13:10:14.95-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T13:11:22.343-07:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/all-01\",\r\n      \"name\": \"all-01\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security, UpdateRollup, FeaturePack, ServicePack, Definition, Tools, Updates\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": null,\r\n          \"duration\": \"PT2H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-02\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/a-stasku-rg0/providers/microsoft.compute/virtualmachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Hour\",\r\n        \"startTime\": \"2018-10-23T12:02:00-07:00\",\r\n        \"creationTime\": \"2018-10-23T11:54:17.86-07:00\",\r\n        \"lastModifiedTime\": \"2018-10-23T11:54:28.58-07:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-02-03T16:02:00-08:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"NUM\": \"32\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-002\",\r\n      \"name\": \"test-suc-002\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": [\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch1\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              },\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch2\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\",\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-02\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2019-02-03T15:01:39.2-08:00\",\r\n        \"lastModifiedTime\": \"2019-02-03T15:02:42.907-08:00\",\r\n        \"provisioningState\": \"Provisioning\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-001\",\r\n      \"name\": \"test-suc-001\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": [\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch1\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              },\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch2\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2019-02-03T15:01:37.78-08:00\",\r\n        \"lastModifiedTime\": \"2019-02-03T15:02:36.31-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/testJemal\",\r\n      \"name\": \"testJemal\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": [\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch1\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              },\r\n              {\r\n                \"FunctionAlias\": \"SavedSearch2\",\r\n                \"WorkspaceId\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourcegroups/to-delete-01/providers/microsoft.operationalinsights/workspaces/fbs-aa-01\"\r\n              }\r\n            ]\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2019-01-28T19:05:30.95-08:00\",\r\n        \"lastModifiedTime\": \"2019-01-28T19:05:30.983-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/to-delete-01/providers/Microsoft.Automation/automationAccounts/fbs-aa-01/softwareUpdateConfigurations/test-suc-006\",\r\n      \"name\": \"test-suc-006\",\r\n      \"properties\": {\r\n        \"updateConfiguration\": {\r\n          \"operatingSystem\": \"Windows\",\r\n          \"windows\": {\r\n            \"includedUpdateClassifications\": \"Critical, Security\",\r\n            \"excludedKbNumbers\": null,\r\n            \"includedKbNumbers\": null,\r\n            \"rebootSetting\": \"IfRequired\",\r\n            \"IsInvalidKbNumbers\": false\r\n          },\r\n          \"linux\": null,\r\n          \"targets\": {\r\n            \"azureQueries\": [\r\n              {\r\n                \"scope\": [\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0\",\r\n                  \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d\"\r\n                ],\r\n                \"tagSettings\": {\r\n                  \"tags\": {\r\n                    \"tag1\": [\r\n                      \"tag1Value1\",\r\n                      \"tag1Value2\"\r\n                    ],\r\n                    \"tag2\": [\r\n                      \"tag2Value1\",\r\n                      \"tag2Value2\"\r\n                    ]\r\n                  },\r\n                  \"filterOperator\": \"All\"\r\n                },\r\n                \"locations\": [\r\n                  \"Japan East\",\r\n                  \"UK South\"\r\n                ]\r\n              }\r\n            ],\r\n            \"nonAzureQueries\": null\r\n          },\r\n          \"duration\": \"PT3H\",\r\n          \"azureVirtualMachines\": [\r\n            \"/subscriptions/422b6c61-95b0-4213-b3be-7282315df71d/resourceGroups/a-stasku-rg0/providers/Microsoft.Compute/virtualMachines/vmj-arm-01\"\r\n          ],\r\n          \"nonAzureComputerNames\": null\r\n        },\r\n        \"frequency\": \"Day\",\r\n        \"startTime\": \"2019-05-05T19:26:00-07:00\",\r\n        \"creationTime\": \"2018-12-27T14:17:21.987-08:00\",\r\n        \"lastModifiedTime\": \"2018-12-27T14:17:22.11-08:00\",\r\n        \"provisioningState\": \"Succeeded\",\r\n        \"nextRun\": \"2019-05-05T19:26:00-07:00\",\r\n        \"tasks\": {\r\n          \"preTask\": {\r\n            \"source\": \"preScript\",\r\n            \"parameters\": {}\r\n          },\r\n          \"postTask\": {\r\n            \"source\": \"postScript\",\r\n            \"parameters\": {\r\n              \"Num\": \"4\"\r\n            }\r\n          }\r\n        }\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     },
     {
@@ -573,14 +589,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dac6a65e-3c18-4e2f-ad87-c87f5e1b5928"
+          "27f93542-a819-4e54-affd-24453f5cb1d0"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -591,13 +609,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "dac6a65e-3c18-4e2f-ad87-c87f5e1b5928"
+          "27f93542-a819-4e54-affd-24453f5cb1d0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -609,16 +627,16 @@
           "14999"
         ],
         "x-ms-correlation-request-id": [
-          "5b2c865c-2d33-4c3e-9a40-29733da491f3"
+          "b2d7ea57-13b8-474d-95ef-4a8deb2b7bfd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201143Z:5b2c865c-2d33-4c3e-9a40-29733da491f3"
+          "WESTUS2:20190203T230337Z:b2d7ea57-13b8-474d-95ef-4a8deb2b7bfd"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:42 GMT"
+          "Sun, 03 Feb 2019 23:03:36 GMT"
         ],
         "Expires": [
           "-1"
@@ -637,14 +655,16 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "510f108e-8714-44a5-bfad-020b60be0a44"
+          "cf221943-09a4-4299-97a6-ec032eed9979"
         ],
         "Accept-Language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.26919.02",
-          "Microsoft.Azure.Management.Automation.AutomationClient/3.3.0.0"
+          "FxVersion/4.6.27129.04",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.Automation.AutomationClient/3.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -655,13 +675,13 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "510f108e-8714-44a5-bfad-020b60be0a44"
+          "cf221943-09a4-4299-97a6-ec032eed9979"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "Server": [
-          "Microsoft-IIS/8.5"
+          "Microsoft-IIS/10.0"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -673,16 +693,16 @@
           "14998"
         ],
         "x-ms-correlation-request-id": [
-          "233c0d1b-41a4-4dfa-896e-af54bbc56103"
+          "2b0bdd3f-879c-46b0-a033-ed4853c4bc85"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20181023T201144Z:233c0d1b-41a4-4dfa-896e-af54bbc56103"
+          "WESTUS2:20190203T230341Z:2b0bdd3f-879c-46b0-a033-ed4853c4bc85"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Date": [
-          "Tue, 23 Oct 2018 20:11:44 GMT"
+          "Sun, 03 Feb 2019 23:03:41 GMT"
         ],
         "Expires": [
           "-1"

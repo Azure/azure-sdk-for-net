@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IApiDiagnosticLoggerOperations
     {
         /// <summary>
-        /// Lists all loggers assosiated with the specified Diagnostic of an
+        /// Lists all loggers associated with the specified Diagnostic of an
         /// API.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string diagnosticId, string loggerid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Attaches a logger to a dignostic for an API.
+        /// Attaches a logger to a diagnostic for an API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -168,7 +168,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string diagnosticId, string loggerid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all loggers assosiated with the specified Diagnostic of an
+        /// Lists all loggers associated with the specified Diagnostic of an
         /// API.
         /// </summary>
         /// <param name='nextPageLink'>

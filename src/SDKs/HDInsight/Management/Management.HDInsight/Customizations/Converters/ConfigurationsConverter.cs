@@ -13,6 +13,7 @@ namespace Microsoft.Azure.Management.HDInsight
     using System.Collections.Generic;
     using System.Linq;
 
+    [Obsolete("This type is deprecated. Please don't use it anymore.")]
     public static class ConfigurationsConverter
     {
         public static Dictionary<string, string> Convert(HttpConnectivitySettings configuration)

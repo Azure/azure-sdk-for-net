@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.WebSites
     public partial interface IAppServicePlansOperations
     {
         /// <summary>
-        /// Get all App Service plans for a subcription.
+        /// Get all App Service plans for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all App Service plans for a subcription.
+        /// Get all App Service plans for a subscription.
         /// </remarks>
         /// <param name='detailed'>
         /// Specify &lt;code&gt;true&lt;/code&gt; to return all App Service
@@ -441,10 +441,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListMetricDefintionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for an App Serice plan.
+        /// Get metrics for an App Service plan.
         /// </summary>
         /// <remarks>
-        /// Get metrics for an App Serice plan.
+        /// Get metrics for an App Service plan.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -492,7 +492,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of the App Service plan.
         /// </param>
         /// <param name='softRestart'>
-        /// Specify &lt;code&gt;true&lt;/code&gt; to performa a soft restart,
+        /// Specify &lt;code&gt;true&lt;/code&gt; to perform a soft restart,
         /// applies the configuration settings and restarts the apps if
         /// necessary. The default is &lt;code&gt;false&lt;/code&gt;, which
         /// always restarts and reprovisions the apps
@@ -552,10 +552,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<Site>>> ListWebAppsWithHttpMessagesAsync(string resourceGroupName, string name, string skipToken = default(string), string filter = default(string), string top = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all selectable sku's for a given App Service Plan
+        /// Gets all selectable SKUs for a given App Service Plan
         /// </summary>
         /// <remarks>
-        /// Gets all selectable sku's for a given App Service Plan
+        /// Gets all selectable SKUs for a given App Service Plan
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// Name of the resource group to which the resource belongs.
@@ -974,10 +974,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<AppServicePlan>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, AppServicePlan appServicePlan, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get all App Service plans for a subcription.
+        /// Get all App Service plans for a subscription.
         /// </summary>
         /// <remarks>
-        /// Get all App Service plans for a subcription.
+        /// Get all App Service plans for a subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1101,10 +1101,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// </exception>
         Task<AzureOperationResponse<IPage<ResourceMetricDefinition>>> ListMetricDefintionsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get metrics for an App Serice plan.
+        /// Get metrics for an App Service plan.
         /// </summary>
         /// <remarks>
-        /// Get metrics for an App Serice plan.
+        /// Get metrics for an App Service plan.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

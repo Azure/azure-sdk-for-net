@@ -228,6 +228,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// List all aggregated global event subscriptions under a specific
         /// Azure subscription
         /// </remarks>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -243,7 +252,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListGlobalBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all global event subscriptions for a topic type
         /// </summary>
@@ -254,6 +263,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicTypeName'>
         /// Name of the topic type
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -269,7 +287,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListGlobalBySubscriptionForTopicTypeWithHttpMessagesAsync(string topicTypeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionForTopicTypeWithHttpMessagesAsync(string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all global event subscriptions under an Azure subscription and
         /// resource group
@@ -281,6 +299,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -296,7 +323,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListGlobalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all global event subscriptions under a resource group for a
         /// topic type
@@ -311,6 +338,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicTypeName'>
         /// Name of the topic type
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -326,7 +362,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListGlobalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string topicTypeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
         /// </summary>
@@ -337,6 +373,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='location'>
         /// Name of the location
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -352,7 +397,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListRegionalBySubscriptionWithHttpMessagesAsync(string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionWithHttpMessagesAsync(string location, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
         /// and resource group
@@ -367,6 +412,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='location'>
         /// Name of the location
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -382,7 +436,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListRegionalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
         /// for a topic type
@@ -397,6 +451,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicTypeName'>
         /// Name of the topic type
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -412,7 +475,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListRegionalBySubscriptionForTopicTypeWithHttpMessagesAsync(string location, string topicTypeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionForTopicTypeWithHttpMessagesAsync(string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
         /// and resource group for a topic type
@@ -430,6 +493,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='topicTypeName'>
         /// Name of the topic type
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -445,7 +517,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string location, string topicTypeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all event subscriptions for a specific topic
         /// </summary>
@@ -465,6 +537,15 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='resourceName'>
         /// Name of the resource
         /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -480,7 +561,48 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<EventSubscription>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all event subscriptions for a specific domain topic
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions that have been created for a specific
+        /// domain topic
+        /// </remarks>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription.
+        /// </param>
+        /// <param name='domainName'>
+        /// Name of the top level domain
+        /// </param>
+        /// <param name='topicName'>
+        /// Name of the domain topic
+        /// </param>
+        /// <param name='filter'>
+        /// Filter the results using OData syntax.
+        /// </param>
+        /// <param name='top'>
+        /// The number of results to return.
+        /// </param>
+        /// <param name='label'>
+        /// The label used to filter the results for event subscriptions list.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByDomainTopicWithHttpMessagesAsync(string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create or update an event subscription
         /// </summary>
@@ -602,5 +724,271 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<EventSubscription>> BeginUpdateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get an aggregated list of all global event subscriptions under an
+        /// Azure subscription
+        /// </summary>
+        /// <remarks>
+        /// List all aggregated global event subscriptions under a specific
+        /// Azure subscription
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all global event subscriptions for a topic type
+        /// </summary>
+        /// <remarks>
+        /// List all global event subscriptions under an Azure subscription for
+        /// a topic type.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all global event subscriptions under an Azure subscription and
+        /// resource group
+        /// </summary>
+        /// <remarks>
+        /// List all global event subscriptions under a specific Azure
+        /// subscription and resource group
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all global event subscriptions under a resource group for a
+        /// topic type
+        /// </summary>
+        /// <remarks>
+        /// List all global event subscriptions under a resource group for a
+        /// specific topic type.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all regional event subscriptions under an Azure subscription
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions from the given location under a
+        /// specific Azure subscription
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all regional event subscriptions under an Azure subscription
+        /// and resource group
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions from the given location under a
+        /// specific Azure subscription and resource group
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all regional event subscriptions under an Azure subscription
+        /// for a topic type
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions from the given location under a
+        /// specific Azure subscription and topic type.
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all regional event subscriptions under an Azure subscription
+        /// and resource group for a topic type
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions from the given location under a
+        /// specific Azure subscription and resource group and topic type
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all event subscriptions for a specific topic
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions that have been created for a specific
+        /// topic
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all event subscriptions for a specific domain topic
+        /// </summary>
+        /// <remarks>
+        /// List all event subscriptions that have been created for a specific
+        /// domain topic
+        /// </remarks>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByDomainTopicNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

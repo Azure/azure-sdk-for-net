@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
         /// <param name="id">The application ID.</param>
         /// <param name="isPublic">Setting your application as public allows
         /// other people to use your application's endpoint using their own
-        /// keys.</param>
+        /// keys for billing purposes.</param>
         public ApplicationSettings(System.Guid id, bool isPublic)
         {
             Id = id;
@@ -53,7 +53,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring.Models
 
         /// <summary>
         /// Gets or sets setting your application as public allows other people
-        /// to use your application's endpoint using their own keys.
+        /// to use your application's endpoint using their own keys for billing
+        /// purposes.
         /// </summary>
         [JsonProperty(PropertyName = "public")]
         public bool IsPublic { get; set; }

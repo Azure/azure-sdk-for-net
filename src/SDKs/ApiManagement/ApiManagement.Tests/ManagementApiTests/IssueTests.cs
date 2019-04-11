@@ -34,7 +34,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     null);
                 Assert.NotNull(apiListResponse);
                 Assert.Single(apiListResponse);
-                Assert.NotNull(apiListResponse.NextPageLink);
+                Assert.Null(apiListResponse.NextPageLink);
 
                 // find the echo api
                 var echoApi = apiListResponse.First();

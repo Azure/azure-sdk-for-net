@@ -13,6 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Prediction result.
+    /// </summary>
     public partial class Prediction
     {
         /// <summary>
@@ -26,6 +29,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         /// <summary>
         /// Initializes a new instance of the Prediction class.
         /// </summary>
+        /// <param name="probability">Probability of the tag.</param>
+        /// <param name="tagId">Id of the predicted tag.</param>
+        /// <param name="tagName">Name of the predicted tag.</param>
+        /// <param name="boundingBox">Bounding box of the prediction.</param>
         public Prediction(double probability = default(double), System.Guid tagId = default(System.Guid), string tagName = default(string), BoundingBox boundingBox = default(BoundingBox))
         {
             Probability = probability;
@@ -41,24 +48,41 @@ namespace Microsoft.Azure.CognitiveServices.Vision.CustomVision.Training.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets probability of the tag.
         /// </summary>
         [JsonProperty(PropertyName = "probability")]
         public double Probability { get; private set; }
 
         /// <summary>
+        /// Gets id of the predicted tag.
         /// </summary>
         [JsonProperty(PropertyName = "tagId")]
         public System.Guid TagId { get; private set; }
 
         /// <summary>
+        /// Gets name of the predicted tag.
         /// </summary>
         [JsonProperty(PropertyName = "tagName")]
         public string TagName { get; private set; }
 
         /// <summary>
+        /// Gets bounding box of the prediction.
         /// </summary>
         [JsonProperty(PropertyName = "boundingBox")]
         public BoundingBox BoundingBox { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (BoundingBox != null)
+            {
+                BoundingBox.Validate();
+            }
+        }
     }
 }

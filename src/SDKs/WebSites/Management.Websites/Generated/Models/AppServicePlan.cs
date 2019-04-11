@@ -45,8 +45,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="status">App Service plan status. Possible values
         /// include: 'Ready', 'Pending', 'Creating'</param>
         /// <param name="subscription">App Service plan subscription.</param>
-        /// <param name="adminSiteName">App Service plan administration
-        /// site.</param>
         /// <param name="hostingEnvironmentProfile">Specification for the App
         /// Service Environment to use for the App Service plan.</param>
         /// <param name="maximumNumberOfWorkers">Maximum number of instances
@@ -57,6 +55,9 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App
         /// Service plan will scale to all instances of the plan.</param>
+        /// <param name="maximumElasticWorkerCount">Maximum number of total
+        /// workers allowed for this ElasticScaleEnabled App Service
+        /// Plan</param>
         /// <param name="numberOfSites">Number of apps assigned to this App
         /// Service plan.</param>
         /// <param name="isSpot">If &lt;code&gt;true&lt;/code&gt;, this App
@@ -70,7 +71,10 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="reserved">If Linux app service plan
         /// &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
         /// otherwise.</param>
-        /// <param name="isXenon">If Hyper-V container app service plan
+        /// <param name="isXenon">Obsolete: If Hyper-V container app service
+        /// plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
+        /// otherwise.</param>
+        /// <param name="hyperV">If Hyper-V container app service plan
         /// &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt;
         /// otherwise.</param>
         /// <param name="targetWorkerCount">Scaling worker count.</param>
@@ -78,17 +82,17 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="provisioningState">Provisioning state of the App
         /// Service Environment. Possible values include: 'Succeeded',
         /// 'Failed', 'Canceled', 'InProgress', 'Deleting'</param>
-        public AppServicePlan(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
+        public AppServicePlan(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? maximumElasticWorkerCount = default(int?), int? numberOfSites = default(int?), bool? isSpot = default(bool?), System.DateTime? spotExpirationTime = default(System.DateTime?), System.DateTime? freeOfferExpirationTime = default(System.DateTime?), string resourceGroup = default(string), bool? reserved = default(bool?), bool? isXenon = default(bool?), bool? hyperV = default(bool?), int? targetWorkerCount = default(int?), int? targetWorkerSizeId = default(int?), ProvisioningState? provisioningState = default(ProvisioningState?), SkuDescription sku = default(SkuDescription))
             : base(location, id, name, kind, type, tags)
         {
             WorkerTierName = workerTierName;
             Status = status;
             Subscription = subscription;
-            AdminSiteName = adminSiteName;
             HostingEnvironmentProfile = hostingEnvironmentProfile;
             MaximumNumberOfWorkers = maximumNumberOfWorkers;
             GeoRegion = geoRegion;
             PerSiteScaling = perSiteScaling;
+            MaximumElasticWorkerCount = maximumElasticWorkerCount;
             NumberOfSites = numberOfSites;
             IsSpot = isSpot;
             SpotExpirationTime = spotExpirationTime;
@@ -96,6 +100,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ResourceGroup = resourceGroup;
             Reserved = reserved;
             IsXenon = isXenon;
+            HyperV = hyperV;
             TargetWorkerCount = targetWorkerCount;
             TargetWorkerSizeId = targetWorkerSizeId;
             ProvisioningState = provisioningState;
@@ -128,12 +133,6 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string Subscription { get; private set; }
 
         /// <summary>
-        /// Gets or sets app Service plan administration site.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.adminSiteName")]
-        public string AdminSiteName { get; set; }
-
-        /// <summary>
         /// Gets or sets specification for the App Service Environment to use
         /// for the App Service plan.
         /// </summary>
@@ -161,6 +160,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.perSiteScaling")]
         public bool? PerSiteScaling { get; set; }
+
+        /// <summary>
+        /// Gets or sets maximum number of total workers allowed for this
+        /// ElasticScaleEnabled App Service Plan
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.maximumElasticWorkerCount")]
+        public int? MaximumElasticWorkerCount { get; set; }
 
         /// <summary>
         /// Gets number of apps assigned to this App Service plan.
@@ -203,12 +209,20 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public bool? Reserved { get; set; }
 
         /// <summary>
-        /// Gets or sets if Hyper-V container app service plan
+        /// Gets or sets obsolete: If Hyper-V container app service plan
         /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;,
         /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; otherwise.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isXenon")]
         public bool? IsXenon { get; set; }
+
+        /// <summary>
+        /// Gets or sets if Hyper-V container app service plan
+        /// &amp;lt;code&amp;gt;true&amp;lt;/code&amp;gt;,
+        /// &amp;lt;code&amp;gt;false&amp;lt;/code&amp;gt; otherwise.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hyperV")]
+        public bool? HyperV { get; set; }
 
         /// <summary>
         /// Gets or sets scaling worker count.

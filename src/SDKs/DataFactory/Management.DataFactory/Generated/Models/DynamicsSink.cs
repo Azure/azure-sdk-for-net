@@ -43,12 +43,15 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="sinkRetryWait">Sink retry wait. Type: string (or
         /// Expression with resultType string), pattern:
         /// ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])).</param>
+        /// <param name="maxConcurrentConnections">The maximum concurrent
+        /// connection count for the sink data store. Type: integer (or
+        /// Expression with resultType integer).</param>
         /// <param name="ignoreNullValues">The flag indicating whether ignore
         /// null values from input dataset (except key fields) during write
         /// operation. Default is false. Type: boolean (or Expression with
         /// resultType boolean).</param>
-        public DynamicsSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object ignoreNullValues = default(object))
-            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait)
+        public DynamicsSink(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), object writeBatchSize = default(object), object writeBatchTimeout = default(object), object sinkRetryCount = default(object), object sinkRetryWait = default(object), object maxConcurrentConnections = default(object), object ignoreNullValues = default(object))
+            : base(additionalProperties, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections)
         {
             IgnoreNullValues = ignoreNullValues;
             CustomInit();

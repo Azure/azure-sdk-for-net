@@ -59,19 +59,76 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
 
                 // Publish events to topic
                 string topicHostname = new Uri(createTopicResponse.Endpoint).Host;
-                TopicCredentials topicCredentials = new TopicCredentials(keys.Key1);
+                ResourceCredentials credentials = new ResourceCredentials(keys.Key1);
 
-                EventGridClient client =  EventGridManagementHelper.GetEventGridClient(
+                EventGridClient client = EventGridManagementHelper.GetEventGridClient(
                     context,
-                    topicCredentials,
+                    credentials,
                     new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
 
-                Console.WriteLine("Publishing to Azure Event Grid");
+                Console.WriteLine("Publishing to Azure Event Grid Topic");
                 client.PublishEventsAsync(topicHostname, GetEventsList()).GetAwaiter().GetResult();
                 Console.WriteLine("Published successfully!");
 
                 // Delete topic
                 this.EventGridManagementClient.Topics.Delete(resourceGroup, topicName);
+            }
+        }
+
+        [Fact]
+        public void PublishEventsToDomain()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                this.InitializeClients(context);
+
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
+
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(EventGridManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
+
+                var domainName = TestUtilities.GenerateName(EventGridManagementHelper.DomainPrefix);
+                var originalTagsDictionary = new Dictionary<string, string>()
+                {
+                    {"originalTag1", "originalValue1"},
+                    {"originalTag2", "originalValue2"}
+                };
+
+                Domain domain = new Domain()
+                {
+                    Location = location,
+                    Tags = originalTagsDictionary
+                };
+
+                var createDomainResponse = this.EventGridManagementClient.Domains.CreateOrUpdate(resourceGroup, domainName, domain);
+
+                Assert.NotNull(createDomainResponse);
+                Assert.Equal(createDomainResponse.Name, domainName);
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(60));
+
+                // Get the domain key
+                DomainSharedAccessKeys keys = this.EventGridManagementClient.Domains.ListSharedAccessKeys(resourceGroup, domainName);
+
+                // Publish events to domain
+                string domainHostname = new Uri(createDomainResponse.Endpoint).Host;
+                ResourceCredentials credentials = new ResourceCredentials(keys.Key1);
+
+                EventGridClient client = EventGridManagementHelper.GetEventGridClient(
+                    context,
+                    credentials,
+                    new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
+
+                Console.WriteLine("Publishing to Azure Event Grid Domain");
+                client.PublishEventsAsync(domainHostname, GetEventsList()).GetAwaiter().GetResult();
+                Console.WriteLine("Published successfully!");
+
+                // Delete Domain
+                this.EventGridManagementClient.Domains.Delete(resourceGroup, domainName);
             }
         }
 
@@ -83,6 +140,8 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
             {
                 eventsList.Add(new EventGridEvent()
                 {
+                    Topic = $"Topic-{i}",
+                    Subject = $"Subject-{i}",
                     Id = Guid.NewGuid().ToString(),
                     Data = new EventSpecificData()
                     {
@@ -92,7 +151,6 @@ namespace Microsoft.Azure.EventGrid.Tests.ScenarioTests
                     },
                     EventTime = DateTime.Now,
                     EventType = "Microsoft.MockPublisher.TestEvent",
-                    Subject = "TestSubject",
                     DataVersion = "1.0"
                 });
             }

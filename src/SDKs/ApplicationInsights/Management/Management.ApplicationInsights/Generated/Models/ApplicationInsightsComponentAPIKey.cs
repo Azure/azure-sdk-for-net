@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// Initializes a new instance of the
         /// ApplicationInsightsComponentAPIKey class.
         /// </summary>
-        /// <param name="id">The unique ID of the API key inside an Applciation
+        /// <param name="id">The unique ID of the API key inside an Application
         /// Insights component. It is auto generated when the API key is
         /// created.</param>
         /// <param name="apiKey">The API key value. It will be only return once
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets the unique ID of the API key inside an Applciation Insights
+        /// Gets the unique ID of the API key inside an Application Insights
         /// component. It is auto generated when the API key is created.
         /// </summary>
         [JsonProperty(PropertyName = "id")]

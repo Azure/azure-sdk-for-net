@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using System.Linq;
 
     /// <summary>
-    /// The parameters used to check the availabity of the vault name.
+    /// The parameters used to check the availability of the vault name.
     /// </summary>
     public partial class VaultCheckNameAvailabilityParameters
     {

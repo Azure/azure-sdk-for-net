@@ -42,11 +42,10 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="location">Resource location.</param>
-        /// <param name="etag">An ETag of the resource updated.</param>
         /// <param name="sku">The SKU of the cluster.</param>
         /// <param name="state">The state of the resource. Possible values
         /// include: 'Creating', 'Unavailable', 'Running', 'Deleting',
-        /// 'Deleted', 'Stopping', 'Stopped', 'Starting'</param>
+        /// 'Deleted', 'Stopping', 'Stopped', 'Starting', 'Updating'</param>
         /// <param name="provisioningState">The provisioned state of the
         /// resource. Possible values include: 'Running', 'Creating',
         /// 'Deleting', 'Succeeded', 'Failed'</param>
@@ -55,12 +54,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// URI.</param>
         /// <param name="trustedExternalTenants">The cluster's external
         /// tenants.</param>
-        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), string etag = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>))
+        public ClusterUpdate(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string location = default(string), AzureSku sku = default(AzureSku), string state = default(string), string provisioningState = default(string), string uri = default(string), string dataIngestionUri = default(string), IList<TrustedExternalTenant> trustedExternalTenants = default(IList<TrustedExternalTenant>))
             : base(id, name, type)
         {
             Tags = tags;
             Location = location;
-            Etag = etag;
             Sku = sku;
             State = state;
             ProvisioningState = provisioningState;
@@ -88,12 +86,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         public string Location { get; set; }
 
         /// <summary>
-        /// Gets an ETag of the resource updated.
-        /// </summary>
-        [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; private set; }
-
-        /// <summary>
         /// Gets or sets the SKU of the cluster.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
@@ -102,7 +94,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Gets the state of the resource. Possible values include:
         /// 'Creating', 'Unavailable', 'Running', 'Deleting', 'Deleted',
-        /// 'Stopping', 'Stopped', 'Starting'
+        /// 'Stopping', 'Stopped', 'Starting', 'Updating'
         /// </summary>
         [JsonProperty(PropertyName = "properties.state")]
         public string State { get; private set; }

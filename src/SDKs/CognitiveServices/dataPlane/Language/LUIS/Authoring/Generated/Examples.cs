@@ -51,7 +51,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         public LUISAuthoringClient Client { get; private set; }
 
         /// <summary>
-        /// Adds a labeled example to the application.
+        /// Adds a labeled example utterance in a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='exampleLabelObject'>
-        /// An example label with the expected intent and entities.
+        /// A labeled example utterance with the expected intent and entities.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Adds a batch of labeled examples to the application.
+        /// Adds a batch of labeled example utterances to a version of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// The version ID.
         /// </param>
         /// <param name='exampleLabelObjectArray'>
-        /// Array of examples.
+        /// Array of example utterances.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -413,7 +413,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Returns examples to be reviewed.
+        /// Returns example utterances to be reviewed from a version of the
+        /// application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -604,7 +605,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         }
 
         /// <summary>
-        /// Deletes the labeled example with the specified ID.
+        /// Deletes the labeled example utterances with the specified ID from a version
+        /// of the application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.

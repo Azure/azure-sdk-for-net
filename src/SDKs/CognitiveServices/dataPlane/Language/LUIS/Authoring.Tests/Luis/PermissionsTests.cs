@@ -11,7 +11,28 @@
         {
             UseClientFor(async client =>
             {
-                var result = await client.Permissions.ListAsync(appId);
+                var collaborators = new CollaboratorsArray
+                {
+                    Emails = new string[]
+                    {
+                        "guest@outlook.com",
+                        "invited.user@live.com"
+                    }
+                };
+
+                await client.Permissions.UpdateAsync(GlobalAppId, collaborators);
+                var result = await client.Permissions.ListAsync(GlobalAppId);
+
+                var userToRemove = new UserCollaborator
+                {
+                    Email = "guest@outlook.com"
+                };
+                await client.Permissions.DeleteAsync(GlobalAppId, userToRemove);
+                userToRemove = new UserCollaborator
+                {
+                    Email = "invited.user@live.com"
+                };
+                await client.Permissions.DeleteAsync(GlobalAppId, userToRemove);
 
                 Assert.Equal("owner.user@microsoft.com", result.Owner);
                 Assert.Equal(new string[] { "guest@outlook.com", "invited.user@live.com" }, result.Emails);
@@ -28,8 +49,9 @@
                     Email = "guest@outlook.com"
                 };
 
-                await client.Permissions.AddAsync(appId, userToAdd);
-                var result = await client.Permissions.ListAsync(appId);
+                await client.Permissions.AddAsync(GlobalAppId, userToAdd);
+                var result = await client.Permissions.ListAsync(GlobalAppId);
+                await client.Permissions.DeleteAsync(GlobalAppId, userToAdd);
 
                 Assert.True(result.Emails.Contains(userToAdd.Email));
             });
@@ -45,8 +67,9 @@
                     Email = "guest@outlook.com"
                 };
 
-                await client.Permissions.DeleteAsync(appId, userToRemove);
-                var result = await client.Permissions.ListAsync(appId);
+                await client.Permissions.AddAsync(GlobalAppId, userToRemove);
+                await client.Permissions.DeleteAsync(GlobalAppId, userToRemove);
+                var result = await client.Permissions.ListAsync(GlobalAppId);
 
                 Assert.False(result.Emails.Contains(userToRemove.Email));
             });
@@ -66,8 +89,9 @@
                     }
                 };
 
-                await client.Permissions.UpdateAsync(appId, collaborators);
-                var result = await client.Permissions.ListAsync(appId);
+                await client.Permissions.UpdateAsync(GlobalAppId, collaborators);
+                var result = await client.Permissions.ListAsync(GlobalAppId);
+                await client.Permissions.UpdateAsync(GlobalAppId, new CollaboratorsArray { Emails = new string[0] });
 
                 Assert.Equal(collaborators.Emails, result.Emails);
             });

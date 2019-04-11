@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// </summary>
     public static class ConnectionMonitorSourceStatus
     {
-        public const string Uknown = "Uknown";
+        public const string Unknown = "Unknown";
         public const string Active = "Active";
         public const string Inactive = "Inactive";
     }

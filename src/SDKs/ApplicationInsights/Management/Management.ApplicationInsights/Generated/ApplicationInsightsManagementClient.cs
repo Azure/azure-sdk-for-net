@@ -47,29 +47,30 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         public string ApiVersion { get; private set; }
 
         /// <summary>
-        /// The Azure subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -79,14 +80,14 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         public virtual IOperations Operations { get; private set; }
 
         /// <summary>
-        /// Gets the IComponentsOperations.
+        /// Gets the IAnnotationsOperations.
         /// </summary>
-        public virtual IComponentsOperations Components { get; private set; }
+        public virtual IAnnotationsOperations Annotations { get; private set; }
 
         /// <summary>
-        /// Gets the IWebTestsOperations.
+        /// Gets the IAPIKeysOperations.
         /// </summary>
-        public virtual IWebTestsOperations WebTests { get; private set; }
+        public virtual IAPIKeysOperations APIKeys { get; private set; }
 
         /// <summary>
         /// Gets the IExportConfigurationsOperations.
@@ -104,9 +105,67 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         public virtual IComponentQuotaStatusOperations ComponentQuotaStatus { get; private set; }
 
         /// <summary>
-        /// Gets the IAPIKeysOperations.
+        /// Gets the IComponentFeatureCapabilitiesOperations.
         /// </summary>
-        public virtual IAPIKeysOperations APIKeys { get; private set; }
+        public virtual IComponentFeatureCapabilitiesOperations ComponentFeatureCapabilities { get; private set; }
+
+        /// <summary>
+        /// Gets the IComponentAvailableFeaturesOperations.
+        /// </summary>
+        public virtual IComponentAvailableFeaturesOperations ComponentAvailableFeatures { get; private set; }
+
+        /// <summary>
+        /// Gets the IProactiveDetectionConfigurationsOperations.
+        /// </summary>
+        public virtual IProactiveDetectionConfigurationsOperations ProactiveDetectionConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IComponentsOperations.
+        /// </summary>
+        public virtual IComponentsOperations Components { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkItemConfigurationsOperations.
+        /// </summary>
+        public virtual IWorkItemConfigurationsOperations WorkItemConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets the IFavoritesOperations.
+        /// </summary>
+        public virtual IFavoritesOperations Favorites { get; private set; }
+
+        /// <summary>
+        /// Gets the IWebTestLocationsOperations.
+        /// </summary>
+        public virtual IWebTestLocationsOperations WebTestLocations { get; private set; }
+
+        /// <summary>
+        /// Gets the IWebTestsOperations.
+        /// </summary>
+        public virtual IWebTestsOperations WebTests { get; private set; }
+
+        /// <summary>
+        /// Gets the IAnalyticsItemsOperations.
+        /// </summary>
+        public virtual IAnalyticsItemsOperations AnalyticsItems { get; private set; }
+
+        /// <summary>
+        /// Gets the IWorkbooksOperations.
+        /// </summary>
+        public virtual IWorkbooksOperations Workbooks { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the ApplicationInsightsManagementClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ApplicationInsightsManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected ApplicationInsightsManagementClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the ApplicationInsightsManagementClient class.
@@ -191,6 +250,33 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Thrown when a required parameter is null
         /// </exception>
         public ApplicationInsightsManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ApplicationInsightsManagementClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling ApplicationInsightsManagementClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public ApplicationInsightsManagementClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
         {
             if (credentials == null)
             {
@@ -310,12 +396,21 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         private void Initialize()
         {
             Operations = new Operations(this);
-            Components = new ComponentsOperations(this);
-            WebTests = new WebTestsOperations(this);
+            Annotations = new AnnotationsOperations(this);
+            APIKeys = new APIKeysOperations(this);
             ExportConfigurations = new ExportConfigurationsOperations(this);
             ComponentCurrentBillingFeatures = new ComponentCurrentBillingFeaturesOperations(this);
             ComponentQuotaStatus = new ComponentQuotaStatusOperations(this);
-            APIKeys = new APIKeysOperations(this);
+            ComponentFeatureCapabilities = new ComponentFeatureCapabilitiesOperations(this);
+            ComponentAvailableFeatures = new ComponentAvailableFeaturesOperations(this);
+            ProactiveDetectionConfigurations = new ProactiveDetectionConfigurationsOperations(this);
+            Components = new ComponentsOperations(this);
+            WorkItemConfigurations = new WorkItemConfigurationsOperations(this);
+            Favorites = new FavoritesOperations(this);
+            WebTestLocations = new WebTestLocationsOperations(this);
+            WebTests = new WebTestsOperations(this);
+            AnalyticsItems = new AnalyticsItemsOperations(this);
+            Workbooks = new WorkbooksOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2015-05-01";
             AcceptLanguage = "en-US";

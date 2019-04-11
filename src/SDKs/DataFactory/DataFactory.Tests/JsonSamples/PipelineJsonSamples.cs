@@ -52,7 +52,7 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
-        [JsonSample]         
+        [JsonSample]
         public const string CopyActivityWithSkipIncompatibleRows = @" 
 { 
   ""name"": ""MyPipeline"", 
@@ -122,7 +122,7 @@ namespace DataFactory.Tests.JsonSamples
   }
 }
 ";
-        
+
 
         [JsonSample]
         public const string ChainedActivitiesWithParametersPipeline = @"
@@ -1803,7 +1803,8 @@ namespace DataFactory.Tests.JsonSamples
                         ""PropertyBagPropertyName1"": ""PropertyBagValue1"",
                         ""propertyBagPropertyName2"": ""PropertyBagValue2"",
                         ""dateTime1"": ""2015-04-12T12:13:14Z"",
-                    }
+                    },
+                    ""retentionTimeInDays"": 35
                 }
             }
         ]
@@ -1985,7 +1986,7 @@ namespace DataFactory.Tests.JsonSamples
         ]
     }
 }";
-                
+
         [JsonSample]
         public const string AzureMLBatchExecutionPipeline = @"
 {
@@ -3360,5 +3361,192 @@ namespace DataFactory.Tests.JsonSamples
     }
 }";
 
+        [JsonSample(version: "AzureFunctionActivity")]
+        public const string AzureFunction = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                ""name"": ""Azure Function1"",
+                ""type"": ""AzureFunctionActivity"",
+                ""policy"": {
+                    ""timeout"": ""7.00:00:00"",
+                    ""retry"": 0,
+                    ""retryIntervalInSeconds"": 30,
+                    ""secureOutput"": false,
+                    ""secureInput"": false
+                },
+                ""typeProperties"": {
+                    ""functionName"": ""GenericWebhookCSharp1"",
+                    ""method"": ""POST"",
+                    ""headers"": {
+                        ""Content-Type"": ""application/json"",
+                    },
+                    ""body"": {
+                        ""first"": ""Azure"",
+                        ""last"": ""Function""
+                    }
+                }
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "Copy")]
+        public const string CopySapOpenHubToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from SAP Open Hub to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""SapOpenHubSource""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputSapOpenHub"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "Copy")]
+        public const string CopyRestToAdls = @"
+{
+    name: ""MyPipelineName"",
+    properties: 
+    {
+        description : ""Copy from REST to Azure Data Lake Store"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""TestActivity"",
+                description: ""Test activity description"", 
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""RestSource"",
+                        ""httpRequestTimeout"": ""00:01:00""
+                    },
+                    sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        copyBehavior: ""FlattenHierarchy""
+                    },
+                    translator:
+                    {
+                        type: ""TabularTranslator"",
+                        collectionReference: ""$.fakekey""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        referenceName: ""InputRest"", type: ""DatasetReference""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        referenceName: ""OutputAdlsDA"", type: ""DatasetReference""
+                    }
+                ],
+                linkedServiceName: { referenceName: ""MyLinkedServiceName"", type: ""LinkedServiceReference"" },
+                policy:
+                {
+                    retry: 3,
+                    timeout: ""00:00:05"",
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample(version: "WebhookActivity")]
+        public const string Webhook = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                ""name"": ""Webhook1"",
+                ""type"": ""WebHook"",
+                ""typeProperties"": {
+                    ""url"": ""http://samplesample.azurewebsites.net/api/execute/webhook"",
+                    ""method"": ""POST"",
+                    ""headers"": {
+                        ""Content-Type"": ""application/json""
+                    },
+                    ""body"": {
+                        ""key"": ""value""
+                    },
+                    ""timeout"": ""00:03:00""
+                }
+            }
+        ]
+    }
+}";
+
+        [JsonSample(version: "ValidationActivity")]
+        public const string Validation = @"
+{
+    name: ""MyPipelineName"",
+    properties: {
+        activities: [
+            {
+                ""type"": ""Validation"",
+                ""name"": ""ValidationActivity"",
+                ""description"": ""Test activity description"",
+                ""typeProperties"": {
+                    ""timeout"": ""00:03:00"",
+                    ""sleep"": 10,
+                    ""minimumSize"": {
+                        ""type"": ""Expression"",
+                        ""value"": ""@add(0,1)""
+                    },
+                    ""dataset"": {
+                        ""referenceName"": ""FileDataset"",
+                        ""type"": ""DatasetReference""
+                    }
+                }
+            }
+        ]
+    }
+}";
     }
 }

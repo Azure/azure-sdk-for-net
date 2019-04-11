@@ -13,7 +13,7 @@ namespace Compute.Tests.DiskRPTests
     public class DiskRPUltraSSDTests : DiskRPTestsBase
     {
         //direct drive is only enabled in eastus2euap
-        private static string DiskRPLocation = "eastus2euap";
+        private static string DiskRPLocation = "eastus2";
 
         [Fact]
         public void UltraSSD_CRUD_EmptyDisk()
@@ -26,14 +26,12 @@ namespace Compute.Tests.DiskRPTests
                 var rgName = TestUtilities.GenerateName(TestPrefix);
                 var diskName = TestUtilities.GenerateName(DiskNamePrefix);
                 Disk disk = GenerateBaseDisk("Empty");
-                disk.Sku = new DiskSku
-                {
-                    Name = DiskStorageAccountTypes.UltraSSDLRS
-                };
+                disk.Sku = new DiskSku(DiskStorageAccountTypes.UltraSSDLRS, "Ultra");
                 disk.DiskSizeGB = 256;
-                disk.Zones = new List<string> { "3" };
+                disk.Zones = new List<string> { "2" };
                 disk.DiskMBpsReadWrite = 8;
                 disk.DiskIOPSReadWrite = 500;
+                disk.Location = DiskRPLocation;
 
                 try
                 {

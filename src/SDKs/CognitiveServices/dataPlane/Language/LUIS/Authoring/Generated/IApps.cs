@@ -27,10 +27,11 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Creates a new LUIS app.
         /// </summary>
         /// <param name='applicationCreateObject'>
-        /// A model containing Name, Description (optional), Culture, Usage
-        /// Scenario (optional), Domain (optional) and initial version ID
+        /// An application containing Name, Description (optional), Culture,
+        /// Usage Scenario (optional), Domain (optional) and initial version ID
         /// (optional) of the application. Default value for the version ID is
-        /// 0.1. Note: the culture cannot be changed after the app is created.
+        /// "0.1". Note: the culture cannot be changed after the app is
+        /// created.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,7 +50,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<System.Guid>> AddWithHttpMessagesAsync(ApplicationCreateObject applicationCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all of the user applications.
+        /// Lists all of the user's applications.
         /// </summary>
         /// <param name='skip'>
         /// The number of entries to skip. Default value is 0.
@@ -75,15 +76,16 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<IList<ApplicationInfoResponse>>> ListWithHttpMessagesAsync(int? skip = 0, int? take = 100, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Imports an application to LUIS, the application's structure should
-        /// be included in in the request body.
+        /// Imports an application to LUIS, the application's structure is
+        /// included in the request body.
         /// </summary>
         /// <param name='luisApp'>
         /// A LUIS application structure.
         /// </param>
         /// <param name='appName'>
         /// The application name to create. If not specified, the application
-        /// name will be read from the imported object.
+        /// name will be read from the imported object. If the application name
+        /// already exists, an error is returned.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -159,7 +161,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<IList<string>>> ListUsageScenariosWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the supported application cultures.
+        /// Gets a list of supported cultures. Cultures are equivalent to the
+        /// written language and locale. For example,"en-us" represents the
+        /// U.S. variation of English.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -178,7 +182,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<IList<AvailableCulture>>> ListSupportedCulturesWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the query logs of the past month for the application.
+        /// Gets the logs of the past month's endpoint queries for the
+        /// application.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -252,6 +257,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <param name='appId'>
         /// The application ID.
         /// </param>
+        /// <param name='force'>
+        /// A flag to indicate whether to force an operation.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -267,7 +275,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<OperationStatus>> DeleteWithHttpMessagesAsync(System.Guid appId, bool? force = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Publishes a specific version of the application.
         /// </summary>
@@ -295,7 +303,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<ProductionOrStagingEndpointInfo>> PublishWithHttpMessagesAsync(System.Guid appId, ApplicationPublishObject applicationPublishObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the application settings.
+        /// Get the application settings including 'UseAllTrainingData'.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -317,7 +325,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<ApplicationSettings>> GetSettingsWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the application settings.
+        /// Updates the application settings including 'UseAllTrainingData'.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -342,7 +350,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<OperationStatus>> UpdateSettingsWithHttpMessagesAsync(System.Guid appId, ApplicationSettingUpdateObject applicationSettingUpdateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the application publish settings.
+        /// Get the application publish settings including
+        /// 'UseAllTrainingData'.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -364,7 +373,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<PublishSettings>> GetPublishSettingsWithHttpMessagesAsync(System.Guid appId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Updates the application publish settings.
+        /// Updates the application publish settings including
+        /// 'UseAllTrainingData'.
         /// </summary>
         /// <param name='appId'>
         /// The application ID.
@@ -430,7 +440,8 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<IList<PrebuiltDomain>>> ListAvailableCustomPrebuiltDomainsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a prebuilt domain along with its models as a new application.
+        /// Adds a prebuilt domain along with its intent and entity models as a
+        /// new application.
         /// </summary>
         /// <param name='prebuiltDomainCreateObject'>
         /// A prebuilt domain create object containing the name and culture of
@@ -453,8 +464,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// </exception>
         Task<HttpOperationResponse<System.Guid>> AddCustomPrebuiltDomainWithHttpMessagesAsync(PrebuiltDomainCreateObject prebuiltDomainCreateObject, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets all the available custom prebuilt domains for a specific
-        /// culture.
+        /// Gets all the available prebuilt domains for a specific culture.
         /// </summary>
         /// <param name='culture'>
         /// Culture.
@@ -475,5 +485,65 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Authoring
         /// Thrown when a required parameter is null
         /// </exception>
         Task<HttpOperationResponse<IList<PrebuiltDomain>>> ListAvailableCustomPrebuiltDomainsForCultureWithHttpMessagesAsync(string culture, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// package - Gets published LUIS application package in binary stream
+        /// GZip format
+        /// </summary>
+        /// <remarks>
+        /// Packages a published LUIS application as a GZip file to be used in
+        /// the LUIS container.
+        /// </remarks>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='slotName'>
+        /// The publishing slot name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<Stream>> PackagePublishedApplicationAsGzipWithHttpMessagesAsync(System.Guid appId, string slotName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// package - Gets trained LUIS application package in binary stream
+        /// GZip format
+        /// </summary>
+        /// <remarks>
+        /// Packages trained LUIS application as GZip file to be used in the
+        /// LUIS container.
+        /// </remarks>
+        /// <param name='appId'>
+        /// The application ID.
+        /// </param>
+        /// <param name='versionId'>
+        /// The version ID.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<Stream>> PackageTrainedApplicationAsGzipWithHttpMessagesAsync(System.Guid appId, string versionId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             byte[] tokenAsBytes = Convert.FromBase64String(accessToken);
             string tokenAsString = Encoding.ASCII.GetString(tokenAsBytes);
-            tokenAsString = tokenAsString.Replace("[exp]", $"{(long) timeSpan.TotalSeconds + secondsFromCurrent}");
+            tokenAsString = tokenAsString.Replace("[exp]", $"{(long)timeSpan.TotalSeconds + secondsFromCurrent}");
             tokenAsBytes = Encoding.ASCII.GetBytes(tokenAsString);
             return Convert.ToBase64String(tokenAsBytes);
         }
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
 
             midPart = UpdateTokenTime(midPart, secondsFromCurrent);
 
-            return 
+            return
                 "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USIsImtpZCI6IlZXVkljMVdEMVRrc2JiMzAxc2FzTTVrT3E1USJ9" + "." + midPart + "." + "gGo1wCH2k8kqt6JUdjBMavZX9Sq2L_tKLvVDPUJv3NurZT5JGYyS7gJ11RMrVaxyG48dnlWat1vEBcB-YLOkpL-2gR_sSAoAStPuz8yXAFHxluw-WOqiWxlm2leENqwMmCrMYinm8ohkrScpfRFm6-4fzgczdhNi0vjkTHaycYnrPrH9cZHSL9Qyzt6MH6pEyGct4zmgASI1Vlrga5_x_x8xj-FscIRYorrvx61fThaor8M4FjzglNgum4j5yecn1pIcp75CK43xb7e4jdsfL2nl6wgn5mZj_59b_aKNa3_VA-NmZTlxjvjlL_AHdDkYPlku_B75-0EbfKN2IR5eLw";
         }
 
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        ///  The response has claims as expected from Azure App Service MSI response
+        ///  The response has claims as expected from App Service MSI response
         /// </summary>
         /// <returns></returns>
         internal static string GetMsiAppServicesTokenResponse()
@@ -84,14 +84,25 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         }
 
         /// <summary>
-        ///  The response has claims as expected from MSI response with user-assigned managed identity
+        ///  The response has claims as expected from App Service MSI response with user-assigned managed identity
         /// </summary>
         /// <returns></returns>
-        internal static string GetManagedIdentityTokenResponse()
+        internal static string GetManagedIdentityAppServicesTokenResponse()
         {
             return
-                "{\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyIsImtpZCI6IjdfWnVmMXR2a3dMeFlhSFMzcTZsVWpVWUlHdyJ9.eyJhdWQiOiJodHRwczovL3ZhdWx0LmF6dXJlLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTM2MDkxMTk1LCJuYmYiOjE1MzYwOTExOTUsImV4cCI6MTUzNjEyMDI5NSwiYWlvIjoiNDJCZ1lJaW8zK3N1cE1XOVcrZWd4UGZNK3pFbUFBPT0iLCJhcHBpZCI6Ijk0MjM0M2IxLTRhZjItNDkwYy1iNmQ5LTkyNTBiOGYyODA4YyIsImFwcGlkYWNyIjoiMiIsImVfZXhwIjoyODgwMDAsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJzdWIiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1dGkiOiJtcVk3QnJfOENVS3hnd1JteW11RkFBIiwidmVyIjoiMS4wIiwieG1zX21pcmlkIjoiL3N1YnNjcmlwdGlvbnMvYmRkNzg5ZjMtZDlkMS00YmVhLWFjMTQtMzBhMzllZDY2ZDMzL3Jlc291cmNlZ3JvdXBzL3Rlc3RiZWQvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy9UZXN0QmVkTWFuYWdlZElkZW50aXR5In0.ic31ZbWlTJ72DLGDmwbuPQJi1Lw_pw7UdBUauXD9MpDznSts2j3GXpa9mldiEeTeUAKtygt2ncnjStUaIlxfh94wxT37V5NElEwE2yVjY1mD1yRkTN9MIB8QQijkzNgzKms6y-zWn0i7oLCV6fdOZInrSLB9zd_X4AJI4LAGLvpzzt7cemNYRtNH4OJa3tTQP6vxh5wLY_gVlfSnOe1zX2RCXcOX3SC4YgOdo-L0n9w4iMV4HrQo6sfN5F5Rtaqi4MlwsuNuMiPZO0S8B73Qy3SFMQD3P2j_u47c5TI-PBa69ORqIEtbdg9FUIjY1_dBKgruJCXSm9tA0WvX-P0u5A\",\"client_id\":\"942343b1-4af2-490c-b6d9-9250b8f2808c\",\"expires_in\":\"28799\",\"expires_on\":\"1536120295\",\"ext_expires_in\":\"288000\",\"not_before\":\"1536091195\",\"resource\":\"https://vault.azure.net/\",\"token_type\":\"Bearer\"}";
+                "{\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1zeE1KTUxDSURXTVRQdlp5SjZ0eC1DRHh3MCIsImtpZCI6Ii1zeE1KTUxDSURXTVRQdlp5SjZ0eC1DRHh3MCJ9.eyJhdWQiOiJodHRwczovL3ZhdWx0LmF6dXJlLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTUwMjc3NjYwLCJuYmYiOjE1NTAyNzc2NjAsImV4cCI6MTU1MDMwNjc2MCwiYWlvIjoiNDJKZ1lPaWZHRnlZUFgrSnRsbXQvdTFucjdjMkFBQT0iLCJhcHBpZCI6Ijk0MjM0M2IxLTRhZjItNDkwYy1iNmQ5LTkyNTBiOGYyODA4YyIsImFwcGlkYWNyIjoiMiIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJzdWIiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1dGkiOiJUVW9za19PbGkwNlMzZGh6TXVsOEFBIiwidmVyIjoiMS4wIiwieG1zX21pcmlkIjoiL3N1YnNjcmlwdGlvbnMvYmRkNzg5ZjMtZDlkMS00YmVhLWFjMTQtMzBhMzllZDY2ZDMzL3Jlc291cmNlZ3JvdXBzL3Rlc3RiZWQvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy9UZXN0QmVkTWFuYWdlZElkZW50aXR5In0.l1E07vTtwSCFasXuFMw1QQXzZutZxFYRjtJhO0L5jyni6L9FO8B2azuIb6ot2KoS5TY-jcvJiLuX-e1Nxu4GlrVAMBukRKjxsyHhYQJ9vppVu7vPFG9EY-GCcamsgkoh6ItbYhDD6sRBqUjTGG2I7lvKNhLg2g92KZiwDhXVtfDPwWLMrnZKmuwOOBwU5UZ61poAmZvw5NO5a8pvXqJ1s5koKo8aPjnCdkJ5WA2SvLbGM_VMo5O6WgLgB4UTC_LnNvsp5nzie2W6Z-VnM_Ar3w1KMeP6_xJZAyEVsxQIgIF3hy12iekpvViwXXUzvthjpeoFobvn65l6NX7fIrNZNQ\",\"expires_on\":\"2/16/2019 8:46:00 AM +00:00\",\"resource\":\"https://vault.azure.net/\",\"token_type\":\"Bearer\"}";
         }
+
+        /// <summary>
+        ///  The response has claims as expected from Azure VM MSI response with user-assigned managed identity
+        /// </summary>
+        /// <returns></returns>
+        internal static string GetManagedIdentityAzureVmTokenResponse()
+        {
+            return
+                "{\"access_token\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6Ii1zeE1KTUxDSURXTVRQdlp5SjZ0eC1DRHh3MCIsImtpZCI6Ii1zeE1KTUxDSURXTVRQdlp5SjZ0eC1DRHh3MCJ9.eyJhdWQiOiJodHRwczovL3ZhdWx0LmF6dXJlLm5ldC8iLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDcvIiwiaWF0IjoxNTUwMjc4NDkwLCJuYmYiOjE1NTAyNzg0OTAsImV4cCI6MTU1MDMwNzU5MCwiYWlvIjoiNDJKZ1lBaU9YWmxSWXBlZitYcWZaZEFpTnMyN0FBPT0iLCJhcHBpZCI6Ijk0MjM0M2IxLTRhZjItNDkwYy1iNmQ5LTkyNTBiOGYyODA4YyIsImFwcGlkYWNyIjoiMiIsImlkcCI6Imh0dHBzOi8vc3RzLndpbmRvd3MubmV0LzcyZjk4OGJmLTg2ZjEtNDFhZi05MWFiLTJkN2NkMDExZGI0Ny8iLCJvaWQiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJzdWIiOiJiMzllNTZiZS1jZThiLTQyYjAtYjY3ZS0xYWI5YmU4ODUxZmQiLCJ0aWQiOiI3MmY5ODhiZi04NmYxLTQxYWYtOTFhYi0yZDdjZDAxMWRiNDciLCJ1dGkiOiJaUHZPY0tPUE4wYVZicm9lZmhNQUFBIiwidmVyIjoiMS4wIiwieG1zX21pcmlkIjoiL3N1YnNjcmlwdGlvbnMvYmRkNzg5ZjMtZDlkMS00YmVhLWFjMTQtMzBhMzllZDY2ZDMzL3Jlc291cmNlZ3JvdXBzL3Rlc3RiZWQvcHJvdmlkZXJzL01pY3Jvc29mdC5NYW5hZ2VkSWRlbnRpdHkvdXNlckFzc2lnbmVkSWRlbnRpdGllcy9UZXN0QmVkTWFuYWdlZElkZW50aXR5In0.TxlAPmz2_xAgIQUtrz0zP7Y2iid7tiQg3SEMOAMW6P69NngKBR8JZWMZ20K01rHarrxsb_7IaKwFpK4MHadv-ZNcjXeGgA_FdnxKkluNArjCAj-2n3wLeZVE3o8kbmrBCuosEwUCyH69wHINABmz3xLnO5c9OUQXjK7-Z73DfV1ZYWXXBE2HzQlNAyKbTcd4GQng22REahKFj4snuDTt_dvXg1s8pkrnqsz-fCHf1QHK6mk_ds-Y4uz40SyLlVJ_i4PxZtLZYcl-kS-ol0qEKdxYE6ghAVzuwF6DbX-2LAw2QY2mcMIOttyCw4r1V-lTVuTenrG2uOM7syBTJ-4y4A\",\"client_id\":\"942343b1-4af2-490c-b6d9-9250b8f2808c\",\"expires_in\":\"28800\",\"expires_on\":\"1550307590\",\"ext_expires_in\":\"28800\",\"not_before\":\"1550278490\",\"resource\":\"https://vault.azure.net/\",\"token_type\":\"Bearer\"}";
+        }
+
 
         /// <summary>
         ///  The response from MSI missing token

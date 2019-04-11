@@ -6,72 +6,71 @@
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"location\": \"CentralUS\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  }\r\n}",
       "RequestHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Content-Length": [
-          "289"
-        ],
         "x-ms-client-request-id": [
-          "3e9647f8-6b37-4fa2-976c-7f80a97209dc"
+          "aa8e54b0-3af3-44b2-bcbd-939c4e61bdfa"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADe5eo=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.77.113\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
-      "ResponseHeaders": {
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.6.0"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Expires": [
-          "-1"
-        ],
+        "Content-Length": [
+          "289"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:38:45 GMT"
+          "Tue, 02 Apr 2019 04:12:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "\"AAAAAADe5eo=\""
+          "\"AAAAAAFtoSg=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "11ce87f9-e584-4c19-bf0d-5f49f961a4a0",
-          "a519e44e-b5f5-4caa-8aa5-863ad88dd2d4"
+          "3bc938b5-14fb-4b62-912f-e6b388ea7b8e",
+          "78036f52-9589-4b6c-b0b2-a9574ba6df1e"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1192"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "db1cfa09-029a-40e8-bfef-8d669095d50d"
+          "8ae9cd80-53fb-4cd3-b6ad-e3ee4e8da2d6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T193845Z:db1cfa09-029a-40e8-bfef-8d669095d50d"
+          "WESTUS2:20190402T041218Z:8ae9cd80-53fb-4cd3-b6ad-e3ee4e8da2d6"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "1831"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAFtoSg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": []\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "StatusCode": 200
     },
     {
@@ -81,91 +80,124 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4c283203-699b-48e4-a775-bff7727f8af2"
+          "21476f45-1cd4-4726-8e36-997d1cbb211b"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.6.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAADe5eo=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.77.113\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": null,\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": null\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:38:45 GMT"
+          "Tue, 02 Apr 2019 04:12:18 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "ETag": [
-          "\"AAAAAADe5eo=\""
+          "\"AAAAAAFtoSg=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "bd07fb9e-55c8-4a99-8ace-40a1d80493e1"
+          "ee61afa6-cce8-46df-badd-9c5c6aefaba9"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14990"
+          "11999"
         ],
         "x-ms-correlation-request-id": [
-          "4cb6af6f-88cb-44a5-a5e2-63c2d6305b97"
+          "1e8ef34d-4492-46a3-ad15-5a1dd2bfcc4a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T193845Z:4cb6af6f-88cb-44a5-a5e2-63c2d6305b97"
+          "WESTUS2:20190402T041219Z:1e8ef34d-4492-46a3-ad15-5a1dd2bfcc4a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8409?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDg0MDk/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
-      "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"path\": \"weatherapi\",\r\n    \"contentValue\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\r\\n<wsdl:definitions xmlns:s=\\\"http://www.w3.org/2001/XMLSchema\\\" xmlns:soap12=\\\"http://schemas.xmlsoap.org/wsdl/soap12/\\\" xmlns:mime=\\\"http://schemas.xmlsoap.org/wsdl/mime/\\\" xmlns:tns=\\\"http://ws.cdyne.com/WeatherWS/\\\" xmlns:soap=\\\"http://schemas.xmlsoap.org/wsdl/soap/\\\" xmlns:tm=\\\"http://microsoft.com/wsdl/mime/textMatching/\\\" xmlns:http=\\\"http://schemas.xmlsoap.org/wsdl/http/\\\" xmlns:soapenc=\\\"http://schemas.xmlsoap.org/soap/encoding/\\\" \\r\\n                  targetNamespace=\\\"http://ws.cdyne.com/WeatherWS/\\\" xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">\\r\\n  <wsdl:types>\\r\\n    <s:schema elementFormDefault=\\\"qualified\\\" targetNamespace=\\\"http://ws.cdyne.com/WeatherWS/\\\">\\r\\n      <s:element name=\\\"GetWeatherInformation\\\">\\r\\n        <s:complexType />\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetWeatherInformationResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"GetWeatherInformationResult\\\" type=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"ArrayOfWeatherDescription\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"unbounded\\\" name=\\\"WeatherDescription\\\" type=\\\"tns:WeatherDescription\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"WeatherDescription\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Description\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"PictureURL\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"GetCityForecastByZIP\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetCityForecastByZIPResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"GetCityForecastByZIPResult\\\" type=\\\"tns:ForecastReturn\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"ForecastReturn\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Success\\\" type=\\\"s:boolean\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ResponseText\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"State\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"City\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherStationCity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ForecastResult\\\" type=\\\"tns:ArrayOfForecast\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"ArrayOfForecast\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"unbounded\\\" name=\\\"Forecast\\\" nillable=\\\"true\\\" type=\\\"tns:Forecast\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"Forecast\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Date\\\" type=\\\"s:dateTime\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Desciption\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Temperatures\\\" type=\\\"tns:temp\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"ProbabilityOfPrecipiation\\\" type=\\\"tns:POP\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"temp\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"MorningLow\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"DaytimeHigh\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"POP\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Nighttime\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Daytime\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"GetCityWeatherByZIP\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetCityWeatherByZIPResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"GetCityWeatherByZIPResult\\\" type=\\\"tns:WeatherReturn\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"WeatherReturn\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Success\\\" type=\\\"s:boolean\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ResponseText\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"State\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"City\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherStationCity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Description\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Temperature\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"RelativeHumidity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Wind\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Pressure\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Visibility\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WindChill\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Remarks\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"ArrayOfWeatherDescription\\\" nillable=\\\"true\\\" type=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n      <s:element name=\\\"ForecastReturn\\\" nillable=\\\"true\\\" type=\\\"tns:ForecastReturn\\\" />\\r\\n      <s:element name=\\\"WeatherReturn\\\" type=\\\"tns:WeatherReturn\\\" />\\r\\n    </s:schema>\\r\\n  </wsdl:types>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetWeatherInformation\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetWeatherInformationResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityForecastByZIP\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityForecastByZIPResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityWeatherByZIP\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityWeatherByZIPResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpGetIn\\\" />\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpGetIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ForecastReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpGetIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:WeatherReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpPostIn\\\" />\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpPostIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ForecastReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpPostIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:WeatherReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:portType name=\\\"WeatherSoap\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:portType name=\\\"WeatherHttpGet\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:portType name=\\\"WeatherHttpPost\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:binding name=\\\"WeatherSoap\\\" type=\\\"tns:WeatherSoap\\\">\\r\\n    <soap:binding transport=\\\"http://schemas.xmlsoap.org/soap/http\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetWeatherInformation\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherSoap12\\\" type=\\\"tns:WeatherSoap\\\">\\r\\n    <soap12:binding transport=\\\"http://schemas.xmlsoap.org/soap/http\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetWeatherInformation\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherHttpGet\\\" type=\\\"tns:WeatherHttpGet\\\">\\r\\n    <http:binding verb=\\\"GET\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <http:operation location=\\\"/GetWeatherInformation\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityForecastByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityWeatherByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherHttpPost\\\" type=\\\"tns:WeatherHttpPost\\\">\\r\\n    <http:binding verb=\\\"POST\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <http:operation location=\\\"/GetWeatherInformation\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityForecastByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityWeatherByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:service name=\\\"Weather\\\">\\r\\n    <wsdl:port name=\\\"WeatherSoap\\\" binding=\\\"tns:WeatherSoap\\\">\\r\\n      <soap:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherSoap12\\\" binding=\\\"tns:WeatherSoap12\\\">\\r\\n      <soap12:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherHttpGet\\\" binding=\\\"tns:WeatherHttpGet\\\">\\r\\n      <http:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherHttpPost\\\" binding=\\\"tns:WeatherHttpPost\\\">\\r\\n      <http:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n  </wsdl:service>\\r\\n</wsdl:definitions>\",\r\n    \"contentFormat\": \"wsdl\",\r\n    \"wsdlSelector\": {\r\n      \"wsdlServiceName\": \"Weather\",\r\n      \"wsdlEndpointName\": \"WeatherSoap\"\r\n    },\r\n    \"apiType\": \"soap\"\r\n  }\r\n}",
-      "RequestHeaders": {
+        ],
+        "Content-Length": [
+          "1831"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
-        "Content-Length": [
-          "18972"
-        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice\",\r\n  \"name\": \"sdktestservice\",\r\n  \"type\": \"Microsoft.ApiManagement/service\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\",\r\n    \"tag3\": \"value3\"\r\n  },\r\n  \"location\": \"Central US\",\r\n  \"etag\": \"AAAAAAFtoSg=\",\r\n  \"properties\": {\r\n    \"publisherEmail\": \"apim@autorestsdk.com\",\r\n    \"publisherName\": \"autorestsdk\",\r\n    \"notificationSenderEmail\": \"apimgmt-noreply@mail.windowsazure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"targetProvisioningState\": \"\",\r\n    \"createdAtUtc\": \"2017-06-16T19:08:53.4371217Z\",\r\n    \"gatewayUrl\": \"https://sdktestservice.azure-api.net\",\r\n    \"gatewayRegionalUrl\": \"https://sdktestservice-centralus-01.regional.azure-api.net\",\r\n    \"portalUrl\": \"https://sdktestservice.portal.azure-api.net\",\r\n    \"managementApiUrl\": \"https://sdktestservice.management.azure-api.net\",\r\n    \"scmUrl\": \"https://sdktestservice.scm.azure-api.net\",\r\n    \"hostnameConfigurations\": [],\r\n    \"publicIPAddresses\": [\r\n      \"52.173.33.36\"\r\n    ],\r\n    \"privateIPAddresses\": null,\r\n    \"additionalLocations\": null,\r\n    \"virtualNetworkConfiguration\": null,\r\n    \"customProperties\": {\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Ciphers.TripleDes168\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls10\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Tls11\": \"True\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Security.Backend.Protocols.Ssl30\": \"False\",\r\n      \"Microsoft.WindowsAzure.ApiManagement.Gateway.Protocols.Server.Http2\": \"False\"\r\n    },\r\n    \"virtualNetworkType\": \"None\",\r\n    \"certificates\": []\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"Developer\",\r\n    \"capacity\": 1\r\n  },\r\n  \"identity\": null\r\n}",
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid7243?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDcyNDM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"path\": \"weatherapi\",\r\n    \"contentValue\": \"<?xml version=\\\"1.0\\\" encoding=\\\"utf-8\\\"?>\\r\\n<wsdl:definitions xmlns:s=\\\"http://www.w3.org/2001/XMLSchema\\\" xmlns:soap12=\\\"http://schemas.xmlsoap.org/wsdl/soap12/\\\" xmlns:mime=\\\"http://schemas.xmlsoap.org/wsdl/mime/\\\" xmlns:tns=\\\"http://ws.cdyne.com/WeatherWS/\\\" xmlns:soap=\\\"http://schemas.xmlsoap.org/wsdl/soap/\\\" xmlns:tm=\\\"http://microsoft.com/wsdl/mime/textMatching/\\\" xmlns:http=\\\"http://schemas.xmlsoap.org/wsdl/http/\\\" xmlns:soapenc=\\\"http://schemas.xmlsoap.org/soap/encoding/\\\" \\r\\n                  targetNamespace=\\\"http://ws.cdyne.com/WeatherWS/\\\" xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">\\r\\n  <wsdl:types>\\r\\n    <s:schema elementFormDefault=\\\"qualified\\\" targetNamespace=\\\"http://ws.cdyne.com/WeatherWS/\\\">\\r\\n      <s:element name=\\\"GetWeatherInformation\\\">\\r\\n        <s:complexType />\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetWeatherInformationResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"GetWeatherInformationResult\\\" type=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"ArrayOfWeatherDescription\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"unbounded\\\" name=\\\"WeatherDescription\\\" type=\\\"tns:WeatherDescription\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"WeatherDescription\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Description\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"PictureURL\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"GetCityForecastByZIP\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetCityForecastByZIPResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"GetCityForecastByZIPResult\\\" type=\\\"tns:ForecastReturn\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"ForecastReturn\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Success\\\" type=\\\"s:boolean\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ResponseText\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"State\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"City\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherStationCity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ForecastResult\\\" type=\\\"tns:ArrayOfForecast\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"ArrayOfForecast\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"unbounded\\\" name=\\\"Forecast\\\" nillable=\\\"true\\\" type=\\\"tns:Forecast\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"Forecast\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Date\\\" type=\\\"s:dateTime\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Desciption\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Temperatures\\\" type=\\\"tns:temp\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"ProbabilityOfPrecipiation\\\" type=\\\"tns:POP\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"temp\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"MorningLow\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"DaytimeHigh\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:complexType name=\\\"POP\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Nighttime\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Daytime\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"GetCityWeatherByZIP\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:element name=\\\"GetCityWeatherByZIPResponse\\\">\\r\\n        <s:complexType>\\r\\n          <s:sequence>\\r\\n            <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"GetCityWeatherByZIPResult\\\" type=\\\"tns:WeatherReturn\\\" />\\r\\n          </s:sequence>\\r\\n        </s:complexType>\\r\\n      </s:element>\\r\\n      <s:complexType name=\\\"WeatherReturn\\\">\\r\\n        <s:sequence>\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"Success\\\" type=\\\"s:boolean\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"ResponseText\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"State\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"City\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherStationCity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"1\\\" maxOccurs=\\\"1\\\" name=\\\"WeatherID\\\" type=\\\"s:short\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Description\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Temperature\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"RelativeHumidity\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Wind\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Pressure\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Visibility\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"WindChill\\\" type=\\\"s:string\\\" />\\r\\n          <s:element minOccurs=\\\"0\\\" maxOccurs=\\\"1\\\" name=\\\"Remarks\\\" type=\\\"s:string\\\" />\\r\\n        </s:sequence>\\r\\n      </s:complexType>\\r\\n      <s:element name=\\\"ArrayOfWeatherDescription\\\" nillable=\\\"true\\\" type=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n      <s:element name=\\\"ForecastReturn\\\" nillable=\\\"true\\\" type=\\\"tns:ForecastReturn\\\" />\\r\\n      <s:element name=\\\"WeatherReturn\\\" type=\\\"tns:WeatherReturn\\\" />\\r\\n    </s:schema>\\r\\n  </wsdl:types>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetWeatherInformation\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetWeatherInformationResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityForecastByZIP\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityForecastByZIPResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPSoapIn\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityWeatherByZIP\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPSoapOut\\\">\\r\\n    <wsdl:part name=\\\"parameters\\\" element=\\\"tns:GetCityWeatherByZIPResponse\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpGetIn\\\" />\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpGetIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ForecastReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpGetIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpGetOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:WeatherReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpPostIn\\\" />\\r\\n  <wsdl:message name=\\\"GetWeatherInformationHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ArrayOfWeatherDescription\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpPostIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityForecastByZIPHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:ForecastReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpPostIn\\\">\\r\\n    <wsdl:part name=\\\"ZIP\\\" type=\\\"s:string\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:message name=\\\"GetCityWeatherByZIPHttpPostOut\\\">\\r\\n    <wsdl:part name=\\\"Body\\\" element=\\\"tns:WeatherReturn\\\" />\\r\\n  </wsdl:message>\\r\\n  <wsdl:portType name=\\\"WeatherSoap\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPSoapIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPSoapOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:portType name=\\\"WeatherHttpGet\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPHttpGetIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPHttpGetOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:portType name=\\\"WeatherHttpPost\\\">\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Gets Information for each WeatherID</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetWeatherInformationHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetWeatherInformationHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City Forecast Over the Next 7 Days, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityForecastByZIPHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityForecastByZIPHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <wsdl:documentation xmlns:wsdl=\\\"http://schemas.xmlsoap.org/wsdl/\\\">Allows you to get your City's Weather, which is updated hourly. U.S. Only</wsdl:documentation>\\r\\n      <wsdl:input message=\\\"tns:GetCityWeatherByZIPHttpPostIn\\\" />\\r\\n      <wsdl:output message=\\\"tns:GetCityWeatherByZIPHttpPostOut\\\" />\\r\\n    </wsdl:operation>\\r\\n  </wsdl:portType>\\r\\n  <wsdl:binding name=\\\"WeatherSoap\\\" type=\\\"tns:WeatherSoap\\\">\\r\\n    <soap:binding transport=\\\"http://schemas.xmlsoap.org/soap/http\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetWeatherInformation\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <soap:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherSoap12\\\" type=\\\"tns:WeatherSoap\\\">\\r\\n    <soap12:binding transport=\\\"http://schemas.xmlsoap.org/soap/http\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetWeatherInformation\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityForecastByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <soap12:operation soapAction=\\\"http://ws.cdyne.com/WeatherWS/GetCityWeatherByZIP\\\" style=\\\"document\\\" />\\r\\n      <wsdl:input>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <soap12:body use=\\\"literal\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherHttpGet\\\" type=\\\"tns:WeatherHttpGet\\\">\\r\\n    <http:binding verb=\\\"GET\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <http:operation location=\\\"/GetWeatherInformation\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityForecastByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityWeatherByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <http:urlEncoded />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:binding name=\\\"WeatherHttpPost\\\" type=\\\"tns:WeatherHttpPost\\\">\\r\\n    <http:binding verb=\\\"POST\\\" />\\r\\n    <wsdl:operation name=\\\"GetWeatherInformation\\\">\\r\\n      <http:operation location=\\\"/GetWeatherInformation\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityForecastByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityForecastByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n    <wsdl:operation name=\\\"GetCityWeatherByZIP\\\">\\r\\n      <http:operation location=\\\"/GetCityWeatherByZIP\\\" />\\r\\n      <wsdl:input>\\r\\n        <mime:content type=\\\"application/x-www-form-urlencoded\\\" />\\r\\n      </wsdl:input>\\r\\n      <wsdl:output>\\r\\n        <mime:mimeXml part=\\\"Body\\\" />\\r\\n      </wsdl:output>\\r\\n    </wsdl:operation>\\r\\n  </wsdl:binding>\\r\\n  <wsdl:service name=\\\"Weather\\\">\\r\\n    <wsdl:port name=\\\"WeatherSoap\\\" binding=\\\"tns:WeatherSoap\\\">\\r\\n      <soap:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherSoap12\\\" binding=\\\"tns:WeatherSoap12\\\">\\r\\n      <soap12:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherHttpGet\\\" binding=\\\"tns:WeatherHttpGet\\\">\\r\\n      <http:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n    <wsdl:port name=\\\"WeatherHttpPost\\\" binding=\\\"tns:WeatherHttpPost\\\">\\r\\n      <http:address location=\\\"http://wsf.cdyne.com/WeatherWS/Weather.asmx\\\" />\\r\\n    </wsdl:port>\\r\\n  </wsdl:service>\\r\\n</wsdl:definitions>\",\r\n    \"contentFormat\": \"wsdl\",\r\n    \"wsdlSelector\": {\r\n      \"wsdlServiceName\": \"Weather\",\r\n      \"wsdlEndpointName\": \"WeatherSoap\"\r\n    },\r\n    \"apiType\": \"soap\"\r\n  }\r\n}",
+      "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c5018c33-c83b-4e0e-99c8-9efb8f20f861"
+          "d5960da0-2cd8-4899-8c45-7dea60fc6f11"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.6.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "18972"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8409\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid8409\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Apr 2019 04:12:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"AAAAAAAAZOs=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "387d77f2-f197-4492-a312-08efbdb72ef4"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1198"
+        ],
+        "x-ms-correlation-request-id": [
+          "25589512-b5b2-47e1-8021-5e52c0b257ab"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190402T041220Z:25589512-b5b2-47e1-8021-5e52c0b257ab"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "Content-Length": [
           "749"
         ],
@@ -174,18 +206,42 @@
         ],
         "Expires": [
           "-1"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid7243\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid7243\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
+      "StatusCode": 201
+    },
+    {
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid7243?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDcyNDM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "e6582a17-dcdf-47de-91c6-f3c350a51e09"
         ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.6.0"
+        ]
+      },
+      "ResponseHeaders": {
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:38:46 GMT"
+          "Tue, 02 Apr 2019 04:12:19 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"AAAAAAAAOE4=\""
+          "\"AAAAAAAAZOs=\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -194,162 +250,107 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "f29bac6a-4c7b-4336-a25c-7c8612c0d99a"
+          "064587a3-2fb2-435b-948c-5eb48eae0f82"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1191"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11998"
         ],
         "x-ms-correlation-request-id": [
-          "2f861b76-25d6-42a4-b3b0-bffa114abe80"
+          "05b99fd0-de8b-41b1-9f62-c5109a3a3d8f"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T193846Z:2f861b76-25d6-42a4-b3b0-bffa114abe80"
+          "WESTUS2:20190402T041220Z:05b99fd0-de8b-41b1-9f62-c5109a3a3d8f"
         ],
         "X-Content-Type-Options": [
           "nosniff"
-        ]
-      },
-      "StatusCode": 201
-    },
-    {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8409?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDg0MDk/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "x-ms-client-request-id": [
-          "adcb8f5b-34df-4ca5-aad8-bf6c616cba3c"
         ],
-        "accept-language": [
-          "en-US"
+        "Content-Length": [
+          "749"
         ],
-        "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8409\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid8409\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
-      "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 09 Mar 2018 19:38:46 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
-        "ETag": [
-          "\"AAAAAAAAOE4=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "21722848-8a00-4882-a1ec-4251382a5dfb"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14989"
-        ],
-        "x-ms-correlation-request-id": [
-          "1e0dbe91-304d-4e7a-90c0-7a28e155488d"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180309T193846Z:1e0dbe91-304d-4e7a-90c0-7a28e155488d"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid7243\",\r\n  \"type\": \"Microsoft.ApiManagement/service/apis\",\r\n  \"name\": \"aid7243\",\r\n  \"properties\": {\r\n    \"displayName\": \"Weather\",\r\n    \"apiRevision\": \"1\",\r\n    \"description\": null,\r\n    \"serviceUrl\": \"http://wsf.cdyne.com/WeatherWS/Weather.asmx\",\r\n    \"path\": \"weatherapi\",\r\n    \"protocols\": [\r\n      \"https\"\r\n    ],\r\n    \"authenticationSettings\": {\r\n      \"oAuth2\": null,\r\n      \"openid\": null\r\n    },\r\n    \"subscriptionKeyParameterNames\": {\r\n      \"header\": \"Ocp-Apim-Subscription-Key\",\r\n      \"query\": \"subscription-key\"\r\n    },\r\n    \"type\": \"soap\",\r\n    \"isCurrent\": true\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8409?format=wsdl-link&export=true&api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDg0MDk/Zm9ybWF0PXdzZGwtbGluayZleHBvcnQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDE4LTAxLTAx",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid7243?format=wsdl-link&export=true&api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDcyNDM/Zm9ybWF0PXdzZGwtbGluayZleHBvcnQ9dHJ1ZSZhcGktdmVyc2lvbj0yMDE4LTAxLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "563fdc25-2776-4a5c-9f65-c9549851c9c9"
+          "e859ccb3-3f1f-40f8-865c-d6e618f74347"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.6.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"link\": \"https://apimgmtstkjpszvoe48cckrb.blob.core.windows.net/api-export/Weather.xsd?sv=2015-07-08&sr=b&sig=WuP5C3UmZkP1hjJD%2BaXjz1eJoqFpTjR%2F80Ht56riZjs%3D&se=2018-03-09T19:43:46Z&sp=r\"\r\n}",
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Tue, 02 Apr 2019 04:12:19 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "ETag": [
+          "\"AAAAAAAAZOs=\""
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-request-id": [
+          "e4eb57b4-75e0-45b4-8762-7d8b937c0a1a"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "11997"
+        ],
+        "x-ms-correlation-request-id": [
+          "035d7177-d9b5-4396-a169-55a95e11bdff"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20190402T041220Z:035d7177-d9b5-4396-a169-55a95e11bdff"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
         "Content-Length": [
-          "194"
+          "192"
         ],
         "Content-Type": [
           "application/vnd.ms.wsdl.link+xml; charset=utf-8"
         ],
         "Expires": [
           "-1"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 09 Mar 2018 19:38:47 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "ETag": [
-          "\"AAAAAAAAOE4=\""
-        ],
-        "Server": [
-          "Microsoft-HTTPAPI/2.0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-request-id": [
-          "7aa3203b-6f85-4a70-aa16-df90d572f1ac"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14988"
-        ],
-        "x-ms-correlation-request-id": [
-          "7496eae2-2b8a-4f24-80fd-989743537978"
-        ],
-        "x-ms-routing-request-id": [
-          "WESTUS2:20180309T193847Z:7496eae2-2b8a-4f24-80fd-989743537978"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
         ]
       },
+      "ResponseBody": "{\r\n  \"link\": \"https://apimgmtstkjpszvoe48cckrb.blob.core.windows.net/api-export/Weather.xsd?sv=2015-07-08&sr=b&sig=Qq0uHyY02Ar1MsYa1Vnm6L9iR1l8DRg7VK%2BUXkTkMYc%3D&se=2019-04-02T04:17:20Z&sp=r\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid8409?api-version=2018-01-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDg0MDk/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
+      "RequestUri": "/subscriptions/bab08e11-7b12-4354-9fd1-4b5d64d40b68/resourceGroups/Api-Default-CentralUS/providers/Microsoft.ApiManagement/service/sdktestservice/apis/aid7243?api-version=2018-01-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYmFiMDhlMTEtN2IxMi00MzU0LTlmZDEtNGI1ZDY0ZDQwYjY4L3Jlc291cmNlR3JvdXBzL0FwaS1EZWZhdWx0LUNlbnRyYWxVUy9wcm92aWRlcnMvTWljcm9zb2Z0LkFwaU1hbmFnZW1lbnQvc2VydmljZS9zZGt0ZXN0c2VydmljZS9hcGlzL2FpZDcyNDM/YXBpLXZlcnNpb249MjAxOC0wMS0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6f8f6df3-fdad-4d31-8177-2f20d1c54e6c"
+          "76a05c6e-e4fa-41c1-ab28-c525376f2156"
         ],
         "If-Match": [
           "*"
@@ -358,23 +359,18 @@
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ApiManagement.ApiManagementClient/4.0.6.0"
         ]
       },
-      "ResponseBody": "",
       "ResponseHeaders": {
-        "Content-Length": [
-          "0"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 09 Mar 2018 19:38:47 GMT"
+          "Tue, 02 Apr 2019 04:12:20 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -386,27 +382,34 @@
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-request-id": [
-          "b373b0e8-0189-42a4-bf81-595b4e24cf3c"
+          "e6449c62-8b16-413f-9672-f34559d9105e"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1190"
+        "x-ms-ratelimit-remaining-subscription-deletes": [
+          "14999"
         ],
         "x-ms-correlation-request-id": [
-          "7c5e680f-e4b2-4772-bf6d-4d234c56e9bf"
+          "feee16ce-04c2-44f2-9341-0c25360a735a"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20180309T193847Z:7c5e680f-e4b2-4772-bf6d-4d234c56e9bf"
+          "WESTUS2:20190402T041221Z:feee16ce-04c2-44f2-9341-0c25360a735a"
         ],
         "X-Content-Type-Options": [
           "nosniff"
+        ],
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "",
       "StatusCode": 200
     }
   ],
   "Names": {
     "WsdlTest": [
-      "aid8409"
+      "aid7243"
     ]
   },
   "Variables": {

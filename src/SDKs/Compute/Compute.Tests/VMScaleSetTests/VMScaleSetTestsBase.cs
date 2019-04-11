@@ -106,13 +106,16 @@ namespace Compute.Tests
             string healthProbeId = null,
             string loadBalancerBackendPoolId = null,
             IList<string> zones = null,
-            int? osDiskSizeInGB = null)
+            int? osDiskSizeInGB = null,
+            string machineSizeType = null)
         {
             // Generate Container name to hold disk VHds
             string containerName = TestUtilities.GenerateName(TestPrefix);
             var vhdContainer = "https://" + storageAccountName + ".blob.core.windows.net/" + containerName;
             var vmssName = TestUtilities.GenerateName("vmss");
             bool createOSDisk = !hasManagedDisks || osDiskSizeInGB != null;
+
+            string vmSize = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2;
 
             return new VirtualMachineScaleSet()
             {
@@ -121,7 +124,7 @@ namespace Compute.Tests
                 Sku = new CM.Sku()
                 {
                     Capacity = 2,
-                    Name = zones == null ? VirtualMachineSizeTypes.StandardA0 : VirtualMachineSizeTypes.StandardA1V2,
+                    Name = machineSizeType == null ? vmSize : machineSizeType
                 },
                 Zones = zones,
                 Overprovision = false,
@@ -209,7 +212,8 @@ namespace Compute.Tests
             bool createWithHealthProbe = false,
             Subnet subnet = null,
             IList<string> zones = null,
-            int? osDiskSizeInGB = null)
+            int? osDiskSizeInGB = null,
+            string machineSizeType = null)
         {
             try
             {
@@ -226,7 +230,8 @@ namespace Compute.Tests
                                                                                      createWithHealthProbe,
                                                                                      subnet,
                                                                                      zones,
-                                                                                     osDiskSizeInGB);
+                                                                                     osDiskSizeInGB,
+                                                                                     machineSizeType: machineSizeType);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -302,7 +307,8 @@ namespace Compute.Tests
             bool createWithHealthProbe = false,
             Subnet subnet = null,
             IList<string> zones = null,
-            int? osDiskSizeInGB = null)
+            int? osDiskSizeInGB = null,
+            string machineSizeType = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -327,7 +333,7 @@ namespace Compute.Tests
             Assert.True(createWithManagedDisks || storageAccount != null);
             inputVMScaleSet = CreateDefaultVMScaleSetInput(rgName, storageAccount?.Name, imageRef, subnetResponse.Id, hasManagedDisks:createWithManagedDisks,
                 healthProbeId: loadBalancer?.Probes?.FirstOrDefault()?.Id,
-                loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB);
+                loadBalancerBackendPoolId: loadBalancer?.BackendAddressPools?.FirstOrDefault()?.Id, zones: zones, osDiskSizeInGB: osDiskSizeInGB, machineSizeType: machineSizeType);
             if (vmScaleSetCustomizer != null)
             {
                 vmScaleSetCustomizer(inputVMScaleSet);

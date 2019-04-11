@@ -10,18 +10,122 @@
 
 namespace Microsoft.Azure.Management.FrontDoor.Models
 {
+    using Microsoft.Rest;
+    using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
-    /// Defines values for MatchCondition.
+    /// Define a match condition.
     /// </summary>
-    public static class MatchCondition
+    public partial class MatchCondition
     {
-        public const string RemoteAddr = "RemoteAddr";
-        public const string RequestMethod = "RequestMethod";
-        public const string QueryString = "QueryString";
-        public const string PostArgs = "PostArgs";
-        public const string RequestUri = "RequestUri";
-        public const string RequestHeader = "RequestHeader";
-        public const string RequestBody = "RequestBody";
+        /// <summary>
+        /// Initializes a new instance of the MatchCondition class.
+        /// </summary>
+        public MatchCondition()
+        {
+            CustomInit();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the MatchCondition class.
+        /// </summary>
+        /// <param name="matchVariable">Match variable to compare against.
+        /// Possible values include: 'RemoteAddr', 'RequestMethod',
+        /// 'QueryString', 'PostArgs', 'RequestUri', 'RequestHeader',
+        /// 'RequestBody', 'Cookies'</param>
+        /// <param name="operatorProperty">Describes operator to be matched.
+        /// Possible values include: 'Any', 'IPMatch', 'GeoMatch', 'Equal',
+        /// 'Contains', 'LessThan', 'GreaterThan', 'LessThanOrEqual',
+        /// 'GreaterThanOrEqual', 'BeginsWith', 'EndsWith', 'RegEx'</param>
+        /// <param name="matchValue">List of possible match values.</param>
+        /// <param name="selector">Selector can used to match against a
+        /// specific key from QueryString, PostArgs, RequestHeader or
+        /// Cookies.</param>
+        /// <param name="negateCondition">Describes if the result of this
+        /// condition should be negated.</param>
+        /// <param name="transforms">List of transforms.</param>
+        public MatchCondition(string matchVariable, string operatorProperty, IList<string> matchValue, string selector = default(string), bool? negateCondition = default(bool?), IList<string> transforms = default(IList<string>))
+        {
+            MatchVariable = matchVariable;
+            Selector = selector;
+            OperatorProperty = operatorProperty;
+            NegateCondition = negateCondition;
+            MatchValue = matchValue;
+            Transforms = transforms;
+            CustomInit();
+        }
+
+        /// <summary>
+        /// An initialization method that performs custom operations like setting defaults
+        /// </summary>
+        partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets match variable to compare against. Possible values
+        /// include: 'RemoteAddr', 'RequestMethod', 'QueryString', 'PostArgs',
+        /// 'RequestUri', 'RequestHeader', 'RequestBody', 'Cookies'
+        /// </summary>
+        [JsonProperty(PropertyName = "matchVariable")]
+        public string MatchVariable { get; set; }
+
+        /// <summary>
+        /// Gets or sets selector can used to match against a specific key from
+        /// QueryString, PostArgs, RequestHeader or Cookies.
+        /// </summary>
+        [JsonProperty(PropertyName = "selector")]
+        public string Selector { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes operator to be matched. Possible values
+        /// include: 'Any', 'IPMatch', 'GeoMatch', 'Equal', 'Contains',
+        /// 'LessThan', 'GreaterThan', 'LessThanOrEqual', 'GreaterThanOrEqual',
+        /// 'BeginsWith', 'EndsWith', 'RegEx'
+        /// </summary>
+        [JsonProperty(PropertyName = "operator")]
+        public string OperatorProperty { get; set; }
+
+        /// <summary>
+        /// Gets or sets describes if the result of this condition should be
+        /// negated.
+        /// </summary>
+        [JsonProperty(PropertyName = "negateCondition")]
+        public bool? NegateCondition { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of possible match values.
+        /// </summary>
+        [JsonProperty(PropertyName = "matchValue")]
+        public IList<string> MatchValue { get; set; }
+
+        /// <summary>
+        /// Gets or sets list of transforms.
+        /// </summary>
+        [JsonProperty(PropertyName = "transforms")]
+        public IList<string> Transforms { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (MatchVariable == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MatchVariable");
+            }
+            if (OperatorProperty == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OperatorProperty");
+            }
+            if (MatchValue == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "MatchValue");
+            }
+        }
     }
 }

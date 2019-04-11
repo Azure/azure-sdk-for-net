@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.DataFactory.Models
         /// <param name="description">Linked service description.</param>
         /// <param name="parameters">Parameters for linked service.</param>
         /// <param name="annotations">List of tags that can be used for
-        /// describing the Dataset.</param>
+        /// describing the linked service.</param>
         /// <param name="environmentUrl">The URL of Salesforce instance.
         /// Default is 'https://login.salesforce.com'. To copy data from
         /// sandbox, specify 'https://test.salesforce.com'. To copy data from

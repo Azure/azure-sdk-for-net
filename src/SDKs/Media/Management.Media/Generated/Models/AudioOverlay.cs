@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="audioGainLevel">The gain level of audio in the
         /// overlay. The value should be in the range [0, 1.0]. The default is
         /// 1.0.</param>
-        public AudioOverlay(string inputLabel = default(string), System.TimeSpan? start = default(System.TimeSpan?), System.TimeSpan? end = default(System.TimeSpan?), System.TimeSpan? fadeInDuration = default(System.TimeSpan?), System.TimeSpan? fadeOutDuration = default(System.TimeSpan?), double? audioGainLevel = default(double?))
+        public AudioOverlay(string inputLabel, System.TimeSpan? start = default(System.TimeSpan?), System.TimeSpan? end = default(System.TimeSpan?), System.TimeSpan? fadeInDuration = default(System.TimeSpan?), System.TimeSpan? fadeOutDuration = default(System.TimeSpan?), double? audioGainLevel = default(double?))
             : base(inputLabel, start, end, fadeInDuration, fadeOutDuration, audioGainLevel)
         {
             CustomInit();
@@ -70,5 +70,15 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </summary>
         partial void CustomInit();
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

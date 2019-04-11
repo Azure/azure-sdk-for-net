@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// Lists all of the protection policies within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy1>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Retrieve protection policy with specified name within a resource
         /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the resource group.
+        /// The name of the Web Application Firewall Policy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,16 +70,16 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<WebApplicationFirewallPolicy1>> GetWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WebApplicationFirewallPolicy>> GetWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates or update policy with specified ruleset name within a
+        /// Create or update policy with specified ruleset name within a
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the resource group.
+        /// The name of the Web Application Firewall Policy.
         /// </param>
         /// <param name='parameters'>
         /// Policy to be created.
@@ -99,15 +99,15 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<WebApplicationFirewallPolicy1>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy1 parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WebApplicationFirewallPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes Policy
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the resource group.
+        /// The name of the Web Application Firewall Policy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -123,13 +123,42 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create or update policy with specified ruleset name within a
+        /// resource group.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='policyName'>
+        /// The name of the Web Application Firewall Policy.
+        /// </param>
+        /// <param name='parameters'>
+        /// Policy to be created.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<WebApplicationFirewallPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, WebApplicationFirewallPolicy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes Policy
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='policyName'>
-        /// The name of the resource group.
+        /// The name of the Web Application Firewall Policy.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -165,6 +194,6 @@ namespace Microsoft.Azure.Management.FrontDoor
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy1>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<WebApplicationFirewallPolicy>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

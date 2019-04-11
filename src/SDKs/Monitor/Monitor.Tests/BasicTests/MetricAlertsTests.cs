@@ -38,6 +38,27 @@ namespace Monitor.Tests.BasicTests
 
         [Fact]
         [Trait("Category", "Mock")]
+        public void CreateUpdateMultiResourceMetricAlertRuleTest()
+        {
+            MetricAlertResource expectedParams = GetSampleMultiResourceMetricRuleResourceParams();
+            var handler = new RecordedDelegatingHandler();
+            var insightClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParams, insightClient.SerializationSettings);
+
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightClient = GetMonitorManagementClient(handler);
+
+            var result = insightClient.MetricAlerts.CreateOrUpdate(resourceGroupName: "rg1", ruleName: "Rule2", parameters: expectedParams);
+            Utilities.AreEqual(expectedParams, result);
+        }
+
+        [Fact]
+        [Trait("Category", "Mock")]
         public void ListMetricAlertRuleByResourceGroupTest()
         {
             var expectedResponseValue = GetSampleMetricAlertCollection();
@@ -120,6 +141,27 @@ namespace Monitor.Tests.BasicTests
             Utilities.AreEqual(expectedParams, result);
         }
 
+        [Fact]
+        [Trait("Category","Mock")]
+        public void GetMultiResourceMetricAlertTest()
+        {
+            MetricAlertResource expectedParams = GetSampleMultiResourceMetricRuleResourceParams();
+            var handler = new RecordedDelegatingHandler();
+            var insightClient = GetMonitorManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParams, insightClient.SerializationSettings);
+
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(serializedObject)
+            };
+
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightClient = GetMonitorManagementClient(handler);
+
+            var result = insightClient.MetricAlerts.Get(resourceGroupName: "rg1", ruleName: "Rule1");
+            Utilities.AreEqual(expectedParams, result);
+        }
+
         private MetricAlertStatusCollection GetMetricAlertStatus()
         {
             MetricAlertStatusProperties statusProps = new MetricAlertStatusProperties()
@@ -161,6 +203,29 @@ namespace Monitor.Tests.BasicTests
                             ActionGroupId = "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/custommetricdemo/providers/microsoft.insights/actiongroups/scactiongroup"
                         }
                     }
+                ),
+                 new MetricAlertResource(
+                    description: "alert description",
+                    severity: 3,
+                    location: "global",
+                    enabled: true,
+                    targetResourceRegion: "southcentralus",
+                    targetResourceType: "Microsoft.Compute/virtualMachines",
+                    scopes: new List<string>()
+                    {
+                        "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo2",
+                        "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo3"
+                    },
+                    evaluationFrequency: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
+                    windowSize: new TimeSpan(hours: 0, minutes: 5 ,seconds: 0),
+                    criteria: GetSampleMultiResourceMetricCriteria(),
+                    actions: new List<MetricAlertAction>()
+                    {
+                        new MetricAlertAction()
+                    {
+                        ActionGroupId = "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/default-activitylogalerts/providers/microsoft.insights/actiongroups/anashah"
+                    }
+                }
                 )
             };
         }
@@ -191,6 +256,35 @@ namespace Monitor.Tests.BasicTests
                 );
         }
 
+        private MetricAlertResource GetSampleMultiResourceMetricRuleResourceParams()
+        {
+            MetricAlertMultipleResourceMultipleMetricCriteria metricCriteria = GetSampleMultiResourceMetricCriteria();
+
+            return new MetricAlertResource(
+                description: "alert description",
+                severity: 3,
+                location: "global",
+                enabled: true,
+                targetResourceRegion: "southcentralus",
+                targetResourceType: "Microsoft.Compute/virtualMachines",
+                scopes: new List<string>()
+                {
+                    "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo2",
+                    "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourceGroups/SanjaychResourceGroup/providers/Microsoft.Compute/virtualMachines/SCCMDemo3"
+                },
+                evaluationFrequency: new TimeSpan(hours: 0, minutes: 5, seconds: 0),
+                windowSize: new TimeSpan(hours: 0, minutes: 5 ,seconds: 0),
+                criteria: metricCriteria,
+                actions: new List<MetricAlertAction>()
+                {
+                    new MetricAlertAction()
+                    {
+                        ActionGroupId = "/subscriptions/80430018-24ee-4b28-a7bd-fb23b5a221d6/resourcegroups/default-activitylogalerts/providers/microsoft.insights/actiongroups/anashah"
+                    }
+                }
+            );
+        }
+
         private static MetricAlertSingleResourceMultipleMetricCriteria GetSampleMetricCriteria()
         {
             MetricDimension metricDimension = new MetricDimension()
@@ -219,6 +313,36 @@ namespace Monitor.Tests.BasicTests
                     }
                 }
             );
+        }
+
+        private static MetricAlertMultipleResourceMultipleMetricCriteria GetSampleMultiResourceMetricCriteria()
+        {
+            MetricDimension metricDimension = new MetricDimension()
+            {
+                Name = "name1",
+                OperatorProperty = "Include",
+                Values = new List<string>()
+                {
+                    "Primary"
+                }
+            };
+
+            MetricDimension[] metricDimensions = new MetricDimension[1] { metricDimension };
+
+            return new MetricAlertMultipleResourceMultipleMetricCriteria(
+                allOf: new List<MultiMetricCriteria>
+                {
+                    new MetricCriteria()
+                    {
+                        MetricName = "Metric Name",
+                        Name = "metric1",
+                        Dimensions = metricDimensions,
+                        Threshold = 100,
+                        OperatorProperty = "GreaterThan",
+                        TimeAggregation = "Avergage"
+                    }
+                }
+           );
         }
     }
 }

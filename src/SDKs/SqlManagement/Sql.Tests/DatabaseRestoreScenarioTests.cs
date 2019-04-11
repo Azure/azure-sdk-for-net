@@ -479,5 +479,62 @@ namespace Sql.Tests
                     || !listResponseAfterDelete.Where(x => x.Name == postResponse.Name).Any());
             }
         }
+
+        [Fact]
+        public void TestGetRecoverableInstanceDatabase()
+        {
+            // Use exising CI/database, otherwise 10 hours are needed for waiting new created database is replicated in paired cluster. 
+            // In worst case, more than 1 day is needed for waiting 
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+                string resourceGroup = "restore-rg";
+                string managedInstanceName = "restorerunnermanagedserverwus";
+                var managedInstance = sqlClient.ManagedInstances.Get(resourceGroup, managedInstanceName);
+
+                // List recoveralbe database 
+                var listResponse = sqlClient.RecoverableManagedDatabases.ListByInstance(resourceGroup, managedInstance.Name);
+                // Get more than 1 database 
+                Assert.True(listResponse.Count() > 0);
+                Assert.True(listResponse.Where(x => (x.Id.Contains(resourceGroup) && x.Id.Contains(managedInstanceName))).Any());
+            }
+        }
+
+        [Fact]
+        public void TestRecoverInstanceDatabase()
+        {
+            using (SqlManagementTestContext context = new SqlManagementTestContext(this))
+            {
+                SqlManagementClient sqlClient = context.GetClient<SqlManagementClient>();
+
+                // Use exising CI/database, otherwise 10 hours are needed for waiting new created database is replicated in paired cluster. 
+                // In worst case, more than 1 day is needed for waiting 
+                string resourceGroup = "restore-rg";
+                string managedInstanceName = "restorerunnermanagedserverwus";
+                var managedInstance = sqlClient.ManagedInstances.Get(resourceGroup, managedInstanceName);
+
+                // List recoveralbe database  
+                var listResponse = sqlClient.RecoverableManagedDatabases.ListByInstance(resourceGroup, managedInstance.Name);
+
+                // Get more than 1 database  
+                Assert.True(listResponse.Count() > 0);
+                RecoverableManagedDatabase sourceManagedDb = listResponse.First();
+                String targetDbName = SqlManagementTestUtilities.GenerateName();
+                var targetInput = new ManagedDatabase()
+                {
+                    Location = managedInstance.Location,
+                    CreateMode = "Recovery",
+                    RecoverableDatabaseId = sourceManagedDb.Id
+                };
+
+                // Issue recovery request  
+                var targetDb = sqlClient.ManagedDatabases.CreateOrUpdate(resourceGroup, managedInstanceName, targetDbName,
+                   targetInput);
+
+                Assert.NotNull(targetDb);
+                SqlManagementTestUtilities.ValidateManagedDatabase(targetInput, targetDb, targetDbName);
+                sqlClient.ManagedDatabases.Delete(resourceGroup, managedInstance.Name, targetDb.Name);
+            }
+        }
     }
 }

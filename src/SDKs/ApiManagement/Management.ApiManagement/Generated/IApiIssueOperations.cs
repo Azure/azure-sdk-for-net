@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IApiIssueOperations
     {
         /// <summary>
-        /// Lists all issues assosiated with the specified API.
+        /// Lists all issues associated with the specified API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all issues assosiated with the specified API.
+        /// Lists all issues associated with the specified API.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

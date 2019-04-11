@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -220,7 +220,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -245,7 +245,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.

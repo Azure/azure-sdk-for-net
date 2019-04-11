@@ -35,9 +35,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <param name="name">The name that identifies this endpoint. The name
         /// can only include alphanumeric characters, periods, underscores,
         /// hyphens and has a maximum length of 64 characters. The following
-        /// names are reserved:  events, operationsMonitoringEvents,
-        /// fileNotifications, $default. Endpoint names must be unique across
-        /// endpoint types.</param>
+        /// names are reserved:  events, fileNotifications, $default. Endpoint
+        /// names must be unique across endpoint types.</param>
         /// <param name="subscriptionId">The subscription identifier of the
         /// event hub endpoint.</param>
         /// <param name="resourceGroup">The name of the resource group of the
@@ -66,8 +65,8 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// Gets or sets the name that identifies this endpoint. The name can
         /// only include alphanumeric characters, periods, underscores, hyphens
         /// and has a maximum length of 64 characters. The following names are
-        /// reserved:  events, operationsMonitoringEvents, fileNotifications,
-        /// $default. Endpoint names must be unique across endpoint types.
+        /// reserved:  events, fileNotifications, $default. Endpoint names must
+        /// be unique across endpoint types.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

@@ -33,7 +33,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 
                 Assert.NotEmpty(groupsList);
                 Assert.Equal(3, groupsList.GetEnumerator().ToIEnumerable().Count());
-                Assert.NotNull(groupsList.NextPageLink);
+                Assert.Null(groupsList.NextPageLink);
 
                 // list by paging using ODATA query
                 groupsList = testBase.client.Group.ListByService(
