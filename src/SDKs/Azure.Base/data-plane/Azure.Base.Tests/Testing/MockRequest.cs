@@ -3,7 +3,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Base.Http;
+using Azure.Base.Pipeline;
 
 namespace Azure.Base.Testing
 {

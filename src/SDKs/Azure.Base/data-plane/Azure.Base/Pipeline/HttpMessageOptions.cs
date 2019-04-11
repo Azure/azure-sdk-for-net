@@ -3,7 +3,7 @@
 
 using System.ComponentModel;
 
-namespace Azure.Base.Http
+namespace Azure.Base.Pipeline
 {
     public partial class HttpPipelineMessage
     {

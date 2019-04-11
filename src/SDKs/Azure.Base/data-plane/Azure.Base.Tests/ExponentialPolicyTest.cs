@@ -4,7 +4,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
+using Azure.Base.Pipeline.Policies;
 using Azure.Base.Testing;
 using Azure.Base.Tests.Testing;
 using NUnit.Framework;
@@ -92,11 +93,15 @@ namespace Azure.Base.Tests
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
             public ExponentialRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> shouldRetryException = null, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
-                : base(retriableCodes, shouldRetryException, maxRetries, delay, maxDelay)
             {
+                RetriableCodes = retriableCodes;
+                ShouldRetryException = shouldRetryException;
+                MaxRetries = maxRetries;
+                Delay = delay;
+                MaxDelay = maxDelay;
             }
 
-            internal override Task Delay(TimeSpan time, CancellationToken cancellationToken)
+            internal override Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
             {
                 return DelayGate.WaitForRelease(time);
             }

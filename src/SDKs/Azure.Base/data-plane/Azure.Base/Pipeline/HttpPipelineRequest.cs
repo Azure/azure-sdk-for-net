@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Base.Http
+namespace Azure.Base.Pipeline
 {
     public abstract class HttpPipelineRequest : IDisposable
     {

@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
+using Azure.Base.Pipeline.Policies;
 using NUnit.Framework;
 using System;
 using System.Net.Http;
@@ -29,14 +29,15 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.LoggingPolicy = null;
 
             // specify custom retry policy options
-            options.RetryPolicy = RetryPolicy.CreateFixed(
-                maxRetries: 10,
-                delay: TimeSpan.FromSeconds(1),
-                retriableCodes: new int[] {
+            options.RetryPolicy = new FixedRetryPolicy()
+            {
+                MaxRetries = 10,
+                Delay = TimeSpan.FromSeconds(1),
+                RetriableCodes = new [] {
                     500, // Internal Server Error
                     504  // Gateway Timeout
                 }
-            );
+            };
 
             // add a policy (custom behavior) that executes once per client call
             options.PerCallPolicies.Add(new AddHeaderPolicy());

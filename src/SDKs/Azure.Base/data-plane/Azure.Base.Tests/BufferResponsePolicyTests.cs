@@ -4,7 +4,7 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline.Policies;
 using Azure.Base.Testing;
 using NUnit.Framework;
 

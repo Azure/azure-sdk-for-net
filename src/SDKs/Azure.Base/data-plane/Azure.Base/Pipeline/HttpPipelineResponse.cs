@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Azure.Base.Http
+namespace Azure.Base.Pipeline
 {
     public abstract class HttpPipelineResponse: IDisposable
     {

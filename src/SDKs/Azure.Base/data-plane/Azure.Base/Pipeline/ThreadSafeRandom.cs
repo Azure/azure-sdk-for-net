@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Base.Http.Pipeline
+namespace Azure.Base.Pipeline
 {
     internal class ThreadSafeRandom: Random
     {
