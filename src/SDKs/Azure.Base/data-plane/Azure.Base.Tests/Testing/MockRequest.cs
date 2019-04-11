@@ -11,7 +11,7 @@ namespace Azure.Base.Testing
     {
         public MockRequest()
         {
-            RequestId = new Guid().ToString();
+            RequestId = Guid.NewGuid().ToString();
         }
 
         private readonly List<HttpHeader> _headers = new List<HttpHeader>();

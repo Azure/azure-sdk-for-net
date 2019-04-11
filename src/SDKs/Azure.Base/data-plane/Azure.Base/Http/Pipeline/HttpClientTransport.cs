@@ -288,7 +288,7 @@ namespace Azure.Base.Http.Pipeline
             public override string ToString() => _responseMessage.ToString();
         }
 
-        private class ContentStream : Stream
+        private class ContentStream : ReadOnlyStream
         {
             private readonly Task<Stream> _contentTask;
             private Stream _contentStream;
@@ -297,21 +297,10 @@ namespace Azure.Base.Http.Pipeline
             {
                 _contentTask = contentTask;
             }
-
-            public override void Flush()
-            {
-                throw new NotSupportedException();
-            }
-
             public override long Seek(long offset, SeekOrigin origin)
             {
                 EnsureStream();
                 return _contentStream.Seek(offset, origin);
-            }
-
-            public override void SetLength(long value)
-            {
-                throw new NotSupportedException();
             }
 
             public override async Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
@@ -324,11 +313,6 @@ namespace Azure.Base.Http.Pipeline
             {
                 EnsureStream();
                 return _contentStream.Read(buffer, offset, count);
-            }
-
-            public override void Write(byte[] buffer, int offset, int count)
-            {
-                throw new NotSupportedException();
             }
 
             public override bool CanRead
@@ -348,8 +332,6 @@ namespace Azure.Base.Http.Pipeline
                     return _contentStream.CanSeek;
                 }
             }
-
-            public override bool CanWrite => false;
 
             public override long Length
             {
