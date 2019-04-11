@@ -16,7 +16,7 @@ namespace Azure.Base.Tests
 {
     public class PipelineTests
     {
-
+/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5654 test skipped for net461 */
 #if !FullNetFx
         [Test]
         public async Task Basics()
@@ -56,7 +56,7 @@ namespace Azure.Base.Tests
 
             Assert.AreEqual(userAgent, $"azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
-
+/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5654 test skipped for net461 */
 #if !FullNetFx
         class CustomRetryPolicy : RetryPolicy
         {

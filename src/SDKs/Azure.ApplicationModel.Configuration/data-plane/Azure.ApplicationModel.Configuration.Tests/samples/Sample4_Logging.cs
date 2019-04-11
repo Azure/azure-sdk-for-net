@@ -65,6 +65,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
+/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5654 test skipped for net461 */
 #if !FullNetFx
             base.OnEventWritten(eventData);
 #endif
