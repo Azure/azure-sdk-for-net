@@ -34,8 +34,8 @@ namespace Azure.ApplicationModel.Configuration
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
                     new AuthenticationPolicy(credential, secret),
-                    BufferResponsePolicy.Singleton,
-                    options.LoggingPolicy);
+                    options.LoggingPolicy,
+                    BufferResponsePolicy.Singleton);
         }
 
         [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
