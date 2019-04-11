@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline.Policies;
 using Azure.Base.Testing;
 using NUnit.Framework;
 

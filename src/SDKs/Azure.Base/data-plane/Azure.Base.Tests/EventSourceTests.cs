@@ -3,14 +3,13 @@
 
 using System;
 using System.Diagnostics.Tracing;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
+using Azure.Base.Pipeline.Policies;
 using Azure.Base.Testing;
 using NUnit.Framework;
 

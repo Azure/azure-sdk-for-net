@@ -6,8 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration
 {

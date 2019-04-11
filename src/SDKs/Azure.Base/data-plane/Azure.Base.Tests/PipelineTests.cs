@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
+using Azure.Base.Pipeline.Policies;
 using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
@@ -56,7 +56,7 @@ namespace Azure.Base.Tests
 
         class CustomRetryPolicy : RetryPolicy
         {
-            protected override bool ShouldRetryResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+            protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
             {
                 delay = TimeSpan.Zero;
                 if (attempted > 5) return false;
@@ -64,7 +64,7 @@ namespace Azure.Base.Tests
                 return true;
             }
 
-            protected override bool ShouldRetryException(Exception exception, int attempted, out TimeSpan delay)
+            protected override bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay)
             {
                 return false;
             }

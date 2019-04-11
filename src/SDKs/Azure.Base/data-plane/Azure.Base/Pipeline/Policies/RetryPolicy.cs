@@ -8,13 +8,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
 
-namespace Azure.Base.Http.Pipeline
+namespace Azure.Base.Pipeline.Policies
 {
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
-        public static RetryPolicy CreateFixed(int maxRetries, TimeSpan delay, params int[] retriableCodes)
-            => new FixedRetryPolicy(retriableCodes, exception => false, maxRetries, delay);
-
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             int attempt = 0;
@@ -44,7 +41,7 @@ namespace Azure.Base.Http.Pipeline
 
                 if (lastException != null)
                 {
-                    if (!ShouldRetryException(lastException, attempt, out delay))
+                    if (!IsRetriableException(lastException, attempt, out delay))
                     {
                         // Rethrow a singular exception
                         if (exceptions.Count == 1)
@@ -55,27 +52,27 @@ namespace Azure.Base.Http.Pipeline
                         throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
                     }
                 }
-                else if (!ShouldRetryResponse(message, attempt, out delay))
+                else if (!IsRetriableResponse(message, attempt, out delay))
                 {
                     return;
                 }
 
                 if (delay > TimeSpan.Zero)
                 {
-                    await Delay(delay, message.Cancellation);
+                    await DelayAsync(delay, message.Cancellation);
                 }
 
                 HttpPipelineEventSource.Singleton.RequestRetrying(message.Request, attempt);
             }
         }
 
-        internal virtual async Task Delay(TimeSpan time, CancellationToken cancellationToken)
+        internal virtual async Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
         {
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
         }
 
-        protected abstract bool ShouldRetryResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay);
+        protected abstract bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay);
 
-        protected abstract bool ShouldRetryException(Exception exception, int attempted, out TimeSpan delay);
+        protected abstract bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay);
     }
 }

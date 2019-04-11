@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
 using Azure.Base.Testing;
 using Azure.Base.Tests.Testing;
 using NUnit.Framework;

@@ -1,13 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Base.Pipeline;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Azure.Base.Tests;
 using Azure.Base.Tests.Testing;
 
 namespace Azure.Base.Testing

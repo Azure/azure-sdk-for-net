@@ -4,11 +4,10 @@
 
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
 
-namespace Azure.Base.Http.Pipeline
+namespace Azure.Base.Pipeline.Policies
 {
     public class LoggingPolicy : HttpPipelinePolicy
     {

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Azure.Base.Http.Pipeline
+namespace Azure.Base.Pipeline.Policies
 {
     public class AddHeadersPolicy : HttpPipelinePolicy
     {

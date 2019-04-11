@@ -5,7 +5,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
-namespace Azure.Base.Http.Pipeline
+namespace Azure.Base.Pipeline
 {
     public abstract class HttpPipelinePolicy
     {

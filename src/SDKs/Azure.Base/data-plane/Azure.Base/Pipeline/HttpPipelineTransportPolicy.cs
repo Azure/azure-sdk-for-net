@@ -4,9 +4,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using Azure.Base.Http.Pipeline;
 
-namespace Azure.Base.Http
+namespace Azure.Base.Pipeline
 {
     internal class HttpPipelineTransportPolicy : HttpPipelinePolicy
     {

@@ -9,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Http;
+using Azure.Base.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration
 {

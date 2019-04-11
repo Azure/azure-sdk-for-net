@@ -4,7 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace Azure.Base.Http
+namespace Azure.Base.Pipeline
 {
     public readonly struct HttpHeader : IEquatable<HttpHeader>
     {

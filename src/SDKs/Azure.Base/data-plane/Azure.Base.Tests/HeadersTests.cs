@@ -3,7 +3,7 @@
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using Azure.Base.Http;
+using Azure.Base.Pipeline;
 using NUnit.Framework;
 
 namespace Azure.Base.Tests

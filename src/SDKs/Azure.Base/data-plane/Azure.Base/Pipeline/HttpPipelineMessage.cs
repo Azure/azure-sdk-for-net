@@ -6,7 +6,7 @@ using System;
 using System.ComponentModel;
 using System.Threading;
 
-namespace Azure.Base.Http
+namespace Azure.Base.Pipeline
 {
     public partial class HttpPipelineMessage  : IDisposable
     {

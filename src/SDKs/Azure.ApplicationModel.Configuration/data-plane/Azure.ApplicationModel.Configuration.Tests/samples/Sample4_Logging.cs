@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
