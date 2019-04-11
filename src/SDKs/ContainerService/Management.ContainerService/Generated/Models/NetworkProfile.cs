@@ -31,10 +31,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         /// <param name="vnetCidr">CIDR for the OpenShift Vnet.</param>
         /// <param name="peerVnetId">CIDR of the Vnet to peer.</param>
-        public NetworkProfile(string vnetCidr = default(string), string peerVnetId = default(string))
+        /// <param name="vnetId">ID of the Vnet created for OSA
+        /// cluster.</param>
+        public NetworkProfile(string vnetCidr = default(string), string peerVnetId = default(string), string vnetId = default(string))
         {
             VnetCidr = vnetCidr;
             PeerVnetId = peerVnetId;
+            VnetId = vnetId;
             CustomInit();
         }
 
@@ -54,6 +57,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "peerVnetId")]
         public string PeerVnetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets ID of the Vnet created for OSA cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "vnetId")]
+        public string VnetId { get; set; }
 
     }
 }

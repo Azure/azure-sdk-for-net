@@ -45,9 +45,11 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// billing purposes</param>
         /// <param name="provisioningState">The current deployment or
         /// provisioning state, which only appears in the response.</param>
-        /// <param name="publicHostname">Optional user-specified FQDN for
-        /// OpenShift API server.</param>
-        /// <param name="fqdn">User-specified FQDN for OpenShift API server
+        /// <param name="clusterVersion">Version of OpenShift specified when
+        /// creating the cluster.</param>
+        /// <param name="publicHostname">Service generated FQDN for OpenShift
+        /// API server.</param>
+        /// <param name="fqdn">Service generated FQDN for OpenShift API server
         /// loadbalancer internal hostname.</param>
         /// <param name="networkProfile">Configuration for OpenShift
         /// networking.</param>
@@ -59,12 +61,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// VMs.</param>
         /// <param name="authProfile">Configures OpenShift
         /// authentication.</param>
-        public OpenShiftManagedCluster(string location, string openShiftVersion, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), string provisioningState = default(string), string publicHostname = default(string), string fqdn = default(string), NetworkProfile networkProfile = default(NetworkProfile), IList<OpenShiftRouterProfile> routerProfiles = default(IList<OpenShiftRouterProfile>), OpenShiftManagedClusterMasterPoolProfile masterPoolProfile = default(OpenShiftManagedClusterMasterPoolProfile), IList<OpenShiftManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<OpenShiftManagedClusterAgentPoolProfile>), OpenShiftManagedClusterAuthProfile authProfile = default(OpenShiftManagedClusterAuthProfile))
+        public OpenShiftManagedCluster(string location, string openShiftVersion, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), string provisioningState = default(string), string clusterVersion = default(string), string publicHostname = default(string), string fqdn = default(string), NetworkProfile networkProfile = default(NetworkProfile), IList<OpenShiftRouterProfile> routerProfiles = default(IList<OpenShiftRouterProfile>), OpenShiftManagedClusterMasterPoolProfile masterPoolProfile = default(OpenShiftManagedClusterMasterPoolProfile), IList<OpenShiftManagedClusterAgentPoolProfile> agentPoolProfiles = default(IList<OpenShiftManagedClusterAgentPoolProfile>), OpenShiftManagedClusterAuthProfile authProfile = default(OpenShiftManagedClusterAuthProfile))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
             ProvisioningState = provisioningState;
             OpenShiftVersion = openShiftVersion;
+            ClusterVersion = clusterVersion;
             PublicHostname = publicHostname;
             Fqdn = fqdn;
             NetworkProfile = networkProfile;
@@ -102,17 +105,23 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string OpenShiftVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets optional user-specified FQDN for OpenShift API server.
+        /// Gets version of OpenShift specified when creating the cluster.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicHostname")]
-        public string PublicHostname { get; set; }
+        [JsonProperty(PropertyName = "properties.clusterVersion")]
+        public string ClusterVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets user-specified FQDN for OpenShift API server
-        /// loadbalancer internal hostname.
+        /// Gets service generated FQDN for OpenShift API server.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publicHostname")]
+        public string PublicHostname { get; private set; }
+
+        /// <summary>
+        /// Gets service generated FQDN for OpenShift API server loadbalancer
+        /// internal hostname.
         /// </summary>
         [JsonProperty(PropertyName = "properties.fqdn")]
-        public string Fqdn { get; set; }
+        public string Fqdn { get; private set; }
 
         /// <summary>
         /// Gets or sets configuration for OpenShift networking.
