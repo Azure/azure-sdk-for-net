@@ -15,12 +15,7 @@ namespace Azure.Base.Pipeline.Policies
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
 
-        private int[] _excludeErrors = Array.Empty<int>();
-
         public static readonly LoggingPolicy Shared = new LoggingPolicy();
-
-        public LoggingPolicy(params int[] excludeErrors)
-            => _excludeErrors = excludeErrors;
 
         // TODO (pri 1): we should remove sensitive information, e.g. keys
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -36,9 +31,7 @@ namespace Azure.Base.Pipeline.Policies
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             var after = Stopwatch.GetTimestamp();
 
-            var status = message.Response.Status;
-            // if error status
-            if (status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1))
+            if (message.ResponseClassifier.IsErrorResponse(message.Response))
             {
                 s_eventSource.ErrorResponse(message.Response);
 

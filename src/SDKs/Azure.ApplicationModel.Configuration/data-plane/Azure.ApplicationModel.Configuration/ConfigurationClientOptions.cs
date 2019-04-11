@@ -9,23 +9,19 @@ namespace Azure.ApplicationModel.Configuration
 {
     public class ConfigurationClientOptions: HttpClientOptions
     {
+        public ResponseClassifier ResponseClassifier { get; set; }
+
         public FixedRetryPolicy RetryPolicy { get; set; }
 
         public HttpPipelinePolicy LoggingPolicy { get; set; }
 
         public ConfigurationClientOptions()
         {
+            ResponseClassifier = new DefaultResponseClassifier();
             LoggingPolicy = Base.Pipeline.Policies.LoggingPolicy.Shared;
             RetryPolicy = new FixedRetryPolicy()
             {
                 Delay =  TimeSpan.Zero,
-                RetriableCodes = new[]
-                {
-                    //429, // Too Many Requests TODO (pri 2): this needs to throttle based on x-ms-retry-after
-                    500, // Internal Server Error
-                    503, // Service Unavailable
-                    504  // Gateway Timeout
-                },
                 MaxRetries = 3
             };
         }

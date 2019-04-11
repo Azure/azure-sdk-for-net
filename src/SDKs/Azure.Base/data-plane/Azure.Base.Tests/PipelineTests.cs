@@ -43,7 +43,7 @@ namespace Azure.Base.Tests
                     return new MockResponse(200);
                 });
 
-            var pipeline = HttpPipeline.Build(new TestClientOptions() { Transport = mockTransport }, new HttpPipelinePolicy[0]);
+            var pipeline = HttpPipeline.Build(new TestClientOptions() { Transport = mockTransport }, null);
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
@@ -64,7 +64,7 @@ namespace Azure.Base.Tests
                 return true;
             }
 
-            protected override bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay)
+            protected override bool IsRetriableException(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
             {
                 return false;
             }

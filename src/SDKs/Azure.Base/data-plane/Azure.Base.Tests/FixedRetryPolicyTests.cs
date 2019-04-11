@@ -17,9 +17,10 @@ namespace Azure.Base.Tests
         [Test]
         public async Task WaitsBetweenRetries()
         {
-            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, delay: TimeSpan.FromSeconds(3));
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(3));
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -35,9 +36,10 @@ namespace Azure.Base.Tests
         [Test]
         public async Task WaitsSameAmountEveryTime()
         {
-            var policy = new FixedRetryPolicyMock(retriableCodes: new [] { 500 }, delay: TimeSpan.FromSeconds(3), maxRetries: 3);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(3), maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -53,9 +55,9 @@ namespace Azure.Base.Tests
             Assert.AreEqual(500, response.Status);
         }
 
-        protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3)
+        protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
         {
-            var policy = new FixedRetryPolicyMock(retriableCodes, exceptionFilter, maxRetries, TimeSpan.FromSeconds(3));
+            var policy = new FixedRetryPolicyMock(maxRetries, TimeSpan.FromSeconds(3));
             return (policy, policy.DelayGate);
         }
 
@@ -63,12 +65,10 @@ namespace Azure.Base.Tests
         {
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            public FixedRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> shouldRetryException = null, int maxRetries = 3, TimeSpan delay = default)
+            public FixedRetryPolicyMock(int maxRetries = 3, TimeSpan delay = default)
             {
                 Delay = delay;
                 MaxRetries = maxRetries;
-                RetriableCodes = retriableCodes;
-                ShouldRetryException = shouldRetryException;
             }
 
             internal override Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)

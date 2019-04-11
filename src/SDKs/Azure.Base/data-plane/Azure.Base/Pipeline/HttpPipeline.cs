@@ -15,12 +15,14 @@ namespace Azure.Base.Pipeline
     public class HttpPipeline
     {
         private readonly HttpPipelineTransport _transport;
+        private readonly ResponseClassifier _responseClassifier;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
         private readonly IServiceProvider _services;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, IServiceProvider services = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, IServiceProvider services = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _responseClassifier = responseClassifier ?? DefaultResponseClassifier.Singleton;
 
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
@@ -43,12 +45,13 @@ namespace Azure.Base.Pipeline
             using (var message = new HttpPipelineMessage(cancellationToken))
             {
                 message.Request = request;
+                message.ResponseClassifier = _responseClassifier;
                 await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
                 return new Response(message.Response);
             }
         }
 
-        public static HttpPipeline Build(HttpClientOptions options, params HttpPipelinePolicy[] clientPolicies)
+        public static HttpPipeline Build(HttpClientOptions options, ResponseClassifier responseClassifier, params HttpPipelinePolicy[] clientPolicies)
         {
             var policies = new List<HttpPipelinePolicy>();
 
@@ -65,7 +68,7 @@ namespace Azure.Base.Pipeline
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ServiceProvider);
+            return new HttpPipeline(options.Transport, policies.ToArray(), responseClassifier, options.ServiceProvider);
         }
 
         private static AddHeadersPolicy CreateTelemetryPolicy(HttpClientOptions options)

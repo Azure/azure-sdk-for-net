@@ -11,16 +11,6 @@ namespace Azure.Base.Pipeline.Policies
         private readonly Random _random = new ThreadSafeRandom();
 
         /// <summary>
-        /// Gets or sets the list of response status codes to retry.
-        /// </summary>
-        public int[] RetriableCodes { get; set; } = Array.Empty<int>();
-
-        /// <summary>
-        /// Gets or sets the delegate to specify is exception should be retried.
-        /// </summary>
-        public Func<Exception, bool> ShouldRetryException { get; set; } = _ => false;
-
-        /// <summary>
         /// Gets or sets the maximum number of retry attempts before giving up.
         /// </summary>
         public int MaxRetries { get; set; } = 10;
@@ -51,10 +41,10 @@ namespace Azure.Base.Pipeline.Policies
                 return false;
             }
 
-            return Array.IndexOf(RetriableCodes, message.Response.Status) >= 0;
+            return !message.ResponseClassifier.IsFatalErrorResponse(message.Response);
         }
 
-        protected override bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay)
+        protected override bool IsRetriableException(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
         {
             delay = CalculateDelay(attempted);
 
@@ -63,7 +53,7 @@ namespace Azure.Base.Pipeline.Policies
                 return false;
             }
 
-            return ShouldRetryException != null && ShouldRetryException(exception);
+            return !message.ResponseClassifier.IsFatalException(exception);
         }
 
         private TimeSpan CalculateDelay(int attempted)

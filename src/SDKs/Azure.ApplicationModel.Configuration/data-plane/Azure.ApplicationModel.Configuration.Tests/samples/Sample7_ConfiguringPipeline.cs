@@ -28,15 +28,13 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // remove logging policy
             options.LoggingPolicy = null;
 
+            options.ResponseClassifier = new DefaultResponseClassifier();
+
             // specify custom retry policy options
             options.RetryPolicy = new FixedRetryPolicy()
             {
                 MaxRetries = 10,
-                Delay = TimeSpan.FromSeconds(1),
-                RetriableCodes = new [] {
-                    500, // Internal Server Error
-                    504  // Gateway Timeout
-                }
+                Delay = TimeSpan.FromSeconds(1)
             };
 
             // add a policy (custom behavior) that executes once per client call

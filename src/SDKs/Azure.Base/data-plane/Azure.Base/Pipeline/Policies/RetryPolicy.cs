@@ -35,13 +35,13 @@ namespace Azure.Base.Pipeline.Policies
                     lastException = ex;
                 }
 
-                TimeSpan delay;
+                TimeSpan delay = TimeSpan.Zero;
 
                 attempt++;
 
                 if (lastException != null)
                 {
-                    if (!IsRetriableException(lastException, attempt, out delay))
+                    if (!IsRetriableException(message, lastException, attempt, out delay))
                     {
                         // Rethrow a singular exception
                         if (exceptions.Count == 1)
@@ -52,7 +52,7 @@ namespace Azure.Base.Pipeline.Policies
                         throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
                     }
                 }
-                else if (!IsRetriableResponse(message, attempt, out delay))
+                else if (!message.ResponseClassifier.IsErrorResponse(message.Response) || !IsRetriableResponse(message, attempt, out delay))
                 {
                     return;
                 }
@@ -73,6 +73,6 @@ namespace Azure.Base.Pipeline.Policies
 
         protected abstract bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay);
 
-        protected abstract bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay);
+        protected abstract bool IsRetriableException(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay);
     }
 }

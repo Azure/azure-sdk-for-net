@@ -24,6 +24,7 @@ namespace Azure.Base.Pipeline
         public HttpPipelineRequest Request { get; set; }
 
         public HttpPipelineResponse Response { get; set; }
+        public ResponseClassifier ResponseClassifier { get; set; }
 
         // make many of these protected internal
         public virtual void Dispose()
