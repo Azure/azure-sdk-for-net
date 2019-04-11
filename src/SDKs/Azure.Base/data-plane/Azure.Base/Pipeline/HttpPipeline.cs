@@ -56,7 +56,7 @@ namespace Azure.Base.Pipeline
 
             if (!options.DisableTelemetry)
             {
-                policies.Add(CreateTelemetryPolicy(options));
+                policies.Add(new TelemetryPolicy(options.GetType().Assembly, options.ApplicationId));
             }
 
             policies.AddRange(clientPolicies);
@@ -66,22 +66,6 @@ namespace Azure.Base.Pipeline
             policies.RemoveAll(policy => policy == null);
 
             return new HttpPipeline(options.Transport, policies.ToArray(), options.ServiceProvider);
-        }
-
-        private static AddHeadersPolicy CreateTelemetryPolicy(HttpClientOptions options)
-        {
-            var clientAssembly = options.GetType().Assembly;
-            var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
-            if (componentAttribute == null)
-            {
-                throw new InvalidOperationException(
-                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
-            }
-
-            var assemblyVersion = clientAssembly.GetName().Version.ToString();
-            var addHeadersPolicy = new AddHeadersPolicy();
-            addHeadersPolicy.AddHeader(HttpHeader.Common.CreateUserAgent(componentAttribute.ComponentName, assemblyVersion, options.ApplicationId));
-            return addHeadersPolicy;
         }
     }
 }

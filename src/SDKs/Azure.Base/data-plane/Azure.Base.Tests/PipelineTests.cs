@@ -7,8 +7,6 @@ using Azure.Base.Testing;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,28 +28,6 @@ namespace Azure.Base.Tests
             var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
-        }
-
-        [Test]
-        public async Task ComponentNameAndVersionReadFromAssembly()
-        {
-            string userAgent = null;
-
-            var mockTransport = new MockTransport(
-                req => {
-                    Assert.True(req.TryGetHeader("User-Agent", out userAgent));
-                    return new MockResponse(200);
-                });
-
-            var pipeline = HttpPipeline.Build(new TestClientOptions() { Transport = mockTransport }, new HttpPipelinePolicy[0]);
-
-            var request = pipeline.CreateRequest();
-            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
-            await pipeline.SendRequestAsync(request, CancellationToken.None);
-
-            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-            Assert.AreEqual(userAgent, $"azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
         }
 
         class CustomRetryPolicy : RetryPolicy
