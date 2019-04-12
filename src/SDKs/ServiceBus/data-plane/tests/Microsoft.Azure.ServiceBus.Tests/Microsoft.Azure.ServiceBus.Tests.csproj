@@ -26,6 +26,8 @@
     <Compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\SessionDiagnosticsTests.cs" />
     <Compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\Diagnostics\QueueClientDiagnosticsTests.cs" />
     <Compile Remove="..\..\test\Microsoft.Azure.ServiceBus.UnitTests\API\APIApprovals.cs" />
+    <!-- Issue https://github.com/Azure/azure-sdk-for-net/issues/5774 removed from build for net461 -->
+    <Compile Remove="MessageInterop\MessageInteropEnd2EndTests.cs" />
   </ItemGroup>
 
    <ItemGroup Condition="'$(IsTargetingNetCoreApp)' == 'true'">
