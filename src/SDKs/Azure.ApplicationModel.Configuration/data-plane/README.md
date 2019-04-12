@@ -1,13 +1,9 @@
 # Azure App Configuration client library for .NET
 Azure App Configuration is a managed service that helps developers centralize their application configurations simply and securely.
 
-Modern programs, especially programs running in a cloud, generally have many components that are distributed in nature. Spreading configuration settings across these components can lead to hard-to-troubleshoot errors during an application deployment. Use App Configuration to store all the settings for your application and secure their accesses in one place.
+Modern programs, especially programs running in a cloud, generally have many components that are distributed in nature. Spreading configuration settings across these components can lead to hard-to-troubleshoot errors during an application deployment. Use App Configuration to securely store all the settings for your application in one place.
 
-Use the client library for App Configuration to:
-- Create a Configuration Setting
-- Retrieve a Configuration Setting
-- Update an existing Configuration Setting
-- Delete a Configuration Setting
+Use the client library for App Configuration to create and manage application configuration settings.
 
 [Source code]() | [Package (NuGet)][package] | [API reference documentation]() | [Product documentation][azconfig_docs]
 
@@ -53,10 +49,10 @@ var client = new ConfigurationClient(connectionString);
 ## Key concepts
 
 ### Configuration Setting
-Is the fundamental resource within a Configuration Store. In its simplest form it is a key and a value. However, there are additional properties such as the modifiable content type and tags fields that allow the value to be interpreted or associated in different ways.
+A Configuration Setting is the fundamental resource within a Configuration Store. In its simplest form it is a key and a value. However, there are additional properties such as the modifiable content type and tags fields that allow the value to be interpreted or associated in different ways.
 
 The Label property of a Configuration Setting provides a way to separate Configuration Settings into different dimensions. These dimensions are user defined and can take any form. Some common examples of dimensions to use for a label include regions, semantic versions, or environments. Many applications have a required set of configuration keys that have varying values as the application exists across different dimensions.
-For example, MaxRequests may be 100 in "NorthAmerica", and 200 in "WestEurope". By creating a Configuration Setting named MaxRequests with a label of "NorthAmerica" and another, only with a different value, in the "WestEurope" label, a solution can be achieved that allows the application to seamlessly retrieve Configuration Settings as it runs in these two dimensions.
+For example, MaxRequests may be 100 in "NorthAmerica", and 200 in "WestEurope". By creating a Configuration Setting named MaxRequests with a label of "NorthAmerica" and another, only with a different value, in the "WestEurope" label, an application can seamlessly retrieve Configuration Settings as it runs in these two dimensions.
 
 Properties of a Configuration Setting:
 
@@ -87,7 +83,7 @@ The following sections provide several code snippets covering some of the most c
 
 ### Create a Configuration Setting
 Create a Configuration Setting to be stored in the Configuration Store.
-There are two (2) ways to store a Configuration Setting:
+There are two ways to store a Configuration Setting:
 - AddAsync creates a setting only if the setting does not already exist in the store.
 - SetAsync creates a setting if it doesn't exist or overrides an existing setting.
 
@@ -99,7 +95,7 @@ await client.SetAsync(setting);
 ```
 
 ### Retrieve a Configuration Setting
-Retrieves a previously stored Configuration Setting by calling GetAsync
+Retrieve a previously stored Configuration Setting by calling GetAsync. If the Configuration Setting does not exist in the store, a `404 - Not Found` error will occur.
 
 ```c#
 string connectionString = <connection_string>;
@@ -110,7 +106,7 @@ ConfigurationSetting setting = await client.GetAsync("some_key");
 ```
 
 ### Update an existing Configuration Setting
-Updates an existing Configuration Setting by calling UpdateAsync. If the Configuration Setting does not exist in the store, a `412 - Precondition Failed` error will occur.
+Update an existing Configuration Setting by calling UpdateAsync. If the Configuration Setting does not exist in the store, a `412 - Precondition Failed` error will occur.
 
 ```c#
 string connectionString = <connection_string>;
@@ -121,7 +117,7 @@ ConfigurationSetting setting = await client.UpdateAsync("some_key", "new_value")
 ```
 
 ### Delete a Configuration Setting
-Deletes an existing Configuration Setting by calling DeleteAsync
+Delete an existing Configuration Setting by calling DeleteAsync
 
 ```c#
 string connectionString = <connection_string>;
