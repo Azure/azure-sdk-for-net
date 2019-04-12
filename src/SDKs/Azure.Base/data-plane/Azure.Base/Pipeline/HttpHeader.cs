@@ -64,25 +64,6 @@ namespace Azure.Base.Pipeline
 
             public static readonly HttpHeader JsonContentType = new HttpHeader(Names.ContentType, s_applicationJson);
             public static readonly HttpHeader OctetStreamContentType = new HttpHeader(Names.ContentType, s_applicationOctetStream);
-
-            static readonly string PlatformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
-
-            public static HttpHeader CreateUserAgent(string componentName, string componentVersion, string applicationId = default)
-            {
-                if (applicationId != null)
-                {
-                    return new HttpHeader(Names.UserAgent, $"{applicationId} azsdk-net-{componentName}/{componentVersion} {PlatformInformation}");
-                }
-
-                return new HttpHeader(Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {PlatformInformation}");
-            }
-
-
-
-            public static HttpHeader CreateHost(string hostName)
-            {
-                return new HttpHeader(Names.Host, hostName);
-            }
         }
     }
 }

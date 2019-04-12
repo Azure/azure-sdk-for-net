@@ -2,21 +2,43 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using Azure.Base.Attributes;
 
 namespace Azure.Base.Pipeline.Policies
 {
-    public class AddHeadersPolicy : HttpPipelinePolicy
+    public class TelemetryPolicy : HttpPipelinePolicy
     {
-        List<HttpHeader> _headersToAdd = new List<HttpHeader>();
+        private readonly HttpHeader _header;
 
-        public void AddHeader(HttpHeader header)
-            => _headersToAdd.Add(header);
+        public TelemetryPolicy(Assembly clientAssembly, string applicationId)
+        {
+            var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+            if (componentAttribute == null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
+            }
+
+            var componentName = componentAttribute.ComponentName;
+            var componentVersion = clientAssembly.GetName().Version.ToString();
+
+            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
+            if (applicationId != null)
+            {
+                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"{applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+            }
+            else
+            {
+                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+            }
+        }
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            foreach (var header in _headersToAdd) message.Request.AddHeader(header);
+            message.Request.AddHeader(_header);
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
     }
