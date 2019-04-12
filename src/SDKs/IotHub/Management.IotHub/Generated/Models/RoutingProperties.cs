@@ -44,8 +44,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// built-in eventhub endpoint.</param>
         /// <param name="enrichments">The list of user-provided enrichments
         /// that the IoT hub applies to messages to be delivered to built-in
-        /// and custom endpoints. See:
-        /// https://aka.ms/telemetryoneventgrid</param>
+        /// and custom endpoints. See: https://aka.ms/iotmsgenrich</param>
         public RoutingProperties(RoutingEndpoints endpoints = default(RoutingEndpoints), IList<RouteProperties> routes = default(IList<RouteProperties>), FallbackRouteProperties fallbackRoute = default(FallbackRouteProperties), IList<EnrichmentProperties> enrichments = default(IList<EnrichmentProperties>))
         {
             Endpoints = endpoints;
@@ -88,7 +87,7 @@ namespace Microsoft.Azure.Management.IotHub.Models
         /// <summary>
         /// Gets or sets the list of user-provided enrichments that the IoT hub
         /// applies to messages to be delivered to built-in and custom
-        /// endpoints. See: https://aka.ms/telemetryoneventgrid
+        /// endpoints. See: https://aka.ms/iotmsgenrich
         /// </summary>
         [JsonProperty(PropertyName = "enrichments")]
         public IList<EnrichmentProperties> Enrichments { get; set; }
