@@ -36,6 +36,17 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanReadWellFormedGeoPointWithIntegerCoordinates()
+        {
+            var expectedPoint = GeographyPoint.Create(47, 121);
+            const string Json = @"{""type"":""Point"",""coordinates"":[121,47]}";
+
+            GeographyPoint actualPoint = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
+
+            Assert.Equal(expectedPoint, actualPoint);
+        }
+
+        [Fact]
         public void CanReadWellFormedGeoPointWithCRS()
         {
             var expectedPoint = GeographyPoint.Create(47.1, 121.9);

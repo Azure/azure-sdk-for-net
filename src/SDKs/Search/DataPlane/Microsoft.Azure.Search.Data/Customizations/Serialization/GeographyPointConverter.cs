@@ -34,8 +34,23 @@ namespace Microsoft.Azure.Search.Serialization
             reader.ExpectAndAdvance(JsonToken.String, "Point");
             reader.ExpectAndAdvance(JsonToken.PropertyName, "coordinates");
             reader.ExpectAndAdvance(JsonToken.StartArray);
-            double longitude = reader.ExpectAndAdvance<double>(JsonToken.Float);
-            double latitude = reader.ExpectAndAdvance<double>(JsonToken.Float);
+
+            double ReadFloatOrInt()
+            {
+                switch (reader.TokenType)
+                {
+                    case JsonToken.Integer:
+                        return reader.ExpectAndAdvance<long>(JsonToken.Integer);
+
+                    // Treat all other cases as Float and let ExpectAndAdvance() handle any errors.
+                    default:
+                        return reader.ExpectAndAdvance<double>(JsonToken.Float);
+                }
+            }
+
+            double longitude = ReadFloatOrInt();
+            double latitude = ReadFloatOrInt();
+
             reader.ExpectAndAdvance(JsonToken.EndArray);
 
             if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals("crs"))

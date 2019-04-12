@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Search.Tests
             public void AnnotationsAreExcludedFromDocument()
             {
                 const string Json =
-    @"{
+@"{
     ""@search.score"": 3.14,
     ""field1"": ""value1"",
     ""field2"": 123,
@@ -73,16 +73,18 @@ namespace Microsoft.Azure.Search.Tests
             public void CanReadNullValues()
             {
                 const string Json =
-    @"{
+@"{
     ""field1"": null,
-    ""field2"": [ ""hello"", null ]
+    ""field2"": [ ""hello"", null ],
+    ""field3"": [ null, 123, null ],
 }";
 
                 var expectedDoc =
                     new Document()
                     {
                         ["field1"] = null,
-                        ["field2"] = new[] { "hello", null }
+                        ["field2"] = new string[] { "hello", null },
+                        ["field3"] = new object[] { null, 123L, null }
                     };
 
                 Document actualDoc = Deserialize(Json);
@@ -109,7 +111,11 @@ namespace Microsoft.Azure.Search.Tests
 
             [Theory]
             [InlineData(@"[""hello"", ""goodbye""]", new string[] { "hello", "goodbye" })]
-            public void CanReadArraysOfPrimitiveTypes(string jsonArray, object[] expectedArray)
+            [InlineData(@"[123, 456]", new long[] { 123L, 456L })]
+            [InlineData(@"[9999999999999, -12]", new long[] { 9_999_999_999_999L, -12L })]
+            [InlineData(@"[3.14, 2.78]", new double[] { 3.14, 2.78 })]
+            [InlineData(@"[true, false]", new bool[] { true, false })]
+            public void CanReadArraysOfPrimitiveTypes(string jsonArray, Array expectedArray)
             {
                 string json = $@"{{ ""field"": {jsonArray} }}";
 
@@ -140,14 +146,49 @@ namespace Microsoft.Azure.Search.Tests
                 AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
+            [Fact]
+            public void CanReadGeoPointCollections()
+            {
+                const string Json =
+@"{
+    ""field"": [
+        { ""type"": ""Point"", ""coordinates"": [-122.131577, 47.678581] },
+        { ""type"": ""Point"", ""coordinates"": [-121, 49] }
+    ]
+}";
+
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field"] = new[]
+                        {
+                            GeographyPoint.Create(latitude: 47.678581, longitude: -122.131577),
+                            GeographyPoint.Create(latitude: 49, longitude: -121)
+                        }
+                    };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
+            }
+
             // This is not quite a pinning test in the sense that it actually is correct behavior if the field is defined
             // as Edm.DateTimeOffset. What's notable is that this is how such values deserialize, even when the field is not that type.
             [Fact]
             public void DateTimeStringsAreReadAsDateTime()
             {
-                string json = $@"{{ ""field"": ""{TestDateString}"" }}";
+                string json =
+$@"{{
+    ""field1"": ""{TestDateString}"",
+    ""field2"": [""{TestDateString}"", ""{TestDateString}""]
+}}";
 
-                var expectedDoc = new Document() { ["field"] = TestDate };
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["field1"] = TestDate,
+                        ["field2"] = new DateTimeOffset[] { TestDate, TestDate }
+                    };
 
                 Document actualDoc = Deserialize(json);
 
@@ -162,10 +203,11 @@ namespace Microsoft.Azure.Search.Tests
             public void SpecialDoublesAreReadAsStrings()
             {
                 const string Json =
-    @"{
+@"{
     ""field1"": ""NaN"",
     ""field2"": ""INF"",
-    ""field3"": ""-INF""
+    ""field3"": ""-INF"",
+    ""field4"": [""NaN"", ""INF"", ""-INF""]
 }";
 
                 var expectedDoc =
@@ -173,7 +215,8 @@ namespace Microsoft.Azure.Search.Tests
                     {
                         ["field1"] = "NaN",
                         ["field2"] = "INF",
-                        ["field3"] = "-INF"
+                        ["field3"] = "-INF",
+                        ["field4"] = new string[] { "NaN", "INF", "-INF" }
                     };
 
                 Document actualDoc = Deserialize(Json);
@@ -185,12 +228,12 @@ namespace Microsoft.Azure.Search.Tests
             public void CanReadArraysOfMixedTypes()
             {
                 // Azure Search won't return payloads like this; This test is only for pinning purposes.
-                const string Json = @"{ ""field"": [""hello"", 123, 3.14] }";
+                const string Json = @"{ ""field"": [""hello"", 123, 3.14, { ""type"": ""Point"", ""coordinates"": [-122.131577, 47.678581] }] }";
 
                 var expectedDoc =
                     new Document()
                     {
-                        ["field"] = new object[] { "hello", 123L, 3.14 }
+                        ["field"] = new object[] { "hello", 123L, 3.14, GeographyPoint.Create(47.678581, -122.131577) }
                     };
 
                 Document actualDoc = Deserialize(Json);
@@ -215,12 +258,12 @@ namespace Microsoft.Azure.Search.Tests
             }
 
             [Fact]
-            public void EmptyArraysReadAsStringArrays()
+            public void EmptyArraysReadAsObjectArrays()
             {
                 const string Json = @"{ ""field"": [] }";
 
-                // With no elements, we can't tell what type of collection it is. For backward compatibility, we assume type string.
-                var expectedDoc = new Document() { ["field"] = new string[0] };
+                // With no elements, we can't tell what type of collection it is, so we default to object.
+                var expectedDoc = new Document() { ["field"] = new object[0] };
 
                 Document actualDoc = Deserialize(Json);
 
@@ -233,6 +276,7 @@ namespace Microsoft.Azure.Search.Tests
                 const string Json = @"{ ""field"": [null, null] }";
 
                 // With only null elements, we can't tell what type of collection it is. For backward compatibility, we assume type string.
+                // This shouldn't happen in practice anyway since Azure Search generally doesn't allow nulls in collections.
                 var expectedDoc = new Document() { ["field"] = new string[] { null, null } };
 
                 Document actualDoc = Deserialize(Json);
