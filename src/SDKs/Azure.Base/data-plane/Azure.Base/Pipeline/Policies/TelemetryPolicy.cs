@@ -3,6 +3,7 @@
 
 using System;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Azure.Base.Attributes;
 
@@ -21,8 +22,18 @@ namespace Azure.Base.Pipeline.Policies
                     $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
             }
 
-            var assemblyVersion = clientAssembly.GetName().Version.ToString();
-            _header = HttpHeader.Common.CreateUserAgent(componentAttribute.ComponentName, assemblyVersion, applicationId);
+            var componentName = componentAttribute.ComponentName;
+            var componentVersion = clientAssembly.GetName().Version.ToString();
+
+            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
+            if (applicationId != null)
+            {
+                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"{applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+            }
+            else
+            {
+                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+            }
         }
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
