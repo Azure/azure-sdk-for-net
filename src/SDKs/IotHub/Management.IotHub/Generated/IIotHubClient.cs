@@ -89,10 +89,5 @@ namespace Microsoft.Azure.Management.IotHub
         /// </summary>
         ICertificatesOperations Certificates { get; }
 
-        /// <summary>
-        /// Gets the IIotHubOperations.
-        /// </summary>
-        IIotHubOperations IotHub { get; }
-
     }
 }
