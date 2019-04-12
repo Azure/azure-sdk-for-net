@@ -82,11 +82,6 @@ namespace Microsoft.Azure.Management.Compute
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
 
         /// <summary>
-        /// Gets the IProximityPlacementGroupsOperations.
-        /// </summary>
-        public virtual IProximityPlacementGroupsOperations ProximityPlacementGroups { get; private set; }
-
-        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         public virtual IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; private set; }
@@ -135,6 +130,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineScaleSetRollingUpgradesOperations.
         /// </summary>
         public virtual IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; private set; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetOperations.
+        /// </summary>
+        public virtual IVirtualMachineScaleSetOperations VirtualMachineScaleSet { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
@@ -429,7 +429,6 @@ namespace Microsoft.Azure.Management.Compute
         {
             Operations = new Operations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
-            ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
@@ -440,6 +439,7 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSets = new VirtualMachineScaleSetsOperations(this);
             VirtualMachineScaleSetExtensions = new VirtualMachineScaleSetExtensionsOperations(this);
             VirtualMachineScaleSetRollingUpgrades = new VirtualMachineScaleSetRollingUpgradesOperations(this);
+            VirtualMachineScaleSet = new VirtualMachineScaleSetOperations(this);
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);

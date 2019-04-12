@@ -77,11 +77,6 @@ namespace Microsoft.Azure.Management.Compute
         IAvailabilitySetsOperations AvailabilitySets { get; }
 
         /// <summary>
-        /// Gets the IProximityPlacementGroupsOperations.
-        /// </summary>
-        IProximityPlacementGroupsOperations ProximityPlacementGroups { get; }
-
-        /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
         /// </summary>
         IVirtualMachineExtensionImagesOperations VirtualMachineExtensionImages { get; }
@@ -130,6 +125,11 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineScaleSetRollingUpgradesOperations.
         /// </summary>
         IVirtualMachineScaleSetRollingUpgradesOperations VirtualMachineScaleSetRollingUpgrades { get; }
+
+        /// <summary>
+        /// Gets the IVirtualMachineScaleSetOperations.
+        /// </summary>
+        IVirtualMachineScaleSetOperations VirtualMachineScaleSet { get; }
 
         /// <summary>
         /// Gets the IVirtualMachineScaleSetVMsOperations.
