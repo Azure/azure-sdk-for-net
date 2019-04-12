@@ -26,7 +26,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests.MessageInterop
         [DisplayTestMethodName]
         public async Task RunEnd2EndSerializerTests(TransportType transportType, string sbConnectionString)
         {
-            await ServiceBusScope.WithQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
+            await ServiceBusScope.UsingQueueAsync(partitioned: false, sessionEnabled: false, async queueName =>
             {
                 // Create a full framework MessageSender
                 var csb = new Microsoft.ServiceBus.ServiceBusConnectionStringBuilder(sbConnectionString)
