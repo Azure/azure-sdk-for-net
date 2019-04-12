@@ -95,7 +95,7 @@ await client.SetAsync(setting);
 ```
 
 ### Retrieve a Configuration Setting
-Retrieve a previously stored Configuration Setting by calling GetAsync. If the Configuration Setting does not exist in the store, a `404 - Not Found` error will occur.
+Retrieve a previously stored Configuration Setting by calling GetAsync.
 
 ```c#
 string connectionString = <connection_string>;
@@ -106,7 +106,7 @@ ConfigurationSetting setting = await client.GetAsync("some_key");
 ```
 
 ### Update an existing Configuration Setting
-Update an existing Configuration Setting by calling UpdateAsync. If the Configuration Setting does not exist in the store, a `412 - Precondition Failed` error will occur.
+Update an existing Configuration Setting by calling UpdateAsync.
 
 ```c#
 string connectionString = <connection_string>;
