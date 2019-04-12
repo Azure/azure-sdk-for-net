@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Graph.RBAC
         public virtual IApplicationsOperations Applications { get; private set; }
 
         /// <summary>
+        /// Gets the IApplicationOperations.
+        /// </summary>
+        public virtual IApplicationOperations Application { get; private set; }
+
+        /// <summary>
         /// Gets the IDeletedApplicationsOperations.
         /// </summary>
         public virtual IDeletedApplicationsOperations DeletedApplications { get; private set; }
@@ -362,6 +367,7 @@ namespace Microsoft.Azure.Graph.RBAC
         {
             SignedInUser = new SignedInUserOperations(this);
             Applications = new ApplicationsOperations(this);
+            Application = new ApplicationOperations(this);
             DeletedApplications = new DeletedApplicationsOperations(this);
             Groups = new GroupsOperations(this);
             ServicePrincipals = new ServicePrincipalsOperations(this);

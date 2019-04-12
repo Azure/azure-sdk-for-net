@@ -61,8 +61,8 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// <param name="homepage">The home page of the application.</param>
         /// <param name="identifierUris">A collection of URIs for the
         /// application.</param>
-        /// <param name="informationalUrls">urls with more informations of the
-        /// application.</param>
+        /// <param name="informationalUrls">URLs with more information about
+        /// the application.</param>
         /// <param name="isDeviceOnlyAuthSupported">Specifies whether this
         /// application supports device authentication without a user. The
         /// default is false.</param>
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         public IList<string> IdentifierUris { get; set; }
 
         /// <summary>
-        /// Gets or sets urls with more informations of the application.
+        /// Gets or sets uRLs with more information about the application.
         /// </summary>
         [JsonProperty(PropertyName = "informationalUrls")]
         public InformationalUrl InformationalUrls { get; set; }

@@ -80,6 +80,11 @@ namespace Microsoft.Azure.Graph.RBAC
         IApplicationsOperations Applications { get; }
 
         /// <summary>
+        /// Gets the IApplicationOperations.
+        /// </summary>
+        IApplicationOperations Application { get; }
+
+        /// <summary>
         /// Gets the IDeletedApplicationsOperations.
         /// </summary>
         IDeletedApplicationsOperations DeletedApplications { get; }
