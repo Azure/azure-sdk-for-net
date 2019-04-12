@@ -27,11 +27,15 @@ namespace Azure.Base.Diagnostics
         private const int RequestContentEvent = 2;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
+        private const int ResponseContentTextEvent = 13;
         private const int ResponseContentBlockEvent = 11;
+        private const int ResponseContentTextBlockEvent = 15;
         private const int RequestDelayEvent = 7;
         private const int ErrorResponseEvent = 8;
         private const int ErrorResponseContentEvent = 9;
+        private const int ErrorResponseContentTextEvent = 14;
         private const int ErrorResponseContentBlockEvent = 12;
+        private const int ErrorResponseContentTextBlockEvent = 16;
         private const int RequestRetryingEvent = 10;
 
         private HttpPipelineEventSource() : base(EventSourceName) { }
@@ -85,6 +89,15 @@ namespace Azure.Base.Diagnostics
         }
 
         [NonEvent]
+        public async Task ResponseContentTextAsync(HttpPipelineResponse response, Encoding encoding, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                ResponseContentText(response.RequestId, await FormatContentStringAsync(response.ResponseContentStream, encoding).ConfigureAwait(false));
+            }
+        }
+
+        [NonEvent]
         public void ErrorResponse(HttpPipelineResponse response)
         {
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
@@ -99,6 +112,14 @@ namespace Azure.Base.Diagnostics
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream).ConfigureAwait(false));
+            }
+        }
+        [NonEvent]
+        public async Task ErrorResponseContentTextAsync(HttpPipelineResponse response, Encoding encoding, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                ErrorResponseContentText(response.RequestId, await FormatContentStringAsync(response.ResponseContentStream, encoding).ConfigureAwait(false));
             }
         }
 
@@ -154,6 +175,18 @@ namespace Azure.Base.Diagnostics
             WriteEvent(ResponseContentBlockEvent, requestId, blockNumber, content);
         }
 
+        [Event(ResponseContentTextEvent, Level = EventLevel.Verbose)]
+        private void ResponseContentText(string requestId, string content)
+        {
+            WriteEvent(ResponseContentTextEvent, requestId, content);
+        }
+
+        [Event(ResponseContentTextBlockEvent, Level = EventLevel.Verbose)]
+        public void ResponseContentTextBlock(string requestId, int blockNumber, string content)
+        {
+            WriteEvent(ResponseContentTextBlockEvent, requestId, blockNumber, content);
+        }
+
         [Event(ErrorResponseEvent, Level = EventLevel.Error)]
         public void ErrorResponse(string requestId, int status, string headers)
         {
@@ -167,9 +200,21 @@ namespace Azure.Base.Diagnostics
         }
 
         [Event(ErrorResponseContentBlockEvent, Level = EventLevel.Informational)]
-        private void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content)
+        public void ErrorResponseContentBlock(string requestId, int blockNumber, byte[] content)
         {
             WriteEvent(ErrorResponseContentBlockEvent, requestId, blockNumber, content);
+        }
+
+        [Event(ErrorResponseContentTextEvent, Level = EventLevel.Informational)]
+        private void ErrorResponseContentText(string requestId, string content)
+        {
+            WriteEvent(ErrorResponseContentTextEvent, requestId, content);
+        }
+
+        [Event(ErrorResponseContentTextBlockEvent, Level = EventLevel.Informational)]
+        public void ErrorResponseContentTextBlock(string requestId, int blockNumber, string content)
+        {
+            WriteEvent(ErrorResponseContentTextBlockEvent, requestId, blockNumber, content);
         }
 
         [Event(RequestDelayEvent, Level = EventLevel.Warning)]
@@ -203,6 +248,21 @@ namespace Azure.Base.Diagnostics
                 responseContent.Position = 0;
 
                 return FormatContent(memoryStream.ToArray());
+            }
+        }
+
+        private static async Task<string> FormatContentStringAsync(Stream responseContent, Encoding encoding)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await responseContent.CopyToAsync(memoryStream);
+
+                // Rewind the stream
+                responseContent.Position = 0;
+
+                byte[] buffer = memoryStream.ToArray();
+
+                return encoding.GetString(FormatContent(buffer));
             }
         }
 

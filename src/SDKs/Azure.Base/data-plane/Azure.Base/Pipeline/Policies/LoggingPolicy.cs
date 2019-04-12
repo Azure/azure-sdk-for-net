@@ -5,6 +5,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 using Azure.Base.Diagnostics;
 
@@ -39,11 +40,18 @@ namespace Azure.Base.Pipeline.Policies
 
             var status = message.Response.Status;
             bool isError = status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1);
+            Encoding textEncoding = null;
+
+            if (message.Response.TryGetHeader("Content-Type", out var contentType) && contentType.StartsWith("text/"))
+            {
+                textEncoding = Encoding.UTF8;
+            }
+
             bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ResponseContentStream?.CanSeek == false;
 
             if (wrapResponseStream)
             {
-                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError);
+                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError, textEncoding);
             }
 
             if (isError)
@@ -52,7 +60,14 @@ namespace Azure.Base.Pipeline.Policies
 
                 if (!wrapResponseStream && message.Response.ResponseContentStream != null)
                 {
-                    await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                    if (textEncoding != null)
+                    {
+                        await s_eventSource.ErrorResponseContentTextAsync(message.Response, textEncoding, message.Cancellation).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                    }
                 }
             }
 
@@ -60,7 +75,15 @@ namespace Azure.Base.Pipeline.Policies
 
             if (!wrapResponseStream && message.Response.ResponseContentStream != null)
             {
-                await s_eventSource.ResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                if (textEncoding != null)
+                {
+                    await s_eventSource.ResponseContentTextAsync(message.Response, textEncoding, message.Cancellation).ConfigureAwait(false);
+
+                }
+                else
+                {
+                    await s_eventSource.ResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                }
             }
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
@@ -79,9 +102,11 @@ namespace Azure.Base.Pipeline.Policies
 
             private readonly bool _error;
 
+            private readonly Encoding _textEncoding;
+
             private int _blockNumber;
 
-            public LoggingStream(string requestId, HttpPipelineEventSource eventSource, Stream originalStream, bool error)
+            public LoggingStream(string requestId, HttpPipelineEventSource eventSource, Stream originalStream, bool error, Encoding textEncoding)
             {
                 // Should only wrap non-seekable streams
                 Debug.Assert(!originalStream.CanSeek);
@@ -89,6 +114,7 @@ namespace Azure.Base.Pipeline.Policies
                 _eventSource = eventSource;
                 _originalStream = originalStream;
                 _error = error;
+                _textEncoding = textEncoding;
             }
 
             public override long Seek(long offset, SeekOrigin origin)
@@ -104,11 +130,23 @@ namespace Azure.Base.Pipeline.Policies
                     return result;
                 }
 
-                _eventSource.ResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
-
-                if (_error)
+                if (_textEncoding != null)
                 {
-                    _eventSource.ErrorResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
+                    _eventSource.ResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(buffer, offset, count));
+
+                    if (_error)
+                    {
+                        _eventSource.ErrorResponseContentTextBlock(_requestId, _blockNumber, _textEncoding.GetString(buffer, offset, count));
+                    }
+                }
+                else
+                {
+                    _eventSource.ResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
+
+                    if (_error)
+                    {
+                        _eventSource.ErrorResponseContentBlock(_requestId, _blockNumber, buffer, offset, count);
+                    }
                 }
 
                 _blockNumber++;
