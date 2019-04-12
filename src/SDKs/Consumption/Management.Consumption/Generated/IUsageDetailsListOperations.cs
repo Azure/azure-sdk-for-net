@@ -45,6 +45,10 @@ namespace Microsoft.Azure.Management.Consumption
         /// For e.g. to specify billing period at department scope use
         /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
         /// </param>
+        /// <param name='metric'>
+        /// Allows to select different type of cost/usage records. Allowed
+        /// values: Usage, ActualCost, AmortizedCost. Default is ActualCost.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -60,7 +64,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders>> DownloadWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders>> DownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Download usage details data.
         /// </summary>
@@ -83,6 +87,10 @@ namespace Microsoft.Azure.Management.Consumption
         /// For e.g. to specify billing period at department scope use
         /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
         /// </param>
+        /// <param name='metric'>
+        /// Allows to select different type of cost/usage records. Allowed
+        /// values: Usage, ActualCost, AmortizedCost. Default is ActualCost.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -98,6 +106,6 @@ namespace Microsoft.Azure.Management.Consumption
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

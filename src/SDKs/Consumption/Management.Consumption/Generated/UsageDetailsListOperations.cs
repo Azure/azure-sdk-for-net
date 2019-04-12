@@ -73,6 +73,10 @@ namespace Microsoft.Azure.Management.Consumption
         /// to specify billing period at department scope use
         /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
         /// </param>
+        /// <param name='metric'>
+        /// Allows to select different type of cost/usage records. Allowed values:
+        /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -94,7 +98,7 @@ namespace Microsoft.Azure.Management.Consumption
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (scope == null)
             {
@@ -112,6 +116,7 @@ namespace Microsoft.Azure.Management.Consumption
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("scope", scope);
+                tracingParameters.Add("metric", metric);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDownload", tracingParameters);
             }
@@ -123,6 +128,10 @@ namespace Microsoft.Azure.Management.Consumption
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (metric != null)
+            {
+                _queryParameters.Add(string.Format("metric={0}", System.Uri.EscapeDataString(metric)));
             }
             if (_queryParameters.Count > 0)
             {

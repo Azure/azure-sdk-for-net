@@ -46,9 +46,13 @@ namespace Microsoft.Azure.Management.Consumption
             /// to specify billing period at department scope use
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
-            public static UsageDetailsDownloadResponse Download(this IUsageDetailsListOperations operations, string scope)
+            /// <param name='metric'>
+            /// Allows to select different type of cost/usage records. Allowed values:
+            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// </param>
+            public static UsageDetailsDownloadResponse Download(this IUsageDetailsListOperations operations, string scope, string metric = default(string))
             {
-                return operations.DownloadAsync(scope).GetAwaiter().GetResult();
+                return operations.DownloadAsync(scope, metric).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -76,12 +80,16 @@ namespace Microsoft.Azure.Management.Consumption
             /// to specify billing period at department scope use
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
+            /// <param name='metric'>
+            /// Allows to select different type of cost/usage records. Allowed values:
+            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsageDetailsDownloadResponse> DownloadAsync(this IUsageDetailsListOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsageDetailsDownloadResponse> DownloadAsync(this IUsageDetailsListOperations operations, string scope, string metric = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DownloadWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DownloadWithHttpMessagesAsync(scope, metric, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -112,9 +120,13 @@ namespace Microsoft.Azure.Management.Consumption
             /// to specify billing period at department scope use
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
-            public static UsageDetailsDownloadResponse BeginDownload(this IUsageDetailsListOperations operations, string scope)
+            /// <param name='metric'>
+            /// Allows to select different type of cost/usage records. Allowed values:
+            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// </param>
+            public static UsageDetailsDownloadResponse BeginDownload(this IUsageDetailsListOperations operations, string scope, string metric = default(string))
             {
-                return operations.BeginDownloadAsync(scope).GetAwaiter().GetResult();
+                return operations.BeginDownloadAsync(scope, metric).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -142,12 +154,16 @@ namespace Microsoft.Azure.Management.Consumption
             /// to specify billing period at department scope use
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
+            /// <param name='metric'>
+            /// Allows to select different type of cost/usage records. Allowed values:
+            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsageDetailsDownloadResponse> BeginDownloadAsync(this IUsageDetailsListOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UsageDetailsDownloadResponse> BeginDownloadAsync(this IUsageDetailsListOperations operations, string scope, string metric = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginDownloadWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDownloadWithHttpMessagesAsync(scope, metric, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
