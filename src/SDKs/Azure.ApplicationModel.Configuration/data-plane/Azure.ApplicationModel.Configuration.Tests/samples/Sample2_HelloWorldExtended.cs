@@ -28,7 +28,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // Instantiate a client that will be used to call the service.
             var client = new ConfigurationClient(connectionString);
 
-            // Creates the Configuration Settings to be stored in the Configuration Store.
+            // Create the Configuration Settings to be stored in the Configuration Store.
             var betaEndpoint = new ConfigurationSetting("endpoint", "https://beta.endpoint.com", "beta");
             var betaInstances = new ConfigurationSetting("instances", "1", "beta");
             var productionEndpoint = new ConfigurationSetting("endpoint", "https://production.endpoint.com", "production");

@@ -25,7 +25,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // Create a Configuration Setting to be stored in the Configuration Store.
             var setting = new ConfigurationSetting("some_key", "some_value");
 
-            // There are two(2) ways to store a Configuration Setting:
+            // There are two ways to store a Configuration Setting:
             //   -AddAsync creates a setting only if the setting does not already exist in the store.
             //   -SetAsync creates a setting if it doesn't exist or overrides an existing setting
             await client.SetAsync(setting);
