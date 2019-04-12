@@ -31,11 +31,10 @@ namespace Azure.Base.Tests
             var transport = new MockTransport(new MockResponse(200));
             var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly, "application-id");
 
-            var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             await SendGetRequest(transport, telemetryPolicy);
 
             Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
-            Assert.AreEqual(userAgent, $"application-id azsdk-net-base-test/{assemblyVersion} ({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})");
+            StringAssert.StartsWith("application-id ", userAgent);
         }
     }
 }
