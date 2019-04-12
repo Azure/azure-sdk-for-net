@@ -293,9 +293,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private void AssertRequestCommon(MockRequest request)
         {
-            var expected = HttpHeader.Common.CreateUserAgent("config", "1.0.0.0").Value;
             Assert.True(request.TryGetHeader("User-Agent", out var value));
-            StringAssert.StartsWith(expected, value);
+            StringAssert.Contains("azsdk-net-config/1.0.0.0", value);
         }
 
         private static ConfigurationSetting CreateSetting(int i)
