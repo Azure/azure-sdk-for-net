@@ -47,7 +47,7 @@ Once you have the value of the connection string, you can create the Configurati
 
 ```c#
 string connectionString = <connection_string>;
-ConfigurationClient client = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 ```
 
 ## Key concepts
@@ -93,7 +93,7 @@ There are two (2) ways to store a Configuration Setting:
 
 ```c#
 string connectionString = <connection_string>;
-ConfigurationClient client = = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
 await client.SetAsync(setting);
 ```
@@ -103,7 +103,7 @@ Retrieves a previously stored Configuration Setting by calling GetAsync
 
 ```c#
 string connectionString = <connection_string>;
-ConfigurationClient client = = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
 await client.SetAsync(setting);
 ConfigurationSetting setting = await client.GetAsync("some_key");
@@ -114,7 +114,7 @@ Updates an existing Configuration Setting by calling UpdateAsync. If the Configu
 
 ```c#
 string connectionString = <connection_string>;
-ConfigurationClient client = = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
 await client.SetAsync(setting);
 ConfigurationSetting setting = await client.UpdateAsync("some_key", "new_value");
@@ -125,7 +125,7 @@ Deletes an existing Configuration Setting by calling DeleteAsync
 
 ```c#
 string connectionString = <connection_string>;
-ConfigurationClient client = = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
 await client.SetAsync(setting);
 ConfigurationSetting setting = await client.DeleteAsync("some_key");
@@ -141,7 +141,7 @@ For example, if you try to retrieve a Configuration Setting that doesn't exist i
 
 ```c#
 string connectionString = <connection_string>;
-ConfigurationClient client = = new ConfigurationClient(connectionString);
+var client = new ConfigurationClient(connectionString);
 ConfigurationSetting setting = await client.GetAsync("some_key");
 ````
 
