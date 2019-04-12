@@ -183,24 +183,45 @@ namespace Microsoft.Azure.Search
         /// <list type="bullet">
         /// <item>
         /// <description>
-        /// Any numeric value without a decimal point will be deserialized to System.Int64 (long in C#).
+        /// Any numeric value without a decimal point will be deserialized to System.Int64 (long in C#, int64 in F#).
         /// </description>
         /// </item>
         /// <item>
         /// <description>
         /// Special double-precision floating point values such as NaN and Infinity will be deserialized as type
-        /// System.String rather than System.Double.
+        /// System.String rather than System.Double, even if they are in arrays with regular floating point values.
         /// </description>
         /// </item>
         /// <item>
         /// <description>
-        /// Any string field with a value formatted like a DateTimeOffset will be deserialized incorrectly. We
-        /// recommend storing such values in Edm.DateTimeOffset fields rather than Edm.String fields.
+        /// Any string field with a value formatted like a DateTimeOffset will be deserialized incorrectly. This applies to
+        /// such values in arrays of strings as well. We recommend storing such values in Edm.DateTimeOffset fields rather
+        /// than Edm.String fields.
         /// </description>
         /// </item>
         /// <item>
         /// <description>
         /// Any Edm.DateTimeOffset field will be deserialized as a System.DateTimeOffset, not System.DateTime.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any empty JSON array will be deserialized as an array of System.Object (object[] in C#, obj[] in F#).
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Any array of a primitive type will be deserialized as an array of its corresponding .NET type, not as an array of
+        /// System.Object, unless the values cannot all be deserialized to the same type. For example, the arrays [3.14, "NaN"] and
+        /// ["hello", "2016-10-10T17:41:05.123-07:00"] will both deserialize as arrays of System.Object (object[] in C#, obj[] in F#).
+        /// This is because special double values always deserialize as strings, while strings that look like DateTimeOffset always
+        /// deserialize as DateTimeOffset.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Complex fields will be recursively deserialized into instances of type <c cref="Document">Document</c>. Similarly, complex
+        /// collection fields will be deserialized into arrays of such instances.
         /// </description>
         /// </item>
         /// </list>
@@ -244,7 +265,7 @@ namespace Microsoft.Azure.Search
         /// <remarks>
         /// The generic overloads of the Get, GetAsync, and GetWithHttpMessagesAsync methods support mapping of Azure
         /// Search field types to .NET types via the type parameter T. Note that all Azure Search field types except
-        /// collections are nullable, so we recommend using nullable primitive types for the properties of type T.
+        /// collections are nullable, so we recommend using nullable types for the properties of T.
         /// The type mapping is as follows:
         /// <list type="table">
         /// <listheader>
@@ -253,35 +274,31 @@ namespace Microsoft.Azure.Search
         /// </listheader>
         /// <item>
         /// <term>Edm.String</term>
-        /// <description>System.String (string in C#)</description>
-        /// </item>
-        /// <item>
-        /// <term>Collection(Edm.String)</term>
-        /// <description>IEnumerable&lt;System.String&gt;</description>
+        /// <description>System.String (string in C# and F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Boolean</term>
-        /// <description>System.Nullable&lt;System.Boolean&gt; (bool? in C#)</description>
+        /// <description>System.Nullable&lt;System.Boolean&gt; (bool? in C#, Nullable&lt;bool&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Double</term>
-        /// <description>System.Nullable&lt;System.Double&gt; (double? in C#)</description>
+        /// <description>System.Nullable&lt;System.Double&gt; (double? in C#, Nullable&lt;float&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Int32</term>
-        /// <description>System.Nullable&lt;System.Int32&gt; (int? in C#)</description>
+        /// <description>System.Nullable&lt;System.Int32&gt; (int? in C#, Nullable&lt;int&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.Int64</term>
-        /// <description>System.Nullable&lt;System.Int64&gt; (long? in C#)</description>
+        /// <description>System.Nullable&lt;System.Int64&gt; (long? in C#, Nullable&lt;int64&gt; in F#)</description>
         /// </item>
         /// <item>
         /// <term>Edm.DateTimeOffset</term>
         /// <description>
-        /// System.Nullable&lt;System.DateTimeOffset&gt; (DateTimeOffset? in C#) or
-        /// System.Nullable&lt;System.DateTime&gt; (DateTime? in C#). Both types work, although we recommend using
-        /// DateTimeOffset. When retrieving documents, DateTime values will always be in UTC. When indexing documents,
-        /// DateTime values are interpreted as follows:
+        /// System.Nullable&lt;System.DateTimeOffset&gt; (DateTimeOffset? in C#, Nullable&lt;DateTimeOffset&gt; in F#) or
+        /// System.Nullable&lt;System.DateTime&gt; (DateTime? in C#, Nullable&lt;DateTime&gt; in F#). Both types work, although we
+        /// recommend using DateTimeOffset. When retrieving documents, DateTime values will always be in UTC. When indexing
+        /// documents, DateTime values are interpreted as follows:
         /// <list type="table">
         /// <item>
         /// <term>UTC DateTime</term>
@@ -301,6 +318,52 @@ namespace Microsoft.Azure.Search
         /// <item>
         /// <term>Edm.GeographyPoint</term>
         /// <description><c cref="Microsoft.Spatial.GeographyPoint">Microsoft.Spatial.GeographyPoint</c></description>
+        /// </item>
+        /// <item>
+        /// <term>Edm.ComplexType</term>
+        /// <description>
+        /// Any type that can be deserialized from the JSON objects in the complex field. This can be a value type or a reference type,
+        /// but we recommend using a reference type since complex fields are nullable in Azure Search.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.String)</term>
+        /// <description>IEnumerable&lt;System.String&gt; (seq&lt;string&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Boolean)</term>
+        /// <description>IEnumerable&lt;System.Boolean&gt; (seq&lt;bool&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Double)</term>
+        /// <description>IEnumerable&lt;System.Double&gt; (seq&lt;float&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Int32)</term>
+        /// <description>IEnumerable&lt;System.Int32&gt; (seq&lt;int&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.Int64)</term>
+        /// <description>IEnumerable&lt;System.Int64&gt; (seq&lt;int64&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.DateTimeOffset)</term>
+        /// <description>
+        /// IEnumerable&lt;System.DateTimeOffset&gt; or IEnumerable&lt;System.DateTime&gt; (seq&lt;DateTimeOffset&gt; or
+        /// seq&lt;DateTime&gt; in F#). Both types work, although we recommend using IEnumerable&lt;System.DateTimeOffset&gt;.
+        /// See the notes above on Edm.DateTimeOffset for details.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.GeographyPoint)</term>
+        /// <description>IEnumerable&lt;Microsoft.Spatial.GeographyPoint&gt; (seq&lt;GeographyPoint&gt; in F#)</description>
+        /// </item>
+        /// <item>
+        /// <term>Collection(Edm.ComplexType)</term>
+        /// <description>
+        /// IEnumerable&lt;U&gt; (seq&lt;U&gt; in F#) where U is any type that can be deserialized from the JSON objects in the complex
+        /// collection field. This can be a value type or a reference type.
+        /// </description>
         /// </item>
         /// </list> 
         /// </remarks>
