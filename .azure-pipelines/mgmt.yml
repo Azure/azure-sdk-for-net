@@ -22,6 +22,5 @@ steps:
     condition: succeededOrFailed()
     inputs:
       testResultsFiles: '**/*.trx'
-      testRunTitle: '$(OSName) DotNet $(DotNetCoreVersion)'
       testResultsFormat: 'VSTest'
       mergeTestResults: true
