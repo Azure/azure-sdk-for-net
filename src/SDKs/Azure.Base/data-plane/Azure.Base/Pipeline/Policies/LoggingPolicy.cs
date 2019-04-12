@@ -29,9 +29,22 @@ namespace Azure.Base.Pipeline.Policies
         {
             s_eventSource.Request(message.Request);
 
+            Encoding requestTextEncoding = null;
+            if (message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) && IsTextContentType(contentType))
+            {
+                requestTextEncoding = Encoding.UTF8;
+            }
+
             if (message.Request.Content != null)
             {
-                await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                if (requestTextEncoding != null)
+                {
+                    await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.Cancellation);
+                }
+                else
+                {
+                    await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                }
             }
 
             var before = Stopwatch.GetTimestamp();
@@ -40,18 +53,18 @@ namespace Azure.Base.Pipeline.Policies
 
             var status = message.Response.Status;
             bool isError = status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1);
-            Encoding textEncoding = null;
 
-            if (message.Response.TryGetHeader("Content-Type", out var contentType) && contentType.StartsWith("text/"))
+            Encoding responseTextEncoding = null;
+            if (message.Response.TryGetHeader(HttpHeader.Names.ContentType, out contentType) && IsTextContentType(contentType))
             {
-                textEncoding = Encoding.UTF8;
+                responseTextEncoding = Encoding.UTF8;
             }
 
             bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ResponseContentStream?.CanSeek == false;
 
             if (wrapResponseStream)
             {
-                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError, textEncoding);
+                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError, responseTextEncoding);
             }
 
             if (isError)
@@ -60,9 +73,9 @@ namespace Azure.Base.Pipeline.Policies
 
                 if (!wrapResponseStream && message.Response.ResponseContentStream != null)
                 {
-                    if (textEncoding != null)
+                    if (responseTextEncoding != null)
                     {
-                        await s_eventSource.ErrorResponseContentTextAsync(message.Response, textEncoding, message.Cancellation).ConfigureAwait(false);
+                        await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
                     }
                     else
                     {
@@ -75,9 +88,9 @@ namespace Azure.Base.Pipeline.Policies
 
             if (!wrapResponseStream && message.Response.ResponseContentStream != null)
             {
-                if (textEncoding != null)
+                if (responseTextEncoding != null)
                 {
-                    await s_eventSource.ResponseContentTextAsync(message.Response, textEncoding, message.Cancellation).ConfigureAwait(false);
+                    await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
 
                 }
                 else
@@ -90,6 +103,11 @@ namespace Azure.Base.Pipeline.Policies
             if (elapsedMilliseconds > s_delayWarningThreshold) {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
             }
+        }
+
+        private static bool IsTextContentType(string contentType)
+        {
+            return contentType.StartsWith("text/");
         }
 
         private class LoggingStream : ReadOnlyStream

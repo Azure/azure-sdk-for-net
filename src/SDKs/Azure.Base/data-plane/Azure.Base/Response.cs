@@ -10,7 +10,7 @@ namespace Azure
 {
     public readonly struct Response: IDisposable
     {
-        public HttpPipelineResponse HttpResponse { get; }
+        private readonly HttpPipelineResponse _httpResponse;
 
         public Response(HttpPipelineResponse httpResponse)
         {
@@ -19,19 +19,19 @@ namespace Azure
                 throw new ArgumentNullException(nameof(httpResponse));
             }
 
-            HttpResponse = httpResponse;
+            _httpResponse = httpResponse;
         }
 
-        public int Status => HttpResponse.Status;
+        public int Status => _httpResponse.Status;
 
-        public Stream ContentStream => HttpResponse.ResponseContentStream;
+        public Stream ContentStream => _httpResponse.ResponseContentStream;
 
         public bool TryGetHeader(string name, out string values)
         {
-            return HttpResponse.TryGetHeader(name, out values);
+            return _httpResponse.TryGetHeader(name, out values);
         }
 
-        public void Dispose() => HttpResponse.Dispose();
+        public void Dispose() => _httpResponse.Dispose();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => base.Equals(obj);
@@ -40,6 +40,6 @@ namespace Azure
         public override int GetHashCode() => base.GetHashCode();
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => HttpResponse.ToString();
+        public override string ToString() => _httpResponse.ToString();
     }
 }

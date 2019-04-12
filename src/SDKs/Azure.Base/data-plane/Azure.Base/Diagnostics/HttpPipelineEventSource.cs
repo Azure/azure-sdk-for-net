@@ -25,6 +25,7 @@ namespace Azure.Base.Diagnostics
 
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
+        private const int RequestContentTextEvent = 17;
         private const int ResponseEvent = 5;
         private const int ResponseContentEvent = 6;
         private const int ResponseContentTextEvent = 13;
@@ -58,6 +59,15 @@ namespace Azure.Base.Diagnostics
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContent(request.RequestId, await FormatContentAsync(request.Content, cancellationToken));
+            }
+        }
+
+        [NonEvent]
+        public async Task RequestContentTextAsync(HttpPipelineRequest request, Encoding encoding, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                RequestContentText(request.RequestId, await FormatContentStringAsync(request.Content, encoding, cancellationToken));
             }
         }
 
@@ -155,6 +165,12 @@ namespace Azure.Base.Diagnostics
         private void RequestContent(string requestId, byte[] content)
         {
             WriteEvent(RequestContentEvent, requestId, content);
+        }
+
+        [Event(RequestContentTextEvent, Level = EventLevel.Verbose)]
+        private void RequestContentText(string requestId, string content)
+        {
+            WriteEvent(RequestContentTextEvent, requestId, content);
         }
 
         [Event(ResponseEvent, Level = EventLevel.Informational)]
@@ -273,6 +289,16 @@ namespace Azure.Base.Diagnostics
                 await requestContent.WriteTo(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
 
                 return FormatContent(memoryStream.ToArray());
+            }
+        }
+
+        private static async Task<string> FormatContentStringAsync(HttpPipelineRequestContent requestContent, Encoding encoding, CancellationToken cancellationToken)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                await requestContent.WriteTo(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+
+                return encoding.GetString(FormatContent(memoryStream.ToArray()));
             }
         }
 
