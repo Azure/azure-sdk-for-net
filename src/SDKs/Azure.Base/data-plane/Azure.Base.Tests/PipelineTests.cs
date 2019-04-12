@@ -14,6 +14,8 @@ namespace Azure.Base.Tests
 {
     public class PipelineTests
     {
+/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5773 test skipped for net461 */
+#if !FullNetFx
         [Test]
         public async Task Basics()
         {
@@ -28,8 +30,10 @@ namespace Azure.Base.Tests
             var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
+#endif
         }
-
+/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5773 test skipped for net461 */
+#if !FullNetFx
         class CustomRetryPolicy : RetryPolicy
         {
             protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
@@ -45,6 +49,7 @@ namespace Azure.Base.Tests
                 return false;
             }
         }
+#endif
 
         class TestClientOptions : HttpClientOptions
         {
