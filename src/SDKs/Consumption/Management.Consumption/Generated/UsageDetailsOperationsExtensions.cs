@@ -73,8 +73,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// </param>
             /// <param name='metric'>
             /// Allows to select different type of cost/usage records. Allowed values:
-            /// Usage, ActualCost, AmortizedCost, ActualAndAmortizedCost. Default is
-            /// ActualCost.
+            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
             /// </param>
             public static IPage<UsageDetail> List(this IUsageDetailsOperations operations, string scope, string expand = default(string), string filter = default(string), string skiptoken = default(string), int? top = default(int?), string metric = default(string))
             {
@@ -133,8 +132,7 @@ namespace Microsoft.Azure.Management.Consumption
             /// </param>
             /// <param name='metric'>
             /// Allows to select different type of cost/usage records. Allowed values:
-            /// Usage, ActualCost, AmortizedCost, ActualAndAmortizedCost. Default is
-            /// ActualCost.
+            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

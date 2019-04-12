@@ -108,15 +108,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="publisherName">Publisher Name.</param>
         /// <param name="publisherType">Publisher Type.</param>
         /// <param name="planName">Plan Name.</param>
-        /// <param name="isAmortizedCost">Indicates if the record represents
-        /// amortized costs. A record may be actual and amortized, if
-        /// amortization is not applicable (e.g. non-reservation usage) or not
-        /// supported (e.g. Marketplace purchases).</param>
-        /// <param name="isActualCost">Indicates if the record represents
-        /// actual, billed charges (as opposed to an amortized cost). A record
-        /// may be actual and amortized, if amortization is not applicable
-        /// (e.g. non-reservation usage) or not supported (e.g. Marketplace
-        /// purchases).</param>
         /// <param name="chargeType">Indicates a charge represents credits,
         /// usage, a Marketplace purchase, a reservation fee, or a
         /// refund.</param>
@@ -124,7 +115,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// occur. OneTime for purchases which only happen once, Monthly for
         /// fees which recur every month, and UsageBased for charges based on
         /// how much a service is used.</param>
-        public UsageDetail(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingAccountId = default(string), string billingAccountName = default(string), System.DateTime? billingPeriodStartDate = default(System.DateTime?), System.DateTime? billingPeriodEndDate = default(System.DateTime?), string billingProfileId = default(string), string billingProfileName = default(string), string accountOwnerId = default(string), string accountName = default(string), string subscriptionId = default(string), string subscriptionName = default(string), System.DateTime? date = default(System.DateTime?), string product = default(string), string partNumber = default(string), System.Guid? meterId = default(System.Guid?), MeterDetailsResponse meterDetails = default(MeterDetailsResponse), decimal? quantity = default(decimal?), decimal? effectivePrice = default(decimal?), decimal? cost = default(decimal?), decimal? unitPrice = default(decimal?), string billingCurrency = default(string), string resourceLocation = default(string), string consumedService = default(string), string resourceId = default(string), string resourceName = default(string), string serviceInfo1 = default(string), string serviceInfo2 = default(string), string additionalInfo = default(string), string invoiceSection = default(string), string costCenter = default(string), string resourceGroup = default(string), string reservationId = default(string), string reservationName = default(string), string productOrderId = default(string), string productOrderName = default(string), string offerId = default(string), bool? isAzureCreditEligible = default(bool?), string term = default(string), string publisherName = default(string), string publisherType = default(string), string planName = default(string), bool? isAmortizedCost = default(bool?), bool? isActualCost = default(bool?), string chargeType = default(string), string frequency = default(string))
+        public UsageDetail(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string billingAccountId = default(string), string billingAccountName = default(string), System.DateTime? billingPeriodStartDate = default(System.DateTime?), System.DateTime? billingPeriodEndDate = default(System.DateTime?), string billingProfileId = default(string), string billingProfileName = default(string), string accountOwnerId = default(string), string accountName = default(string), string subscriptionId = default(string), string subscriptionName = default(string), System.DateTime? date = default(System.DateTime?), string product = default(string), string partNumber = default(string), System.Guid? meterId = default(System.Guid?), MeterDetailsResponse meterDetails = default(MeterDetailsResponse), decimal? quantity = default(decimal?), decimal? effectivePrice = default(decimal?), decimal? cost = default(decimal?), decimal? unitPrice = default(decimal?), string billingCurrency = default(string), string resourceLocation = default(string), string consumedService = default(string), string resourceId = default(string), string resourceName = default(string), string serviceInfo1 = default(string), string serviceInfo2 = default(string), string additionalInfo = default(string), string invoiceSection = default(string), string costCenter = default(string), string resourceGroup = default(string), string reservationId = default(string), string reservationName = default(string), string productOrderId = default(string), string productOrderName = default(string), string offerId = default(string), bool? isAzureCreditEligible = default(bool?), string term = default(string), string publisherName = default(string), string publisherType = default(string), string planName = default(string), string chargeType = default(string), string frequency = default(string))
             : base(id, name, type, tags)
         {
             BillingAccountId = billingAccountId;
@@ -167,8 +158,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
             PublisherName = publisherName;
             PublisherType = publisherType;
             PlanName = planName;
-            IsAmortizedCost = isAmortizedCost;
-            IsActualCost = isActualCost;
             ChargeType = chargeType;
             Frequency = frequency;
             CustomInit();
@@ -439,24 +428,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.planName")]
         public string PlanName { get; private set; }
-
-        /// <summary>
-        /// Gets indicates if the record represents amortized costs. A record
-        /// may be actual and amortized, if amortization is not applicable
-        /// (e.g. non-reservation usage) or not supported (e.g. Marketplace
-        /// purchases).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isAmortizedCost")]
-        public bool? IsAmortizedCost { get; private set; }
-
-        /// <summary>
-        /// Gets indicates if the record represents actual, billed charges (as
-        /// opposed to an amortized cost). A record may be actual and
-        /// amortized, if amortization is not applicable (e.g. non-reservation
-        /// usage) or not supported (e.g. Marketplace purchases).
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isActualCost")]
-        public bool? IsActualCost { get; private set; }
 
         /// <summary>
         /// Gets indicates a charge represents credits, usage, a Marketplace
