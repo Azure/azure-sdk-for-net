@@ -30,8 +30,9 @@ namespace Azure.Base.Tests
             var response = await pipeline.SendRequestAsync(request, CancellationToken.None);
 
             Assert.AreEqual(1, response.Status);
-#endif
         }
+#endif
+
 /* Issue https://github.com/Azure/azure-sdk-for-net/issues/5773 test skipped for net461 */
 #if !FullNetFx
         class CustomRetryPolicy : RetryPolicy
