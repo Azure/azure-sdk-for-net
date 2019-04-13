@@ -6,14 +6,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Azure.Search.Common;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Search.Serialization
 {
     /// <summary>
-    /// Defines extension methods for JsonReader that make it easier to implement a custom JsonConverter.
+    /// Defines extension methods for various JSON.NET types that make it easier to implement a custom JsonConverter.
     /// </summary>
-    public static class JsonReaderExtensions
+    public static class JsonExtensions
     {
         /// <summary>
         /// Asserts that the given JSON reader is positioned on a token with the expected type. Optionally asserts
@@ -80,6 +82,8 @@ namespace Microsoft.Azure.Search.Serialization
             JsonToken expectedToken, 
             params object[] expectedValues)
         {
+            Throw.IfArgumentNull(reader, nameof(reader));
+
             if (reader.TokenType != expectedToken)
             {
                 throw new JsonSerializationException(
@@ -125,6 +129,8 @@ namespace Microsoft.Azure.Search.Serialization
         /// <param name="reader">The JSON reader to advance.</param>
         public static void Advance(this JsonReader reader)
         {
+            Throw.IfArgumentNull(reader, nameof(reader));
+
             if (!reader.Read())
             {
                 throw new JsonSerializationException("Deserialization failed. Unexpected end of input.");
@@ -198,6 +204,11 @@ namespace Microsoft.Azure.Search.Serialization
             IEnumerable<string> optionalProperties,
             Action<JsonReader, string> readProperty)
         {
+            Throw.IfArgumentNull(requiredProperties, nameof(requiredProperties));
+            Throw.IfArgumentNull(optionalProperties, nameof(optionalProperties));
+            Throw.IfArgumentNull(readProperty, nameof(readProperty));
+
+            // ExpectAndAdvance validates that reader is not null.
             reader.ExpectAndAdvance(JsonToken.StartObject);
 
             string[] allPropertyNames = requiredProperties.Concat(optionalProperties).ToArray();
@@ -218,6 +229,60 @@ namespace Microsoft.Azure.Search.Serialization
                         string.Format("Deserialization failed. Could not find required '{0}' property.", propertyName));
                 }
             }
+        }
+
+        /// <summary>
+        /// Indicates whether or not the given JSON token matches the expected string.
+        /// </summary>
+        /// <param name="token">The token to check.</param>
+        /// <param name="expectedValue">The expected string value.</param>
+        /// <returns><c>true</c> if the given JSON token matches the expected string, <c>false</c> otherwise.</returns>
+        public static bool IsString(this JToken token, string expectedValue) =>
+            token?.Type == JTokenType.String && token?.Value<string>() == expectedValue;
+
+        /// <summary>
+        /// Indicates whether or not the given JSON token is a numeric literal.
+        /// </summary>
+        /// <param name="token">The token to check.</param>
+        /// <returns><c>true</c> if the given JSON token represents a number, <c>false</c> otherwise.</returns>
+        public static bool IsNumber(this JToken token) => token?.Type == JTokenType.Float || token?.Type == JTokenType.Integer;
+
+        /// <summary>
+        /// Validates the properties of the given JSON object, enforcing the presence of required properties and ignoring
+        /// the order of properties.
+        /// </summary>
+        /// <param name="obj">The JSON object to validate.</param>
+        /// <param name="requiredProperties">
+        /// The names of all JSON properties that are expected to be present in the given object.
+        /// </param>
+        /// <param name="isPropertyValid">
+        /// A predicate that determines whether the name and value of given <c cref="JProperty">JProperty</c> are valid.
+        /// </param>
+        /// <returns>
+        /// <c>true</c> if all properties of the given JSON object pass the given validation function and all required properties exist,
+        /// <c>false</c> otherwise.
+        /// </returns>
+        public static bool IsValid(this JObject obj, IEnumerable<string> requiredProperties, Func<JProperty, bool> isPropertyValid)
+        {
+            Throw.IfArgumentNull(obj, nameof(obj));
+            Throw.IfArgumentNull(requiredProperties, nameof(requiredProperties));
+            Throw.IfArgumentNull(isPropertyValid, nameof(isPropertyValid));
+
+            var processedProperties = new HashSet<string>();
+
+            foreach (JProperty property in obj.Properties())
+            {
+                if (isPropertyValid(property))
+                {
+                    processedProperties.Add(property.Name);
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+            return requiredProperties.All(p => processedProperties.Contains(p));
         }
     }
 }
