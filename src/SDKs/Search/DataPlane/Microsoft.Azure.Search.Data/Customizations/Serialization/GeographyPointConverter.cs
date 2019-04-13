@@ -2,18 +2,25 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Reflection;
+using Microsoft.Spatial;
+using Newtonsoft.Json;
+
 namespace Microsoft.Azure.Search.Serialization
 {
-    using System;
-    using System.Reflection;
-    using Microsoft.Spatial;
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Serializes Microsoft.Spatial.GeographyPoint objects to Geo-JSON and vice-versa.
     /// </summary>
     internal class GeographyPointConverter : JsonConverter
     {
+        private const string Coordinates = "coordinates";
+        private const string Crs = "crs";
+        private const string Name = "name";
+        private const string Point = "Point";
+        private const string Properties = "properties";
+        private const string Type = "type";
+
         public override bool CanConvert(Type objectType) =>
             typeof(GeographyPoint).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
 
@@ -29,55 +36,87 @@ namespace Microsoft.Azure.Search.Serialization
                 return null;
             }
 
-            reader.ExpectAndAdvance(JsonToken.StartObject);
-            reader.ExpectAndAdvance(JsonToken.PropertyName, "type");
-            reader.ExpectAndAdvance(JsonToken.String, "Point");
-            reader.ExpectAndAdvance(JsonToken.PropertyName, "coordinates");
-            reader.ExpectAndAdvance(JsonToken.StartArray);
+            GeographyPoint result = null;
 
-            double ReadFloatOrInt()
+            void ReadCoordinatesProperty(JsonReader coordinatesReader)
             {
-                switch (reader.TokenType)
+                coordinatesReader.ExpectAndAdvance(JsonToken.StartArray);
+
+                double ReadFloatOrInt()
                 {
-                    case JsonToken.Integer:
-                        return reader.ExpectAndAdvance<long>(JsonToken.Integer);
+                    switch (coordinatesReader.TokenType)
+                    {
+                        case JsonToken.Integer:
+                            return coordinatesReader.ExpectAndAdvance<long>(JsonToken.Integer);
 
-                    // Treat all other cases as Float and let ExpectAndAdvance() handle any errors.
-                    default:
-                        return reader.ExpectAndAdvance<double>(JsonToken.Float);
+                        // Treat all other cases as Float and let ExpectAndAdvance() handle any errors.
+                        default:
+                            return coordinatesReader.ExpectAndAdvance<double>(JsonToken.Float);
+                    }
                 }
+
+                double longitude = ReadFloatOrInt();
+                double latitude = ReadFloatOrInt();
+
+                coordinatesReader.ExpectAndAdvance(JsonToken.EndArray);
+                result = GeographyPoint.Create(latitude, longitude);
             }
 
-            double longitude = ReadFloatOrInt();
-            double latitude = ReadFloatOrInt();
-
-            reader.ExpectAndAdvance(JsonToken.EndArray);
-
-            if (reader.TokenType == JsonToken.PropertyName && reader.Value.Equals("crs"))
+            void ReadCrsProperty(JsonReader crsReader)
             {
-                reader.Advance();
-                reader.ExpectAndAdvance(JsonToken.StartObject);
-                reader.ExpectAndAdvance(JsonToken.PropertyName, "type");
-                reader.ExpectAndAdvance(JsonToken.String, "name");
-                reader.ExpectAndAdvance(JsonToken.PropertyName, "properties");
-                reader.ExpectAndAdvance(JsonToken.StartObject);
-                reader.ExpectAndAdvance(JsonToken.PropertyName, "name");
-                reader.ExpectAndAdvance(JsonToken.String, "EPSG:4326");
-                reader.ExpectAndAdvance(JsonToken.EndObject);
-                reader.ExpectAndAdvance(JsonToken.EndObject);
+                void ReadPropertiesProperty(JsonReader propertiesReader) =>
+                    propertiesReader.ReadObjectAndAdvance(
+                        requiredProperties: new[] { Name },
+                        readProperty: (r, _) => r.ExpectAndAdvance(JsonToken.String, "EPSG:4326"));
+
+                crsReader.ReadObjectAndAdvance(
+                    requiredProperties: new[] { Type, Properties },
+                    readProperty: (r, propertyName) =>
+                    {
+                        switch (propertyName)
+                        {
+                            case Type:
+                                r.ExpectAndAdvance(JsonToken.String, Name);
+                                break;
+
+                            case Properties:
+                                ReadPropertiesProperty(r);
+                                break;
+                        }
+                    });
             }
 
-            reader.Expect(JsonToken.EndObject);
-            return GeographyPoint.Create(latitude, longitude);
+            reader.ReadObject(
+                requiredProperties: new[] { Type, Coordinates },
+                optionalProperties: new[] { Crs },
+                readProperty: (r, propertyName) =>
+                {
+                    switch (propertyName)
+                    {
+                        case Type:
+                            r.ExpectAndAdvance(JsonToken.String, Point);
+                            break;
+
+                        case Coordinates:
+                            ReadCoordinatesProperty(r);
+                            break;
+
+                        case Crs:
+                            ReadCrsProperty(r);
+                            break;
+                    }
+                });
+
+            return result;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
             var point = (GeographyPoint)value;
             writer.WriteStartObject();
-            writer.WritePropertyName("type");
-            writer.WriteValue("Point");
-            writer.WritePropertyName("coordinates");
+            writer.WritePropertyName(Type);
+            writer.WriteValue(Point);
+            writer.WritePropertyName(Coordinates);
             writer.WriteStartArray();
             writer.WriteValue(point.Longitude);
             writer.WriteValue(point.Latitude);

@@ -2,12 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using Newtonsoft.Json;
+
 namespace Microsoft.Azure.Search.Serialization
 {
-    using System;
-    using System.Reflection;
-    using Newtonsoft.Json;
-
     /// <summary>
     /// Defines extension methods for JsonReader that make it easier to implement a custom JsonConverter.
     /// </summary>
@@ -21,11 +23,11 @@ namespace Microsoft.Azure.Search.Serialization
         /// </summary>
         /// <param name="reader">The JSON reader.</param>
         /// <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
-        /// <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
+        /// <param name="expectedValues">Optional; The expected possible values of the current JSON token.</param>
         public static void ExpectAndAdvance(
             this JsonReader reader, 
             JsonToken expectedToken, 
-            object expectedValue = null) => ExpectAndAdvance<object>(reader, expectedToken, expectedValue);
+            params object[] expectedValues) => ExpectAndAdvance<object>(reader, expectedToken, expectedValues);
 
         /// <summary>
         /// Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the
@@ -36,16 +38,16 @@ namespace Microsoft.Azure.Search.Serialization
         /// <typeparam name="TValue">The expected type of the value of the current JSON token.</typeparam>
         /// <param name="reader">The JSON reader.</param>
         /// <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
-        /// <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
+        /// <param name="expectedValues">Optional; The expected possible values of the current JSON token.</param>
         /// <returns>
         /// The value of the JSON token before advancing the reader, or default(TValue) if the token has no value.
         /// </returns>
         public static TValue ExpectAndAdvance<TValue>(
             this JsonReader reader, 
             JsonToken expectedToken, 
-            object expectedValue = null)
+            params object[] expectedValues)
         {
-            TValue result = Expect<TValue>(reader, expectedToken, expectedValue);
+            TValue result = Expect<TValue>(reader, expectedToken, expectedValues);
             Advance(reader);
             return result;
         }
@@ -57,9 +59,9 @@ namespace Microsoft.Azure.Search.Serialization
         /// </summary>
         /// <param name="reader">The JSON reader.</param>
         /// <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
-        /// <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
-        public static void Expect(this JsonReader reader, JsonToken expectedToken, object expectedValue = null) =>
-            Expect<object>(reader, expectedToken, expectedValue);
+        /// <param name="expectedValues">Optional; The expected possible values of the current JSON token.</param>
+        public static void Expect(this JsonReader reader, JsonToken expectedToken, params object[] expectedValues) =>
+            Expect<object>(reader, expectedToken, expectedValues);
 
         /// <summary>
         /// Asserts that the given JSON reader is positioned on a token with the expected type and retrieves the
@@ -69,40 +71,41 @@ namespace Microsoft.Azure.Search.Serialization
         /// <typeparam name="TValue">The expected type of the value of the current JSON token.</typeparam>
         /// <param name="reader">The JSON reader.</param>
         /// <param name="expectedToken">The JSON token on which the reader is expected to be positioned.</param>
-        /// <param name="expectedValue">Optional; The expected value of the current JSON token.</param>
+        /// <param name="expectedValues">Optional; The expected possible values of the current JSON token.</param>
         /// <returns>
         /// The value of the current JSON token, or default(TValue) if the current token has no value.
         /// </returns>
         public static TValue Expect<TValue>(
             this JsonReader reader, 
             JsonToken expectedToken, 
-            object expectedValue = null)
+            params object[] expectedValues)
         {
             if (reader.TokenType != expectedToken)
             {
                 throw new JsonSerializationException(
-                    String.Format("Deserialization failed. Expected token: '{0}'", expectedToken));
+                    string.Format("Deserialization failed. Expected token: '{0}'", expectedToken));
             }
 
-            if (expectedValue != null && (reader.Value == null || !reader.Value.Equals(expectedValue)))
+            if (expectedValues != null && expectedValues.Length > 0 &&
+                (reader.Value == null || !Array.Exists(expectedValues, v => reader.Value.Equals(v))))
             {
                 string message =
-                    String.Format(
-                        "Deserialization failed. Expected value: '{0}'. Actual: '{1}'",
-                        expectedValue,
+                    string.Format(
+                        "Deserialization failed. Expected value(s): '{0}'. Actual: '{1}'",
+                        string.Join(", ", expectedValues),
                         reader.Value);
 
                 throw new JsonSerializationException(message);
             }
 
-            TValue result = default(TValue);
+            var result = default(TValue);
 
             if (reader.Value != null)
             {
                 if (!typeof(TValue).GetTypeInfo().IsAssignableFrom(reader.ValueType.GetTypeInfo()))
                 {
                     string message =
-                        String.Format(
+                        string.Format(
                             "Deserialization failed. Value '{0}' is not of expected type '{1}'.",
                             reader.Value,
                             typeof(TValue));
@@ -125,6 +128,95 @@ namespace Microsoft.Azure.Search.Serialization
             if (!reader.Read())
             {
                 throw new JsonSerializationException("Deserialization failed. Unexpected end of input.");
+            }
+        }
+
+        /// <summary>
+        /// Reads the properties of JSON objects, enforcing the presence of required properties and ignoring the order of properties.
+        /// </summary>
+        /// <param name="reader">The JSON reader to use to read an object.</param>
+        /// <param name="requiredProperties">
+        /// The names of all JSON properties that are expected to be present in the parsed object.
+        /// </param>
+        /// <param name="readProperty">
+        /// A callback that reads a property value with the given name from the given <c cref="JsonReader">JsonReader</c>. It must
+        /// advance the reader to the name of the next property, or the end of the object if there are no more properties to read.
+        /// </param>
+        /// <remarks>
+        /// This method will leave the reader positioned on the end of the object.
+        /// </remarks>
+        public static void ReadObject(
+            this JsonReader reader, 
+            IEnumerable<string> requiredProperties, 
+            Action<JsonReader, string> readProperty) =>
+            reader.ReadObject(requiredProperties, Enumerable.Empty<string>(), readProperty);
+
+        /// <summary>
+        /// Reads the properties of JSON objects, enforcing the presence of required properties and ignoring the order of properties,
+        /// and then advances the given reader to the next token after the end of the object.
+        /// </summary>
+        /// <param name="reader">The JSON reader to use to read an object.</param>
+        /// <param name="requiredProperties">
+        /// The names of all JSON properties that are expected to be present in the parsed object.
+        /// </param>
+        /// <param name="readProperty">
+        /// A callback that reads a property value with the given name from the given <c cref="JsonReader">JsonReader</c>. It must
+        /// advance the reader to the name of the next property, or the end of the object if there are no more properties to read.
+        /// </param>
+        /// <remarks>
+        /// This method will advance the reader to the next position after the end of the object.
+        /// </remarks>
+        public static void ReadObjectAndAdvance(
+            this JsonReader reader, 
+            IEnumerable<string> requiredProperties, 
+            Action<JsonReader, string> readProperty)
+        {
+            reader.ReadObject(requiredProperties, readProperty);
+            reader.Advance();
+        }
+
+        /// <summary>
+        /// Reads the properties of JSON objects, enforcing the presence of required properties and ignoring the order of properties.
+        /// </summary>
+        /// <param name="reader">The JSON reader to use to read an object.</param>
+        /// <param name="requiredProperties">
+        /// The names of all JSON properties that are expected to be present in the parsed object.
+        /// </param>
+        /// <param name="optionalProperties">
+        /// The names of JSON properties besides the required properties that may be present in the parsed object.
+        /// </param>
+        /// <param name="readProperty">
+        /// A callback that reads a property value with the given name from the given <c cref="JsonReader">JsonReader</c>. It must
+        /// advance the reader to the name of the next property, or the end of the object if there are no more properties to read.
+        /// </param>
+        /// <remarks>
+        /// This method will leave the reader positioned on the end of the object.
+        /// </remarks>
+        public static void ReadObject(
+            this JsonReader reader, 
+            IEnumerable<string> requiredProperties,
+            IEnumerable<string> optionalProperties,
+            Action<JsonReader, string> readProperty)
+        {
+            reader.ExpectAndAdvance(JsonToken.StartObject);
+
+            string[] allPropertyNames = requiredProperties.Concat(optionalProperties).ToArray();
+            var processedProperties = new HashSet<string>();
+
+            while (reader.TokenType != JsonToken.EndObject)
+            {
+                string propertyName = reader.ExpectAndAdvance<string>(JsonToken.PropertyName, allPropertyNames);
+                readProperty(reader, propertyName);
+                processedProperties.Add(propertyName);
+            }
+
+            foreach (var propertyName in requiredProperties)
+            {
+                if (!processedProperties.Contains(propertyName))
+                {
+                    throw new JsonSerializationException(
+                        string.Format("Deserialization failed. Could not find required '{0}' property.", propertyName));
+                }
             }
         }
     }
