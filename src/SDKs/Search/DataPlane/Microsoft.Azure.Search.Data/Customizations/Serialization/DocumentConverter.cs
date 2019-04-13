@@ -53,19 +53,15 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
 
-        private static GeographyPoint DeserializeGeoPoint(JObject obj, JsonSerializer serializer)
-        {
-            var tokenReader = new JTokenReader(obj);
-            return serializer.Deserialize<GeographyPoint>(tokenReader);
-        }
-
         private static object ConvertToken(JToken token, JsonSerializer serializer)
         {
             switch (token)
             {
                 case JObject obj:
-                    // Assume geo-point for now.
-                    return DeserializeGeoPoint(obj, serializer);
+                    var tokenReader = new JTokenReader(obj);
+                    return GeographyPointConverter.IsGeoJson(obj) ?
+                        serializer.Deserialize<GeographyPoint>(tokenReader) :
+                        (object)serializer.Deserialize<Document>(tokenReader);
 
                 default:
                     return token.ToObject(typeof(object), serializer);
@@ -165,7 +161,9 @@ namespace Microsoft.Azure.Search.Serialization
                     return ConvertToArrayOfValueType<DateTimeOffset>();
 
                 case JTokenType.Object:
-                    return ConvertToArrayOfReferenceType<GeographyPoint>();
+                    return GeographyPointConverter.IsGeoJson((JObject)array[0]) ?
+                        ConvertToArrayOfReferenceType<GeographyPoint>() :
+                        ConvertToArrayOfReferenceType<Document>();
 
                 default:
                     return array.Select(t => ConvertToken(t, serializer)).ToArray();

@@ -77,6 +77,7 @@ namespace Microsoft.Azure.Search.Tests
     ""field1"": null,
     ""field2"": [ ""hello"", null ],
     ""field3"": [ null, 123, null ],
+    ""field4"": [ null, { ""name"": ""Bob"" } ]
 }";
 
                 var expectedDoc =
@@ -84,7 +85,8 @@ namespace Microsoft.Azure.Search.Tests
                     {
                         ["field1"] = null,
                         ["field2"] = new string[] { "hello", null },
-                        ["field3"] = new object[] { null, 123L, null }
+                        ["field3"] = new object[] { null, 123L, null },
+                        ["field4"] = new object[] { null, new Document() { ["name"] = "Bob" } }
                     };
 
                 Document actualDoc = Deserialize(Json);
@@ -147,7 +149,7 @@ namespace Microsoft.Azure.Search.Tests
             }
 
             [Fact]
-            public void CanReadGeoPointCollections()
+            public void CanReadGeoPointCollection()
             {
                 const string Json =
 @"{
@@ -172,8 +174,94 @@ namespace Microsoft.Azure.Search.Tests
                 AssertDocumentsEqual(expectedDoc, actualDoc);
             }
 
+            [Fact]
+            public void CanReadComplexObject()
+            {
+                const string Json =
+@"{
+    ""name"": ""Boots"",
+    ""details"": {
+        ""sku"": 123,
+        ""seasons"": [ ""fall"", ""winter"" ]
+    }
+}";
+
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["name"] = "Boots",
+                        ["details"] = new Document()
+                        {
+                            ["sku"] = 123L,
+                            ["seasons"] = new string[] { "fall", "winter" }
+                        }
+                    };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
+            }
+
+            [Fact]
+            public void CanReadComplexCollection()
+            {
+                const string Json =
+@"{
+    ""stores"": [
+        {
+            ""name"": ""North"",
+            ""address"": {
+                ""city"": ""Vancouver"",
+                ""country"": ""Canada""
+            },
+            ""location"": { ""type"": ""Point"", ""coordinates"": [-121, 49] }
+        },
+        {
+            ""name"": ""South"",
+            ""address"": {
+                ""city"": ""Seattle"",
+                ""country"": ""USA""
+            },
+            ""location"": { ""type"": ""Point"", ""coordinates"": [-122.5, 47.6] }
+        }
+    ]
+}";
+
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["stores"] = new[]
+                        {
+                            new Document()
+                            {
+                                ["name"] = "North",
+                                ["address"] = new Document()
+                                {
+                                    ["city"] = "Vancouver",
+                                    ["country"] = "Canada"
+                                },
+                                ["location"] = GeographyPoint.Create(latitude: 49, longitude: -121)
+                            },
+                            new Document()
+                            {
+                                ["name"] = "South",
+                                ["address"] = new Document()
+                                {
+                                    ["city"] = "Seattle",
+                                    ["country"] = "USA"
+                                },
+                                ["location"] = GeographyPoint.Create(latitude: 47.6, longitude: -122.5)
+                            }
+                        }
+                    };
+
+                Document actualDoc = Deserialize(Json);
+
+                AssertDocumentsEqual(expectedDoc, actualDoc);
+            }
+
             // This is not quite a pinning test in the sense that it actually is correct behavior if the field is defined
-            // as Edm.DateTimeOffset. What's notable is that this is how such values deserialize, even when the field is not that type.
+            // as Edm.DateTimeOffset. What's notable is that this is how such values deserialize even when the field is not that type.
             [Fact]
             public void DateTimeStringsAreReadAsDateTime()
             {
@@ -207,7 +295,8 @@ $@"{{
     ""field1"": ""NaN"",
     ""field2"": ""INF"",
     ""field3"": ""-INF"",
-    ""field4"": [""NaN"", ""INF"", ""-INF""]
+    ""field4"": [""NaN"", ""INF"", ""-INF""],
+    ""field5"": { ""value"": ""-INF"" }
 }";
 
                 var expectedDoc =
@@ -216,7 +305,8 @@ $@"{{
                         ["field1"] = "NaN",
                         ["field2"] = "INF",
                         ["field3"] = "-INF",
-                        ["field4"] = new string[] { "NaN", "INF", "-INF" }
+                        ["field4"] = new string[] { "NaN", "INF", "-INF" },
+                        ["field5"] = new Document() { ["value"] = "-INF" }
                     };
 
                 Document actualDoc = Deserialize(Json);
@@ -228,12 +318,32 @@ $@"{{
             public void CanReadArraysOfMixedTypes()
             {
                 // Azure Search won't return payloads like this; This test is only for pinning purposes.
-                const string Json = @"{ ""field"": [""hello"", 123, 3.14, { ""type"": ""Point"", ""coordinates"": [-122.131577, 47.678581] }] }";
+                const string Json =
+@"{
+    ""field"": [
+        ""hello"",
+        123,
+        3.14,
+        { ""type"": ""Point"", ""coordinates"": [-122.131577, 47.678581] },
+        { ""name"": ""Arthur"", ""quest"": null }
+    ]
+}";
 
                 var expectedDoc =
                     new Document()
                     {
-                        ["field"] = new object[] { "hello", 123L, 3.14, GeographyPoint.Create(47.678581, -122.131577) }
+                        ["field"] = new object[]
+                        {
+                            "hello",
+                            123L,
+                            3.14,
+                            GeographyPoint.Create(47.678581, -122.131577),
+                            new Document()
+                            {
+                                ["name"] = "Arthur",
+                                ["quest"] = null
+                            }
+                        }
                     };
 
                 Document actualDoc = Deserialize(Json);
