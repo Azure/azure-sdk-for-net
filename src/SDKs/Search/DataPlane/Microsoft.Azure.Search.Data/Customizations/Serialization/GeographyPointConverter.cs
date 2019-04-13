@@ -3,9 +3,12 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Spatial;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.Search.Serialization
 {
@@ -20,15 +23,38 @@ namespace Microsoft.Azure.Search.Serialization
         private const string Point = "Point";
         private const string Properties = "properties";
         private const string Type = "type";
+        private const string WorldGeodeticSystem1984 = "EPSG:4326"; // See https://epsg.io/4326
+
+        private static readonly IEnumerable<string> CrsOnly = new[] { Crs };
+        private static readonly IEnumerable<string> NameOnly = new[] { Name };
+        private static readonly IEnumerable<string> TypeAndCoordinates = new[] { Type, Coordinates };
+        private static readonly IEnumerable<string> TypeAndProperties = new[] { Type, Properties };
 
         public override bool CanConvert(Type objectType) =>
             typeof(GeographyPoint).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
 
-        public override object ReadJson(
-            JsonReader reader, 
-            Type objectType, 
-            object existingValue, 
-            JsonSerializer serializer)
+        public static bool IsGeoJson(JObject obj) =>
+            obj?.IsValid(
+                requiredProperties: TypeAndCoordinates,
+                isPropertyValid: property =>
+                {
+                    switch (property.Name)
+                    {
+                        case Type:
+                            return property.Value.IsString(Point);
+
+                        case Coordinates:
+                            return AreCoordinates(property.Value);
+
+                        case Crs:
+                            return property.Value is JObject possibleCrs && IsCrs(possibleCrs);
+
+                        default:
+                            return false;
+                    }
+                }) ?? false;
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             // Check for null first.
             if (reader.TokenType == JsonToken.Null)
@@ -38,57 +64,9 @@ namespace Microsoft.Azure.Search.Serialization
 
             GeographyPoint result = null;
 
-            void ReadCoordinatesProperty(JsonReader coordinatesReader)
-            {
-                coordinatesReader.ExpectAndAdvance(JsonToken.StartArray);
-
-                double ReadFloatOrInt()
-                {
-                    switch (coordinatesReader.TokenType)
-                    {
-                        case JsonToken.Integer:
-                            return coordinatesReader.ExpectAndAdvance<long>(JsonToken.Integer);
-
-                        // Treat all other cases as Float and let ExpectAndAdvance() handle any errors.
-                        default:
-                            return coordinatesReader.ExpectAndAdvance<double>(JsonToken.Float);
-                    }
-                }
-
-                double longitude = ReadFloatOrInt();
-                double latitude = ReadFloatOrInt();
-
-                coordinatesReader.ExpectAndAdvance(JsonToken.EndArray);
-                result = GeographyPoint.Create(latitude, longitude);
-            }
-
-            void ReadCrsProperty(JsonReader crsReader)
-            {
-                void ReadPropertiesProperty(JsonReader propertiesReader) =>
-                    propertiesReader.ReadObjectAndAdvance(
-                        requiredProperties: new[] { Name },
-                        readProperty: (r, _) => r.ExpectAndAdvance(JsonToken.String, "EPSG:4326"));
-
-                crsReader.ReadObjectAndAdvance(
-                    requiredProperties: new[] { Type, Properties },
-                    readProperty: (r, propertyName) =>
-                    {
-                        switch (propertyName)
-                        {
-                            case Type:
-                                r.ExpectAndAdvance(JsonToken.String, Name);
-                                break;
-
-                            case Properties:
-                                ReadPropertiesProperty(r);
-                                break;
-                        }
-                    });
-            }
-
             reader.ReadObject(
-                requiredProperties: new[] { Type, Coordinates },
-                optionalProperties: new[] { Crs },
+                requiredProperties: TypeAndCoordinates,
+                optionalProperties: CrsOnly,
                 readProperty: (r, propertyName) =>
                 {
                     switch (propertyName)
@@ -98,11 +76,11 @@ namespace Microsoft.Azure.Search.Serialization
                             break;
 
                         case Coordinates:
-                            ReadCoordinatesProperty(r);
+                            result = ReadCoordinates(r);
                             break;
 
                         case Crs:
-                            ReadCrsProperty(r);
+                            ReadCrs(r);
                             break;
                     }
                 });
@@ -122,6 +100,78 @@ namespace Microsoft.Azure.Search.Serialization
             writer.WriteValue(point.Latitude);
             writer.WriteEndArray();
             writer.WriteEndObject();
+        }
+
+        private static bool IsCrsProperties(JObject possibleProperties) =>
+            possibleProperties.IsValid(
+                requiredProperties: NameOnly,
+                isPropertyValid: property => property.Name == Name && property.Value.IsString(WorldGeodeticSystem1984));
+
+        private static void ReadCrsProperties(JsonReader propertiesReader) =>
+            propertiesReader.ReadObjectAndAdvance(
+                requiredProperties: NameOnly,
+                readProperty: (r, _) => r.ExpectAndAdvance(JsonToken.String, WorldGeodeticSystem1984));
+
+        private static bool IsCrs(JObject possibleCrs) =>
+            possibleCrs.IsValid(
+                requiredProperties: TypeAndProperties,
+                isPropertyValid: property =>
+                {
+                    switch (property.Name)
+                    {
+                        case Type:
+                            return property.Value.IsString(Name);
+
+                        case Properties:
+                            return property.Value is JObject possibleProperties && IsCrsProperties(possibleProperties);
+
+                        default:
+                            return false;
+                    }
+                });
+
+        private static void ReadCrs(JsonReader crsReader) =>
+            crsReader.ReadObjectAndAdvance(
+                requiredProperties: TypeAndProperties,
+                readProperty: (r, propertyName) =>
+                {
+                    switch (propertyName)
+                    {
+                        case Type:
+                            r.ExpectAndAdvance(JsonToken.String, Name);
+                            break;
+
+                        case Properties:
+                            ReadCrsProperties(r);
+                            break;
+                    }
+                });
+
+        private static bool AreCoordinates(JToken possibleCoordinates) =>
+            possibleCoordinates is JArray array && array.Count == 2 && array[0].IsNumber() && array[1].IsNumber();
+
+        private static GeographyPoint ReadCoordinates(JsonReader coordinatesReader)
+        {
+            coordinatesReader.ExpectAndAdvance(JsonToken.StartArray);
+
+            double ReadFloatOrInt()
+            {
+                switch (coordinatesReader.TokenType)
+                {
+                    case JsonToken.Integer:
+                        return coordinatesReader.ExpectAndAdvance<long>(JsonToken.Integer);
+
+                    // Treat all other cases as Float and let ExpectAndAdvance() handle any errors.
+                    default:
+                        return coordinatesReader.ExpectAndAdvance<double>(JsonToken.Float);
+                }
+            }
+
+            double longitude = ReadFloatOrInt();
+            double latitude = ReadFloatOrInt();
+
+            coordinatesReader.ExpectAndAdvance(JsonToken.EndArray);
+            return GeographyPoint.Create(latitude, longitude);
         }
     }
 }

@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Serialization;
     using Microsoft.Spatial;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using Xunit;
 
     public sealed class GeographyPointConverterTests
@@ -33,7 +34,7 @@ namespace Microsoft.Azure.Search.Tests
             var expectedPoint = GeographyPoint.Create(47.1, 121.9);
             const string Json = @"{ ""type"": ""Point"", ""coordinates"": [ 121.9, 47.1 ] }";
 
-            GeographyPoint actualPoint = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
+            GeographyPoint actualPoint = DeserializeAndExpectSuccess(Json);
 
             Assert.Equal(expectedPoint, actualPoint);
         }
@@ -44,7 +45,7 @@ namespace Microsoft.Azure.Search.Tests
             var expectedPoint = GeographyPoint.Create(47, 121);
             const string Json = @"{ ""type"": ""Point"", ""coordinates"": [ 121, 47 ] }";
 
-            GeographyPoint actualPoint = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
+            GeographyPoint actualPoint = DeserializeAndExpectSuccess(Json);
 
             Assert.Equal(expectedPoint, actualPoint);
         }
@@ -65,7 +66,7 @@ namespace Microsoft.Azure.Search.Tests
     }
 }";
 
-            GeographyPoint actualPoint = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
+            GeographyPoint actualPoint = DeserializeAndExpectSuccess(Json);
 
             Assert.Equal(expectedPoint, actualPoint);
         }
@@ -86,7 +87,7 @@ namespace Microsoft.Azure.Search.Tests
     ""type"": ""Point""
 }";
 
-            GeographyPoint actualPoint = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
+            GeographyPoint actualPoint = DeserializeAndExpectSuccess(Json);
 
             Assert.Equal(expectedPoint, actualPoint);
         }
@@ -95,26 +96,23 @@ namespace Microsoft.Azure.Search.Tests
         public void ReadInvalidGeoPointContentThrowsException()
         {
             const string InvalidJson = @"{ ""type"": ""NotAPoint"", ""coordinates"": [ 121.9, 47.1 ] }";
-
-            Assert.Throws<JsonSerializationException>(
-                () => JsonConvert.DeserializeObject<GeographyPoint>(InvalidJson, _jsonSettings));
+            DeserializeAndExpectFailure(InvalidJson);
         }
 
         [Fact]
         public void ReadInvalidGeoPointStructureThrowsException()
         {
             const string InvalidJson = @"{ ""type"": [ ""Point"" ] }";
-
-            Assert.Throws<JsonSerializationException>(
-                () => JsonConvert.DeserializeObject<GeographyPoint>(InvalidJson, _jsonSettings));
+            DeserializeAndExpectFailure(InvalidJson);
         }
 
         [Theory]
         [InlineData(@"{ ""type"": ""Point"", ""coordinates"": [ 121.9, 47.1 ], ""nope"": 0 }")]
         [InlineData(@"{ ""type"": ""Point"", ""coordinates"": [ 121.9, 47.1 ], ""crs"": { ""type"": ""name"", ""properties"": { ""name"": ""EPSG:4326"" }, ""nope"": false } }")]
+        [InlineData(@"{ ""type"": ""Point"", ""coordinates"": [ 121.9, 47.1 ], ""crs"": { ""type"": ""name"", ""properties"": { ""name"": ""EPSG:4326"", ""nope"": ""EPSG:4326"" } } }")]
         public void ReadValidGeoPointWithExtraStuffThrowsException(string invalidJson)
         {
-            Assert.Throws<JsonSerializationException>(() => JsonConvert.DeserializeObject<GeographyPoint>(invalidJson, _jsonSettings));
+            DeserializeAndExpectFailure(invalidJson);
         }
 
         [Fact]
@@ -123,7 +121,7 @@ namespace Microsoft.Azure.Search.Tests
             const string Json = @"{ ""type"": ""Point"", ""coordinates"": [ 121.9, 47.1 ], ""coordinates"": [ 122.1, 49.1 ] }";
 
             var expectedPoint = GeographyPoint.Create(49.1, 122.1);
-            var actualPoint = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
+            GeographyPoint actualPoint = DeserializeAndExpectSuccess(Json);
 
             Assert.Equal(expectedPoint, actualPoint);
         }
@@ -131,14 +129,42 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void ReadEmptyObjectThrowsException()
         {
-            Assert.Throws<JsonSerializationException>(() => JsonConvert.DeserializeObject<GeographyPoint>("{}", _jsonSettings));
+            DeserializeAndExpectFailure("{}");
         }
 
         [Fact]
         public void ReadNullReturnsNull()
         {
-            GeographyPoint point = JsonConvert.DeserializeObject<GeographyPoint>("null", _jsonSettings);
+            const string Json = "null";
+
+            // This is the one case where you can deserialize something to a GeographyPoint that isn't recognized as Geo-JSON.
+            JObject dynamicPoint = JsonConvert.DeserializeObject<JObject>(Json);
+            Assert.Null(dynamicPoint);
+            Assert.False(GeographyPointConverter.IsGeoJson(dynamicPoint), "Null should not be recognized as Geo-JSON");
+
+            var point = JsonConvert.DeserializeObject<GeographyPoint>(Json, _jsonSettings);
+
             Assert.Null(point);
+        }
+
+        private GeographyPoint DeserializeAndExpectSuccess(string json)
+        {
+            JObject dynamicPoint = JsonConvert.DeserializeObject<JObject>(json);
+            Assert.True(
+                GeographyPointConverter.IsGeoJson(dynamicPoint), 
+                $"Expected given JSON to be recognized as Geo-JSON: <{json}>");
+
+            return JsonConvert.DeserializeObject<GeographyPoint>(json, _jsonSettings);
+        }
+
+        private void DeserializeAndExpectFailure(string json)
+        {
+            JObject dynamicPoint = JsonConvert.DeserializeObject<JObject>(json);
+            Assert.False(
+                GeographyPointConverter.IsGeoJson(dynamicPoint), 
+                $"Expected given JSON to NOT be recognized as Geo-JSON: <{json}>");
+
+            Assert.Throws<JsonSerializationException>(() => JsonConvert.DeserializeObject<GeographyPoint>(json, _jsonSettings));
         }
     }
 }
