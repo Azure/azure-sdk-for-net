@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
@@ -15,6 +16,7 @@ namespace Microsoft.Azure.Search.Tests
     using Xunit;
     using FacetResults = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Models.FacetResult>>;
     using HitHighlights = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>>;
+    using DataType = Models.DataType;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.
@@ -624,16 +626,7 @@ namespace Microsoft.Azure.Search.Tests
             var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
-                Fields = new[]
-                {
-                    new Field("Key", DataType.String) { IsKey = true },
-                    new Field("Rating", DataType.Int32),
-                    new Field("Count", DataType.Int64),
-                    new Field("IsEnabled", DataType.Boolean),
-                    new Field("Ratio", DataType.Double),
-                    new Field("StartDate", DataType.DateTimeOffset),
-                    new Field("EndDate", DataType.DateTimeOffset)
-                }
+                Fields = FieldBuilder.BuildForType<NonNullableModel>()
             };
 
             serviceClient.Indexes.Create(index);
@@ -650,7 +643,13 @@ namespace Microsoft.Azure.Search.Tests
                 IsEnabled = true, 
                 Rating = 5, 
                 Ratio = 3.14, 
-                StartDate = startDate
+                StartDate = startDate,
+                TopLevelBucket = new Bucket() { BucketName =  "A", Count = 12 },
+                Buckets = new[]
+                {
+                    new Bucket() { BucketName = "B", Count = 20 },
+                    new Bucket() { BucketName = "C", Count = 7 }
+                }
             };
 
             var doc2 = new NonNullableModel()
@@ -661,7 +660,9 @@ namespace Microsoft.Azure.Search.Tests
                 IsEnabled = default(bool),
                 Rating = default(int),
                 Ratio = default(double),
-                StartDate = default(DateTimeOffset)
+                StartDate = default(DateTimeOffset),
+                TopLevelBucket = default(Bucket),
+                Buckets = new[] { default(Bucket) }
             };
 
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
@@ -683,29 +684,37 @@ namespace Microsoft.Azure.Search.Tests
             var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
-                Fields = new[]
-                {
-                    new Field("Key", DataType.String) { IsKey = true },
-                    new Field("IntValue", DataType.Int32)
-                }
+                Fields = FieldBuilder.BuildForType<ModelWithNullableValueTypes>()
             };
 
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            var doc = new ModelWithNullableInt()
-            {
-                Key = "123",
-                IntValue = null
-            };
-
-            var batch = IndexBatch.Upload(new[] { doc });
+            var batch =
+                IndexBatch.Upload(new[]
+                {
+                    new ModelWithNullableValueTypes()
+                    {
+                        Key = "123",
+                        IntValue = null,
+                        Bucket = new Bucket() { BucketName = "Z", Count = 1 }
+                    },
+                    new ModelWithNullableValueTypes()
+                    {
+                        Key = "456",
+                        IntValue = 5,
+                        Bucket = null
+                    }
+                });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
 
-            SerializationException e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
+            SerializationException e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithValueTypes>("123"));
             Assert.Contains("Error converting value {null} to type 'System.Int32'. Path 'IntValue'.", e.ToString());
+
+            e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithValueTypes>("456"));
+            Assert.Contains("Error converting value {null} to type 'Microsoft.Azure.Search.Tests.SearchTests+Bucket'. Path 'Bucket'.", e.ToString());
         }
 
         protected void TestCanFilterNonNullableType()
@@ -715,27 +724,32 @@ namespace Microsoft.Azure.Search.Tests
             var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
-                Fields = new[]
-                {
-                    new Field("Key", DataType.String) { IsKey = true },
-                    new Field("IntValue", DataType.Int32) { IsFilterable = true }
-                }
+                Fields = FieldBuilder.BuildForType<ModelWithValueTypes>()
             };
 
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            var doc = new ModelWithInt() { Key = "123", IntValue = 0 };
-            var batch = IndexBatch.Upload(new[] { doc });
+            var docs = new[]
+            {
+                new ModelWithValueTypes() { Key = "123", IntValue = 0, Bucket = new Bucket() { BucketName = "A", Count = 3 } },
+                new ModelWithValueTypes() { Key = "456", IntValue = 7, Bucket = new Bucket() { BucketName = "B", Count = 5 } },
+                new ModelWithValueTypes() { Key = "789", IntValue = 1, Bucket = new Bucket() { BucketName = "B", Count = 99 } }
+            };
 
-            indexClient.Documents.Index(batch);
+            IEnumerable<ModelWithValueTypes> expectedDocs = docs.Where(d => d.Key != "789");
+
+            indexClient.Documents.Index(IndexBatch.Upload(docs));
             SearchTestUtilities.WaitForIndexing();
 
-            var parameters = new SearchParameters() { Filter = "IntValue eq 0" };
-            DocumentSearchResult<ModelWithInt> response = indexClient.Documents.Search<ModelWithInt>("*", parameters);
+            var parameters = new SearchParameters()
+            {
+                Filter = "IntValue eq 0 or (Bucket/BucketName eq 'B' and Bucket/Count lt 10)"
+            };
 
-            Assert.Equal(1, response.Results.Count);
-            Assert.Equal(doc.IntValue, response.Results[0].Document.IntValue);
+            DocumentSearchResult<ModelWithValueTypes> response = indexClient.Documents.Search<ModelWithValueTypes>("*", parameters);
+
+            Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
         }
 
         protected void TestCanSearchWithCustomContractResolver()
@@ -898,8 +912,25 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
+        private struct Bucket
+        {
+            [IsFilterable]
+            public string BucketName { get; set; }
+
+            [IsFilterable]
+            public int Count { get; set; }
+
+            public override bool Equals(object obj) =>
+                obj is Bucket other &&
+                BucketName == other.BucketName &&
+                Count == other.Count;
+
+            public override int GetHashCode() => (BucketName?.GetHashCode() ?? 0) ^ Count.GetHashCode();
+        }
+
         private class NonNullableModel
         {
+            [Key]
             public string Key { get; set; }
 
             public int Rating { get; set; }
@@ -914,6 +945,10 @@ namespace Microsoft.Azure.Search.Tests
 
             public DateTime EndDate { get; set; }
 
+            public Bucket TopLevelBucket { get; set; }
+
+            public Bucket[] Buckets { get; set; }
+
             public override bool Equals(object obj) =>
                 obj is NonNullableModel other &&
                 Count == other.Count &&
@@ -922,7 +957,49 @@ namespace Microsoft.Azure.Search.Tests
                 Key == other.Key &&
                 Rating == other.Rating &&
                 Ratio == other.Ratio &&
-                StartDate == other.StartDate;
+                StartDate == other.StartDate &&
+                TopLevelBucket.Equals(other.TopLevelBucket) &&
+                Buckets.SequenceEqualsNullSafe(other.Buckets);
+
+            public override int GetHashCode() => Key?.GetHashCode() ?? 0;
+        }
+
+        private class ModelWithValueTypes
+        {
+            [Key]
+            [IsSearchable]
+            public string Key { get; set; }
+
+            [IsFilterable]
+            public int IntValue { get; set; }
+
+            public Bucket Bucket { get; set; }
+
+            public override bool Equals(object obj) =>
+                obj is ModelWithValueTypes other &&
+                Key == other.Key &&
+                IntValue == other.IntValue &&
+                Bucket.Equals(other.Bucket);
+
+            public override int GetHashCode() => Key?.GetHashCode() ?? 0;
+        }
+
+        private class ModelWithNullableValueTypes
+        {
+            [Key]
+            [IsSearchable]
+            public string Key { get; set; }
+
+            [IsFilterable]
+            public int? IntValue { get; set; }
+
+            public Bucket? Bucket { get; set; }
+
+            public override bool Equals(object obj) =>
+                obj is ModelWithValueTypes other &&
+                Key == other.Key &&
+                IntValue == other.IntValue &&
+                Bucket.Equals(other.Bucket);
 
             public override int GetHashCode() => Key?.GetHashCode() ?? 0;
         }
