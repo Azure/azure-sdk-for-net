@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SettingsOperations operations.
+    /// DeviceSecurityGroupsOperations operations.
     /// </summary>
-    internal partial class SettingsOperations : IServiceOperations<SecurityCenterClient>, ISettingsOperations
+    internal partial class DeviceSecurityGroupsOperations : IServiceOperations<SecurityCenterClient>, IDeviceSecurityGroupsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SettingsOperations class.
+        /// Initializes a new instance of the DeviceSecurityGroupsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal SettingsOperations(SecurityCenterClient client)
+        internal DeviceSecurityGroupsOperations(SecurityCenterClient client)
         {
             if (client == null)
             {
@@ -51,8 +51,11 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Settings about different configurations in security center
+        /// Gets the list of device security groups for the specified IoT hub resource.
         /// </summary>
+        /// <param name='resourceId'>
+        /// The identifier of the resource.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -74,18 +77,11 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Setting>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DeviceSecurityGroup>>> ListWithHttpMessagesAsync(string resourceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (resourceId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
             string apiVersion = "2017-08-01-preview";
             // Tracing
@@ -96,13 +92,14 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/settings").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups").ToString();
+            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -201,7 +198,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Setting>>();
+            var _result = new AzureOperationResponse<IPage<DeviceSecurityGroup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -214,7 +211,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Setting>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DeviceSecurityGroup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -234,10 +231,14 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Settings of different configurations in security center
+        /// Gets the device security group for the specified IoT hub resource.
         /// </summary>
-        /// <param name='settingName'>
-        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+        /// <param name='resourceId'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='deviceSecurityGroupName'>
+        /// The name of the security group. Please notice that the name is case
+        /// insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -260,22 +261,15 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Setting>> GetWithHttpMessagesAsync(string settingName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeviceSecurityGroup>> GetWithHttpMessagesAsync(string resourceId, string deviceSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (resourceId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            if (Client.SubscriptionId != null)
+            if (deviceSecurityGroupName == null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
-            }
-            if (settingName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "settingName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceSecurityGroupName");
             }
             string apiVersion = "2017-08-01-preview";
             // Tracing
@@ -286,15 +280,16 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("settingName", settingName);
+                tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("deviceSecurityGroupName", deviceSecurityGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{settingName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(settingName, Client.SerializationSettings).Trim('"')));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}").ToString();
+            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{deviceSecurityGroupName}", System.Uri.EscapeDataString(deviceSecurityGroupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -393,7 +388,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Setting>();
+            var _result = new AzureOperationResponse<DeviceSecurityGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -406,7 +401,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Setting>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DeviceSecurityGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -426,14 +421,18 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// updating settings about different configurations in security center
+        /// Creates or updates the device security group on a specified IoT hub
+        /// resource.
         /// </summary>
-        /// <param name='settingName'>
-        /// Name of setting: (MCAS/WDATP). Possible values include: 'MCAS', 'WDATP'
+        /// <param name='resourceId'>
+        /// The identifier of the resource.
         /// </param>
-        /// <param name='kind'>
-        /// the kind of the settings string (DataExportSetting). Possible values
-        /// include: 'DataExportSetting', 'AlertSuppressionSetting'
+        /// <param name='deviceSecurityGroupName'>
+        /// The name of the security group. Please notice that the name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='deviceSecurityGroup'>
+        /// Security group object.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -456,33 +455,21 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Setting>> UpdateWithHttpMessagesAsync(string settingName, string kind, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<DeviceSecurityGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceId, string deviceSecurityGroupName, DeviceSecurityGroup deviceSecurityGroup, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (resourceId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            if (Client.SubscriptionId != null)
+            if (deviceSecurityGroupName == null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceSecurityGroupName");
             }
-            if (settingName == null)
+            if (deviceSecurityGroup == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "settingName");
-            }
-            if (kind == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "kind");
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceSecurityGroup");
             }
             string apiVersion = "2017-08-01-preview";
-            Setting setting = new Setting();
-            if (kind != null)
-            {
-                setting.Kind = kind;
-            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -491,16 +478,17 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("settingName", settingName);
-                tracingParameters.Add("setting", setting);
+                tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("deviceSecurityGroupName", deviceSecurityGroupName);
+                tracingParameters.Add("deviceSecurityGroup", deviceSecurityGroup);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/settings/{settingName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{settingName}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(settingName, Client.SerializationSettings).Trim('"')));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}").ToString();
+            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{deviceSecurityGroupName}", System.Uri.EscapeDataString(deviceSecurityGroupName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -544,9 +532,9 @@ namespace Microsoft.Azure.Management.Security
 
             // Serialize Request
             string _requestContent = null;
-            if(setting != null)
+            if(deviceSecurityGroup != null)
             {
-                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(setting, Client.SerializationSettings);
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(deviceSecurityGroup, Client.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -570,7 +558,7 @@ namespace Microsoft.Azure.Management.Security
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -605,7 +593,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Setting>();
+            var _result = new AzureOperationResponse<DeviceSecurityGroup>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -618,7 +606,25 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Setting>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DeviceSecurityGroup>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<DeviceSecurityGroup>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -638,7 +644,176 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Settings about different configurations in security center
+        /// Deletes the security group
+        /// </summary>
+        /// <param name='resourceId'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='deviceSecurityGroupName'>
+        /// The name of the security group. Please notice that the name is case
+        /// insensitive.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceId, string deviceSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
+            }
+            if (deviceSecurityGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "deviceSecurityGroupName");
+            }
+            string apiVersion = "2017-08-01-preview";
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("deviceSecurityGroupName", deviceSecurityGroupName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/deviceSecurityGroups/{deviceSecurityGroupName}").ToString();
+            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{deviceSecurityGroupName}", System.Uri.EscapeDataString(deviceSecurityGroupName));
+            List<string> _queryParameters = new List<string>();
+            if (apiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets the list of device security groups for the specified IoT hub resource.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -664,7 +839,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<Setting>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<DeviceSecurityGroup>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -778,7 +953,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<Setting>>();
+            var _result = new AzureOperationResponse<IPage<DeviceSecurityGroup>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -791,7 +966,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<Setting>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<DeviceSecurityGroup>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

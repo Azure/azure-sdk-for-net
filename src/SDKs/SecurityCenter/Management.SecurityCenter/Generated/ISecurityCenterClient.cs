@@ -72,64 +72,34 @@ namespace Microsoft.Azure.Management.Security
 
 
         /// <summary>
+        /// Gets the IRegulatoryComplianceStandardsOperations.
+        /// </summary>
+        IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceControlsOperations.
+        /// </summary>
+        IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceAssessmentsOperations.
+        /// </summary>
+        IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; }
+
+        /// <summary>
         /// Gets the IPricingsOperations.
         /// </summary>
         IPricingsOperations Pricings { get; }
 
         /// <summary>
-        /// Gets the IAlertsOperations.
+        /// Gets the ISecurityContactsOperations.
         /// </summary>
-        IAlertsOperations Alerts { get; }
+        ISecurityContactsOperations SecurityContacts { get; }
 
         /// <summary>
-        /// Gets the ISettingsOperations.
+        /// Gets the IWorkspaceSettingsOperations.
         /// </summary>
-        ISettingsOperations Settings { get; }
-
-        /// <summary>
-        /// Gets the IAllowedConnectionsOperations.
-        /// </summary>
-        IAllowedConnectionsOperations AllowedConnections { get; }
-
-        /// <summary>
-        /// Gets the IDiscoveredSecuritySolutionsOperations.
-        /// </summary>
-        IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
-
-        /// <summary>
-        /// Gets the IExternalSecuritySolutionsOperations.
-        /// </summary>
-        IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
-
-        /// <summary>
-        /// Gets the IJitNetworkAccessPoliciesOperations.
-        /// </summary>
-        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
-
-        /// <summary>
-        /// Gets the ILocationsOperations.
-        /// </summary>
-        ILocationsOperations Locations { get; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        IOperations Operations { get; }
-
-        /// <summary>
-        /// Gets the ITasksOperations.
-        /// </summary>
-        ITasksOperations Tasks { get; }
-
-        /// <summary>
-        /// Gets the ITopologyOperations.
-        /// </summary>
-        ITopologyOperations Topology { get; }
-
-        /// <summary>
-        /// Gets the IAdvancedThreatProtectionOperations.
-        /// </summary>
-        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
+        IWorkspaceSettingsOperations WorkspaceSettings { get; }
 
         /// <summary>
         /// Gets the IAutoProvisioningSettingsOperations.
@@ -142,19 +112,74 @@ namespace Microsoft.Azure.Management.Security
         ICompliancesOperations Compliances { get; }
 
         /// <summary>
+        /// Gets the IAdvancedThreatProtectionOperations.
+        /// </summary>
+        IAdvancedThreatProtectionOperations AdvancedThreatProtection { get; }
+
+        /// <summary>
+        /// Gets the IDeviceSecurityGroupsOperations.
+        /// </summary>
+        IDeviceSecurityGroupsOperations DeviceSecurityGroups { get; }
+
+        /// <summary>
+        /// Gets the ISettingsOperations.
+        /// </summary>
+        ISettingsOperations Settings { get; }
+
+        /// <summary>
         /// Gets the IInformationProtectionPoliciesOperations.
         /// </summary>
         IInformationProtectionPoliciesOperations InformationProtectionPolicies { get; }
 
         /// <summary>
-        /// Gets the ISecurityContactsOperations.
+        /// Gets the IOperations.
         /// </summary>
-        ISecurityContactsOperations SecurityContacts { get; }
+        IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IWorkspaceSettingsOperations.
+        /// Gets the ILocationsOperations.
         /// </summary>
-        IWorkspaceSettingsOperations WorkspaceSettings { get; }
+        ILocationsOperations Locations { get; }
+
+        /// <summary>
+        /// Gets the ITasksOperations.
+        /// </summary>
+        ITasksOperations Tasks { get; }
+
+        /// <summary>
+        /// Gets the IAlertsOperations.
+        /// </summary>
+        IAlertsOperations Alerts { get; }
+
+        /// <summary>
+        /// Gets the IDiscoveredSecuritySolutionsOperations.
+        /// </summary>
+        IDiscoveredSecuritySolutionsOperations DiscoveredSecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the IJitNetworkAccessPoliciesOperations.
+        /// </summary>
+        IJitNetworkAccessPoliciesOperations JitNetworkAccessPolicies { get; }
+
+        /// <summary>
+        /// Gets the IExternalSecuritySolutionsOperations.
+        /// </summary>
+        IExternalSecuritySolutionsOperations ExternalSecuritySolutions { get; }
+
+        /// <summary>
+        /// Gets the ITopologyOperations.
+        /// </summary>
+        ITopologyOperations Topology { get; }
+
+        /// <summary>
+        /// Gets the IAllowedConnectionsOperations.
+        /// </summary>
+        IAllowedConnectionsOperations AllowedConnections { get; }
+
+        /// <summary>
+        /// Gets the IAdaptiveNetworkHardeningsOperations.
+        /// </summary>
+        IAdaptiveNetworkHardeningsOperations AdaptiveNetworkHardenings { get; }
 
     }
 }
