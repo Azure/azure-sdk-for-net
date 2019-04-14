@@ -6,6 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Net;
     using Microsoft.AspNetCore.WebUtilities;
@@ -703,6 +704,166 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        [Fact]
+        public void CanRoundtripStaticallyTypedPrimitiveCollections()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+                Index index = ModelWithPrimitiveCollections.CreateIndex();
+                serviceClient.Indexes.Create(index);
+
+                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+                var expectedDoc =
+                    new ModelWithPrimitiveCollections()
+                    {
+                        Key = "1",
+                        Bools = new[] { true, false },
+                        Dates = new[]
+                        {
+                            new DateTimeOffset(2019, 4, 14, 14, 24, 0, TimeSpan.FromHours(-7)),
+                            new DateTimeOffset(1999, 12, 31, 23, 59, 59, TimeSpan.Zero)
+                        },
+                        Doubles = new[] { double.NegativeInfinity, 0.0, 2.78, double.NaN, 3.14, double.PositiveInfinity },
+                        Ints = new[] { 1, 2, 3, 4, -13, 5, 0 },
+                        Longs = new[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
+                        Points = new[]
+                        {
+                            GeographyPoint.Create(49, -123),
+                            GeographyPoint.Create(47, -121)
+                        },
+                        Strings = new[]
+                        {
+                            "hello",
+                            "2019-04-14T14:56:00-07:00"
+                        }
+                    };
+
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
+                indexClient.Documents.Index(batch);
+
+                var actualDoc = indexClient.Documents.Get<ModelWithPrimitiveCollections>(expectedDoc.Key);
+
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
+        public void DynamicallyTypedPrimitiveCollectionsDoNotAllRoundtripCorrectly()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+                Index index = ModelWithPrimitiveCollections.CreateIndex();
+                serviceClient.Indexes.Create(index);
+
+                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+                var indexedDoc = new Document()
+                {
+                    ["Key"] = "1",
+                    ["Bools"] = new bool[] { true, false },
+                    ["Dates"] = new DateTimeOffset[]
+                    {
+                        new DateTimeOffset(2019, 4, 14, 14, 24, 0, TimeSpan.FromHours(-7)),
+                        new DateTimeOffset(1999, 12, 31, 23, 59, 59, TimeSpan.Zero)
+                    },
+                    ["Doubles"] = new double[] { double.NegativeInfinity, 0.0, 2.78, double.NaN, 3.14, double.PositiveInfinity },
+                    ["Ints"] = new int[] { 1, 2, 3, 4, -13, 5, 0 },
+                    ["Longs"] = new long[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
+                    ["Points"] = new GeographyPoint[]
+                    {
+                        GeographyPoint.Create(49, -123),
+                        GeographyPoint.Create(47, -121)
+                    },
+                    ["Strings"] = new string[]
+                    {
+                        "hello",
+                        "2019-04-14T14:56:00-07:00"
+                    }
+                };
+
+                var expectedDoc = new Document()
+                {
+                    ["Key"] = "1",
+                    ["Bools"] = new bool[] { true, false },
+                    ["Dates"] = new DateTimeOffset[]
+                    {
+                        new DateTimeOffset(2019, 4, 14, 14, 24, 0, TimeSpan.FromHours(-7)),
+                        new DateTimeOffset(1999, 12, 31, 23, 59, 59, TimeSpan.Zero)
+                    },
+                    ["Doubles"] = new object[] { "-INF", 0.0, 2.78, "NaN", 3.14, "INF" },
+                    ["Ints"] = new long[] { 1L, 2L, 3L, 4L, -13L, 5L, 0L },
+                    ["Longs"] = new long[] { -9_999_999_999_999_999L, 832_372_345_832_523L },
+                    ["Points"] = new GeographyPoint[]
+                    {
+                        GeographyPoint.Create(49, -123),
+                        GeographyPoint.Create(47, -121)
+                    },
+                    ["Strings"] = new object[]
+                    {
+                        "hello",
+                        new DateTimeOffset(2019, 4, 14, 14, 56, 0, TimeSpan.FromHours(-7))
+                    }
+                };
+
+                var batch = IndexBatch.Upload(new[] { indexedDoc });
+                indexClient.Documents.Index(batch);
+
+                Document actualDoc = indexClient.Documents.Get("1");
+
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
+        public void EmptyDynamicallyTypedPrimitiveCollectionsRoundtripAsObjectArrays()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+                Index index = ModelWithPrimitiveCollections.CreateIndex();
+                serviceClient.Indexes.Create(index);
+
+                SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+
+                var indexedDoc = new Document()
+                {
+                    ["Key"] = "1",
+                    ["Bools"] = new bool[0],
+                    ["Dates"] = new DateTimeOffset[0],
+                    ["Doubles"] = new double[0],
+                    ["Ints"] = new int[0],
+                    ["Longs"] = new long[0],
+                    ["Points"] = new GeographyPoint[0],
+                    ["Strings"] = new string[0]
+                };
+
+                var expectedDoc = new Document()
+                {
+                    ["Key"] = "1",
+                    ["Bools"] = new object[0],
+                    ["Dates"] = new object[0],
+                    ["Doubles"] = new object[0],
+                    ["Ints"] = new object[0],
+                    ["Longs"] = new object[0],
+                    ["Points"] = new object[0],
+                    ["Strings"] = new object[0]
+                };
+
+                var batch = IndexBatch.Upload(new[] { indexedDoc });
+                indexClient.Documents.Index(batch);
+
+                Document actualDoc = indexClient.Documents.Get("1");
+
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
         /// <summary>
         /// Creates a $select clause from the given document that includes all explicitly initialized fields.
         /// </summary>
@@ -753,6 +914,46 @@ namespace Microsoft.Azure.Search.Tests
                         break;
                 }
             }
+        }
+
+        private class ModelWithPrimitiveCollections
+        {
+            [Key]
+            public string Key { get; set; }
+
+            public bool[] Bools { get; set; }
+
+            public DateTimeOffset[] Dates { get; set; }
+
+            public double[] Doubles { get; set; }
+
+            public int[] Ints { get; set; }
+
+            public long[] Longs { get; set; }
+
+            public GeographyPoint[] Points { get; set; }
+
+            public string[] Strings { get; set; }
+
+            public static Index CreateIndex() =>
+                new Index()
+                {
+                    Name = SearchTestUtilities.GenerateName(),
+                    Fields = FieldBuilder.BuildForType<ModelWithPrimitiveCollections>()
+                };
+
+            public override bool Equals(object obj) =>
+                obj is ModelWithPrimitiveCollections other &&
+                Key == other.Key &&
+                Bools.SequenceEqualsNullSafe(other.Bools) &&
+                Dates.SequenceEqualsNullSafe(other.Dates) &&
+                Doubles.SequenceEqualsNullSafe(other.Doubles) &&
+                Ints.SequenceEqualsNullSafe(other.Ints) &&
+                Longs.SequenceEqualsNullSafe(other.Longs) &&
+                Points.SequenceEqualsNullSafe(other.Points) &&
+                Strings.SequenceEqualsNullSafe(other.Strings);
+
+            public override int GetHashCode() => Key?.GetHashCode() ?? 0;
         }
     }
 }
