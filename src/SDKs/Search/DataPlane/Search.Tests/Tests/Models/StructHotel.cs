@@ -46,16 +46,6 @@ namespace Microsoft.Azure.Search.Tests
         public override string ToString() =>
             $"StreetAddress: {StreetAddress}; City: {City}; State/Province: {StateProvince}; Country: {Country}; " +
             $"PostalCode: {PostalCode}";
-
-        public Document AsDocument() =>
-            new Document()
-            {
-                ["streetAddress"] = StreetAddress,
-                ["city"] = City,
-                ["stateProvince"] = StateProvince,
-                ["country"] = Country,
-                ["postalCode"] = PostalCode
-            };
     }
 
     [SerializePropertyNamesAsCamelCase]
@@ -102,19 +92,6 @@ namespace Microsoft.Azure.Search.Tests
             $"Description: {Description}; Description (French): {DescriptionFr}; Type: {Type}; BaseRate: {BaseRate}; " +
             $"Bed Options: {BedOptions}; Sleeps: {SleepsCount}; Smoking: {SmokingAllowed}; " +
             $"Tags: {Tags?.ToCommaSeparatedString() ?? "null"}";
-
-        public Document AsDocument() =>
-            new Document()
-            {
-                ["description"] = Description,
-                ["descriptionFr"] = DescriptionFr,
-                ["type"] = Type,
-                ["baseRate"] = BaseRate,
-                ["bedOptions"] = BedOptions,
-                ["sleepsCount"] = SleepsCount,
-                ["smokingAllowed"] = SmokingAllowed,
-                ["tags"] = Tags ?? new string[0]   // OData always gives [] instead of null for collections.
-            };
     }
 
     [SerializePropertyNamesAsCamelCase]
@@ -187,23 +164,5 @@ namespace Microsoft.Azure.Search.Tests
                 $"Location: [{Location?.Longitude ?? 0}, {Location?.Latitude ?? 0}]; " +
                 $"Address: {{ {Address} }}; Rooms: [{string.Join("; ", Rooms?.Select(FormatRoom) ?? new string[0])}]";
         }
-
-        public Document AsDocument() =>
-            new Document()
-            {
-                ["hotelId"] = HotelId,
-                ["hotelName"] = HotelName,
-                ["description"] = Description,
-                ["descriptionFr"] = DescriptionFr,
-                ["category"] = Category,
-                ["tags"] = Tags ?? new string[0],   // OData always gives [] instead of null for collections.
-                ["parkingIncluded"] = ParkingIncluded,
-                ["smokingAllowed"] = SmokingAllowed,
-                ["lastRenovationDate"] = LastRenovationDate,
-                ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
-                ["location"] = Location,
-                ["address"] = Address.AsDocument(),
-                ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new Document[0]
-            };
     }
 }
