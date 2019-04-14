@@ -184,15 +184,20 @@ namespace Microsoft.Azure.Search.Tests
             var suggestParameters =
                 new SuggestParameters()
                 {
-                    Select = new[] { "hotelName", "rating" }
+                    Select = new[] { "hotelName", "rating", "address/city", "rooms/type" }
                 };
 
             DocumentSuggestResult<Hotel> response =
-                client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
+                client.Documents.Suggest<Hotel>("secret", "sg", suggestParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", Rating = 5 };
+            var expectedDoc = new Hotel()
+            {
+                HotelName = "Secret Point Motel",
+                Rating = 4,
+                Address = new HotelAddress() { City = "New York" },
+                Rooms = new[] { new HotelRoom() { Type = "Budget Room" }, new HotelRoom() { Type = "Budget Room" } }
+            };
 
-            Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(expectedDoc, response.Results.First().Document);
         }
