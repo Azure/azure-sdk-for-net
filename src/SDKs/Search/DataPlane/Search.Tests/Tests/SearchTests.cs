@@ -210,17 +210,27 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     SearchFields = new[] { "category", "hotelName" },
-                    Select = new[] { "hotelName", "rating" }
+                    Select = new[] { "hotelName", "rating", "address/city", "rooms/type" }
                 };
 
             DocumentSearchResult<Hotel> response =
-                client.Documents.Search<Hotel>("fancy luxury", searchParameters);
+                client.Documents.Search<Hotel>("fancy luxury secret", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", Rating = 5 };
+            var expectedDocs = new[]
+            {
+                new Hotel() { HotelName = "Fancy Stay", Rating = 5 },
+                new Hotel()
+                {
+                    HotelName = "Secret Point Motel",
+                    Rating = 4,
+                    Address = new HotelAddress() { City = "New York" },
+                    Rooms = new[] { new HotelRoom() { Type = "Budget Room" }, new HotelRoom() { Type = "Budget Room" } }
+                }
+            }.OrderBy(hotel => hotel.HotelName);
 
-            Assert.NotNull(response.Results);
-            Assert.Equal(1, response.Results.Count);
-            Assert.Equal(expectedDoc, response.Results.First().Document);
+            var actualDocs = response.Results.Select(r => r.Document).OrderBy(hotel => hotel.HotelName);
+
+            Assert.Equal(expectedDocs, actualDocs);
         }
 
         protected void TestCanSearchWithLuceneSyntax()
