@@ -621,7 +621,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index = new Index()
+            var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
@@ -639,7 +639,7 @@ namespace Microsoft.Azure.Search.Tests
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            DateTimeOffset startDate = new DateTimeOffset(2015, 11, 24, 14, 01, 00, TimeSpan.FromHours(-8));
+            var startDate = new DateTimeOffset(2015, 11, 24, 14, 01, 00, TimeSpan.FromHours(-8));
             DateTime endDate = startDate.UtcDateTime + TimeSpan.FromDays(15);
 
             var doc1 = new NonNullableModel() 
@@ -680,7 +680,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index = new Index()
+            var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
@@ -712,7 +712,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index = new Index()
+            var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
@@ -808,7 +808,7 @@ namespace Microsoft.Azure.Search.Tests
                 Enumerable.Range(existingDocumentCount + 1, totalDocCount - existingDocumentCount)
                 .Select(id => id.ToString());
 
-            List<Hotel> hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
+            var hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
 
             for (int i = 0; i < hotels.Count; i += 1000)
             {
@@ -914,27 +914,17 @@ namespace Microsoft.Azure.Search.Tests
 
             public DateTime EndDate { get; set; }
 
-            public override bool Equals(object obj)
-            {
-                if (!(obj is NonNullableModel other))
-                {
-                    return false;
-                }
+            public override bool Equals(object obj) =>
+                obj is NonNullableModel other &&
+                Count == other.Count &&
+                EndDate == other.EndDate &&
+                IsEnabled == other.IsEnabled &&
+                Key == other.Key &&
+                Rating == other.Rating &&
+                Ratio == other.Ratio &&
+                StartDate == other.StartDate;
 
-                return
-                    Count == other.Count &&
-                    EndDate == other.EndDate &&
-                    IsEnabled == other.IsEnabled &&
-                    Key == other.Key &&
-                    Rating == other.Rating &&
-                    Ratio == other.Ratio &&
-                    StartDate == other.StartDate;
-            }
-
-            public override int GetHashCode()
-            {
-                return (Key != null) ? Key.GetHashCode() : 0;
-            }
+            public override int GetHashCode() => Key?.GetHashCode() ?? 0;
         }
     }
 }
