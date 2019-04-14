@@ -698,9 +698,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-#pragma warning disable xUnit1004 // Test methods should not be skipped
-        [Fact(Skip = "Need to determine if merging sub-fields is supposed to work.")]
-#pragma warning restore xUnit1004 // Test methods should not be skipped
+        [Fact]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeDynamicDocuments()
         {
@@ -720,7 +718,7 @@ namespace Microsoft.Azure.Search.Tests
                         ["parkingIncluded"] = false,
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
-                        ["rating"] = 4,
+                        ["rating"] = 4L,
                         ["location"] = GeographyPoint.Create(40.760586, -73.975403),
                         ["address"] = new Document()
                         {
@@ -739,7 +737,7 @@ namespace Microsoft.Azure.Search.Tests
                                 ["type"] = "Budget Room",
                                 ["baseRate"] = 9.69,
                                 ["bedOptions"] = "1 Queen Bed",
-                                ["sleepsCount"] = 2,
+                                ["sleepsCount"] = 2L,
                                 ["smokingAllowed"] = true,
                                 ["tags"] = new[] { "vcr/dvd" }
                             },
@@ -750,7 +748,7 @@ namespace Microsoft.Azure.Search.Tests
                                 ["type"] = "Budget Room",
                                 ["baseRate"] = 8.09,
                                 ["bedOptions"] = "1 King Bed",
-                                ["sleepsCount"] = 2,
+                                ["sleepsCount"] = 2L,
                                 ["smokingAllowed"] = true,
                                 ["tags"] = new[] { "vcr/dvd", "jacuzzi tub" }
                             }
@@ -766,7 +764,7 @@ namespace Microsoft.Azure.Search.Tests
                         ["tags"] = new[] { "pool", "air conditioning" },
                         ["parkingIncluded"] = true,
                         ["lastRenovationDate"] = null,
-                        ["rating"] = 3,
+                        ["rating"] = 3L,
                         ["location"] = null,
                         ["address"] = new Document(),
                         ["rooms"] = new[]
@@ -777,7 +775,7 @@ namespace Microsoft.Azure.Search.Tests
                                 ["type"] = "Budget Room",
                                 ["baseRate"] = 10.5,
                                 ["bedOptions"] = "1 Queen Bed",
-                                ["sleepsCount"] = 2,
+                                ["sleepsCount"] = 2L,
                                 ["smokingAllowed"] = true,
                                 ["tags"] = new[] { "vcr/dvd", "balcony" }
                             }
@@ -796,7 +794,7 @@ namespace Microsoft.Azure.Search.Tests
                         ["parkingIncluded"] = true,
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = null,
-                        ["rating"] = 3,
+                        ["rating"] = 3L,
                         ["location"] = null,
                         ["address"] = new Document()
                         {
@@ -808,14 +806,16 @@ namespace Microsoft.Azure.Search.Tests
                         },
                         ["rooms"] = new[]
                         {
+                            // This should look like the merged doc with unspecified fields as null because we don't support
+                            // partial updates for complex collections.
                             new Document()
                             {
                                 ["description"] = null,
-                                ["descriptionFr"] = "Chambre Économique, 1 grand lit (côté ville)",
+                                ["descriptionFr"] = null,
                                 ["type"] = "Budget Room",
                                 ["baseRate"] = 10.5,
                                 ["bedOptions"] = "1 Queen Bed",
-                                ["sleepsCount"] = 2,
+                                ["sleepsCount"] = 2L,
                                 ["smokingAllowed"] = true,
                                 ["tags"] = new[] { "vcr/dvd", "balcony" }
                             }
@@ -841,9 +841,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-#pragma warning disable xUnit1004 // Test methods should not be skipped
-        [Fact(Skip = "Need to determine if merging sub-fields is supposed to work.")]
-#pragma warning restore xUnit1004 // Test methods should not be skipped
+        [Fact]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeStaticallyTypedDocuments()
         {
@@ -951,10 +949,12 @@ namespace Microsoft.Azure.Search.Tests
                         },
                         Rooms = new[]
                         {
+                            // This should look like the merged doc with unspecified fields as null because we don't support
+                            // partial updates for complex collections.
                             new HotelRoom()
                             {
-                                Description = "Budget Room, 1 Queen Bed (Cityside)",
-                                DescriptionFr = "Chambre Économique, 1 grand lit (côté ville)",
+                                Description = null,
+                                DescriptionFr = null,
                                 Type = "Budget Room",
                                 BaseRate = 10.5,
                                 BedOptions = "1 Queen Bed",
@@ -983,9 +983,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-#pragma warning disable xUnit1004 // Test methods should not be skipped
-        [Fact(Skip = "Need to determine if merging sub-fields is supposed to work.")]
-#pragma warning restore xUnit1004 // Test methods should not be skipped
+        [Fact]
         public void CanSetExplicitNullsInStaticallyTypedDocuments()
         {
             Run(() =>
@@ -1064,7 +1062,7 @@ namespace Microsoft.Azure.Search.Tests
                         {
                             new LoudHotelRoom()
                             {
-                                DESCRIPTION = null,    // This property has NullValueHandling.Include, so this will null out the field.
+                                DESCRIPTION = null,
                                 TYPE = "Budget Room",
                                 BASERATE = 10.5,
                                 SMOKINGALLOWED = false,
@@ -1097,13 +1095,16 @@ namespace Microsoft.Azure.Search.Tests
                         },
                         ROOMS = new[]
                         {
+                            // Regardless of NullValueHandling, this should look like the merged doc with unspecified fields as null
+                            // because we don't support partial updates for complex collections.
                             new LoudHotelRoom()
                             {
                                 DESCRIPTION = null,
+                                DESCRIPTIONFRENCH = null,
                                 TYPE = "Budget Room",
                                 BASERATE = 10.5,
-                                BEDOPTIONS = "1 Queen Bed",
-                                SLEEPSCOUNT = 2,
+                                BEDOPTIONS = null,
+                                SLEEPSCOUNT = null,
                                 SMOKINGALLOWED = false,
                                 TAGS = new[] { "vcr/dvd", "balcony" }
                             }
