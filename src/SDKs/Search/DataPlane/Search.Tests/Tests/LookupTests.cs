@@ -5,6 +5,8 @@
 namespace Microsoft.Azure.Search.Tests
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Net;
     using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Azure.Search.Models;
@@ -15,9 +17,7 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class LookupTests : SearchTestBase<IndexFixture>
     {
-#pragma warning disable xUnit1004 // Test methods should not be skipped
-        [Fact(Skip = "Dynamic documents not supported yet.")]
-#pragma warning restore xUnit1004 // Test methods should not be skipped
+        [Fact]
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanGetDynamicDocument()
         {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search.Tests
                         ["parkingIncluded"] = false,
                         ["smokingAllowed"] = true,
                         ["lastRenovationDate"] = new DateTimeOffset(1970, 1, 18, 0, 0, 0, TimeSpan.FromHours(-5)),
-                        ["rating"] = 4,
+                        ["rating"] = 4L,
                         ["location"] = GeographyPoint.Create(40.760586, -73.975403),
                         ["address"] = new Document()
                         {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Search.Tests
                                 ["type"] = "Budget Room",
                                 ["baseRate"] = 9.69,
                                 ["bedOptions"] = "1 Queen Bed",
-                                ["sleepsCount"] = 2,
+                                ["sleepsCount"] = 2L,
                                 ["smokingAllowed"] = true,
                                 ["tags"] = new[] { "vcr/dvd" }
                             },
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Search.Tests
                                 ["type"] = "Budget Room",
                                 ["baseRate"] = 8.09,
                                 ["bedOptions"] = "1 King Bed",
-                                ["sleepsCount"] = 2,
+                                ["sleepsCount"] = 2L,
                                 ["smokingAllowed"] = true,
                                 ["tags"] = new[] { "vcr/dvd", "jacuzzi tub" }
                             }
@@ -83,9 +83,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-#pragma warning disable xUnit1004 // Test methods should not be skipped
-        [Fact(Skip = "Dynamic documents not supported yet.")]
-#pragma warning restore xUnit1004 // Test methods should not be skipped
+        [Fact]
         public void CanGetDynamicDocumentWithNullOrEmptyValues()
         {
             Run(() =>
@@ -97,12 +95,88 @@ namespace Microsoft.Azure.Search.Tests
                     {
                         ["hotelId"] = "1",
                         ["hotelName"] = null,
-                        ["tags"] = new string[0],
+                        ["tags"] = new object[0],
                         ["parkingIncluded"] = null,
                         ["lastRenovationDate"] = null,
                         ["rating"] = null,
                         ["location"] = null,
+                        ["address"] = null,
+                        ["rooms"] = new[]
+                        {
+                            new Document()
+                            {
+                                ["baseRate"] = null,
+                                ["bedOptions"] = null,
+                                ["sleepsCount"] = null,
+                                ["smokingAllowed"] = null,
+                                ["tags"] = new object[0]
+                            }
+                        }
+                    };
+
+                var batch = IndexBatch.Upload(new[] { expectedDoc });
+                client.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                // Select only the fields set in the test case so we don't get superfluous data back.
+                IEnumerable<string> selectedFields = SelectPopulatedFields(expectedDoc);
+
+                Document actualDoc = client.Documents.Get("1", selectedFields);
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
+        public void GetDynamicDocumentWithEmptyObjectsReturnsObjectsFullOfNulls()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var originalDoc =
+                    new Document()
+                    {
+                        ["hotelId"] = "1",
                         ["address"] = new Document()
+                    };
+
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["hotelId"] = "1",
+                        ["address"] = new Document()
+                        {
+                            ["streetAddress"] = null,
+                            ["city"] = null,
+                            ["stateProvince"] = null,
+                            ["country"] = null,
+                            ["postalCode"] = null
+                        }
+                    };
+
+                var batch = IndexBatch.Upload(new[] { originalDoc });
+                client.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                // Select only the fields set in the test case so we don't get superfluous data back.
+                IEnumerable<string> selectedFields = SelectPopulatedFields(originalDoc);
+
+                Document actualDoc = client.Documents.Get("1", selectedFields);
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
+        public void EmptyDynamicObjectsOmittedFromCollectionOnGetWhenSubFieldsSelected()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var originalDoc =
+                    new Document()
+                    {
+                        ["hotelId"] = "1",
                         ["rooms"] = new[]
                         {
                             new Document(),
@@ -112,23 +186,106 @@ namespace Microsoft.Azure.Search.Tests
                                 ["bedOptions"] = null,
                                 ["sleepsCount"] = null,
                                 ["smokingAllowed"] = null,
-                                ["tags"] = new string[0]
+                                ["tags"] = new object[0]
                             }
                         }
                     };
 
-                var batch = IndexBatch.Upload(new[] { expectedDoc });
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["hotelId"] = "1",
+                        ["rooms"] = new[]
+                        {
+                            new Document()
+                            {
+                                ["baseRate"] = null,
+                                ["bedOptions"] = null,
+                                ["sleepsCount"] = null,
+                                ["smokingAllowed"] = null,
+                                ["tags"] = new object[0]
+                            }
+                        }
+                    };
+
+                var batch = IndexBatch.Upload(new[] { originalDoc });
                 client.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
-                Document actualDoc = client.Documents.Get("1", expectedDoc.Keys);
+                // Select only the fields set in the test case so we don't get superfluous data back.
+                IEnumerable<string> selectedFields = SelectPopulatedFields(originalDoc);
+
+                Document actualDoc = client.Documents.Get("1", selectedFields);
                 Assert.Equal(expectedDoc, actualDoc);
             });
         }
 
-#pragma warning disable xUnit1004 // Test methods should not be skipped
-        [Fact(Skip = "Dynamic documents not supported yet.")]
-#pragma warning restore xUnit1004 // Test methods should not be skipped
+        [Fact]
+        public void EmptyDynamicObjectsInCollectionExpandedOnGetWhenCollectionFieldSelected()
+        {
+            Run(() =>
+            {
+                SearchIndexClient client = Data.GetSearchIndexClient();
+
+                var originalDoc =
+                    new Document()
+                    {
+                        ["hotelId"] = "1",
+                        ["rooms"] = new[]
+                        {
+                            new Document(),
+                            new Document()
+                            {
+                                ["baseRate"] = null,
+                                ["bedOptions"] = null,
+                                ["sleepsCount"] = null,
+                                ["smokingAllowed"] = null,
+                                ["tags"] = new object[0]
+                            }
+                        }
+                    };
+
+                var expectedDoc =
+                    new Document()
+                    {
+                        ["hotelId"] = "1",
+                        ["rooms"] = new[]
+                        {
+                            new Document()
+                            {
+                                ["description"] = null,
+                                ["descriptionFr"] = null,
+                                ["type"] = null,
+                                ["baseRate"] = null,
+                                ["bedOptions"] = null,
+                                ["sleepsCount"] = null,
+                                ["smokingAllowed"] = null,
+                                ["tags"] = new object[0]
+                            },
+                            new Document()
+                            {
+                                ["description"] = null,
+                                ["descriptionFr"] = null,
+                                ["type"] = null,
+                                ["baseRate"] = null,
+                                ["bedOptions"] = null,
+                                ["sleepsCount"] = null,
+                                ["smokingAllowed"] = null,
+                                ["tags"] = new object[0]
+                            },
+                        }
+                    };
+
+                var batch = IndexBatch.Upload(new[] { originalDoc });
+                client.Documents.Index(batch);
+                SearchTestUtilities.WaitForIndexing();
+
+                Document actualDoc = client.Documents.Get("1", selectedFields: new[] { "hotelId", "rooms" });
+                Assert.Equal(expectedDoc, actualDoc);
+            });
+        }
+
+        [Fact]
         public void GetDynamicDocumentCannotAlwaysDetermineCorrectType()
         {
             Run(() =>
@@ -169,7 +326,10 @@ namespace Microsoft.Azure.Search.Tests
                 client.Documents.Index(batch);
                 SearchTestUtilities.WaitForIndexing();
 
-                Document actualDoc = client.Documents.Get("1", indexedDoc.Keys);
+                // Select only the fields set in the test case so we don't get superfluous data back.
+                IEnumerable<string> selectedFields = SelectPopulatedFields(indexedDoc);
+                
+                Document actualDoc = client.Documents.Get("1", selectedFields);
                 Assert.Equal(expectedDoc, actualDoc);
             });
         }
@@ -541,6 +701,58 @@ namespace Microsoft.Azure.Search.Tests
                     HttpStatusCode.BadRequest,
                     "Invalid expression: Could not find a property named 'ThisFieldDoesNotExist' on type 'search.document'.");
             });
+        }
+
+        /// <summary>
+        /// Creates a $select clause from the given document that includes all explicitly initialized fields.
+        /// </summary>
+        private static IEnumerable<string> SelectPopulatedFields(Document doc)
+        {
+            foreach (KeyValuePair<string, object> kvp in doc)
+            {
+                string field = kvp.Key;
+
+                string MakeFieldPath(string subField) => field + "/" + subField;
+
+                switch (kvp.Value)
+                {
+                    case Document subDoc:
+                        IEnumerable<string> subFields = SelectPopulatedFields(subDoc);
+
+                        if (subFields.Any())
+                        {
+                            foreach (string subField in subFields)
+                            {
+                                yield return MakeFieldPath(subField);
+                            }
+                        }
+                        else
+                        {
+                            yield return field;
+                        }
+                        break;
+
+                    case Document[] subDocs:
+                        var uniqueSubFields = new HashSet<string>(subDocs.SelectMany(SelectPopulatedFields));
+
+                        if (uniqueSubFields.Any())
+                        {
+                            foreach (string subField in uniqueSubFields)
+                            {
+                                yield return MakeFieldPath(subField);
+                            }
+                        }
+                        else
+                        {
+                            yield return field;
+                        }
+                        break;
+
+                    default:
+                        yield return field;
+                        break;
+                }
+            }
         }
     }
 }

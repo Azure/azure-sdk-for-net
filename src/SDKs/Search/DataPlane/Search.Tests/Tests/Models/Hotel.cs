@@ -111,9 +111,9 @@ namespace Microsoft.Azure.Search.Tests
                 ["type"] = Type,
                 ["baseRate"] = BaseRate,
                 ["bedOptions"] = BedOptions,
-                ["sleepsCount"] = SleepsCount,
+                ["sleepsCount"] = SleepsCount.HasValue? (long?)SleepsCount.Value : null, // JSON.NET always deserializes to int64
                 ["smokingAllowed"] = SmokingAllowed,
-                ["tags"] = Tags ?? new string[0]   // OData always gives [] instead of null for collections.
+                ["tags"] = Tags ?? new object[0]   // OData always gives [] instead of null for collections.
             };
     }
 
@@ -196,14 +196,15 @@ namespace Microsoft.Azure.Search.Tests
                 ["description"] = Description,
                 ["descriptionFr"] = DescriptionFr,
                 ["category"] = Category,
-                ["tags"] = Tags ?? new string[0],   // OData always gives [] instead of null for collections.
+                ["tags"] = Tags ?? new object[0],   // OData always gives [] instead of null for collections.
                 ["parkingIncluded"] = ParkingIncluded,
                 ["smokingAllowed"] = SmokingAllowed,
                 ["lastRenovationDate"] = LastRenovationDate,
                 ["rating"] = Rating.HasValue ? (long?)Rating.Value : null, // JSON.NET always deserializes to int64
                 ["location"] = Location,
                 ["address"] = Address?.AsDocument(),
-                ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new Document[0]
+                // With no elements to infer the type during deserialization, we must assume object[].
+                ["rooms"] = Rooms?.Select(r => r.AsDocument())?.ToArray() ?? new object[0]
             };
     }
 }

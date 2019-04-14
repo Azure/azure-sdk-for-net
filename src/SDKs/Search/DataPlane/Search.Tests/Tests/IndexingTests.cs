@@ -699,7 +699,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
 #pragma warning disable xUnit1004 // Test methods should not be skipped
-        [Fact(Skip = "Dynamic documents not supported yet.")]
+        [Fact(Skip = "Need to determine if merging sub-fields is supposed to work.")]
 #pragma warning restore xUnit1004 // Test methods should not be skipped
         [Trait(TestTraits.AcceptanceType, TestTraits.LiveBVT)]
         public void CanMergeDynamicDocuments()
@@ -810,7 +810,7 @@ namespace Microsoft.Azure.Search.Tests
                         {
                             new Document()
                             {
-                                ["description"] = "Budget Room, 1 Queen Bed (Cityside)",
+                                ["description"] = null,
                                 ["descriptionFr"] = "Chambre Économique, 1 grand lit (côté ville)",
                                 ["type"] = "Budget Room",
                                 ["baseRate"] = 10.5,
