@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <Description>Microsoft Azure Key Vault Test Framework</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Test Framework</AssemblyTitle>
@@ -7,7 +6,7 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />
+    <ProjectReference Include="..\..\src\Microsoft.Azure.KeyVault.csproj" />
   </ItemGroup>
 
   <ItemGroup>
