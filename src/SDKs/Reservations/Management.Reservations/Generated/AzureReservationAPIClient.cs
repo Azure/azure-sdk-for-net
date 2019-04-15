@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Reservations
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Supported version.
+        /// Supported version for this document is 2019-04-01
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Reservations
             Reservation = new ReservationOperations(this);
             Operation = new OperationOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-06-01";
+            ApiVersion = "2019-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

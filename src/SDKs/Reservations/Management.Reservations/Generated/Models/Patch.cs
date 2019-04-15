@@ -33,8 +33,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         /// <param name="appliedScopeType">Possible values include: 'Single',
         /// 'Shared'</param>
-        /// <param name="instanceFlexibility">Possible values include: 'On',
-        /// 'Off', 'NotSupported'</param>
+        /// <param name="instanceFlexibility">Possible values include: 'True',
+        /// 'False'</param>
         /// <param name="name">Name of the Reservation</param>
         public Patch(string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), string instanceFlexibility = default(string), string name = default(string))
         {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public IList<string> AppliedScopes { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'On', 'Off', 'NotSupported'
+        /// Gets or sets possible values include: 'True', 'False'
         /// </summary>
         [JsonProperty(PropertyName = "properties.instanceFlexibility")]
         public string InstanceFlexibility { get; set; }
