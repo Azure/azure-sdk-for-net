@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// Initializes a new instance of the
         /// PurchaseRequestPropertiesReservedResourceProperties class.
         /// </summary>
-        /// <param name="instanceFlexibility">Possible values include: 'True',
-        /// 'False'</param>
+        /// <param name="instanceFlexibility">Possible values include: 'On',
+        /// 'Off'</param>
         public PurchaseRequestPropertiesReservedResourceProperties(string instanceFlexibility = default(string))
         {
             InstanceFlexibility = instanceFlexibility;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets possible values include: 'True', 'False'
+        /// Gets or sets possible values include: 'On', 'Off'
         /// </summary>
         [JsonProperty(PropertyName = "instanceFlexibility")]
         public string InstanceFlexibility { get; set; }
