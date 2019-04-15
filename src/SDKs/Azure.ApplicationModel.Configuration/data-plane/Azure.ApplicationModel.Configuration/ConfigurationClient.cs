@@ -6,9 +6,9 @@ using System;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Diagnostics;
-using Azure.Base.Pipeline;
-using Azure.Base.Pipeline.Policies;
+using Azure.Core.Diagnostics;
+using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
