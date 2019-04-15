@@ -156,5 +156,10 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         IWorkspaceSettingsOperations WorkspaceSettings { get; }
 
+        /// <summary>
+        /// Gets the IServerVulnerabilityAssessmentOperations.
+        /// </summary>
+        IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
+
     }
 }
