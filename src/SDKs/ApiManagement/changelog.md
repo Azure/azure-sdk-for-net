@@ -1,8 +1,17 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
-### Changes in 5.0.0-preview
+### Changes in 4.8.0-preview
 
 - Switch the .NET client to use api-version `2019-01-01`
+- Add support for cloning Apis from an ApiRevision and ApiVersionSet
+- Enabled support for Importing and Exporting Apis based on OpenApi specification
+- Add support for creating Api Diagnostics
+- Diagnostics support configuring detailed sampling and Header configuration
+- Add support for creating and update Cache entity.
+- Subscription Contract has breaking change. The ProductId property is replaced with Scope and UserId is replaced with OwnerId.
+- Added support for creating Global Scope Subscriptions
+- Added support for managing `Consumption` Sku services.
+- Deprecated Api UpdateHostName and UploadCertificate for configurating ApiManagement service. Use CreateOrUpdate service instead.
 
 ### Changes in 4.0.6-preview
 
