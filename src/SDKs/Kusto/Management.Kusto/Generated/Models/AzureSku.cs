@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
         /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
         /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
-        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2'</param>
+        /// 'Standard_L4s'</param>
         /// <param name="capacity">SKU capacity.</param>
         public AzureSku(string name, int? capacity = default(int?))
         {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// 'Standard_DS14_v2+3TB_PS', 'Standard_DS14_v2+4TB_PS',
         /// 'Standard_D13_v2', 'Standard_D14_v2', 'Standard_L8s',
         /// 'Standard_L16s', 'Standard_D11_v2', 'Standard_D12_v2',
-        /// 'Standard_L4s', 'Dev(No SLA)_Standard_D11_v2'
+        /// 'Standard_L4s'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
