@@ -86,9 +86,12 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string managementGroupsNamespace = "Microsoft.Management";
             string policyTrackedResourcesResource = "default";
-            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -109,7 +112,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupName", managementGroupName);
                 tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -122,9 +124,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupName}", System.Uri.EscapeDataString(managementGroupName));
             _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -290,8 +292,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string policyTrackedResourcesResource = "default";
-            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -311,7 +316,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
                 tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -323,9 +327,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -498,8 +502,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string policyTrackedResourcesResource = "default";
-            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -520,7 +527,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
                 tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -533,9 +539,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -701,8 +707,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string policyTrackedResourcesResource = "default";
-            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -722,7 +731,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("policyTrackedResourcesResource", policyTrackedResourcesResource);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -734,9 +742,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{policyTrackedResourcesResource}", System.Uri.EscapeDataString(policyTrackedResourcesResource));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {

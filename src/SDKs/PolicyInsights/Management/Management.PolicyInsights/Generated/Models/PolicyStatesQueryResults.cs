@@ -37,11 +37,14 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// <param name="odatacount">OData entity count; represents the number
         /// of policy state records returned.</param>
         /// <param name="value">Query results.</param>
-        public PolicyStatesQueryResults(string odatacontext = default(string), int? odatacount = default(int?), IList<PolicyState> value = default(IList<PolicyState>))
+        /// <param name="odatanextLink">Odata next link, used to get the next
+        /// set of records.</param>
+        public PolicyStatesQueryResults(string odatacontext = default(string), int? odatacount = default(int?), IList<PolicyState> value = default(IList<PolicyState>), string odatanextLink = default(string))
         {
             Odatacontext = odatacontext;
             Odatacount = odatacount;
             Value = value;
+            OdatanextLink = odatanextLink;
             CustomInit();
         }
 
@@ -69,6 +72,12 @@ namespace Microsoft.Azure.Management.PolicyInsights.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<PolicyState> Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets odata next link, used to get the next set of records.
+        /// </summary>
+        [JsonProperty(PropertyName = "@odata.nextLink")]
+        public string OdatanextLink { get; set; }
 
         /// <summary>
         /// Validate the object.

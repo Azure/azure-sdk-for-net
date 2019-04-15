@@ -93,8 +93,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -110,7 +113,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListDeploymentsAtManagementGroup", tracingParameters);
@@ -122,9 +124,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -290,8 +292,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -302,7 +307,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CancelAtManagementGroup", tracingParameters);
             }
@@ -313,9 +317,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -473,8 +477,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "managementGroupId");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -494,7 +501,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupId", managementGroupId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -506,9 +512,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupsNamespace}", System.Uri.EscapeDataString(managementGroupsNamespace));
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -681,12 +687,15 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -697,7 +706,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateAtManagementGroup", tracingParameters);
@@ -709,9 +717,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -897,8 +905,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -909,7 +920,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAtManagementGroup", tracingParameters);
             }
@@ -920,9 +930,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1084,8 +1094,11 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             string managementGroupsNamespace = "Microsoft.Management";
-            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1096,7 +1109,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("managementGroupsNamespace", managementGroupsNamespace);
                 tracingParameters.Add("managementGroupId", managementGroupId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAtManagementGroup", tracingParameters);
             }
@@ -1107,9 +1119,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{managementGroupId}", System.Uri.EscapeDataString(managementGroupId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1274,7 +1286,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1289,7 +1304,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListDeploymentsAtSubscription", tracingParameters);
@@ -1300,9 +1314,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -1468,7 +1482,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1478,7 +1495,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CancelAtSubscription", tracingParameters);
             }
@@ -1488,9 +1504,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1648,7 +1664,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionId");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -1667,7 +1686,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -1678,9 +1696,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.PolicyInsights/remediations").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -1853,11 +1871,14 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1867,7 +1888,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateAtSubscription", tracingParameters);
@@ -1878,9 +1898,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2066,7 +2086,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2076,7 +2099,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAtSubscription", tracingParameters);
             }
@@ -2086,9 +2108,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2250,7 +2272,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2260,7 +2285,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAtSubscription", tracingParameters);
             }
@@ -2270,9 +2294,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2444,7 +2468,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2460,7 +2487,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListDeploymentsAtResourceGroup", tracingParameters);
@@ -2472,9 +2498,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -2647,7 +2673,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2658,7 +2687,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CancelAtResourceGroup", tracingParameters);
             }
@@ -2669,9 +2697,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2836,7 +2864,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -2856,7 +2887,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -2868,9 +2898,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(subscriptionId));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -3050,11 +3080,14 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3065,7 +3098,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateAtResourceGroup", tracingParameters);
@@ -3077,9 +3109,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3272,7 +3304,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3283,7 +3318,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAtResourceGroup", tracingParameters);
             }
@@ -3294,9 +3328,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3465,7 +3499,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3476,7 +3513,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 tracingParameters.Add("subscriptionId", subscriptionId);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAtResourceGroup", tracingParameters);
             }
@@ -3487,9 +3523,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -3654,7 +3690,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -3669,7 +3708,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListDeploymentsAtResource", tracingParameters);
@@ -3680,9 +3718,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -3848,7 +3886,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3858,7 +3899,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CancelAtResource", tracingParameters);
             }
@@ -3868,9 +3908,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4028,7 +4068,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             int? top = default(int?);
             if (queryOptions != null)
             {
@@ -4047,7 +4090,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("top", top);
                 tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -4058,9 +4100,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.PolicyInsights/remediations").ToString();
             _url = _url.Replace("{resourceId}", resourceId);
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (top != null)
             {
@@ -4233,11 +4275,14 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
-            string apiVersion = "2018-07-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4247,7 +4292,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateAtResource", tracingParameters);
@@ -4258,9 +4302,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4446,7 +4490,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4456,7 +4503,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAtResource", tracingParameters);
             }
@@ -4466,9 +4512,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -4630,7 +4676,10 @@ namespace Microsoft.Azure.Management.PolicyInsights
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "remediationName");
             }
-            string apiVersion = "2018-07-01-preview";
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4640,7 +4689,6 @@ namespace Microsoft.Azure.Management.PolicyInsights
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceId", resourceId);
                 tracingParameters.Add("remediationName", remediationName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAtResource", tracingParameters);
             }
@@ -4650,9 +4698,9 @@ namespace Microsoft.Azure.Management.PolicyInsights
             _url = _url.Replace("{resourceId}", resourceId);
             _url = _url.Replace("{remediationName}", System.Uri.EscapeDataString(remediationName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
