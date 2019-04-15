@@ -54,8 +54,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// Calculate price for a `ReservationOrder`.
         /// </summary>
         /// <remarks>
-        /// Calculate price for placing a `ReservationOrder`
-        ///
+        /// Calculate price for placing a `ReservationOrder`.
         /// </remarks>
         /// <param name='body'>
         /// Information needed for calculate or purchase reservation
@@ -412,8 +411,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// Purchase `ReservationOrder`
         /// </summary>
         /// <remarks>
-        /// Purchase `ReservationOrder` and create resource under the specificed URI
-        ///
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
@@ -618,8 +616,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// Purchase `ReservationOrder`
         /// </summary>
         /// <remarks>
-        /// Purchase `ReservationOrder` and create resource under the specificed URI
-        ///
+        /// Purchase `ReservationOrder` and create resource under the specified URI.
         /// </remarks>
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
