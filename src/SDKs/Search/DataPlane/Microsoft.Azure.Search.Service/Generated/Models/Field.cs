@@ -36,7 +36,8 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Field class.
         /// </summary>
-        /// <param name="name">The name of the field.</param>
+        /// <param name="name">The name of the field, which must be unique
+        /// within the fields collection of the index or parent field.</param>
         /// <param name="type">The data type of the field. Possible values
         /// include: 'Edm.String', 'Edm.Int32', 'Edm.Int64', 'Edm.Double',
         /// 'Edm.Boolean', 'Edm.DateTimeOffset', 'Edm.GeographyPoint',
@@ -45,30 +46,31 @@ namespace Microsoft.Azure.Search.Models
         /// identifies documents in the index. Exactly one top-level field in
         /// each index must be chosen as the key field and it must be of type
         /// Edm.String. Key fields can be used to look up documents directly
-        /// and update or delete specific documents. Default is false for leaf
-        /// fields and null for complex fields.</param>
+        /// and update or delete specific documents. Default is false for
+        /// simple fields and null for complex fields.</param>
         /// <param name="retrievable">A value indicating whether the field can
-        /// be returned in a search result. This is useful when you want to use
-        /// a field (for example, margin) as a filter, sorting, or scoring
-        /// mechanism but do not want the field to be visible to the end user.
-        /// This property must be true for key fields, and it must be null for
-        /// complex fields. This property can be changed on existing fields.
-        /// Enabling this property does not cause any increase in index storage
-        /// requirements. Default is true for leaf fields and null for complex
-        /// fields.</param>
+        /// be returned in a search result. You can disable this option if you
+        /// want to use a field (for example, margin) as a filter, sorting, or
+        /// scoring mechanism but do not want the field to be visible to the
+        /// end user. This property must be true for key fields, and it must be
+        /// null for complex fields. This property can be changed on existing
+        /// fields. Enabling this property does not cause any increase in index
+        /// storage requirements. Default is true for simple fields and null
+        /// for complex fields.</param>
         /// <param name="searchable">A value indicating whether the field is
-        /// full-text search-able. This means it will undergo analysis such as
+        /// full-text searchable. This means it will undergo analysis such as
         /// word-breaking during indexing. If you set a searchable field to a
         /// value like "sunny day", internally it will be split into the
         /// individual tokens "sunny" and "day". This enables full-text
         /// searches for these terms. Fields of type Edm.String or
         /// Collection(Edm.String) are searchable by default. This property
-        /// must be false for leaf fields of other data types, and it must be
-        /// null for complex fields. Note: searchable fields consume extra
-        /// space in your index since Azure Search will store an additional
-        /// tokenized version of the field value for full-text searches. If you
-        /// want to save space in your index and you don't need a field to be
-        /// included in searches, set searchable to false.</param>
+        /// must be false for simple fields of other non-string data types, and
+        /// it must be null for complex fields. Note: searchable fields consume
+        /// extra space in your index since Azure Search will store an
+        /// additional tokenized version of the field value for full-text
+        /// searches. If you want to save space in your index and you don't
+        /// need a field to be included in searches, set searchable to
+        /// false.</param>
         /// <param name="filterable">A value indicating whether to enable the
         /// field to be referenced in $filter queries. filterable differs from
         /// searchable in how strings are handled. Fields of type Edm.String or
@@ -77,26 +79,29 @@ namespace Microsoft.Azure.Search.Models
         /// example, if you set such a field f to "sunny day", $filter=f eq
         /// 'sunny' will find no matches, but $filter=f eq 'sunny day' will.
         /// This property must be null for complex fields. Default is true for
-        /// leaf fields and null for complex fields.</param>
+        /// simple fields and null for complex fields.</param>
         /// <param name="sortable">A value indicating whether to enable the
         /// field to be referenced in $orderby expressions. By default Azure
         /// Search sorts results by score, but in many experiences users will
-        /// want to sort by fields in the documents. A leaf field can be
-        /// sortable only if it single-valued; That is, if it has a single
-        /// value in the scope of the parent document. This means that
-        /// collection fields cannot be sortable, nor can sub-fields directly
-        /// or indirectly contained in a complex collection. This property must
-        /// be null for complex fields. Default is true for single-valued leaf
-        /// fields, false for multi-valued leaf fields, and null for complex
+        /// want to sort by fields in the documents. A simple field can be
+        /// sortable only if it is single-valued (it has a single value in the
+        /// scope of the parent document). Simple collection fields cannot be
+        /// sortable, since they are multi-valued. Simple sub-fields of complex
+        /// collections are also multi-valued, and therefore cannot be
+        /// sortable. This is true whether it's an immediate parent field, or
+        /// an ancestor field, that's the complex collection. Complex fields
+        /// cannot be sortable and the sortable property must be null for such
+        /// fields. The default for sortable is true for single-valued simple
+        /// fields, false for multi-valued simple fields, and null for complex
         /// fields.</param>
         /// <param name="facetable">A value indicating whether to enable the
         /// field to be referenced in facet queries. Typically used in a
         /// presentation of search results that includes hit count by category
         /// (for example, search for digital cameras and see hits by brand, by
         /// megapixels, by price, and so on). This property must be null for
-        /// complex fields. Leaf fields of type Edm.GeographyPoint or
+        /// complex fields. Fields of type Edm.GeographyPoint or
         /// Collection(Edm.GeographyPoint) cannot be facetable. Default is true
-        /// for all other leaf fields.</param>
+        /// for all other simple fields.</param>
         /// <param name="analyzer">The name of the language analyzer to use for
         /// the field. This option can be used only with searchable fields and
         /// it can't be set together with either searchAnalyzer or
@@ -186,17 +191,17 @@ namespace Microsoft.Azure.Search.Models
         /// 'tr.microsoft', 'tr.lucene', 'uk.microsoft', 'ur.microsoft',
         /// 'vi.microsoft', 'standard.lucene', 'standardasciifolding.lucene',
         /// 'keyword', 'pattern', 'simple', 'stop', 'whitespace'</param>
-        /// <param name="synonymMaps">A list of synonym map names that
-        /// associates synonym maps with the field. This option can be used
-        /// only with searchable fields. Currently only one synonym map per
-        /// field is supported. Assigning a synonym map to a field ensures that
-        /// query terms targeting that field are expanded at query-time using
-        /// the rules in the synonym map. This attribute can be changed on
-        /// existing fields. Must be null or an empty collection for complex
+        /// <param name="synonymMaps">A list of the names of synonym maps to
+        /// associate with this field. This option can be used only with
+        /// searchable fields. Currently only one synonym map per field is
+        /// supported. Assigning a synonym map to a field ensures that query
+        /// terms targeting that field are expanded at query-time using the
+        /// rules in the synonym map. This attribute can be changed on existing
+        /// fields. Must be null or an empty collection for complex
         /// fields.</param>
         /// <param name="fields">A list of sub-fields if this is a field of
         /// type Edm.ComplexType or Collection(Edm.ComplexType). Must be null
-        /// or empty for leaf fields.</param>
+        /// or empty for simple fields.</param>
         internal Field(string name, DataType type, bool? key = default(bool?), bool? retrievable = default(bool?), bool? searchable = default(bool?), bool? filterable = default(bool?), bool? sortable = default(bool?), bool? facetable = default(bool?), AnalyzerName? analyzer = default(AnalyzerName?), AnalyzerName? searchAnalyzer = default(AnalyzerName?), AnalyzerName? indexAnalyzer = default(AnalyzerName?), IList<string> synonymMaps = default(IList<string>), IList<Field> fields = default(IList<Field>))
         {
             Name = name;
@@ -221,7 +226,8 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the field.
+        /// Gets or sets the name of the field, which must be unique within the
+        /// fields collection of the index or parent field.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -240,40 +246,40 @@ namespace Microsoft.Azure.Search.Models
         /// identifies documents in the index. Exactly one top-level field in
         /// each index must be chosen as the key field and it must be of type
         /// Edm.String. Key fields can be used to look up documents directly
-        /// and update or delete specific documents. Default is false for leaf
-        /// fields and null for complex fields.
+        /// and update or delete specific documents. Default is false for
+        /// simple fields and null for complex fields.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
         internal bool? Key { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the field can be returned
-        /// in a search result. This is useful when you want to use a field
-        /// (for example, margin) as a filter, sorting, or scoring mechanism
-        /// but do not want the field to be visible to the end user. This
-        /// property must be true for key fields, and it must be null for
+        /// in a search result. You can disable this option if you want to use
+        /// a field (for example, margin) as a filter, sorting, or scoring
+        /// mechanism but do not want the field to be visible to the end user.
+        /// This property must be true for key fields, and it must be null for
         /// complex fields. This property can be changed on existing fields.
         /// Enabling this property does not cause any increase in index storage
-        /// requirements. Default is true for leaf fields and null for complex
-        /// fields.
+        /// requirements. Default is true for simple fields and null for
+        /// complex fields.
         /// </summary>
         [JsonProperty(PropertyName = "retrievable")]
         internal bool? Retrievable { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the field is full-text
-        /// search-able. This means it will undergo analysis such as
+        /// searchable. This means it will undergo analysis such as
         /// word-breaking during indexing. If you set a searchable field to a
         /// value like "sunny day", internally it will be split into the
         /// individual tokens "sunny" and "day". This enables full-text
         /// searches for these terms. Fields of type Edm.String or
         /// Collection(Edm.String) are searchable by default. This property
-        /// must be false for leaf fields of other data types, and it must be
-        /// null for complex fields. Note: searchable fields consume extra
-        /// space in your index since Azure Search will store an additional
-        /// tokenized version of the field value for full-text searches. If you
-        /// want to save space in your index and you don't need a field to be
-        /// included in searches, set searchable to false.
+        /// must be false for simple fields of other non-string data types, and
+        /// it must be null for complex fields. Note: searchable fields consume
+        /// extra space in your index since Azure Search will store an
+        /// additional tokenized version of the field value for full-text
+        /// searches. If you want to save space in your index and you don't
+        /// need a field to be included in searches, set searchable to false.
         /// </summary>
         [JsonProperty(PropertyName = "searchable")]
         internal bool? Searchable { get; set; }
@@ -287,7 +293,7 @@ namespace Microsoft.Azure.Search.Models
         /// example, if you set such a field f to "sunny day", $filter=f eq
         /// 'sunny' will find no matches, but $filter=f eq 'sunny day' will.
         /// This property must be null for complex fields. Default is true for
-        /// leaf fields and null for complex fields.
+        /// simple fields and null for complex fields.
         /// </summary>
         [JsonProperty(PropertyName = "filterable")]
         internal bool? Filterable { get; set; }
@@ -296,13 +302,17 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets a value indicating whether to enable the field to be
         /// referenced in $orderby expressions. By default Azure Search sorts
         /// results by score, but in many experiences users will want to sort
-        /// by fields in the documents. A leaf field can be sortable only if it
-        /// single-valued; That is, if it has a single value in the scope of
-        /// the parent document. This means that collection fields cannot be
-        /// sortable, nor can sub-fields directly or indirectly contained in a
-        /// complex collection. This property must be null for complex fields.
-        /// Default is true for single-valued leaf fields, false for
-        /// multi-valued leaf fields, and null for complex fields.
+        /// by fields in the documents. A simple field can be sortable only if
+        /// it is single-valued (it has a single value in the scope of the
+        /// parent document). Simple collection fields cannot be sortable,
+        /// since they are multi-valued. Simple sub-fields of complex
+        /// collections are also multi-valued, and therefore cannot be
+        /// sortable. This is true whether it's an immediate parent field, or
+        /// an ancestor field, that's the complex collection. Complex fields
+        /// cannot be sortable and the sortable property must be null for such
+        /// fields. The default for sortable is true for single-valued simple
+        /// fields, false for multi-valued simple fields, and null for complex
+        /// fields.
         /// </summary>
         [JsonProperty(PropertyName = "sortable")]
         internal bool? Sortable { get; set; }
@@ -313,9 +323,8 @@ namespace Microsoft.Azure.Search.Models
         /// search results that includes hit count by category (for example,
         /// search for digital cameras and see hits by brand, by megapixels, by
         /// price, and so on). This property must be null for complex fields.
-        /// Leaf fields of type Edm.GeographyPoint or
-        /// Collection(Edm.GeographyPoint) cannot be facetable. Default is true
-        /// for all other leaf fields.
+        /// Fields of type Edm.GeographyPoint or Collection(Edm.GeographyPoint)
+        /// cannot be facetable. Default is true for all other simple fields.
         /// </summary>
         [JsonProperty(PropertyName = "facetable")]
         internal bool? Facetable { get; set; }
@@ -423,13 +432,13 @@ namespace Microsoft.Azure.Search.Models
         public AnalyzerName? IndexAnalyzer { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of synonym map names that associates synonym
-        /// maps with the field. This option can be used only with searchable
-        /// fields. Currently only one synonym map per field is supported.
-        /// Assigning a synonym map to a field ensures that query terms
-        /// targeting that field are expanded at query-time using the rules in
-        /// the synonym map. This attribute can be changed on existing fields.
-        /// Must be null or an empty collection for complex fields.
+        /// Gets or sets a list of the names of synonym maps to associate with
+        /// this field. This option can be used only with searchable fields.
+        /// Currently only one synonym map per field is supported. Assigning a
+        /// synonym map to a field ensures that query terms targeting that
+        /// field are expanded at query-time using the rules in the synonym
+        /// map. This attribute can be changed on existing fields. Must be null
+        /// or an empty collection for complex fields.
         /// </summary>
         [JsonProperty(PropertyName = "synonymMaps")]
         public IList<string> SynonymMaps { get; set; }
@@ -437,7 +446,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a list of sub-fields if this is a field of type
         /// Edm.ComplexType or Collection(Edm.ComplexType). Must be null or
-        /// empty for leaf fields.
+        /// empty for simple fields.
         /// </summary>
         [JsonProperty(PropertyName = "fields")]
         public IList<Field> Fields { get; set; }
