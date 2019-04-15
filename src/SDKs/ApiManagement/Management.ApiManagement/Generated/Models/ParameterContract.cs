@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="type">Parameter type.</param>
         /// <param name="description">Parameter description.</param>
         /// <param name="defaultValue">Default parameter value.</param>
-        /// <param name="required">whether parameter is required or
+        /// <param name="required">Specifies whether parameter is required or
         /// not.</param>
         /// <param name="values">Parameter values.</param>
         public ParameterContract(string name, string type, string description = default(string), string defaultValue = default(string), bool? required = default(bool?), IList<string> values = default(IList<string>))
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string DefaultValue { get; set; }
 
         /// <summary>
-        /// Gets or sets whether parameter is required or not.
+        /// Gets or sets specifies whether parameter is required or not.
         /// </summary>
         [JsonProperty(PropertyName = "required")]
         public bool? Required { get; set; }

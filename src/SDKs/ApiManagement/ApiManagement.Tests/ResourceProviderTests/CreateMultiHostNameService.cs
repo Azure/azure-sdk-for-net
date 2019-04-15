@@ -3,15 +3,15 @@
 // license information.
 // 
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using Xunit;
 
 namespace ApiManagement.Tests.ResourceProviderTests
@@ -79,8 +79,12 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.tags);
 
                 Assert.NotNull(createdService.HostnameConfigurations);
-                Assert.Equal(3, createdService.HostnameConfigurations.Count());
-                foreach(HostnameConfiguration hostnameConfig in createdService.HostnameConfigurations)
+                Assert.Equal(4, createdService.HostnameConfigurations.Count()); // customhostname config + 1 default proxy
+                var defaultHostname = new Uri(createdService.GatewayUrl).Host;
+                var hostnameConfigurationToValidate = createdService.HostnameConfigurations
+                    .Where(h => !h.HostName.Equals(defaultHostname, StringComparison.InvariantCultureIgnoreCase));
+
+                foreach (HostnameConfiguration hostnameConfig in hostnameConfigurationToValidate)
                 {
                     var hostnameConfiguration = createdService.HostnameConfigurations
                         .SingleOrDefault(h => hostnameConfig.HostName.Equals(h.HostName));
@@ -89,6 +93,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     Assert.NotNull(hostnameConfiguration.Certificate);
                     Assert.NotNull(hostnameConfiguration.Certificate.Subject);
                     Assert.Equal(cert.Thumbprint, hostnameConfiguration.Certificate.Thumbprint);
+
                     if (HostnameType.Proxy == hostnameConfiguration.Type)
                     {
                         Assert.True(hostnameConfiguration.DefaultSslBinding);
@@ -117,8 +122,11 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 Assert.NotNull(updatedService);
                 Assert.NotEmpty(updatedService.Tags);
                 Assert.Equal(intialTagsCount + 1, updatedService.Tags.Count);
-                Assert.Equal(3, updatedService.HostnameConfigurations.Count());
-                foreach (HostnameConfiguration hostnameConfig in updatedService.HostnameConfigurations)
+                Assert.Equal(4, updatedService.HostnameConfigurations.Count());
+
+                hostnameConfigurationToValidate = updatedService.HostnameConfigurations
+                    .Where(h => !h.HostName.Equals(defaultHostname, StringComparison.InvariantCultureIgnoreCase));
+                foreach (HostnameConfiguration hostnameConfig in hostnameConfigurationToValidate)
                 {
                     var hostnameConfiguration = updatedService.HostnameConfigurations
                         .SingleOrDefault(h => hostnameConfig.HostName.Equals(h.HostName));
@@ -127,6 +135,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     Assert.NotNull(hostnameConfiguration.Certificate);
                     Assert.NotNull(hostnameConfiguration.Certificate.Subject);
                     Assert.Equal(cert.Thumbprint, hostnameConfiguration.Certificate.Thumbprint);
+
                     if (HostnameType.Proxy == hostnameConfiguration.Type)
                     {
                         Assert.True(hostnameConfiguration.DefaultSslBinding);
@@ -159,5 +168,5 @@ namespace ApiManagement.Tests.ResourceProviderTests
                 });
             }
         }
-    }   
+    }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     using System.Linq;
 
     /// <summary>
-    /// Api Release details.
+    /// ApiRelease details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
     public partial class ApiReleaseContract : Resource

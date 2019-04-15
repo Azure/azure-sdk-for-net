@@ -120,17 +120,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (productId != null)
             {
-                if (productId.Length > 80)
+                if (productId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
                 }
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string groupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -362,17 +362,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (productId != null)
             {
-                if (productId.Length > 80)
+                if (productId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
                 }
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (groupId == null)
@@ -381,17 +381,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 204 && (int)_statusCode != 404)
+            if ((int)_statusCode != 204)
             {
                 var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -517,10 +517,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<bool>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
-            _result.Body = _statusCode == System.Net.HttpStatusCode.NoContent;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -602,17 +601,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (productId != null)
             {
-                if (productId.Length > 80)
+                if (productId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
                 }
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (groupId == null)
@@ -621,17 +620,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -873,17 +872,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (productId != null)
             {
-                if (productId.Length > 80)
+                if (productId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
                 }
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (groupId == null)
@@ -892,17 +891,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)

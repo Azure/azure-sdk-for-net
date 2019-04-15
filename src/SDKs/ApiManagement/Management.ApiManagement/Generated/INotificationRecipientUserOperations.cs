@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
         /// 'QuotaLimitApproachingPublisherNotificationMessage'
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Adds the API Management User to the list of Recipients for the
         /// Notification.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
         /// 'QuotaLimitApproachingPublisherNotificationMessage'
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RecipientUserContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecipientUserContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Removes the API Management user from the list of Notification.
         /// </summary>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
         /// 'QuotaLimitApproachingPublisherNotificationMessage'
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
@@ -163,6 +163,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string notificationName, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

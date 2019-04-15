@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="defaultProperty">The default capacity.</param>
         /// <param name="scaleType">The scale type applicable to the sku.
         /// Possible values include: 'automatic', 'manual', 'none'</param>
-        public ResourceSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? defaultProperty = default(int?), ResourceSkuCapacityScaleType? scaleType = default(ResourceSkuCapacityScaleType?))
+        public ResourceSkuCapacity(int? minimum = default(int?), int? maximum = default(int?), int? defaultProperty = default(int?), string scaleType = default(string))
         {
             Minimum = minimum;
             Maximum = maximum;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// 'automatic', 'manual', 'none'
         /// </summary>
         [JsonProperty(PropertyName = "scaleType")]
-        public ResourceSkuCapacityScaleType? ScaleType { get; private set; }
+        public string ScaleType { get; private set; }
 
     }
 }
