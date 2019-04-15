@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.Compute
         public string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -80,11 +85,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         public virtual IAvailabilitySetsOperations AvailabilitySets { get; private set; }
-
-        /// <summary>
-        /// Gets the IProximityPlacementGroupsOperations.
-        /// </summary>
-        public virtual IProximityPlacementGroupsOperations ProximityPlacementGroups { get; private set; }
 
         /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
@@ -150,41 +150,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineRunCommandsOperations.
         /// </summary>
         public virtual IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; private set; }
-
-        /// <summary>
-        /// Gets the IResourceSkusOperations.
-        /// </summary>
-        public virtual IResourceSkusOperations ResourceSkus { get; private set; }
-
-        /// <summary>
-        /// Gets the IDisksOperations.
-        /// </summary>
-        public virtual IDisksOperations Disks { get; private set; }
-
-        /// <summary>
-        /// Gets the ISnapshotsOperations.
-        /// </summary>
-        public virtual ISnapshotsOperations Snapshots { get; private set; }
-
-        /// <summary>
-        /// Gets the IGalleriesOperations.
-        /// </summary>
-        public virtual IGalleriesOperations Galleries { get; private set; }
-
-        /// <summary>
-        /// Gets the IGalleryImagesOperations.
-        /// </summary>
-        public virtual IGalleryImagesOperations GalleryImages { get; private set; }
-
-        /// <summary>
-        /// Gets the IGalleryImageVersionsOperations.
-        /// </summary>
-        public virtual IGalleryImageVersionsOperations GalleryImageVersions { get; private set; }
-
-        /// <summary>
-        /// Gets the IContainerServicesOperations.
-        /// </summary>
-        public virtual IContainerServicesOperations ContainerServices { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the ComputeManagementClient class.
@@ -429,7 +394,6 @@ namespace Microsoft.Azure.Management.Compute
         {
             Operations = new Operations(this);
             AvailabilitySets = new AvailabilitySetsOperations(this);
-            ProximityPlacementGroups = new ProximityPlacementGroupsOperations(this);
             VirtualMachineExtensionImages = new VirtualMachineExtensionImagesOperations(this);
             VirtualMachineExtensions = new VirtualMachineExtensionsOperations(this);
             VirtualMachineImages = new VirtualMachineImagesOperations(this);
@@ -443,14 +407,8 @@ namespace Microsoft.Azure.Management.Compute
             VirtualMachineScaleSetVMs = new VirtualMachineScaleSetVMsOperations(this);
             LogAnalytics = new LogAnalyticsOperations(this);
             VirtualMachineRunCommands = new VirtualMachineRunCommandsOperations(this);
-            ResourceSkus = new ResourceSkusOperations(this);
-            Disks = new DisksOperations(this);
-            Snapshots = new SnapshotsOperations(this);
-            Galleries = new GalleriesOperations(this);
-            GalleryImages = new GalleryImagesOperations(this);
-            GalleryImageVersions = new GalleryImageVersionsOperations(this);
-            ContainerServices = new ContainerServicesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
+            ApiVersion = "2019-05-01-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

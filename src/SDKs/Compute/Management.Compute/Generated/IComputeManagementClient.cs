@@ -48,6 +48,11 @@ namespace Microsoft.Azure.Management.Compute
         string SubscriptionId { get; set; }
 
         /// <summary>
+        /// Client Api Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
@@ -75,11 +80,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IAvailabilitySetsOperations.
         /// </summary>
         IAvailabilitySetsOperations AvailabilitySets { get; }
-
-        /// <summary>
-        /// Gets the IProximityPlacementGroupsOperations.
-        /// </summary>
-        IProximityPlacementGroupsOperations ProximityPlacementGroups { get; }
 
         /// <summary>
         /// Gets the IVirtualMachineExtensionImagesOperations.
@@ -145,41 +145,6 @@ namespace Microsoft.Azure.Management.Compute
         /// Gets the IVirtualMachineRunCommandsOperations.
         /// </summary>
         IVirtualMachineRunCommandsOperations VirtualMachineRunCommands { get; }
-
-        /// <summary>
-        /// Gets the IResourceSkusOperations.
-        /// </summary>
-        IResourceSkusOperations ResourceSkus { get; }
-
-        /// <summary>
-        /// Gets the IDisksOperations.
-        /// </summary>
-        IDisksOperations Disks { get; }
-
-        /// <summary>
-        /// Gets the ISnapshotsOperations.
-        /// </summary>
-        ISnapshotsOperations Snapshots { get; }
-
-        /// <summary>
-        /// Gets the IGalleriesOperations.
-        /// </summary>
-        IGalleriesOperations Galleries { get; }
-
-        /// <summary>
-        /// Gets the IGalleryImagesOperations.
-        /// </summary>
-        IGalleryImagesOperations GalleryImages { get; }
-
-        /// <summary>
-        /// Gets the IGalleryImageVersionsOperations.
-        /// </summary>
-        IGalleryImageVersionsOperations GalleryImageVersions { get; }
-
-        /// <summary>
-        /// Gets the IContainerServicesOperations.
-        /// </summary>
-        IContainerServicesOperations ContainerServices { get; }
 
     }
 }
