@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
     /// </summary>
     public static class InstanceFlexibility
     {
-        public const string True = "True";
-        public const string False = "False";
+        public const string On = "On";
+        public const string Off = "Off";
     }
 }
