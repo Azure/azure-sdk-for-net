@@ -7,9 +7,9 @@
     <PackageId>Microsoft.Azure.Management.PolicyInsights</PackageId>
     <Description>Provides policy insights operations for Microsoft Azure.</Description>
     <AssemblyName>Microsoft.Azure.Management.PolicyInsights</AssemblyName>
-    <Version>2.0.1</Version>
+    <Version>2.0.2</Version>
     <PackageTags>Azure;Policy;PolicyInsights;PolicyEvent;PolicyState;Compliance;</PackageTags>
-    <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
+    <PackageReleaseNotes>Added support for querying policy evaluation details.</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
