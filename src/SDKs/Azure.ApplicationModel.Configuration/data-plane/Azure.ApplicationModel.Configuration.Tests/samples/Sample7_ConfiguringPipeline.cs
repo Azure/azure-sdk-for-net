@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Pipeline;
-using Azure.Base.Pipeline.Policies;
+using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
 using System.Net.Http;

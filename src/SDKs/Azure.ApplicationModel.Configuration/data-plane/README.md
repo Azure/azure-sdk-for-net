@@ -168,7 +168,7 @@ These samples provide example of those scenarios:
 - [How to configure service requests](Azure.ApplicationModel.Configuration.Tests/samples/Sample7_ConfiguringPipeline.cs)
 
 # Contributing
-If the changes you are working on span both Azure.Base and Azure.Configuration then you can set this environment variable before launching Visual Studio. That will use Project To Project references between Azure.Configuration and Azure.Base instead of package references.
+If the changes you are working on span both Azure.Core and Azure.Configuration then you can set this environment variable before launching Visual Studio. That will use Project To Project references between Azure.Configuration and Azure.Core instead of package references.
 
 This will enable the project to project references:
 ```

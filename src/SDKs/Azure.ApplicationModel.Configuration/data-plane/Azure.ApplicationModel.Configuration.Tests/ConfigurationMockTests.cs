@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Pipeline;
-using Azure.Base.Testing;
+using Azure.Core.Pipeline;
+using Azure.Core.Testing;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
