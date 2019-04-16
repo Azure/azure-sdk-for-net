@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Search.Models
             new AutocompleteRequest()
             {
                 AutocompleteMode = parameters?.AutocompleteMode,
+                Filter = parameters?.Filter,
                 HighlightPostTag = parameters?.HighlightPostTag,
                 HighlightPreTag = parameters?.HighlightPreTag,
                 MinimumCoverage = parameters?.MinimumCoverage,
