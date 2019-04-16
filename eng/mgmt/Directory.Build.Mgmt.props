@@ -1,5 +1,7 @@
 ﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
+  <Import Project="CI.Bootstrap.targets" Sdk="Microsoft.Internal.NetSdkBuild.Mgmt.Tools" Version="0.9.0" />
+
+  <!-- <PropertyGroup>
     <LibraryRoot>$(RepoRoot)</LibraryRoot>
     <LibraryToolsFolder>$(LibraryRoot)\tools</LibraryToolsFolder>
     <BuildAssetsDir>$(LibraryToolsFolder)\BuildAssets</BuildAssetsDir>
@@ -11,7 +13,7 @@
     <NetSdkBuildTargetsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildTargetsDir)' == '' ">$(SdkBuildToolsDir)\targets</NetSdkBuildTargetsDir>
     <NetSdkBuildToolsDir Condition=" Exists('$(BuildAssetsDir)') ">$(BuildAssetsDir)</NetSdkBuildToolsDir>
     <NetSdkBuildToolsDir Condition=" Exists('$(SdkBuildToolsDir)') AND '$(NetSdkBuildToolsDir)' == '' ">$(SdkBuildToolsDir)</NetSdkBuildToolsDir>
-  </PropertyGroup>
+  </PropertyGroup> -->
 
   <!-- If Scope is specified then don't ignore any tests by default otherwise when building all ignore the projects with issues -->
   <PropertyGroup Condition="'$(Scope)' == '' or '$(Scope)' == 'All' or '$(Scope)' == 'SDKs\'">
@@ -29,5 +31,6 @@
     <DefaultPathTokenToIgnore>$(DefaultPathTokenToIgnore) data-plane</DefaultPathTokenToIgnore>
   </PropertyGroup>
 
-  <Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/>
+  <!-- <Import Project="$(NetSdkBuildTargetsDir)\core\_AzSdk.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_AzSdk.props') "/>
+  <Import Project="$(NetSdkBuildTargetsDir)\core\_Directory.Build.props" Condition=" Exists('$(NetSdkBuildTargetsDir)\core\_Directory.Build.props') "/> -->
 </Project>
