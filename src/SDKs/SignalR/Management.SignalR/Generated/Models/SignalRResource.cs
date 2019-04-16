@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the
         /// resource.</param>
-        /// <param name="name">The name of the resouce.</param>
+        /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the service - e.g.
         /// "Microsoft.SignalRService/SignalR"</param>
         /// <param name="location">The GEO location of the SignalR service.
@@ -49,6 +49,16 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// service. Retained for future use.
         /// The hostname will be of format:
         /// &amp;lt;hostNamePrefix&amp;gt;.service.signalr.net.</param>
+        /// <param name="features">List of SignalR featureFlags. e.g.
+        /// ServiceMode.
+        ///
+        /// When updating featureFlags, if certain featureFlag is not included
+        /// in parameters, SignalR service will remain it unchanged.
+        /// And when you GET a SignalR resource, the response will include only
+        /// those featureFlags explicitly set by you. For other featureFlags,
+        /// SignalR service will use its globally default value. Note that,
+        /// default value doesn't mean "false". It varies in terms of different
+        /// FeatureFlags.</param>
         /// <param name="provisioningState">Provisioning state of the resource.
         /// Possible values include: 'Unknown', 'Succeeded', 'Failed',
         /// 'Canceled', 'Running', 'Creating', 'Updating', 'Deleting',
@@ -57,19 +67,20 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// service.</param>
         /// <param name="hostName">FQDN of the SignalR service instance.
         /// Format: xxx.service.signalr.net</param>
-        /// <param name="publicPort">The publicly accessibly port of the
+        /// <param name="publicPort">The publicly accessible port of the
         /// SignalR service which is designed for browser/client side
         /// usage.</param>
-        /// <param name="serverPort">The publicly accessibly port of the
+        /// <param name="serverPort">The publicly accessible port of the
         /// SignalR service which is designed for customer server side
         /// usage.</param>
         /// <param name="version">Version of the SignalR resource. Probably you
         /// need the same or higher version of client SDKs.</param>
-        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string))
+        public SignalRResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ResourceSku sku = default(ResourceSku), string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>), string provisioningState = default(string), string externalIP = default(string), string hostName = default(string), int? publicPort = default(int?), int? serverPort = default(int?), string version = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
             HostNamePrefix = hostNamePrefix;
+            Features = features;
             ProvisioningState = provisioningState;
             ExternalIP = externalIP;
             HostName = hostName;
@@ -100,6 +111,20 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string HostNamePrefix { get; set; }
 
         /// <summary>
+        /// Gets or sets list of SignalR featureFlags. e.g. ServiceMode.
+        ///
+        /// When updating featureFlags, if certain featureFlag is not included
+        /// in parameters, SignalR service will remain it unchanged.
+        /// And when you GET a SignalR resource, the response will include only
+        /// those featureFlags explicitly set by you. For other featureFlags,
+        /// SignalR service will use its globally default value. Note that,
+        /// default value doesn't mean "false". It varies in terms of different
+        /// FeatureFlags.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.features")]
+        public IList<SignalRFeature> Features { get; set; }
+
+        /// <summary>
         /// Gets provisioning state of the resource. Possible values include:
         /// 'Unknown', 'Succeeded', 'Failed', 'Canceled', 'Running',
         /// 'Creating', 'Updating', 'Deleting', 'Moving'
@@ -121,14 +146,14 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public string HostName { get; private set; }
 
         /// <summary>
-        /// Gets the publicly accessibly port of the SignalR service which is
+        /// Gets the publicly accessible port of the SignalR service which is
         /// designed for browser/client side usage.
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicPort")]
         public int? PublicPort { get; private set; }
 
         /// <summary>
-        /// Gets the publicly accessibly port of the SignalR service which is
+        /// Gets the publicly accessible port of the SignalR service which is
         /// designed for customer server side usage.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverPort")]
@@ -152,6 +177,16 @@ namespace Microsoft.Azure.Management.SignalR.Models
             if (Sku != null)
             {
                 Sku.Validate();
+            }
+            if (Features != null)
+            {
+                foreach (var element in Features)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

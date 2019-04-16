@@ -83,6 +83,10 @@ namespace Microsoft.Azure.Management.SignalR
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
