@@ -33,6 +33,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal const string MissingResource = "Resource must be specified.";
 
+        internal const string RetryFailure = "Failed after 5 retries.";
+
 
         /// <summary>
         /// Creates an instance of AzureServiceTokenProviderException. 

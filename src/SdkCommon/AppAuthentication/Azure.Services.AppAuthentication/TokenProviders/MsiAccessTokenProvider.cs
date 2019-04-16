@@ -3,6 +3,7 @@
 
 using System;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -68,7 +69,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                             internalTokenSource.CancelAfter(AzureVmImdsTimeout);
                             await httpClient.SendAsync(imdsProbeRequest, linkedTokenSource.Token).ConfigureAwait(false);
                         }
-                        catch (TaskCanceledException)
+                        catch (OperationCanceledException)
                         {
                             // request to IMDS timed out (internal cancellation token cancelled), neither Azure VM IMDS nor App Services MSI are available
                             if (internalTokenSource.Token.IsCancellationRequested)
@@ -92,18 +93,23 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     ? $"{msiEndpoint}?resource={resource}{clientIdParameter}&api-version=2017-09-01"
                     : $"{AzureVmImdsEndpoint}?resource={resource}{clientIdParameter}&api-version=2018-02-01";
 
-                HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-
-                if (isAppServicesMsiAvailable)
+                Func<HttpRequestMessage> getRequestMessage = () =>
                 {
-                    request.Headers.Add("Secret", msiSecret);
-                }
-                else
-                {
-                    request.Headers.Add("Metadata", "true");
-                }
+                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
 
-                HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                    if (isAppServicesMsiAvailable)
+                    {
+                        request.Headers.Add("Secret", msiSecret);
+                    }
+                    else
+                    {
+                        request.Headers.Add("Metadata", "true");
+                    }
+
+                    return request;
+                };
+
+                HttpResponseMessage response = await httpClient.SendAsyncWithRetry(getRequestMessage, cancellationToken).ConfigureAwait(false);
 
                 // If the response is successful, it should have JSON response with an access_token field
                 if (response.IsSuccessStatusCode)
@@ -138,7 +144,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             catch (HttpRequestException)
             {
                 throw new AzureServiceTokenProviderException(ConnectionString, resource, authority,
-                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
+                    $"{AzureServiceTokenProviderException.ManagedServiceIdentityUsed} {AzureServiceTokenProviderException.RetryFailure} {AzureServiceTokenProviderException.MsiEndpointNotListening}");
             }
             catch (Exception exp)
             {

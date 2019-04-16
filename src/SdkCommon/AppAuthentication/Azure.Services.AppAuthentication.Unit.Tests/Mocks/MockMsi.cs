@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             MsiMissingToken,
             MsiAppServicesIncorrectRequest,
             MsiAzureVmTimeout,
+            MsiUnresponsive,
+            MsiThrottled,
+            MsiTransientServerError
         }
 
         private readonly MsiTestType _msiTestType;
@@ -51,7 +54,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         /// <returns></returns>
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            // HitCount is updated when this method gets called. This allows for testing of cache. 
+            // HitCount is updated when this method gets called. This allows for testing of cache and retry logic. 
             HitCount++;
 
             HttpResponseMessage responseMessage = null;
@@ -145,6 +148,50 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
                         }
                     }
                     throw new Exception("Test fail");
+
+                case MsiTestType.MsiUnresponsive:
+                case MsiTestType.MsiThrottled:
+                case MsiTestType.MsiTransientServerError:
+                    // give success response after max number of retries
+                    if (HitCount == MsiRetryHelper.MaxRetries)
+                    {
+                        responseMessage = new HttpResponseMessage
+                        {
+                            Content = new StringContent(TokenHelper.GetMsiAzureVmTokenResponse(),
+                                Encoding.UTF8,
+                                Constants.JsonContentType)
+                        };
+                    }
+                    // for unresponsive MSI, must give a response for initial probe request
+                    else if (HitCount == 1 && _msiTestType == MsiTestType.MsiUnresponsive)
+                    {
+                        responseMessage = new HttpResponseMessage
+                        {
+                            StatusCode = HttpStatusCode.BadRequest,
+                            Content = new StringContent(Constants.IncorrectFormatError,
+                                Encoding.UTF8,
+                                Constants.JsonContentType)
+                        };
+                        break;
+                    }
+                    else
+                    {
+                        // give error based on test type
+                        if (_msiTestType == MsiTestType.MsiUnresponsive)
+                        {
+                            throw new HttpRequestException();
+                        }
+                        else
+                        {
+                            responseMessage = new HttpResponseMessage
+                            {
+                                StatusCode = (_msiTestType == MsiTestType.MsiThrottled)
+                                    ? (HttpStatusCode)429
+                                    : HttpStatusCode.InternalServerError
+                            };
+                        }
+                    }
+                    break;
             }
             return Task.FromResult(responseMessage);
         }
