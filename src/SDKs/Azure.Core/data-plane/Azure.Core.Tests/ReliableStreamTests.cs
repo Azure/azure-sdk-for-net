@@ -108,6 +108,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Failed at 0", aggregateException.InnerExceptions[0].Message);
             Assert.AreEqual("Failed at 1", aggregateException.InnerExceptions[1].Message);
             Assert.AreEqual("Failed at 2", aggregateException.InnerExceptions[2].Message);
+            Assert.AreEqual("Failed at 3", aggregateException.InnerExceptions[3].Message);
             Assert.AreEqual(4, mockTransport.Requests.Count);
         }
 
