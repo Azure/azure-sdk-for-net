@@ -336,9 +336,9 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<AppTemplate> ListTemplates(this IAppsOperations operations)
+            public static AppTemplatesResult Templates(this IAppsOperations operations)
             {
-                return operations.ListTemplatesAsync().GetAwaiter().GetResult();
+                return operations.TemplatesAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -350,9 +350,9 @@ namespace Microsoft.Azure.Management.IotCentral
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<AppTemplate>> ListTemplatesAsync(this IAppsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AppTemplatesResult> TemplatesAsync(this IAppsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListTemplatesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TemplatesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -556,40 +556,6 @@ namespace Microsoft.Azure.Management.IotCentral
             public static async Task<IPage<App>> ListByResourceGroupNextAsync(this IAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get all available application templates.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<AppTemplate> ListTemplatesNext(this IAppsOperations operations, string nextPageLink)
-            {
-                return operations.ListTemplatesNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get all available application templates.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<AppTemplate>> ListTemplatesNextAsync(this IAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListTemplatesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
