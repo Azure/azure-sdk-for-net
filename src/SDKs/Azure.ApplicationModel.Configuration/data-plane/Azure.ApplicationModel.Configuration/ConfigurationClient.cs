@@ -41,7 +41,7 @@ namespace Azure.ApplicationModel.Configuration
         [HttpError(typeof(RequestFailedException), 412, Message = "Matching item is already in the store")]
         [HttpError(typeof(RequestFailedException), 429, Message = "Too many requests")]
         [UsageErrors(typeof(RequestFailedException), 401, 409, 408, 500, 502, 503, 504)]
-        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -70,13 +70,13 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -107,13 +107,13 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return await SetAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -148,13 +148,13 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
+        public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
@@ -178,7 +178,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
@@ -204,7 +204,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
+        public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
             using (var request = _pipeline.CreateRequest())
             {
@@ -227,7 +227,7 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
+        public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
             using (var request = _pipeline.CreateRequest())
             {

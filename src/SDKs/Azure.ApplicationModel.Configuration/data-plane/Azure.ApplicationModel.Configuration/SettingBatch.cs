@@ -11,11 +11,11 @@ namespace Azure.ApplicationModel.Configuration
     [DebuggerTypeProxy(typeof(SettingBatchDebugView))]
     public class SettingBatch
     {
-        readonly ConfigurationSetting[] _settings;
-        readonly SettingSelector _selector;
-        readonly string _link;
+        private readonly ConfigurationSetting[] _settings;
+        private readonly SettingSelector _selector;
+        private readonly string _link;
 
-        internal SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
+        public SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
         {
             _settings = settings;
             _link = link;
