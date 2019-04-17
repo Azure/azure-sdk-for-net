@@ -31,12 +31,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the TriggerProperties class.
         /// </summary>
+        /// <param name="schedulerTriggers">The collection of scheduler
+        /// triggers.</param>
         /// <param name="sourceTriggers">The collection of triggers based on
         /// source code repository.</param>
         /// <param name="baseImageTrigger">The trigger based on base image
         /// dependencies.</param>
-        public TriggerProperties(IList<SourceTrigger> sourceTriggers = default(IList<SourceTrigger>), BaseImageTrigger baseImageTrigger = default(BaseImageTrigger))
+        public TriggerProperties(IList<SchedulerTrigger> schedulerTriggers = default(IList<SchedulerTrigger>), IList<SourceTrigger> sourceTriggers = default(IList<SourceTrigger>), BaseImageTrigger baseImageTrigger = default(BaseImageTrigger))
         {
+            SchedulerTriggers = schedulerTriggers;
             SourceTriggers = sourceTriggers;
             BaseImageTrigger = baseImageTrigger;
             CustomInit();
@@ -46,6 +49,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets the collection of scheduler triggers.
+        /// </summary>
+        [JsonProperty(PropertyName = "schedulerTriggers")]
+        public IList<SchedulerTrigger> SchedulerTriggers { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of triggers based on source code
@@ -68,13 +77,23 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (SourceTriggers != null)
+            if (SchedulerTriggers != null)
             {
-                foreach (var element in SourceTriggers)
+                foreach (var element in SchedulerTriggers)
                 {
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (SourceTriggers != null)
+            {
+                foreach (var element1 in SourceTriggers)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }
