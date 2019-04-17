@@ -27,7 +27,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
                 }
             };
 
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);

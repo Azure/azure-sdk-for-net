@@ -16,8 +16,8 @@ namespace Azure.ApplicationModel.Configuration.Samples
         public async Task HelloWorld()
         {
             // Retrieve the connection string from the configuration store. 
-            // You can get the string from your Azure portal or using Azure CLI.
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            // You can get the string from your Azure portal.
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 
             // Instantiate a client that will be used to call the service.
             var client = new ConfigurationClient(connectionString);
