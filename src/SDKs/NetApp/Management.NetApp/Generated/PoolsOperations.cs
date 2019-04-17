@@ -51,8 +51,11 @@ namespace Microsoft.Azure.Management.NetApp
         public AzureNetAppFilesManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all capacity pools in the NetApp Account
+        /// Describe all Capacity Pools
         /// </summary>
+        /// <remarks>
+        /// List all capacity pools in the NetApp Account
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -65,7 +68,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -196,13 +199,14 @@ namespace Microsoft.Azure.Management.NetApp
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -212,6 +216,10 @@ namespace Microsoft.Azure.Management.NetApp
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -257,8 +265,11 @@ namespace Microsoft.Azure.Management.NetApp
         }
 
         /// <summary>
-        /// Get a capacity pool
+        /// Describe a Capacity Pool
         /// </summary>
+        /// <remarks>
+        /// Get detailsof the specified capacity pool
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -274,7 +285,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -411,13 +422,14 @@ namespace Microsoft.Azure.Management.NetApp
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -427,6 +439,10 @@ namespace Microsoft.Azure.Management.NetApp
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -472,8 +488,11 @@ namespace Microsoft.Azure.Management.NetApp
         }
 
         /// <summary>
-        /// Create or Update a capacity pool
+        /// Create or Update the specified capacity pool within the resource group
         /// </summary>
+        /// <remarks>
+        /// Create or Update a capacity pool
+        /// </remarks>
         /// <param name='body'>
         /// Capacity pool object supplied in the body of the operation.
         /// </param>
@@ -500,8 +519,11 @@ namespace Microsoft.Azure.Management.NetApp
         }
 
         /// <summary>
-        /// Patch a capacity pool
+        /// Update a capacity pool
         /// </summary>
+        /// <remarks>
+        /// Patch the specified capacity pool
+        /// </remarks>
         /// <param name='body'>
         /// Capacity pool object supplied in the body of the operation.
         /// </param>
@@ -520,7 +542,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -668,13 +690,14 @@ namespace Microsoft.Azure.Management.NetApp
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -684,6 +707,10 @@ namespace Microsoft.Azure.Management.NetApp
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -731,6 +758,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Delete a capacity pool
         /// </summary>
+        /// <remarks>
+        /// Delete the specified capacity pool
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -754,8 +784,11 @@ namespace Microsoft.Azure.Management.NetApp
         }
 
         /// <summary>
-        /// Create or Update a capacity pool
+        /// Create or Update the specified capacity pool within the resource group
         /// </summary>
+        /// <remarks>
+        /// Create or Update a capacity pool
+        /// </remarks>
         /// <param name='body'>
         /// Capacity pool object supplied in the body of the operation.
         /// </param>
@@ -774,7 +807,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -926,13 +959,14 @@ namespace Microsoft.Azure.Management.NetApp
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 201 && (int)_statusCode != 202)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -942,6 +976,10 @@ namespace Microsoft.Azure.Management.NetApp
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);
@@ -1007,6 +1045,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Delete a capacity pool
         /// </summary>
+        /// <remarks>
+        /// Delete the specified capacity pool
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -1022,7 +1063,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1156,13 +1197,14 @@ namespace Microsoft.Azure.Management.NetApp
             string _responseContent = null;
             if ((int)_statusCode != 202 && (int)_statusCode != 204)
             {
-                var ex = new ErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    Error _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<Error>(_responseContent, Client.DeserializationSettings);
+                    CloudError _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
+                        ex = new CloudException(_errorBody.Message);
                         ex.Body = _errorBody;
                     }
                 }
@@ -1172,6 +1214,10 @@ namespace Microsoft.Azure.Management.NetApp
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
                 if (_shouldTrace)
                 {
                     ServiceClientTracing.Error(_invocationId, ex);

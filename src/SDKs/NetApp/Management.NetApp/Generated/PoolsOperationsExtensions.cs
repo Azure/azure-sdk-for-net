@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class PoolsOperationsExtensions
     {
             /// <summary>
-            /// Lists all capacity pools in the NetApp Account
+            /// Describe all Capacity Pools
             /// </summary>
+            /// <remarks>
+            /// List all capacity pools in the NetApp Account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -41,8 +44,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Lists all capacity pools in the NetApp Account
+            /// Describe all Capacity Pools
             /// </summary>
+            /// <remarks>
+            /// List all capacity pools in the NetApp Account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -64,8 +70,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get a capacity pool
+            /// Describe a Capacity Pool
             /// </summary>
+            /// <remarks>
+            /// Get detailsof the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -84,8 +93,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get a capacity pool
+            /// Describe a Capacity Pool
             /// </summary>
+            /// <remarks>
+            /// Get detailsof the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -110,8 +122,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or Update a capacity pool
+            /// Create or Update the specified capacity pool within the resource group
             /// </summary>
+            /// <remarks>
+            /// Create or Update a capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -133,8 +148,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or Update a capacity pool
+            /// Create or Update the specified capacity pool within the resource group
             /// </summary>
+            /// <remarks>
+            /// Create or Update a capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -162,8 +180,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a capacity pool
+            /// Update a capacity pool
             /// </summary>
+            /// <remarks>
+            /// Patch the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -185,8 +206,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a capacity pool
+            /// Update a capacity pool
             /// </summary>
+            /// <remarks>
+            /// Patch the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -216,6 +240,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a capacity pool
             /// </summary>
+            /// <remarks>
+            /// Delete the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -236,6 +263,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a capacity pool
             /// </summary>
+            /// <remarks>
+            /// Delete the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -257,8 +287,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or Update a capacity pool
+            /// Create or Update the specified capacity pool within the resource group
             /// </summary>
+            /// <remarks>
+            /// Create or Update a capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -280,8 +313,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or Update a capacity pool
+            /// Create or Update the specified capacity pool within the resource group
             /// </summary>
+            /// <remarks>
+            /// Create or Update a capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -311,6 +347,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a capacity pool
             /// </summary>
+            /// <remarks>
+            /// Delete the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -331,6 +370,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a capacity pool
             /// </summary>
+            /// <remarks>
+            /// Delete the specified capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

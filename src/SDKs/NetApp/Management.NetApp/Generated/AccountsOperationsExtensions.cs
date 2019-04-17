@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class AccountsOperationsExtensions
     {
             /// <summary>
-            /// Lists all NetApp accounts in the resource group
+            /// Describe all NetApp Accounts in a resource group
             /// </summary>
+            /// <remarks>
+            /// List and describe all NetApp accounts in the resource group
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -38,8 +41,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Lists all NetApp accounts in the resource group
+            /// Describe all NetApp Accounts in a resource group
             /// </summary>
+            /// <remarks>
+            /// List and describe all NetApp accounts in the resource group
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -58,8 +64,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get the NetApp account
+            /// Describe a NetApp Account
             /// </summary>
+            /// <remarks>
+            /// Get the NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -75,8 +84,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get the NetApp account
+            /// Describe a NetApp Account
             /// </summary>
+            /// <remarks>
+            /// Get the NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -100,6 +112,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create or update a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified NetApp account within the resource group
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -120,6 +135,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create or update a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified NetApp account within the resource group
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -146,6 +164,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Delete the specified NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -163,6 +184,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Delete the specified NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -181,8 +205,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a NetApp account
+            /// Update a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Patch the specified NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -201,8 +228,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a NetApp account
+            /// Update a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Patch the specified NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -229,6 +259,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create or update a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified NetApp account within the resource group
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -249,6 +282,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create or update a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified NetApp account within the resource group
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -275,6 +311,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Delete the specified NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -292,6 +331,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a NetApp account
             /// </summary>
+            /// <remarks>
+            /// Delete the specified NetApp account
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
