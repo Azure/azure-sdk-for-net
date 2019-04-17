@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ReliableStreamTests
+    public class RetriableStreamTests
     {
         private byte[] _buffer = new byte[256];
 
@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
                 );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await ReliableStream.Create(offset => SendTestRequestAsync(pipeline, offset), maxRetries: 5);
+            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), maxRetries: 5);
 
             Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
@@ -48,7 +48,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsIfInitialRequestThrow()
         {
-            Assert.ThrowsAsync<InvalidOperationException>(() => ReliableStream.Create(_ => throw new InvalidOperationException(), 5));
+            Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.Create(_ => throw new InvalidOperationException(), 5));
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await ReliableStream.Create(
+            var reliableStream = await RetriableStream.Create(
                 async offset =>
                 {
                     if (offset == 0)
@@ -91,7 +91,7 @@ namespace Azure.Core.Tests
 
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await ReliableStream.Create(
+            var reliableStream = await RetriableStream.Create(
                 async offset =>
                 {
                     if (offset == 0)

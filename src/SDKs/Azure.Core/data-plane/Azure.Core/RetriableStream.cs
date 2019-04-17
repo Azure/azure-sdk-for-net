@@ -10,14 +10,14 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core
 {
-    public static class ReliableStream
+    public static class RetriableStream
     {
         public static async Task<Stream> Create(Func<long, Task<Response>> responseFactory, int maxRetries)
         {
-            return new ReliableStreamImpl(await responseFactory(0), responseFactory, maxRetries);
+            return new RetriableStreamImpl(await responseFactory(0), responseFactory, maxRetries);
         }
 
-        private class ReliableStreamImpl : ReadOnlyStream
+        private class RetriableStreamImpl : ReadOnlyStream
         {
             private readonly Func<long, Task<Response>> _responseFactory;
 
@@ -31,7 +31,7 @@ namespace Azure.Core
 
             private List<Exception> _exceptions;
 
-            public ReliableStreamImpl(Response initialResponse, Func<long, Task<Response>> responseFactory, int maxRetries)
+            public RetriableStreamImpl(Response initialResponse, Func<long, Task<Response>> responseFactory, int maxRetries)
             {
                 _currentStream = initialResponse.ContentStream;
                 _responseFactory = responseFactory;
@@ -63,6 +63,8 @@ namespace Azure.Core
 
             private async Task RetryAsync(Exception exception)
             {
+                // TODO: Verify exception type using ResponseClassifier and rethrow immediately for fatal
+
                 if (_exceptions == null)
                 {
                     _exceptions = new List<Exception>();
@@ -70,7 +72,6 @@ namespace Azure.Core
 
                 _exceptions.Add(exception);
 
-                // TODO: Verify exception type using ResponseClassifier and rethrow immediately for fatal
                 _retryCount++;
 
                 if (_retryCount > _maxRetries)
