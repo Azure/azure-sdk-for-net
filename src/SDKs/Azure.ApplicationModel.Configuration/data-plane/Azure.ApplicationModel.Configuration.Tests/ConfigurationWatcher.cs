@@ -8,7 +8,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.ApplicationModel.Configuration
+namespace Azure.ApplicationModel.Configuration.Tests
 {
     public class ConfigurationWatcher
     {
@@ -28,8 +28,7 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         public TimeSpan Interval { get; set; } = TimeSpan.FromSeconds(1);
-        public Task Task => _watching;
-
+        
         public void Start(CancellationToken token = default)
         {
             lock (_sync) {
@@ -56,7 +55,7 @@ namespace Azure.ApplicationModel.Configuration
         public event EventHandler<SettingChangedEventArgs> SettingChanged;
         public event EventHandler<Exception> Error;
 
-        protected virtual bool HasChanged(ConfigurationSetting left, ConfigurationSetting right)
+        protected virtual bool CompareSetting(ConfigurationSetting left, ConfigurationSetting right)
         {
             if (left == null && right != null) return true;
             return !left.Equals(right);
@@ -114,7 +113,7 @@ namespace Azure.ApplicationModel.Configuration
                 if (response.Status == 200) {
                     ConfigurationSetting current = response.Value;
                     _lastPolled.TryGetValue(current.Key, out var previous);
-                    if (HasChanged(current, previous)) {
+                    if (CompareSetting(current, previous)) {
                         if (current == null) _lastPolled.Remove(current.Key);
                         else _lastPolled[current.Key] = current;
                         var e = new SettingChangedEventArgs(previous, current);
