@@ -156,5 +156,15 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         IWorkspaceSettingsOperations WorkspaceSettings { get; }
 
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        IAssessmentsOperations Assessments { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
+
     }
 }

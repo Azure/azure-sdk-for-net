@@ -162,6 +162,16 @@ namespace Microsoft.Azure.Management.Security
         public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
 
         /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        public virtual IAssessmentsOperations Assessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        public virtual IAssessmentsMetadataOperations AssessmentsMetadata { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -419,6 +429,8 @@ namespace Microsoft.Azure.Management.Security
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             SecurityContacts = new SecurityContactsOperations(this);
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
+            Assessments = new AssessmentsOperations(this);
+            AssessmentsMetadata = new AssessmentsMetadataOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -451,6 +463,8 @@ namespace Microsoft.Azure.Management.Security
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResourceDetails>("assessedResourceSource"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResourceDetails>("assessedResourceSource"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
