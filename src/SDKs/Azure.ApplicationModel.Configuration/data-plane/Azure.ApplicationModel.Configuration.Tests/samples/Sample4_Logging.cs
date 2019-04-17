@@ -18,7 +18,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         [Test]
         public async Task Logging()
         {
-            // Retrieve the connection string from the configuration store. 
+            // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
             var client = new ConfigurationClient(connectionString);
@@ -65,10 +65,6 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5654 test skipped for net461 */
-#if !FullNetFx
-            base.OnEventWritten(eventData);
-#endif
             if (eventData.EventSource.Name == SOURCE_NAME) {
                 var formatted = eventData.EventName + " : " + eventData.Payload[0].ToString();
                 Console.WriteLine(formatted);
