@@ -25,7 +25,6 @@ namespace Microsoft.Azure.Management.Billing
                 new Tuple<string, string, string>("Billing", "BillingAccountBillingRoleAssignment", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingAccountBillingRoleDefinition", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingAccounts", "2018-11-01-preview"),
-                new Tuple<string, string, string>("Billing", "BillingAccountsWithCreateInvoiceSectionPermission", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingProfileBillingPermissions", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingProfileBillingRoleAssignment", "2018-11-01-preview"),
                 new Tuple<string, string, string>("Billing", "BillingProfileBillingRoleDefinition", "2018-11-01-preview"),

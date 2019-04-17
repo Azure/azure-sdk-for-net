@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Details about the product.
+    /// Details about the enable azure sku.
     /// </summary>
     public partial class EnabledAzureSKUs
     {
@@ -44,10 +44,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sku id.
+        /// Gets the sku id.
         /// </summary>
         [JsonProperty(PropertyName = "skuId")]
-        public string SkuId { get; set; }
+        public string SkuId { get; private set; }
 
         /// <summary>
         /// Gets the sku description.
