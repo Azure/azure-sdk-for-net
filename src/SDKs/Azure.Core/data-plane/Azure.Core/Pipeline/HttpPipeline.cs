@@ -54,10 +54,7 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerCallPolicies);
 
-            if (!options.DisableTelemetry)
-            {
-                policies.Add(new TelemetryPolicy(options.GetType().Assembly, options.ApplicationId));
-            }
+            policies.Add(options.TelemetryPolicy);
 
             policies.AddRange(clientPolicies);
 

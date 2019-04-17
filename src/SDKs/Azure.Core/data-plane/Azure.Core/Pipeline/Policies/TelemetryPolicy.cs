@@ -11,29 +11,26 @@ namespace Azure.Core.Pipeline.Policies
 {
     public class TelemetryPolicy : HttpPipelinePolicy
     {
-        private readonly HttpHeader _header;
+        private readonly Assembly _clientAssembly;
 
-        public TelemetryPolicy(Assembly clientAssembly, string applicationId)
+        private HttpHeader _header;
+
+        private string _applicationId;
+
+        public string ApplicationId
         {
-            var componentAttribute = clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
-            if (componentAttribute == null)
+            get => _applicationId;
+            set
             {
-                throw new InvalidOperationException(
-                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{clientAssembly.FullName}'.");
+                _applicationId = value;
+                InitializeHeader();
             }
+        }
 
-            var componentName = componentAttribute.ComponentName;
-            var componentVersion = clientAssembly.GetName().Version.ToString();
-
-            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
-            if (applicationId != null)
-            {
-                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"{applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}");
-            }
-            else
-            {
-                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {platformInformation}");
-            }
+        public TelemetryPolicy(Assembly clientAssembly)
+        {
+            _clientAssembly = clientAssembly;
+            InitializeHeader();
         }
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -41,5 +38,29 @@ namespace Azure.Core.Pipeline.Policies
             message.Request.AddHeader(_header);
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
+
+        private void InitializeHeader()
+        {
+            var componentAttribute = _clientAssembly.GetCustomAttribute<AzureSdkClientLibraryAttribute>();
+            if (componentAttribute == null)
+            {
+                throw new InvalidOperationException(
+                    $"{nameof(AzureSdkClientLibraryAttribute)} is required to be set on client SDK assembly '{_clientAssembly.FullName}'.");
+            }
+
+            var componentName = componentAttribute.ComponentName;
+            var componentVersion = _clientAssembly.GetName().Version.ToString();
+
+            var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
+            if (_applicationId != null)
+            {
+                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"{_applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+            }
+            else
+            {
+                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+            }
+        }
+
     }
 }

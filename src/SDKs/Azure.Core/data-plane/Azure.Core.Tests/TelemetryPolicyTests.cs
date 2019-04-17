@@ -16,7 +16,7 @@ namespace Azure.Core.Tests
         public async Task ComponentNameAndVersionReadFromAssembly()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly, null);
+            var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly);
 
             var assemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             await SendGetRequest(transport, telemetryPolicy);
@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
         public async Task ApplicationIdIsIncluded()
         {
             var transport = new MockTransport(new MockResponse(200));
-            var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly, "application-id");
+            var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly) { ApplicationId = "application-id" };
 
             await SendGetRequest(transport, telemetryPolicy);
 
