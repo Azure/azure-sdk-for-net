@@ -32,16 +32,32 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the DiagnosticContract class.
         /// </summary>
-        /// <param name="enabled">Indicates whether a diagnostic should receive
-        /// data or not.</param>
+        /// <param name="loggerId">Resource Id of a target logger.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
-        public DiagnosticContract(bool enabled, string id = default(string), string name = default(string), string type = default(string))
+        /// <param name="alwaysLog">Specifies for what type of messages
+        /// sampling settings should not apply. Possible values include:
+        /// 'allErrors'</param>
+        /// <param name="sampling">Sampling settings for Diagnostic.</param>
+        /// <param name="frontend">Diagnostic settings for incoming/outgoing
+        /// HTTP messages to the Gateway.</param>
+        /// <param name="backend">Diagnostic settings for incoming/outgoing
+        /// HTTP messages to the Backend</param>
+        /// <param name="enableHttpCorrelationHeaders">Whether to process
+        /// Correlation Headers coming to Api Management Service. Only
+        /// applicable to Application Insights diagnostics. Default is
+        /// true.</param>
+        public DiagnosticContract(string loggerId, string id = default(string), string name = default(string), string type = default(string), string alwaysLog = default(string), SamplingSettings sampling = default(SamplingSettings), PipelineDiagnosticSettings frontend = default(PipelineDiagnosticSettings), PipelineDiagnosticSettings backend = default(PipelineDiagnosticSettings), bool? enableHttpCorrelationHeaders = default(bool?))
             : base(id, name, type)
         {
-            Enabled = enabled;
+            AlwaysLog = alwaysLog;
+            LoggerId = loggerId;
+            Sampling = sampling;
+            Frontend = frontend;
+            Backend = backend;
+            EnableHttpCorrelationHeaders = enableHttpCorrelationHeaders;
             CustomInit();
         }
 
@@ -51,11 +67,45 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets indicates whether a diagnostic should receive data or
-        /// not.
+        /// Gets or sets specifies for what type of messages sampling settings
+        /// should not apply. Possible values include: 'allErrors'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool Enabled { get; set; }
+        [JsonProperty(PropertyName = "properties.alwaysLog")]
+        public string AlwaysLog { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource Id of a target logger.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.loggerId")]
+        public string LoggerId { get; set; }
+
+        /// <summary>
+        /// Gets or sets sampling settings for Diagnostic.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sampling")]
+        public SamplingSettings Sampling { get; set; }
+
+        /// <summary>
+        /// Gets or sets diagnostic settings for incoming/outgoing HTTP
+        /// messages to the Gateway.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.frontend")]
+        public PipelineDiagnosticSettings Frontend { get; set; }
+
+        /// <summary>
+        /// Gets or sets diagnostic settings for incoming/outgoing HTTP
+        /// messages to the Backend
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.backend")]
+        public PipelineDiagnosticSettings Backend { get; set; }
+
+        /// <summary>
+        /// Gets or sets whether to process Correlation Headers coming to Api
+        /// Management Service. Only applicable to Application Insights
+        /// diagnostics. Default is true.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableHttpCorrelationHeaders")]
+        public bool? EnableHttpCorrelationHeaders { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -65,7 +115,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (LoggerId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "LoggerId");
+            }
+            if (Sampling != null)
+            {
+                Sampling.Validate();
+            }
+            if (Frontend != null)
+            {
+                Frontend.Validate();
+            }
+            if (Backend != null)
+            {
+                Backend.Validate();
+            }
         }
     }
 }

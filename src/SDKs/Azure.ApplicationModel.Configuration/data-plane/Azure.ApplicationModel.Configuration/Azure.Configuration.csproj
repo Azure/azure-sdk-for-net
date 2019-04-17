@@ -20,12 +20,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Memory" Version="4.5.1" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
     <PackageReference Include="Microsoft.Bcl.Json.Sources" Version="4.6.0-preview3.19128.7">
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
 
-  <!-- Import the Azure.Base project -->  
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Azure.Base\data-plane\Azure.Base\Azure.Base.props" />
+  <!-- Import the Azure.Core project -->  
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Azure.Core\data-plane\Azure.Core\Azure.Core.props" />
 </Project>

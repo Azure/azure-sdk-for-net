@@ -187,10 +187,13 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiManagementServiceResource>> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all API Management services within a resource group.
         /// </summary>
@@ -314,68 +317,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ApiManagementServiceResource>> ApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Upload Custom Domain SSL certificate for an API Management service.
-        /// This operation will be deprecated in future releases.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the Upload SSL certificate for an API
-        /// Management service operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<CertificateInformation>> UploadCertificateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceUploadCertificateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates, updates, or deletes the custom hostnames for an API
-        /// Management service. The custom hostname can be applied to the Proxy
-        /// and Portal endpoint. This is a long running operation and could
-        /// take several minutes to complete. This operation will be deprecated
-        /// in the next version update.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the UpdateHostname operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> UpdateHostnameWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceUpdateHostnameParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Restores a backup of an API Management service created using the
         /// ApiManagementService_Backup operation on the current service. This
         /// is a long running operation and could take several minutes to
@@ -497,6 +438,31 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse<ApiManagementServiceResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Deletes an existing API Management service.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ApiManagementServiceResource>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Updates the Microsoft.ApiManagement resource running in the Virtual
         /// network to pick the updated network settings.
         /// </summary>
@@ -528,38 +494,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ApiManagementServiceResource>> BeginApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates, updates, or deletes the custom hostnames for an API
-        /// Management service. The custom hostname can be applied to the Proxy
-        /// and Portal endpoint. This is a long running operation and could
-        /// take several minutes to complete. This operation will be deprecated
-        /// in the next version update.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the API Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the UpdateHostname operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<ApiManagementServiceResource>> BeginUpdateHostnameWithHttpMessagesAsync(string resourceGroupName, string serviceName, ApiManagementServiceUpdateHostnameParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all API Management services within a resource group.
         /// </summary>

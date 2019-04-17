@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="id">Identifier.</param>
         /// <param name="primaryKey">Primary access key.</param>
         /// <param name="secondaryKey">Secondary access key.</param>
-        /// <param name="enabled">Tenant access information of the API
-        /// Management service.</param>
+        /// <param name="enabled">Determines whether direct access is
+        /// enabled.</param>
         public AccessInformationContract(string id = default(string), string primaryKey = default(string), string secondaryKey = default(string), bool? enabled = default(bool?))
         {
             Id = id;
@@ -67,8 +67,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string SecondaryKey { get; set; }
 
         /// <summary>
-        /// Gets or sets tenant access information of the API Management
-        /// service.
+        /// Gets or sets determines whether direct access is enabled.
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }

@@ -41,6 +41,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// Subscription credentials that uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every
         /// service call.
@@ -65,6 +70,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
+
+        /// <summary>
+        /// Gets the IApplicationOperationResultsOperations.
+        /// </summary>
+        IApplicationOperationResultsOperations ApplicationOperationResults { get; }
+
+        /// <summary>
+        /// Gets the IComputeOperationResultsOperations.
+        /// </summary>
+        IComputeOperationResultsOperations ComputeOperationResults { get; }
 
         /// <summary>
         /// Gets the IFabricOperations.
@@ -122,6 +137,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         IStorageSystemsOperations StorageSystems { get; }
 
         /// <summary>
+        /// Gets the IVolumesOperations.
+        /// </summary>
+        IVolumesOperations Volumes { get; }
+
+        /// <summary>
         /// Gets the ILogicalSubnetsOperations.
         /// </summary>
         ILogicalSubnetsOperations LogicalSubnets { get; }
@@ -130,6 +150,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the IMacAddressPoolsOperations.
         /// </summary>
         IMacAddressPoolsOperations MacAddressPools { get; }
+
+        /// <summary>
+        /// Gets the INetworkOperationResultsOperations.
+        /// </summary>
+        INetworkOperationResultsOperations NetworkOperationResults { get; }
 
         /// <summary>
         /// Gets the IScaleUnitsOperations.
@@ -147,19 +172,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         ISlbMuxInstancesOperations SlbMuxInstances { get; }
 
         /// <summary>
-        /// Gets the IDrivesOperations.
+        /// Gets the IStorageOperationResultsOperations.
         /// </summary>
-        IDrivesOperations Drives { get; }
-
-        /// <summary>
-        /// Gets the IStorageSubSystemsOperations.
-        /// </summary>
-        IStorageSubSystemsOperations StorageSubSystems { get; }
-
-        /// <summary>
-        /// Gets the IVolumesOperations.
-        /// </summary>
-        IVolumesOperations Volumes { get; }
+        IStorageOperationResultsOperations StorageOperationResults { get; }
 
     }
 }

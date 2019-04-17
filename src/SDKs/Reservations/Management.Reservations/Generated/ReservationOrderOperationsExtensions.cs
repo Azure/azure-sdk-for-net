@@ -22,6 +22,46 @@ namespace Microsoft.Azure.Management.Reservations
     public static partial class ReservationOrderOperationsExtensions
     {
             /// <summary>
+            /// Calculate price for a `ReservationOrder`.
+            /// </summary>
+            /// <remarks>
+            /// Calculate price for placing a `ReservationOrder`.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Information needed for calculate or purchase reservation
+            /// </param>
+            public static CalculatePriceResponse Calculate(this IReservationOrderOperations operations, PurchaseRequest body)
+            {
+                return operations.CalculateAsync(body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Calculate price for a `ReservationOrder`.
+            /// </summary>
+            /// <remarks>
+            /// Calculate price for placing a `ReservationOrder`.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='body'>
+            /// Information needed for calculate or purchase reservation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CalculatePriceResponse> CalculateAsync(this IReservationOrderOperations operations, PurchaseRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CalculateWithHttpMessagesAsync(body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get all `ReservationOrder`s.
             /// </summary>
             /// <remarks>
@@ -52,6 +92,52 @@ namespace Microsoft.Azure.Management.Reservations
             public static async Task<IPage<ReservationOrderResponse>> ListAsync(this IReservationOrderOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Purchase `ReservationOrder`
+            /// </summary>
+            /// <remarks>
+            /// Purchase `ReservationOrder` and create resource under the specified URI.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='body'>
+            /// Information needed for calculate or purchase reservation
+            /// </param>
+            public static ReservationOrderResponse Purchase(this IReservationOrderOperations operations, string reservationOrderId, PurchaseRequest body)
+            {
+                return operations.PurchaseAsync(reservationOrderId, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Purchase `ReservationOrder`
+            /// </summary>
+            /// <remarks>
+            /// Purchase `ReservationOrder` and create resource under the specified URI.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='body'>
+            /// Information needed for calculate or purchase reservation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReservationOrderResponse> PurchaseAsync(this IReservationOrderOperations operations, string reservationOrderId, PurchaseRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PurchaseWithHttpMessagesAsync(reservationOrderId, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -92,6 +178,52 @@ namespace Microsoft.Azure.Management.Reservations
             public static async Task<ReservationOrderResponse> GetAsync(this IReservationOrderOperations operations, string reservationOrderId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(reservationOrderId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Purchase `ReservationOrder`
+            /// </summary>
+            /// <remarks>
+            /// Purchase `ReservationOrder` and create resource under the specified URI.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='body'>
+            /// Information needed for calculate or purchase reservation
+            /// </param>
+            public static ReservationOrderResponse BeginPurchase(this IReservationOrderOperations operations, string reservationOrderId, PurchaseRequest body)
+            {
+                return operations.BeginPurchaseAsync(reservationOrderId, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Purchase `ReservationOrder`
+            /// </summary>
+            /// <remarks>
+            /// Purchase `ReservationOrder` and create resource under the specified URI.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='reservationOrderId'>
+            /// Order Id of the reservation
+            /// </param>
+            /// <param name='body'>
+            /// Information needed for calculate or purchase reservation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ReservationOrderResponse> BeginPurchaseAsync(this IReservationOrderOperations operations, string reservationOrderId, PurchaseRequest body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginPurchaseWithHttpMessagesAsync(reservationOrderId, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

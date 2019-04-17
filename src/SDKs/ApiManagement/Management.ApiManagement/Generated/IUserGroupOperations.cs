@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<GroupContract>>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, string uid, ODataQuery<GroupContract> odataQuery = default(ODataQuery<GroupContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<GroupContract>>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, string userId, ODataQuery<GroupContract> odataQuery = default(ODataQuery<GroupContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all user groups.
         /// </summary>

@@ -25,8 +25,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IGroupUserOperations
     {
         /// <summary>
-        /// Lists a collection of the members of the group, specified by its
-        /// identifier.
+        /// Lists a collection of user entities associated with the group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Group identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
@@ -87,9 +86,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Adds a user to the specified group.
+        /// Add existing user to existing group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -101,7 +100,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Group identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
@@ -120,7 +119,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<UserContract>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<UserContract>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Remove existing user from existing group.
         /// </summary>
@@ -134,7 +133,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Group identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
@@ -150,10 +149,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists a collection of the members of the group, specified by its
-        /// identifier.
+        /// Lists a collection of user entities associated with the group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
