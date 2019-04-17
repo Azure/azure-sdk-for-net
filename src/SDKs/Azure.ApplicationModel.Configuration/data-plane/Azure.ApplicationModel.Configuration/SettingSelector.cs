@@ -81,7 +81,20 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode()
+        {
+            int hash = 17;
+            if (Keys != null)
+                hash = hash * 23 + Keys.GetHashCode();
+            if (Labels != null)
+                hash = hash * 23 + Labels.GetHashCode();
+            if (AsOf.HasValue)
+                hash = hash * 23 + AsOf.GetHashCode();
+            if (BatchLink != null)
+                hash = hash * 23 + BatchLink.GetHashCode();
+            hash = hash * 23 + Fields.GetHashCode();
+            return hash;
+        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         // TODO ()
