@@ -14,8 +14,7 @@ namespace Azure.Core.Tests
 {
     public class PipelineTests
     {
-/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5773 test skipped for net461 */
-#if !FullNetFx
+
         [Test]
         public async Task Basics()
         {
@@ -31,10 +30,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(1, response.Status);
         }
-#endif
 
-/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5773 test skipped for net461 */
-#if !FullNetFx
         class CustomRetryPolicy : RetryPolicy
         {
             protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
@@ -47,10 +43,46 @@ namespace Azure.Core.Tests
 
             protected override bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay)
             {
+                delay = TimeSpan.Zero;
                 return false;
             }
         }
-#endif
+
+        [Test]
+        public async Task TelemetryPolicyIsAddedByDefault()
+        {
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var httpClientOptions = new TestClientOptions()
+            {
+                Transport = mockTransport
+            };
+            var pipeline = HttpPipeline.Build(httpClientOptions);
+            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            {
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+            }
+
+            Assert.True(mockTransport.SingleRequest.TryGetHeader("User-Agent", out _));
+        }
+
+
+        [Test]
+        public async Task TelemetryPolicyIsNotAppliedWhenSetToNull()
+        {
+            var mockTransport = new MockTransport(new MockResponse(200));
+            var httpClientOptions = new TestClientOptions()
+            {
+                Transport = mockTransport,
+                TelemetryPolicy = null
+            };
+            var pipeline = HttpPipeline.Build(httpClientOptions);
+            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            {
+                await pipeline.SendRequestAsync(request, CancellationToken.None);
+            }
+
+            Assert.False(mockTransport.SingleRequest.TryGetHeader("User-Agent", out _));
+        }
 
         class TestClientOptions : HttpClientOptions
         {
