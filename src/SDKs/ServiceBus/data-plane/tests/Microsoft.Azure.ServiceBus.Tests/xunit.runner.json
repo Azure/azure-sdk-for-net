@@ -3,5 +3,6 @@
     "longRunningTestSeconds": 61,
     "diagnosticMessages": true,
     "internalDiagnosticMessages": true,
-    "parallelizeAssembly": true
+    "parallelizeAssembly": true,
+    "shadowCopy" : false
 }

@@ -42,9 +42,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<OperationContract> ListByApi(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>))
+            /// <param name='tags'>
+            /// Include tags in the response.
+            /// </param>
+            public static IPage<OperationContract> ListByApi(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>), string tags = default(string))
             {
-                return operations.ListByApiAsync(resourceGroupName, serviceName, apiId, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByApiAsync(resourceGroupName, serviceName, apiId, odataQuery, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -67,12 +70,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='tags'>
+            /// Include tags in the response.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<OperationContract>> ListByApiAsync(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<OperationContract>> ListByApiAsync(this IApiOperationOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>), string tags = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

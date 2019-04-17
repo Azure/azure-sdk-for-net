@@ -68,6 +68,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
+        /// <param name='tags'>
+        /// Include tags in the response.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -89,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<OperationContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<OperationContract>>> ListByApiWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<OperationContract> odataQuery = default(ODataQuery<OperationContract>), string tags = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -152,6 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
+                tracingParameters.Add("tags", tags);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByApi", tracingParameters);
             }
@@ -170,6 +174,10 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     _queryParameters.Add(_odataFilter);
                 }
+            }
+            if (tags != null)
+            {
+                _queryParameters.Add(string.Format("tags={0}", System.Uri.EscapeDataString(tags)));
             }
             if (Client.ApiVersion != null)
             {
@@ -390,9 +398,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -642,9 +650,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -861,7 +869,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<OperationContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, OperationContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<OperationContract,ApiOperationCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, OperationContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -919,9 +927,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1071,7 +1079,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<OperationContract>();
+            var _result = new AzureOperationResponse<OperationContract,ApiOperationCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1113,6 +1121,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiOperationCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -1224,9 +1245,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1489,9 +1510,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "operationId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(operationId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "operationId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "operationId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)

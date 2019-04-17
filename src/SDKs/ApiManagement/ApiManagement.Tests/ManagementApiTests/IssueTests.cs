@@ -111,7 +111,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.serviceName,
                         echoApi.Name,
                         newissueId,
-                        issueUpdateContract);
+                        issueUpdateContract,
+                        "*");
 
                     // get the issue
                     issueData = await testBase.client.ApiIssue.GetAsync(
@@ -151,7 +152,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         issueCommentParameters);
                     Assert.NotNull(addedComment);
                     Assert.Equal(addedComment.Name, newcommentId);
-                    //Assert.Equal(addedComment.UserId, adminUser.Id); Bug userId is not getting populated
+                    // https://msazure.visualstudio.com/DefaultCollection/One/_workitems/edit/4402087
+                    //Assert.Equal(addedComment.UserId, adminUser.Id); //Bug userId is not getting populated
                     Assert.NotNull(addedComment.CreatedDate);
 
                     // get the comment tag.

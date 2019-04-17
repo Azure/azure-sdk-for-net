@@ -386,9 +386,9 @@ namespace Microsoft.Azure.KeyVault.Tests
             // Verify - positive test.
             var verified = client.VerifyAsync(kid, algorithm, digest, signature).Result;
             Assert.True(verified);
-
 #if FullNetFx
-            verified = ecdsa.VerifyData(digest, signature);
+            var hashAlgorithmName = new HashAlgorithmName(algorithm);
+            verified = ecdsa.VerifyData(digest, signature, hashAlgorithmName);
             Assert.True(verified);
 #endif
 
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.KeyVault.Tests
             Assert.False(verified);
 
 #if FullNetFx
-            verified = ecdsa.VerifyData(digest, signature);
+            verified = ecdsa.VerifyData(digest, signature, hashAlgorithmName);
             Assert.False(verified);
 #endif
         }

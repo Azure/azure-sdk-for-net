@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class UserOperationsExtensions
     {
             /// <summary>
-            /// Returns calling user identity information.
+            /// Lists a collection of registered users in the specified service instance.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,32 +34,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static CurrentUserIdentity GetIdentity(this IUserOperations operations, string resourceGroupName, string serviceName)
+            /// <param name='odataQuery'>
+            /// OData parameters to apply to the operation.
+            /// </param>
+            /// <param name='expandGroups'>
+            /// Detailed Group in response.
+            /// </param>
+            public static IPage<UserContract> ListByService(this IUserOperations operations, string resourceGroupName, string serviceName, ODataQuery<UserContract> odataQuery = default(ODataQuery<UserContract>), bool? expandGroups = default(bool?))
             {
-                return operations.GetIdentityAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns calling user identity information.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CurrentUserIdentity> GetIdentityAsync(this IUserOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetIdentityWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, expandGroups).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -77,32 +60,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<UserContract> ListByService(this IUserOperations operations, string resourceGroupName, string serviceName, ODataQuery<UserContract> odataQuery = default(ODataQuery<UserContract>))
-            {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists a collection of registered users in the specified service instance.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
+            /// <param name='expandGroups'>
+            /// Detailed Group in response.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<UserContract>> ListByServiceAsync(this IUserOperations operations, string resourceGroupName, string serviceName, ODataQuery<UserContract> odataQuery = default(ODataQuery<UserContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<UserContract>> ListByServiceAsync(this IUserOperations operations, string resourceGroupName, string serviceName, ODataQuery<UserContract> odataQuery = default(ODataQuery<UserContract>), bool? expandGroups = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, expandGroups, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -121,13 +87,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static UserGetEntityTagHeaders GetEntityTag(this IUserOperations operations, string resourceGroupName, string serviceName, string uid)
+            public static UserGetEntityTagHeaders GetEntityTag(this IUserOperations operations, string resourceGroupName, string serviceName, string userId)
             {
-                return operations.GetEntityTagAsync(resourceGroupName, serviceName, uid).GetAwaiter().GetResult();
+                return operations.GetEntityTagAsync(resourceGroupName, serviceName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -143,16 +109,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UserGetEntityTagHeaders> GetEntityTagAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UserGetEntityTagHeaders> GetEntityTagAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -170,13 +136,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static UserContract Get(this IUserOperations operations, string resourceGroupName, string serviceName, string uid)
+            public static UserContract Get(this IUserOperations operations, string resourceGroupName, string serviceName, string userId)
             {
-                return operations.GetAsync(resourceGroupName, serviceName, uid).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -191,16 +157,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UserContract> GetAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UserContract> GetAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -218,7 +184,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -229,9 +195,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static UserContract CreateOrUpdate(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, UserCreateParameters parameters, string ifMatch = default(string))
+            public static UserContract CreateOrUpdate(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, uid, parameters, ifMatch).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, userId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -246,7 +212,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -260,9 +226,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UserContract> CreateOrUpdateAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, UserCreateParameters parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UserContract> CreateOrUpdateAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserCreateParameters parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, uid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, userId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -280,7 +246,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -292,9 +258,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, UserUpdateParameters parameters, string ifMatch)
+            public static void Update(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserUpdateParameters parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, uid, parameters, ifMatch).GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, serviceName, userId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -309,7 +275,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -324,9 +290,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, UserUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, uid, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, userId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -341,7 +307,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -356,9 +322,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='notify'>
             /// Send an Account Closed Email notification to the User.
             /// </param>
-            public static void Delete(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?))
+            public static void Delete(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, uid, ifMatch, deleteSubscriptions, notify).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, userId, ifMatch, deleteSubscriptions, notify).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -373,7 +339,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -391,9 +357,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, string ifMatch, bool? deleteSubscriptions = default(bool?), bool? notify = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, uid, ifMatch, deleteSubscriptions, notify, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, userId, ifMatch, deleteSubscriptions, notify, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -409,13 +375,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static GenerateSsoUrlResult GenerateSsoUrl(this IUserOperations operations, string resourceGroupName, string serviceName, string uid)
+            public static GenerateSsoUrlResult GenerateSsoUrl(this IUserOperations operations, string resourceGroupName, string serviceName, string userId)
             {
-                return operations.GenerateSsoUrlAsync(resourceGroupName, serviceName, uid).GetAwaiter().GetResult();
+                return operations.GenerateSsoUrlAsync(resourceGroupName, serviceName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -431,16 +397,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GenerateSsoUrlResult> GenerateSsoUrlAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GenerateSsoUrlResult> GenerateSsoUrlAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GenerateSsoUrlWithHttpMessagesAsync(resourceGroupName, serviceName, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GenerateSsoUrlWithHttpMessagesAsync(resourceGroupName, serviceName, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -458,16 +424,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='parameters'>
             /// Create Authorization Token parameters.
             /// </param>
-            public static UserTokenResult GetSharedAccessToken(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, UserTokenParameters parameters)
+            public static UserTokenResult GetSharedAccessToken(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserTokenParameters parameters)
             {
-                return operations.GetSharedAccessTokenAsync(resourceGroupName, serviceName, uid, parameters).GetAwaiter().GetResult();
+                return operations.GetSharedAccessTokenAsync(resourceGroupName, serviceName, userId, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -482,7 +448,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -492,9 +458,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UserTokenResult> GetSharedAccessTokenAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string uid, UserTokenParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UserTokenResult> GetSharedAccessTokenAsync(this IUserOperations operations, string resourceGroupName, string serviceName, string userId, UserTokenParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetSharedAccessTokenWithHttpMessagesAsync(resourceGroupName, serviceName, uid, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetSharedAccessTokenWithHttpMessagesAsync(resourceGroupName, serviceName, userId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

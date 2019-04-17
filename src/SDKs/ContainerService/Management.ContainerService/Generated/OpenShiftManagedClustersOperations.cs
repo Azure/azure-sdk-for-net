@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            string apiVersion = "2018-09-30-preview";
+            string apiVersion = "2019-04-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.ContainerService
                     throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
                 }
             }
-            string apiVersion = "2018-09-30-preview";
+            string apiVersion = "2019-04-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -482,7 +482,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            string apiVersion = "2018-09-30-preview";
+            string apiVersion = "2019-04-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -783,7 +783,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 parameters.Validate();
             }
-            string apiVersion = "2018-09-30-preview";
+            string apiVersion = "2019-04-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1015,7 +1015,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            string apiVersion = "2018-09-30-preview";
+            string apiVersion = "2019-04-30";
             TagsObject parameters = new TagsObject();
             if (tags != null)
             {
@@ -1229,7 +1229,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceName");
             }
-            string apiVersion = "2018-09-30-preview";
+            string apiVersion = "2019-04-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

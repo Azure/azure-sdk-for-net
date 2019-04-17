@@ -269,9 +269,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            public static void Delete(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName)
+            public static ApiManagementServiceResource Delete(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName)
             {
-                operations.DeleteAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+                return operations.DeleteAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -289,9 +289,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApiManagementServiceResource> DeleteAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
@@ -483,108 +486,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task<ApiManagementServiceResource> ApplyNetworkConfigurationUpdatesAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Upload Custom Domain SSL certificate for an API Management service. This
-            /// operation will be deprecated in future releases.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Upload SSL certificate for an API Management
-            /// service operation.
-            /// </param>
-            public static CertificateInformation UploadCertificate(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceUploadCertificateParameters parameters)
-            {
-                return operations.UploadCertificateAsync(resourceGroupName, serviceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Upload Custom Domain SSL certificate for an API Management service. This
-            /// operation will be deprecated in future releases.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the Upload SSL certificate for an API Management
-            /// service operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CertificateInformation> UploadCertificateAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceUploadCertificateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UploadCertificateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates, updates, or deletes the custom hostnames for an API Management
-            /// service. The custom hostname can be applied to the Proxy and Portal
-            /// endpoint. This is a long running operation and could take several minutes
-            /// to complete. This operation will be deprecated in the next version update.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the UpdateHostname operation.
-            /// </param>
-            public static ApiManagementServiceResource UpdateHostname(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceUpdateHostnameParameters parameters)
-            {
-                return operations.UpdateHostnameAsync(resourceGroupName, serviceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates, updates, or deletes the custom hostnames for an API Management
-            /// service. The custom hostname can be applied to the Proxy and Portal
-            /// endpoint. This is a long running operation and could take several minutes
-            /// to complete. This operation will be deprecated in the next version update.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the UpdateHostname operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ApiManagementServiceResource> UpdateHostnameAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UpdateHostnameWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -787,6 +688,46 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
+            /// Deletes an existing API Management service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static ApiManagementServiceResource BeginDelete(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.BeginDeleteAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an existing API Management service.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiManagementServiceResource> BeginDeleteAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Updates the Microsoft.ApiManagement resource running in the Virtual network
             /// to pick the updated network settings.
             /// </summary>
@@ -835,58 +776,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             public static async Task<ApiManagementServiceResource> BeginApplyNetworkConfigurationUpdatesAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceApplyNetworkConfigurationParameters parameters = default(ApiManagementServiceApplyNetworkConfigurationParameters), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginApplyNetworkConfigurationUpdatesWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Creates, updates, or deletes the custom hostnames for an API Management
-            /// service. The custom hostname can be applied to the Proxy and Portal
-            /// endpoint. This is a long running operation and could take several minutes
-            /// to complete. This operation will be deprecated in the next version update.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the UpdateHostname operation.
-            /// </param>
-            public static ApiManagementServiceResource BeginUpdateHostname(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceUpdateHostnameParameters parameters)
-            {
-                return operations.BeginUpdateHostnameAsync(resourceGroupName, serviceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Creates, updates, or deletes the custom hostnames for an API Management
-            /// service. The custom hostname can be applied to the Proxy and Portal
-            /// endpoint. This is a long running operation and could take several minutes
-            /// to complete. This operation will be deprecated in the next version update.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='serviceName'>
-            /// The name of the API Management service.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the UpdateHostname operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ApiManagementServiceResource> BeginUpdateHostnameAsync(this IApiManagementServiceOperations operations, string resourceGroupName, string serviceName, ApiManagementServiceUpdateHostnameParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateHostnameWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface ITenantAccessOperations
     {
         /// <summary>
-        /// Get tenant access information details.
+        /// Tenant access metadata
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -38,7 +38,29 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<TenantAccessGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get tenant access information details
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -79,7 +101,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerate primary access key.
+        /// Regenerate primary access key
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -101,7 +123,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> RegeneratePrimaryKeyWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Regenerate secondary access key.
+        /// Regenerate secondary access key
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

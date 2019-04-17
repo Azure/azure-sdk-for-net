@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.Compute
                 new Tuple<string, string, string>("Compute", "Images", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "LogAnalytics", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "Operations", "2018-10-01"),
+                new Tuple<string, string, string>("Compute", "ProximityPlacementGroups", "2018-10-01"),
                 new Tuple<string, string, string>("Compute", "ResourceSkus", "2017-09-01"),
                 new Tuple<string, string, string>("Compute", "Snapshots", "2018-09-30"),
                 new Tuple<string, string, string>("Compute", "Usage", "2018-10-01"),

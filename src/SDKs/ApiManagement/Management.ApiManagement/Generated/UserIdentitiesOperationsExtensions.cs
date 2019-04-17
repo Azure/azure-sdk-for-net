@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class UserIdentitiesOperationsExtensions
     {
             /// <summary>
-            /// Lists all user identities.
+            /// List of all user identities.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,17 +33,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static IPage<UserIdentityContract> List(this IUserIdentitiesOperations operations, string resourceGroupName, string serviceName, string uid)
+            public static IPage<UserIdentityContract> List(this IUserIdentitiesOperations operations, string resourceGroupName, string serviceName, string userId)
             {
-                return operations.ListAsync(resourceGroupName, serviceName, uid).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, serviceName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all user identities.
+            /// List of all user identities.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -54,23 +54,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<UserIdentityContract>> ListAsync(this IUserIdentitiesOperations operations, string resourceGroupName, string serviceName, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<UserIdentityContract>> ListAsync(this IUserIdentitiesOperations operations, string resourceGroupName, string serviceName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists all user identities.
+            /// List of all user identities.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all user identities.
+            /// List of all user identities.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

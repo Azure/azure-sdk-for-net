@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the SubscriptionUpdateParameters
         /// class.
         /// </summary>
-        /// <param name="userId">User identifier path: /users/{uid}</param>
-        /// <param name="productId">Product identifier path:
-        /// /products/{productId}</param>
+        /// <param name="ownerId">User identifier path: /users/{userId}</param>
+        /// <param name="scope">Scope like /products/{productId} or /apis or
+        /// /apis/{apiId}</param>
         /// <param name="expirationDate">Subscription expiration date. The
         /// setting is for audit purposes only and the subscription is not
         /// automatically expired. The subscription lifecycle can be managed by
@@ -58,16 +58,19 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// 'active', 'expired', 'submitted', 'rejected', 'cancelled'</param>
         /// <param name="stateComment">Comments describing subscription state
         /// change by the administrator.</param>
-        public SubscriptionUpdateParameters(string userId = default(string), string productId = default(string), System.DateTime? expirationDate = default(System.DateTime?), string displayName = default(string), string primaryKey = default(string), string secondaryKey = default(string), SubscriptionState? state = default(SubscriptionState?), string stateComment = default(string))
+        /// <param name="allowTracing">Determines whether tracing can be
+        /// enabled</param>
+        public SubscriptionUpdateParameters(string ownerId = default(string), string scope = default(string), System.DateTime? expirationDate = default(System.DateTime?), string displayName = default(string), string primaryKey = default(string), string secondaryKey = default(string), SubscriptionState? state = default(SubscriptionState?), string stateComment = default(string), bool? allowTracing = default(bool?))
         {
-            UserId = userId;
-            ProductId = productId;
+            OwnerId = ownerId;
+            Scope = scope;
             ExpirationDate = expirationDate;
             DisplayName = displayName;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             State = state;
             StateComment = stateComment;
+            AllowTracing = allowTracing;
             CustomInit();
         }
 
@@ -77,16 +80,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets user identifier path: /users/{uid}
+        /// Gets or sets user identifier path: /users/{userId}
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userId")]
-        public string UserId { get; set; }
+        [JsonProperty(PropertyName = "properties.ownerId")]
+        public string OwnerId { get; set; }
 
         /// <summary>
-        /// Gets or sets product identifier path: /products/{productId}
+        /// Gets or sets scope like /products/{productId} or /apis or
+        /// /apis/{apiId}
         /// </summary>
-        [JsonProperty(PropertyName = "properties.productId")]
-        public string ProductId { get; set; }
+        [JsonProperty(PropertyName = "properties.scope")]
+        public string Scope { get; set; }
 
         /// <summary>
         /// Gets or sets subscription expiration date. The setting is for audit
@@ -137,6 +141,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.stateComment")]
         public string StateComment { get; set; }
+
+        /// <summary>
+        /// Gets or sets determines whether tracing can be enabled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowTracing")]
+        public bool? AllowTracing { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyCollection,ProductPolicyListByProductHeaders>> ListByProductWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PolicyCollection>> ListByProductWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -109,6 +109,25 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (productId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "productId");
+            }
+            if (productId != null)
+            {
+                if (productId.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
+                }
+                if (productId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "productId", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -116,25 +135,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (productId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "productId");
-            }
-            if (productId != null)
-            {
-                if (productId.Length > 80)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
-                }
-                if (productId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "productId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
-                }
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -154,8 +154,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{productId}", System.Uri.EscapeDataString(productId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyCollection,ProductPolicyListByProductHeaders>();
+            var _result = new AzureOperationResponse<PolicyCollection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -273,19 +273,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
-            }
-            try
-            {
-                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ProductPolicyListByProductHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
-            }
-            catch (JsonException ex)
-            {
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -350,6 +337,25 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (productId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "productId");
+            }
+            if (productId != null)
+            {
+                if (productId.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
+                }
+                if (productId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "productId", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -357,25 +363,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (productId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "productId");
-            }
-            if (productId != null)
-            {
-                if (productId.Length > 80)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
-                }
-                if (productId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "productId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
-                }
             }
             string policyId = "policy";
             // Tracing
@@ -397,9 +384,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{productId}", System.Uri.EscapeDataString(productId));
             _url = _url.Replace("{policyId}", System.Uri.EscapeDataString(policyId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -579,6 +566,25 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new ValidationException(ValidationRules.Pattern, "serviceName", "^[a-zA-Z](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$");
                 }
             }
+            if (productId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "productId");
+            }
+            if (productId != null)
+            {
+                if (productId.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
+                }
+                if (productId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "productId", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
+                }
+            }
             if (Client.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -586,25 +592,6 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (productId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "productId");
-            }
-            if (productId != null)
-            {
-                if (productId.Length > 80)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
-                }
-                if (productId.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "productId", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
-                }
             }
             string policyId = "policy";
             // Tracing
@@ -626,9 +613,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/products/{productId}/policies/{policyId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{productId}", System.Uri.EscapeDataString(productId));
             _url = _url.Replace("{policyId}", System.Uri.EscapeDataString(policyId));
+            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
@@ -808,7 +795,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, PolicyContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PolicyContract,ProductPolicyCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, PolicyContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -839,17 +826,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (productId != null)
             {
-                if (productId.Length > 80)
+                if (productId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
                 }
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (parameters == null)
@@ -1000,7 +987,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<PolicyContract>();
+            var _result = new AzureOperationResponse<PolicyContract,ProductPolicyCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1042,6 +1029,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     }
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ProductPolicyCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
             }
             if (_shouldTrace)
             {
@@ -1117,17 +1117,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (productId != null)
             {
-                if (productId.Length > 80)
+                if (productId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
                 }
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (ifMatch == null)

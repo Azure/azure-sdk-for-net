@@ -77,29 +77,14 @@ namespace Microsoft.Azure.Management.ApiManagement
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IPolicyOperations.
-        /// </summary>
-        public virtual IPolicyOperations Policy { get; private set; }
-
-        /// <summary>
-        /// Gets the IPolicySnippetsOperations.
-        /// </summary>
-        public virtual IPolicySnippetsOperations PolicySnippets { get; private set; }
-
-        /// <summary>
-        /// Gets the IRegionsOperations.
-        /// </summary>
-        public virtual IRegionsOperations Regions { get; private set; }
-
-        /// <summary>
         /// Gets the IApiOperations.
         /// </summary>
         public virtual IApiOperations Api { get; private set; }
 
         /// <summary>
-        /// Gets the IApiRevisionsOperations.
+        /// Gets the IApiRevisionOperations.
         /// </summary>
-        public virtual IApiRevisionsOperations ApiRevisions { get; private set; }
+        public virtual IApiRevisionOperations ApiRevision { get; private set; }
 
         /// <summary>
         /// Gets the IApiReleaseOperations.
@@ -115,6 +100,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IApiOperationPolicyOperations.
         /// </summary>
         public virtual IApiOperationPolicyOperations ApiOperationPolicy { get; private set; }
+
+        /// <summary>
+        /// Gets the ITagOperations.
+        /// </summary>
+        public virtual ITagOperations Tag { get; private set; }
 
         /// <summary>
         /// Gets the IApiProductOperations.
@@ -137,11 +127,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IApiDiagnosticOperations ApiDiagnostic { get; private set; }
 
         /// <summary>
-        /// Gets the IApiDiagnosticLoggerOperations.
-        /// </summary>
-        public virtual IApiDiagnosticLoggerOperations ApiDiagnosticLogger { get; private set; }
-
-        /// <summary>
         /// Gets the IApiIssueOperations.
         /// </summary>
         public virtual IApiIssueOperations ApiIssue { get; private set; }
@@ -157,6 +142,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IApiIssueAttachmentOperations ApiIssueAttachment { get; private set; }
 
         /// <summary>
+        /// Gets the IApiTagDescriptionOperations.
+        /// </summary>
+        public virtual IApiTagDescriptionOperations ApiTagDescription { get; private set; }
+
+        /// <summary>
+        /// Gets the IOperationOperations.
+        /// </summary>
+        public virtual IOperationOperations Operation { get; private set; }
+
+        /// <summary>
+        /// Gets the IApiVersionSetOperations.
+        /// </summary>
+        public virtual IApiVersionSetOperations ApiVersionSet { get; private set; }
+
+        /// <summary>
         /// Gets the IAuthorizationServerOperations.
         /// </summary>
         public virtual IAuthorizationServerOperations AuthorizationServer { get; private set; }
@@ -165,6 +165,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the IBackendOperations.
         /// </summary>
         public virtual IBackendOperations Backend { get; private set; }
+
+        /// <summary>
+        /// Gets the ICacheOperations.
+        /// </summary>
+        public virtual ICacheOperations Cache { get; private set; }
 
         /// <summary>
         /// Gets the ICertificateOperations.
@@ -192,11 +197,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IDiagnosticOperations Diagnostic { get; private set; }
 
         /// <summary>
-        /// Gets the IDiagnosticLoggerOperations.
-        /// </summary>
-        public virtual IDiagnosticLoggerOperations DiagnosticLogger { get; private set; }
-
-        /// <summary>
         /// Gets the IEmailTemplateOperations.
         /// </summary>
         public virtual IEmailTemplateOperations EmailTemplate { get; private set; }
@@ -217,9 +217,19 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IIdentityProviderOperations IdentityProvider { get; private set; }
 
         /// <summary>
+        /// Gets the IIssueOperations.
+        /// </summary>
+        public virtual IIssueOperations Issue { get; private set; }
+
+        /// <summary>
         /// Gets the ILoggerOperations.
         /// </summary>
         public virtual ILoggerOperations Logger { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkStatusOperations.
+        /// </summary>
+        public virtual INetworkStatusOperations NetworkStatus { get; private set; }
 
         /// <summary>
         /// Gets the INotificationOperations.
@@ -237,14 +247,19 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual INotificationRecipientEmailOperations NotificationRecipientEmail { get; private set; }
 
         /// <summary>
-        /// Gets the INetworkStatusOperations.
-        /// </summary>
-        public virtual INetworkStatusOperations NetworkStatus { get; private set; }
-
-        /// <summary>
         /// Gets the IOpenIdConnectProviderOperations.
         /// </summary>
         public virtual IOpenIdConnectProviderOperations OpenIdConnectProvider { get; private set; }
+
+        /// <summary>
+        /// Gets the IPolicyOperations.
+        /// </summary>
+        public virtual IPolicyOperations Policy { get; private set; }
+
+        /// <summary>
+        /// Gets the IPolicySnippetOperations.
+        /// </summary>
+        public virtual IPolicySnippetOperations PolicySnippet { get; private set; }
 
         /// <summary>
         /// Gets the ISignInSettingsOperations.
@@ -302,6 +317,11 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IQuotaByPeriodKeysOperations QuotaByPeriodKeys { get; private set; }
 
         /// <summary>
+        /// Gets the IRegionOperations.
+        /// </summary>
+        public virtual IRegionOperations Region { get; private set; }
+
+        /// <summary>
         /// Gets the IReportsOperations.
         /// </summary>
         public virtual IReportsOperations Reports { get; private set; }
@@ -315,21 +335,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Gets the ITagResourceOperations.
         /// </summary>
         public virtual ITagResourceOperations TagResource { get; private set; }
-
-        /// <summary>
-        /// Gets the ITagOperations.
-        /// </summary>
-        public virtual ITagOperations Tag { get; private set; }
-
-        /// <summary>
-        /// Gets the ITagDescriptionOperations.
-        /// </summary>
-        public virtual ITagDescriptionOperations TagDescription { get; private set; }
-
-        /// <summary>
-        /// Gets the IOperationOperations.
-        /// </summary>
-        public virtual IOperationOperations Operation { get; private set; }
 
         /// <summary>
         /// Gets the ITenantAccessOperations.
@@ -367,9 +372,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         public virtual IUserIdentitiesOperations UserIdentities { get; private set; }
 
         /// <summary>
-        /// Gets the IApiVersionSetOperations.
+        /// Gets the IUserConfirmationPasswordOperations.
         /// </summary>
-        public virtual IApiVersionSetOperations ApiVersionSet { get; private set; }
+        public virtual IUserConfirmationPasswordOperations UserConfirmationPassword { get; private set; }
 
         /// <summary>
         /// Gets the IApiExportOperations.
@@ -617,40 +622,43 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </summary>
         private void Initialize()
         {
-            Policy = new PolicyOperations(this);
-            PolicySnippets = new PolicySnippetsOperations(this);
-            Regions = new RegionsOperations(this);
             Api = new ApiOperations(this);
-            ApiRevisions = new ApiRevisionsOperations(this);
+            ApiRevision = new ApiRevisionOperations(this);
             ApiRelease = new ApiReleaseOperations(this);
             ApiOperation = new ApiOperationOperations(this);
             ApiOperationPolicy = new ApiOperationPolicyOperations(this);
+            Tag = new TagOperations(this);
             ApiProduct = new ApiProductOperations(this);
             ApiPolicy = new ApiPolicyOperations(this);
             ApiSchema = new ApiSchemaOperations(this);
             ApiDiagnostic = new ApiDiagnosticOperations(this);
-            ApiDiagnosticLogger = new ApiDiagnosticLoggerOperations(this);
             ApiIssue = new ApiIssueOperations(this);
             ApiIssueComment = new ApiIssueCommentOperations(this);
             ApiIssueAttachment = new ApiIssueAttachmentOperations(this);
+            ApiTagDescription = new ApiTagDescriptionOperations(this);
+            Operation = new OperationOperations(this);
+            ApiVersionSet = new ApiVersionSetOperations(this);
             AuthorizationServer = new AuthorizationServerOperations(this);
             Backend = new BackendOperations(this);
+            Cache = new CacheOperations(this);
             Certificate = new CertificateOperations(this);
             ApiManagementOperations = new ApiManagementOperations(this);
             ApiManagementServiceSkus = new ApiManagementServiceSkusOperations(this);
             ApiManagementService = new ApiManagementServiceOperations(this);
             Diagnostic = new DiagnosticOperations(this);
-            DiagnosticLogger = new DiagnosticLoggerOperations(this);
             EmailTemplate = new EmailTemplateOperations(this);
             Group = new GroupOperations(this);
             GroupUser = new GroupUserOperations(this);
             IdentityProvider = new IdentityProviderOperations(this);
+            Issue = new IssueOperations(this);
             Logger = new LoggerOperations(this);
+            NetworkStatus = new NetworkStatusOperations(this);
             Notification = new NotificationOperations(this);
             NotificationRecipientUser = new NotificationRecipientUserOperations(this);
             NotificationRecipientEmail = new NotificationRecipientEmailOperations(this);
-            NetworkStatus = new NetworkStatusOperations(this);
             OpenIdConnectProvider = new OpenIdConnectProviderOperations(this);
+            Policy = new PolicyOperations(this);
+            PolicySnippet = new PolicySnippetOperations(this);
             SignInSettings = new SignInSettingsOperations(this);
             SignUpSettings = new SignUpSettingsOperations(this);
             DelegationSettings = new DelegationSettingsOperations(this);
@@ -662,12 +670,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             Property = new PropertyOperations(this);
             QuotaByCounterKeys = new QuotaByCounterKeysOperations(this);
             QuotaByPeriodKeys = new QuotaByPeriodKeysOperations(this);
+            Region = new RegionOperations(this);
             Reports = new ReportsOperations(this);
             Subscription = new SubscriptionOperations(this);
             TagResource = new TagResourceOperations(this);
-            Tag = new TagOperations(this);
-            TagDescription = new TagDescriptionOperations(this);
-            Operation = new OperationOperations(this);
             TenantAccess = new TenantAccessOperations(this);
             TenantAccessGit = new TenantAccessGitOperations(this);
             TenantConfiguration = new TenantConfigurationOperations(this);
@@ -675,10 +681,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             UserGroup = new UserGroupOperations(this);
             UserSubscription = new UserSubscriptionOperations(this);
             UserIdentities = new UserIdentitiesOperations(this);
-            ApiVersionSet = new ApiVersionSetOperations(this);
+            UserConfirmationPassword = new UserConfirmationPasswordOperations(this);
             ApiExport = new ApiExportOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-01-01";
+            ApiVersion = "2019-01-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

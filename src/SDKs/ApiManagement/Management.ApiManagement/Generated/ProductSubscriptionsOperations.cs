@@ -119,17 +119,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (productId != null)
             {
-                if (productId.Length > 80)
+                if (productId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "productId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "productId", 256);
                 }
                 if (productId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "productId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(productId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "productId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "productId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
