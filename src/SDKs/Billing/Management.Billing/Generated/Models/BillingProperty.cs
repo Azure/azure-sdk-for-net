@@ -35,27 +35,31 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="productId">Product Id.</param>
         /// <param name="billingTenantId">Billing tenant Id.</param>
         /// <param name="billingAccountId">Billing account Id.</param>
         /// <param name="billingAccountName">Billing account name.</param>
         /// <param name="billingProfileId">Billing profile Id.</param>
         /// <param name="billingProfileName">Billing profile name.</param>
+        /// <param name="costCenter">Cost center name.</param>
         /// <param name="invoiceSectionId">Invoice Section Id.</param>
         /// <param name="invoiceSectionName">Invoice Section name.</param>
+        /// <param name="productId">Product Id.</param>
+        /// <param name="productName">Product name.</param>
         /// <param name="skuId">SKU Id.</param>
         /// <param name="skuDescription">SKU description.</param>
-        public BillingProperty(string id = default(string), string name = default(string), string type = default(string), string productId = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountName = default(string), string billingProfileId = default(string), string billingProfileName = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string skuId = default(string), string skuDescription = default(string))
+        public BillingProperty(string id = default(string), string name = default(string), string type = default(string), string billingTenantId = default(string), string billingAccountId = default(string), string billingAccountName = default(string), string billingProfileId = default(string), string billingProfileName = default(string), string costCenter = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string productId = default(string), string productName = default(string), string skuId = default(string), string skuDescription = default(string))
             : base(id, name, type)
         {
-            ProductId = productId;
             BillingTenantId = billingTenantId;
             BillingAccountId = billingAccountId;
             BillingAccountName = billingAccountName;
             BillingProfileId = billingProfileId;
             BillingProfileName = billingProfileName;
+            CostCenter = costCenter;
             InvoiceSectionId = invoiceSectionId;
             InvoiceSectionName = invoiceSectionName;
+            ProductId = productId;
+            ProductName = productName;
             SkuId = skuId;
             SkuDescription = skuDescription;
             CustomInit();
@@ -65,12 +69,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets product Id.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.productId")]
-        public string ProductId { get; private set; }
 
         /// <summary>
         /// Gets billing tenant Id.
@@ -103,6 +101,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string BillingProfileName { get; private set; }
 
         /// <summary>
+        /// Gets cost center name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.costCenter")]
+        public string CostCenter { get; private set; }
+
+        /// <summary>
         /// Gets invoice Section Id.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceSectionId")]
@@ -113,6 +117,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceSectionName")]
         public string InvoiceSectionName { get; private set; }
+
+        /// <summary>
+        /// Gets product Id.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.productId")]
+        public string ProductId { get; private set; }
+
+        /// <summary>
+        /// Gets product name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.productName")]
+        public string ProductName { get; private set; }
 
         /// <summary>
         /// Gets SKU Id.
