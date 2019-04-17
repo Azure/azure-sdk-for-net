@@ -154,8 +154,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             //Etag tests
             var testSettingEtagDiff = testSettingsameCase.Clone();
-            testSettingsameCase.ETag = new ETag(Guid.NewGuid().ToString());
-            testSettingEtagDiff.ETag = new ETag(Guid.NewGuid().ToString());
+            testSettingsameCase.ETag = Guid.NewGuid().ToString();
+            testSettingEtagDiff.ETag = Guid.NewGuid().ToString();
             Assert.AreNotEqual(testSettingsameCase, testSettingEtagDiff);
 
             // Different tags

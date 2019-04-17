@@ -48,7 +48,7 @@ namespace Azure.ApplicationModel.Configuration
             if (root.TryGetProperty("value", out var value)) setting.Value = value.GetString();
             if (root.TryGetProperty("label", out var labelValue)) setting.Label = labelValue.GetString();
             if (root.TryGetProperty("content_type", out var contentValue)) setting.ContentType = contentValue.GetString();
-            if (root.TryGetProperty("etag", out var eTagValue)) setting.ETag = new ETag(eTagValue.GetString());
+            if (root.TryGetProperty("etag", out var eTagValue)) setting.ETag = eTagValue.GetString();
             if (root.TryGetProperty("last_modified", out var lastModified))
             {
                 if(lastModified.Type == JsonValueType.Null)

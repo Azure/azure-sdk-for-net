@@ -154,7 +154,7 @@ namespace Azure.ApplicationModel.Configuration
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
+        public async Task<Response> DeleteAsync(string key, string label = default, string etag = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 

@@ -55,7 +55,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <summary>
         /// An ETag indicating the state of a key-value within a configuration store.
         /// </summary>
-        public ETag ETag { get; set; }
+        public string ETag { get; set; }
 
         /// <summary>
         /// The last time a modifying operation was performed on the given key-value.
@@ -102,7 +102,7 @@ namespace Azure.ApplicationModel.Configuration
             if (!string.Equals(Label, other.Label, StringComparison.Ordinal)) return false;
             if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal)) return false;
             if (!TagsEquals(other.Tags)) return false;
-            
+
             return true;
         }
 
