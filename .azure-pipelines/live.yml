@@ -13,63 +13,6 @@ variables:
   DotNetCoreVersion: '2.1.503'
 
 jobs:
-  - job: 'Build'
-
-    pool:
-      vmImage: 'vs2017-win2016'
-
-    steps:
-      - task: DotNetCoreInstaller@0
-        displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
-        inputs:
-          version: '$(DotNetCoreVersion)'
-
-      - script: 'dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false'
-        displayName: 'Build and Package'
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-
-      - task: PublishBuildArtifacts@1
-        condition: succeededOrFailed()
-        displayName: 'Publish Artifacts'
-        inputs:
-          ArtifactName: packages
-
-  - job: 'Analyze'
-
-    dependsOn:
-      - 'Build'
-
-    pool:
-      vmImage: 'vs2017-win2016'
-
-    steps:
-      - task: UsePythonVersion@0
-        displayName: 'Use Python 3.6'
-        inputs:
-          versionSpec: '3.6'
-
-      - script: |
-          pip install setuptools wheel
-          pip install doc-warden
-          ward scan -d $(Build.SourcesDirectory) -c $(Build.SourcesDirectory)/eng/.docsettings.yml
-        displayName: 'Verify Readmes'
-
-      - task: DownloadBuildArtifacts@0
-        displayName: 'Download Build Artifacts'
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-        inputs:
-          artifactName: packages
-          downloadPath: $(System.DefaultWorkingDirectory)
-
-      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
-        displayName: 'Component Detection'
-        # ComponentGovernance is currently unable to run on pull requests of public projects.  Running on
-        # scheduled builds should be good enough.
-        condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
-
   - job: 'Test'
 
     strategy:
@@ -107,15 +50,18 @@ jobs:
           version: '$(DotNetCoreVersion)'
 
       - task: DotNetCoreCLI@2
-        displayName: 'Build & Test'
+        displayName: 'Build & Test (live tests)'
+        condition: ne(variables['System.TeamProject'], 'public')
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
+          APP_CONFIG_CONNECTION: $(AppConfigConnectionString)
+          AZ_SERVICE_BUS_CONNECTION: $(ServiceBusConnectionString)
         inputs:
           command: test
           projects: '$(ProjectFile)'
-          arguments: --filter TestCategory!=Live --logger trx
+          arguments: --filter TestCategory=Live --logger trx
           publishTestResults: false
 
       - task: PublishTestResults@2
