@@ -9,7 +9,7 @@
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
 	<PackageReleaseNotes>
       <![CDATA[
-        1) Added support for Cert Rotation (Cert auth based on Subject name)
+        1) Added support for KeyVault/dSMS assisted Cert Rotation 
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
