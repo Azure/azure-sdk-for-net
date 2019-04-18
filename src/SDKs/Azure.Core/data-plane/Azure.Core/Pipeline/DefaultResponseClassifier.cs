@@ -6,11 +6,9 @@ using System.IO;
 
 namespace Azure.Core.Pipeline
 {
-    public class DefaultResponseClassifier : ResponseClassifier
+    internal class DefaultResponseClassifier : ResponseClassifier
     {
-        public static DefaultResponseClassifier Singleton { get; } = new DefaultResponseClassifier();
-
-        protected DefaultResponseClassifier()
+        public DefaultResponseClassifier()
         {
         }
 
@@ -21,7 +19,7 @@ namespace Azure.Core.Pipeline
 
         public override bool IsRetriableException(Exception exception)
         {
-            return !(exception is IOException);
+            return (exception is IOException);
         }
 
         public override bool IsErrorResponse(HttpPipelineResponse pipelineResponse)

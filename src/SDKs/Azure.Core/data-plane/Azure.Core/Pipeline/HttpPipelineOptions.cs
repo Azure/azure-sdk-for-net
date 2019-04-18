@@ -20,7 +20,7 @@ namespace Azure.Core.Pipeline
 
         public string ApplicationId { get; set; }
 
-        public ResponseClassifier ResponseClassifier { get; set; } = DefaultResponseClassifier.Singleton;
+        public ResponseClassifier ResponseClassifier { get; set; } = ResponseClassifier.Default;
 
         public IServiceProvider ServiceProvider { get; set; } = EmptyServiceProvider.Singleton;
 

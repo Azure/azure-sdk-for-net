@@ -16,7 +16,7 @@ namespace Azure.ApplicationModel.Configuration
 
         public ConfigurationClientOptions()
         {
-            ResponseClassifier = new DefaultResponseClassifier();
+            ResponseClassifier = ResponseClassifier.Default;
             LoggingPolicy = Core.Pipeline.Policies.LoggingPolicy.Shared;
             RetryPolicy = new FixedRetryPolicy()
             {

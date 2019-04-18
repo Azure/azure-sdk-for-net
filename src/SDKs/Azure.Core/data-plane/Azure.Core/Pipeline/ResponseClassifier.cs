@@ -2,12 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
-using System.IO;
 
 namespace Azure.Core.Pipeline
 {
     public abstract class ResponseClassifier
     {
+        public static ResponseClassifier Default { get; } = new DefaultResponseClassifier();
+
         /// <summary>
         /// Specifies if the response should terminate the pipeline and not be retried
         /// </summary>
@@ -22,26 +23,5 @@ namespace Azure.Core.Pipeline
         /// Specifies if the response is not successful but can be retried
         /// </summary>
         public abstract bool IsErrorResponse(HttpPipelineResponse pipelineResponse);
-    }
-
-    public class DefaultResponseClassifier : ResponseClassifier
-    {
-        public static DefaultResponseClassifier Singleton { get; } = new DefaultResponseClassifier();
-
-        public override bool IsRetriableResponse(HttpPipelineResponse pipelineResponse)
-        {
-            return false;
-        }
-
-        public override bool IsRetriableException(Exception exception)
-        {
-            return !(exception is IOException);
-        }
-
-        public override bool IsErrorResponse(HttpPipelineResponse pipelineResponse)
-        {
-            var statusKind = pipelineResponse.Status / 100;
-            return statusKind == 4 || statusKind == 5;
-        }
     }
 }

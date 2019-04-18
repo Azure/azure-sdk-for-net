@@ -173,7 +173,7 @@ namespace Azure.Core.Tests
 
         protected abstract (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3);
 
-        protected class MockResponseClassifier: DefaultResponseClassifier
+        protected class MockResponseClassifier: ResponseClassifier
         {
             private readonly int[] _retriableCodes;
 
@@ -193,6 +193,11 @@ namespace Azure.Core.Tests
             public override bool IsRetriableException(Exception exception)
             {
                 return _exceptionFilter != null && _exceptionFilter(exception);
+            }
+
+            public override bool IsErrorResponse(HttpPipelineResponse pipelineResponse)
+            {
+                return Default.IsErrorResponse(pipelineResponse);
             }
         }
     }

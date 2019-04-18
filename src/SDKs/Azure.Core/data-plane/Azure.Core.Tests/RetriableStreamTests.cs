@@ -19,15 +19,15 @@ namespace Azure.Core.Tests
         public async Task MaintainsGlobalLengthAndPosition()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            var stream2 = new MockReadStream(50, offset: 50);
+            var stream2 = new MockReadStream(50, offset: 50, throwIOException: false);
 
             var mockTransport = new MockTransport(
                 new MockResponse(200) { ResponseContentStream = stream1 },
                 new MockResponse(200) { ResponseContentStream = stream2 }
-                );
+            );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), maxRetries: 5);
+            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), ResponseClassifier.Default, maxRetries: 5);
 
             Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
@@ -46,9 +46,36 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task DoesntRetryNonRetryableExceptions()
+        {
+            var stream1 = new MockReadStream(100, throwAfter: 50);
+            var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
+
+            var mockTransport = new MockTransport(
+                new MockResponse(200) { ResponseContentStream = stream1 },
+                new MockResponse(200) { ResponseContentStream = stream2 }
+            );
+            var pipeline = new HttpPipeline(mockTransport);
+
+            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), ResponseClassifier.Default, maxRetries: 5);
+
+            Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 0, 25));
+            Assert.AreEqual(100, reliableStream.Length);
+            Assert.AreEqual(25, reliableStream.Position);
+
+            Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 25, 25));
+            Assert.AreEqual(100, reliableStream.Length);
+            Assert.AreEqual(50, reliableStream.Position);
+
+            Assert.ThrowsAsync<InvalidOperationException>(() => reliableStream.ReadAsync(_buffer, 50, 50));
+
+            AssertReads(_buffer, 50);
+        }
+
+        [Test]
         public void ThrowsIfInitialRequestThrow()
         {
-            Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.Create(_ => throw new InvalidOperationException(), 5));
+            Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.Create(_ => throw new InvalidOperationException(), ResponseClassifier.Default, 5));
         }
 
         [Test]
@@ -70,7 +97,7 @@ namespace Azure.Core.Tests
                     {
                         throw new InvalidOperationException();
                     }
-                }, maxRetries: 5);
+                }, ResponseClassifier.Default, maxRetries: 5);
 
             await reliableStream.ReadAsync(_buffer, 0, 25);
             await reliableStream.ReadAsync(_buffer, 25, 25);
@@ -100,7 +127,7 @@ namespace Azure.Core.Tests
                     }
 
                     throw new InvalidOperationException();
-                }, maxRetries: 3);
+                }, ResponseClassifier.Default, maxRetries: 3);
 
             var aggregateException = Assert.ThrowsAsync<AggregateException>(() => reliableStream.ReadAsync(_buffer, 0, 4));
             StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);
@@ -137,10 +164,13 @@ namespace Azure.Core.Tests
 
             private byte _offset;
 
-            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0)
+            private readonly bool _throwIOException;
+
+            public MockReadStream(long length, long throwAfter = int.MaxValue, byte offset = 0, bool throwIOException = true)
             {
                 _throwAfter = throwAfter;
                 _offset = offset;
+                _throwIOException = throwIOException;
                 Length = length;
             }
 
@@ -152,7 +182,11 @@ namespace Azure.Core.Tests
 
                 if (Position > _throwAfter)
                 {
-                    throw new IOException($"Failed at {_offset}");
+                    if (_throwIOException)
+                    {
+                        throw new IOException($"Failed at {_offset}");
+                    }
+                    throw new InvalidOperationException();
                 }
 
                 for (int i = 0; i < left; i++)

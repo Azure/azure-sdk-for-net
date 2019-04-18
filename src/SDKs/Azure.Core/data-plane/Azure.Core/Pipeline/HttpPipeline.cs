@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
         public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, IServiceProvider services = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
-            _responseClassifier = responseClassifier ?? DefaultResponseClassifier.Singleton;
+            _responseClassifier = responseClassifier ?? ResponseClassifier.Default;
 
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
