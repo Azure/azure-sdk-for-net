@@ -3,16 +3,15 @@
 
 namespace Microsoft.Rest.Azure.Authentication
 {
-    using System;
-    using System.Net.Http.Headers;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.IdentityModel.Clients.ActiveDirectory;
     using Microsoft.Rest.Azure.Authentication.Internal;
     using Microsoft.Rest.ClientRuntime.Azure.Authentication.Properties;
-    using System.Collections.Generic;
-    using System.Security.Cryptography.X509Certificates;
     using Microsoft.Rest.ClientRuntime.Azure.Authentication.Utilities;
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http.Headers;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Provides tokens for Azure Active Directory applications. 
@@ -269,27 +268,101 @@ namespace Microsoft.Rest.Azure.Authentication
         #region Cert
 
 #if !net452
+
+        /// <summary>
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// service settings (authority, token audience) for log in to azure resource manager during authentication.
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// for detailed instructions on creating an Azure Active Directory application.
+        /// </summary>
+        /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
+        /// <param name="clientId">The active directory clientId for the application.</param>
+        /// <param name="certificateFilePath">Path to the certificate file</param>
+        /// <param name="IsCertificateRollOverEnabled">Set it to true if certificate KeyVault/dSMS assistend certificate (Auto Rotation)</param>
+        /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
         public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, string certificateFilePath, bool IsCertificateRollOverEnabled)
+        {
+            return await LoginSilentAsync(domain, clientId, certificateFilePath, certificatePassword: string.Empty, IsCertificateRollOverEnabled: IsCertificateRollOverEnabled);
+        }
+
+        /// <summary>
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// service settings (authority, token audience) for log in to azure resource manager during authentication.
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// for detailed instructions on creating an Azure Active Directory application.
+        /// </summary>
+        /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
+        /// <param name="clientId">The active directory clientId for the application.</param>
+        /// <param name="certificateFilePath">Path to certificate file</param>
+        /// <param name="certificatePassword">Certificate password</param>
+        /// <param name="IsCertificateRollOverEnabled">Set it to true if certificate KeyVault/dSMS assistend certificate (Auto Rotation)</param>
+        /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
+        public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, string certificateFilePath, string certificatePassword, bool IsCertificateRollOverEnabled)
         {
             Check.NotEmptyNotNull(domain);
             Check.NotEmptyNotNull(clientId);
             Check.FileExists(certificateFilePath);
 
-            ClientAssertionCertificate certAssertion = new ClientAssertionCertificate(clientId, certificateFilePath);
+            ClientAssertionCertificate certAssertion = null;
+            if (string.IsNullOrEmpty(certificatePassword))
+            {
+                certAssertion = new ClientAssertionCertificate(clientId, certificateFilePath);
+            }
+            else
+            {
+                certAssertion = new ClientAssertionCertificate(clientId, certificateFilePath, certificatePassword);
+            }
+            
             CertificateAuthenticationProvider certAuthProvider = new CertificateAuthenticationProvider(certAssertion, IsCertificateRollOverEnabled);
 
             return await LoginSilentAsync(domain, clientId, certAuthProvider);
         }
 
-        public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, bool IsCertifcateRollOverEnabled)
+        /// <summary>
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// service settings (authority, token audience) for log in to azure resource manager during authentication.
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// for detailed instructions on creating an Azure Active Directory application.
+        /// </summary>        
+        /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
+        /// <param name="clientId">The active directory clientId for the application.</param>
+        /// <param name="certificate">The certificate associated with Active Directory application.</param>
+        /// <param name="IsCertificateRollOverEnabled">Set it to true if certificate KeyVault/dSMS assistend certificate (Auto Rotation)</param>
+        /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
+        public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, bool IsCertificateRollOverEnabled)
+        {
+            return await LoginSilentAsync(domain, clientId, certificate, certificatePassword: string.Empty, IsCertificateRollOverEnabled: IsCertificateRollOverEnabled);
+        }
+
+        /// <summary>
+        /// Creates ServiceClientCredentials for authenticating requests as an active directory application using certificate credentials. Uses the default token cache and the default 
+        /// service settings (authority, token audience) for log in to azure resource manager during authentication.
+        /// See <see href="https://azure.microsoft.com/en-us/documentation/articles/active-directory-devquickstarts-dotnet/">Active Directory Quickstart for .Net</see> 
+        /// for detailed instructions on creating an Azure Active Directory application.
+        /// </summary>
+        /// <param name="domain">The active directory domain or tenantId to authenticate with.</param>
+        /// <param name="clientId">The active directory clientId for the application.</param>
+        /// <param name="certificate">The certificate associated with Active Directory application.</param>
+        /// <param name="certificatePassword">Certificate password</param>
+        /// <param name="IsCertificateRollOverEnabled">Set it to true if certificate KeyVault/dSMS assistend certificate (Auto Rotation)</param>
+        /// <returns>A ServiceClientCredentials object that can authenticate http requests as the given application.</returns>
+        public static async Task<ServiceClientCredentials> LoginSilentAsync(string domain, string clientId, byte[] certificate, string certificatePassword, bool IsCertificateRollOverEnabled)
         {
             Check.NotEmptyNotNull(domain);
             Check.NotEmptyNotNull(clientId);
 
-            ClientAssertionCertificate certAssertion = new ClientAssertionCertificate(clientId, certificate);
-            CertificateAuthenticationProvider cap = new CertificateAuthenticationProvider(certAssertion, IsCertifcateRollOverEnabled);
-
-            return await LoginSilentAsync(domain, clientId, cap);
+            ClientAssertionCertificate certAssertion = null;
+            if (string.IsNullOrEmpty(certificatePassword))
+            {
+                certAssertion = new ClientAssertionCertificate(clientId, certificate);
+            }
+            else
+            {
+                certAssertion = new ClientAssertionCertificate(clientId, certificate, certificatePassword);
+            }
+            
+            CertificateAuthenticationProvider certAuthProvider = new CertificateAuthenticationProvider(certAssertion, IsCertificateRollOverEnabled);
+            return await LoginSilentAsync(domain, clientId, certAuthProvider);
         }
 
 #endif

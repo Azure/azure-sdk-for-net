@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-
 namespace Az.Auth.NetCore.Test
 {
     using Microsoft.Rest;
@@ -13,10 +12,10 @@ namespace Az.Auth.NetCore.Test
 
     public class LoginTests
     {
-        //[Fact]
+        [Fact(Skip ="needs cert to be provided in order to test")]
         public void TestCertAuthWithCertRotation()
         {
-            string certFilePath = @"C:\Users\Desktop\CertRotation\testAme.crt";
+            string certFilePath = @"";
             string tenantId = @"";
             string clientId = @"";
 

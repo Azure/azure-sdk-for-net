@@ -38,6 +38,9 @@ namespace Microsoft.Rest.Azure.Authentication
         public ClientAssertionCertificate(string clientId, string certificateFilePath) 
             : this(clientId, new X509Certificate2(certificateFilePath)) { }
 
+        public ClientAssertionCertificate(string clientId, string certificateFilePath, string certificatePassword)
+            : this(clientId, new X509Certificate2(certificateFilePath, certificatePassword)) { }
+
         public byte[] Sign(string message)
         {
             using (var key = certificate.GetRSAPrivateKey())
