@@ -133,10 +133,10 @@ namespace Azure.ApplicationModel.Configuration
         public override int GetHashCode()
         {
             var hashCode = new HashCodeBuilder();
-            hashCode.Add(Key, StringComparer.InvariantCultureIgnoreCase);
-            hashCode.Add(Label, StringComparer.InvariantCultureIgnoreCase);
-            hashCode.Add(Value, StringComparer.InvariantCultureIgnoreCase);
-            hashCode.Add(ContentType, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(Key, StringComparer.Ordinal);
+            hashCode.Add(Label, StringComparer.Ordinal);
+            hashCode.Add(Value, StringComparer.Ordinal);
+            hashCode.Add(ContentType, StringComparer.Ordinal);
             hashCode.Add(LastModified);
             hashCode.Add(ETag);
             hashCode.Add(Locked);

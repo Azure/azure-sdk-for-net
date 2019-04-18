@@ -89,7 +89,7 @@ namespace Azure.ApplicationModel.Configuration
             hashCode.Add(Labels);
             hashCode.Add(AsOf);
             hashCode.Add(Fields);
-            hashCode.Add(BatchLink, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(BatchLink, StringComparer.Ordinal);
             return hashCode.ToHashCode();
         }
 
