@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="1.0.2" />
-    <PackageReference Include="Microsoft.Azure.Graph.RBAC" Version="3.8.0-preview" />
     <ProjectReference Include="..\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
     <ProjectReference Include="..\..\Management\Search.Management.Tests\Search.Management.Tests.csproj" />
   </ItemGroup>
@@ -23,10 +22,6 @@
   <!--Do not remove until VS Test Tools fixes #472-->
   <ItemGroup>
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Update="Microsoft.Azure.Test.HttpRecorder" Version="1.13.3" />
-    <PackageReference Update="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="1.7.6" />
   </ItemGroup>
  
 </Project>
