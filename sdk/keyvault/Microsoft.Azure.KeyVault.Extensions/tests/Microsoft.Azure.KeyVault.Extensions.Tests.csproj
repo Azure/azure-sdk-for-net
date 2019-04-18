@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <Description>Microsoft Azure Key Vault Extensions tests</Description>
     <Version>1.0.0</Version>
@@ -12,11 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault.Cryptography\Microsoft.Azure.KeyVault.Cryptography.csproj" />
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault.Extensions\Microsoft.Azure.KeyVault.Extensions.csproj" />
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault.Core\Microsoft.Azure.KeyVault.Core.csproj" />
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault.TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.KeyVault\src\Microsoft.Azure.KeyVault.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.Cryptography\src\Microsoft.Azure.KeyVault.Cryptography.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.KeyVault.Extensions.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.Core\src\Microsoft.Azure.KeyVault.Core.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.KeyVault\tests\TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">

@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
     <Description>Microsoft.Azure.KeyVault.Tests Class Library</Description>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
@@ -14,8 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.csproj" />
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault.TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
+    <Compile Remove="TestFramework\**\*.cs" />
+    <ProjectReference Include="..\src\Microsoft.Azure.KeyVault.csproj" />
+    <ProjectReference Include="TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
