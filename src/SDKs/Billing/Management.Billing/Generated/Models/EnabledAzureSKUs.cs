@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Billing.Models
     using System.Linq;
 
     /// <summary>
-    /// Details about the enable azure sku.
+    /// Details about the enabled azure sku.
     /// </summary>
     public partial class EnabledAzureSKUs
     {
