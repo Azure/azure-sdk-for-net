@@ -156,14 +156,14 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteCanUseHitHighlighting()
         {
-            var expectedText = new List<String>() { "police", "polite" };
-            var expectedQueryPlusText = new List<String>() { "<b>police</b>", "<b>polite</b>" };
+            var expectedText = new List<String>() { "pool", "popular" };
+            var expectedQueryPlusText = new List<String>() { "<b>pool</b>", "<b>popular</b>" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
                 AutocompleteMode = AutocompleteMode.OneTerm,
-                Filter = "baseRate gt 200 or baseRate lt 100",
+                Filter = "hotelName eq 'EconoStay' or hotelName eq 'Fancy Stay'",
                 HighlightPreTag = "<b>",
                 HighlightPostTag = "</b>",
             };
@@ -242,7 +242,6 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteWithFilter()
         {
-
             var expectedText = new List<String>() { "polite" };
             var expectedQueryPlusText = new List<String>() { "polite" };
 
@@ -269,7 +268,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 AutocompleteMode = AutocompleteMode.OneTerm,
                 UseFuzzyMatching = true,
-                Filter = "hotelId ne '6' and (baseRate gt 200 or tags/any(t : t eq 'budget'))"
+                Filter = "hotelId ne '6' and (hotelName eq 'Modern Stay' or tags/any(t : t eq 'budget'))"
             };
 
             AutocompleteResult response = client.Documents.Autocomplete("mod", "sg", autocompleteParameters);
