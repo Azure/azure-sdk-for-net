@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// 'Microsoft.NetApp/netAppAccount/capacityPools',
         /// 'Microsoft.NetApp/netAppAccount/capacityPools/volumes',
         /// 'Microsoft.NetApp/netAppAccount/capacityPools/volumes/snapshots'</param>
-        /// <param name="resourceGroup">Is fully qualified domain name.</param>
+        /// <param name="resourceGroup">Resource group name.</param>
         public ResourceNameAvailabilityRequest(string name, string type, string resourceGroup)
         {
             Name = name;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets is fully qualified domain name.
+        /// Gets or sets resource group name.
         /// </summary>
         [JsonProperty(PropertyName = "resourceGroup")]
         public string ResourceGroup { get; set; }
