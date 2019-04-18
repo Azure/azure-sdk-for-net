@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// message are deserialized this collection</param>
         /// <param name="allOf">The list of metric criteria for this 'all of'
         /// operation. </param>
-        public MetricAlertSingleResourceMultipleMetricCriteria(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<MetricCriteria> allOf = default(IList<MetricCriteria>))
+        public MetricAlertSingleResourceMultipleMetricCriteria(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), IList<StaticMetricCriteria> allOf = default(IList<StaticMetricCriteria>))
             : base(additionalProperties)
         {
             AllOf = allOf;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// operation.
         /// </summary>
         [JsonProperty(PropertyName = "allOf")]
-        public IList<MetricCriteria> AllOf { get; set; }
+        public IList<StaticMetricCriteria> AllOf { get; set; }
 
     }
 }
