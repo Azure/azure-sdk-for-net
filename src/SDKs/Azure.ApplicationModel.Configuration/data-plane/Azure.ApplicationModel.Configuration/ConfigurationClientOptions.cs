@@ -9,7 +9,6 @@ namespace Azure.ApplicationModel.Configuration
 {
     public class ConfigurationClientOptions: HttpClientOptions
     {
-        public ResponseClassifier ResponseClassifier { get; set; }
 
         public FixedRetryPolicy RetryPolicy { get; set; }
 

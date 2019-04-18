@@ -68,7 +68,7 @@ namespace Azure.Core.Pipeline
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), responseClassifier, options.ServiceProvider);
+            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, options.ServiceProvider);
         }
     }
 }
