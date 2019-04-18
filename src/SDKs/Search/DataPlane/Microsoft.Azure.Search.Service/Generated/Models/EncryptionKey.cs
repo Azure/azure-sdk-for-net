@@ -15,9 +15,9 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// The configuration to use encryption with customer-managed keys. This
-    /// information will be used to encrypt or decrypt the data you have
-    /// protected using your own keys.
+    /// A customer-managed encryption key in Azure Key Vault. Keys that you
+    /// create and manage can be used to encrypt or decrypt data-at-rest in
+    /// Azure Search, such as indexes and synonym maps.
     /// </summary>
     public partial class EncryptionKey
     {
@@ -32,19 +32,17 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the EncryptionKey class.
         /// </summary>
-        /// <param name="keyVaultKeyName">The name of the key, from your Azure
-        /// KeyVault, you wish to use to protect your data. </param>
-        /// <param name="keyVaultKeyVersion">The specific version of the key,
-        /// from your Azure KeyVault, you wish to use to protect your
-        /// data.</param>
-        /// <param name="keyVaultUri">The URI of the Azure KeyVault where you
-        /// created the key you want to use to protect your data. This value is
-        /// also sometime referred to as the KeyVault DNS Name. An example
-        /// value would be :
-        /// https://your-keyvault-name.vault.azure.net.</param>
-        /// <param name="accessCredentials">The credentials to use to
-        /// authenticate to the provided KeyVault. Can be left unspecified if
-        /// MSI (Managed Service Identity) is enabled for the service.</param>
+        /// <param name="keyVaultKeyName">The name of your Azure Key Vault key
+        /// to be used to encrypt your data at rest.</param>
+        /// <param name="keyVaultKeyVersion">The version of your Azure Key
+        /// Vault key to be used to encrypt your data at rest.</param>
+        /// <param name="keyVaultUri">The URI of your Azure Key Vault, also
+        /// referred to as DNS name, that contains the key to be used to
+        /// encrypt your data at rest. An example URI might be
+        /// https://my-keyvault-name.vault.azure.net.</param>
+        /// <param name="accessCredentials">Optional Azure Active Directory
+        /// credentials used for accessing your Azure Key Vault. Not required
+        /// if using managed identity instead.</param>
         public EncryptionKey(string keyVaultKeyName, string keyVaultKeyVersion, string keyVaultUri, AzureActiveDirectoryApplicationCredentials accessCredentials = default(AzureActiveDirectoryApplicationCredentials))
         {
             KeyVaultKeyName = keyVaultKeyName;
@@ -60,32 +58,32 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the key, from your Azure KeyVault, you
-        /// wish to use to protect your data.
+        /// Gets or sets the name of your Azure Key Vault key to be used to
+        /// encrypt your data at rest.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultKeyName")]
         public string KeyVaultKeyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the specific version of the key, from your Azure
-        /// KeyVault, you wish to use to protect your data.
+        /// Gets or sets the version of your Azure Key Vault key to be used to
+        /// encrypt your data at rest.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultKeyVersion")]
         public string KeyVaultKeyVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI of the Azure KeyVault where you created the
-        /// key you want to use to protect your data. This value is also
-        /// sometime referred to as the KeyVault DNS Name. An example value
-        /// would be : https://your-keyvault-name.vault.azure.net.
+        /// Gets or sets the URI of your Azure Key Vault, also referred to as
+        /// DNS name, that contains the key to be used to encrypt your data at
+        /// rest. An example URI might be
+        /// https://my-keyvault-name.vault.azure.net.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultUri")]
         public string KeyVaultUri { get; set; }
 
         /// <summary>
-        /// Gets or sets the credentials to use to authenticate to the provided
-        /// KeyVault. Can be left unspecified if MSI (Managed Service Identity)
-        /// is enabled for the service.
+        /// Gets or sets optional Azure Active Directory credentials used for
+        /// accessing your Azure Key Vault. Not required if using managed
+        /// identity instead.
         /// </summary>
         [JsonProperty(PropertyName = "accessCredentials")]
         public AzureActiveDirectoryApplicationCredentials AccessCredentials { get; set; }
@@ -109,6 +107,10 @@ namespace Microsoft.Azure.Search.Models
             if (KeyVaultUri == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "KeyVaultUri");
+            }
+            if (AccessCredentials != null)
+            {
+                AccessCredentials.Validate();
             }
         }
     }

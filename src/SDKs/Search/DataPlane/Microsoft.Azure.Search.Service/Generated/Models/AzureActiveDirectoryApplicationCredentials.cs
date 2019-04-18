@@ -10,13 +10,14 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The credentials of the Azure Active Directory Application identity we
-    /// are going to use to authenticate to your KeyVault when we need to
-    /// access your encryption keys.
+    /// Credentials of a registered application created for your Azure Search
+    /// service, used for authenticated access to the encryption keys stored in
+    /// Azure Key Vault.
     /// </summary>
     public partial class AzureActiveDirectoryApplicationCredentials
     {
@@ -33,14 +34,14 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the
         /// AzureActiveDirectoryApplicationCredentials class.
         /// </summary>
-        /// <param name="applicationId">The is the ID of the Azure Active
-        /// Directory Application that will be used to authenticate to your
-        /// KeyVault. The Application ID is not to be confused with the Object
-        /// ID of your Azure Active Directory Application.</param>
-        /// <param name="applicationSecret">The application secret, also
-        /// sometime refered to as the authentication key value. This will be
-        /// used to authenticate to your KeyVault.</param>
-        public AzureActiveDirectoryApplicationCredentials(string applicationId = default(string), string applicationSecret = default(string))
+        /// <param name="applicationId">An AAD Application ID that was granted
+        /// the required access permissions to the Azure Key Vault that is to
+        /// be used when encrypting your data at rest. The Application ID
+        /// should not be confused with the Object ID for your AAD
+        /// Application.</param>
+        /// <param name="applicationSecret">The authentication key of the
+        /// specified AAD application.</param>
+        public AzureActiveDirectoryApplicationCredentials(string applicationId, string applicationSecret = default(string))
         {
             ApplicationId = applicationId;
             ApplicationSecret = applicationSecret;
@@ -53,21 +54,33 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the is the ID of the Azure Active Directory
-        /// Application that will be used to authenticate to your KeyVault. The
-        /// Application ID is not to be confused with the Object ID of your
-        /// Azure Active Directory Application.
+        /// Gets or sets an AAD Application ID that was granted the required
+        /// access permissions to the Azure Key Vault that is to be used when
+        /// encrypting your data at rest. The Application ID should not be
+        /// confused with the Object ID for your AAD Application.
         /// </summary>
         [JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }
 
         /// <summary>
-        /// Gets or sets the application secret, also sometime refered to as
-        /// the authentication key value. This will be used to authenticate to
-        /// your KeyVault.
+        /// Gets or sets the authentication key of the specified AAD
+        /// application.
         /// </summary>
         [JsonProperty(PropertyName = "applicationSecret")]
         public string ApplicationSecret { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ApplicationId");
+            }
+        }
     }
 }
