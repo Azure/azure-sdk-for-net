@@ -21,7 +21,7 @@ namespace Azure.Core.Tests
                 new MockResponse(500),
                 new MockResponse(1));
 
-            var pipeline = new HttpPipeline(mockTransport, new [] { new CustomRetryPolicy() });
+            var pipeline = new HttpPipeline(mockTransport, new [] { new FixedRetryPolicy() { Delay = TimeSpan.Zero, MaxRetries = 5 } }, responseClassifier: new CustomResponseClassifier());
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
@@ -30,20 +30,21 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, response.Status);
         }
 
-        class CustomRetryPolicy : RetryPolicy
+        class CustomResponseClassifier : ResponseClassifier
         {
-            protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+            public override bool IsRetriableResponse(HttpPipelineResponse pipelineResponse)
             {
-                delay = TimeSpan.Zero;
-                if (attempted > 5) return false;
-                if (message.Response.Status == 1) return false;
-                return true;
+                return pipelineResponse.Status == 500;
             }
 
-            protected override bool IsRetriableException(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
+            public override bool IsRetriableException(Exception exception)
             {
-                delay = TimeSpan.Zero;
                 return false;
+            }
+
+            public override bool IsErrorResponse(HttpPipelineResponse pipelineResponse)
+            {
+                return IsRetriableResponse(pipelineResponse);
             }
         }
 

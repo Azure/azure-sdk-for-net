@@ -11,11 +11,6 @@ namespace Azure.Core.Pipeline.Policies
         private readonly Random _random = new ThreadSafeRandom();
 
         /// <summary>
-        /// Gets or sets the maximum number of retry attempts before giving up.
-        /// </summary>
-        public int MaxRetries { get; set; } = 10;
-
-        /// <summary>
         /// Gets or sets the timespan used as a base for exponential backoff.
         /// </summary>
         public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
@@ -32,28 +27,14 @@ namespace Azure.Core.Pipeline.Policies
         {
         }
 
-        protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        protected override void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
             delay = CalculateDelay(attempted);
-
-            if (attempted > MaxRetries)
-            {
-                return false;
-            }
-
-            return !message.ResponseClassifier.IsFatalErrorResponse(message.Response);
         }
 
-        protected override bool IsRetriableException(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
+        protected override void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
         {
             delay = CalculateDelay(attempted);
-
-            if (attempted > MaxRetries)
-            {
-                return false;
-            }
-
-            return !message.ResponseClassifier.IsFatalException(exception);
         }
 
         private TimeSpan CalculateDelay(int attempted)
