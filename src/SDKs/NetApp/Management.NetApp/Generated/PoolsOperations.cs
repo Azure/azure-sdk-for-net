@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// Describe a Capacity Pool
         /// </summary>
         /// <remarks>
-        /// Get detailsof the specified capacity pool
+        /// Get details of the specified capacity pool
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

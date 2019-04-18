@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="exportPolicy">exportPolicy</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
         /// <param name="snapshotId">Snapshot ID</param>
-        /// <param name="baremetalTenantId">Baremental Tenant ID</param>
+        /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
         /// <param name="subnetId">The Azure Resource URI for a delegated
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
         public Volume(string location, string creationToken, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), long? usageThreshold = default(long?), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), string subnetId = default(string))
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public string SnapshotId { get; set; }
 
         /// <summary>
-        /// Gets baremental Tenant ID
+        /// Gets baremetal Tenant ID
         /// </summary>
         /// <remarks>
         /// Unique Baremetal Tenant Identifier.
