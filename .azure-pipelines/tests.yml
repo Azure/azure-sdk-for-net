@@ -1,4 +1,4 @@
-ernal variables:
+# External variables:
 # ProjectFile - The project to build and test. This variable is defined in pipeline web ui because we want to be able to provide it at queue time and that isn't supported in yaml yet.
 # MaxParallelTestJobs - Maximum number of parallel test jobs
 # AzConfigConnectionString - The connection string used for testing the AzConfig service. This is set in the pipeline web ui as it needs different values for public vs internal.
