@@ -34,8 +34,13 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="synonyms">A series of synonym rules in the specified
         /// synonym map format. The rules must be separated by
         /// newlines.</param>
-        /// <param name="encryptionKey">Encryption key used to encrypt the
-        /// synonym map.</param>
+        /// <param name="encryptionKey">The configuration to use when you want
+        /// to encrypt the synonym map with your own encryption key
+        /// (customer-managed key). On updates, the encryption key
+        /// configuration will stay unchanged if not specified or null.
+        /// Encryption with customer-managed keys is not available for free
+        /// services. For paid services, it is only available for services
+        /// created on or after 2019-01-1.</param>
         /// <param name="eTag">The ETag of the synonym map.</param>
         public SynonymMap(string name, string synonyms, EncryptionKey encryptionKey = default(EncryptionKey), string eTag = default(string))
         {
@@ -72,7 +77,12 @@ namespace Microsoft.Azure.Search.Models
         public string Synonyms { get; set; }
 
         /// <summary>
-        /// Gets or sets encryption key used to encrypt the synonym map.
+        /// Gets or sets the configuration to use when you want to encrypt the
+        /// synonym map with your own encryption key (customer-managed key). On
+        /// updates, the encryption key configuration will stay unchanged if
+        /// not specified or null. Encryption with customer-managed keys is not
+        /// available for free services. For paid services, it is only
+        /// available for services created on or after 2019-01-1.
         /// </summary>
         [JsonProperty(PropertyName = "encryptionKey")]
         public EncryptionKey EncryptionKey { get; set; }

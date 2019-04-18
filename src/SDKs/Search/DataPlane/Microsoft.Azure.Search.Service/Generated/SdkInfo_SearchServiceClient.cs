@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Search
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\src\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "67d6bf5c72fb183114938332e72f5d8d995f9979";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/shmed/azure-rest-api-specs/blob/ramero/encryption/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\csi\\sdk\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "shmed";
+      public static readonly String GithubBranchName = "ramero/encryption";
+      public static readonly String GithubCommidId = "7b2e6de352d50d58f771abe828243b808a8412e2";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section

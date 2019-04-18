@@ -13,6 +13,11 @@ namespace Microsoft.Azure.Search.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// The credentials of the Azure Active Directory Application identity we
+    /// are going to use to authenticate to your KeyVault when we need to
+    /// access your encryption keys.
+    /// </summary>
     public partial class AzureActiveDirectoryApplicationCredentials
     {
         /// <summary>
@@ -28,8 +33,13 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the
         /// AzureActiveDirectoryApplicationCredentials class.
         /// </summary>
-        /// <param name="applicationId">The application id.</param>
-        /// <param name="applicationSecret">The application secret.</param>
+        /// <param name="applicationId">The is the ID of the Azure Active
+        /// Directory Application that will be used to authenticate to your
+        /// KeyVault. The Application ID is not to be confused with the Object
+        /// ID of your Azure Active Directory Application.</param>
+        /// <param name="applicationSecret">The application secret, also
+        /// sometime refered to as the authentication key value. This will be
+        /// used to authenticate to your KeyVault.</param>
         public AzureActiveDirectoryApplicationCredentials(string applicationId = default(string), string applicationSecret = default(string))
         {
             ApplicationId = applicationId;
@@ -43,13 +53,18 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the application id.
+        /// Gets or sets the is the ID of the Azure Active Directory
+        /// Application that will be used to authenticate to your KeyVault. The
+        /// Application ID is not to be confused with the Object ID of your
+        /// Azure Active Directory Application.
         /// </summary>
         [JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }
 
         /// <summary>
-        /// Gets or sets the application secret.
+        /// Gets or sets the application secret, also sometime refered to as
+        /// the authentication key value. This will be used to authenticate to
+        /// your KeyVault.
         /// </summary>
         [JsonProperty(PropertyName = "applicationSecret")]
         public string ApplicationSecret { get; set; }

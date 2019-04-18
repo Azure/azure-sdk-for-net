@@ -15,7 +15,9 @@ namespace Microsoft.Azure.Search.Models
     using System.Linq;
 
     /// <summary>
-    /// Represents an encryption key in Azure Search.
+    /// The configuration to use encryption with customer-managed keys. This
+    /// information will be used to encrypt or decrypt the data you have
+    /// protected using your own keys.
     /// </summary>
     public partial class EncryptionKey
     {
@@ -30,14 +32,19 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the EncryptionKey class.
         /// </summary>
-        /// <param name="keyVaultKeyName">The name of the key vault
-        /// key.</param>
-        /// <param name="keyVaultKeyVersion">The version of the key vault
-        /// key.</param>
-        /// <param name="keyVaultUri">The URI of the key vault.</param>
+        /// <param name="keyVaultKeyName">The name of the key, from your Azure
+        /// KeyVault, you wish to use to protect your data. </param>
+        /// <param name="keyVaultKeyVersion">The specific version of the key,
+        /// from your Azure KeyVault, you wish to use to protect your
+        /// data.</param>
+        /// <param name="keyVaultUri">The URI of the Azure KeyVault where you
+        /// created the key you want to use to protect your data. This value is
+        /// also sometime referred to as the KeyVault DNS Name. An example
+        /// value would be :
+        /// https://your-keyvault-name.vault.azure.net.</param>
         /// <param name="accessCredentials">The credentials to use to
-        /// authenticate to the provided key vault. Can be left null if MSI
-        /// (Managed Service Identity) is to be used instead.</param>
+        /// authenticate to the provided KeyVault. Can be left unspecified if
+        /// MSI (Managed Service Identity) is enabled for the service.</param>
         public EncryptionKey(string keyVaultKeyName, string keyVaultKeyVersion, string keyVaultUri, AzureActiveDirectoryApplicationCredentials accessCredentials = default(AzureActiveDirectoryApplicationCredentials))
         {
             KeyVaultKeyName = keyVaultKeyName;
@@ -53,27 +60,32 @@ namespace Microsoft.Azure.Search.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the key vault key.
+        /// Gets or sets the name of the key, from your Azure KeyVault, you
+        /// wish to use to protect your data.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultKeyName")]
         public string KeyVaultKeyName { get; set; }
 
         /// <summary>
-        /// Gets or sets the version of the key vault key.
+        /// Gets or sets the specific version of the key, from your Azure
+        /// KeyVault, you wish to use to protect your data.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultKeyVersion")]
         public string KeyVaultKeyVersion { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI of the key vault.
+        /// Gets or sets the URI of the Azure KeyVault where you created the
+        /// key you want to use to protect your data. This value is also
+        /// sometime referred to as the KeyVault DNS Name. An example value
+        /// would be : https://your-keyvault-name.vault.azure.net.
         /// </summary>
         [JsonProperty(PropertyName = "keyVaultUri")]
         public string KeyVaultUri { get; set; }
 
         /// <summary>
         /// Gets or sets the credentials to use to authenticate to the provided
-        /// key vault. Can be left null if MSI (Managed Service Identity) is to
-        /// be used instead.
+        /// KeyVault. Can be left unspecified if MSI (Managed Service Identity)
+        /// is enabled for the service.
         /// </summary>
         [JsonProperty(PropertyName = "accessCredentials")]
         public AzureActiveDirectoryApplicationCredentials AccessCredentials { get; set; }

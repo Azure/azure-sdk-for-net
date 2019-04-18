@@ -49,8 +49,13 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="tokenFilters">The token filters for the index.</param>
         /// <param name="charFilters">The character filters for the
         /// index.</param>
-        /// <param name="encryptionKey">Encryption key used to encrypt the
-        /// index.</param>
+        /// <param name="encryptionKey">The configuration to use when you want
+        /// to encrypt the index with your own encryption key (customer-managed
+        /// key). On updates, the encryption key configuration will stay
+        /// unchanged if not specified or null. Encryption with
+        /// customer-managed keys is not available for free services. For paid
+        /// services, it is only available for services created on or after
+        /// 2019-01-1.</param>
         /// <param name="eTag">The ETag of the index.</param>
         public Index(string name, IList<Field> fields, IList<ScoringProfile> scoringProfiles = default(IList<ScoringProfile>), string defaultScoringProfile = default(string), CorsOptions corsOptions = default(CorsOptions), IList<Suggester> suggesters = default(IList<Suggester>), IList<Analyzer> analyzers = default(IList<Analyzer>), IList<Tokenizer> tokenizers = default(IList<Tokenizer>), IList<TokenFilter> tokenFilters = default(IList<TokenFilter>), IList<CharFilter> charFilters = default(IList<CharFilter>), EncryptionKey encryptionKey = default(EncryptionKey), string eTag = default(string))
         {
@@ -139,7 +144,12 @@ namespace Microsoft.Azure.Search.Models
         public IList<CharFilter> CharFilters { get; set; }
 
         /// <summary>
-        /// Gets or sets encryption key used to encrypt the index.
+        /// Gets or sets the configuration to use when you want to encrypt the
+        /// index with your own encryption key (customer-managed key). On
+        /// updates, the encryption key configuration will stay unchanged if
+        /// not specified or null. Encryption with customer-managed keys is not
+        /// available for free services. For paid services, it is only
+        /// available for services created on or after 2019-01-1.
         /// </summary>
         [JsonProperty(PropertyName = "encryptionKey")]
         public EncryptionKey EncryptionKey { get; set; }
