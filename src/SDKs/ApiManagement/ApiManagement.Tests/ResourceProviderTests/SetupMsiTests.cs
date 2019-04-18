@@ -22,7 +22,11 @@ namespace ApiManagement.Tests.ResourceProviderTests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var testBase = new ApiManagementTestBase(context);
+                string consumptionSkuRegion = "West US";
 
+                // setup MSI on Consumption SKU
+                testBase.serviceProperties.Location = consumptionSkuRegion;
+                testBase.serviceProperties.Sku = new ApiManagementServiceSkuProperties(SkuType.Consumption);
                 testBase.serviceProperties.Identity = new ApiManagementServiceIdentity();
                 var createdService = testBase.client.ApiManagementService.CreateOrUpdate(
                     resourceGroupName: testBase.rgName,
@@ -33,7 +37,7 @@ namespace ApiManagement.Tests.ResourceProviderTests
                     testBase.serviceName,
                     testBase.rgName,
                     testBase.subscriptionId,
-                    testBase.location,
+                    consumptionSkuRegion,
                     testBase.serviceProperties.PublisherEmail,
                     testBase.serviceProperties.PublisherName,
                     testBase.serviceProperties.Sku.Name,

@@ -3,6 +3,8 @@
 # MaxParallelTestJobs - Maximum number of parallel test jobs
 # AzConfigConnectionString - The connection string used for testing the AzConfig service. This is set in the pipeline web ui as it needs different values for public vs internal.
 # ServiceBusConnectionString - The connection string used for testing the Service Bus service. This is set in the pipeline web ui as it needs different values for public vs internal.
+# EventHubsConnectionString - The connection string to the namespace used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
+# EventHubsStorageConnectionString - The connection string to the storage account used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
 
 trigger:
   - master
@@ -22,7 +24,7 @@ jobs:
         inputs:
           version: '$(DotNetCoreVersion)'
 
-      - script: 'dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror'
+      - script: 'dotnet pack $(ProjectFile) -o $(Build.ArtifactStagingDirectory) -warnaserror /p:PublicSign=false'
         displayName: 'Build and Package'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -124,8 +126,10 @@ jobs:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          AZ_CONFIG_CONNECTION: $(AzConfigConnectionString)
+          APP_CONFIG_CONNECTION: $(AppConfigConnectionString)
           AZ_SERVICE_BUS_CONNECTION: $(ServiceBusConnectionString)
+          AZ_EVENT_HUBS_CONNECTION: $(EventHubsConnectionString)
+          AZ_EVENT_HUBS_STORAGE_CONNECTION: $(EventHubsStorageConnectionString)
         inputs:
           command: test
           projects: '$(ProjectFile)'

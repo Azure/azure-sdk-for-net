@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 using System;
-using Azure.Base.Pipeline;
-using Azure.Base.Pipeline.Policies;
+using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -18,7 +18,7 @@ namespace Azure.ApplicationModel.Configuration
         public ConfigurationClientOptions()
         {
             ResponseClassifier = new DefaultResponseClassifier();
-            LoggingPolicy = Base.Pipeline.Policies.LoggingPolicy.Shared;
+            LoggingPolicy = Core.Pipeline.Policies.LoggingPolicy.Shared;
             RetryPolicy = new FixedRetryPolicy()
             {
                 Delay =  TimeSpan.Zero,

@@ -33,15 +33,22 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            /// <param name='filter'>
+            /// |   Field     |     Usage     |     Supported operators     |     Supported
+            /// functions
+            /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
+            /// name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
+            /// endswith | &lt;/br&gt;
+            /// </param>
             /// <param name='top'>
             /// Number of records to return.
             /// </param>
             /// <param name='skip'>
             /// Number of records to skip.
             /// </param>
-            public static IPage<EmailTemplateContract> ListByService(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, int? top = default(int?), int? skip = default(int?))
+            public static IPage<EmailTemplateContract> ListByService(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string filter = default(string), int? top = default(int?), int? skip = default(int?))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, top, skip).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, filter, top, skip).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,6 +63,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
+            /// <param name='filter'>
+            /// |   Field     |     Usage     |     Supported operators     |     Supported
+            /// functions
+            /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
+            /// name | filter | ge, le, eq, ne, gt, lt | substringof, contains, startswith,
+            /// endswith | &lt;/br&gt;
+            /// </param>
             /// <param name='top'>
             /// Number of records to return.
             /// </param>
@@ -65,9 +79,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EmailTemplateContract>> ListByServiceAsync(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<EmailTemplateContract>> ListByServiceAsync(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string filter = default(string), int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, top, skip, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, filter, top, skip, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -301,9 +315,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Update parameters.
             /// </param>
-            public static void Update(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters)
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
+            public static void Update(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters, string ifMatch)
             {
-                operations.UpdateAsync(resourceGroupName, serviceName, templateName, parameters).GetAwaiter().GetResult();
+                operations.UpdateAsync(resourceGroupName, serviceName, templateName, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -332,12 +351,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Update parameters.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
+            /// update.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IEmailTemplateOperations operations, string resourceGroupName, string serviceName, string templateName, EmailTemplateUpdateParameters parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, templateName, parameters, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, templateName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

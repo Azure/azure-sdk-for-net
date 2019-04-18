@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Configuration", "Azur
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Configuration.Tests", "Azure.ApplicationModel.Configuration.Tests\Azure.Configuration.Tests.csproj", "{AAA761F4-D037-46AC-BF7A-496C15310F66}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Base", "..\..\Azure.Base\data-plane\Azure.Base\Azure.Base.csproj", "{019A28FC-EFEA-4431-872C-AB8F9C0049BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\Azure.Core\data-plane\Azure.Core\Azure.Core.csproj", "{019A28FC-EFEA-4431-872C-AB8F9C0049BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Base.Tests", "..\..\Azure.Base\data-plane\Azure.Base.Tests\Azure.Base.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests", "..\..\Azure.Core\data-plane\Azure.Core.Tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

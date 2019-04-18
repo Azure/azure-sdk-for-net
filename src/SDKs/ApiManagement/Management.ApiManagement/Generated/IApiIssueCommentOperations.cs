@@ -159,9 +159,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Create parameters.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity
-        /// state from the header response of the GET request or it should be *
-        /// for unconditional update.
+        /// ETag of the Entity. Not required when creating an entity, but
+        /// required when updating an entity.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -178,7 +177,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IssueCommentContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, IssueCommentContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IssueCommentContract,ApiIssueCommentCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, string commentId, IssueCommentContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified comment from an Issue.
         /// </summary>
@@ -201,9 +200,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Issue.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity
-        /// state from the header response of the GET request or it should be *
-        /// for unconditional update.
+        /// ETag of the Entity. ETag should match the current entity state from
+        /// the header response of the GET request or it should be * for
+        /// unconditional update.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

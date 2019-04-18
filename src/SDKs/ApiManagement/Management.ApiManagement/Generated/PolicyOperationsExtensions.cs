@@ -33,13 +33,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='scope'>
-            /// Policy scope. Possible values include: 'Tenant', 'Product', 'Api',
-            /// 'Operation', 'All'
-            /// </param>
-            public static PolicyCollection ListByService(this IPolicyOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?))
+            public static PolicyCollection ListByService(this IPolicyOperations operations, string resourceGroupName, string serviceName)
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, scope).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,16 +50,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='scope'>
-            /// Policy scope. Possible values include: 'Tenant', 'Product', 'Api',
-            /// 'Operation', 'All'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyCollection> ListByServiceAsync(this IPolicyOperations operations, string resourceGroupName, string serviceName, PolicyScopeContract? scope = default(PolicyScopeContract?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyCollection> ListByServiceAsync(this IPolicyOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, scope, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -167,9 +159,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// The policy contents to apply.
             /// </param>
-            public static PolicyContract CreateOrUpdate(this IPolicyOperations operations, string resourceGroupName, string serviceName, PolicyContract parameters)
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static PolicyContract CreateOrUpdate(this IPolicyOperations operations, string resourceGroupName, string serviceName, PolicyContract parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -188,12 +184,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// The policy contents to apply.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyContract> CreateOrUpdateAsync(this IPolicyOperations operations, string resourceGroupName, string serviceName, PolicyContract parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyContract> CreateOrUpdateAsync(this IPolicyOperations operations, string resourceGroupName, string serviceName, PolicyContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -61,24 +61,29 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
-        /// <param name="displayName">API name.</param>
+        /// <param name="subscriptionRequired">Specifies whether an API or
+        /// Product subscription is required for accessing the API.</param>
+        /// <param name="sourceApiId">API identifier of the source API.</param>
+        /// <param name="displayName">API name. Must be 1 to 300 characters
+        /// long.</param>
         /// <param name="serviceUrl">Absolute URL of the backend service
-        /// implementing this API.</param>
+        /// implementing this API. Cannot be more than 2000 characters
+        /// long.</param>
         /// <param name="protocols">Describes on which protocols the operations
         /// in this API can be invoked.</param>
-        /// <param name="contentValue">Content value when Importing an
-        /// API.</param>
-        /// <param name="contentFormat">Format of the Content in which the API
-        /// is getting imported. Possible values include: 'wadl-xml',
+        /// <param name="apiVersionSet">Version set details</param>
+        /// <param name="value">Content value when Importing an API.</param>
+        /// <param name="format">Format of the Content in which the API is
+        /// getting imported. Possible values include: 'wadl-xml',
         /// 'wadl-link-json', 'swagger-json', 'swagger-link-json', 'wsdl',
-        /// 'wsdl-link'</param>
+        /// 'wsdl-link', 'openapi', 'openapi+json', 'openapi-link'</param>
         /// <param name="wsdlSelector">Criteria to limit import of WSDL to a
         /// subset of the document.</param>
         /// <param name="soapApiType">Type of Api to create.
         /// * `http` creates a SOAP to REST API
         /// * `soap` creates a SOAP pass-through API. Possible values include:
         /// 'SoapToRest', 'SoapPassThrough'</param>
-        public ApiCreateOrUpdateParameter(string path, string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails), string contentValue = default(string), string contentFormat = default(string), ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default(ApiCreateOrUpdatePropertiesWsdlSelector), string soapApiType = default(string))
+        public ApiCreateOrUpdateParameter(string path, string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string sourceApiId = default(string), string displayName = default(string), string serviceUrl = default(string), IList<Protocol?> protocols = default(IList<Protocol?>), ApiVersionSetContractDetails apiVersionSet = default(ApiVersionSetContractDetails), string value = default(string), string format = default(string), ApiCreateOrUpdatePropertiesWsdlSelector wsdlSelector = default(ApiCreateOrUpdatePropertiesWsdlSelector), string soapApiType = default(string))
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -91,13 +96,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
+            SubscriptionRequired = subscriptionRequired;
+            SourceApiId = sourceApiId;
             DisplayName = displayName;
             ServiceUrl = serviceUrl;
             Path = path;
             Protocols = protocols;
             ApiVersionSet = apiVersionSet;
-            ContentValue = contentValue;
-            ContentFormat = contentFormat;
+            Value = value;
+            Format = format;
             WsdlSelector = wsdlSelector;
             SoapApiType = soapApiType;
             CustomInit();
@@ -149,10 +156,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ApiVersion { get; set; }
 
         /// <summary>
-        /// Gets indicates if API revision is current api revision.
+        /// Gets or sets indicates if API revision is current api revision.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isCurrent")]
-        public bool? IsCurrent { get; private set; }
+        public bool? IsCurrent { get; set; }
 
         /// <summary>
         /// Gets indicates if API revision is accessible via the gateway.
@@ -179,14 +186,27 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ApiVersionSetId { get; set; }
 
         /// <summary>
-        /// Gets or sets API name.
+        /// Gets or sets specifies whether an API or Product subscription is
+        /// required for accessing the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subscriptionRequired")]
+        public bool? SubscriptionRequired { get; set; }
+
+        /// <summary>
+        /// Gets or sets API identifier of the source API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sourceApiId")]
+        public string SourceApiId { get; set; }
+
+        /// <summary>
+        /// Gets or sets API name. Must be 1 to 300 characters long.
         /// </summary>
         [JsonProperty(PropertyName = "properties.displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets absolute URL of the backend service implementing this
-        /// API.
+        /// API. Cannot be more than 2000 characters long.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceUrl")]
         public string ServiceUrl { get; set; }
@@ -208,6 +228,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public IList<Protocol?> Protocols { get; set; }
 
         /// <summary>
+        /// Gets or sets version set details
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiVersionSet")]
         public ApiVersionSetContractDetails ApiVersionSet { get; set; }
@@ -215,16 +236,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets content value when Importing an API.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.contentValue")]
-        public string ContentValue { get; set; }
+        [JsonProperty(PropertyName = "properties.value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Gets or sets format of the Content in which the API is getting
         /// imported. Possible values include: 'wadl-xml', 'wadl-link-json',
-        /// 'swagger-json', 'swagger-link-json', 'wsdl', 'wsdl-link'
+        /// 'swagger-json', 'swagger-link-json', 'wsdl', 'wsdl-link',
+        /// 'openapi', 'openapi+json', 'openapi-link'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.contentFormat")]
-        public string ContentFormat { get; set; }
+        [JsonProperty(PropertyName = "properties.format")]
+        public string Format { get; set; }
 
         /// <summary>
         /// Gets or sets criteria to limit import of WSDL to a subset of the

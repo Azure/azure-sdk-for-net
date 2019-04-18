@@ -17,24 +17,24 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             // Retrieve the connection string from the configuration store. 
             // You can get the string from your Azure portal.
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 
             // Instantiate a client that will be used to call the service.
             var client = new ConfigurationClient(connectionString);
 
-            // Create a setting to be stored by the configuration service.
+            // Create a Configuration Setting to be stored in the Configuration Store.
             var setting = new ConfigurationSetting("some_key", "some_value");
 
-            // SetAsyc adds a new setting to the store or overrides an existing setting.
-            // Alternativelly you can call AddAsync which only succeeds if the setting does not already exist in the store.
-            // Or you can call UpdateAsync to update a setting that is already present in the store.
+            // There are two ways to store a Configuration Setting:
+            //   -AddAsync creates a setting only if the setting does not already exist in the store.
+            //   -SetAsync creates a setting if it doesn't exist or overrides an existing setting
             await client.SetAsync(setting);
 
-            // Retrieve a previously stored setting by calling GetAsync.
+            // Retrieve a previously stored Configuration Setting by calling GetAsync.
             ConfigurationSetting gotSetting = await client.GetAsync("some_key");
             Debug.WriteLine(gotSetting.Value);
 
-            // Delete the setting when you don't need it anymore.
+            // Delete the Configuration Setting from the Configuration Store when you don't need it anymore.
             await client.DeleteAsync("some_key");
         }
     }

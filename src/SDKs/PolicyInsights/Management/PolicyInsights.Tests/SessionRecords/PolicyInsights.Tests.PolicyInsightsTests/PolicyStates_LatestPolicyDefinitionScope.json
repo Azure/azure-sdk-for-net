@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/d7b13c30-e6aa-47e1-b50a-8e33f152d086/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2018-04-04&$top=10&$from=2018-04-04T00:00:00Z",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9kN2IxM2MzMC1lNmFhLTQ3ZTEtYjUwYS04ZTMzZjE1MmQwODYvcHJvdmlkZXJzL01pY3Jvc29mdC5Qb2xpY3lJbnNpZ2h0cy9wb2xpY3lTdGF0ZXMvbGF0ZXN0L3F1ZXJ5UmVzdWx0cz9hcGktdmVyc2lvbj0yMDE4LTA0LTA0JiR0b3A9MTAmJGZyb209MjAxOC0wNC0wNFQwMCUzQTAwJTNBMDBa",
+      "RequestUri": "/subscriptions/d0610b27-9663-4c05-89f8-5b4be01e86a5/providers/Microsoft.Authorization/policyDefinitions/d7b13c30-e6aa-47e1-b50a-8e33f152d086/providers/Microsoft.PolicyInsights/policyStates/latest/queryResults?api-version=2018-07-01-preview&$top=10&$from=2018-04-04T00:00:00Z",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZDA2MTBiMjctOTY2My00YzA1LTg5ZjgtNWI0YmUwMWU4NmE1L3Byb3ZpZGVycy9NaWNyb3NvZnQuQXV0aG9yaXphdGlvbi9wb2xpY3lEZWZpbml0aW9ucy9kN2IxM2MzMC1lNmFhLTQ3ZTEtYjUwYS04ZTMzZjE1MmQwODYvcHJvdmlkZXJzL01pY3Jvc29mdC5Qb2xpY3lJbnNpZ2h0cy9wb2xpY3lTdGF0ZXMvbGF0ZXN0L3F1ZXJ5UmVzdWx0cz9hcGktdmVyc2lvbj0yMDE4LTA3LTAxLXByZXZpZXcmJHRvcD0xMCYkZnJvbT0yMDE4LTA0LTA0VDAwJTNBMDAlM0EwMFo=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {

@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<ApiReleaseContract> List(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>))
+            public static IPage<ApiReleaseContract> ListByService(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>))
             {
-                return operations.ListAsync(resourceGroupName, serviceName, apiId, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, apiId, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -74,9 +74,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApiReleaseContract>> ListAsync(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApiReleaseContract>> ListByServiceAsync(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -217,9 +217,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Create parameters.
             /// </param>
-            public static ApiReleaseContract Create(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters)
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static ApiReleaseContract CreateOrUpdate(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters, string ifMatch = default(string))
             {
-                return operations.CreateAsync(resourceGroupName, serviceName, apiId, releaseId, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, apiId, releaseId, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -245,12 +249,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Create parameters.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ApiReleaseContract> CreateAsync(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ApiReleaseContract> CreateOrUpdateAsync(this IApiReleaseOperations operations, string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, releaseId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, releaseId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -400,9 +408,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ApiReleaseContract> ListNext(this IApiReleaseOperations operations, string nextPageLink)
+            public static IPage<ApiReleaseContract> ListByServiceNext(this IApiReleaseOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListByServiceNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -420,9 +428,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApiReleaseContract>> ListNextAsync(this IApiReleaseOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApiReleaseContract>> ListByServiceNextAsync(this IApiReleaseOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

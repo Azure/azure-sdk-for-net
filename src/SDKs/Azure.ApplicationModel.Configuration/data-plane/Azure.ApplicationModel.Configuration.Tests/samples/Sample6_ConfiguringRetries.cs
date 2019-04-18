@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Pipeline.Policies;
+using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
@@ -23,7 +23,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
                 Delay = TimeSpan.FromSeconds(1)
             };
 
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);

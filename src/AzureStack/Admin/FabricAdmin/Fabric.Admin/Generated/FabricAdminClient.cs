@@ -47,6 +47,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Client API Version.
+        /// </summary>
+        public string ApiVersion { get; private set; }
+
+        /// <summary>
         /// Subscription credentials that uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every service
         /// call.
@@ -70,6 +75,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
+
+        /// <summary>
+        /// Gets the IApplicationOperationResultsOperations.
+        /// </summary>
+        public virtual IApplicationOperationResultsOperations ApplicationOperationResults { get; private set; }
+
+        /// <summary>
+        /// Gets the IComputeOperationResultsOperations.
+        /// </summary>
+        public virtual IComputeOperationResultsOperations ComputeOperationResults { get; private set; }
 
         /// <summary>
         /// Gets the IFabricOperations.
@@ -127,6 +142,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public virtual IStorageSystemsOperations StorageSystems { get; private set; }
 
         /// <summary>
+        /// Gets the IVolumesOperations.
+        /// </summary>
+        public virtual IVolumesOperations Volumes { get; private set; }
+
+        /// <summary>
         /// Gets the ILogicalSubnetsOperations.
         /// </summary>
         public virtual ILogicalSubnetsOperations LogicalSubnets { get; private set; }
@@ -135,6 +155,11 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the IMacAddressPoolsOperations.
         /// </summary>
         public virtual IMacAddressPoolsOperations MacAddressPools { get; private set; }
+
+        /// <summary>
+        /// Gets the INetworkOperationResultsOperations.
+        /// </summary>
+        public virtual INetworkOperationResultsOperations NetworkOperationResults { get; private set; }
 
         /// <summary>
         /// Gets the IScaleUnitsOperations.
@@ -152,19 +177,9 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         public virtual ISlbMuxInstancesOperations SlbMuxInstances { get; private set; }
 
         /// <summary>
-        /// Gets the IDrivesOperations.
+        /// Gets the IStorageOperationResultsOperations.
         /// </summary>
-        public virtual IDrivesOperations Drives { get; private set; }
-
-        /// <summary>
-        /// Gets the IStorageSubSystemsOperations.
-        /// </summary>
-        public virtual IStorageSubSystemsOperations StorageSubSystems { get; private set; }
-
-        /// <summary>
-        /// Gets the IVolumesOperations.
-        /// </summary>
-        public virtual IVolumesOperations Volumes { get; private set; }
+        public virtual IStorageOperationResultsOperations StorageOperationResults { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the FabricAdminClient class.
@@ -407,6 +422,8 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// </summary>
         private void Initialize()
         {
+            ApplicationOperationResults = new ApplicationOperationResultsOperations(this);
+            ComputeOperationResults = new ComputeOperationResultsOperations(this);
             Fabric = new FabricOperations(this);
             EdgeGateways = new EdgeGatewaysOperations(this);
             EdgeGatewayPools = new EdgeGatewayPoolsOperations(this);
@@ -418,15 +435,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             LogicalNetworks = new LogicalNetworksOperations(this);
             StoragePools = new StoragePoolsOperations(this);
             StorageSystems = new StorageSystemsOperations(this);
+            Volumes = new VolumesOperations(this);
             LogicalSubnets = new LogicalSubnetsOperations(this);
             MacAddressPools = new MacAddressPoolsOperations(this);
+            NetworkOperationResults = new NetworkOperationResultsOperations(this);
             ScaleUnits = new ScaleUnitsOperations(this);
             ScaleUnitNodes = new ScaleUnitNodesOperations(this);
             SlbMuxInstances = new SlbMuxInstancesOperations(this);
-            Drives = new DrivesOperations(this);
-            StorageSubSystems = new StorageSubSystemsOperations(this);
-            Volumes = new VolumesOperations(this);
+            StorageOperationResults = new StorageOperationResultsOperations(this);
             BaseUri = new System.Uri("https://adminmanagement.local.azurestack.external");
+            ApiVersion = "2016-05-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

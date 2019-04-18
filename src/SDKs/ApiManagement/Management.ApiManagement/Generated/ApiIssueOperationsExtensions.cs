@@ -41,9 +41,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<IssueContract> ListByService(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>))
+            /// <param name='expandCommentsAttachments'>
+            /// Expand the comment attachments.
+            /// </param>
+            public static IPage<IssueContract> ListByService(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>), bool? expandCommentsAttachments = default(bool?))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, apiId, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, apiId, odataQuery, expandCommentsAttachments).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -65,12 +68,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='expandCommentsAttachments'>
+            /// Expand the comment attachments.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<IssueContract>> ListByServiceAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<IssueContract>> ListByServiceAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>), bool? expandCommentsAttachments = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, odataQuery, expandCommentsAttachments, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -154,9 +160,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Issue identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static IssueContract Get(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId)
+            /// <param name='expandCommentsAttachments'>
+            /// Expand the comment attachments.
+            /// </param>
+            public static IssueContract Get(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, bool? expandCommentsAttachments = default(bool?))
             {
-                return operations.GetAsync(resourceGroupName, serviceName, apiId, issueId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, apiId, issueId, expandCommentsAttachments).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -179,12 +188,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Issue identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
+            /// <param name='expandCommentsAttachments'>
+            /// Expand the comment attachments.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IssueContract> GetAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IssueContract> GetAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, bool? expandCommentsAttachments = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, issueId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, issueId, expandCommentsAttachments, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -214,9 +226,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Create parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
-            /// update.
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
             /// </param>
             public static IssueContract CreateOrUpdate(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueContract parameters, string ifMatch = default(string))
             {
@@ -247,9 +258,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Create parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
-            /// update.
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -286,11 +296,11 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Update parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Update(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch = default(string))
+            public static void Update(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch)
             {
                 operations.UpdateAsync(resourceGroupName, serviceName, apiId, issueId, parameters, ifMatch).GetAwaiter().GetResult();
             }
@@ -319,14 +329,14 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Update parameters.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, issueId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -352,8 +362,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// instance.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
             public static void Delete(this IApiIssueOperations operations, string resourceGroupName, string serviceName, string apiId, string issueId, string ifMatch)
@@ -382,8 +392,8 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// instance.
             /// </param>
             /// <param name='ifMatch'>
-            /// ETag of the Issue Entity. ETag should match the current entity state from
-            /// the header response of the GET request or it should be * for unconditional
+            /// ETag of the Entity. ETag should match the current entity state from the
+            /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
             /// <param name='cancellationToken'>

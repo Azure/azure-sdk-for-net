@@ -38,12 +38,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='tags'>
+            /// Include tags in the response.
+            /// </param>
             /// <param name='expandApiVersionSet'>
             /// Include full ApiVersionSet resource in response
             /// </param>
-            public static IPage<ApiContract> ListByService(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<ApiContract> odataQuery = default(ODataQuery<ApiContract>), bool? expandApiVersionSet = false)
+            public static IPage<ApiContract> ListByService(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<ApiContract> odataQuery = default(ODataQuery<ApiContract>), string tags = default(string), bool? expandApiVersionSet = default(bool?))
             {
-                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, expandApiVersionSet).GetAwaiter().GetResult();
+                return operations.ListByServiceAsync(resourceGroupName, serviceName, odataQuery, tags, expandApiVersionSet).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,15 +65,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='tags'>
+            /// Include tags in the response.
+            /// </param>
             /// <param name='expandApiVersionSet'>
             /// Include full ApiVersionSet resource in response
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ApiContract>> ListByServiceAsync(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<ApiContract> odataQuery = default(ODataQuery<ApiContract>), bool? expandApiVersionSet = false, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ApiContract>> ListByServiceAsync(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<ApiContract> odataQuery = default(ODataQuery<ApiContract>), string tags = default(string), bool? expandApiVersionSet = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, expandApiVersionSet, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByServiceWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, tags, expandApiVersionSet, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -385,9 +391,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<TagResourceContract> ListByTags(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>))
+            /// <param name='includeNotTaggedApis'>
+            /// Include not tagged APIs.
+            /// </param>
+            public static IPage<TagResourceContract> ListByTags(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedApis = default(bool?))
             {
-                return operations.ListByTagsAsync(resourceGroupName, serviceName, odataQuery).GetAwaiter().GetResult();
+                return operations.ListByTagsAsync(resourceGroupName, serviceName, odataQuery, includeNotTaggedApis).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -405,12 +414,81 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
+            /// <param name='includeNotTaggedApis'>
+            /// Include not tagged APIs.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TagResourceContract>> ListByTagsAsync(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TagResourceContract>> ListByTagsAsync(this IApiOperations operations, string resourceGroupName, string serviceName, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedApis = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByTagsWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTagsWithHttpMessagesAsync(resourceGroupName, serviceName, odataQuery, includeNotTaggedApis, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates new or updates existing specified API of the API Management service
+            /// instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static ApiContract BeginCreateOrUpdate(this IApiOperations operations, string resourceGroupName, string serviceName, string apiId, ApiCreateOrUpdateParameter parameters, string ifMatch = default(string))
+            {
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, serviceName, apiId, parameters, ifMatch).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates new or updates existing specified API of the API Management service
+            /// instance.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='apiId'>
+            /// API revision identifier. Must be unique in the current API Management
+            /// service instance. Non-current revision has ;rev=n as a suffix where n is
+            /// the revision number.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update parameters.
+            /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApiContract> BeginCreateOrUpdateAsync(this IApiOperations operations, string resourceGroupName, string serviceName, string apiId, ApiCreateOrUpdateParameter parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

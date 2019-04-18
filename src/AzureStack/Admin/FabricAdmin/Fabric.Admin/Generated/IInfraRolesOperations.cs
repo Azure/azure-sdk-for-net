@@ -81,7 +81,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// </exception>
         Task<AzureOperationResponse<IPage<InfraRole>>> ListWithHttpMessagesAsync(string resourceGroupName, string location, ODataQuery<InfraRole> odataQuery = default(ODataQuery<InfraRole>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Restarts the requestd infrastructure role.
+        /// Restarts the requested infrastructure role.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.
@@ -106,7 +106,7 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// </exception>
         Task<AzureOperationResponse> RestartWithHttpMessagesAsync(string resourceGroupName, string location, string infraRole, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Restarts the requestd infrastructure role.
+        /// Restarts the requested infrastructure role.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the resource group.

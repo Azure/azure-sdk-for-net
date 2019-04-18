@@ -32,5 +32,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Basic SKU of Api Management.
         /// </summary>
         public const string Basic = "Basic";
+        /// <summary>
+        /// Consumption SKU of Api Management.
+        /// </summary>
+        public const string Consumption = "Consumption";
     }
 }

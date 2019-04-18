@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base.Pipeline;
-using Azure.Base.Pipeline.Policies;
+using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
 using System.Net.Http;
@@ -43,7 +43,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // add a policy that executes once per retry
             options.PerRetryPolicies.Add(new CustomLogPolicy());
 
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
