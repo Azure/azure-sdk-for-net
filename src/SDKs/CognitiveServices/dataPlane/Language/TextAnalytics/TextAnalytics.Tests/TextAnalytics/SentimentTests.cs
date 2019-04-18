@@ -35,5 +35,6 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
                 Assert.True(result.Documents[0].Score > 0);
             }
         }
+
     }
 }
