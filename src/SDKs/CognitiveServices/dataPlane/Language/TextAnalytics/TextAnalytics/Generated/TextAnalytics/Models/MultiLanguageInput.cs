@@ -30,7 +30,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// representation of a language. For example, use "en" for English;
         /// "es" for Spanish etc.,</param>
         /// <param name="id">Unique, non-empty document identifier.</param>
-        public MultiLanguageInput(string language = default(string), string id = default(string), string text = default(string))
+        public MultiLanguageInput(string id = default(string), string text = default(string), string language = default(string))
         {
             Language = language;
             Id = id;
@@ -47,18 +47,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// Gets or sets this is the 2 letter ISO 639-1 representation of a
         /// language. For example, use "en" for English; "es" for Spanish etc.,
         /// </summary>
-        [JsonProperty(PropertyName = "language")]
+        [JsonProperty(PropertyName = "language", Order = 3)]
         public string Language { get; set; }
 
         /// <summary>
         /// Gets or sets unique, non-empty document identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id", Order = 1)]
         public string Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "text")]
+        [JsonProperty(PropertyName = "text", Order = 2)]
         public string Text { get; set; }
 
     }

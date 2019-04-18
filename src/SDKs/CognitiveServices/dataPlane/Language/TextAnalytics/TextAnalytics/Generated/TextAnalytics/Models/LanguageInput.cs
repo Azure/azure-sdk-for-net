@@ -27,7 +27,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
         /// Initializes a new instance of the LanguageInput class.
         /// </summary>
         /// <param name="id">Unique, non-empty document identifier.</param>
-        public LanguageInput(string countryHint = default(string), string id = default(string), string text = default(string))
+        public LanguageInput(string id = default(string), string text = default(string), string countryHint = default(string))
         {
             CountryHint = countryHint;
             Id = id;
@@ -42,18 +42,18 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "countryHint")]
+        [JsonProperty(PropertyName = "countryHint", Order = 3)]
         public string CountryHint { get; set; }
 
         /// <summary>
         /// Gets or sets unique, non-empty document identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty(PropertyName = "id", Order = 1)]
         public string Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "text")]
+        [JsonProperty(PropertyName = "text", Order = 2)]
         public string Text { get; set; }
 
     }

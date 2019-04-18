@@ -20,8 +20,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
             {
                 HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                LanguageBatchResult result = await client.DetectLanguageAsync(
-                    null,
+                LanguageBatchResult result = await client.DetectLanguageBatchAsync(
                     new LanguageBatchInput(
                         new List<LanguageInput>()
                         {
