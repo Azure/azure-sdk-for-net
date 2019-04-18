@@ -5,6 +5,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -131,13 +132,16 @@ namespace Azure.ApplicationModel.Configuration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            int hash = 17;
-            if (Key!=null) hash = hash * 23 + Key.GetHashCode();
-            if (Value != null) hash = hash * 23 + Value.GetHashCode();
-            if (Label != null) hash = hash * 23 + Label.GetHashCode();
-            if (ETag != null) hash = hash * 23 + ETag.GetHashCode();
-            hash = hash * 23 + LastModified.GetHashCode();
-            return hash;
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Key, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(Label, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(Value, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(ContentType, StringComparer.InvariantCultureIgnoreCase);
+            hashCode.Add(LastModified);
+            hashCode.Add(ETag);
+            hashCode.Add(Locked);
+            hashCode.Add(Tags);
+            return hashCode.ToHashCode();
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
