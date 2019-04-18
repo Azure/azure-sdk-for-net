@@ -1,4 +1,4 @@
-# External variables:
+ernal variables:
 # ProjectFile - The project to build and test. This variable is defined in pipeline web ui because we want to be able to provide it at queue time and that isn't supported in yaml yet.
 # MaxParallelTestJobs - Maximum number of parallel test jobs
 # AzConfigConnectionString - The connection string used for testing the AzConfig service. This is set in the pipeline web ui as it needs different values for public vs internal.
@@ -50,8 +50,7 @@ jobs:
           version: '$(DotNetCoreVersion)'
 
       - task: DotNetCoreCLI@2
-        displayName: 'Build & Test (live tests)'
-        condition: ne(variables['System.TeamProject'], 'public')
+        displayName: 'Build & Test (all tests)'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -61,7 +60,7 @@ jobs:
         inputs:
           command: test
           projects: '$(ProjectFile)'
-          arguments: --filter TestCategory=Live --logger trx
+          arguments: --logger trx
           publishTestResults: false
 
       - task: PublishTestResults@2
