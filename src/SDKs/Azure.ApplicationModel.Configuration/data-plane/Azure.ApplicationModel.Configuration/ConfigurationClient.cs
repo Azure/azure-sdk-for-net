@@ -17,6 +17,10 @@ namespace Azure.ApplicationModel.Configuration
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
 
+        protected ConfigurationClient()
+        {
+        }
+
         public ConfigurationClient(string connectionString)
             : this(connectionString, new ConfigurationClientOptions())
         {
