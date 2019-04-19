@@ -183,7 +183,9 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
         private static KeyVaultClient GetKeyVaultClient()
         {
-            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), new DelegatingHandler[] { HttpMockServer.CreateInstance() });
+            return new KeyVaultClient(
+                new TestKeyVaultCredential(GetAccessToken), 
+                new DelegatingHandler[] { HttpMockServer.CreateInstance() });
         }
 
         private static async Task<string> GetAccessToken(string authority, string resource, string scope)
