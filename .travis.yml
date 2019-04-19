@@ -36,11 +36,11 @@ matrix:
         - ls -al
         - ls -al TestResults
         - cat TestResults/*.log
-        
-      - language: csharp
-        stage: Mono ClientRuntime build
-        mono: latest
-        sudo: required
-        dist: trusty
-        script:
-          - ./tools/linuxScripts/runClientRuntimeTests.sh
+
+    # - language: csharp
+    #     stage: Mono ClientRuntime build
+    #     mono: latest
+    #     sudo: required
+    #     dist: trusty
+    #     script:
+    #       - ./tools/linuxScripts/runClientRuntimeTests.sh
