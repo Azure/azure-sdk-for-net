@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.HDInsight.Job", "Microsoft.Azure.HDInsight.Job\Microsoft.Azure.HDInsight.Job.csproj", "{5B3E44D5-6234-46BC-9904-882037E47F42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.HDInsight.Job", "src\Microsoft.Azure.HDInsight.Job.csproj", "{5B3E44D5-6234-46BC-9904-882037E47F42}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.HDInsight.Job.Tests", "Microsoft.Azure.HDInsight.Job.Tests\Microsoft.Azure.HDInsight.Job.Tests.csproj", "{A28C288F-9F7C-49D9-883C-E396AEC4F3E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.HDInsight.Job.Tests", "tests\Microsoft.Azure.HDInsight.Job.Tests.csproj", "{A28C288F-9F7C-49D9-883C-E396AEC4F3E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
