@@ -22,6 +22,6 @@ steps:
     condition: succeededOrFailed()
     inputs:
       testResultsFiles: '**/*.trx'
-      testRunTitle: 'Test Results for PR# $(SYSTEM_PULLREQUEST_PULLREQUESTNUMBER)'
+      testRunTitle: 'Test Results for Windows builds'
       testResultsFormat: 'VSTest'
       mergeTestResults: true
