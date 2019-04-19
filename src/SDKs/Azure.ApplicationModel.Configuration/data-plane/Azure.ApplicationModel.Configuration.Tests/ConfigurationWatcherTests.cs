@@ -8,7 +8,6 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Collections.Generic;
-using static Azure.ApplicationModel.Configuration.ConfigurationWatcher;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
@@ -23,7 +22,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             const int numberOfSettings = 2;
 
-            // key prexfix used to partition tests running at the same time so that they don't interract with each other
+            // key prefix used to partition tests running at the same time so that they don't interract with each other
             var testPartition = Guid.NewGuid().ToString();
 
             var addedSettings = new List<ConfigurationSetting>(numberOfSettings);
@@ -31,12 +30,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try {
                 // add settings to the store
                 for (int i = 0; i < numberOfSettings; i++) {
-                    var reponse = await client.AddAsync(new ConfigurationSetting($"{testPartition}_{i}", i.ToString()));
-                    Assert.AreEqual(200, reponse.Status);
-                    addedSettings.Add(reponse.Value);
+                    ConfigurationSetting setting = await client.AddAsync(new ConfigurationSetting($"{testPartition}_{i}", i.ToString()));
+                    addedSettings.Add(setting);
                 }
 
-                var changed = new List<SettingChangedEventArgs>(); // acumulator for detected changes
+                var changed = new List<ConfigurationWatcher.SettingChangedEventArgs>(); // acumulator for detected changes
                 var watcher = new ConfigurationWatcher(client, addedSettings.Select((setting) => setting.Key).ToArray());
                 watcher.SettingChanged += (sender, e) =>
                 {
@@ -73,6 +71,39 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     }
                 }
             }
+        }
+
+        [Test]
+        public async Task WatcherSample()
+        {
+            // Retrieve the connection string from the configuration store. 
+            // You can get the string from your Azure portal.
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
+
+            // Instantiate a client that will be used to call the service.
+            var client = new ConfigurationClient(connectionString);
+
+            // Setup the watcher to watch "key1" and "key2"
+            var watcher = new ConfigurationWatcher(client, "key1", "key2");
+            watcher.SettingChanged += (sender, e) =>
+            {
+                Console.WriteLine($"old value: {e.Older.Value}");
+                Console.WriteLine($"new value: {e.Newer.Value}");
+            };
+            // Print errors occuring during watching
+            watcher.Error += (sender, e) =>
+            {
+                Console.WriteLine($"Error {e.Message}");
+            };
+
+            // start watching
+            watcher.Start();
+
+            // watch for 1 second
+            await Task.Delay(1000);
+
+            // stop watching
+            await watcher.Stop();
         }
     }
 }
