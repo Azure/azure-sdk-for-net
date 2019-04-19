@@ -24,9 +24,10 @@ matrix:
         - sudo apt-get clean
         - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 6B05F25D762E3157
         #- wget -q https://packages.microsoft.com/config/ubuntu/14.04/packages-microsoft-prod.deb
-        - sudo dpkg -i packages-microsoft-prod.deb        
+        #- sudo dpkg -i packages-microsoft-prod.deb        
         #- wget -q https://packages.microsoft.com/config/ubuntu/14.04/packages-microsoft-prod.deb
         - sudo apt-get install apt-transport-https                
+        - sudo apt-get update
         - sudo apt-get install dotnet-sdk-2.1.201
         - sudo apt-get update
       script:
