@@ -9,6 +9,9 @@ using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
 {
+    /// <summary>
+    /// ConfigurationSetting is a resource identified by unique combination of key and label.
+    /// </summary>
     public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
     {
         private IDictionary<string, string> _tags;
@@ -16,6 +19,12 @@ namespace Azure.ApplicationModel.Configuration
         // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
         internal ConfigurationSetting() { }
 
+        /// <summary>
+        /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
         public ConfigurationSetting(string key, string value, string label = null)
         {
             Key = key;
@@ -24,46 +33,46 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         /// <summary>
-        /// The primary identifier of a key-value.
-        /// The key is used in unison with the label to uniquely identify a key-value.
+        /// The primary identifier of a configuration setting.
+        /// The key is used in unison with the label to uniquely identify a configuration setting.
         /// </summary>
         public string Key { get; set; }
 
         /// <summary>
-        /// A value used to group key-values.
-        /// The label is used in unison with the key to uniquely identify a key-value.
+        /// A value used to group configuration settings.
+        /// The label is used in unison with the key to uniquely identify a configuration setting.
         /// </summary>
         public string Label { get; set; }
 
         /// <summary>
-        /// The value of the key-value.
+        /// The value of the configuration setting.
         /// </summary>
         public string Value { get; set; }
 
         /// <summary>
-        /// The content type of the key-value's value.
+        /// The content type of the configuration setting's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// An ETag indicating the state of a key-value within a configuration store.
+        /// An ETag indicating the state of a configuration setting within a configuration store.
         /// </summary>
         public ETag ETag { get; set; }
 
         /// <summary>
-        /// The last time a modifying operation was performed on the given key-value.
+        /// The last time a modifying operation was performed on the given configuration setting.
         /// </summary>
         public DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
-        /// A value indicating whether the key-value is locked.
-        /// A locked key-value may not be modified until it is unlocked.
+        /// A value indicating whether the configuration setting is locked.
+        /// A locked configuration setting may not be modified until it is unlocked.
         /// </summary>
         public bool? Locked { get; internal set; }
 
         /// <summary>
-        /// A dictionary of tags that can help identify what a key-value may be applicable for.
+        /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
         /// </summary>
         public IDictionary<string, string> Tags {
             get => _tags ?? (_tags = new Dictionary<string, string>());

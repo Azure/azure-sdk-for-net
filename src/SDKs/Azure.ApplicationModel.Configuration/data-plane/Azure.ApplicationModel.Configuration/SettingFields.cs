@@ -6,6 +6,9 @@ using System;
 
 namespace Azure.ApplicationModel.Configuration
 {
+    /// <summary>
+    /// Fields to retrieve from a configuration setting.
+    /// </summary>
     [Flags]
     public enum SettingFields : uint
     {
