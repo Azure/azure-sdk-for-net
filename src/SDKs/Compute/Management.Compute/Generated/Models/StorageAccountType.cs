@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Compute.Models
 {
 
     /// <summary>
-    /// Defines values for ProximityPlacementGroupType.
+    /// Defines values for StorageAccountType.
     /// </summary>
-    public static class ProximityPlacementGroupType
+    public static class StorageAccountType
     {
-        public const string Standard = "Standard";
-        public const string Ultra = "Ultra";
+        public const string StandardLRS = "Standard_LRS";
+        public const string StandardZRS = "Standard_ZRS";
     }
 }

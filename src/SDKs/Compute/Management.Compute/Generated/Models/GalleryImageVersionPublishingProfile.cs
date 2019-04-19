@@ -48,13 +48,17 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="endOfLifeDate">The end of life date of the gallery
         /// Image Version. This property can be used for decommissioning
         /// purposes. This property is updatable.</param>
-        public GalleryImageVersionPublishingProfile(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?))
+        /// <param name="storageAccountType">Specifies the storage account type
+        /// to be used to store the image. This property is not updatable.
+        /// Possible values include: 'Standard_LRS', 'Standard_ZRS'</param>
+        public GalleryImageVersionPublishingProfile(GalleryArtifactSource source, IList<TargetRegion> targetRegions = default(IList<TargetRegion>), int? replicaCount = default(int?), bool? excludeFromLatest = default(bool?), System.DateTime? publishedDate = default(System.DateTime?), System.DateTime? endOfLifeDate = default(System.DateTime?), string storageAccountType = default(string))
             : base(source, targetRegions)
         {
             ReplicaCount = replicaCount;
             ExcludeFromLatest = excludeFromLatest;
             PublishedDate = publishedDate;
             EndOfLifeDate = endOfLifeDate;
+            StorageAccountType = storageAccountType;
             CustomInit();
         }
 
@@ -93,6 +97,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "endOfLifeDate")]
         public System.DateTime? EndOfLifeDate { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies the storage account type to be used to store
+        /// the image. This property is not updatable. Possible values include:
+        /// 'Standard_LRS', 'Standard_ZRS'
+        /// </summary>
+        [JsonProperty(PropertyName = "storageAccountType")]
+        public string StorageAccountType { get; set; }
 
         /// <summary>
         /// Validate the object.
