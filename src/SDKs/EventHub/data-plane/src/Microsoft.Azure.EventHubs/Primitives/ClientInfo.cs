@@ -23,14 +23,12 @@ namespace Microsoft.Azure.EventHubs
                 product = GetAssemblyAttributeValue<AssemblyProductAttribute>(assembly, p => p.Product);
                 version = GetAssemblyAttributeValue<AssemblyFileVersionAttribute>(assembly, v => v.Version);
                 framework = GetAssemblyAttributeValue<TargetFrameworkAttribute>(assembly, f => f.FrameworkName);
-#if NETSTANDARD2_0
-                platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
+#if FullNetFx
+                platform = Environment.OSVersion.VersionString;
 #elif UAP10_0
                 platform = "UAP";
-#elif NET461
-                platform = Environment.OSVersion.VersionString;
-#elif IOS
-                platform = "IOS";
+#else
+                platform = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
 #endif
             }
             catch { }

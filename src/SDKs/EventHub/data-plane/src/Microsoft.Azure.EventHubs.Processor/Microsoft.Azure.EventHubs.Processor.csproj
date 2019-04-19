@@ -1,33 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <Description>This is the next generation Azure Event Hubs .NET Standard Event Processor Host library. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
     <AssemblyTitle>Microsoft.Azure.EventHubs.Processor</AssemblyTitle>
-    <VersionPrefix>3.0.0</VersionPrefix>
-    <Authors>Microsoft</Authors>
-    <TargetFrameworks>net461;netstandard2.0;uap10.0;</TargetFrameworks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <AssemblyName>Microsoft.Azure.EventHubs.Processor</AssemblyName>
-    <AssemblyOriginatorKeyFile>../../build/keyfile.snk</AssemblyOriginatorKeyFile>
-    <SignAssembly>true</SignAssembly>
-    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
-    <PackageId>Microsoft.Azure.EventHubs.Processor</PackageId>
-    <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;Event Processor Host</PackageTags>
-    <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/Azure/azure-event-hubs-dotnet/master/event-hubs.png</PackageIconUrl>
-    <PackageProjectUrl>https://github.com/Azure/azure-event-hubs-dotnet</PackageProjectUrl>
-    <PackageLicenseUrl>https://raw.githubusercontent.com/Azure/azure-event-hubs-dotnet/master/LICENSE</PackageLicenseUrl>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
-    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
-    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
-    <DebugType>full</DebugType>
-    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Microsoft.Azure.EventHubs.Processor.xml</DocumentationFile>
+    <Description>This is the next generation Azure Event Hubs .NET Standard Event Processor Host library. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
     <Version>3.0.0</Version>
     <AssemblyVersion>3.0.0.0</AssemblyVersion>
     <FileVersion>3.0.0.0</FileVersion>
-    <DelaySign>true</DelaySign>
-    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <VersionPrefix>3.0.0</VersionPrefix>
+    <PackageId>Microsoft.Azure.EventHubs.Processor</PackageId>
+    <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT;Event Processor Host</PackageTags>
+    <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
+    <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.Processor.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
+    <RootNamespace>Microsoft.Azure.EventHubs.Processor</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <DefineConstants>$(DefineConstants);NETSTANDARD2_0</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
+    <DefineConstants>$(DefineConstants);NETSTANDARD1_4</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,32 +30,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
     <PackageReference Include="Microsoft.Azure.KeyVault.Core" Version="3.0.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
   </ItemGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
-    <NugetTargetMoniker>UAP,Version=v10.0</NugetTargetMoniker>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-    <TargetFrameworkIdentifier>.NETCore</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
-  </PropertyGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.3" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
     <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform " Version="5.2.3" />
-    <PackageReference Include="Microsoft.Azure.Storage.Blob" Version="9.4.2" />
-  </ItemGroup>
-
 </Project>

@@ -68,7 +68,7 @@ namespace Microsoft.Azure.EventHubs
         /// </summary>
         /// <param name="keyName">The key name of the corresponding SharedAccessKeyAuthorizationRule.</param>
         /// <param name="sharedAccessKey">The key associated with the SharedAccessKeyAuthorizationRule</param>
-        /// <param name="tokenTimeToLive">The token time to live</param> 
+        /// <param name="tokenTimeToLive">The token time to live</param>
         /// <param name="tokenScope">The tokenScope of tokens to request.</param>
         /// <returns>A TokenProvider initialized with the provided RuleId and Password</returns>
         public static TokenProvider CreateSharedAccessSignatureTokenProvider(string keyName, string sharedAccessKey, TimeSpan tokenTimeToLive, TokenScope tokenScope)
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.EventHubs
         }
 
 
-#if !UAP10_0 && !IOS
+#if ALLOW_CERTIFICATE_IDENTITY
         /// <summary>Creates an Azure Active Directory token provider.</summary>
         /// <param name="authContext">AuthenticationContext for AAD.</param>
         /// <param name="clientCredential">The app credential.</param>
@@ -99,10 +99,10 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="userIdentifier">User Identifier</param>
         /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
         public static TokenProvider CreateAadTokenProvider(
-            AuthenticationContext authContext, 
-            string clientId, 
-            Uri redirectUri, 
-            IPlatformParameters platformParameters, 
+            AuthenticationContext authContext,
+            string clientId,
+            Uri redirectUri,
+            IPlatformParameters platformParameters,
             UserIdentifier userIdentifier = null)
         {
             Guard.ArgumentNotNull(nameof(authContext), authContext);
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.EventHubs
             return new AzureActiveDirectoryTokenProvider(authContext, clientId, redirectUri, platformParameters, userIdentifier);
         }
 
-#if !UAP10_0 && !IOS
+#if ALLOW_CERTIFICATE_IDENTITY
         /// <summary>Creates an Azure Active Directory token provider.</summary>
         /// <param name="authContext">AuthenticationContext for AAD.</param>
         /// <param name="clientAssertionCertificate">The client assertion certificate credential.</param>

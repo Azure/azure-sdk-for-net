@@ -84,7 +84,7 @@ namespace Microsoft.Azure.EventHubs
             return eventHubClient;
         }
 
-#if !UAP10_0 && !IOS
+#if ALLOW_CERTIFICATE_IDENTITY
         /// <summary>
         /// Creates a new instance of the Event Hubs client using the specified endpoint, entity path, AAD authentication context.
         /// </summary>
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.EventHubs
                 transportType);
         }
 
-#if !UAP10_0 && !IOS
+#if ALLOW_CERTIFICATE_IDENTITY
         /// <summary>
         /// Creates a new instance of the Event Hubs client using the specified endpoint, entity path, AAD authentication context.
         /// </summary>
@@ -256,10 +256,10 @@ namespace Microsoft.Azure.EventHubs
         /// <summary>
         /// Send a batch of <see cref="EventData"/> to EventHub. The sent EventData will land on any arbitrarily chosen EventHub partition.
         /// This is the most recommended way to send to EventHub.
-        /// 
+        ///
         /// <para>There are 3 ways to send to EventHubs, to understand this particular type of send refer to the overload <see cref="SendAsync(EventData)"/>, which is used to send single <see cref="EventData"/>.
         /// Use this overload if you need to send a batch of <see cref="EventData"/>.</para>
-        /// 
+        ///
         /// Sending a batch of <see cref="EventData"/>'s is useful in the following cases:
         /// <para>i.    Efficient send - sending a batch of <see cref="EventData"/> maximizes the overall throughput by optimally using the number of sessions created to EventHub's service.</para>
         /// <para>ii.   Send multiple <see cref="EventData"/>'s in a Transaction. To acheieve ACID properties, the Gateway Service will forward all <see cref="EventData"/>'s in the batch to a single EventHub partition.</para>
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.EventHubs
         ///         sendEvent.Properties = applicationProperties;
         ///         events.Add(sendEvent);
         ///     }
-        ///         
+        ///
         ///     await client.SendAsync(events);
         ///     Console.WriteLine("Sent Batch... Size: {0}", events.Count);
         /// }
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.EventHubs
         ///  <para>a)  There is a need for correlation of events based on Sender instance; The sender can generate a UniqueId and set it as partitionKey - which on the received Message can be used for correlation</para>
         ///  <para>b) The client wants to take control of distribution of data across partitions.</para>
         ///  Multiple PartitionKeys could be mapped to one Partition. EventHubs service uses a proprietary Hash algorithm to map the PartitionKey to a PartitionId.
-        ///  Using this type of send (Sending using a specific partitionKey) could sometimes result in partitions which are not evenly distributed. 
+        ///  Using this type of send (Sending using a specific partitionKey) could sometimes result in partitions which are not evenly distributed.
         /// </summary>
         /// <param name="eventData">the <see cref="EventData"/> to be sent.</param>
         /// <param name="partitionKey">the partitionKey will be hashed to determine the partitionId to send the EventData to. On the Received message this can be accessed at <see cref="EventData.SystemPropertiesCollection.PartitionKey"/>.</param>

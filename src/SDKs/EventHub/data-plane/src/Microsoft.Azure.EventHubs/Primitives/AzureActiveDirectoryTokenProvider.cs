@@ -14,7 +14,7 @@ namespace Microsoft.Azure.EventHubs
     {
         readonly AuthenticationContext authContext;
 
-#if !UAP10_0 && !IOS
+#if ALLOW_CERTIFICATE_IDENTITY
         readonly ClientCredential clientCredential;
         readonly ClientAssertionCertificate clientAssertionCertificate;
 #endif
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.EventHubs
 
         readonly AuthType authType;
 
-#if !UAP10_0 && !IOS
+#if ALLOW_CERTIFICATE_IDENTITY
         internal AzureActiveDirectoryTokenProvider(AuthenticationContext authContext, ClientCredential credential)
         {
             this.clientCredential = credential;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.EventHubs
 
             switch (this.authType)
             {
-#if !UAP10_0 && !IOS
+#if ALLOW_CERTIFICATE_IDENTITY
                 case AuthType.ClientCredential:
                     authResult = await this.authContext.AcquireTokenAsync(ClientConstants.AadEventHubsAudience, this.clientCredential);
                     break;

@@ -76,7 +76,7 @@ namespace Microsoft.Azure.EventHubs.Processor
                 MaximumExecutionTime = TimeSpan.FromMinutes(1)
             };
 
-#if NET461
+#if FullNetFx
             // Proxy enabled?
             if (this.host.EventProcessorOptions != null && this.host.EventProcessorOptions.WebProxy != null)
             {
