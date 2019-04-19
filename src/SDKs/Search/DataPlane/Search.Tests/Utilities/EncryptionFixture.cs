@@ -20,7 +20,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     using System.Net.Http;
     using System.Threading;
     using System.Threading.Tasks;
-    using static Microsoft.Azure.KeyVault.KeyVaultClient;
 
     public class EncryptionFixture : SearchServiceFixture
     {
@@ -52,23 +51,33 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             RegisterRequiredProvider(context);
 
-            SearchManagementClient searchManagementClient = context.GetServiceClient<SearchManagementClient>();
-            string searchServicePrincipalId = searchManagementClient.Services.Get(this.ResourceGroupName, this.SearchServiceName).Identity.PrincipalId;
-            string[] servicePrincipalIdsWithReadAccess = new string[] { TestAADApplicationObjectId, searchServicePrincipalId };
+            List<AccessPolicyEntry> keyVaultAccessPolicies = new List<AccessPolicyEntry>();
 
-            Vault keyVault = CreateKeyVault(context, this.ResourceGroupName, TestEnvironmentFactory.GetTestEnvironment().Tenant, servicePrincipalIdsWithReadAccess);
-            this.KeyVaultUri = keyVault.Properties.VaultUri;
-            this.KeyVaultName = keyVault.Name;
+            // Creating an access policy with key management capabilities to the sdk test account
+            // so it can later create a new key vault key
+            keyVaultAccessPolicies.Add(CreateReadAndWriteAccess(GetSdkTestAccountAADClientID()));
 
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            // Creating an access policy with "read" key access to the search service so we can use
+            // encryption with MSI (managed service identity)
+            keyVaultAccessPolicies.Add(CreateReadOnlyAccess(GetSearchServicePrincipalId()));
+
+            // Creating an access policy with "read" key access to our test registered azure
+            // active directory application so we can use encryption with AAD credentials
+            keyVaultAccessPolicies.Add(CreateReadOnlyAccess(TestAADApplicationObjectId));
+
+            Vault keyVault = CreateKeyVault(keyVaultAccessPolicies);
+            KeyVaultUri = keyVault.Properties.VaultUri;
+            KeyVaultName = keyVault.Name;
+
+            if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {
-                // it may take a second before we can create a key in a freshly created KeyVault
+                // it may take a second before we can create a key in a freshly created Key Vault
                 TestUtilities.Wait(TimeSpan.FromSeconds(3));
             }
 
-            KeyBundle key = CreateKey(context, keyVault);
-            this.KeyName = key.KeyIdentifier.Name;
-            this.KeyVersion = key.KeyIdentifier.Version;
+            KeyBundle key = CreateKeyVaultKey(keyVault);
+            KeyName = key.KeyIdentifier.Name;
+            KeyVersion = key.KeyIdentifier.Version;
         }
 
         public override void Cleanup()
@@ -82,86 +91,99 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             base.Cleanup();
         }
 
+        private string GetSearchServicePrincipalId()
+        {
+            SearchManagementClient searchManagementClient = this.MockContext.GetServiceClient<SearchManagementClient>();
+            return searchManagementClient.Services.Get(this.ResourceGroupName, this.SearchServiceName).Identity.PrincipalId;
+        }
+
+        private string GetSdkTestAccountAADClientID()
+        {
+            return TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.AADClientIdKey];
+        }
+
         private static void RegisterRequiredProvider(MockContext context)
         {
             ResourceManagementClient client = context.GetServiceClient<ResourceManagementClient>();
             Provider provider = client.Providers.Register("Microsoft.KeyVault");
         }
 
-        private static Vault CreateKeyVault(MockContext context, string resourceGroupName, string tenantId, string[] servicePrincipalIdsWithReadAccess)
+        private AccessPolicyEntry CreateReadOnlyAccess(string securityPrincipalId)
         {
-            var accessPolicies = new List<AccessPolicyEntry>();
-
-            // we add an access policy for each service principal that requires read access to the key vault. 
-            foreach (string servicePrincipalId in servicePrincipalIdsWithReadAccess)
+            return new AccessPolicyEntry
             {
-                accessPolicies.Add(new AccessPolicyEntry
-                {
-                    TenantId = System.Guid.Parse(tenantId),
-                    ObjectId = servicePrincipalId,
-                    Permissions = new Permissions()
-                    {
-                        Keys = new List<string>()
-                    {
-                        KeyPermissions.Get,
-                        KeyPermissions.WrapKey,
-                        KeyPermissions.UnwrapKey
-                    }
-                    }
-                });
-            }
-
-            string servicePrincipalObjectId = TestEnvironmentFactory.GetTestEnvironment().ConnectionString.KeyValuePairs[ConnectionStringKeys.AADClientIdKey];
-            // we also add an access policy for the sdk test account itself with full management permission to create and delete keys
-            accessPolicies.Add(new AccessPolicyEntry
-            {
-                TenantId = System.Guid.Parse(tenantId),
-                ObjectId = servicePrincipalObjectId,
+                TenantId = Guid.Parse(TestEnvironmentFactory.GetTestEnvironment().Tenant),
+                ObjectId = securityPrincipalId,
                 Permissions = new Permissions()
                 {
                     Keys = new List<string>()
                     {
+                        KeyPermissions.Get,
+                        KeyPermissions.WrapKey,
+                        KeyPermissions.UnwrapKey,
+                    }
+                }
+            };
+        }
+
+        private AccessPolicyEntry CreateReadAndWriteAccess(string securityPrincipalId)
+        {
+            return new AccessPolicyEntry
+            {
+                TenantId = Guid.Parse(TestEnvironmentFactory.GetTestEnvironment().Tenant),
+                ObjectId = securityPrincipalId,
+                Permissions = new Permissions()
+                {
+                    Keys = new List<string>()
+                    {
+                         KeyPermissions.Get,
+                        KeyPermissions.WrapKey,
+                        KeyPermissions.UnwrapKey,
                         KeyPermissions.Create,
                         KeyPermissions.Delete,
                         KeyPermissions.Get,
                         KeyPermissions.List
                     }
                 }
-            });
+            };
+        }
 
-            KeyVaultManagementClient keyVaultMgmtClient = context.GetServiceClient<KeyVaultManagementClient>();
+        private Vault CreateKeyVault(List<AccessPolicyEntry> accessPolicies)
+        {
+            KeyVaultManagementClient keyVaultMgmtClient = this.MockContext.GetServiceClient<KeyVaultManagementClient>();
             string keyVaultName = TestUtilities.GenerateName("keyvault");
-            return keyVaultMgmtClient.Vaults.CreateOrUpdate(resourceGroupName, keyVaultName, new Microsoft.Azure.Management.KeyVault.Models.VaultCreateOrUpdateParameters
+            return keyVaultMgmtClient.Vaults.CreateOrUpdate(ResourceGroupName, keyVaultName, new VaultCreateOrUpdateParameters
             {
                 Location = "northcentralus",
-                Properties = new Microsoft.Azure.Management.KeyVault.Models.VaultProperties
+                Properties = new VaultProperties
                 {
-                    TenantId = System.Guid.Parse(tenantId),
+                    TenantId = Guid.Parse(TestEnvironmentFactory.GetTestEnvironment().Tenant),
                     AccessPolicies = accessPolicies,
-                    Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku(Microsoft.Azure.Management.KeyVault.Models.SkuName.Standard)
+                    Sku = new Management.KeyVault.Models.Sku(SkuName.Standard)
                 }
             });
         }
 
-        private static KeyBundle CreateKey(MockContext context, Vault keyVault)
+        private KeyBundle CreateKeyVaultKey(Vault keyVault)
         {
             string keyName = TestUtilities.GenerateName("keyvaultkey");
 
             KeyVaultClient keyVaultClient = GetKeyVaultClient();
 
-            return keyVaultClient.CreateKeyAsync(keyVault.Properties.VaultUri, keyName, JsonWebKeyType.Rsa, 2048,
-                    JsonWebKeyOperation.AllOperations, new KeyAttributes()).GetAwaiter().GetResult();
-        }
-
-        private static DelegatingHandler[] GetHandlers()
-        {
-            HttpMockServer server = HttpMockServer.CreateInstance();
-            return new DelegatingHandler[] { server };
+            int keySize = 2048;
+            return keyVaultClient.CreateKeyAsync(
+                keyVault.Properties.VaultUri, 
+                keyName, 
+                JsonWebKeyType.Rsa, 
+                keySize,
+                JsonWebKeyOperation.AllOperations, 
+                new KeyAttributes()
+           ).GetAwaiter().GetResult();
         }
 
         private static KeyVaultClient GetKeyVaultClient()
         {
-            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
+            return new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), new DelegatingHandler[] { HttpMockServer.CreateInstance() });
         }
 
         private static async Task<string> GetAccessToken(string authority, string resource, string scope)
@@ -179,7 +201,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
         private class TestKeyVaultCredential : KeyVaultCredential
         {
-            public TestKeyVaultCredential(AuthenticationCallback authenticationCallback) : base(authenticationCallback)
+            public TestKeyVaultCredential(KeyVaultClient.AuthenticationCallback authenticationCallback) : base(authenticationCallback)
             {
             }
 
@@ -192,7 +214,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 }
                 else
                 {
-                    return Task.Run(() => { return; });
+                    return Task.Run(() => {});
                 }
             }
         }

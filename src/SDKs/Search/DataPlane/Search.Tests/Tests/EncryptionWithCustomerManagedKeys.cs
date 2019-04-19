@@ -8,10 +8,10 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Tests.Utilities;
     using Xunit;
 
-    public sealed class EncryptionWithCMKTests : SearchTestBase<EncryptionFixture>
+    public sealed class EncryptionWithCustomerManagedKeysTests : SearchTestBase<EncryptionFixture>
     {
         [Fact]
-        public void CreateIndexWithCMKUsingAccessCredentials()
+        public void CreateIndexWithCustomerManagedKeysUsingAccessCredentials()
         {
             Run(() =>
             {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
-        public void CreateIndexWithCMKUsingWithoutAccessCredentials()
+        public void CreateIndexWithCustomerManagedKeysWithoutAccessCredentials()
         {
             Run(() =>
             {
@@ -51,6 +51,47 @@ namespace Microsoft.Azure.Search.Tests
 
                 Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
                 AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
+            });
+        }
+
+        [Fact]
+        public void CreateSynonymMapWithCustomerManagedKeysUsingAccessCredentials()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                SynonymMap encryptedSynonymMap = CreateEncryptedSynonymMap(new EncryptionKey()
+                {
+                    KeyVaultUri = this.Data.KeyVaultUri,
+                    KeyVaultKeyName = this.Data.KeyName,
+                    KeyVaultKeyVersion = this.Data.KeyVersion,
+                    AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
+                    {
+                        ApplicationId = this.Data.TestAADApplicationId,
+                        ApplicationSecret = this.Data.TestAADApplicationSecret
+                    }
+                });
+
+                SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
+                AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
+            });
+        }
+
+        [Fact]
+        public void CreateSynonymMapWithCustomerManagedKeysWithoutAccessCredentials()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+                SynonymMap encryptedSynonymMap = CreateEncryptedSynonymMap(new EncryptionKey()
+                {
+                    KeyVaultUri = this.Data.KeyVaultUri,
+                    KeyVaultKeyName = this.Data.KeyName,
+                    KeyVaultKeyVersion = this.Data.KeyVersion
+                });
+
+                SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
+                AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
             });
         }
 
@@ -77,51 +118,10 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expected, actual, new ModelComparer<Index>());
         }
 
-        [Fact]
-        public void CreateSynonymMapWithCMKUsingAccessCredentials()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                SynonymMap encryptedSynonymMap = CreatedEncryptedSynonymMap(new EncryptionKey()
-                {
-                    KeyVaultUri = this.Data.KeyVaultUri,
-                    KeyVaultKeyName = this.Data.KeyName,
-                    KeyVaultKeyVersion = this.Data.KeyVersion,
-                    AccessCredentials = new AzureActiveDirectoryApplicationCredentials()
-                    {
-                        ApplicationId = this.Data.TestAADApplicationId,
-                        ApplicationSecret = this.Data.TestAADApplicationSecret
-                    }
-                });
-
-                SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
-                AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
-            });
-        }
-
-        [Fact]
-        public void CreateSynonymMapWithCMKUsingWithoutAccessCredentials()
-        {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                SynonymMap encryptedSynonymMap = CreatedEncryptedSynonymMap(new EncryptionKey()
-                {
-                    KeyVaultUri = this.Data.KeyVaultUri,
-                    KeyVaultKeyName = this.Data.KeyName,
-                    KeyVaultKeyVersion = this.Data.KeyVersion
-                });
-
-                SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
-                AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
-            });
-        }        
-
-        private static SynonymMap CreatedEncryptedSynonymMap(EncryptionKey encryptionKey)
+        private static SynonymMap CreateEncryptedSynonymMap(EncryptionKey encryptionKey)
         {
             string synonymMapName = SearchTestUtilities.GenerateName();
-            return new SynonymMap(synonymMapName, "word1,word2", encryptionKey);
+            return new SynonymMap(synonymMapName, "hi,hello", encryptionKey);
         }
 
         private static void AssertSynonymMapsEqual(SynonymMap expected, SynonymMap actual)
