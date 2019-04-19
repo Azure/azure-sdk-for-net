@@ -23,10 +23,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// </summary>
             /// <remarks>
             /// The train request must include a 'Source' parameter that is
-            /// either a Azure Storage Blob Container SAS Uri or a path to a locally
-            /// mounted             drive. When local paths are specified, they must always
-            /// follow the Linux/Unix style             absolute path convention and be
-            /// rooted to the {Mounts:Input}             configuration setting value.
+            /// an Azure Storage blob container Uri that is that is accessible externally
+            /// (preferably a Shared Access Signature Uri) or valid path to data in a
+            /// locally mounted drive.
+            /// When local paths are specified, they must follow the Linux/Unix path format
+            /// and
+            /// absolute path convention rooted to the input mount configuration setting
+            /// value.
+            /// Models are trained using documents that are of the following
+            /// content type - 'application/pdf', 'image/jpeg' and 'image/png'.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,7 +39,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='trainRequest'>
             /// Request object for training.
             /// </param>
-            public static TrainResponse CustomTrain(this IFormRecognizerOperations operations, TrainRequest trainRequest = default(TrainRequest))
+            public static TrainResponse CustomTrain(this IFormRecognizerOperations operations, TrainRequest trainRequest)
             {
                 return operations.CustomTrainAsync(trainRequest).GetAwaiter().GetResult();
             }
@@ -44,10 +49,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// </summary>
             /// <remarks>
             /// The train request must include a 'Source' parameter that is
-            /// either a Azure Storage Blob Container SAS Uri or a path to a locally
-            /// mounted             drive. When local paths are specified, they must always
-            /// follow the Linux/Unix style             absolute path convention and be
-            /// rooted to the {Mounts:Input}             configuration setting value.
+            /// an Azure Storage blob container Uri that is that is accessible externally
+            /// (preferably a Shared Access Signature Uri) or valid path to data in a
+            /// locally mounted drive.
+            /// When local paths are specified, they must follow the Linux/Unix path format
+            /// and
+            /// absolute path convention rooted to the input mount configuration setting
+            /// value.
+            /// Models are trained using documents that are of the following
+            /// content type - 'application/pdf', 'image/jpeg' and 'image/png'.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -58,7 +68,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TrainResponse> CustomTrainAsync(this IFormRecognizerOperations operations, TrainRequest trainRequest = default(TrainRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TrainResponse> CustomTrainAsync(this IFormRecognizerOperations operations, TrainRequest trainRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CustomTrainWithHttpMessagesAsync(trainRequest, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -146,7 +156,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// Delete Model
             /// </summary>
             /// <remarks>
-            /// Delete a model and all associated pre-processing data.
+            /// Delete model artifacts.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -163,7 +173,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// Delete Model
             /// </summary>
             /// <remarks>
-            /// Delete a model and all associated pre-processing data.
+            /// Delete model artifacts.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -180,12 +190,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             }
 
             /// <summary>
-            /// Analyze document
+            /// Analyze Form
             /// </summary>
             /// <remarks>
-            /// &lt;para&gt;The document to analyze must be must be of expected
-            /// media type - currently supported types are application/pdf, image/jpg or
-            /// image/png.&lt;/para&gt;
+            /// &lt;para&gt;The document to analyze must be of a supported
+            /// content type - content type - 'application/pdf', 'image/jpeg' and
+            /// 'image/png'.&lt;/para&gt;
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -197,7 +207,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// An optional list of known keys to extract the values for.
             /// </param>
             /// <param name='form'>
-            /// Upload image or pdf content for processing.
+            /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
+            /// processing.
             /// </param>
             public static AnalyzeResponse CustomAnalyze(this IFormRecognizerOperations operations, string id, IList<string> keys = default(IList<string>), Stream form = default(Stream))
             {
@@ -205,12 +216,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             }
 
             /// <summary>
-            /// Analyze document
+            /// Analyze Form
             /// </summary>
             /// <remarks>
-            /// &lt;para&gt;The document to analyze must be must be of expected
-            /// media type - currently supported types are application/pdf, image/jpg or
-            /// image/png.&lt;/para&gt;
+            /// &lt;para&gt;The document to analyze must be of a supported
+            /// content type - content type - 'application/pdf', 'image/jpeg' and
+            /// 'image/png'.&lt;/para&gt;
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -222,7 +233,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// An optional list of known keys to extract the values for.
             /// </param>
             /// <param name='form'>
-            /// Upload image or pdf content for processing.
+            /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
+            /// processing.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

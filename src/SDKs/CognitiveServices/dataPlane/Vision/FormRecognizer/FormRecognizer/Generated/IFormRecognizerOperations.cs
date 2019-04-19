@@ -24,11 +24,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// </summary>
         /// <remarks>
         /// The train request must include a 'Source' parameter that is
-        /// either a Azure Storage Blob Container SAS Uri or a path to a
-        /// locally mounted             drive. When local paths are specified,
-        /// they must always follow the Linux/Unix style             absolute
-        /// path convention and be rooted to the {Mounts:Input}
-        /// configuration setting value.
+        /// an Azure Storage blob container Uri that is that is accessible
+        /// externally
+        /// (preferably a Shared Access Signature Uri) or valid path to data in
+        /// a locally mounted drive.
+        /// When local paths are specified, they must follow the Linux/Unix
+        /// path format and
+        /// absolute path convention rooted to the input mount configuration
+        /// setting value.
+        /// Models are trained using documents that are of the following
+        /// content type - 'application/pdf', 'image/jpeg' and 'image/png'.
         /// </remarks>
         /// <param name='trainRequest'>
         /// Request object for training.
@@ -45,7 +50,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        Task<HttpOperationResponse<TrainResponse>> CustomTrainWithHttpMessagesAsync(TrainRequest trainRequest = default(TrainRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<HttpOperationResponse<TrainResponse>> CustomTrainWithHttpMessagesAsync(TrainRequest trainRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get Keys
         /// </summary>
@@ -95,7 +103,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// Delete Model
         /// </summary>
         /// <remarks>
-        /// Delete a model and all associated pre-processing data.
+        /// Delete model artifacts.
         /// </remarks>
         /// <param name='id'>
         /// The identifier of the model to delete.
@@ -114,12 +122,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// </exception>
         Task<HttpOperationResponse> CustomDeleteModelByIdWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Analyze document
+        /// Analyze Form
         /// </summary>
         /// <remarks>
-        /// &lt;para&gt;The document to analyze must be must be of expected
-        /// media type - currently supported types are application/pdf,
-        /// image/jpg or image/png.&lt;/para&gt;
+        /// &lt;para&gt;The document to analyze must be of a supported
+        /// content type - content type - 'application/pdf', 'image/jpeg' and
+        /// 'image/png'.&lt;/para&gt;
         /// </remarks>
         /// <param name='id'>
         /// Identifier of the model to analyze the document with.
@@ -128,7 +136,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// An optional list of known keys to extract the values for.
         /// </param>
         /// <param name='form'>
-        /// Upload image or pdf content for processing.
+        /// Upload content of type 'application/pdf', 'image/jpeg' or
+        /// 'image/png' for processing.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

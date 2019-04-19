@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
     /// </summary>
     public partial interface IFormRecognizerClient : System.IDisposable
     {
-	string Endpoint { get; set; }
+        string Endpoint { get; set; }
 
         /// <summary>
         /// The base URI of the service.
