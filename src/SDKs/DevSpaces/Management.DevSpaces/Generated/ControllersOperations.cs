@@ -947,6 +947,10 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='name'>
         /// Name of the resource.
         /// </param>
+        /// <param name='targetContainerHostResourceId'>
+        /// Resource ID of the target container host mapped to the Azure Dev Spaces
+        /// Controller.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -968,7 +972,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ControllerConnectionDetailsList>> ListConnectionDetailsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ControllerConnectionDetailsList>> ListConnectionDetailsWithHttpMessagesAsync(string resourceGroupName, string name, string targetContainerHostResourceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -1012,6 +1016,15 @@ namespace Microsoft.Azure.Management.DevSpaces
                     throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$");
                 }
             }
+            if (targetContainerHostResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "targetContainerHostResourceId");
+            }
+            ListConnectionDetailsParameters listConnectionDetailsParameters = new ListConnectionDetailsParameters();
+            if (targetContainerHostResourceId != null)
+            {
+                listConnectionDetailsParameters.TargetContainerHostResourceId = targetContainerHostResourceId;
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1021,6 +1034,7 @@ namespace Microsoft.Azure.Management.DevSpaces
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("listConnectionDetailsParameters", listConnectionDetailsParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListConnectionDetails", tracingParameters);
             }
@@ -1073,6 +1087,12 @@ namespace Microsoft.Azure.Management.DevSpaces
 
             // Serialize Request
             string _requestContent = null;
+            if(listConnectionDetailsParameters != null)
+            {
+                _requestContent = Rest.Serialization.SafeJsonConvert.SerializeObject(listConnectionDetailsParameters, Client.SerializationSettings);
+                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            }
             // Set Credentials
             if (Client.Credentials != null)
             {

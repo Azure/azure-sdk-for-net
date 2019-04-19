@@ -202,6 +202,10 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='name'>
         /// Name of the resource.
         /// </param>
+        /// <param name='targetContainerHostResourceId'>
+        /// Resource ID of the target container host mapped to the Azure Dev
+        /// Spaces Controller.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -217,7 +221,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ControllerConnectionDetailsList>> ListConnectionDetailsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ControllerConnectionDetailsList>> ListConnectionDetailsWithHttpMessagesAsync(string resourceGroupName, string name, string targetContainerHostResourceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an Azure Dev Spaces Controller.
         /// </summary>
