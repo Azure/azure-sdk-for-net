@@ -1,0 +1,26 @@
+# Default behavior: if Git thinks a file is text (as opposed to binary), it
+# will normalize line endings to LF in the repository, but convert to your
+# platform's native line endings on checkout (e.g., CRLF for Windows).
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout. E.g.,
+#*.c text
+
+# Declare files that will always have CRLF line endings on checkout. E.g.,
+#*.sln text eol=crlf
+
+# Declare files that will always have LF line endings on checkout. E.g.,
+*.sh text eol=lf
+
+# Denote all files that should not have line endings normalized, should not be
+# merged, and should not show in a textual diff.
+*.docm binary
+*.docx binary
+*.ico binary
+*.lib binary
+*.png binary
+*.pptx binary
+*.snk binary
+*.vsdx binary
+*.xps binary

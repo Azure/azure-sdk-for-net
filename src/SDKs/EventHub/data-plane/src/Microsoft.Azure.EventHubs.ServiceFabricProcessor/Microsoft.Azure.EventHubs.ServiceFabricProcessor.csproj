@@ -1,0 +1,47 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>This is the next generation Azure Event Hubs .NET Standard Service Fabric Processor library, which integrates Event Hub event consumption with Service Fabric. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
+    <AssemblyTitle>Microsoft.Azure.EventHubs.ServiceFabricProcessor</AssemblyTitle>
+    <VersionPrefix>0.5.3-PREVIEW</VersionPrefix>
+    <Authors>Microsoft</Authors>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyName>Microsoft.Azure.EventHubs.ServiceFabricProcessor</AssemblyName>
+    <AssemblyOriginatorKeyFile>../../build/keyfile.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>Microsoft.Azure.EventHubs.ServiceFabricProcessor</PackageId>
+    <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT</PackageTags>
+    <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/Azure/azure-event-hubs-dotnet/master/event-hubs.png</PackageIconUrl>
+    <PackageProjectUrl>https://github.com/Azure/azure-event-hubs-dotnet</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/Azure/azure-event-hubs-dotnet/master/LICENSE</PackageLicenseUrl>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <DebugType>full</DebugType>
+    <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\Microsoft.Azure.EventHubs.Processor.xml</DocumentationFile>
+    <Version>0.5.3</Version>
+    <AssemblyVersion>0.5.3.0</AssemblyVersion>
+    <FileVersion>0.5.3.0</FileVersion>
+    <DelaySign>true</DelaySign>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ServiceFabric" Version="6.4.624" />
+    <PackageReference Include="Microsoft.ServiceFabric.Data" Version="3.3.624" />
+    <PackageReference Include="Microsoft.ServiceFabric.Services" Version="3.3.624" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Microsoft.Azure.EventHubs\Microsoft.Azure.EventHubs.csproj" />
+  </ItemGroup>
+
+</Project>
