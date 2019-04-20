@@ -5,7 +5,7 @@ matrix:
       mono: none
       sudo: required
       dist: trusty
-      group: deprecated-2017Q4
+      #group: deprecated-2017Q4
       env:
           global:
               - DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
