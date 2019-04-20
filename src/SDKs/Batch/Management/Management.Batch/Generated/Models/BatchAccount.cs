@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// account.</param>
         /// <param name="activeJobAndJobScheduleQuota">The active job and job
         /// schedule quota for the Batch account.</param>
-        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int dedicatedCoreQuota = default(int), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
+        public BatchAccount(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string accountEndpoint = default(string), ProvisioningState provisioningState = default(ProvisioningState), PoolAllocationMode? poolAllocationMode = default(PoolAllocationMode?), KeyVaultReference keyVaultReference = default(KeyVaultReference), AutoStorageProperties autoStorage = default(AutoStorageProperties), int? dedicatedCoreQuota = default(int?), int? lowPriorityCoreQuota = default(int?), IList<VirtualMachineFamilyCoreQuota> dedicatedCoreQuotaPerVMFamily = default(IList<VirtualMachineFamilyCoreQuota>), bool dedicatedCoreQuotaPerVMFamilyEnforced = default(bool), int poolQuota = default(int), int activeJobAndJobScheduleQuota = default(int))
             : base(id, name, type, location, tags)
         {
             AccountEndpoint = accountEndpoint;
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// is managed on the subscription so this value is not returned.
         /// </remarks>
         [JsonProperty(PropertyName = "properties.dedicatedCoreQuota")]
-        public int DedicatedCoreQuota { get; private set; }
+        public int? DedicatedCoreQuota { get; private set; }
 
         /// <summary>
         /// Gets the low-priority core quota for the Batch account.
