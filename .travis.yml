@@ -1,5 +1,12 @@
 matrix:
-  include:    
+  include:
+    - language: csharp
+      stage: Mono ClientRuntime build
+      mono: latest
+      sudo: required
+      dist: xenial
+      script:
+        - ./tools/linuxScripts/runClientRuntimeTests.sh
     - language: csharp
       stage: NetCore build for SDK repo
       mono: none
@@ -38,12 +45,4 @@ matrix:
         - pwd
         - ls -al
         - ls -al TestResults
-        - cat TestResults/*.log
-
-    - language: csharp
-        stage: Mono ClientRuntime build
-        mono: latest
-        sudo: required
-        dist: xenial
-        script:
-          - ./tools/linuxScripts/runClientRuntimeTests.sh
+        - cat TestResults/*.log    
