@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="language">The language for Enrollment</param>
         /// <param name="countryCode">The countryCode for Enrollment</param>
         /// <param name="status">Enrollment status</param>
-        /// <param name="billingCylce">Enrollment billing cycle</param>
-        public Enrollment(System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string currency = default(string), string channel = default(string), EnrollmentPolicies policies = default(EnrollmentPolicies), string language = default(string), string countryCode = default(string), string status = default(string), string billingCylce = default(string))
+        /// <param name="billingCycle">Enrollment billing cycle</param>
+        public Enrollment(System.DateTime? startDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), string currency = default(string), string channel = default(string), EnrollmentPolicies policies = default(EnrollmentPolicies), string language = default(string), string countryCode = default(string), string status = default(string), string billingCycle = default(string))
         {
             StartDate = startDate;
             EndDate = endDate;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
             Language = language;
             CountryCode = countryCode;
             Status = status;
-            BillingCylce = billingCylce;
+            BillingCycle = billingCycle;
             CustomInit();
         }
 
@@ -110,8 +110,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Gets enrollment billing cycle
         /// </summary>
-        [JsonProperty(PropertyName = "billingCylce")]
-        public string BillingCylce { get; private set; }
+        [JsonProperty(PropertyName = "billingCycle")]
+        public string BillingCycle { get; private set; }
 
     }
 }
