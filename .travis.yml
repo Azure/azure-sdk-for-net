@@ -44,6 +44,6 @@ matrix:
         stage: Mono ClientRuntime build
         mono: latest
         sudo: required
-        dist: trusty
+        dist: xenial
         script:
           - ./tools/linuxScripts/runClientRuntimeTests.sh
