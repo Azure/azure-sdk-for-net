@@ -404,16 +404,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// Use this interface to get the result of a Read operation, employing the
             /// state-of-the-art Optical Character Recognition (OCR) algorithms optimized
             /// for text-heavy documents. When you use the Read File interface, the
-            /// response contains a field called "Operation-Location". The
-            /// "Operation-Location" field contains the URL that you must use for your
-            /// "Read Operation Result" operation to access OCR results.​
+            /// response contains a field called 'Operation-Location'. The
+            /// 'Operation-Location' field contains the URL that you must use for your
+            /// 'GetReadOperationResult' operation to access OCR results.​
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='mode'>
-            /// Type of text to recognize. Possible values include: 'Handwritten',
-            /// 'Printed'
             /// </param>
             /// <param name='url'>
             /// Publicly reachable URL of an image.
@@ -421,9 +417,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BatchReadFileHeaders> BatchReadFileAsync(this IComputerVisionClient operations, string url, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BatchReadFileHeaders> BatchReadFileAsync(this IComputerVisionClient operations, string url, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchReadFileWithHttpMessagesAsync(url, mode, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BatchReadFileWithHttpMessagesAsync(url, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }
@@ -431,14 +427,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
 
             /// <summary>
             /// This interface is used for getting OCR results of Read operation. The URL
-            /// to this interface should be retrieved from "Operation-Location" field
+            /// to this interface should be retrieved from 'Operation-Location' field
             /// returned from Batch Read File interface.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='operationId'>
-            /// Id of read operation returned in the response of the "Batch Read File"
+            /// Id of read operation returned in the response of the 'Batch Read File'
             /// interface.
             /// </param>
             /// <param name='cancellationToken'>
@@ -791,8 +787,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// employing the state-of-the-art Optical Character Recognition (OCR)
             /// algorithms optimized for text-heavy documents. When you use the Read
             /// Document interface, the response contains a field called
-            /// "Operation-Location". The "Operation-Location" field contains the URL that
-            /// you must use for your "Get Read Result operation" to access OCR results.​
+            /// 'Operation-Location'. The 'Operation-Location' field contains the URL that
+            /// you must use for your 'Get Read Result operation' to access OCR results.​
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
