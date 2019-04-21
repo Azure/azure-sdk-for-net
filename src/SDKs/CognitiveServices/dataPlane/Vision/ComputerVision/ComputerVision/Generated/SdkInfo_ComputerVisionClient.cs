@@ -48,10 +48,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/ComputerVision/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\Source\\cognition\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "46dd1d23b20e3a85eb1422f2c8c5fc1223b296f5";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/toothache/azure-rest-api-specs/blob/fix_ocr_swagger/specification/cognitiveservices/data-plane/ComputerVision/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\Users\\yatengh\\Source\\cognitive\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "toothache";
+      public static readonly String GithubBranchName = "fix_ocr_swagger";
+      public static readonly String GithubCommidId = "e5acd28f4998f94a3322e6fdff493f36fb2e1767";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
