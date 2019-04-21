@@ -796,16 +796,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             /// <param name='image'>
             /// An image stream.
             /// </param>
-            /// <param name='mode'>
-            /// Type of text to recognize. Possible values include: 'Handwritten',
-            /// 'Printed'
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<BatchReadFileInStreamHeaders> BatchReadFileInStreamAsync(this IComputerVisionClient operations, Stream image, TextRecognitionMode mode, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<BatchReadFileInStreamHeaders> BatchReadFileInStreamAsync(this IComputerVisionClient operations, Stream image, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BatchReadFileInStreamWithHttpMessagesAsync(image, mode, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BatchReadFileInStreamWithHttpMessagesAsync(image, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Headers;
                 }

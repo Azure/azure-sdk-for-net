@@ -716,17 +716,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
-        /// <param name='mode'>
-        /// Type of text to recognize. Possible values include: 'Handwritten',
-        /// 'Printed'
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationHeaderResponse<BatchReadFileInStreamHeaders>> BatchReadFileInStreamWithHttpMessagesAsync(Stream image, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationHeaderResponse<BatchReadFileInStreamHeaders>> BatchReadFileInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

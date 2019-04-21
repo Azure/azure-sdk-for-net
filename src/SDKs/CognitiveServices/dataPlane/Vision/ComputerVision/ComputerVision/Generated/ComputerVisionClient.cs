@@ -4231,10 +4231,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <param name='image'>
         /// An image stream.
         /// </param>
-        /// <param name='mode'>
-        /// Type of text to recognize. Possible values include: 'Handwritten',
-        /// 'Printed'
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -4253,7 +4249,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationHeaderResponse<BatchReadFileInStreamHeaders>> BatchReadFileInStreamWithHttpMessagesAsync(Stream image, TextRecognitionMode mode, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationHeaderResponse<BatchReadFileInStreamHeaders>> BatchReadFileInStreamWithHttpMessagesAsync(Stream image, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -4271,7 +4267,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("image", image);
-                tracingParameters.Add("mode", mode);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BatchReadFileInStream", tracingParameters);
             }
@@ -4279,12 +4274,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "read/core/asyncBatchAnalyze";
             _url = _url.Replace("{Endpoint}", Endpoint);
-            List<string> _queryParameters = new List<string>();
-            _queryParameters.Add(string.Format("mode={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(mode, SerializationSettings).Trim('"'))));
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
