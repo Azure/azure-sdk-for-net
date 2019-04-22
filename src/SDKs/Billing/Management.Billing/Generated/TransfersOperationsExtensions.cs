@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class TransfersOperationsExtensions
     {
             /// <summary>
-            /// Initiates the request to transfer the GTM or legacy subscriptions or RIs to
-            /// GTM.
+            /// Initiates the request to transfer the modern or legacy subscriptions or RIs
+            /// to modern.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Initiates the request to transfer the GTM or legacy subscriptions or RIs to
-            /// GTM.
+            /// Initiates the request to transfer the modern or legacy subscriptions or RIs
+            /// to modern.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

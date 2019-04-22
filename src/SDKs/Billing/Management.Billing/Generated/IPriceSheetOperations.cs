@@ -19,20 +19,18 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicyOperations operations.
+    /// PriceSheetOperations operations.
     /// </summary>
-    public partial interface IPolicyOperations
+    public partial interface IPriceSheetOperations
     {
         /// <summary>
-        /// The policy for a given billing account name and billing profile
-        /// name.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// Get pricesheet for invoice id (invoiceName).
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// Azure Billing Account ID.
         /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
+        /// <param name='invoiceName'>
+        /// The name of an invoice resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,18 +47,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Policy>> GetByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to update a policy.
+        /// Get pricesheet for invoice id (invoiceName).
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// Azure Billing Account ID.
         /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the update policy operation.
+        /// <param name='invoiceName'>
+        /// The name of an invoice resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,6 +72,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Policy>> UpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Policy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

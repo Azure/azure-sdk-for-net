@@ -19,19 +19,21 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingProfilesOperations operations.
+    /// InvoicesOperations operations.
     /// </summary>
-    public partial interface IBillingProfilesOperations
+    public partial interface IInvoicesOperations
     {
         /// <summary>
-        /// Lists all billing profiles for a user which that user has access
-        /// to.
+        /// List of invoices for a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the invoiceSections.
+        /// <param name='periodStartDate'>
+        /// Invoice period start date.
+        /// </param>
+        /// <param name='periodEndDate'>
+        /// Invoice period end date.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -48,9 +50,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfileListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the billing profile by id.
+        /// List of invoices for a billing profile.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -58,8 +60,11 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the invoiceSections.
+        /// <param name='periodStartDate'>
+        /// Invoice period start date.
+        /// </param>
+        /// <param name='periodEndDate'>
+        /// Invoice period end date.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,9 +81,9 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfile>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to update a billing profile.
+        /// Get the invoice by id.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -86,8 +91,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='billingProfileName'>
         /// Billing Profile Id.
         /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the update billing profile operation.
+        /// <param name='invoiceName'>
+        /// Invoice Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -104,34 +109,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders>> UpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// The operation to update a billing profile.
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the update billing profile operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<BillingProfile,BillingProfilesUpdateHeaders>> BeginUpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, BillingProfile parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<InvoiceSummary>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

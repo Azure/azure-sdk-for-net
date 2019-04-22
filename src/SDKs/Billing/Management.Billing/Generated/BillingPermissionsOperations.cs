@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EnrollmentAccountsOperations operations.
+    /// BillingPermissionsOperations operations.
     /// </summary>
-    internal partial class EnrollmentAccountsOperations : IServiceOperations<BillingManagementClient>, IEnrollmentAccountsOperations
+    internal partial class BillingPermissionsOperations : IServiceOperations<BillingManagementClient>, IBillingPermissionsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the EnrollmentAccountsOperations class.
+        /// Initializes a new instance of the BillingPermissionsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EnrollmentAccountsOperations(BillingManagementClient client)
+        internal BillingPermissionsOperations(BillingManagementClient client)
         {
             if (client == null)
             {
@@ -51,18 +51,10 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all Enrollment Accounts for a user which he has access to.
+        /// Lists all billing permissions for the caller under a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
-        /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the department.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
-        /// string where key and value is separated by a colon (:).
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -85,7 +77,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EnrollmentAccountListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BillingPermissionsListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -103,27 +95,17 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("expand", expand);
-                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccountName", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccount", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/providers/Microsoft.Billing/billingPermissions").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -213,7 +195,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EnrollmentAccountListResult>();
+            var _result = new AzureOperationResponse<BillingPermissionsListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -226,7 +208,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EnrollmentAccountListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingPermissionsListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -246,21 +228,13 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the enrollment account by id.
+        /// Lists all billing permissions for the caller under Invoice Section.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='enrollmentAccountName'>
-        /// Enrollment Account Id.
-        /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the Department.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
-        /// string where key and value is separated by a colon (:).
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -283,7 +257,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EnrollmentAccount>> GetByEnrollmentAccountIdWithHttpMessagesAsync(string billingAccountName, string enrollmentAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -293,9 +267,9 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (enrollmentAccountName == null)
+            if (invoiceSectionName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "enrollmentAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceSectionName");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -305,29 +279,19 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("enrollmentAccountName", enrollmentAccountName);
-                tracingParameters.Add("expand", expand);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("invoiceSectionName", invoiceSectionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByEnrollmentAccountId", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByInvoiceSections", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoiceSections/{invoiceSectionName}/providers/Microsoft.Billing/billingPermissions").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
-            _url = _url.Replace("{enrollmentAccountName}", System.Uri.EscapeDataString(enrollmentAccountName));
+            _url = _url.Replace("{invoiceSectionName}", System.Uri.EscapeDataString(invoiceSectionName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (expand != null)
-            {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -417,7 +381,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EnrollmentAccount>();
+            var _result = new AzureOperationResponse<BillingPermissionsListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -430,7 +394,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EnrollmentAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<BillingPermissionsListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

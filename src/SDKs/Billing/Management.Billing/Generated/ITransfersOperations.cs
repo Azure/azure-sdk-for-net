@@ -24,8 +24,8 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface ITransfersOperations
     {
         /// <summary>
-        /// Initiates the request to transfer the GTM or legacy subscriptions
-        /// or RIs to GTM.
+        /// Initiates the request to transfer the modern or legacy
+        /// subscriptions or RIs to modern.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.

@@ -19,20 +19,16 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicyOperations operations.
+    /// BillingPermissionsOperations operations.
     /// </summary>
-    public partial interface IPolicyOperations
+    public partial interface IBillingPermissionsOperations
     {
         /// <summary>
-        /// The policy for a given billing account name and billing profile
-        /// name.
-        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
+        /// Lists all billing permissions for the caller under a billing
+        /// account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
-        /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -49,18 +45,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Policy>> GetByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByBillingAccountWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The operation to update a policy.
+        /// Lists all billing permissions for the caller under Invoice Section.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='billingProfileName'>
-        /// Billing Profile Id.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the update policy operation.
+        /// <param name='invoiceSectionName'>
+        /// InvoiceSection Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -77,6 +70,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Policy>> UpdateWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Policy parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingPermissionsListResult>> ListByInvoiceSectionsWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PolicyOperations.
+    /// Extension methods for PaymentMethodsOperations.
     /// </summary>
-    public static partial class PolicyOperationsExtensions
+    public static partial class PaymentMethodsOperationsExtensions
     {
             /// <summary>
-            /// The policy for a given billing account name and billing profile name.
+            /// Lists the Payment Methods by billing profile Id.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            public static Policy GetByBillingProfileName(this IPolicyOperations operations, string billingAccountName, string billingProfileName)
+            public static IPage<PaymentMethod> ListByBillingProfileName(this IPaymentMethodsOperations operations, string billingAccountName, string billingProfileName)
             {
-                return operations.GetByBillingProfileNameAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
+                return operations.ListByBillingProfileNameAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The policy for a given billing account name and billing profile name.
+            /// Lists the Payment Methods by billing profile Id.
             /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
@@ -55,55 +55,45 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Policy> GetByBillingProfileNameAsync(this IPolicyOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PaymentMethod>> ListByBillingProfileNameAsync(this IPaymentMethodsOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByBillingProfileNameWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingProfileNameWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// The operation to update a policy.
+            /// Lists the Payment Methods by billing profile Id.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update policy operation.
-            /// </param>
-            public static Policy Update(this IPolicyOperations operations, string billingAccountName, string billingProfileName, Policy parameters)
+            public static IPage<PaymentMethod> ListByBillingProfileNameNext(this IPaymentMethodsOperations operations, string nextPageLink)
             {
-                return operations.UpdateAsync(billingAccountName, billingProfileName, parameters).GetAwaiter().GetResult();
+                return operations.ListByBillingProfileNameNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// The operation to update a policy.
+            /// Lists the Payment Methods by billing profile Id.
+            /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='billingAccountName'>
-            /// billing Account Id.
-            /// </param>
-            /// <param name='billingProfileName'>
-            /// Billing Profile Id.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to the update policy operation.
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Policy> UpdateAsync(this IPolicyOperations operations, string billingAccountName, string billingProfileName, Policy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<PaymentMethod>> ListByBillingProfileNameNextAsync(this IPaymentMethodsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountName, billingProfileName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByBillingProfileNameNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
