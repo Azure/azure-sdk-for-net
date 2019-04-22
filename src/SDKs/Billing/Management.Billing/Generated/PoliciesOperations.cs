@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicyOperations operations.
+    /// PoliciesOperations operations.
     /// </summary>
-    internal partial class PolicyOperations : IServiceOperations<BillingManagementClient>, IPolicyOperations
+    internal partial class PoliciesOperations : IServiceOperations<BillingManagementClient>, IPoliciesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the PolicyOperations class.
+        /// Initializes a new instance of the PoliciesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal PolicyOperations(BillingManagementClient client)
+        internal PoliciesOperations(BillingManagementClient client)
         {
             if (client == null)
             {

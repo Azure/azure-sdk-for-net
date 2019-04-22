@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<InvoiceListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the invoice by id.
+        /// Get the invoice by name.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.

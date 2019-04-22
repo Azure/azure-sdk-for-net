@@ -462,7 +462,7 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the invoice by id.
+        /// Get the invoice by name.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.

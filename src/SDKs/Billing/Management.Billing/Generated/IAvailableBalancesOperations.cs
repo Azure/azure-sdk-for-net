@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AvailableBalanceOperations operations.
+    /// AvailableBalancesOperations operations.
     /// </summary>
-    public partial interface IAvailableBalanceOperations
+    public partial interface IAvailableBalancesOperations
     {
         /// <summary>
         /// The latest available credit balance for a given billingAccountName

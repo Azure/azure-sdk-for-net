@@ -799,8 +799,8 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Transfers the modern subscription from one invoice section to another
-        /// within a billing account.
+        /// Transfers the subscription from one invoice section to another within a
+        /// billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -828,8 +828,8 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Transfers the modern subscription from one invoice section to another
-        /// within a billing account.
+        /// Transfers the subscription from one invoice section to another within a
+        /// billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.

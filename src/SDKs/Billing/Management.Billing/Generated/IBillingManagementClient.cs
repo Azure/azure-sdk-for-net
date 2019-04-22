@@ -77,9 +77,9 @@ namespace Microsoft.Azure.Management.Billing
         IBillingAccountsOperations BillingAccounts { get; }
 
         /// <summary>
-        /// Gets the IAvailableBalanceOperations.
+        /// Gets the IAvailableBalancesOperations.
         /// </summary>
-        IAvailableBalanceOperations AvailableBalance { get; }
+        IAvailableBalancesOperations AvailableBalances { get; }
 
         /// <summary>
         /// Gets the IPaymentMethodsOperations.
@@ -132,9 +132,9 @@ namespace Microsoft.Azure.Management.Billing
         ITransactionsOperations Transactions { get; }
 
         /// <summary>
-        /// Gets the IPolicyOperations.
+        /// Gets the IPoliciesOperations.
         /// </summary>
-        IPolicyOperations Policy { get; }
+        IPoliciesOperations Policies { get; }
 
         /// <summary>
         /// Gets the IBillingPropertyOperations.
@@ -167,14 +167,14 @@ namespace Microsoft.Azure.Management.Billing
         IBillingProfileBillingPermissionsOperations BillingProfileBillingPermissions { get; }
 
         /// <summary>
-        /// Gets the IBillingRoleDefinitionOperations.
+        /// Gets the IBillingRoleDefinitionsOperations.
         /// </summary>
-        IBillingRoleDefinitionOperations BillingRoleDefinition { get; }
+        IBillingRoleDefinitionsOperations BillingRoleDefinitions { get; }
 
         /// <summary>
-        /// Gets the IBillingRoleAssignmentOperations.
+        /// Gets the IBillingRoleAssignmentsOperations.
         /// </summary>
-        IBillingRoleAssignmentOperations BillingRoleAssignment { get; }
+        IBillingRoleAssignmentsOperations BillingRoleAssignments { get; }
 
         /// <summary>
         /// Gets the IAgreementsOperations.

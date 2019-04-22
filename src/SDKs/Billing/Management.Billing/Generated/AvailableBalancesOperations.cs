@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// AvailableBalanceOperations operations.
+    /// AvailableBalancesOperations operations.
     /// </summary>
-    internal partial class AvailableBalanceOperations : IServiceOperations<BillingManagementClient>, IAvailableBalanceOperations
+    internal partial class AvailableBalancesOperations : IServiceOperations<BillingManagementClient>, IAvailableBalancesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the AvailableBalanceOperations class.
+        /// Initializes a new instance of the AvailableBalancesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal AvailableBalanceOperations(BillingManagementClient client)
+        internal AvailableBalancesOperations(BillingManagementClient client)
         {
             if (client == null)
             {

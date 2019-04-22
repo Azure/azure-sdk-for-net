@@ -128,8 +128,8 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<BillingSubscriptionSummary>> GetWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string billingSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Transfers the modern subscription from one invoice section to
-        /// another within a billing account.
+        /// Transfers the subscription from one invoice section to another
+        /// within a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -160,8 +160,8 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<TransferBillingSubscriptionResult,BillingSubscriptionsTransferHeaders>> TransferWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string billingSubscriptionName, TransferBillingSubscriptionRequestProperties parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Transfers the modern subscription from one invoice section to
-        /// another within a billing account.
+        /// Transfers the subscription from one invoice section to another
+        /// within a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.

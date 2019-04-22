@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// BillingRoleAssignmentOperations operations.
+    /// BillingRoleAssignmentsOperations operations.
     /// </summary>
-    internal partial class BillingRoleAssignmentOperations : IServiceOperations<BillingManagementClient>, IBillingRoleAssignmentOperations
+    internal partial class BillingRoleAssignmentsOperations : IServiceOperations<BillingManagementClient>, IBillingRoleAssignmentsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the BillingRoleAssignmentOperations class.
+        /// Initializes a new instance of the BillingRoleAssignmentsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal BillingRoleAssignmentOperations(BillingManagementClient client)
+        internal BillingRoleAssignmentsOperations(BillingManagementClient client)
         {
             if (client == null)
             {

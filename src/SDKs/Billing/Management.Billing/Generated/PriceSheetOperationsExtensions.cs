@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class PriceSheetOperationsExtensions
     {
             /// <summary>
-            /// Get pricesheet for invoice id (invoiceName).
+            /// Download price sheet for an invoice.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get pricesheet for invoice id (invoiceName).
+            /// Download price sheet for an invoice.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get pricesheet for invoice id (invoiceName).
+            /// Download price sheet for an invoice.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get pricesheet for invoice id (invoiceName).
+            /// Download price sheet for an invoice.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

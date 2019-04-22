@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the invoice by id.
+            /// Get the invoice by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.Billing
             }
 
             /// <summary>
-            /// Get the invoice by id.
+            /// Get the invoice by name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

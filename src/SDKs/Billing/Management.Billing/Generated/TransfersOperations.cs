@@ -51,8 +51,7 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Initiates the request to transfer the modern or legacy subscriptions or RIs
-        /// to modern.
+        /// Initiates the request to transfer the legacy subscriptions or RIs.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.

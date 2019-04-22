@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for AvailableBalanceOperations.
+    /// Extension methods for AvailableBalancesOperations.
     /// </summary>
-    public static partial class AvailableBalanceOperationsExtensions
+    public static partial class AvailableBalancesOperationsExtensions
     {
             /// <summary>
             /// The latest available credit balance for a given billingAccountName and
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            public static AvailableBalance GetByBillingProfile(this IAvailableBalanceOperations operations, string billingAccountName, string billingProfileName)
+            public static AvailableBalance GetByBillingProfile(this IAvailableBalancesOperations operations, string billingAccountName, string billingProfileName)
             {
                 return operations.GetByBillingProfileAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AvailableBalance> GetByBillingProfileAsync(this IAvailableBalanceOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AvailableBalance> GetByBillingProfileAsync(this IAvailableBalancesOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetByBillingProfileWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {

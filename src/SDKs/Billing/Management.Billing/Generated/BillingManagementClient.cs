@@ -82,9 +82,9 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingAccountsOperations BillingAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IAvailableBalanceOperations.
+        /// Gets the IAvailableBalancesOperations.
         /// </summary>
-        public virtual IAvailableBalanceOperations AvailableBalance { get; private set; }
+        public virtual IAvailableBalancesOperations AvailableBalances { get; private set; }
 
         /// <summary>
         /// Gets the IPaymentMethodsOperations.
@@ -137,9 +137,9 @@ namespace Microsoft.Azure.Management.Billing
         public virtual ITransactionsOperations Transactions { get; private set; }
 
         /// <summary>
-        /// Gets the IPolicyOperations.
+        /// Gets the IPoliciesOperations.
         /// </summary>
-        public virtual IPolicyOperations Policy { get; private set; }
+        public virtual IPoliciesOperations Policies { get; private set; }
 
         /// <summary>
         /// Gets the IBillingPropertyOperations.
@@ -172,14 +172,14 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingProfileBillingPermissionsOperations BillingProfileBillingPermissions { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingRoleDefinitionOperations.
+        /// Gets the IBillingRoleDefinitionsOperations.
         /// </summary>
-        public virtual IBillingRoleDefinitionOperations BillingRoleDefinition { get; private set; }
+        public virtual IBillingRoleDefinitionsOperations BillingRoleDefinitions { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingRoleAssignmentOperations.
+        /// Gets the IBillingRoleAssignmentsOperations.
         /// </summary>
-        public virtual IBillingRoleAssignmentOperations BillingRoleAssignment { get; private set; }
+        public virtual IBillingRoleAssignmentsOperations BillingRoleAssignments { get; private set; }
 
         /// <summary>
         /// Gets the IAgreementsOperations.
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Management.Billing
         private void Initialize()
         {
             BillingAccounts = new BillingAccountsOperations(this);
-            AvailableBalance = new AvailableBalanceOperations(this);
+            AvailableBalances = new AvailableBalancesOperations(this);
             PaymentMethods = new PaymentMethodsOperations(this);
             BillingProfiles = new BillingProfilesOperations(this);
             InvoiceSections = new InvoiceSectionsOperations(this);
@@ -439,15 +439,15 @@ namespace Microsoft.Azure.Management.Billing
             BillingSubscriptions = new BillingSubscriptionsOperations(this);
             Products = new ProductsOperations(this);
             Transactions = new TransactionsOperations(this);
-            Policy = new PolicyOperations(this);
+            Policies = new PoliciesOperations(this);
             BillingProperty = new BillingPropertyOperations(this);
             Transfers = new TransfersOperations(this);
             RecipientTransfers = new RecipientTransfersOperations(this);
             Operations = new Operations(this);
             BillingPermissions = new BillingPermissionsOperations(this);
             BillingProfileBillingPermissions = new BillingProfileBillingPermissionsOperations(this);
-            BillingRoleDefinition = new BillingRoleDefinitionOperations(this);
-            BillingRoleAssignment = new BillingRoleAssignmentOperations(this);
+            BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
+            BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             ApiVersion = "2018-11-01-preview";

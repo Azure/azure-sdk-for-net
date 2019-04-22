@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for PolicyOperations.
+    /// Extension methods for PoliciesOperations.
     /// </summary>
-    public static partial class PolicyOperationsExtensions
+    public static partial class PoliciesOperationsExtensions
     {
             /// <summary>
             /// The policy for a given billing account name and billing profile name.
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='billingProfileName'>
             /// Billing Profile Id.
             /// </param>
-            public static Policy GetByBillingProfileName(this IPolicyOperations operations, string billingAccountName, string billingProfileName)
+            public static Policy GetByBillingProfileName(this IPoliciesOperations operations, string billingAccountName, string billingProfileName)
             {
                 return operations.GetByBillingProfileNameAsync(billingAccountName, billingProfileName).GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Policy> GetByBillingProfileNameAsync(this IPolicyOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Policy> GetByBillingProfileNameAsync(this IPoliciesOperations operations, string billingAccountName, string billingProfileName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetByBillingProfileNameWithHttpMessagesAsync(billingAccountName, billingProfileName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='parameters'>
             /// Parameters supplied to the update policy operation.
             /// </param>
-            public static Policy Update(this IPolicyOperations operations, string billingAccountName, string billingProfileName, Policy parameters)
+            public static Policy Update(this IPoliciesOperations operations, string billingAccountName, string billingProfileName, Policy parameters)
             {
                 return operations.UpdateAsync(billingAccountName, billingProfileName, parameters).GetAwaiter().GetResult();
             }
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Billing
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Policy> UpdateAsync(this IPolicyOperations operations, string billingAccountName, string billingProfileName, Policy parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Policy> UpdateAsync(this IPoliciesOperations operations, string billingAccountName, string billingProfileName, Policy parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(billingAccountName, billingProfileName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

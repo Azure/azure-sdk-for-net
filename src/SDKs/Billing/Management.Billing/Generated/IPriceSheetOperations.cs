@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Billing
     public partial interface IPriceSheetOperations
     {
         /// <summary>
-        /// Get pricesheet for invoice id (invoiceName).
+        /// Download price sheet for an invoice.
         /// </summary>
         /// <param name='billingAccountName'>
         /// Azure Billing Account ID.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Billing
         /// </exception>
         Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get pricesheet for invoice id (invoiceName).
+        /// Download price sheet for an invoice.
         /// </summary>
         /// <param name='billingAccountName'>
         /// Azure Billing Account ID.

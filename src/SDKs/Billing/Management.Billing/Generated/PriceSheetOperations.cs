@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get pricesheet for invoice id (invoiceName).
+        /// Download price sheet for an invoice.
         /// </summary>
         /// <param name='billingAccountName'>
         /// Azure Billing Account ID.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get pricesheet for invoice id (invoiceName).
+        /// Download price sheet for an invoice.
         /// </summary>
         /// <param name='billingAccountName'>
         /// Azure Billing Account ID.

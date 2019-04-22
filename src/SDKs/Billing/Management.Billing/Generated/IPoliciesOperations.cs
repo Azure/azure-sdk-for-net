@@ -19,9 +19,9 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// PolicyOperations operations.
+    /// PoliciesOperations operations.
     /// </summary>
-    public partial interface IPolicyOperations
+    public partial interface IPoliciesOperations
     {
         /// <summary>
         /// The policy for a given billing account name and billing profile
