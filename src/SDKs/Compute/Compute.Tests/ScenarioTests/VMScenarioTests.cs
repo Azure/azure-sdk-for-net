@@ -147,9 +147,28 @@ namespace Compute.Tests
             }
         }
 
+        /// <summary>
+        /// To record this test case, you need to run it in zone supported regions like eastus2euap.
+        /// </summary>
+        [Fact]
+        [Trait("Name", "TestVMScenarioOperations_PpgScenario")]
+        public void TestVMScenarioOperations_PpgScenario()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                TestVMScenarioOperationsInternal("TestVMScenarioOperations_PpgScenario", hasManagedDisks: true, isPpgScenario: true);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
         private void TestVMScenarioOperationsInternal(string methodName, bool hasManagedDisks = false, IList<string> zones = null, string vmSize = "Standard_A0",
             string osDiskStorageAccountType = "Standard_LRS", string dataDiskStorageAccountType = "Standard_LRS", bool? writeAcceleratorEnabled = null,
-            bool hasDiffDisks = false, bool callUpdateVM = false)
+            bool hasDiffDisks = false, bool callUpdateVM = false, bool isPpgScenario = false)
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName, methodName))
             {
@@ -161,6 +180,15 @@ namespace Compute.Tests
                 var rgName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string storageAccountName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
                 string asName = ComputeManagementTestUtilities.GenerateName("as");
+                string ppgName = null;
+                string expectedPpgReferenceId = null;
+
+                if (isPpgScenario)
+                {
+                    ppgName = ComputeManagementTestUtilities.GenerateName("ppgtest");
+                    expectedPpgReferenceId = Helpers.GetProximityPlacementGroupRef(m_subId, rgName, ppgName);
+                }
+
                 VirtualMachine inputVM;
                 try
                 {
@@ -170,7 +198,7 @@ namespace Compute.Tests
                     }
 
                     CreateVM(rgName, asName, storageAccountName, imageRef, out inputVM, hasManagedDisks: hasManagedDisks,hasDiffDisks: hasDiffDisks, vmSize: vmSize, osDiskStorageAccountType: osDiskStorageAccountType,
-                        dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones);
+                        dataDiskStorageAccountType: dataDiskStorageAccountType, writeAcceleratorEnabled: writeAcceleratorEnabled, zones: zones, ppgName: ppgName);
 
                     // Instance view is not completely populated just after VM is provisioned. So we wait here for a few minutes to 
                     // allow GA blob to populate.
@@ -186,15 +214,26 @@ namespace Compute.Tests
 
                     bool hasUserDefinedAS = zones == null;
 
+                    string expectedVMReferenceId = Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name);
                     var listResponse = m_CrpClient.VirtualMachines.List(rgName);
                     ValidateVM(inputVM, listResponse.FirstOrDefault(x => x.Name == inputVM.Name),
-                        Helpers.GetVMReferenceId(m_subId, rgName, inputVM.Name), hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks);
+                        expectedVMReferenceId, hasManagedDisks, hasUserDefinedAS, writeAcceleratorEnabled, hasDiffDisks, expectedPpgReferenceId: expectedPpgReferenceId);
 
                     var listVMSizesResponse = m_CrpClient.VirtualMachines.ListAvailableSizes(rgName, inputVM.Name);
                     Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
 
                     listVMSizesResponse = m_CrpClient.AvailabilitySets.ListAvailableSizes(rgName, asName);
                     Helpers.ValidateVirtualMachineSizeListResponse(listVMSizesResponse, hasAZ: zones != null, writeAcceleratorEnabled: writeAcceleratorEnabled, hasDiffDisks: hasDiffDisks);
+
+                    if(isPpgScenario)
+                    {
+                        ProximityPlacementGroup outProximityPlacementGroup = m_CrpClient.ProximityPlacementGroups.Get(rgName, ppgName);
+                        string expectedAvSetReferenceId = Helpers.GetAvailabilitySetRef(m_subId, rgName, asName);
+                        Assert.Equal(1, outProximityPlacementGroup.VirtualMachines.Count);
+                        Assert.Equal(1, outProximityPlacementGroup.AvailabilitySets.Count);
+                        Assert.Equal(expectedVMReferenceId, outProximityPlacementGroup.VirtualMachines.First().Id, StringComparer.OrdinalIgnoreCase);
+                        Assert.Equal(expectedAvSetReferenceId, outProximityPlacementGroup.AvailabilitySets.First().Id, StringComparer.OrdinalIgnoreCase);
+                    }
 
                     if (callUpdateVM)
                     {

@@ -213,6 +213,7 @@ namespace Compute.Tests
             Subnet subnet = null,
             IList<string> zones = null,
             int? osDiskSizeInGB = null,
+            string ppgId = null,
             string machineSizeType = null)
         {
             try
@@ -231,6 +232,7 @@ namespace Compute.Tests
                                                                                      subnet,
                                                                                      zones,
                                                                                      osDiskSizeInGB,
+                                                                                     ppgId: ppgId,
                                                                                      machineSizeType: machineSizeType);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
@@ -308,6 +310,7 @@ namespace Compute.Tests
             Subnet subnet = null,
             IList<string> zones = null,
             int? osDiskSizeInGB = null,
+            string ppgId = null,
             string machineSizeType = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
@@ -350,12 +353,17 @@ namespace Compute.Tests
 
             inputVMScaleSet.VirtualMachineProfile.ExtensionProfile = extensionProfile;
 
+            if (ppgId != null)
+            {
+                inputVMScaleSet.ProximityPlacementGroup = new Microsoft.Azure.Management.Compute.Models.SubResource() { Id = ppgId };
+            }
+
             var createOrUpdateResponse = m_CrpClient.VirtualMachineScaleSets.CreateOrUpdate(rgName, vmssName, inputVMScaleSet);
 
             Assert.True(createOrUpdateResponse.Name == vmssName);
             Assert.True(createOrUpdateResponse.Location.ToLower() == inputVMScaleSet.Location.ToLower().Replace(" ", ""));
 
-            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks);
+            ValidateVMScaleSet(inputVMScaleSet, createOrUpdateResponse, createWithManagedDisks, ppgId: ppgId);
 
             return createOrUpdateResponse;
         }
@@ -374,7 +382,7 @@ namespace Compute.Tests
             }
         }
 
-        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false)
+        protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut, bool hasManagedDisks = false, string ppgId = null)
         {
             Assert.True(!string.IsNullOrEmpty(vmScaleSetOut.ProvisioningState));
 
@@ -581,6 +589,11 @@ namespace Compute.Tests
                 Assert.Null(vmScaleSetOut.Zones);
                 Assert.Null(vmScaleSetOut.ZoneBalance);
                 Assert.Null(vmScaleSetOut.PlatformFaultDomainCount);
+            }
+
+            if(ppgId != null)
+            {
+                Assert.Equal(ppgId, vmScaleSetOut.ProximityPlacementGroup.Id, StringComparer.OrdinalIgnoreCase);
             }
         }
 
