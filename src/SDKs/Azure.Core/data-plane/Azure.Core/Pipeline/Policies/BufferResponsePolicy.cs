@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline.Policies
         {
             await ProcessNextAsync(pipeline, message);
 
-            if (message.Response.ResponseContentStream != null)
+            if (message.Response.ResponseContentStream != null && !message.Response.ResponseContentStream.CanSeek)
             {
                 Stream responseContentStream = message.Response.ResponseContentStream;
                 var bufferedStream = new MemoryStream();

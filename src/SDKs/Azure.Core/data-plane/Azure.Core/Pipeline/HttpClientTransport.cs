@@ -91,6 +91,7 @@ namespace Azure.Core.Pipeline
 
         sealed class PipelineRequest : HttpPipelineRequest
         {
+            private bool _wasSent = false;
             private readonly HttpRequestMessage _requestMessage;
 
             private PipelineContentAdapter _requestContent;
@@ -144,9 +145,16 @@ namespace Azure.Core.Pipeline
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
+                if (_wasSent == false)
+                {
+                    _wasSent = true;
+                    _requestMessage.RequestUri = UriBuilder.Uri;
+                    return _requestMessage;
+                }
+
                 // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
                 // and so the retry logic fails.
-                var request = new HttpRequestMessage(_requestMessage.Method, UriBuilder.ToString());
+                var request = new HttpRequestMessage(_requestMessage.Method, UriBuilder.Uri);
 
                 CopyHeaders(_requestMessage.Headers, request.Headers);
 
