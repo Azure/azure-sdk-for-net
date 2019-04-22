@@ -1,27 +1,20 @@
-﻿using Microsoft.Azure.CognitiveServices.Personalizer;
-using System.Net.Http;
+﻿using System.Net.Http;
 
-namespace Personalizer.Tests
+namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 {
     public abstract class BaseTests
     {
         public static bool IsTestTenant = false;
-        private static readonly string ApiKey;
-
-        static BaseTests()
-        {
-            // Retrieve the configuration information.
-            ApiKey = "";
-        }
+        // BaseEndpoint only contains protocol and hostname
+        private static string BaseEndpoint = "http://localhost:5000";
+        private static string ApiKey = "000";
 
         protected IPersonalizerClient GetClient(DelegatingHandler handler)
         {
-            IPersonalizerClient client = new PersonalizerClient(new ApiKeyServiceClientCredentials(ApiKey), handlers: handler)
+            return new PersonalizerClient(new ApiKeyServiceClientCredentials(ApiKey), handlers: handler)
             {
-                Endpoint = "https://westus.api.cognitive.microsoft.com"
+                Endpoint = BaseEndpoint
             };
-
-            return client;
         }
     }
 }

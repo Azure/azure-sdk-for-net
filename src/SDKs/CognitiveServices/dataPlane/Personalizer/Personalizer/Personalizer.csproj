@@ -1,14 +1,30 @@
 <Project Sdk="Microsoft.NET.Sdk">
+  <!-- Please do not move/edit code below this line -->
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
+  <!-- Please do not move/edit code above this line -->
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.4;net452</TargetFrameworks>
-    <AssemblyName>Microsoft.Azure.CognitiveServices.Personalizer</AssemblyName>
-    <RootNamespace>Microsoft.Azure.CognitiveServices.Personalizer</RootNamespace>
+    <PackageId>Microsoft.Azure.CognitiveServices.Personalizer</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Personalizer APIs.</Description>
-  </PropertyGroup>
+    <Version>1.0.0</Version>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.Personalizer</AssemblyName>
+    <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Personalizer API;REST HTTP client</PackageTags>
+    <PackageReleaseNotes>
+    <![CDATA[
+    Microsoft Cognitive Services Personalizer SDK.
 
+    This package calls the API version "v1.0"
+
+    ]]></PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+  </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" Version="2.3.20" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 
+  <!-- Please do not move/edit code below this line -->
+  <Import Condition=" Exists('$([MSBuild]::GetPathOfFileAbove(AzSdk.RP.props))') " Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.RP.props'))" />
+  <!-- Please do not move/edit code above this line -->
 </Project>
