@@ -26,8 +26,8 @@
 
   <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsPerformanceTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
     <IsPackable>false</IsPackable>
-    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
-    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.0;net461</RequiredTargetFrameworks>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
 
