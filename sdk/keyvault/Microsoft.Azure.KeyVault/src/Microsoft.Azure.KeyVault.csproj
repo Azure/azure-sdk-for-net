@@ -5,6 +5,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.KeyVault.WebKey\src\Microsoft.Azure.KeyVault.WebKey.csproj" />
   </ItemGroup>
 </Project>

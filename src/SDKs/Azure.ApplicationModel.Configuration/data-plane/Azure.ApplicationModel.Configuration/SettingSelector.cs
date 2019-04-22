@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -81,7 +82,16 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        public override int GetHashCode()
+        {
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Keys);
+            hashCode.Add(Labels);
+            hashCode.Add(AsOf);
+            hashCode.Add(Fields);
+            hashCode.Add(BatchLink, StringComparer.Ordinal);
+            return hashCode.ToHashCode();
+        }
 
         [EditorBrowsable(EditorBrowsableState.Never)]
         // TODO ()

@@ -107,8 +107,7 @@ jobs:
           version: '$(DotNetCoreVersion)'
 
       - task: DotNetCoreCLI@2
-        displayName: 'Build & Test (no live tests)'
-        condition: eq(variables['System.TeamProject'], 'public')
+        displayName: 'Build & Test'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -117,23 +116,6 @@ jobs:
           command: test
           projects: '$(ProjectFile)'
           arguments: --filter TestCategory!=Live --logger trx
-          publishTestResults: false
-
-      - task: DotNetCoreCLI@2
-        displayName: 'Build & Test (with live tests)'
-        condition: ne(variables['System.TeamProject'], 'public')
-        env:
-          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
-          DOTNET_CLI_TELEMETRY_OPTOUT: 1
-          DOTNET_MULTILEVEL_LOOKUP: 0
-          APP_CONFIG_CONNECTION: $(AppConfigConnectionString)
-          AZ_SERVICE_BUS_CONNECTION: $(ServiceBusConnectionString)
-          AZ_EVENT_HUBS_CONNECTION: $(EventHubsConnectionString)
-          AZ_EVENT_HUBS_STORAGE_CONNECTION: $(EventHubsStorageConnectionString)
-        inputs:
-          command: test
-          projects: '$(ProjectFile)'
-          arguments: --logger trx
           publishTestResults: false
 
       - task: PublishTestResults@2

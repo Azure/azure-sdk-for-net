@@ -42,15 +42,17 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// 'Deleted', 'Warning'</param>
         /// <param name="lastMonthCharges">Last month charges.</param>
         /// <param name="monthToDateCharges">Month to date charges.</param>
-        /// <param name="enrollmentAccountContext">The enrollment account
-        /// context.</param>
         /// <param name="billingProfileId">Billing Profile id to which this
         /// product belongs.</param>
         /// <param name="billingProfileName">Billing Profile name to which this
         /// product belongs.</param>
+        /// <param name="invoiceSectionId">Invoice section id to which this
+        /// product belongs.</param>
+        /// <param name="invoiceSectionName">Invoice section name to which this
+        /// product belongs.</param>
         /// <param name="skuId">The sku id.</param>
         /// <param name="skuDescription">The sku description.</param>
-        public BillingSubscriptionSummary(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.Guid? subscriptionId = default(System.Guid?), string subscriptionBillingStatus = default(string), Amount lastMonthCharges = default(Amount), Amount monthToDateCharges = default(Amount), EnrollmentAccountContext enrollmentAccountContext = default(EnrollmentAccountContext), string billingProfileId = default(string), string billingProfileName = default(string), string skuId = default(string), string skuDescription = default(string))
+        public BillingSubscriptionSummary(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.Guid? subscriptionId = default(System.Guid?), string subscriptionBillingStatus = default(string), Amount lastMonthCharges = default(Amount), Amount monthToDateCharges = default(Amount), string billingProfileId = default(string), string billingProfileName = default(string), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string skuId = default(string), string skuDescription = default(string))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -58,9 +60,10 @@ namespace Microsoft.Azure.Management.Billing.Models
             SubscriptionBillingStatus = subscriptionBillingStatus;
             LastMonthCharges = lastMonthCharges;
             MonthToDateCharges = monthToDateCharges;
-            EnrollmentAccountContext = enrollmentAccountContext;
             BillingProfileId = billingProfileId;
             BillingProfileName = billingProfileName;
+            InvoiceSectionId = invoiceSectionId;
+            InvoiceSectionName = invoiceSectionName;
             SkuId = skuId;
             SkuDescription = skuDescription;
             CustomInit();
@@ -103,12 +106,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         public Amount MonthToDateCharges { get; private set; }
 
         /// <summary>
-        /// Gets the enrollment account context.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.enrollmentAccountContext")]
-        public EnrollmentAccountContext EnrollmentAccountContext { get; private set; }
-
-        /// <summary>
         /// Gets billing Profile id to which this product belongs.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfileId")]
@@ -119,6 +116,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfileName")]
         public string BillingProfileName { get; private set; }
+
+        /// <summary>
+        /// Gets invoice section id to which this product belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.invoiceSectionId")]
+        public string InvoiceSectionId { get; private set; }
+
+        /// <summary>
+        /// Gets invoice section name to which this product belongs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.invoiceSectionName")]
+        public string InvoiceSectionName { get; private set; }
 
         /// <summary>
         /// Gets or sets the sku id.

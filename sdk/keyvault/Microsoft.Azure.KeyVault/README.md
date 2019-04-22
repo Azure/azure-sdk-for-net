@@ -58,7 +58,7 @@ The Key Vault Client Library shares the same [Prerequisites](https://github.com/
 
 ## To Build
 
-For information on building the Azure Key Vault SDK, please see [Building the Microsoft Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net#to-build)
+For information on building the Azure Key Vault SDK, please see [Building the Microsoft Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net#to-build).
 
 ## Running Tests
 

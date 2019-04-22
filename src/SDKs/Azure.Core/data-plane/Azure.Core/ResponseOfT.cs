@@ -6,31 +6,14 @@ using System.ComponentModel;
 
 namespace Azure
 {
-    public struct Response<T> : IDisposable
+    public readonly struct Response<T> : IDisposable
     {
-        Response _response;
-        Func<Response, T> _contentParser;
-        T _value;
-
-        public Response(Response response)
-        {
-            _response = response;
-            _contentParser = null;
-            _value = default;
-        }
-
-        public Response(Response response, Func<Response, T> parser)
-        {
-            _response = response;
-            _contentParser = parser;
-            _value = default;
-        }
+        private readonly Response _response;
 
         public Response(Response response, T parsed)
         {
             _response = response;
-            _contentParser = null;
-            _value = parsed;
+            Value = parsed;
         }
 
         public void Deconstruct(out T value, out Response response)
@@ -39,27 +22,15 @@ namespace Azure
             response = _response;
         }
 
-        public static implicit operator T(Response<T> response)
-            => response.Value;
+        public static implicit operator T(Response<T> response) => response.Value;
 
-
-        public T Value
-        {
-            get {
-                if (_contentParser != null) {
-                    _value = _contentParser(_response);
-                    _contentParser = null;
-                }
-                return _value;
-            }
-        }
+        public T Value { get; }
 
         public int Status => _response.Status;
 
         public void Dispose()
         {
             _response.Dispose();
-            _contentParser = default;
         }
 
         public bool TryGetHeader(string name, out string values)
