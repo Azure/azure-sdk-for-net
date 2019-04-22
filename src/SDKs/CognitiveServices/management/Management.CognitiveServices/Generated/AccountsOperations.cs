@@ -313,6 +313,9 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// have a key no greater than 128 characters and value no greater than 256
         /// characters.
         /// </param>
+        /// <param name='properties'>
+        /// Additional properties for Account. Only provided fileds will be updated.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -334,7 +337,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CognitiveServicesAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CognitiveServicesAccount>> UpdateWithHttpMessagesAsync(string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -372,10 +375,11 @@ namespace Microsoft.Azure.Management.CognitiveServices
                 sku.Validate();
             }
             CognitiveServicesAccountUpdateParameters parameters = new CognitiveServicesAccountUpdateParameters();
-            if (sku != null || tags != null)
+            if (sku != null || tags != null || properties != null)
             {
                 parameters.Sku = sku;
                 parameters.Tags = tags;
+                parameters.Properties = properties;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
