@@ -12,12 +12,11 @@ namespace Microsoft.Azure.Management.Sql.Models
 {
 
     /// <summary>
-    /// Defines values for ManagedInstanceProxyOverride.
+    /// Defines values for ManagedServerCreateMode.
     /// </summary>
-    public static class ManagedInstanceProxyOverride
+    public static class ManagedServerCreateMode
     {
-        public const string Proxy = "Proxy";
-        public const string Redirect = "Redirect";
         public const string Default = "Default";
+        public const string PointInTimeRestore = "PointInTimeRestore";
     }
 }
