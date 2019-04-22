@@ -5,7 +5,6 @@
 
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -40,8 +39,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
                     {
                         Path = path,
-                        ContentFormat = ContentFormat.SwaggerJson,
-                        ContentValue = swaggerApiContent
+                        Format = ContentFormat.SwaggerJson,
+                        Value = swaggerApiContent
                     };
 
                     var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
@@ -64,7 +63,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     ApiExportResult swaggerExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, swaggerApi, ExportFormat.Swagger);
 
                     Assert.NotNull(swaggerExport);
-                    Assert.NotNull(swaggerExport.Link);
+                    Assert.NotNull(swaggerExport.Value.Link);
+                    Assert.Equal("swagger-link-json", swaggerExport.ExportResultFormat);
                 }
                 finally
                 {
@@ -100,8 +100,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
                     {
                         Path = path,
-                        ContentFormat = ContentFormat.WadlXml,
-                        ContentValue = wadlApiContent
+                        Format = ContentFormat.WadlXml,
+                        Value = wadlApiContent
                     };
 
                     var wadlApiResponse = testBase.client.Api.CreateOrUpdate(
@@ -127,7 +127,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     ApiExportResult wadlExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, wadlApi, ExportFormat.Wadl);
 
                     Assert.NotNull(wadlExport);
-                    Assert.NotNull(wadlExport.Link);
+                    Assert.NotNull(wadlExport.Value.Link);
+                    Assert.Equal("wadl-link-json", wadlExport.ExportResultFormat);
                 }
                 finally
                 {
@@ -164,8 +165,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
                     {
                         Path = path,
-                        ContentFormat = ContentFormat.Wsdl,
-                        ContentValue = wsdlApiContent,
+                        Format = ContentFormat.Wsdl,
+                        Value = wsdlApiContent,
                         SoapApiType = SoapApiType.SoapPassThrough, // create Soap Pass through API
                         WsdlSelector = new ApiCreateOrUpdatePropertiesWsdlSelector()
                         {
@@ -198,6 +199,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.True(apiContract.Protocols.Contains(Protocol.Https));
                     Assert.Equal("1", apiContract.ApiRevision);
 
+                    /* WSDL Export spits our broken Json 
                     ApiExportResult wsdlExport = testBase.client.ApiExport.Get(
                         testBase.rgName, 
                         testBase.serviceName, 
@@ -205,7 +207,9 @@ namespace ApiManagement.Tests.ManagementApiTests
                         ExportFormat.Wsdl);
 
                     Assert.NotNull(wsdlExport);
-                    Assert.NotNull(wsdlExport.Link);
+                    Assert.NotNull(wsdlExport.Value.Link);
+                    Assert.Equal("wsdl-link+xml", wsdlExport.ExportResultFormat);
+                    */
                 }
                 finally
                 {
@@ -216,6 +220,67 @@ namespace ApiManagement.Tests.ManagementApiTests
                         wsdlApi,
                         "*");
                 }
+            }
+        }
+
+        [Fact]
+        public void OpenApiTest()
+        {
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var testBase = new ApiManagementTestBase(context);
+                testBase.TryCreateApiManagementService();
+
+                const string openapiFilePath = "./Resources/petstore.yaml";
+                const string path = "openapi3";
+                string openApiId = TestUtilities.GenerateName("aid");
+
+                try
+                {
+                    // import API
+                    string openApiContent;
+                    using (StreamReader reader = File.OpenText(openapiFilePath))
+                    {
+                        openApiContent = reader.ReadToEnd();
+                    }
+
+                    var apiCreateOrUpdate = new ApiCreateOrUpdateParameter()
+                    {
+                        Path = path,
+                        Format = ContentFormat.Openapi,
+                        Value = openApiContent
+                    };
+
+                    var swaggerApiResponse = testBase.client.Api.CreateOrUpdate(
+                            testBase.rgName,
+                            testBase.serviceName,
+                            openApiId,
+                            apiCreateOrUpdate);
+
+                    Assert.NotNull(swaggerApiResponse);
+
+                    // get the api to check it was created
+                    var getResponse = testBase.client.Api.Get(testBase.rgName, testBase.serviceName, openApiId);
+
+                    Assert.NotNull(getResponse);
+                    Assert.Equal(openApiId, getResponse.Name);
+                    Assert.Equal(path, getResponse.Path);
+                    Assert.Equal("Swagger Petstore", getResponse.DisplayName);
+                    Assert.Equal("http://petstore.swagger.io/v1", getResponse.ServiceUrl);
+
+                    ApiExportResult openApiExport = testBase.client.ApiExport.Get(testBase.rgName, testBase.serviceName, openApiId, ExportFormat.Openapi);
+
+                    Assert.NotNull(openApiExport);
+                    Assert.NotNull(openApiExport.Value.Link);
+                    Assert.Equal("openapi-link", openApiExport.ExportResultFormat);
+                }
+                finally
+                {
+                    // remove the API
+                    testBase.client.Api.Delete(testBase.rgName, testBase.serviceName, openApiId, "*");
+                }
+
             }
         }
     }

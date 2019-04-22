@@ -9,14 +9,14 @@ Create or use an existing [Configuration Store](https://docs.microsoft.com/en-us
 
 For users that have access to the `Azure SDK Developer Playground` subscription, run:
 1. `az login`
-2. `az extension add --source https://azconfigextensions.blob.core.windows.net/azconfigextension/azconfig-0.3.0-py2.py3-none-any.whl`
-3. `az azconfig credential list -n azconfig`
+2. `az extension add -n appconfig`
+3. `az appconfig credential list -n azconfig`
 
     **Note**: If you see the error similar to: `InvalidResourceNamespace - The resource namespace 'Microsoft.Azconfig' is invalid.` make sure to add the subscription `Azure SDK Developer Playground` as your active subscription. To do this:
     1. Check your active subscription value by doing `az account show`
     2. Set default `az account set --subscription {Name or ID of subscription}`
     3. Double check your active subscription value by doing `az account show`
-5. From the output, get the first connection string and add it as `AZ_CONFIG_CONNECTION` environment variable's value.
+5. From the output, get the first connection string and add it as `APP_CONFIG_CONNECTION` environment variable's value.
 6. Make sure to restart VS or the environment where the tests are running.
 
 

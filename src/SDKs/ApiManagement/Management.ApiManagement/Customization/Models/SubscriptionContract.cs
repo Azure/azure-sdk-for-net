@@ -11,31 +11,30 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// </summary>
     public partial class SubscriptionContract
     {
-        public string ProductIdentifier
+        public string ScopeIdentifier
         {
             get
             {
-                if (!string.IsNullOrEmpty(this.ProductId))
+                if (!string.IsNullOrEmpty(this.Scope))
                 {
-                    return this.ProductId.Split(new[] { '/' }).Last();
+                    return this.Scope.Split(new[] { '/' }).Last();
                 }
 
                 return null;
             }
         }
 
-        public string UserIdentifier
+        public string OwnerIdentifier
         {
             get
             {
-                if (!string.IsNullOrEmpty(this.UserId))
+                if (!string.IsNullOrEmpty(this.OwnerId))
                 {
-                    return this.UserId.Split(new[] { '/' }).Last();
+                    return this.OwnerId.Split(new[] { '/' }).Last();
                 }
 
                 return null;
             }
         }
-
     }
 }

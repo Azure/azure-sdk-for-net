@@ -9,23 +9,27 @@
 
     <!-- Do not inherit implicit dependencies from the engineering system during build or packaging -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
-
-    <!--
-      Override the inherited behavior of forcing test assemblies to be unsigned; this is needed
-      due to the use of "InternalsVisibleTo" grants for test visibility of non-public members
-    -->
-    <SignTestAssembly>true</SignTestAssembly>
-
+    
     <!--
         If the assembly is to be signed, emit a constant so that any constructs which rely on the assembly
         names, such as declaration of friend assemblies for testing, can be adjusted as necessary
     -->
-    <DefineConstants Condition="'$(SignAssembly)' != 'false'">$(DefineConstants);CODESIGN</DefineConstants>
+    <DefineConstants Condition="'$(SignAssembly)' == 'true'">$(DefineConstants);CODESIGN</DefineConstants>
 
     <!--
         Certain tests are only relevant on a Windows platform, due to behavioral differences of third-party
         dependencies.  Emit a constant to allow such tests to be skipped on non-Windows platforms.
     -->
     <DefineConstants Condition="'$(OS)' == 'Windows_NT'">$(DefineConstants);WINDOWS</DefineConstants>
+  </PropertyGroup>
+
+  <!-- 
+    For Track 1, override the engineering system signing key and use the existing key for
+    Azure messaging client libraries.
+  -->
+  <PropertyGroup Condition="'$(SignAssembly)' == 'true'">
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)assets\azure-messaging.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
+    <PublicSign>false</PublicSign>
   </PropertyGroup>
 </Project>

@@ -23,7 +23,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                 var testBase = new ApiManagementTestBase(context);
                 testBase.TryCreateApiManagementService();
 
-                var regions = await testBase.client.Regions.ListByServiceAsync(
+                var regions = await testBase.client.Region.ListByServiceAsync(
                     testBase.rgName,
                     testBase.serviceName);
 

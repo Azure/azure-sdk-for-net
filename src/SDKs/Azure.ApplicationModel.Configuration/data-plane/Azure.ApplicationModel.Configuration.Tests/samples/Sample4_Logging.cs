@@ -2,7 +2,6 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Base;
 using NUnit.Framework;
 using System;
 using System.Diagnostics;
@@ -19,9 +18,9 @@ namespace Azure.ApplicationModel.Configuration.Samples
         [Test]
         public async Task Logging()
         {
-            // Retrieve the connection string from the configuration store. 
+            // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
             var client = new ConfigurationClient(connectionString);
 
             // Setup a listener to monitor logged events.
@@ -66,7 +65,6 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
         protected override void OnEventWritten(EventWrittenEventArgs eventData)
         {
-            base.OnEventWritten(eventData);
             if (eventData.EventSource.Name == SOURCE_NAME) {
                 var formatted = eventData.EventName + " : " + eventData.Payload[0].ToString();
                 Console.WriteLine(formatted);

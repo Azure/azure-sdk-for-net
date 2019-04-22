@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public partial interface IOpenIdConnectProviderOperations
     {
         /// <summary>
-        /// Lists all OpenID Connect Providers.
+        /// Lists of all the OpenId Connect Providers.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -140,7 +140,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<OpenidConnectProviderContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string opid, OpenidConnectProviderContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<OpenidConnectProviderContract,OpenIdConnectProviderCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string opid, OpenidConnectProviderContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the specific OpenID Connect Provider.
         /// </summary>
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string opid, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all OpenID Connect Providers.
+        /// Lists of all the OpenId Connect Providers.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">

@@ -68,6 +68,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
+        /// <param name='includeNotTaggedOperations'>
+        /// Include not tagged Operations.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -89,7 +92,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<TagResourceContract>>> ListByTagsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<TagResourceContract>>> ListByTagsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedOperations = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -152,6 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
+                tracingParameters.Add("includeNotTaggedOperations", includeNotTaggedOperations);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByTags", tracingParameters);
             }
@@ -170,6 +174,10 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     _queryParameters.Add(_odataFilter);
                 }
+            }
+            if (includeNotTaggedOperations != null)
+            {
+                _queryParameters.Add(string.Format("includeNotTaggedOperations={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(includeNotTaggedOperations, Client.SerializationSettings).Trim('"'))));
             }
             if (Client.ApiVersion != null)
             {

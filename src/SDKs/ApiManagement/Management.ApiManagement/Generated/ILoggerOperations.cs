@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='loggerid'>
+        /// <param name='loggerId'>
         /// Logger identifier. Must be unique in the API Management service
         /// instance.
         /// </param>
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationHeaderResponse<LoggerGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationHeaderResponse<LoggerGetEntityTagHeaders>> GetEntityTagWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the details of the logger specified by its identifier.
         /// </summary>
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='loggerid'>
+        /// <param name='loggerId'>
         /// Logger identifier. Must be unique in the API Management service
         /// instance.
         /// </param>
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LoggerContract,LoggerGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoggerContract,LoggerGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or Updates a logger.
         /// </summary>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='loggerid'>
+        /// <param name='loggerId'>
         /// Logger identifier. Must be unique in the API Management service
         /// instance.
         /// </param>
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<LoggerContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerid, LoggerContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<LoggerContract,LoggerCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, LoggerContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing logger.
         /// </summary>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='loggerid'>
+        /// <param name='loggerId'>
         /// Logger identifier. Must be unique in the API Management service
         /// instance.
         /// </param>
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerid, LoggerUpdateContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, LoggerUpdateContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified logger.
         /// </summary>
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='serviceName'>
         /// The name of the API Management service.
         /// </param>
-        /// <param name='loggerid'>
+        /// <param name='loggerId'>
         /// Logger identifier. Must be unique in the API Management service
         /// instance.
         /// </param>
@@ -196,6 +196,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// ETag of the Entity. ETag should match the current entity state from
         /// the header response of the GET request or it should be * for
         /// unconditional update.
+        /// </param>
+        /// <param name='force'>
+        /// Force deletion even if diagnostic is attached.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -209,7 +212,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerid, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string loggerId, string ifMatch, bool? force = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists a collection of loggers in the specified service instance.
         /// <see href="https://docs.microsoft.com/en-us/azure/api-management/api-management-howto-log-event-hubs" />

@@ -3,13 +3,12 @@
 // license information.
 
 using System;
-using System.Collections;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Diagnostics;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Core.Diagnostics;
+using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -34,14 +33,10 @@ namespace Azure.ApplicationModel.Configuration
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
                     new AuthenticationPolicy(credential, secret),
-                    BufferResponsePolicy.Singleton,
-                    options.LoggingPolicy);
+                    options.LoggingPolicy,
+                    BufferResponsePolicy.Singleton);
         }
 
-        [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
-        [HttpError(typeof(RequestFailedException), 412, Message = "Matching item is already in the store")]
-        [HttpError(typeof(RequestFailedException), 429, Message = "Too many requests")]
-        [UsageErrors(typeof(RequestFailedException), 401, 409, 408, 500, 502, 503, 504)]
         public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));

@@ -11,12 +11,14 @@
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the Save Tenant Configuration operation.
+    /// Save Tenant Configuration Contract details.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class SaveConfigurationParameter
     {
         /// <summary>
@@ -51,7 +53,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets the name of the Git branch in which to commit the
         /// current configuration snapshot.
         /// </summary>
-        [JsonProperty(PropertyName = "branch")]
+        [JsonProperty(PropertyName = "properties.branch")]
         public string Branch { get; set; }
 
         /// <summary>
@@ -59,7 +61,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// is committed to the Git repository, even if the Git repository has
         /// newer changes that would be overwritten.
         /// </summary>
-        [JsonProperty(PropertyName = "force")]
+        [JsonProperty(PropertyName = "properties.force")]
         public bool? Force { get; set; }
 
         /// <summary>
