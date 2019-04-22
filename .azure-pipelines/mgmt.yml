@@ -25,6 +25,6 @@ steps:
     condition: succeededOrFailed()
     inputs:
       testResultsFiles: '**/*.trx'
-      testRunTitle: 'Test Results for Windows builds'
+      testRunTitle: 'Windows Test Results'
       testResultsFormat: 'VSTest'
       mergeTestResults: true
