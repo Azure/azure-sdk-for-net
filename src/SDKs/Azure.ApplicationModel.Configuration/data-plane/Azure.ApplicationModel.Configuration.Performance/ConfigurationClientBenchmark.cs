@@ -15,19 +15,20 @@ namespace Azure.ApplicationModel.Configuration.Performance
     [MemoryDiagnoser]
     public class ConfigurationClientBenchmark
     {
-        private static readonly string ConnectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
+        private static readonly string MockConnectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
 
         private static readonly MockClientHandler GetResponseMessage = new MockClientHandler(request => new HttpResponseMessage((HttpStatusCode)200)
         {
             Content = new ByteArrayContent(GetResponseBytes)
         });
 
-        private static readonly ConfigurationClient ConfigurationClient = new ConfigurationClient(ConnectionString, new ConfigurationClientOptions()
+        private static readonly ConfigurationClient ConfigurationClient = new ConfigurationClient(MockConnectionString, new ConfigurationClientOptions()
         {
             Transport = new HttpClientTransport(new HttpClient(GetResponseMessage))
         });
 
-        private static readonly byte[] GetResponseBytes = Encoding.UTF8.GetBytes(@"{
+        private static readonly byte[] GetResponseBytes = Encoding.UTF8.GetBytes(
+@"{
   ""etag"": ""4f6dd610dd5e4deebc7fbaef685fb903"",
   ""key"": ""key"",
   ""label"": ""label"",
