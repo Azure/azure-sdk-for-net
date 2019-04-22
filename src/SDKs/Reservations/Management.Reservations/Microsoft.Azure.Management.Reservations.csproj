@@ -7,10 +7,10 @@
 		<PackageId>Microsoft.Azure.Management.Reservations</PackageId>
 		<Description>Microsoft.Azure.Management.Reservations Library</Description>
 		<AssemblyName>Microsoft.Azure.Management.Reservations</AssemblyName>
-		<Version>1.9.1-preview</Version>
+		<Version>2.0.0-preview</Version>
     <PackageTags>Reservations;</PackageTags>
 		<PackageReleaseNotes>
-			Taking dependency on 10.0.3 version of Newtonsoft nuget package.
+			Using new 2019-04-01 api-version contract and adding Calculate and Purchase Reservation
 		</PackageReleaseNotes>
 	</PropertyGroup>
 	<PropertyGroup>
