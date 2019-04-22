@@ -57,6 +57,9 @@ jobs:
           DOTNET_MULTILEVEL_LOOKUP: 0
           APP_CONFIG_CONNECTION: $(AppConfigConnectionString)
           AZ_SERVICE_BUS_CONNECTION: $(ServiceBusConnectionString)
+          AZ_EVENT_HUBS_CONNECTION: $(EventHubsConnectionString)
+          AZ_EVENT_HUBS_STORAGE_CONNECTION: $(EventHubsStorageConnectionString)
+
         inputs:
           command: test
           projects: '$(ProjectFile)'
@@ -70,3 +73,4 @@ jobs:
           testRunTitle: '$(OSName) DotNet $(DotNetCoreVersion)'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
+          
