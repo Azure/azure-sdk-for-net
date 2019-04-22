@@ -314,9 +314,13 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='name'>
             /// Name of the resource.
             /// </param>
-            public static ControllerConnectionDetailsList ListConnectionDetails(this IControllersOperations operations, string resourceGroupName, string name)
+            /// <param name='targetContainerHostResourceId'>
+            /// Resource ID of the target container host mapped to the Azure Dev Spaces
+            /// Controller.
+            /// </param>
+            public static ControllerConnectionDetailsList ListConnectionDetails(this IControllersOperations operations, string resourceGroupName, string name, string targetContainerHostResourceId)
             {
-                return operations.ListConnectionDetailsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                return operations.ListConnectionDetailsAsync(resourceGroupName, name, targetContainerHostResourceId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -335,12 +339,16 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='name'>
             /// Name of the resource.
             /// </param>
+            /// <param name='targetContainerHostResourceId'>
+            /// Resource ID of the target container host mapped to the Azure Dev Spaces
+            /// Controller.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ControllerConnectionDetailsList> ListConnectionDetailsAsync(this IControllersOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ControllerConnectionDetailsList> ListConnectionDetailsAsync(this IControllersOperations operations, string resourceGroupName, string name, string targetContainerHostResourceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListConnectionDetailsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListConnectionDetailsWithHttpMessagesAsync(resourceGroupName, name, targetContainerHostResourceId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
