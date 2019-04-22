@@ -185,19 +185,14 @@ namespace Azure.Core.Tests
                 _exceptionFilter = exceptionFilter;
             }
 
-            public override bool IsRetriableResponse(HttpPipelineResponse pipelineResponse)
+            public override bool IsRetriableResponse(HttpPipelineResponse response)
             {
-                return Array.IndexOf(_retriableCodes, pipelineResponse.Status) >= 0;
+                return Array.IndexOf(_retriableCodes, response.Status) >= 0;
             }
 
             public override bool IsRetriableException(Exception exception)
             {
                 return _exceptionFilter != null && _exceptionFilter(exception);
-            }
-
-            public override bool IsErrorResponse(HttpPipelineResponse pipelineResponse)
-            {
-                return Default.IsErrorResponse(pipelineResponse);
             }
         }
     }

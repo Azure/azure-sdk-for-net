@@ -27,7 +27,7 @@ namespace Azure.Core.Tests
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), ResponseClassifier.Default, maxRetries: 5);
+            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
             Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
             );
             var pipeline = new HttpPipeline(mockTransport);
 
-            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), ResponseClassifier.Default, maxRetries: 5);
+            var reliableStream = await RetriableStream.Create(offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
 
             Assert.AreEqual(25, await reliableStream.ReadAsync(_buffer, 0, 25));
             Assert.AreEqual(100, reliableStream.Length);
@@ -75,7 +75,7 @@ namespace Azure.Core.Tests
         [Test]
         public void ThrowsIfInitialRequestThrow()
         {
-            Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.Create(_ => throw new InvalidOperationException(), ResponseClassifier.Default, 5));
+            Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.Create(_ => throw new InvalidOperationException(), new ResponseClassifier(), 5));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Azure.Core.Tests
                     {
                         throw new InvalidOperationException();
                     }
-                }, ResponseClassifier.Default, maxRetries: 5);
+                }, new ResponseClassifier(), maxRetries: 5);
 
             await reliableStream.ReadAsync(_buffer, 0, 25);
             await reliableStream.ReadAsync(_buffer, 25, 25);
@@ -127,7 +127,7 @@ namespace Azure.Core.Tests
                     }
 
                     throw new InvalidOperationException();
-                }, ResponseClassifier.Default, maxRetries: 3);
+                }, new ResponseClassifier(), maxRetries: 3);
 
             var aggregateException = Assert.ThrowsAsync<AggregateException>(() => reliableStream.ReadAsync(_buffer, 0, 4));
             StringAssert.StartsWith("Retry failed after 4 tries", aggregateException.Message);

@@ -28,8 +28,6 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // remove logging policy
             options.LoggingPolicy = null;
 
-            options.ResponseClassifier = ResponseClassifier.Default;
-
             // specify custom retry policy options
             options.RetryPolicy = new FixedRetryPolicy()
             {
