@@ -84,11 +84,6 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingAccountsOperations BillingAccounts { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingAccountsWithCreateInvoiceSectionPermissionOperations.
-        /// </summary>
-        public virtual IBillingAccountsWithCreateInvoiceSectionPermissionOperations BillingAccountsWithCreateInvoiceSectionPermission { get; private set; }
-
-        /// <summary>
         /// Gets the IAvailableBalanceByBillingProfileOperations.
         /// </summary>
         public virtual IAvailableBalanceByBillingProfileOperations AvailableBalanceByBillingProfile { get; private set; }
@@ -530,7 +525,6 @@ namespace Microsoft.Azure.Management.Billing
         private void Initialize()
         {
             BillingAccounts = new BillingAccountsOperations(this);
-            BillingAccountsWithCreateInvoiceSectionPermission = new BillingAccountsWithCreateInvoiceSectionPermissionOperations(this);
             AvailableBalanceByBillingProfile = new AvailableBalanceByBillingProfileOperations(this);
             PaymentMethodsByBillingProfile = new PaymentMethodsByBillingProfileOperations(this);
             BillingProfilesByBillingAccountName = new BillingProfilesByBillingAccountNameOperations(this);

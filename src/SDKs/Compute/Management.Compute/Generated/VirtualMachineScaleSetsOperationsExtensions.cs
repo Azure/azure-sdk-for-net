@@ -490,14 +490,19 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
             /// virtual machines in the virtual machine scale set.
             /// </param>
-            public static void PowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            public static void PowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? skipShutdown = false, IList<string> instanceIds = default(IList<string>))
             {
-                operations.PowerOffAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+                operations.PowerOffAsync(resourceGroupName, vmScaleSetName, skipShutdown, instanceIds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -514,6 +519,11 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
@@ -522,9 +532,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PowerOffAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PowerOffAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? skipShutdown = false, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, skipShutdown, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -911,6 +921,57 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Converts SinglePlacementGroup property to false for a existing virtual
+            /// machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the virtual machine scale set to create or update.
+            /// </param>
+            /// <param name='activePlacementGroupId'>
+            /// Id of the placement group in which you want future virtual machine
+            /// instances to be placed. To query placement group Id, please use Virtual
+            /// Machine Scale Set VMs - Get API. If not provided, the platform will choose
+            /// one with maximum number of virtual machine instances.
+            /// </param>
+            public static void ConvertToSinglePlacementGroup(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string activePlacementGroupId = default(string))
+            {
+                operations.ConvertToSinglePlacementGroupAsync(resourceGroupName, vmScaleSetName, activePlacementGroupId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Converts SinglePlacementGroup property to false for a existing virtual
+            /// machine scale set.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='vmScaleSetName'>
+            /// The name of the virtual machine scale set to create or update.
+            /// </param>
+            /// <param name='activePlacementGroupId'>
+            /// Id of the placement group in which you want future virtual machine
+            /// instances to be placed. To query placement group Id, please use Virtual
+            /// Machine Scale Set VMs - Get API. If not provided, the platform will choose
+            /// one with maximum number of virtual machine instances.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task ConvertToSinglePlacementGroupAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, string activePlacementGroupId = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.ConvertToSinglePlacementGroupWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, activePlacementGroupId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Create or update a VM scale set.
             /// </summary>
             /// <param name='operations'>
@@ -1147,14 +1208,19 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
             /// virtual machines in the virtual machine scale set.
             /// </param>
-            public static void BeginPowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>))
+            public static void BeginPowerOff(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? skipShutdown = false, IList<string> instanceIds = default(IList<string>))
             {
-                operations.BeginPowerOffAsync(resourceGroupName, vmScaleSetName, instanceIds).GetAwaiter().GetResult();
+                operations.BeginPowerOffAsync(resourceGroupName, vmScaleSetName, skipShutdown, instanceIds).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1171,6 +1237,11 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='vmScaleSetName'>
             /// The name of the VM scale set.
             /// </param>
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
             /// <param name='instanceIds'>
             /// The virtual machine scale set instance ids. Omitting the virtual machine
             /// scale set instance ids will result in the operation being performed on all
@@ -1179,9 +1250,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginPowerOffAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginPowerOffAsync(this IVirtualMachineScaleSetsOperations operations, string resourceGroupName, string vmScaleSetName, bool? skipShutdown = false, IList<string> instanceIds = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, skipShutdown, instanceIds, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

@@ -19,8 +19,14 @@ Install-Package Azure.ApplicationModel.Configuration -Version 1.0.0-preview.1
 
 **Prerequisites**: You must have an [Azure subscription][azure_sub], and a [Configuration Store][configuration_store] to use this package.
 
-To create a Configuration Store, you can use the Azure Portal or [Azure CLI][azure_cli] with the following command:
+To create a Configuration Store, you can use the Azure Portal or [Azure CLI][azure_cli].
 
+You need to install the Azure App Configuration CLI extension first by executing the following command:
+```Powershell
+az extension add -n appconfig
+```
+
+After that, create the Configuration Store:
 ```Powershell
 az appconfig create --name <config-store-name> --resource-group <resource-group-name> --location eastus
 ```
@@ -168,7 +174,7 @@ These samples provide example of those scenarios:
 - [How to configure service requests](Azure.ApplicationModel.Configuration.Tests/samples/Sample7_ConfiguringPipeline.cs)
 
 # Contributing
-If the changes you are working on span both Azure.Base and Azure.Configuration then you can set this environment variable before launching Visual Studio. That will use Project To Project references between Azure.Configuration and Azure.Base instead of package references.
+If the changes you are working on span both Azure.Core and Azure.Configuration then you can set this environment variable before launching Visual Studio. That will use Project To Project references between Azure.Configuration and Azure.Core instead of package references.
 
 This will enable the project to project references:
 ```

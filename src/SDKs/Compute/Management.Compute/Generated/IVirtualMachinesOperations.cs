@@ -362,6 +362,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
+        /// <param name='skipShutdown'>
+        /// The parameter to request non-graceful VM shutdown. True value for
+        /// this flag indicates non-graceful shutdown whereas false indicates
+        /// otherwise. Default value for this flag is false if not specified
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -374,7 +379,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? skipShutdown = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to restart a virtual machine.
         /// </summary>
@@ -683,6 +688,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmName'>
         /// The name of the virtual machine.
         /// </param>
+        /// <param name='skipShutdown'>
+        /// The parameter to request non-graceful VM shutdown. True value for
+        /// this flag indicates non-graceful shutdown whereas false indicates
+        /// otherwise. Default value for this flag is false if not specified
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -695,7 +705,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmName, bool? skipShutdown = false, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The operation to restart a virtual machine.
         /// </summary>

@@ -7,7 +7,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 {
     public class ConfigurationSettingTests
     {
-        static readonly string s_connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
+        static readonly string s_connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
 
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting(
             string.Concat("key-", Guid.NewGuid().ToString("N")),
