@@ -15,7 +15,7 @@ namespace Azure.ApplicationModel.Configuration
         private readonly SettingSelector _selector;
         private readonly string _link;
 
-        public SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
+        internal SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
         {
             _settings = settings;
             _link = link;
