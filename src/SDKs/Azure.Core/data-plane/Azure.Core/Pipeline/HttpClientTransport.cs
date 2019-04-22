@@ -160,7 +160,7 @@ namespace Azure.Core.Pipeline
                     _wasSent = true;
                 }
 
-                _requestMessage.RequestUri = UriBuilder.Uri;
+                currentRequest.RequestUri = UriBuilder.Uri;
 
                 if (_requestContent?.PipelineContent != null)
                 {
