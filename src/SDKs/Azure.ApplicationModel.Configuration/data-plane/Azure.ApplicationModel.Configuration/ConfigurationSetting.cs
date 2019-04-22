@@ -22,14 +22,6 @@ namespace Azure.ApplicationModel.Configuration
             Label = label;
         }
 
-        public ConfigurationSetting(string key, string value, string label, string contentType = null, ETag eTag = default, DateTimeOffset? lastModified = null, bool? locked = null) : this(key, value, label)
-        {
-            ContentType = contentType;
-            ETag = eTag;
-            LastModified = lastModified;
-            Locked = locked;
-        }
-
         /// <summary>
         /// The primary identifier of a key-value.
         /// The key is used in unison with the label to uniquely identify a key-value.
