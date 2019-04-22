@@ -17,6 +17,10 @@ namespace Azure.ApplicationModel.Configuration
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
 
+
+        /// <summary>
+        /// Protected constructor to allow mocking
+        /// </summary>
         protected ConfigurationClient()
         {
         }
