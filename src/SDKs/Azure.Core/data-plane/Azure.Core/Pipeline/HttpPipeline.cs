@@ -34,11 +34,11 @@ namespace Azure.Core.Pipeline
             _services = services ?? HttpClientOptions.EmptyServiceProvider.Singleton;
         }
 
-        public HttpPipelineRequest CreateRequest()
+        public Request CreateRequest()
             => _transport.CreateRequest(_services);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task<Response> SendRequestAsync(HttpPipelineRequest request, CancellationToken cancellationToken)
+        public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             if (_pipeline.IsEmpty) return default;
 
@@ -47,7 +47,7 @@ namespace Azure.Core.Pipeline
                 message.Request = request;
                 message.ResponseClassifier = _responseClassifier;
                 await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
-                return new Response(message.Response);
+                return message.Response;
             }
         }
 

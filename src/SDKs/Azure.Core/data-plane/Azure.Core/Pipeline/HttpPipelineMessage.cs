@@ -21,9 +21,10 @@ namespace Azure.Core.Pipeline
             Cancellation = cancellation;
         }
 
-        public HttpPipelineRequest Request { get; set; }
+        public Request Request { get; set; }
 
-        public HttpPipelineResponse Response { get; set; }
+        public Response Response { get; set; }
+
         public ResponseClassifier ResponseClassifier { get; set; }
 
         // make many of these protected internal

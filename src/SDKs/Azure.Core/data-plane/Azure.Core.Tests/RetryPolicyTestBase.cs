@@ -185,7 +185,7 @@ namespace Azure.Core.Tests
                 _exceptionFilter = exceptionFilter;
             }
 
-            public override bool IsRetriableResponse(HttpPipelineResponse response)
+            public override bool IsRetriableResponse(Response response)
             {
                 return Array.IndexOf(_retriableCodes, response.Status) >= 0;
             }

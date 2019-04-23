@@ -32,7 +32,7 @@ namespace Azure.Core.Tests
 
         class CustomResponseClassifier : ResponseClassifier
         {
-            public override bool IsRetriableResponse(HttpPipelineResponse response)
+            public override bool IsRetriableResponse(Response response)
             {
                 return response.Status == 500;
             }
@@ -42,7 +42,7 @@ namespace Azure.Core.Tests
                 return false;
             }
 
-            public override bool IsErrorResponse(HttpPipelineResponse response)
+            public override bool IsErrorResponse(Response response)
             {
                 return IsRetriableResponse(response);
             }
@@ -52,7 +52,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        class NullPipelineContext : HttpPipelineRequest
+        class NullPipelineContext : Request
         {
             public override void AddHeader(HttpHeader header)
             {

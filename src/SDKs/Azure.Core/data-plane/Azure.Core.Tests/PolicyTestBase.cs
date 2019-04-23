@@ -12,7 +12,7 @@ namespace Azure.Core.Tests
     {
         protected static Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
         {
-            using (HttpPipelineRequest request = transport.CreateRequest(null))
+            using (Request request = transport.CreateRequest(null))
             {
                 request.Method = HttpPipelineMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");
