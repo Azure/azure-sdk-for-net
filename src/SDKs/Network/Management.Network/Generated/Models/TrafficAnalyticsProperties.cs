@@ -30,6 +30,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the TrafficAnalyticsProperties class.
         /// </summary>
+        /// <param name="networkWatcherFlowAnalyticsConfiguration">Parameters
+        /// that define the configuration of traffic analytics.</param>
         public TrafficAnalyticsProperties(TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration)
         {
             NetworkWatcherFlowAnalyticsConfiguration = networkWatcherFlowAnalyticsConfiguration;
@@ -42,6 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets parameters that define the configuration of traffic
+        /// analytics.
         /// </summary>
         [JsonProperty(PropertyName = "networkWatcherFlowAnalyticsConfiguration")]
         public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration { get; set; }

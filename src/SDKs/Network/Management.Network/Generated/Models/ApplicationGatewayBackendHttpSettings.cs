@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="port">The destination port on the backend.</param>
         /// <param name="protocol">The protocol used to communicate with the
-        /// backend. Possible values are 'Http' and 'Https'. Possible values
-        /// include: 'Http', 'Https'</param>
+        /// backend. Possible values include: 'Http', 'Https'</param>
         /// <param name="cookieBasedAffinity">Cookie based affinity. Possible
         /// values include: 'Enabled', 'Disabled'</param>
         /// <param name="requestTimeout">Request timeout in seconds.
@@ -111,8 +110,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the protocol used to communicate with the backend.
-        /// Possible values are 'Http' and 'Https'. Possible values include:
-        /// 'Http', 'Https'
+        /// Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

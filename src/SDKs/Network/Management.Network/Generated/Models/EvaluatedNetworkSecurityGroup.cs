@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ID.</param>
         /// <param name="appliedTo">Resource ID of nic or subnet to which
         /// network security group is applied.</param>
+        /// <param name="matchedRule">Matched network security rule.</param>
         /// <param name="rulesEvaluationResult">List of network security rules
         /// evaluation results.</param>
         public EvaluatedNetworkSecurityGroup(string networkSecurityGroupId = default(string), string appliedTo = default(string), MatchedRule matchedRule = default(MatchedRule), IList<NetworkSecurityRulesEvaluationResult> rulesEvaluationResult = default(IList<NetworkSecurityRulesEvaluationResult>))
@@ -67,6 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string AppliedTo { get; set; }
 
         /// <summary>
+        /// Gets or sets matched network security rule.
         /// </summary>
         [JsonProperty(PropertyName = "matchedRule")]
         public MatchedRule MatchedRule { get; set; }

@@ -32,6 +32,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// NetworkConfigurationDiagnosticResult class.
         /// </summary>
+        /// <param name="profile">Network configuration diagnostic
+        /// profile.</param>
+        /// <param name="networkSecurityGroupResult">Network security group
+        /// result.</param>
         public NetworkConfigurationDiagnosticResult(NetworkConfigurationDiagnosticProfile profile = default(NetworkConfigurationDiagnosticProfile), NetworkSecurityGroupResult networkSecurityGroupResult = default(NetworkSecurityGroupResult))
         {
             Profile = profile;
@@ -45,11 +49,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets network configuration diagnostic profile.
         /// </summary>
         [JsonProperty(PropertyName = "profile")]
         public NetworkConfigurationDiagnosticProfile Profile { get; set; }
 
         /// <summary>
+        /// Gets or sets network security group result.
         /// </summary>
         [JsonProperty(PropertyName = "networkSecurityGroupResult")]
         public NetworkSecurityGroupResult NetworkSecurityGroupResult { get; set; }

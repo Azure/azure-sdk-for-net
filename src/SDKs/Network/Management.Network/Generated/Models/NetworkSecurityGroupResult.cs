@@ -33,8 +33,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the NetworkSecurityGroupResult class.
         /// </summary>
         /// <param name="securityRuleAccessResult">The network traffic is
-        /// allowed or denied. Possible values are 'Allow' and 'Deny'. Possible
-        /// values include: 'Allow', 'Deny'</param>
+        /// allowed or denied. Possible values include: 'Allow', 'Deny'</param>
         /// <param name="evaluatedNetworkSecurityGroups">List of results
         /// network security groups diagnostic.</param>
         public NetworkSecurityGroupResult(string securityRuleAccessResult = default(string), IList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups = default(IList<EvaluatedNetworkSecurityGroup>))
@@ -51,8 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the network traffic is allowed or denied. Possible
-        /// values are 'Allow' and 'Deny'. Possible values include: 'Allow',
-        /// 'Deny'
+        /// values include: 'Allow', 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "securityRuleAccessResult")]
         public string SecurityRuleAccessResult { get; set; }

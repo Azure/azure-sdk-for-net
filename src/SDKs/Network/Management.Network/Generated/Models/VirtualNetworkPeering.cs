@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="allowVirtualNetworkAccess">Whether the VMs in the
-        /// linked virtual network space would be able to access all the VMs in
-        /// local Virtual network space.</param>
+        /// local virtual network space would be able to access the VMs in
+        /// remote virtual network space.</param>
         /// <param name="allowForwardedTraffic">Whether the forwarded traffic
-        /// from the VMs in the remote virtual network will be
-        /// allowed/disallowed.</param>
+        /// from the VMs in the local virtual network will be
+        /// allowed/disallowed in remote virtual network.</param>
         /// <param name="allowGatewayTransit">If gateway links can be used in
         /// remote virtual networking to link to this virtual network.</param>
         /// <param name="useRemoteGateways">If remote gateways can be used on
@@ -87,15 +87,16 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets whether the VMs in the linked virtual network space
-        /// would be able to access all the VMs in local Virtual network space.
+        /// Gets or sets whether the VMs in the local virtual network space
+        /// would be able to access the VMs in remote virtual network space.
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowVirtualNetworkAccess")]
         public bool? AllowVirtualNetworkAccess { get; set; }
 
         /// <summary>
         /// Gets or sets whether the forwarded traffic from the VMs in the
-        /// remote virtual network will be allowed/disallowed.
+        /// local virtual network will be allowed/disallowed in remote virtual
+        /// network.
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowForwardedTraffic")]
         public bool? AllowForwardedTraffic { get; set; }

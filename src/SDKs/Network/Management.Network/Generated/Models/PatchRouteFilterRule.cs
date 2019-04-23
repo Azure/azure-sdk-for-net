@@ -34,8 +34,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the PatchRouteFilterRule class.
         /// </summary>
-        /// <param name="access">The access type of the rule. Valid values are:
-        /// 'Allow', 'Deny'. Possible values include: 'Allow', 'Deny'</param>
+        /// <param name="access">The access type of the rule. Possible values
+        /// include: 'Allow', 'Deny'</param>
         /// <param name="communities">The collection for bgp community values
         /// to filter on. e.g. ['12076:5010','12076:5020']</param>
         /// <param name="id">Resource ID.</param>
@@ -71,8 +71,8 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the access type of the rule. Valid values are:
-        /// 'Allow', 'Deny'. Possible values include: 'Allow', 'Deny'
+        /// Gets or sets the access type of the rule. Possible values include:
+        /// 'Allow', 'Deny'
         /// </summary>
         [JsonProperty(PropertyName = "properties.access")]
         public string Access { get; set; }
