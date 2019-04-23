@@ -18,7 +18,6 @@ namespace Microsoft.Azure.ServiceBus.Management
         private HttpClient httpClient;
         private readonly string endpointFQDN;
         private readonly ITokenProvider tokenProvider;
-        private readonly TimeSpan operationTimeout;
         private readonly int port;
         private readonly string clientId;
 
@@ -48,14 +47,13 @@ namespace Microsoft.Azure.ServiceBus.Management
         /// <param name="tokenProvider">Token provider which will generate security tokens for authorization.</param>
         public ManagementClient(ServiceBusConnectionStringBuilder connectionStringBuilder, ITokenProvider tokenProvider = default)
         {
-            this.httpClient = new HttpClient();
+            this.httpClient = new HttpClient { Timeout = connectionStringBuilder.OperationTimeout };
             this.endpointFQDN = connectionStringBuilder.Endpoint;
             this.tokenProvider = tokenProvider ?? CreateTokenProvider(connectionStringBuilder);
-            this.operationTimeout = Constants.DefaultOperationTimeout;
             this.port = GetPort(connectionStringBuilder.Endpoint);
             this.clientId = nameof(ManagementClient) + Guid.NewGuid().ToString("N").Substring(0, 6);
 
-            MessagingEventSource.Log.ManagementClientCreated(this.clientId, this.operationTimeout.TotalSeconds, this.tokenProvider.ToString());
+            MessagingEventSource.Log.ManagementClientCreated(this.clientId, this.httpClient.Timeout.TotalSeconds, this.tokenProvider.ToString());
         }
 
         public static HttpRequestMessage CloneRequest(HttpRequestMessage req)
@@ -514,11 +512,11 @@ namespace Microsoft.Azure.ServiceBus.Management
             queueDescription.NormalizeDescription(this.endpointFQDN);
             var atomRequest = queueDescription.Serialize().ToString();
             var content = await PutEntity(
-                queueDescription.Path, 
-                atomRequest, 
-                false, 
-                queueDescription.ForwardTo, 
-                queueDescription.ForwardDeadLetteredMessagesTo, 
+                queueDescription.Path,
+                atomRequest,
+                false,
+                queueDescription.ForwardTo,
+                queueDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
             return QueueDescriptionExtensions.ParseFromContent(content);
         }
@@ -670,7 +668,7 @@ namespace Microsoft.Azure.ServiceBus.Management
                 EntityNameHelper.FormatRulePath(topicPath, subscriptionName, ruleDescription.Name),
                 atomRequest,
                 false,
-                null, 
+                null,
                 null,
                 cancellationToken).ConfigureAwait(false);
 
@@ -701,11 +699,11 @@ namespace Microsoft.Azure.ServiceBus.Management
             var atomRequest = queueDescription.Serialize().ToString();
 
             var content = await PutEntity(
-                queueDescription.Path, 
-                atomRequest, 
-                true, 
+                queueDescription.Path,
+                atomRequest,
+                true,
                 queueDescription.ForwardTo,
-                queueDescription.ForwardDeadLetteredMessagesTo, 
+                queueDescription.ForwardDeadLetteredMessagesTo,
                 cancellationToken).ConfigureAwait(false);
 
             return QueueDescriptionExtensions.ParseFromContent(content);
@@ -811,7 +809,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<bool> QueueExistsAsync(string queuePath, CancellationToken cancellationToken = default)
         {
             EntityNameHelper.CheckValidQueueName(queuePath);
-            
+
             try
             {
                 // TODO: Optimize by removing deserialization costs.
@@ -839,7 +837,7 @@ namespace Microsoft.Azure.ServiceBus.Management
         public virtual async Task<bool> TopicExistsAsync(string topicPath, CancellationToken cancellationToken = default)
         {
             EntityNameHelper.CheckValidTopicName(topicPath);
-            
+
             try
             {
                 // TODO: Optimize by removing deserialization costs.
@@ -1013,7 +1011,7 @@ namespace Microsoft.Azure.ServiceBus.Management
             var token = await this.tokenProvider.GetTokenAsync(requestUri, TimeSpan.FromHours(1)).ConfigureAwait(false);
             return token.TokenValue;
         }
-        
+
         private async Task<string> GetEntity(string path, string query, bool enrich, CancellationToken cancellationToken)
         {
             MessagingEventSource.Log.ManagementOperationStart(this.clientId, nameof(GetEntity), $"path:{path},query:{query},enrich:{enrich}");

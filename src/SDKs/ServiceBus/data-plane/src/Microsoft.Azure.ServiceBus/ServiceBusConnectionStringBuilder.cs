@@ -5,6 +5,7 @@ namespace Microsoft.Azure.ServiceBus
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Text;
     using Primitives;
 
@@ -23,6 +24,8 @@ namespace Microsoft.Azure.ServiceBus
 
         const string EntityPathConfigName = "EntityPath";
         const string TransportTypeConfigName = "TransportType";
+
+        const string OperationTimeoutConfigName = "OperationTimeout";
 
         string entityPath, sasKeyName, sasKey, sasToken, endpoint;
 
@@ -143,7 +146,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, TransportType transportType)
             :this(endpoint, entityPath, sharedAccessSignature)
         {
-            this.TransportType = transportType; 
+            this.TransportType = transportType;
         }
 
         /// <summary>
@@ -212,6 +215,12 @@ namespace Microsoft.Azure.ServiceBus
         /// </summary>
         public TransportType TransportType { get; set; }
 
+        /// <summary>
+        /// Duration after which individual operations will timeout.
+        /// </summary>
+        /// <remarks>Defaults to 1 minute.</remarks>
+        public TimeSpan OperationTimeout { get; set; } = Constants.DefaultOperationTimeout;
+
         internal Dictionary<string, string> ConnectionStringProperties = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
 
         /// <summary>
@@ -243,7 +252,12 @@ namespace Microsoft.Azure.ServiceBus
 
             if (this.TransportType != TransportType.Amqp)
             {
-                connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}");
+                connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}{KeyValuePairDelimiter}");
+            }
+
+            if (this.OperationTimeout != Constants.DefaultOperationTimeout)
+            {
+                connectionStringBuilder.Append($"{OperationTimeoutConfigName}{KeyValueSeparator}{this.OperationTimeout}{KeyValuePairDelimiter}");
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -317,6 +331,31 @@ namespace Microsoft.Azure.ServiceBus
                     if (Enum.TryParse(value, true, out TransportType transportType))
                     {
                         this.TransportType = transportType;
+                    }
+                }
+                else if (key.Equals(OperationTimeoutConfigName, StringComparison.OrdinalIgnoreCase))
+                {
+                    if (int.TryParse(value, NumberStyles.Integer, NumberFormatInfo.InvariantInfo, out var timeoutInSeconds))
+                    {
+                        this.OperationTimeout = TimeSpan.FromSeconds(timeoutInSeconds);
+                    }
+                    else if (TimeSpan.TryParse(value, NumberFormatInfo.InvariantInfo, out var operationTimeout))
+                    {
+                        this.OperationTimeout = operationTimeout;
+                    }
+                    else
+                    {
+                        throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) format is invalid. It must be an integer representing a number of seconds.");
+                    }
+
+                    if (this.OperationTimeout.TotalMilliseconds <= 0)
+                    {
+                        throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be greater than zero.");
+                    }
+
+                    if (this.OperationTimeout.TotalHours >= 1)
+                    {
+                        throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be smaller than one hour.");
                     }
                 }
                 else

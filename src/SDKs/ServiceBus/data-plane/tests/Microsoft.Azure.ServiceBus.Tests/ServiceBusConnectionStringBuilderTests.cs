@@ -74,6 +74,13 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
             csBuilder.EntityPath = "myQ";
             Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;EntityPath=myQ", csBuilder.ToString());
+
+            csBuilder.EntityPath = "";
+            csBuilder.TransportType = TransportType.AmqpWebSockets;
+            Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;TransportType=AmqpWebSockets", csBuilder.ToString());
+
+            csBuilder.OperationTimeout = TimeSpan.FromSeconds(42);
+            Assert.Equal("Endpoint=amqps://contoso.servicebus.windows.net;TransportType=AmqpWebSockets;OperationTimeout=00:00:42", csBuilder.ToString());
         }
 
         [Fact]
@@ -123,6 +130,36 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key");
             Assert.Equal(TransportType.Amqp, csBuilder.TransportType);
+        }
+
+        [Fact]
+        public void ConnectionStringBuilderShouldParseOperationTimeoutAsInteger()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;OperationTimeout=120");
+            Assert.Equal(TimeSpan.FromMinutes(2), csBuilder.OperationTimeout);
+        }
+
+        [Fact]
+        public void ConnectionStringBuilderShouldParseOperationTimeoutAsTimeSpan()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;OperationTimeout=00:12:34");
+            Assert.Equal(TimeSpan.FromMinutes(12).Add(TimeSpan.FromSeconds(34)), csBuilder.OperationTimeout);
+        }
+
+        [Fact]
+        public void ConnectionStringBuilderOperationTimeoutShouldDefaultToOneMinute()
+        {
+            var csBuilder = new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key");
+            Assert.Equal(Constants.DefaultOperationTimeout, csBuilder.OperationTimeout);
+        }
+
+        [Fact]
+        public void ConnectionStringBuilderShouldThrowForInvalidOperationTimeout()
+        {
+            var exception = Assert.Throws<ArgumentException>(() => new ServiceBusConnectionStringBuilder("Endpoint=sb://contoso.servicebus.windows.net;SharedAccessKeyName=keyname;SharedAccessKey=key;OperationTimeout=x"));
+            Assert.Equal("connectionString", exception.ParamName);
+            Assert.Contains("OperationTimeout", exception.Message);
+            Assert.Contains("(x)", exception.Message);
         }
 
         [Fact]
