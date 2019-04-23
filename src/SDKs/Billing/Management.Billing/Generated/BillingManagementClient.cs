@@ -167,11 +167,6 @@ namespace Microsoft.Azure.Management.Billing
         public virtual IBillingPermissionsOperations BillingPermissions { get; private set; }
 
         /// <summary>
-        /// Gets the IBillingProfileBillingPermissionsOperations.
-        /// </summary>
-        public virtual IBillingProfileBillingPermissionsOperations BillingProfileBillingPermissions { get; private set; }
-
-        /// <summary>
         /// Gets the IBillingRoleDefinitionsOperations.
         /// </summary>
         public virtual IBillingRoleDefinitionsOperations BillingRoleDefinitions { get; private set; }
@@ -445,7 +440,6 @@ namespace Microsoft.Azure.Management.Billing
             RecipientTransfers = new RecipientTransfersOperations(this);
             Operations = new Operations(this);
             BillingPermissions = new BillingPermissionsOperations(this);
-            BillingProfileBillingPermissions = new BillingProfileBillingPermissionsOperations(this);
             BillingRoleDefinitions = new BillingRoleDefinitionsOperations(this);
             BillingRoleAssignments = new BillingRoleAssignmentsOperations(this);
             Agreements = new AgreementsOperations(this);

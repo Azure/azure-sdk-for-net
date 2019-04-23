@@ -162,11 +162,6 @@ namespace Microsoft.Azure.Management.Billing
         IBillingPermissionsOperations BillingPermissions { get; }
 
         /// <summary>
-        /// Gets the IBillingProfileBillingPermissionsOperations.
-        /// </summary>
-        IBillingProfileBillingPermissionsOperations BillingProfileBillingPermissions { get; }
-
-        /// <summary>
         /// Gets the IBillingRoleDefinitionsOperations.
         /// </summary>
         IBillingRoleDefinitionsOperations BillingRoleDefinitions { get; }

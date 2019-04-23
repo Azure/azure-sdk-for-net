@@ -19,24 +19,26 @@ namespace Microsoft.Azure.Management.Billing.Models
     /// The set of allowed action and not allowed actions a caller has on a
     /// billing account
     /// </summary>
-    public partial class BillingPermissions
+    public partial class BillingPermissionsProperties
     {
         /// <summary>
-        /// Initializes a new instance of the BillingPermissions class.
+        /// Initializes a new instance of the BillingPermissionsProperties
+        /// class.
         /// </summary>
-        public BillingPermissions()
+        public BillingPermissionsProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the BillingPermissions class.
+        /// Initializes a new instance of the BillingPermissionsProperties
+        /// class.
         /// </summary>
         /// <param name="actions">The set of actions that the caller is allowed
         /// to do</param>
         /// <param name="notActions">The set of actions the caller is not
         /// allowed to do</param>
-        public BillingPermissions(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>))
+        public BillingPermissionsProperties(IList<string> actions = default(IList<string>), IList<string> notActions = default(IList<string>))
         {
             Actions = actions;
             NotActions = notActions;
