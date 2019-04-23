@@ -172,7 +172,7 @@ namespace Batch.Tests.ScenarioTests
                     BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
                     Assert.Equal(batchAccountName, batchAccount.Name);
                     Assert.Null(batchAccount.DedicatedCoreQuota);
-                    Assert.Null(batchAccount.DedicatedCoreQuotaPerVMFamily );
+                    Assert.Null(batchAccount.DedicatedCoreQuotaPerVMFamily);
                     Assert.False(batchAccount.DedicatedCoreQuotaPerVMFamilyEnforced); // TODO: change this when pfq enforcement happens
                     Assert.Null(batchAccount.LowPriorityCoreQuota);
                     Assert.Equal(PoolAllocationMode.UserSubscription, batchAccount.PoolAllocationMode);
