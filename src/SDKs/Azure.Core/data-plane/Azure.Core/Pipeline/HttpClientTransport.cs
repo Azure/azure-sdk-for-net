@@ -227,7 +227,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        sealed class PipelineResponse : HttpPipelineResponse
+        sealed class PipelineResponse : Response
         {
             private readonly HttpResponseMessage _responseMessage;
 
@@ -241,7 +241,7 @@ namespace Azure.Core.Pipeline
 
             public override int Status => (int)_responseMessage.StatusCode;
 
-            public override Stream ResponseContentStream
+            public override Stream ContentStream
             {
                 get
                 {

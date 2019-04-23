@@ -4,16 +4,17 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Azure.Core.Pipeline;
 
-namespace Azure.Core.Pipeline
+namespace Azure
 {
-    public abstract class HttpPipelineResponse: IDisposable
+    public abstract class Response: IDisposable
     {
         public abstract int Status { get; }
 
         public abstract bool TryGetHeader(string name, out string value);
 
-        public abstract Stream ResponseContentStream { get; set; }
+        public abstract Stream ContentStream { get; set; }
 
         public abstract string RequestId { get; set; }
 

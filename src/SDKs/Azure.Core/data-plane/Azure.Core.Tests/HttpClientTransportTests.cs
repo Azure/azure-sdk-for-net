@@ -322,10 +322,10 @@ namespace Azure.Core.Tests
             HttpPipelineRequest request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
 
-            HttpPipelineResponse response = await ExecuteRequest(request, transport);
+            Response response = await ExecuteRequest(request, transport);
 
             byte[] data = new byte[5];
-            Stream stream = response.ResponseContentStream;
+            Stream stream = response.ContentStream;
             Task<int> firstRead = stream.ReadAsync(data, 0, 5);
 
             Assert.False(firstRead.IsCompleted);
@@ -363,12 +363,12 @@ namespace Azure.Core.Tests
             HttpPipelineRequest request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
 
-            HttpPipelineResponse response = await ExecuteRequest(request, transport);
+            Response response = await ExecuteRequest(request, transport);
 
             byte[] data = new byte[5];
 
             content.CreateContentReadStreamAsyncCompletionSource.SetResult(null);
-            Stream stream = response.ResponseContentStream;
+            Stream stream = response.ContentStream;
 
             Assert.AreSame(content.MemoryStream, stream);
         }

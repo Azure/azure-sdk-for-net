@@ -60,18 +60,18 @@ namespace Azure.Core.Pipeline.Policies
                 responseTextEncoding = Encoding.UTF8;
             }
 
-            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ResponseContentStream?.CanSeek == false;
+            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
 
             if (wrapResponseStream)
             {
-                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError, responseTextEncoding);
+                message.Response.ContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ContentStream, isError, responseTextEncoding);
             }
 
             if (isError)
             {
                 s_eventSource.ErrorResponse(message.Response);
 
-                if (!wrapResponseStream && message.Response.ResponseContentStream != null)
+                if (!wrapResponseStream && message.Response.ContentStream != null)
                 {
                     if (responseTextEncoding != null)
                     {
@@ -86,7 +86,7 @@ namespace Azure.Core.Pipeline.Policies
 
             s_eventSource.Response(message.Response);
 
-            if (!wrapResponseStream && message.Response.ResponseContentStream != null)
+            if (!wrapResponseStream && message.Response.ContentStream != null)
             {
                 if (responseTextEncoding != null)
                 {

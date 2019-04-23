@@ -22,8 +22,8 @@ namespace Azure.Core.Tests
             var stream2 = new MockReadStream(50, offset: 50);
 
             var mockTransport = new MockTransport(
-                new MockResponse(200) { ResponseContentStream = stream1 },
-                new MockResponse(200) { ResponseContentStream = stream2 }
+                new MockResponse(200) { ContentStream = stream1 },
+                new MockResponse(200) { ContentStream = stream2 }
                 );
             var pipeline = new HttpPipeline(mockTransport);
 
@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
         public async Task ThrowsIfSendingRetryRequestThrows()
         {
             var stream1 = new MockReadStream(100, throwAfter: 50);
-            var mockTransport = new MockTransport(new MockResponse(200) { ResponseContentStream = stream1 });
+            var mockTransport = new MockTransport(new MockResponse(200) { ContentStream = stream1 });
 
             var pipeline = new HttpPipeline(mockTransport);
 
@@ -83,10 +83,10 @@ namespace Azure.Core.Tests
         public async Task RetriesMaxCountAndThrowsAggregateException()
         {
             var mockTransport = new MockTransport(
-                new MockResponse(200) { ResponseContentStream = new MockReadStream(100, throwAfter: 1) },
-                new MockResponse(200) { ResponseContentStream = new MockReadStream(100, throwAfter: 1, offset: 1) },
-                new MockResponse(200) { ResponseContentStream = new MockReadStream(100, throwAfter: 1, offset: 2) },
-                new MockResponse(200) { ResponseContentStream = new MockReadStream(100, throwAfter: 1, offset: 3) }
+                new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1) },
+                new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 1) },
+                new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 2) },
+                new MockResponse(200) { ContentStream = new MockReadStream(100, throwAfter: 1, offset: 3) }
                 );
 
             var pipeline = new HttpPipeline(mockTransport);

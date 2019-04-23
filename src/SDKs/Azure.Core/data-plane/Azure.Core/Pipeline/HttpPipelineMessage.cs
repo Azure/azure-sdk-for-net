@@ -23,7 +23,7 @@ namespace Azure.Core.Pipeline
 
         public HttpPipelineRequest Request { get; set; }
 
-        public HttpPipelineResponse Response { get; set; }
+        public Response Response { get; set; }
 
         // make many of these protected internal
         public virtual void Dispose()

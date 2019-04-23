@@ -44,7 +44,7 @@ namespace Azure.Core.Pipeline
             {
                 message.Request = request;
                 await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
-                return new Response(message.Response);
+                return message.Response;
             }
         }
 
