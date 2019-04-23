@@ -6,7 +6,7 @@
 
 #### Features
 - Added BatchAccount properties `DedicatedCoreQuotaPerVMFamily` and `DedicatedCoreQuotaPerVMFamilyEnforced` to facilitate the transition to per VM family quota
-- **[Breaking]** Accounts created with `PoolAllocationMode` set to `UserSubscription` will no have return core quota values
+- **[Breaking]** Accounts created with `PoolAllocationMode` set to `UserSubscription` will not return core quota properties `DedicatedCoreQuota` or `LowPriorityCoreQuota`
 
 
 ### Changes in 7.0.0
