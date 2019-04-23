@@ -151,7 +151,10 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.NotNull(validReservation);
 
                 reservationId = validReservation.Id.Split('/')[6];
-                Patch Patch = new Patch(AppliedScopeType.Shared, null, InstanceFlexibility.On);
+                Patch Patch = new Patch(
+                    appliedScopeType: AppliedScopeType.Shared,
+                    appliedScopes : null,
+                    instanceFlexibility: InstanceFlexibility.On);
                 var reservation = reservationsClient.Reservation.Update(reservationOrderId, reservationId, Patch);
                 ValidateReservation(reservation);
             }
@@ -178,7 +181,10 @@ namespace Reservations.Tests.ScenarioTests
                 Assert.NotNull(validReservation);
 
                 reservationId = validReservation.Id.Split('/')[6];
-                Patch Patch = new Patch(AppliedScopeType.Single, new List<string>() { $"/subscriptions/{Common.SubscriptionId}" }, InstanceFlexibility.On);
+                Patch Patch = new Patch(
+                    appliedScopeType : AppliedScopeType.Single,
+                    appliedScopes : new List<string>() { $"/subscriptions/{Common.SubscriptionId}" },
+                    instanceFlexibility : InstanceFlexibility.On);
                 var reservation = reservationsClient.Reservation.Update(reservationOrderId, reservationId, Patch);
                 ValidateReservation(reservation);
             }
