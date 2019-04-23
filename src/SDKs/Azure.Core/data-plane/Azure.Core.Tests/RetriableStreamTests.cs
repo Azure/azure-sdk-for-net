@@ -122,7 +122,7 @@ namespace Azure.Core.Tests
 
         private static Task<Response> SendTestRequestAsync(HttpPipeline pipeline, long offset)
         {
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
                 request.AddHeader("Range", "bytes=" + offset);

@@ -24,7 +24,7 @@ namespace Azure.Core.Pipeline
 
         public readonly static HttpClientTransport Shared = new HttpClientTransport();
 
-        public sealed override HttpPipelineRequest CreateRequest(IServiceProvider services)
+        public sealed override Request CreateRequest(IServiceProvider services)
             => new PipelineRequest();
 
         public sealed override async Task ProcessAsync(HttpPipelineMessage message)
@@ -89,7 +89,7 @@ namespace Azure.Core.Pipeline
             return string.Join(",", values);
         }
 
-        sealed class PipelineRequest : HttpPipelineRequest
+        sealed class PipelineRequest : Request
         {
             private readonly HttpRequestMessage _requestMessage;
 

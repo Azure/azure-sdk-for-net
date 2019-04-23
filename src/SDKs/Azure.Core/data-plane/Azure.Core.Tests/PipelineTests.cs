@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         {
         }
 
-        class NullPipelineContext : HttpPipelineRequest
+        class NullPipelineContext : Request
         {
             public override void AddHeader(HttpHeader header)
             {

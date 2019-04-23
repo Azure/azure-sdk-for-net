@@ -45,7 +45,7 @@ namespace Azure.Core.Diagnostics
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
-        public void Request(HttpPipelineRequest request)
+        public void Request(Request request)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
@@ -54,7 +54,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentAsync(HttpPipelineRequest request, CancellationToken cancellationToken)
+        public async Task RequestContentAsync(Request request, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -63,7 +63,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentTextAsync(HttpPipelineRequest request, Encoding encoding, CancellationToken cancellationToken)
+        public async Task RequestContentTextAsync(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -149,7 +149,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void RequestRetrying(HttpPipelineRequest request, int retryNumber)
+        public void RequestRetrying(Request request, int retryNumber)
         {
             RequestRetrying(request.RequestId, retryNumber);
         }

@@ -9,7 +9,7 @@ namespace Azure.Core.Tests
 {
     public class PipelineTestBase
     {
-        protected static async Task<Response> ExecuteRequest(HttpPipelineRequest request, HttpClientTransport transport)
+        protected static async Task<Response> ExecuteRequest(Request request, HttpClientTransport transport)
         {
             using (var message = new HttpPipelineMessage(CancellationToken.None)
             {

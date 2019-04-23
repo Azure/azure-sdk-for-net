@@ -74,7 +74,7 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.AddHeader("Date", "3/26/2019");
@@ -136,7 +136,7 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
@@ -306,7 +306,7 @@ namespace Azure.Core.Tests
             var mockTransport = new MockTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
 

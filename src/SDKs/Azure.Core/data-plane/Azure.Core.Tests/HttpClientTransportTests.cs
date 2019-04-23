@@ -319,7 +319,7 @@ namespace Azure.Core.Tests
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => Task.FromResult(httpResponseMessage));
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            HttpPipelineRequest request = transport.CreateRequest(null);
+            Request request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);
@@ -360,7 +360,7 @@ namespace Azure.Core.Tests
             var mockHandler = new MockHttpClientHandler(httpRequestMessage => Task.FromResult(httpResponseMessage));
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            HttpPipelineRequest request = transport.CreateRequest(null);
+            Request request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
 
             Response response = await ExecuteRequest(request, transport);

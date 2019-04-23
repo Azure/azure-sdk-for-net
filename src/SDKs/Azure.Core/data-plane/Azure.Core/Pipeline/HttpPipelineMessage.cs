@@ -21,7 +21,7 @@ namespace Azure.Core.Pipeline
             Cancellation = cancellation;
         }
 
-        public HttpPipelineRequest Request { get; set; }
+        public Request Request { get; set; }
 
         public Response Response { get; set; }
 
