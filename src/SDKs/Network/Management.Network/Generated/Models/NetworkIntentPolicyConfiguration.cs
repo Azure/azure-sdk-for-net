@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Details of NetworkIntentPolicyConfiguration for
+    /// PrepareNetworkPoliciesRequest.
+    /// </summary>
     public partial class NetworkIntentPolicyConfiguration
     {
         /// <summary>
@@ -30,6 +34,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="networkIntentPolicyName">The name of the Network
         /// Intent Policy for storing in target subscription.</param>
+        /// <param name="sourceNetworkIntentPolicy">Source network intent
+        /// policy.</param>
         public NetworkIntentPolicyConfiguration(string networkIntentPolicyName = default(string), NetworkIntentPolicy sourceNetworkIntentPolicy = default(NetworkIntentPolicy))
         {
             NetworkIntentPolicyName = networkIntentPolicyName;
@@ -50,6 +56,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string NetworkIntentPolicyName { get; set; }
 
         /// <summary>
+        /// Gets or sets source network intent policy.
         /// </summary>
         [JsonProperty(PropertyName = "sourceNetworkIntentPolicy")]
         public NetworkIntentPolicy SourceNetworkIntentPolicy { get; set; }

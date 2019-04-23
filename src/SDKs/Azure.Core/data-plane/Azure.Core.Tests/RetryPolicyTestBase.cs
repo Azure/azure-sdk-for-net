@@ -20,9 +20,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task DoesNotExceedRetryCount()
         {
-            var (policy, gate) = CreateRetryPolicy(retriableCodes: new [] { 500 }, maxRetries: 3);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -39,9 +40,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task OnlyRetriesRetriebleCodes()
         {
-            var (policy, gate) = CreateRetryPolicy(retriableCodes: new [] { 500 }, maxRetries: 3);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -56,9 +58,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RetriesOnException()
         {
-            var (policy, gate) = CreateRetryPolicy(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException);
+            var (policy, gate) = CreateRetryPolicy();
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.CycleWithException(new InvalidOperationException());
 
@@ -73,9 +76,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RetriesOnlyFilteredException()
         {
-            var (policy, gate) = CreateRetryPolicy(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException);
+            var (policy, gate) = CreateRetryPolicy();
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.CycleWithException(new InvalidOperationException());
 
@@ -92,9 +96,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RetriesOnlyFilteredExceptionFirst()
         {
-            var (policy, _) = CreateRetryPolicy(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException);
+            var (policy, _) = CreateRetryPolicy();
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.CycleWithException(new IOException());
 
@@ -104,9 +109,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RethrowsAggregateExceptionAfterMaxRetryCount()
         {
-            var (policy, gate) = CreateRetryPolicy(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException, maxRetries: 3);
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 }, exceptionFilter: ex => ex is InvalidOperationException);
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
             var exceptions = new List<Exception>();
 
             exceptions.Add(new InvalidOperationException());
@@ -126,24 +132,16 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void DoesntMutateOriginalArray()
-        {
-            var codes = new[] { 1, 500, 0 };
-            CreateRetryPolicy(retriableCodes: codes);
-
-            CollectionAssert.AreEqual(new[] {1, 500, 0}, codes);
-        }
-
-        [Test]
         [NonParallelizable]
         public async Task RetryingEmitsEventSourceEvent()
         {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var listener = new TestEventListener();
             listener.EnableEvents(HttpPipelineEventSource.Singleton, EventLevel.Informational);
 
-            var (policy, gate) = CreateRetryPolicy(retriableCodes: new [] { 500 }, maxRetries: 2);
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 2);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             var request = await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -168,11 +166,34 @@ namespace Azure.Core.Tests
             Assert.AreEqual(request.RequestId, e.GetProperty<string>("requestId"));
         }
 
-        protected static Task<Response> SendRequest(MockTransport mockTransport, HttpPipelinePolicy policy)
+        protected static Task<Response> SendRequest(MockTransport mockTransport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier)
         {
-            return SendGetRequest(mockTransport, policy);
+            return SendGetRequest(mockTransport, policy, responseClassifier);
         }
 
-        protected abstract (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3);
+        protected abstract (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3);
+
+        protected class MockResponseClassifier: ResponseClassifier
+        {
+            private readonly int[] _retriableCodes;
+
+            private readonly Func<Exception, bool> _exceptionFilter;
+
+            public MockResponseClassifier(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null)
+            {
+                _retriableCodes = retriableCodes;
+                _exceptionFilter = exceptionFilter;
+            }
+
+            public override bool IsRetriableResponse(HttpPipelineResponse response)
+            {
+                return Array.IndexOf(_retriableCodes, response.Status) >= 0;
+            }
+
+            public override bool IsRetriableException(Exception exception)
+            {
+                return _exceptionFilter != null && _exceptionFilter(exception);
+            }
+        }
     }
 }

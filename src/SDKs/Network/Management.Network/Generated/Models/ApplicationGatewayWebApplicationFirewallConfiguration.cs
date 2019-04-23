@@ -181,10 +181,6 @@ namespace Microsoft.Azure.Management.Network.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "MaxRequestBodySizeInKb", 8);
             }
-            if (FileUploadLimitInMb > 500)
-            {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "FileUploadLimitInMb", 500);
-            }
             if (FileUploadLimitInMb < 0)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "FileUploadLimitInMb", 0);

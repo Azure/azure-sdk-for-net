@@ -36,6 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// initially created for the resource group.</param>
         /// <param name="lastModified">The datetime when the topology was last
         /// modified.</param>
+        /// <param name="resources">A list of topology resources.</param>
         public Topology(string id = default(string), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?), IList<TopologyResource> resources = default(IList<TopologyResource>))
         {
             Id = id;
@@ -70,6 +71,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public System.DateTime? LastModified { get; private set; }
 
         /// <summary>
+        /// Gets or sets a list of topology resources.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
         public IList<TopologyResource> Resources { get; set; }

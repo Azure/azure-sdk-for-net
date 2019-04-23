@@ -33,6 +33,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="name">The name of the user defined route. This is
         /// optional.</param>
+        /// <param name="disableBgpRoutePropagation">If true, on-premises
+        /// routes are not propagated to the network interfaces in the
+        /// subnet.</param>
         /// <param name="source">Who created the route. Possible values are:
         /// 'Unknown', 'User', 'VirtualNetworkGateway', and 'Default'. Possible
         /// values include: 'Unknown', 'User', 'VirtualNetworkGateway',
@@ -45,13 +48,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="nextHopIpAddress">The IP address of the next hop of
         /// the effective route.</param>
         /// <param name="nextHopType">The type of Azure hop the packet should
-        /// be sent to. Possible values are: 'VirtualNetworkGateway',
-        /// 'VnetLocal', 'Internet', 'VirtualAppliance', and 'None'. Possible
-        /// values include: 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
-        /// 'VirtualAppliance', 'None'</param>
-        public EffectiveRoute(string name = default(string), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
+        /// be sent to. Possible values include: 'VirtualNetworkGateway',
+        /// 'VnetLocal', 'Internet', 'VirtualAppliance', 'None'</param>
+        public EffectiveRoute(string name = default(string), bool? disableBgpRoutePropagation = default(bool?), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
         {
             Name = name;
+            DisableBgpRoutePropagation = disableBgpRoutePropagation;
             Source = source;
             State = state;
             AddressPrefix = addressPrefix;
@@ -70,6 +72,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets if true, on-premises routes are not propagated to the
+        /// network interfaces in the subnet.
+        /// </summary>
+        [JsonProperty(PropertyName = "disableBgpRoutePropagation")]
+        public bool? DisableBgpRoutePropagation { get; set; }
 
         /// <summary>
         /// Gets or sets who created the route. Possible values are: 'Unknown',
@@ -102,10 +111,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the type of Azure hop the packet should be sent to.
-        /// Possible values are: 'VirtualNetworkGateway', 'VnetLocal',
-        /// 'Internet', 'VirtualAppliance', and 'None'. Possible values
-        /// include: 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
-        /// 'VirtualAppliance', 'None'
+        /// Possible values include: 'VirtualNetworkGateway', 'VnetLocal',
+        /// 'Internet', 'VirtualAppliance', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "nextHopType")]
         public string NextHopType { get; set; }

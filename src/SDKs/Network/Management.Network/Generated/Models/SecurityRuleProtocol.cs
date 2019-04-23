@@ -18,6 +18,8 @@ namespace Microsoft.Azure.Management.Network.Models
     {
         public const string Tcp = "Tcp";
         public const string Udp = "Udp";
+        public const string Icmp = "Icmp";
+        public const string Esp = "Esp";
         public const string Asterisk = "*";
     }
 }

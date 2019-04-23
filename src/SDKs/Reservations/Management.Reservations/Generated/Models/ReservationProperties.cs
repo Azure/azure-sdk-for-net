@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// expire.</param>
         /// <param name="skuDescription">Description of the SKU in
         /// english.</param>
-        public ReservationProperties(string reservedResourceType = default(string), string instanceFlexibility = default(string), string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), string skuDescription = default(string), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties))
+        public ReservationProperties(string reservedResourceType = default(string), string instanceFlexibility = default(string), string displayName = default(string), IList<string> appliedScopes = default(IList<string>), string appliedScopeType = default(string), int? quantity = default(int?), string provisioningState = default(string), System.DateTime? effectiveDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?), System.DateTime? expiryDate = default(System.DateTime?), string skuDescription = default(string), ExtendedStatusInfo extendedStatusInfo = default(ExtendedStatusInfo), ReservationSplitProperties splitProperties = default(ReservationSplitProperties), ReservationMergeProperties mergeProperties = default(ReservationMergeProperties), bool? renew = default(bool?), RenewPropertiesResponse renewProperties = default(RenewPropertiesResponse))
         {
             ReservedResourceType = reservedResourceType;
             InstanceFlexibility = instanceFlexibility;
@@ -64,6 +64,8 @@ namespace Microsoft.Azure.Management.Reservations.Models
             ExtendedStatusInfo = extendedStatusInfo;
             SplitProperties = splitProperties;
             MergeProperties = mergeProperties;
+            Renew = renew;
+            RenewProperties = renewProperties;
             CustomInit();
         }
 
@@ -154,6 +156,16 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "mergeProperties")]
         public ReservationMergeProperties MergeProperties { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "renew")]
+        public bool? Renew { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "renewProperties")]
+        public RenewPropertiesResponse RenewProperties { get; set; }
 
     }
 }

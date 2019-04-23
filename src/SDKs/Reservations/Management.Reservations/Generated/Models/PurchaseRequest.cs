@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="reservedResourceProperties">Properties specific to
         /// each reserved resource type. Not required if not
         /// applicable.</param>
-        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default(PurchaseRequestPropertiesReservedResourceProperties))
+        public PurchaseRequest(SkuName sku = default(SkuName), string location = default(string), string reservedResourceType = default(string), string billingScopeId = default(string), string term = default(string), int? quantity = default(int?), string displayName = default(string), string appliedScopeType = default(string), IList<string> appliedScopes = default(IList<string>), bool? renew = default(bool?), PurchaseRequestPropertiesReservedResourceProperties reservedResourceProperties = default(PurchaseRequestPropertiesReservedResourceProperties))
         {
             Sku = sku;
             Location = location;
@@ -53,6 +53,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
             DisplayName = displayName;
             AppliedScopeType = appliedScopeType;
             AppliedScopes = appliedScopes;
+            Renew = renew;
             ReservedResourceProperties = reservedResourceProperties;
             CustomInit();
         }
@@ -112,6 +113,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.appliedScopes")]
         public IList<string> AppliedScopes { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.renew")]
+        public bool? Renew { get; set; }
 
         /// <summary>
         /// Gets or sets properties specific to each reserved resource type.
