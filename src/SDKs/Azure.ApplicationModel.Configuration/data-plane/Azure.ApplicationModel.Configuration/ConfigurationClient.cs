@@ -30,6 +30,7 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipeline.Build(options,
+                    options.ResponseClassifier,
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
                     new AuthenticationPolicy(credential, secret),
