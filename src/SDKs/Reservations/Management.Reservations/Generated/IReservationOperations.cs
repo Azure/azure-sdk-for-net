@@ -118,9 +118,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
         /// </param>
-        /// <param name='append'>
-        /// Supported value of this query is renewProperties
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -136,7 +133,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ReservationResponse>> GetWithHttpMessagesAsync(string reservationId, string reservationOrderId, string append = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ReservationResponse>> GetWithHttpMessagesAsync(string reservationId, string reservationOrderId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates a `Reservation`.
         /// </summary>

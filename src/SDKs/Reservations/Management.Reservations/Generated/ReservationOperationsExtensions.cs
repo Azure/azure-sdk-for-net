@@ -174,12 +174,9 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
             /// </param>
-            /// <param name='append'>
-            /// Supported value of this query is renewProperties
-            /// </param>
-            public static ReservationResponse Get(this IReservationOperations operations, string reservationId, string reservationOrderId, string append = default(string))
+            public static ReservationResponse Get(this IReservationOperations operations, string reservationId, string reservationOrderId)
             {
-                return operations.GetAsync(reservationId, reservationOrderId, append).GetAwaiter().GetResult();
+                return operations.GetAsync(reservationId, reservationOrderId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -197,15 +194,12 @@ namespace Microsoft.Azure.Management.Reservations
             /// <param name='reservationOrderId'>
             /// Order Id of the reservation
             /// </param>
-            /// <param name='append'>
-            /// Supported value of this query is renewProperties
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ReservationResponse> GetAsync(this IReservationOperations operations, string reservationId, string reservationOrderId, string append = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ReservationResponse> GetAsync(this IReservationOperations operations, string reservationId, string reservationOrderId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(reservationId, reservationOrderId, append, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(reservationId, reservationOrderId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

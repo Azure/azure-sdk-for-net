@@ -294,9 +294,6 @@ namespace Microsoft.Azure.Management.Reservations
         /// <param name='reservationOrderId'>
         /// Order Id of the reservation
         /// </param>
-        /// <param name='append'>
-        /// Supported value of this query is renewProperties
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -318,7 +315,7 @@ namespace Microsoft.Azure.Management.Reservations
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ReservationResponse>> GetWithHttpMessagesAsync(string reservationId, string reservationOrderId, string append = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ReservationResponse>> GetWithHttpMessagesAsync(string reservationId, string reservationOrderId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (reservationId == null)
             {
@@ -341,7 +338,6 @@ namespace Microsoft.Azure.Management.Reservations
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("reservationId", reservationId);
                 tracingParameters.Add("reservationOrderId", reservationOrderId);
-                tracingParameters.Add("append", append);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -354,10 +350,6 @@ namespace Microsoft.Azure.Management.Reservations
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
-            }
-            if (append != null)
-            {
-                _queryParameters.Add(string.Format("append={0}", System.Uri.EscapeDataString(append)));
             }
             if (_queryParameters.Count > 0)
             {
