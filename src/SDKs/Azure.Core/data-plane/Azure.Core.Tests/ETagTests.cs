@@ -51,7 +51,7 @@ namespace Azure.Core.Tests
         [Test]
         public void EqualityOperatorsDefault()
         {
-            var eTag = new ETag("a");
+            ETag eTag = default;
 
             Assert.True(eTag == new ETag(null));
             Assert.True(eTag == default);
