@@ -20,7 +20,24 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public void ComparisonOperators()
+        public void GetHashCodeNonDefault()
+        {
+            var eTag = new ETag("a");
+
+            Assert.AreEqual(eTag.GetHashCode(), new ETag("a").GetHashCode());
+            Assert.AreNotEqual(eTag.GetHashCode(), new ETag("A").GetHashCode());
+        }
+
+        [Test]
+        public void GetHashCodeDefault()
+        {
+            var eTag = new ETag();
+
+            Assert.AreEqual(eTag.GetHashCode(), new ETag(null).GetHashCode());
+        }
+
+        [Test]
+        public void EqualityOperatorsNonDefault()
         {
             var eTag = new ETag("a");
 
@@ -29,25 +46,38 @@ namespace Azure.Core.Tests
 
             Assert.False(eTag != new ETag("a"));
             Assert.True(eTag != new ETag("A"));
+        }
+
+        [Test]
+        public void EqualityOperatorsDefault()
+        {
+            var eTag = new ETag("a");
+
+            Assert.True(eTag == new ETag(null));
+            Assert.True(eTag == default);
+        }
+
+        [Test]
+        public void EqualityMembersNonDefault()
+        {
+            var eTag = new ETag("a");
 
             Assert.True(eTag.Equals(new ETag("a")));
             Assert.False(eTag.Equals(new ETag("A")));
 
-            Assert.AreEqual(eTag.GetHashCode(), new ETag("a").GetHashCode());
-            Assert.AreNotEqual(eTag.GetHashCode(), new ETag("A").GetHashCode());
+            Assert.True(eTag.Equals((object)new ETag("a")));
+            Assert.False(eTag.Equals((object)new ETag("A")));
         }
 
+
         [Test]
-        public void DefaultComparisonOperators()
+        public void EqualityMembersDefault()
         {
             var eTag = new ETag();
 
-            Assert.True(eTag == new ETag(null));
-            Assert.True(eTag == default);
-
             Assert.True(eTag.Equals(new ETag(null)));;
 
-            Assert.AreEqual(eTag.GetHashCode(), new ETag(null).GetHashCode());
+            Assert.True(eTag.Equals((object)new ETag(null)));
         }
     }
 }
