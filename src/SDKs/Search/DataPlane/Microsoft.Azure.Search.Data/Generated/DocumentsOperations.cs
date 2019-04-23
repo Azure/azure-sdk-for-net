@@ -1960,6 +1960,11 @@ namespace Microsoft.Azure.Search
             {
                 autocompleteMode = autocompleteParameters.AutocompleteMode;
             }
+            string filter = default(string);
+            if (autocompleteParameters != null)
+            {
+                filter = autocompleteParameters.Filter;
+            }
             bool? useFuzzyMatching = default(bool?);
             if (autocompleteParameters != null)
             {
@@ -2001,6 +2006,7 @@ namespace Microsoft.Azure.Search
                 tracingParameters.Add("suggesterName", suggesterName);
                 tracingParameters.Add("clientRequestId", clientRequestId);
                 tracingParameters.Add("autocompleteMode", autocompleteMode);
+                tracingParameters.Add("filter", filter);
                 tracingParameters.Add("useFuzzyMatching", useFuzzyMatching);
                 tracingParameters.Add("highlightPostTag", highlightPostTag);
                 tracingParameters.Add("highlightPreTag", highlightPreTag);
@@ -2030,6 +2036,10 @@ namespace Microsoft.Azure.Search
                 _queryParameters.Add(string.Format("suggesterName={0}", System.Uri.EscapeDataString(suggesterName)));
             }
             _queryParameters.Add(string.Format("autocompleteMode={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(autocompleteMode, requestSerializerSettings ?? Client.SerializationSettings).Trim('"'))));
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+            }
             if (useFuzzyMatching != null)
             {
                 _queryParameters.Add(string.Format("fuzzy={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(useFuzzyMatching, requestSerializerSettings ?? Client.SerializationSettings).Trim('"'))));
