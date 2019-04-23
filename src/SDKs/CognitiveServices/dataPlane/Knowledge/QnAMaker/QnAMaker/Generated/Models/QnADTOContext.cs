@@ -15,27 +15,31 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
     using System.Linq;
 
     /// <summary>
-    /// List of metadata associated with the answer to be updated
+    /// Context of a QnA
     /// </summary>
-    public partial class UpdateQnaDTOMetadata : UpdateMetadataDTO
+    public partial class QnADTOContext : ContextDTO
     {
         /// <summary>
-        /// Initializes a new instance of the UpdateQnaDTOMetadata class.
+        /// Initializes a new instance of the QnADTOContext class.
         /// </summary>
-        public UpdateQnaDTOMetadata()
+        public QnADTOContext()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UpdateQnaDTOMetadata class.
+        /// Initializes a new instance of the QnADTOContext class.
         /// </summary>
-        /// <param name="delete">List of Metadata associated with answer to be
-        /// deleted</param>
-        /// <param name="add">List of metadata associated with answer to be
-        /// added</param>
-        public UpdateQnaDTOMetadata(IList<MetadataDTO> delete = default(IList<MetadataDTO>), IList<MetadataDTO> add = default(IList<MetadataDTO>))
-            : base(delete, add)
+        /// <param name="isContextOnly">To mark if a prompt is relevant only
+        /// with a previous question or not.
+        /// true - Do not include this QnA as search result for queries without
+        /// context
+        /// false - ignores context and includes this QnA in search
+        /// result</param>
+        /// <param name="prompts">List of prompts associated with the
+        /// answer.</param>
+        public QnADTOContext(bool? isContextOnly = default(bool?), IList<PromptDTO> prompts = default(IList<PromptDTO>))
+            : base(isContextOnly, prompts)
         {
             CustomInit();
         }

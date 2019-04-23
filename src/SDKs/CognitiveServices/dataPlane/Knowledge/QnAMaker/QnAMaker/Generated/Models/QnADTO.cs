@@ -40,13 +40,15 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// https://docs.microsoft.com/en-us/azure/cognitive-services/QnAMaker/FAQs</param>
         /// <param name="metadata">List of metadata associated with the
         /// answer.</param>
-        public QnADTO(string answer, IList<string> questions, int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>))
+        /// <param name="context">Context of a QnA</param>
+        public QnADTO(string answer, IList<string> questions, int? id = default(int?), string source = default(string), IList<MetadataDTO> metadata = default(IList<MetadataDTO>), QnADTOContext context = default(QnADTOContext))
         {
             Id = id;
             Answer = answer;
             Source = source;
             Questions = questions;
             Metadata = metadata;
+            Context = context;
             CustomInit();
         }
 
@@ -85,6 +87,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public IList<MetadataDTO> Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets context of a QnA
+        /// </summary>
+        [JsonProperty(PropertyName = "context")]
+        public QnADTOContext Context { get; set; }
 
         /// <summary>
         /// Validate the object.
