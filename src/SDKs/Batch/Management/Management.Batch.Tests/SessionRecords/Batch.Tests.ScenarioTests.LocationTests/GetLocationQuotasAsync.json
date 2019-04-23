@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "dbe0a371-2fed-4949-b2b7-f209209ad834"
+          "fa887ab5-14f9-4fa6-9d50-645c27412bbc"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 23 Apr 2019 19:34:24 GMT"
+          "Tue, 23 Apr 2019 21:39:59 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,13 +33,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "d2855471-667a-44f2-9f8c-eb9e71783acc"
+          "3fa1961e-e30f-4764-b3ab-e62c952d9716"
         ],
         "x-ms-correlation-request-id": [
-          "d2855471-667a-44f2-9f8c-eb9e71783acc"
+          "3fa1961e-e30f-4764-b3ab-e62c952d9716"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190423T193425Z:d2855471-667a-44f2-9f8c-eb9e71783acc"
+          "WESTUS2:20190423T214000Z:3fa1961e-e30f-4764-b3ab-e62c952d9716"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -67,7 +67,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8014c7a4-ca42-4e35-a993-ebed16098c0e"
+          "f4813e30-e528-4802-bae4-5782de2c33e9"
         ],
         "accept-language": [
           "en-US"
@@ -76,7 +76,7 @@
           "FxVersion/4.6.25921.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Batch.BatchManagementClient/7.0.0.0"
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -84,7 +84,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 23 Apr 2019 19:34:24 GMT"
+          "Tue, 23 Apr 2019 21:40:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -96,7 +96,7 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "b9b98323-8fed-4160-9c0e-5edb6a8cf379"
+          "0ea2bf62-37a7-4143-b618-f428b189bafc"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -105,10 +105,10 @@
           "nosniff"
         ],
         "x-ms-correlation-request-id": [
-          "3190544b-69d5-4730-9391-b251dfbdb6c3"
+          "20baaf80-5d39-47dc-b8b3-6600f33cc19e"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190423T193425Z:3190544b-69d5-4730-9391-b251dfbdb6c3"
+          "WESTUS2:20190423T214000Z:20baaf80-5d39-47dc-b8b3-6600f33cc19e"
         ],
         "Content-Length": [
           "18"
