@@ -1,5 +1,14 @@
 ## Microsoft.Azure.Management.Batch release notes
 
+### Changes in 8.0.0
+#### REST API version
+- This version targets REST API version 2019-04-01.
+
+#### Features
+- Added BatchAccount properties `DedicatedCoreQuotaPerVMFamily` and `DedicatedCoreQuotaPerVMFamilyEnforced` to facilitate the transition to per VM family quota
+- **[Breaking]** Accounts created with `PoolAllocationMode` set to `UserSubscription` will no have return core quota values
+
+
 ### Changes in 7.0.0
 #### REST API version
 - This version targets REST API version 2018-12-01.
