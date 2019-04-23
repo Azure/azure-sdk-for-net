@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <param name="writeAcceleratorEnabled">Specifies whether
         /// writeAccelerator should be enabled or disabled on the disk.</param>
-        /// <param name="toBeDetached">Specifies whether the disk is detached
-        /// or in process of detachment from the VM/VMSS</param>
+        /// <param name="toBeDetached">Specifies whether the disk is in process
+        /// of detachment from the VM/VMSS</param>
         /// <param name="diffDiskSettings">Specifies the ephemeral Disk
         /// Settings for the operating system disk used by the virtual
         /// machine.</param>
@@ -158,8 +158,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? WriteAcceleratorEnabled { get; set; }
 
         /// <summary>
-        /// Gets or sets specifies whether the disk is detached or in process
-        /// of detachment from the VM/VMSS
+        /// Gets or sets specifies whether the disk is in process of detachment
+        /// from the VM/VMSS
         /// </summary>
         [JsonProperty(PropertyName = "toBeDetached")]
         public bool? ToBeDetached { get; set; }
