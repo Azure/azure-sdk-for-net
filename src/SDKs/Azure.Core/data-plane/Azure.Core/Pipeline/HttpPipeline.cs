@@ -15,12 +15,14 @@ namespace Azure.Core.Pipeline
     public class HttpPipeline
     {
         private readonly HttpPipelineTransport _transport;
+        private readonly ResponseClassifier _responseClassifier;
         private readonly ReadOnlyMemory<HttpPipelinePolicy> _pipeline;
         private readonly IServiceProvider _services;
 
-        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, IServiceProvider services = null)
+        public HttpPipeline(HttpPipelineTransport transport, HttpPipelinePolicy[] policies = null, ResponseClassifier responseClassifier = null, IServiceProvider services = null)
         {
             _transport = transport ?? throw new ArgumentNullException(nameof(transport));
+            _responseClassifier = responseClassifier ?? new ResponseClassifier();
 
             policies = policies ?? Array.Empty<HttpPipelinePolicy>();
 
@@ -43,12 +45,13 @@ namespace Azure.Core.Pipeline
             using (var message = new HttpPipelineMessage(cancellationToken))
             {
                 message.Request = request;
+                message.ResponseClassifier = _responseClassifier;
                 await _pipeline.Span[0].ProcessAsync(message, _pipeline.Slice(1)).ConfigureAwait(false);
                 return message.Response;
             }
         }
 
-        public static HttpPipeline Build(HttpClientOptions options, params HttpPipelinePolicy[] clientPolicies)
+        public static HttpPipeline Build(HttpClientOptions options, ResponseClassifier responseClassifier, params HttpPipelinePolicy[] clientPolicies)
         {
             var policies = new List<HttpPipelinePolicy>();
 
@@ -65,7 +68,7 @@ namespace Azure.Core.Pipeline
 
             policies.RemoveAll(policy => policy == null);
 
-            return new HttpPipeline(options.Transport, policies.ToArray(), options.ServiceProvider);
+            return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, options.ServiceProvider);
         }
     }
 }

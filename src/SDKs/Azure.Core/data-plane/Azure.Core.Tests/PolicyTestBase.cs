@@ -10,13 +10,13 @@ namespace Azure.Core.Tests
 {
     public abstract class PolicyTestBase
     {
-        protected static Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy)
+        protected static Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
         {
             using (Request request = transport.CreateRequest(null))
             {
                 request.Method = HttpPipelineMethod.Get;
                 request.UriBuilder.Uri = new Uri("http://example.com");
-                var pipeline = new HttpPipeline(transport, new [] { policy });
+                var pipeline = new HttpPipeline(transport, new [] { policy }, responseClassifier);
                 return pipeline.SendRequestAsync(request, CancellationToken.None);
             }
         }

@@ -25,6 +25,8 @@ namespace Azure.Core.Pipeline
 
         public Response Response { get; set; }
 
+        public ResponseClassifier ResponseClassifier { get; set; }
+
         // make many of these protected internal
         public virtual void Dispose()
         {
