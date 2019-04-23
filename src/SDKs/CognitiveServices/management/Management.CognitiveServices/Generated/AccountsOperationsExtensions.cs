@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// characters.
             /// </param>
             /// <param name='properties'>
-            /// Additional properties for Account. Only provided fileds will be updated.
+            /// Additional properties for Account. Only provided fields will be updated.
             /// </param>
             public static CognitiveServicesAccount Update(this IAccountsOperations operations, string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
             {
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// characters.
             /// </param>
             /// <param name='properties'>
-            /// Additional properties for Account. Only provided fileds will be updated.
+            /// Additional properties for Account. Only provided fields will be updated.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

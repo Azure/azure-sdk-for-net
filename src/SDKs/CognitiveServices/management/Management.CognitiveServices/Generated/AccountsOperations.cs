@@ -314,7 +314,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// characters.
         /// </param>
         /// <param name='properties'>
-        /// Additional properties for Account. Only provided fileds will be updated.
+        /// Additional properties for Account. Only provided fields will be updated.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

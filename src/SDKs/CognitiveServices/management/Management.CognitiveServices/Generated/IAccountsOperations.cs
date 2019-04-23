@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.CognitiveServices
         /// and value no greater than 256 characters.
         /// </param>
         /// <param name='properties'>
-        /// Additional properties for Account. Only provided fileds will be
+        /// Additional properties for Account. Only provided fields will be
         /// updated.
         /// </param>
         /// <param name='customHeaders'>

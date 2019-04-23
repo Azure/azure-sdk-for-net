@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
         /// <param name="properties">Additional properties for Account. Only
-        /// provided fileds will be updated.</param>
+        /// provided fields will be updated.</param>
         public CognitiveServicesAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
         {
             Sku = sku;
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
 
         /// <summary>
         /// Gets or sets additional properties for Account. Only provided
-        /// fileds will be updated.
+        /// fields will be updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
