@@ -1,0 +1,39 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/personalizer/v1.0/evaluations/b58c6d92-b727-48c1-9487-4be2782c9e0a",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2V2YWx1YXRpb25zL2I1OGM2ZDkyLWI3MjctNDhjMS05NDg3LTRiZTI3ODJjOWUwYQ==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Date": [
+          "Tue, 23 Apr 2019 05:36:59 GMT"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"b58c6d92-b727-48c1-9487-4be2782c9e0a\",\r\n  \"name\": \"myFirstEvaluation\",\r\n  \"startTime\": \"2018-12-19T00:00:00Z\",\r\n  \"endTime\": \"2019-01-19T00:00:00Z\",\r\n  \"status\": \"completed\",\r\n  \"policyResults\": [\r\n    {\r\n      \"name\": \"Custom Policy 1\",\r\n      \"arguments\": \"--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5\",\r\n      \"summary\": [\r\n        {\r\n          \"timeStamp\": \"2018-12-19T00:00:00Z\",\r\n          \"ipsEstimatorNumerator\": 0,\r\n          \"ipsEstimatorDenominator\": 170,\r\n          \"snipsEstimatorDenominator\": 308.25,\r\n          \"aggregateTimeWindow\": \"00:00:00\",\r\n          \"nonZeroProbability\": 64,\r\n          \"confidenceInterval\": 0,\r\n          \"sumOfSquares\": 0\r\n        },\r\n        {\r\n          \"timeStamp\": \"2018-12-19T00:05:00Z\",\r\n          \"ipsEstimatorNumerator\": 2.2,\r\n          \"ipsEstimatorDenominator\": 196,\r\n          \"snipsEstimatorDenominator\": 193.761,\r\n          \"aggregateTimeWindow\": \"00:00:00\",\r\n          \"nonZeroProbability\": 68,\r\n          \"confidenceInterval\": 1.1009,\r\n          \"sumOfSquares\": 2.424\r\n        }\r\n      ],\r\n      \"totalSummary\": {\r\n        \"timeStamp\": \"2019-01-19T00:00:00Z\",\r\n        \"ipsEstimatorNumerator\": 22.2,\r\n        \"ipsEstimatorDenominator\": 1906,\r\n        \"snipsEstimatorDenominator\": 1993.761,\r\n        \"aggregateTimeWindow\": \"00:00:00\",\r\n        \"nonZeroProbability\": 68,\r\n        \"confidenceInterval\": 1.1209,\r\n        \"sumOfSquares\": 2.484\r\n      }\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

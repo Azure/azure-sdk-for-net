@@ -1,0 +1,89 @@
+﻿using Microsoft.Azure.CognitiveServices.Personalizer.Models;
+using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
+using System.Collections.Generic;
+using System;
+
+namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
+{
+    public class EvaluationsTests : BaseTests
+    {
+        [Fact]
+        public void GetEvaluations()
+        {
+            using (MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "GetEvaluations");
+
+                IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
+
+                IList<Evaluation> evaluations = client.GetEvaluations();
+
+                Assert.Equal(2, evaluations.Count);
+                Assert.Equal("myFirstEvaluation", evaluations[0].Name);
+            }
+        }
+
+        [Fact]
+        public void CreateEvaluation()
+        {
+            using (MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "CreateEvaluation");
+
+                IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
+
+                var evaluation = new EvaluationContract
+                {
+                    Name = "myFirstEvaluation",
+                    StartTime = new DateTime(2018, 12, 19),
+                    EndTime = new DateTime(2019, 1, 19),
+                    EnableOfflineExperimentation = true,
+                    Policies = new PolicyContract[]
+                    {
+                        new PolicyContract
+                        {
+                            Name = "Custom Policy 1",
+                            Arguments = "--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5"
+                        }
+                    }
+                };
+
+                Evaluation createdEvaluation = client.CreateEvaluation(evaluation);
+
+                Assert.Equal(evaluation.Name, createdEvaluation.Name);
+            }
+        }
+
+        [Fact]
+        public void GetEvaluation()
+        {
+            using (MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "GetEvaluation");
+
+                IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
+
+                string evaluationId = "b58c6d92-b727-48c1-9487-4be2782c9e0a";
+                Evaluation evaluation = client.GetEvaluation(evaluationId);
+
+                Assert.Equal(evaluationId, evaluation.Id);
+            }
+        }
+
+        [Fact]
+        public void DeleteEvaluation()
+        {
+            using (MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "DeleteEvaluation");
+
+                IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
+
+                string evaluationId = "b58c6d92-b727-48c1-9487-4be2782c9e0a";
+                client.DeleteEvaluation(evaluationId);
+            }
+        }
+    }
+}
