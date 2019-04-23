@@ -91,6 +91,7 @@ namespace Azure.Core.Pipeline
 
         sealed class PipelineRequest : Request
         {
+            private bool _wasSent = false;
             private readonly HttpRequestMessage _requestMessage;
 
             private PipelineContentAdapter _requestContent;
@@ -144,23 +145,34 @@ namespace Azure.Core.Pipeline
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
-                // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
-                // and so the retry logic fails.
-                var request = new HttpRequestMessage(_requestMessage.Method, UriBuilder.ToString());
+                HttpRequestMessage currentRequest;
+                if (_wasSent)
+                {
+                    // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
+                    // and so the retry logic fails.
+                    currentRequest = new HttpRequestMessage(_requestMessage.Method, UriBuilder.Uri);
+                    CopyHeaders(_requestMessage.Headers, currentRequest.Headers);
 
-                CopyHeaders(_requestMessage.Headers, request.Headers);
+                }
+                else
+                {
+                    currentRequest = _requestMessage;
+                    _wasSent = true;
+                }
+
+                currentRequest.RequestUri = UriBuilder.Uri;
 
                 if (_requestContent?.PipelineContent != null)
                 {
-                    request.Content = new PipelineContentAdapter()
+                    currentRequest.Content = new PipelineContentAdapter()
                     {
                         CancellationToken = cancellation,
                         PipelineContent = _requestContent.PipelineContent
                     };
-                    CopyHeaders(_requestContent.Headers, request.Content.Headers);
+                    CopyHeaders(_requestContent.Headers, currentRequest.Content.Headers);
                 }
 
-                return request;
+                return currentRequest;
             }
 
             public override void Dispose()

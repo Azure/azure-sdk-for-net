@@ -27,6 +27,12 @@ namespace Azure.Core.Pipeline.Policies
         // TODO (pri 1): we should remove sensitive information, e.g. keys
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            if (!s_eventSource.IsEnabled())
+            {
+                await ProcessNextAsync(pipeline, message);
+                return;
+            }
+
             s_eventSource.Request(message.Request);
 
             Encoding requestTextEncoding = null;
