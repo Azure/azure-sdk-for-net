@@ -52,8 +52,8 @@ namespace Azure.Core.Tests
             var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
 
             var mockTransport = new MockTransport(
-                new MockResponse(200) { ResponseContentStream = stream1 },
-                new MockResponse(200) { ResponseContentStream = stream2 }
+                new MockResponse(200) { ContentStream = stream1 },
+                new MockResponse(200) { ContentStream = stream2 }
             );
             var pipeline = new HttpPipeline(mockTransport);
 

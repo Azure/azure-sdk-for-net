@@ -34,11 +34,11 @@ namespace Azure.Core.Pipeline
             _services = services ?? HttpClientOptions.EmptyServiceProvider.Singleton;
         }
 
-        public HttpPipelineRequest CreateRequest()
+        public Request CreateRequest()
             => _transport.CreateRequest(_services);
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public async Task<Response> SendRequestAsync(HttpPipelineRequest request, CancellationToken cancellationToken)
+        public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
             if (_pipeline.IsEmpty) return default;
 
