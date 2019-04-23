@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the LoadBalancingRule class.
         /// </summary>
-        /// <param name="protocol">Possible values include: 'Udp', 'Tcp',
+        /// <param name="protocol">The reference to the transport protocol used
+        /// by the load balancing rule. Possible values include: 'Udp', 'Tcp',
         /// 'All'</param>
         /// <param name="frontendPort">The port for the external endpoint. Port
         /// numbers for each rule must be unique within the Load Balancer.
@@ -122,7 +123,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public SubResource Probe { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'Udp', 'Tcp', 'All'
+        /// Gets or sets the reference to the transport protocol used by the
+        /// load balancing rule. Possible values include: 'Udp', 'Tcp', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

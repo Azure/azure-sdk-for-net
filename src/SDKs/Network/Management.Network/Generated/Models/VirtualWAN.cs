@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// not.</param>
         /// <param name="virtualHubs">List of VirtualHubs in the
         /// VirtualWAN.</param>
+        /// <param name="vpnSites">List of VpnSites in the VirtualWAN.</param>
         /// <param name="securityProviderName">The Security Provider
         /// name.</param>
         /// <param name="allowBranchToBranchTraffic">True if branch to branch
@@ -93,6 +94,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<SubResource> VirtualHubs { get; private set; }
 
         /// <summary>
+        /// Gets list of VpnSites in the VirtualWAN.
         /// </summary>
         [JsonProperty(PropertyName = "properties.vpnSites")]
         public IList<SubResource> VpnSites { get; private set; }

@@ -37,9 +37,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ApplicationGatewayRedirectConfiguration class.
         /// </summary>
         /// <param name="id">Resource ID.</param>
-        /// <param name="redirectType">Supported http redirection types -
-        /// Permanent, Temporary, Found, SeeOther. Possible values include:
-        /// 'Permanent', 'Found', 'SeeOther', 'Temporary'</param>
+        /// <param name="redirectType">HTTP redirection type. Possible values
+        /// include: 'Permanent', 'Found', 'SeeOther', 'Temporary'</param>
         /// <param name="targetListener">Reference to a listener to redirect
         /// the request to.</param>
         /// <param name="targetUrl">Url to redirect the request to.</param>
@@ -81,9 +80,8 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets supported http redirection types - Permanent,
-        /// Temporary, Found, SeeOther. Possible values include: 'Permanent',
-        /// 'Found', 'SeeOther', 'Temporary'
+        /// Gets or sets HTTP redirection type. Possible values include:
+        /// 'Permanent', 'Found', 'SeeOther', 'Temporary'
         /// </summary>
         [JsonProperty(PropertyName = "properties.redirectType")]
         public string RedirectType { get; set; }
