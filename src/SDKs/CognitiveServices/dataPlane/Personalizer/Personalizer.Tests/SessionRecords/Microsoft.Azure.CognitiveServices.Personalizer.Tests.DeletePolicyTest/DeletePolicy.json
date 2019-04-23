@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/personalizer/v1.0/configurations/policy",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2NvbmZpZ3VyYXRpb25zL3BvbGljeQ==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Tue, 23 Apr 2019 00:58:36 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Timing-Allow-Origin": [
+          "*"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"name\": \"app1\",\r\n  \"arguments\": \"--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2\"\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -7,7 +7,7 @@
       "RequestBody": "{\r\n  \"contextFeatures\": [\r\n    {\r\n      \"Features\": {\r\n        \"day\": \"tuesday\",\r\n        \"time\": \"night\",\r\n        \"weather\": \"rainy\"\r\n      }\r\n    },\r\n    {\r\n      \"Features\": {\r\n        \"userId\": \"1234\",\r\n        \"payingUser\": true,\r\n        \"favoriteGenre\": \"documentary\",\r\n        \"hoursOnSite\": 0.12,\r\n        \"lastwatchedType\": \"movie\"\r\n      }\r\n    }\r\n  ],\r\n  \"actions\": [\r\n    {\r\n      \"id\": \"Person1\",\r\n      \"features\": [\r\n        {\r\n          \"videoType\": \"documentary\",\r\n          \"videoLength\": 35,\r\n          \"director\": \"CarlSagan\"\r\n        },\r\n        {\r\n          \"mostWatchedByAge\": \"30-35\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"Person2\",\r\n      \"features\": [\r\n        {\r\n          \"videoType\": \"documentary\",\r\n          \"videoLength\": 35,\r\n          \"director\": \"CarlSagan\"\r\n        },\r\n        {\r\n          \"mostWatchedByAge\": \"40-45\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"excludedActions\": [\r\n    \"Person1\"\r\n  ],\r\n  \"eventId\": \"123456789\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
-          ""
+          "000"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -27,7 +27,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 22:55:10 GMT"
+          "Tue, 23 Apr 2019 00:48:18 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,7 +39,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=677b7594f2374da6b233a6b645e1cb11; expires=Sat, 19 Oct 2019 22:55:11 GMT; domain=; path=/; samesite=lax"
+          "pid=5ccaa9310b59420a9082719d6a4de659; expires=Sun, 20 Oct 2019 00:48:19 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"

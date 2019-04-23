@@ -1,0 +1,51 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/personalizer/v1.0/events/123456789/reward",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2V2ZW50cy8xMjM0NTY3ODkvcmV3YXJk",
+      "RequestMethod": "POST",
+      "RequestBody": "{\r\n  \"value\": 0.5\r\n}",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+        ],
+        "Content-Type": [
+          "application/json-patch+json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "20"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Tue, 23 Apr 2019 00:48:03 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Set-Cookie": [
+          "pid=19ce45c9c9f445b18ff867250dcfa9d7; expires=Sun, 20 Oct 2019 00:48:04 GMT; domain=; path=/; samesite=lax"
+        ],
+        "Expires": [
+          "0"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

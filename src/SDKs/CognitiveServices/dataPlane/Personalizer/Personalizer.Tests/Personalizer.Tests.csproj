@@ -21,11 +21,5 @@
     </None>
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="SessionRecords\Microsoft.Azure.CognitiveServices.Personalizer.Tests.RankingServerFeaturesTest\RankingServerFeatures.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
 

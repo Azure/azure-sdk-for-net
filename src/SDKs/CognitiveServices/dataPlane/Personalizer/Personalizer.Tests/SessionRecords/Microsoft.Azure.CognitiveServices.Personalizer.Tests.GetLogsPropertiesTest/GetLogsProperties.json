@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/personalizer/v1.0/logs/properties",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2xvZ3MvcHJvcGVydGllcw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Tue, 23 Apr 2019 01:35:23 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Set-Cookie": [
+          "pid=d26f177096a246da86e6b2d4764d539a; expires=Sun, 20 Oct 2019 01:35:23 GMT; domain=; path=/; samesite=lax"
+        ],
+        "Timing-Allow-Origin": [
+          "*"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"dateRange\": {\r\n    \"from\": \"2019-04-12T18:35:23.3649317-07:00\",\r\n    \"to\": \"2019-04-22T18:35:23.3649325-07:00\"\r\n  }\r\n}",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

@@ -7,16 +7,17 @@ using Xunit;
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 {
-    public class RankingServerFeaturesTest : BaseTests
+    public class RankServerFeaturesTest : BaseTests
     {
         [Fact]
-        public async Task RankingServerFeatures()
+        public async Task RankServerFeatures()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            using (MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "RankingServerFeatures");
+                HttpMockServer.Initialize(this.GetType().FullName, "RankServerFeatures");
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
+
                 IList<object> contextFeatures = new List<object>() {
                     new { Features = new { day = "tuesday", time = "night", weather = "rainy" } },
                     new { Features = new { userId = "1234", payingUser = true, favoriteGenre = "documentary", hoursOnSite = 0.12, lastwatchedType = "movie" } }
