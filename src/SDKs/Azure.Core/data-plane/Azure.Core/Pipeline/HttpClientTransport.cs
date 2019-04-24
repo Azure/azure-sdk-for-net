@@ -197,6 +197,8 @@ namespace Azure.Core.Pipeline
                         return HttpMethod.Delete;
                     case HttpPipelineMethod.Patch:
                         return s_patch;
+                    case HttpPipelineMethod.Head:
+                        return HttpMethod.Head;
 
                     default:
                         throw new NotImplementedException();
