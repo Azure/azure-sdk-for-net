@@ -87,4 +87,5 @@ Get-Help Start-AutoRestCodeGenerationWithLocalConfig
 
 ```
 This is a test change
+another commit
 ```
