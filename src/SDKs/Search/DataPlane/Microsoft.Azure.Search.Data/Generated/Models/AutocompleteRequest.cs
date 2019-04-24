@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Search.Models
         /// 'oneTermWithContext' to use the current context while producing
         /// auto-completed terms. Possible values include: 'oneTerm',
         /// 'twoTerms', 'oneTermWithContext'</param>
+        /// <param name="filter">An OData expression that filters the documents
+        /// used to produce completed terms for the Autocomplete
+        /// result.</param>
         /// <param name="useFuzzyMatching">A value indicating whether to use
         /// fuzzy matching for the autocomplete query. Default is false. When
         /// set to true, the query will autocomplete terms even if there's a
@@ -62,10 +65,11 @@ namespace Microsoft.Azure.Search.Models
         /// definition.</param>
         /// <param name="top">The number of auto-completed terms to retrieve.
         /// This must be a value between 1 and 100. The default is 5.</param>
-        public AutocompleteRequest(string searchText = default(string), AutocompleteMode? autocompleteMode = default(AutocompleteMode?), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string searchFields = default(string), string suggesterName = default(string), int? top = default(int?))
+        public AutocompleteRequest(string searchText = default(string), AutocompleteMode? autocompleteMode = default(AutocompleteMode?), string filter = default(string), bool? useFuzzyMatching = default(bool?), string highlightPostTag = default(string), string highlightPreTag = default(string), double? minimumCoverage = default(double?), string searchFields = default(string), string suggesterName = default(string), int? top = default(int?))
         {
             SearchText = searchText;
             AutocompleteMode = autocompleteMode;
+            Filter = filter;
             UseFuzzyMatching = useFuzzyMatching;
             HighlightPostTag = highlightPostTag;
             HighlightPreTag = highlightPreTag;
@@ -96,6 +100,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "autocompleteMode")]
         public AutocompleteMode? AutocompleteMode { get; set; }
+
+        /// <summary>
+        /// Gets or sets an OData expression that filters the documents used to
+        /// produce completed terms for the Autocomplete result.
+        /// </summary>
+        [JsonProperty(PropertyName = "filter")]
+        public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to use fuzzy matching for

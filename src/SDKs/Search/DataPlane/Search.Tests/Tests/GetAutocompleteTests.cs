@@ -103,5 +103,17 @@ namespace Microsoft.Azure.Search.Tests
         {
             Run(TestAutocompleteExcludesFieldsNotInSuggester);
         }
+
+        [Fact]
+        public void CanAutocompleteWithFilter()
+        {
+            Run(TestAutocompleteWithFilter);
+        }
+
+        [Fact]
+        public void CanAutocompleteWithFilterAndFuzzy()
+        {
+            Run(TestAutocompleteWithFilterAndFuzzy);
+        }
     }
 }

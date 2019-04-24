@@ -156,13 +156,14 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestAutocompleteCanUseHitHighlighting()
         {
-            var expectedText = new List<String>() { "police", "polite", "pool", "popular" };
-            var expectedQueryPlusText = new List<String>() { "<b>police</b>", "<b>polite</b>", "<b>pool</b>", "<b>popular</b>" };
+            var expectedText = new List<String>() { "pool", "popular" };
+            var expectedQueryPlusText = new List<String>() { "<b>pool</b>", "<b>popular</b>" };
 
             SearchIndexClient client = GetClientForQuery();
             var autocompleteParameters = new AutocompleteParameters()
             {
                 AutocompleteMode = AutocompleteMode.OneTerm,
+                Filter = "hotelName eq 'EconoStay' or hotelName eq 'Fancy Stay'",
                 HighlightPreTag = "<b>",
                 HighlightPostTag = "</b>",
             };
@@ -198,7 +199,8 @@ namespace Microsoft.Azure.Search.Tests
             var autocompleteParameters = new AutocompleteParameters()
             {
                 AutocompleteMode = AutocompleteMode.OneTerm,
-                SearchFields = new[] { "hotelName" }
+                SearchFields = new[] { "hotelName" },
+                Filter = "hotelId eq '7'"
             };
             AutocompleteResult response = client.Documents.Autocomplete("mod", "sg", autocompleteParameters);
 
@@ -236,6 +238,43 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(response);
             Assert.NotNull(response.Results);
             Assert.Equal(0, response.Results.Count);
+        }
+
+        protected void TestAutocompleteWithFilter()
+        {
+            var expectedText = new List<String>() { "polite" };
+            var expectedQueryPlusText = new List<String>() { "polite" };
+
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters()
+            {
+                AutocompleteMode = AutocompleteMode.OneTerm,
+                Filter = "search.in(hotelId, '6,7')",
+            };
+
+            AutocompleteResult response = client.Documents.Autocomplete("po", "sg", autocompleteParameters);
+
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
+        }
+
+        protected void TestAutocompleteWithFilterAndFuzzy()
+        {
+            var expectedText = new List<String>() { "modern", "motel" };
+            var expectedQueryPlusText = new List<String>() { "modern", "motel" };
+
+            SearchIndexClient client = GetClientForQuery();
+            var autocompleteParameters = new AutocompleteParameters()
+            {
+                AutocompleteMode = AutocompleteMode.OneTerm,
+                UseFuzzyMatching = true,
+                Filter = "hotelId ne '6' and (hotelName eq 'Modern Stay' or tags/any(t : t eq 'budget'))"
+            };
+
+            AutocompleteResult response = client.Documents.Autocomplete("mod", "sg", autocompleteParameters);
+
+            Assert.NotNull(response);
+            ValidateResults(response.Results, expectedText, expectedQueryPlusText);
         }
 
         private void ValidateResults(IList<AutocompleteItem> autocompletedItems, List<String> expectedText, List<String> expectedQueryPlusText)

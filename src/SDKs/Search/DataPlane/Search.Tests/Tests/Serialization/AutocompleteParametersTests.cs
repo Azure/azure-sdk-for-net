@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Search.Tests
                 new AutocompleteParameters()
                 {
                     AutocompleteMode = AutocompleteMode.OneTermWithContext,
+                    Filter = "field eq 'text'",
                     HighlightPostTag = "</em>",
                     HighlightPreTag = "<em>",
                     MinimumCoverage = 33.3,
@@ -28,6 +29,7 @@ namespace Microsoft.Azure.Search.Tests
             AutocompleteRequest request = parameters.ToRequest("find me", "sg");
 
             Assert.Equal(parameters.AutocompleteMode, request.AutocompleteMode);
+            Assert.Equal(parameters.Filter, request.Filter);
             Assert.Equal(parameters.HighlightPostTag, request.HighlightPostTag);
             Assert.Equal(parameters.HighlightPreTag, request.HighlightPreTag);
             Assert.Equal(parameters.MinimumCoverage, request.MinimumCoverage);
@@ -48,6 +50,7 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.True(request.AutocompleteMode.HasValue);
             Assert.Equal(AutocompleteMode.OneTerm, request.AutocompleteMode.Value);  // AutocompleteMode is non-nullable in the client contract.
+            Assert.Null(request.Filter);
             Assert.Null(request.HighlightPostTag);
             Assert.Null(request.HighlightPreTag);
             Assert.Null(request.MinimumCoverage);
