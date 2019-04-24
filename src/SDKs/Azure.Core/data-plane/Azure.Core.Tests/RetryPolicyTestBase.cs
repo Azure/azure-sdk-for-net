@@ -201,8 +201,10 @@ namespace Azure.Core.Tests
             Assert.AreEqual(501, response.Status);
         }
 
-        [Test]
-        public async Task RespectsXRetryAfterMSHeader()
+        [Theory]
+        [TestCase("retry-after-ms")]
+        [TestCase("x-ms-retry-after-ms")]
+        public async Task RespectsRetryAfterMSHeader(string headerName)
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
@@ -210,7 +212,7 @@ namespace Azure.Core.Tests
             var task = SendRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
-            mockResponse.AddHeader(new HttpHeader("x-ms-retry-after-ms", "200"));
+            mockResponse.AddHeader(new HttpHeader(headerName, "200"));
 
             await mockTransport.RequestGate.Cycle(mockResponse);
 
