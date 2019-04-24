@@ -108,6 +108,7 @@ namespace Azure.Core.Tests
         [TestCase(HttpPipelineMethod.Patch, "PATCH")]
         [TestCase(HttpPipelineMethod.Post, "POST")]
         [TestCase(HttpPipelineMethod.Put, "PUT")]
+        [TestCase(HttpPipelineMethod.Head, "HEAD")]
         public async Task CanGetAndSetMethod(HttpPipelineMethod method, string expectedMethod)
         {
             HttpMethod httpMethod = null;
