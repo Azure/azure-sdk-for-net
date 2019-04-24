@@ -24,15 +24,18 @@ namespace Microsoft.Azure.Management.NetApp
     public partial interface IOperations
     {
         /// <summary>
-        /// Lists all of the available Microsoft.NetApp Rest API operations
+        /// Describes the Resource Provider
         /// </summary>
+        /// <remarks>
+        /// Lists all of the available Microsoft.NetApp Rest API operations
+        /// </remarks>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
