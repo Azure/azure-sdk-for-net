@@ -48,8 +48,8 @@ namespace Azure.Core.Tests
         [Test]
         public async Task DoesntRetryNonRetryableExceptions()
         {
-            var stream1 = new NoLengthStream();
-            var stream2 = new MockReadStream(50);
+            var stream1 = new MockReadStream(100, throwAfter: 50);
+            var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
 
             var mockTransport = new MockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
