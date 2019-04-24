@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus
 {
     using System;
+    using System.Net;
     using System.Threading.Tasks;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <param name="namespaceConnectionString">Namespace connection string</param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
         public ServiceBusConnection(string namespaceConnectionString)
-            : this(namespaceConnectionString, Constants.DefaultOperationTimeout, RetryPolicy.Default)
+            : this(namespaceConnectionString, RetryPolicy.Default)
         {
         }
 
@@ -45,11 +46,10 @@ namespace Microsoft.Azure.ServiceBus
         /// Creates a new connection to service bus.
         /// </summary>
         /// <param name="namespaceConnectionString">Namespace connection string.</param>
-        /// <param name="operationTimeout">Duration after which individual operations will timeout.</param>
         /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
-        public ServiceBusConnection(string namespaceConnectionString, TimeSpan operationTimeout, RetryPolicy retryPolicy = null)
-            : this(operationTimeout, retryPolicy)
+        public ServiceBusConnection(string namespaceConnectionString, RetryPolicy retryPolicy = null)
+            : this(retryPolicy)
         {
             if (string.IsNullOrWhiteSpace(namespaceConnectionString))
             {
@@ -68,11 +68,38 @@ namespace Microsoft.Azure.ServiceBus
         /// <summary>
         /// Creates a new connection to service bus.
         /// </summary>
+        /// <param name="namespaceConnectionString">Namespace connection string.</param>
+        /// <param name="operationTimeout">Duration after which individual operations will timeout.</param>
+        /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
+        /// <remarks>It is the responsibility of the user to close the connection after use through <see cref="CloseAsync"/></remarks>
+        [Obsolete("This constructor is obsolete. Use ServiceBusConnection(string namespaceConnectionString, RetryPolicy retryPolicy) constructor instead, providing operationTimeout in the connection string.")]
+        public ServiceBusConnection(string namespaceConnectionString, TimeSpan operationTimeout, RetryPolicy retryPolicy = null)
+            : this(retryPolicy)
+        {
+            if (string.IsNullOrWhiteSpace(namespaceConnectionString))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(namespaceConnectionString));
+            }
+
+            var serviceBusConnectionStringBuilder = new ServiceBusConnectionStringBuilder(namespaceConnectionString);
+            if (!string.IsNullOrWhiteSpace(serviceBusConnectionStringBuilder.EntityPath))
+            {
+                throw Fx.Exception.Argument(nameof(namespaceConnectionString), "NamespaceConnectionString should not contain EntityPath.");
+            }
+
+            this.InitializeConnection(serviceBusConnectionStringBuilder);
+            // operationTimeout argument explicitly provided by caller should take precedence over OperationTimeout found in the connection string.
+            this.OperationTimeout = operationTimeout;
+        }
+
+        /// <summary>
+        /// Creates a new connection to service bus.
+        /// </summary>
         /// <param name="endpoint">Fully qualified domain name for Service Bus. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="transportType">Transport type.</param>
         /// <param name="retryPolicy">Retry policy for operations. Defaults to <see cref="RetryPolicy.Default"/></param>
         public ServiceBusConnection(string endpoint, TransportType transportType, RetryPolicy retryPolicy = null)
-            : this(Constants.DefaultOperationTimeout, retryPolicy)
+            : this(retryPolicy)
         {
             if (string.IsNullOrWhiteSpace(endpoint))
             {
@@ -88,9 +115,8 @@ namespace Microsoft.Azure.ServiceBus
             this.InitializeConnection(serviceBusConnectionStringBuilder);
         }
 
-        internal ServiceBusConnection(TimeSpan operationTimeout, RetryPolicy retryPolicy = null)
+        internal ServiceBusConnection(RetryPolicy retryPolicy = null)
         {
-            this.OperationTimeout = operationTimeout;
             this.RetryPolicy = retryPolicy ?? RetryPolicy.Default;
             this.syncLock = new object();
         }
@@ -193,6 +219,7 @@ namespace Microsoft.Azure.ServiceBus
                 this.TokenProvider = new SharedAccessSignatureTokenProvider(builder.SasKeyName, builder.SasKey);
             }
 
+            this.OperationTimeout = builder.OperationTimeout;
             this.TransportType = builder.TransportType;
             this.ConnectionManager = new FaultTolerantAmqpObject<AmqpConnection>(this.CreateConnectionAsync, CloseConnection);
             this.TransactionController = new FaultTolerantAmqpObject<Controller>(this.CreateControllerAsync, CloseController);
@@ -283,7 +310,8 @@ namespace Microsoft.Azure.ServiceBus
                 return AmqpConnectionHelper.CreateWebSocketTransportSettings(
                     networkHost: networkHost,
                     hostName: hostName,
-                    port: port);
+                    port: port,
+                    proxy: WebRequest.DefaultWebProxy);
             }
 
             return AmqpConnectionHelper.CreateTcpTransportSettings(

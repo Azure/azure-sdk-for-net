@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.ExceptionServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -12,16 +13,25 @@ namespace Azure.Core
 {
     public static class RetriableStream
     {
-        public static async Task<Stream> Create(Func<long, Task<Response>> responseFactory, int maxRetries)
+        public static async Task<Stream> Create(Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
         {
-            return new RetriableStreamImpl(await responseFactory(0), responseFactory, maxRetries);
+            return Create(await responseFactory(0).ConfigureAwait(false), responseFactory, responseClassifier, maxRetries);
+        }
+
+        public static Stream Create(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
+        {
+            return new RetriableStreamImpl(initialResponse, responseFactory, responseClassifier, maxRetries);
         }
 
         private class RetriableStreamImpl : ReadOnlyStream
         {
+            private readonly ResponseClassifier _responseClassifier;
+
             private readonly Func<long, Task<Response>> _responseFactory;
 
             private readonly int _maxRetries;
+
+            private readonly Stream _initialStream;
 
             private Stream _currentStream;
 
@@ -31,12 +41,13 @@ namespace Azure.Core
 
             private List<Exception> _exceptions;
 
-            public RetriableStreamImpl(Response initialResponse, Func<long, Task<Response>> responseFactory, int maxRetries)
+            public RetriableStreamImpl(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
+                _initialStream = initialResponse.ContentStream;
                 _currentStream = initialResponse.ContentStream;
+                _responseClassifier = responseClassifier;
                 _responseFactory = responseFactory;
                 _maxRetries = maxRetries;
-                Length = _currentStream.Length;
             }
 
             public override long Seek(long offset, SeekOrigin origin)
@@ -63,7 +74,10 @@ namespace Azure.Core
 
             private async Task RetryAsync(Exception exception)
             {
-                // TODO: Verify exception type using ResponseClassifier and rethrow immediately for fatal
+                if (!_responseClassifier.IsRetriableException(exception))
+                {
+                    ExceptionDispatchInfo.Capture(exception).Throw();
+                }
 
                 if (_exceptions == null)
                 {
@@ -102,7 +116,7 @@ namespace Azure.Core
 
             public override bool CanRead => _currentStream.CanRead;
             public override bool CanSeek { get; } = false;
-            public override long Length { get; }
+            public override long Length => _initialStream.Length;
 
             public override long Position
             {

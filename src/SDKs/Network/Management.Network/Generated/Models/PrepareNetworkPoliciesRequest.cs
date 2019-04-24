@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Collections.Generic;
     using System.Linq;
 
+    /// <summary>
+    /// Details of PrepareNetworkPolicies for Subnet.
+    /// </summary>
     public partial class PrepareNetworkPoliciesRequest
     {
         /// <summary>

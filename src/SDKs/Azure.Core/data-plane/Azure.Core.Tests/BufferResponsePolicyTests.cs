@@ -17,7 +17,7 @@ namespace Azure.Core.Tests
         {
             MockResponse mockResponse = new MockResponse(200);
             var readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
-            mockResponse.ResponseContentStream = readTrackingStream;
+            mockResponse.ContentStream = readTrackingStream;
 
             var mockTransport = new MockTransport(mockResponse);
             var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
@@ -39,7 +39,7 @@ namespace Azure.Core.Tests
         {
             MockResponse mockResponse = new MockResponse(200)
             {
-                ResponseContentStream = new ReadTrackingStream(128, 64)
+                ContentStream = new ReadTrackingStream(128, 64)
             };
 
             var mockTransport = new MockTransport(mockResponse);

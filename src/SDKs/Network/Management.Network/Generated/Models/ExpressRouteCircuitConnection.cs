@@ -46,9 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Customer addresses for tunnels.</param>
         /// <param name="authorizationKey">The authorization key.</param>
         /// <param name="circuitConnectionStatus">Express Route Circuit
-        /// Connection State. Possible values are: 'Connected' and
-        /// 'Disconnected'. Possible values include: 'Connected', 'Connecting',
-        /// 'Disconnected'</param>
+        /// connection state. Possible values include: 'Connected',
+        /// 'Connecting', 'Disconnected'</param>
         /// <param name="provisioningState">Provisioning state of the circuit
         /// connection resource. Possible values are: 'Succeeded', 'Updating',
         /// 'Deleting', and 'Failed'.</param>
@@ -104,12 +103,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string AuthorizationKey { get; set; }
 
         /// <summary>
-        /// Gets express Route Circuit Connection State. Possible values are:
-        /// 'Connected' and 'Disconnected'. Possible values include:
-        /// 'Connected', 'Connecting', 'Disconnected'
+        /// Gets or sets express Route Circuit connection state. Possible
+        /// values include: 'Connected', 'Connecting', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.circuitConnectionStatus")]
-        public string CircuitConnectionStatus { get; private set; }
+        public string CircuitConnectionStatus { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the circuit connection resource.

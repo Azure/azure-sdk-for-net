@@ -164,6 +164,9 @@ namespace Compute.Tests
                     ValidateGalleryImageVersion(inputImageVersion, imageVersionFromGet);
                     imageVersionFromGet = m_CrpClient.GalleryImageVersions.Get(rgName, galleryName, galleryImageName,
                         galleryImageVersionName, ReplicationStatusTypes.ReplicationStatus);
+                    Assert.Equal(StorageAccountType.StandardLRS, imageVersionFromGet.PublishingProfile.StorageAccountType);
+                    Assert.Equal(StorageAccountType.StandardLRS,
+                        imageVersionFromGet.PublishingProfile.TargetRegions.First().StorageAccountType);
                     Assert.NotNull(imageVersionFromGet.ReplicationStatus);
                     Assert.NotNull(imageVersionFromGet.ReplicationStatus.Summary);
 
@@ -316,8 +319,9 @@ namespace Compute.Tests
                         ManagedImage = new ManagedArtifact { Id = sourceImageId }
                     },
                     ReplicaCount = 1,
+                    StorageAccountType = StorageAccountType.StandardLRS,
                     TargetRegions = new List<TargetRegion> {
-                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1 }
+                        new TargetRegion { Name = galleryHomeLocation, RegionalReplicaCount = 1, StorageAccountType = StorageAccountType.StandardLRS }
                     },
                     EndOfLifeDate = DateTime.Today.AddDays(10).Date
                 }

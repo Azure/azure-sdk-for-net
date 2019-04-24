@@ -97,8 +97,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets resource status of the policy.
         /// </summary>
         /// <remarks>
-        /// Possible values include: 'Creating', 'Enabling', 'Enabled',
-        /// 'Disabling', 'Disabled', 'Deleting'
+        /// Resource status of the policy. Possible values include: 'Creating',
+        /// 'Enabling', 'Enabled', 'Disabling', 'Disabled', 'Deleting'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.resourceState")]
         public string ResourceState { get; private set; }

@@ -18,9 +18,19 @@ namespace Compute.Tests
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.AvailabilitySets, availabilitySetName);
         }
 
+        public static string GetProximityPlacementGroupRef(string subId, string resourceGrpName, string proximityPlacementGroupName)
+        {
+            return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.ProximityPlacementGroups, proximityPlacementGroupName);
+        }
+
         public static string GetVMReferenceId(string subId, string resourceGrpName, string vmName)
         {
             return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.VirtualMachines, vmName);
+        }
+
+        public static string GetVMScaleSetReferenceId(string subId, string resourceGrpName, string vmssName)
+        {
+            return GetEntityReferenceId(subId, resourceGrpName, ApiConstants.VMScaleSets, vmssName);
         }
 
         private static string GetEntityReferenceId(string subId, string resourceGrpName, string controllerName, string entityName)

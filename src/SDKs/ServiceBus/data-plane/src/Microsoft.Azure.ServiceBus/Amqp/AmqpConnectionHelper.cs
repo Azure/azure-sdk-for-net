@@ -4,6 +4,7 @@
 namespace Microsoft.Azure.ServiceBus.Amqp
 {
     using System;
+    using System.Net;
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Sasl;
     using Microsoft.Azure.Amqp.Transport;
@@ -101,7 +102,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
         public static TransportSettings CreateWebSocketTransportSettings(
             string networkHost,
             string hostName,
-            int port)
+            int port,
+            IWebProxy proxy)
         {
             var uriBuilder = new UriBuilder(
                 WebSocketConstants.WebSocketSecureScheme,
@@ -112,7 +114,8 @@ namespace Microsoft.Azure.ServiceBus.Amqp
             {
                 Uri = uriBuilder.Uri,
                 ReceiveBufferSize = AmqpConstants.TransportBufferSize,
-                SendBufferSize = AmqpConstants.TransportBufferSize
+                SendBufferSize = AmqpConstants.TransportBufferSize,
+                Proxy = proxy
             };
 
             TransportSettings tpSettings = webSocketTransportSettings;

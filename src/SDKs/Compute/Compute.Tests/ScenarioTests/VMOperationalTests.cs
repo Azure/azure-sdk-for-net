@@ -117,7 +117,7 @@ namespace Compute.Tests
 
                     VirtualMachine ephemeralVM;
                     string as2Name = as1Name + "_ephemeral";
-                    CreateVM(rg1Name, as2Name, storageAccountName, imageRef, out ephemeralVM, hasManagedDisks: true, hasDiffDisks: true, vmSize: VirtualMachineSizeTypes.StandardDS1V2,
+                    CreateVM(rg1Name, as2Name, storageAccountName, imageRef, out ephemeralVM, hasManagedDisks: true, hasDiffDisks: true, vmSize: VirtualMachineSizeTypes.StandardDS5V2,
                         osDiskStorageAccountType: StorageAccountTypes.StandardLRS, dataDiskStorageAccountType: StorageAccountTypes.StandardLRS);
                     m_CrpClient.VirtualMachines.Reimage(rg1Name, ephemeralVM.Name, tempDisk: true);
                     var captureParams = new VirtualMachineCaptureParameters
@@ -211,6 +211,56 @@ namespace Compute.Tests
                     var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg1Name);
                     //Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.Accepted,
                     //    "BeginDeleting status was not Accepted.");
+                }
+
+                Assert.True(passed);
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create VM
+        /// Start VM
+        /// Shutdown VM with skipShutdown = true
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMOperations_PowerOffWithSkipShutdown()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
+                string asName = TestUtilities.GenerateName("as");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachine inputVM1;
+
+                bool passed = false;
+                try
+                {
+                    // Create Storage Account for this VM
+                    var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
+
+                    VirtualMachine vm1 = CreateVM(rg1Name, asName, storageAccountOutput, imageRef,
+                        out inputVM1);
+
+                    m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
+                    // Shutdown VM with SkipShutdown = true
+                    m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name, true);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg1Name);
                 }
 
                 Assert.True(passed);

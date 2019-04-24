@@ -308,6 +308,10 @@ namespace Microsoft.Azure.ServiceBus
     {
         public ServiceBusConnection(Microsoft.Azure.ServiceBus.ServiceBusConnectionStringBuilder connectionStringBuilder) { }
         public ServiceBusConnection(string namespaceConnectionString) { }
+        public ServiceBusConnection(string namespaceConnectionString, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
+        [System.ObsoleteAttribute("This constructor is obsolete. Use ServiceBusConnection(string namespaceConnection" +
+            "String, RetryPolicy retryPolicy) constructor instead, providing operationTimeout" +
+            " in the connection string.")]
         public ServiceBusConnection(string namespaceConnectionString, System.TimeSpan operationTimeout, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public ServiceBusConnection(string endpoint, Microsoft.Azure.ServiceBus.TransportType transportType, Microsoft.Azure.ServiceBus.RetryPolicy retryPolicy = null) { }
         public System.Uri Endpoint { get; set; }
@@ -328,6 +332,7 @@ namespace Microsoft.Azure.ServiceBus
         public ServiceBusConnectionStringBuilder(string endpoint, string entityPath, string sharedAccessSignature, Microsoft.Azure.ServiceBus.TransportType transportType) { }
         public string Endpoint { get; set; }
         public string EntityPath { get; set; }
+        public System.TimeSpan OperationTimeout { get; set; }
         public string SasKey { get; set; }
         public string SasKeyName { get; set; }
         public string SasToken { get; set; }

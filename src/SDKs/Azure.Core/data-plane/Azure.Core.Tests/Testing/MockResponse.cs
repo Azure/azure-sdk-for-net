@@ -9,7 +9,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Core.Testing
 {
-    public class MockResponse : HttpPipelineResponse
+    public class MockResponse : Response
     {
         private readonly List<HttpHeader> _headers = new List<HttpHeader>();
 
@@ -20,7 +20,7 @@ namespace Azure.Core.Testing
 
         public override int Status { get; }
 
-        public override Stream ResponseContentStream { get; set; }
+        public override Stream ContentStream { get; set; }
 
         public override string RequestId { get; set; }
 
@@ -33,7 +33,7 @@ namespace Azure.Core.Testing
 
         public void SetContent(byte[] content)
         {
-            ResponseContentStream = new MemoryStream(content);
+            ContentStream = new MemoryStream(content);
         }
 
         public void SetContent(string content)

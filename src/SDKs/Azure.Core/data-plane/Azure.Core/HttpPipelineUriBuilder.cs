@@ -4,9 +4,8 @@
 using System;
 using System.Text;
 
-namespace Azure
+namespace Azure.Core
 {
-
     public class HttpPipelineUriBuilder
     {
         private const char QuerySeparator = '?';

@@ -9,6 +9,7 @@ namespace Azure.Core.Pipeline
         Post,
         Put,
         Patch,
-        Delete
+        Delete,
+        Head
     }
 }

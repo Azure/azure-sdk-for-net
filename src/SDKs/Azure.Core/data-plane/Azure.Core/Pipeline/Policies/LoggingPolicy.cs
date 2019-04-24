@@ -27,6 +27,12 @@ namespace Azure.Core.Pipeline.Policies
         // TODO (pri 1): we should remove sensitive information, e.g. keys
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            if (!s_eventSource.IsEnabled())
+            {
+                await ProcessNextAsync(pipeline, message);
+                return;
+            }
+
             s_eventSource.Request(message.Request);
 
             Encoding requestTextEncoding = null;
@@ -51,8 +57,7 @@ namespace Azure.Core.Pipeline.Policies
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             var after = Stopwatch.GetTimestamp();
 
-            var status = message.Response.Status;
-            bool isError = status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1);
+            bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
 
             Encoding responseTextEncoding = null;
             if (message.Response.TryGetHeader(HttpHeader.Names.ContentType, out contentType) && IsTextContentType(contentType))
@@ -60,18 +65,18 @@ namespace Azure.Core.Pipeline.Policies
                 responseTextEncoding = Encoding.UTF8;
             }
 
-            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ResponseContentStream?.CanSeek == false;
+            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
 
             if (wrapResponseStream)
             {
-                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError, responseTextEncoding);
+                message.Response.ContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ContentStream, isError, responseTextEncoding);
             }
 
             if (isError)
             {
                 s_eventSource.ErrorResponse(message.Response);
 
-                if (!wrapResponseStream && message.Response.ResponseContentStream != null)
+                if (!wrapResponseStream && message.Response.ContentStream != null)
                 {
                     if (responseTextEncoding != null)
                     {
@@ -86,7 +91,7 @@ namespace Azure.Core.Pipeline.Policies
 
             s_eventSource.Response(message.Response);
 
-            if (!wrapResponseStream && message.Response.ResponseContentStream != null)
+            if (!wrapResponseStream && message.Response.ContentStream != null)
             {
                 if (responseTextEncoding != null)
                 {

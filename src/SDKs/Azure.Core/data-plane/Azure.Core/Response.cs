@@ -1,45 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.IO;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
-    public readonly struct Response: IDisposable
+    public abstract class Response: IDisposable
     {
-        private readonly HttpPipelineResponse _httpResponse;
+        public abstract int Status { get; }
 
-        public Response(HttpPipelineResponse httpResponse)
-        {
-            if (httpResponse == null)
-            {
-                throw new ArgumentNullException(nameof(httpResponse));
-            }
+        public abstract bool TryGetHeader(string name, out string value);
 
-            _httpResponse = httpResponse;
-        }
+        public abstract Stream ContentStream { get; set; }
 
-        public int Status => _httpResponse.Status;
+        public abstract string RequestId { get; set; }
 
-        public Stream ContentStream => _httpResponse.ResponseContentStream;
+        public abstract IEnumerable<HttpHeader> Headers { get; }
 
-        public bool TryGetHeader(string name, out string values)
-        {
-            return _httpResponse.TryGetHeader(name, out values);
-        }
-
-        public void Dispose() => _httpResponse.Dispose();
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => _httpResponse.ToString();
+        public abstract void Dispose();
     }
 }

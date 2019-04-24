@@ -21,6 +21,8 @@ namespace Azure.Core.Pipeline
                     return "PATCH";
                 case HttpPipelineMethod.Delete:
                     return "DELETE";
+                case HttpPipelineMethod.Head:
+                    return "HEAD";
                 default:
                     throw new ArgumentOutOfRangeException(nameof(method), method, null);
             }
@@ -51,6 +53,10 @@ namespace Azure.Core.Pipeline
                 if (string.Equals(method, "POST", StringComparison.InvariantCultureIgnoreCase))
                 {
                     return HttpPipelineMethod.Post;
+                }
+                if (string.Equals(method, "HEAD", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return HttpPipelineMethod.Head;
                 }
             }
             else
