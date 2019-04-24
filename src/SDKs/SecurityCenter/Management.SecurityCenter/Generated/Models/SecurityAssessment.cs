@@ -41,21 +41,20 @@ namespace Microsoft.Azure.Management.Security.Models
         /// assessment</param>
         /// <param name="status">Status of the. Possible values include:
         /// 'Passed', 'Failed', 'NotApplicable'</param>
-        /// <param name="notApplicableReasonCode">Programmatic code for the
-        /// reason the assessment result is NotApplicable</param>
-        /// <param name="notApplicableReasonDescription">Human readable
-        /// description for the reason the assessment result is
-        /// NotApplicable</param>
+        /// <param name="statusReasonCode">Programmatic code for the reason the
+        /// assessment result status</param>
+        /// <param name="statusReasonDescription">Human readable description
+        /// for the reason the assessment result status</param>
         /// <param name="additionalData">Additional data regarding the
         /// assessment</param>
-        public SecurityAssessment(string id = default(string), string name = default(string), string type = default(string), ResourceDetails resourceDetails = default(ResourceDetails), string displayName = default(string), string status = default(string), string notApplicableReasonCode = default(string), string notApplicableReasonDescription = default(string), IList<AssessmentAdditionalData> additionalData = default(IList<AssessmentAdditionalData>))
+        public SecurityAssessment(string id = default(string), string name = default(string), string type = default(string), ResourceDetails resourceDetails = default(ResourceDetails), string displayName = default(string), string status = default(string), string statusReasonCode = default(string), string statusReasonDescription = default(string), IList<AssessmentAdditionalData> additionalData = default(IList<AssessmentAdditionalData>))
             : base(id, name, type)
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;
             Status = status;
-            NotApplicableReasonCode = notApplicableReasonCode;
-            NotApplicableReasonDescription = notApplicableReasonDescription;
+            StatusReasonCode = statusReasonCode;
+            StatusReasonDescription = statusReasonDescription;
             AdditionalData = additionalData;
             CustomInit();
         }
@@ -84,18 +83,17 @@ namespace Microsoft.Azure.Management.Security.Models
         public string Status { get; private set; }
 
         /// <summary>
-        /// Gets programmatic code for the reason the assessment result is
-        /// NotApplicable
+        /// Gets programmatic code for the reason the assessment result status
         /// </summary>
-        [JsonProperty(PropertyName = "properties.notApplicableReasonCode")]
-        public string NotApplicableReasonCode { get; private set; }
+        [JsonProperty(PropertyName = "properties.statusReasonCode")]
+        public string StatusReasonCode { get; private set; }
 
         /// <summary>
         /// Gets human readable description for the reason the assessment
-        /// result is NotApplicable
+        /// result status
         /// </summary>
-        [JsonProperty(PropertyName = "properties.notApplicableReasonDescription")]
-        public string NotApplicableReasonDescription { get; private set; }
+        [JsonProperty(PropertyName = "properties.statusReasonDescription")]
+        public string StatusReasonDescription { get; private set; }
 
         /// <summary>
         /// Gets additional data regarding the assessment

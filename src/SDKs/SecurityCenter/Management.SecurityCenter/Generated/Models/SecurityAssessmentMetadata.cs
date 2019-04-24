@@ -49,10 +49,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="secureScoreWeight">Weight for the security score
         /// calculation. the higher this number, this severity  of this
         /// assessment is higher</param>
-        /// <param name="releaseStatus">Stage of the assessment release.
-        /// Possible values include: 'GA', 'PublicPreview',
-        /// 'PrivatePreview'</param>
-        public SecurityAssessmentMetadata(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), string category = default(string), int? secureScoreWeight = default(int?), string releaseStatus = default(string))
+        /// <param name="preview">True if this assessment is in preview release
+        /// status</param>
+        public SecurityAssessmentMetadata(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string policyDefinitionId = default(string), string description = default(string), string remediationDescription = default(string), string category = default(string), int? secureScoreWeight = default(int?), bool? preview = default(bool?))
             : base(id, name, type)
         {
             DisplayName = displayName;
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.Management.Security.Models
             RemediationDescription = remediationDescription;
             Category = category;
             SecureScoreWeight = secureScoreWeight;
-            ReleaseStatus = releaseStatus;
+            Preview = preview;
             CustomInit();
         }
 
@@ -112,11 +111,10 @@ namespace Microsoft.Azure.Management.Security.Models
         public int? SecureScoreWeight { get; private set; }
 
         /// <summary>
-        /// Gets stage of the assessment release. Possible values include:
-        /// 'GA', 'PublicPreview', 'PrivatePreview'
+        /// Gets true if this assessment is in preview release status
         /// </summary>
-        [JsonProperty(PropertyName = "properties.releaseStatus")]
-        public string ReleaseStatus { get; private set; }
+        [JsonProperty(PropertyName = "properties.preview")]
+        public bool? Preview { get; private set; }
 
     }
 }
