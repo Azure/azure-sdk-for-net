@@ -107,6 +107,14 @@ namespace Azure.Core.Pipeline.Policies
                     delay = delayTime - DateTimeOffset.Now;
                 }
             }
+
+            if (message.Response.TryGetHeader("x-ms-retry-after-ms", out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    delay = TimeSpan.FromMilliseconds(delaySeconds);
+                }
+            }
         }
 
         protected abstract void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay);

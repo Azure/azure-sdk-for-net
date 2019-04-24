@@ -202,6 +202,29 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task RespectsXRetryAfterMSHeader()
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("x-ms-retry-after-ms", "200"));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await gate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            Assert.AreEqual(TimeSpan.FromMilliseconds(200), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task RetryingEmitsEventSourceEvent()
         {
