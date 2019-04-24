@@ -93,7 +93,21 @@ namespace Azure.Core.Pipeline.Policies
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
         }
 
-        protected abstract void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay);
+        protected virtual void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        {
+            delay = TimeSpan.Zero;
+            if (message.Response.TryGetHeader("Retry-After", out var retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    delay = TimeSpan.FromSeconds(delaySeconds);
+                }
+                else if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
+                {
+                    delay = delayTime - DateTimeOffset.Now;
+                }
+            }
+        }
 
         protected abstract void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay);
     }
