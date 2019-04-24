@@ -1,0 +1,1 @@
+Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/Personalizer" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated\Personalizer" -ConfigFileTag "release_1_0_preview"
