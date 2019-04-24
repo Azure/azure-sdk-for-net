@@ -46,14 +46,24 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
         {
-            if (headers.TryGetValues(name, out var values) ||
-                (content != null && content.Headers.TryGetValues(name, out values)))
+            if (TryGetHeader(headers, content, name, out IEnumerable<string> values))
             {
                 value = JoinHeaderValues(values);
                 return true;
             }
 
             value = null;
+            return false;
+        }
+
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out IEnumerable<string> values)
+        {
+            if (headers.TryGetValues(name, out values) ||
+                (content != null && content.Headers.TryGetValues(name, out values)))
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -71,6 +81,28 @@ namespace Azure.Core.Pipeline
                     yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
                 }
             }
+        }
+
+        internal static bool RemoveHeader(HttpHeaders headers, HttpContent content, string name)
+        {
+            // .Remove throws on invalid header name so use TryGet here to check
+            if (headers.TryGetValues(name, out _ ) && headers.Remove(name))
+            {
+                return true;
+            }
+
+            return content?.Headers.TryGetValues(name, out _ ) == true && content.Headers.Remove(name);
+        }
+
+        internal static bool ContainsHeader(HttpHeaders headers, HttpContent content, string name)
+        {
+            // .Contains throws on invalid header name so use TryGet here
+            if (headers.TryGetValues(name, out _))
+            {
+                return true;
+            }
+
+            return content?.Headers.TryGetValues(name, out _) == true;
         }
 
         internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
@@ -140,6 +172,16 @@ namespace Azure.Core.Pipeline
             }
 
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
+
+            public override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
+            public override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_requestMessage.Headers, _requestContent, name);
+            public override void SetHeader(string name, string value)
+            {
+                RemoveHeader(name);
+                AddHeader(name, value);
+            }
+
+            public override bool RemoveHeader(string name) => HttpClientTransport.RemoveHeader(_requestMessage.Headers, _requestContent, name);
 
             public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
 
@@ -289,6 +331,10 @@ namespace Azure.Core.Pipeline
             public override string RequestId { get; set; }
 
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
+
+            public override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out values);
+
+            public override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_responseMessage.Headers, _responseMessage.Content, name);
 
             public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
 

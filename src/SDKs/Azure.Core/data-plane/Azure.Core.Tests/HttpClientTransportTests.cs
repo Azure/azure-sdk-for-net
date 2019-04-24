@@ -190,7 +190,7 @@ namespace Azure.Core.Tests
             };
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanGetAndSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
+        public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
         {
             IEnumerable<string> httpHeaderValues = null;
 
@@ -202,9 +202,7 @@ namespace Azure.Core.Tests
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest(null);
-            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
-            request.Content = HttpPipelineRequestContent.Create(Array.Empty<byte>());
+            Request request = CreateRequest(transport);
 
             request.AddHeader(headerName, headerValue);
 
@@ -222,6 +220,64 @@ namespace Azure.Core.Tests
             await ExecuteRequest(request, transport);
 
             Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            IEnumerable<string> httpHeaderValues = null;
+
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    Assert.True(
+                        httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
+                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            Request request = CreateRequest(transport);
+
+            request.AddHeader(headerName, "Random value");
+            request.SetHeader(headerName, headerValue);
+
+            Assert.True(request.TryGetHeader(headerName, out var value));
+            Assert.AreEqual(headerValue, value);
+
+            Assert.True(request.TryGetHeader(headerName.ToUpper(), out value));
+            Assert.AreEqual(headerValue, value);
+
+            CollectionAssert.AreEqual(new []
+            {
+                new HttpHeader(headerName, headerValue),
+            }, request.Headers);
+
+            await ExecuteRequest(request, transport);
+
+            Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    Assert.False(
+                        httpRequestMessage.Headers.TryGetValues(headerName, out _) &&
+                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out _));
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            Request request = CreateRequest(transport);
+
+            request.AddHeader(headerName, headerValue);
+            Assert.True(request.RemoveHeader(headerName));
+            Assert.False(request.RemoveHeader(headerName));
+
+            Assert.False(request.TryGetHeader(headerName, out _));
+            Assert.False(request.TryGetHeader(headerName.ToUpper(), out _));
+            Assert.False(request.ContainsHeader(headerName.ToUpper()));
+
+            await ExecuteRequest(request, transport);
         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
@@ -273,6 +329,95 @@ namespace Azure.Core.Tests
             await ExecuteRequest(request, transport);
 
             Assert.Null(httpMessageContent);
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader)
+        {
+            var anotherHeaderValue = headerValue + "1";
+            var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+            IEnumerable<string> httpHeaderValues = null;
+
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    Assert.True(
+                        httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
+                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            Request request = CreateRequest(transport);
+
+            request.AddHeader(headerName, headerValue);
+            request.AddHeader(headerName, anotherHeaderValue);
+
+            Assert.True(request.ContainsHeader(headerName));
+
+            Assert.True(request.TryGetHeader(headerName, out var value));
+            Assert.AreEqual(joinedHeaderValues, value);
+
+            Assert.True(request.TryGetHeaderValues(headerName, out var values));
+            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
+
+            CollectionAssert.AreEqual(new []
+            {
+                new HttpHeader(headerName, joinedHeaderValues),
+            }, request.Headers);
+
+            await ExecuteRequest(request, transport);
+
+            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, httpHeaderValues);
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            var anotherHeaderValue = headerValue + "1";
+            var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    var responseMessage = new HttpResponseMessage((HttpStatusCode)200);
+
+                    if (contentHeader)
+                    {
+                        responseMessage.Content = new StreamContent(new MemoryStream());
+                        Assert.True(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, headerValue));
+                        Assert.True(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, anotherHeaderValue));
+                    }
+                    else
+                    {
+                        Assert.True(responseMessage.Headers.TryAddWithoutValidation(headerName, headerValue));
+                        Assert.True(responseMessage.Headers.TryAddWithoutValidation(headerName, anotherHeaderValue));
+                    }
+
+                    return Task.FromResult(responseMessage);
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
+
+            var response = await ExecuteRequest(request, transport);
+
+            Assert.True(response.ContainsHeader(headerName));
+
+            Assert.True(response.TryGetHeader(headerName, out var value));
+            Assert.AreEqual(joinedHeaderValues, value);
+
+            Assert.True(response.TryGetHeaderValues(headerName, out var values));
+            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
+
+            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
+        }
+
+        private static Request CreateRequest(HttpClientTransport transport, byte[] bytes = null)
+        {
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
+            request.Content = HttpPipelineRequestContent.Create(bytes ?? Array.Empty<byte>());
+            return request;
         }
 
         [Test]

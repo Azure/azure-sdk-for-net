@@ -28,6 +28,14 @@ namespace Azure
 
         public abstract bool TryGetHeader(string name, out string value);
 
+        public abstract bool TryGetHeaderValues(string name, out IEnumerable<string> values);
+
+        public abstract bool ContainsHeader(string name);
+
+        public abstract void SetHeader(string name, string value);
+
+        public abstract bool RemoveHeader(string name);
+
         public abstract IEnumerable<HttpHeader> Headers { get; }
 
         public abstract string RequestId { get; set; }
