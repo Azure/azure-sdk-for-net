@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Azure.Core.Attributes
+namespace Azure.Core
 {
     [AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false)]
     public class AzureSdkClientLibraryAttribute: Attribute
