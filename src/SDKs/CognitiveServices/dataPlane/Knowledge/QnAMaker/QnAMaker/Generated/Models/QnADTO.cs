@@ -138,6 +138,10 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
                     }
                 }
             }
+            if (Context != null)
+            {
+                Context.Validate();
+            }
         }
     }
 }
