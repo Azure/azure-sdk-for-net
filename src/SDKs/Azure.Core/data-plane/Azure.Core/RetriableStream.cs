@@ -31,6 +31,8 @@ namespace Azure.Core
 
             private readonly int _maxRetries;
 
+            private readonly Stream _initialStream;
+
             private Stream _currentStream;
 
             private long _position;
@@ -38,8 +40,6 @@ namespace Azure.Core
             private int _retryCount;
 
             private List<Exception> _exceptions;
-
-            private readonly Stream _initialStream;
 
             public RetriableStreamImpl(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
