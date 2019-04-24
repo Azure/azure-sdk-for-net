@@ -29,7 +29,7 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationClient"/> that sends requests to the configuration store.
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/>.
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         public ConfigurationClient(string connectionString)
