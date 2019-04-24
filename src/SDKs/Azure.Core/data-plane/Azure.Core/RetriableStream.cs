@@ -13,9 +13,14 @@ namespace Azure.Core
 {
     public static class RetriableStream
     {
-        public static async Task<Stream> Create(Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier,  int maxRetries)
+        public static async Task<Stream> Create(Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
         {
-            return new RetriableStreamImpl(await responseFactory(0), responseFactory, responseClassifier, maxRetries);
+            return Create(await responseFactory(0), responseFactory, responseClassifier, maxRetries);
+        }
+
+        public static Stream Create(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
+        {
+            return new RetriableStreamImpl(initialResponse, responseFactory, responseClassifier, maxRetries);
         }
 
         private class RetriableStreamImpl : ReadOnlyStream
@@ -34,13 +39,15 @@ namespace Azure.Core
 
             private List<Exception> _exceptions;
 
+            private readonly Stream _initialStream;
+
             public RetriableStreamImpl(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
             {
+                _initialStream = initialResponse.ContentStream;
                 _currentStream = initialResponse.ContentStream;
                 _responseClassifier = responseClassifier;
                 _responseFactory = responseFactory;
                 _maxRetries = maxRetries;
-                Length = _currentStream.Length;
             }
 
             public override long Seek(long offset, SeekOrigin origin)
@@ -109,7 +116,7 @@ namespace Azure.Core
 
             public override bool CanRead => _currentStream.CanRead;
             public override bool CanSeek { get; } = false;
-            public override long Length { get; }
+            public override long Length => _initialStream.Length;
 
             public override long Position
             {

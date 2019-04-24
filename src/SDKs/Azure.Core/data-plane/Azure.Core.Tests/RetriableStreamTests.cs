@@ -48,8 +48,8 @@ namespace Azure.Core.Tests
         [Test]
         public async Task DoesntRetryNonRetryableExceptions()
         {
-            var stream1 = new MockReadStream(100, throwAfter: 50);
-            var stream2 = new MockReadStream(50, offset: 50, throwAfter: 0, throwIOException: false);
+            var stream1 = new NoLengthStream();
+            var stream2 = new MockReadStream(50);
 
             var mockTransport = new MockTransport(
                 new MockResponse(200) { ContentStream = stream1 },
@@ -68,6 +68,30 @@ namespace Azure.Core.Tests
             Assert.AreEqual(50, reliableStream.Position);
 
             Assert.ThrowsAsync<InvalidOperationException>(() => reliableStream.ReadAsync(_buffer, 50, 50));
+
+            AssertReads(_buffer, 50);
+        }
+
+        [Test]
+        public async Task DoesntCallLengthPrematurely()
+        {
+            var stream1 = new NoLengthStream();
+            var stream2 = new MockReadStream(50);
+
+            var mockTransport = new MockTransport(
+                new MockResponse(200) { ContentStream = stream1 },
+                new MockResponse(200) { ContentStream = stream2 }
+            );
+            var pipeline = new HttpPipeline(mockTransport);
+
+            var reliableStream = RetriableStream.Create(await SendTestRequestAsync(pipeline, 0), offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
+
+            Assert.AreEqual(50, await reliableStream.ReadAsync(_buffer, 0, 50));
+            Assert.AreEqual(50, reliableStream.Position);
+
+            Assert.AreEqual(0, await reliableStream.ReadAsync(_buffer, 0, 50));
+
+            Assert.Throws<NotSupportedException>(() => _ = reliableStream.Length);
 
             AssertReads(_buffer, 50);
         }
@@ -156,6 +180,24 @@ namespace Azure.Core.Tests
 
                 return pipeline.SendRequestAsync(request, CancellationToken.None);
             }
+        }
+
+        private class NoLengthStream : ReadOnlyStream
+        {
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                throw new IOException();
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override bool CanRead { get; } = true;
+            public override bool CanSeek { get; } = false;
+            public override long Length => throw new NotSupportedException();
+            public override long Position { get; set; }
         }
 
         private class MockReadStream: ReadOnlyStream
