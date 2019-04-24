@@ -115,6 +115,49 @@ namespace Microsoft.Azure.Management.Logic
             }
 
             /// <summary>
+            /// Deletes a workflow run.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='runName'>
+            /// The workflow run name.
+            /// </param>
+            public static void Delete(this IWorkflowRunsOperations operations, string resourceGroupName, string workflowName, string runName)
+            {
+                operations.DeleteAsync(resourceGroupName, workflowName, runName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a workflow run.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='workflowName'>
+            /// The workflow name.
+            /// </param>
+            /// <param name='runName'>
+            /// The workflow run name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteAsync(this IWorkflowRunsOperations operations, string resourceGroupName, string workflowName, string runName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, workflowName, runName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Cancels a workflow run.
             /// </summary>
             /// <param name='operations'>

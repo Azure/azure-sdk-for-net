@@ -81,6 +81,31 @@ namespace Microsoft.Azure.Management.Logic
         /// </exception>
         Task<AzureOperationResponse<WorkflowRun>> GetWithHttpMessagesAsync(string resourceGroupName, string workflowName, string runName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Deletes a workflow run.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name.
+        /// </param>
+        /// <param name='workflowName'>
+        /// The workflow name.
+        /// </param>
+        /// <param name='runName'>
+        /// The workflow run name.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string workflowName, string runName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Cancels a workflow run.
         /// </summary>
         /// <param name='resourceGroupName'>
