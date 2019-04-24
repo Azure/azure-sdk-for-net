@@ -58,13 +58,7 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out IEnumerable<string> values)
         {
-            if (headers.TryGetValues(name, out values) ||
-                (content != null && content.Headers.TryGetValues(name, out values)))
-            {
-                return true;
-            }
-
-            return false;
+            return headers.TryGetValues(name, out values) || content?.Headers.TryGetValues(name, out values) == true;
         }
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent content)
