@@ -15,7 +15,7 @@ namespace Azure.Core
     {
         public static async Task<Stream> Create(Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
         {
-            return Create(await responseFactory(0), responseFactory, responseClassifier, maxRetries);
+            return Create(await responseFactory(0).ConfigureAwait(false), responseFactory, responseClassifier, maxRetries);
         }
 
         public static Stream Create(Response initialResponse, Func<long, Task<Response>> responseFactory, ResponseClassifier responseClassifier, int maxRetries)
