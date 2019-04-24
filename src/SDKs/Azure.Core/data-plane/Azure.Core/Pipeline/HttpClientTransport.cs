@@ -174,12 +174,8 @@ namespace Azure.Core.Pipeline
             public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
 
             public override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
+
             public override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_requestMessage.Headers, _requestContent, name);
-            public override void SetHeader(string name, string value)
-            {
-                RemoveHeader(name);
-                AddHeader(name, value);
-            }
 
             public override bool RemoveHeader(string name) => HttpClientTransport.RemoveHeader(_requestMessage.Headers, _requestContent, name);
 

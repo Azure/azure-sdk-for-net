@@ -32,7 +32,11 @@ namespace Azure
 
         public abstract bool ContainsHeader(string name);
 
-        public abstract void SetHeader(string name, string value);
+        public virtual void SetHeader(string name, string value)
+        {
+            RemoveHeader(name);
+            AddHeader(name, value);
+        }
 
         public abstract bool RemoveHeader(string name);
 

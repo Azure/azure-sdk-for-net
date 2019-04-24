@@ -51,12 +51,6 @@ namespace Azure.Core.Testing
             return TryGetHeaderValues(name, out _);
         }
 
-        public override void SetHeader(string name, string value)
-        {
-            RemoveHeader(name);
-            AddHeader(name, value);
-        }
-
         public override bool RemoveHeader(string name)
         {
             return _headers.Remove(name);
