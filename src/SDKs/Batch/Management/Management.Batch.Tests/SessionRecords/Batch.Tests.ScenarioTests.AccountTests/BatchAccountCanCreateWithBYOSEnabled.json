@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f2da7418-5860-4683-a18f-47bda3a84e77"
+          "00129458-a132-49da-aa91-4fbf0fa4b700"
         ],
         "accept-language": [
           "en-US"
@@ -24,7 +24,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:52:50 GMT"
+          "Tue, 23 Apr 2019 21:55:58 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,13 +33,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "7da1de78-e747-46ef-93f2-c64f5b5eaadd"
+          "5438567d-de93-4d22-a1c9-a25a9bd80667"
         ],
         "x-ms-correlation-request-id": [
-          "7da1de78-e747-46ef-93f2-c64f5b5eaadd"
+          "5438567d-de93-4d22-a1c9-a25a9bd80667"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235250Z:7da1de78-e747-46ef-93f2-c64f5b5eaadd"
+          "WESTUS2:20190423T215559Z:5438567d-de93-4d22-a1c9-a25a9bd80667"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet5212?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1MjEyP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet9816?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5ODE2P2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bc8f6b48-5026-402a-9148-5b87a4675962"
+          "d7c2c1ff-0e85-4816-8098-da767690ea9f"
         ],
         "accept-language": [
           "en-US"
@@ -90,22 +90,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:52:51 GMT"
+          "Tue, 23 Apr 2019 21:55:59 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-request-id": [
-          "d7d40bd9-6c8e-4d20-98b1-ea9ca32b410d"
+          "af03d7d4-94e7-4e56-9e5c-15053a7e9783"
         ],
         "x-ms-correlation-request-id": [
-          "d7d40bd9-6c8e-4d20-98b1-ea9ca32b410d"
+          "af03d7d4-94e7-4e56-9e5c-15053a7e9783"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235251Z:d7d40bd9-6c8e-4d20-98b1-ea9ca32b410d"
+          "WESTUS2:20190423T215600Z:af03d7d4-94e7-4e56-9e5c-15053a7e9783"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -123,7 +123,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212\",\r\n  \"name\": \"azsmnet5212\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816\",\r\n  \"name\": \"azsmnet9816\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
@@ -133,7 +133,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f2a15ebe-62d3-46a4-abf7-87f1caeb0e78"
+          "87bb0bdb-7ac4-4424-8b78-30fc2a6c0a7c"
         ],
         "accept-language": [
           "en-US"
@@ -150,22 +150,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:52:52 GMT"
+          "Tue, 23 Apr 2019 21:56:01 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1197"
         ],
         "x-ms-request-id": [
-          "85999bd6-778e-4fe0-813b-ed38206bd934"
+          "95067c0b-aeff-4993-8dd6-dbd4fb39aa9c"
         ],
         "x-ms-correlation-request-id": [
-          "85999bd6-778e-4fe0-813b-ed38206bd934"
+          "95067c0b-aeff-4993-8dd6-dbd4fb39aa9c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235252Z:85999bd6-778e-4fe0-813b-ed38206bd934"
+          "WESTUS2:20190423T215602Z:95067c0b-aeff-4993-8dd6-dbd4fb39aa9c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -187,13 +187,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet5212/providers/Microsoft.KeyVault//vaults/azsmnet8008?api-version=2016-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1MjEyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvL3ZhdWx0cy9henNtbmV0ODAwOD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet9816/providers/Microsoft.KeyVault//vaults/azsmnet8858?api-version=2016-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5ODE2L3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvL3ZhdWx0cy9henNtbmV0ODg1OD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"accessPolicies\": [\r\n      {\r\n        \"objectId\": \"f520d84c-3fd3-4cc8-88d4-2ed25b00d27a\",\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"permissions\": {\r\n          \"secrets\": [\r\n            \"All\"\r\n          ],\r\n          \"keys\": [\r\n            \"All\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"enabledForDiskEncryption\": true\r\n  },\r\n  \"location\": \"East US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "4bf78f6c-95e2-4c17-9b04-17a66c7d943a"
+          "92e70ef4-77f6-41b6-9bf6-116286a5a63f"
         ],
         "accept-language": [
           "en-US"
@@ -216,7 +216,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:52:54 GMT"
+          "Tue, 23 Apr 2019 21:56:03 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -240,16 +240,16 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1195"
         ],
         "x-ms-request-id": [
-          "965d29ed-41db-4711-967b-fa80f113b7b5"
+          "61e4bc60-2749-4e32-85eb-1c95e9573e72"
         ],
         "x-ms-correlation-request-id": [
-          "965d29ed-41db-4711-967b-fa80f113b7b5"
+          "61e4bc60-2749-4e32-85eb-1c95e9573e72"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235254Z:965d29ed-41db-4711-967b-fa80f113b7b5"
+          "WESTUS2:20190423T215604Z:61e4bc60-2749-4e32-85eb-1c95e9573e72"
         ],
         "Content-Length": [
           "678"
@@ -261,12 +261,12 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.KeyVault/vaults/azsmnet8008\",\r\n  \"name\": \"azsmnet8008\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"f520d84c-3fd3-4cc8-88d4-2ed25b00d27a\",\r\n        \"permissions\": {\r\n          \"secrets\": [\r\n            \"All\"\r\n          ],\r\n          \"keys\": [\r\n            \"All\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForDiskEncryption\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"vaultUri\": \"https://azsmnet8008.vault.azure.net\",\r\n    \"provisioningState\": \"RegisteringDns\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.KeyVault/vaults/azsmnet8858\",\r\n  \"name\": \"azsmnet8858\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"f520d84c-3fd3-4cc8-88d4-2ed25b00d27a\",\r\n        \"permissions\": {\r\n          \"secrets\": [\r\n            \"All\"\r\n          ],\r\n          \"keys\": [\r\n            \"All\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForDiskEncryption\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"vaultUri\": \"https://azsmnet8858.vault.azure.net\",\r\n    \"provisioningState\": \"RegisteringDns\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet5212/providers/Microsoft.KeyVault//vaults/azsmnet8008?api-version=2016-10-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1MjEyL3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvL3ZhdWx0cy9henNtbmV0ODAwOD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet9816/providers/Microsoft.KeyVault//vaults/azsmnet8858?api-version=2016-10-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5ODE2L3Byb3ZpZGVycy9NaWNyb3NvZnQuS2V5VmF1bHQvL3ZhdWx0cy9henNtbmV0ODg1OD9hcGktdmVyc2lvbj0yMDE2LTEwLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -282,7 +282,7 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:53:24 GMT"
+          "Tue, 23 Apr 2019 21:56:33 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -309,13 +309,13 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "39e4c197-1a53-4e50-b977-cf0d6fecebf6"
+          "4c232227-461e-4d27-9168-40fff771a775"
         ],
         "x-ms-correlation-request-id": [
-          "39e4c197-1a53-4e50-b977-cf0d6fecebf6"
+          "4c232227-461e-4d27-9168-40fff771a775"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235325Z:39e4c197-1a53-4e50-b977-cf0d6fecebf6"
+          "WESTUS2:20190423T215634Z:4c232227-461e-4d27-9168-40fff771a775"
         ],
         "Content-Length": [
           "674"
@@ -327,17 +327,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.KeyVault/vaults/azsmnet8008\",\r\n  \"name\": \"azsmnet8008\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"f520d84c-3fd3-4cc8-88d4-2ed25b00d27a\",\r\n        \"permissions\": {\r\n          \"secrets\": [\r\n            \"All\"\r\n          ],\r\n          \"keys\": [\r\n            \"All\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForDiskEncryption\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"vaultUri\": \"https://azsmnet8008.vault.azure.net/\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.KeyVault/vaults/azsmnet8858\",\r\n  \"name\": \"azsmnet8858\",\r\n  \"type\": \"Microsoft.KeyVault/vaults\",\r\n  \"location\": \"East US\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"sku\": {\r\n      \"family\": \"A\",\r\n      \"name\": \"standard\"\r\n    },\r\n    \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n    \"accessPolicies\": [\r\n      {\r\n        \"tenantId\": \"72f988bf-86f1-41af-91ab-2d7cd011db47\",\r\n        \"objectId\": \"f520d84c-3fd3-4cc8-88d4-2ed25b00d27a\",\r\n        \"permissions\": {\r\n          \"secrets\": [\r\n            \"All\"\r\n          ],\r\n          \"keys\": [\r\n            \"All\"\r\n          ]\r\n        }\r\n      }\r\n    ],\r\n    \"enabledForDeployment\": true,\r\n    \"enabledForDiskEncryption\": true,\r\n    \"enabledForTemplateDeployment\": true,\r\n    \"vaultUri\": \"https://azsmnet8858.vault.azure.net/\",\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.Batch/batchAccounts/azsmnet3625?api-version=2019-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1MjEyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzYyNT9hcGktdmVyc2lvbj0yMDE5LTA0LTAx",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.Batch/batchAccounts/azsmnet497?api-version=2019-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ5ODE2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0NDk3P2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"poolAllocationMode\": \"UserSubscription\",\r\n    \"keyVaultReference\": {\r\n      \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.KeyVault/vaults/azsmnet8008\",\r\n      \"url\": \"https://azsmnet8008.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"properties\": {\r\n    \"poolAllocationMode\": \"UserSubscription\",\r\n    \"keyVaultReference\": {\r\n      \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.KeyVault/vaults/azsmnet8858\",\r\n      \"url\": \"https://azsmnet8858.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b0c9ae8b-812f-4126-8731-0161d1db2893"
+          "910479f1-3bfc-45a4-9c48-313dea0b45ea"
         ],
         "accept-language": [
           "en-US"
@@ -346,7 +346,7 @@
           "FxVersion/4.6.25921.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Batch.BatchManagementClient/7.0.0.0"
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -360,13 +360,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:53:27 GMT"
+          "Tue, 23 Apr 2019 21:56:35 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.Batch/batchAccounts/azsmnet3625/operationResults/12c7c5eb-93dc-4fb2-8c82-9e4a6d257978?api-version=2019-04-01"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.Batch/batchAccounts/azsmnet497/operationResults/b0cda05d-102f-4311-991a-8c3f13d6b1e8?api-version=2019-04-01"
         ],
         "Retry-After": [
           "15"
@@ -375,7 +375,7 @@
           "Microsoft-HTTPAPI/2.0"
         ],
         "x-ms-request-id": [
-          "12c7c5eb-93dc-4fb2-8c82-9e4a6d257978"
+          "b0cda05d-102f-4311-991a-8c3f13d6b1e8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -387,10 +387,10 @@
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "b6176064-5f76-4322-9138-8fdffdcb0904"
+          "2ac11e95-966b-4522-8fd1-94691c440651"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235328Z:b6176064-5f76-4322-9138-8fdffdcb0904"
+          "WESTUS2:20190423T215636Z:2ac11e95-966b-4522-8fd1-94691c440651"
         ],
         "Content-Length": [
           "0"
@@ -403,8 +403,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.Batch/batchAccounts/azsmnet3625/operationResults/12c7c5eb-93dc-4fb2-8c82-9e4a6d257978?api-version=2019-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1MjEyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzYyNS9vcGVyYXRpb25SZXN1bHRzLzEyYzdjNWViLTkzZGMtNGZiMi04YzgyLTllNGE2ZDI1Nzk3OD9hcGktdmVyc2lvbj0yMDE5LTA0LTAx",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.Batch/batchAccounts/azsmnet497/operationResults/b0cda05d-102f-4311-991a-8c3f13d6b1e8?api-version=2019-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ5ODE2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0NDk3L29wZXJhdGlvblJlc3VsdHMvYjBjZGEwNWQtMTAyZi00MzExLTk5MWEtOGMzZjEzZDZiMWU4P2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -412,7 +412,7 @@
           "FxVersion/4.6.25921.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Batch.BatchManagementClient/7.0.0.0"
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -420,13 +420,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:53:42 GMT"
+          "Tue, 23 Apr 2019 21:56:51 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0x8D6C77DC05B6629\""
+          "\"0x8D6C83697BBB489\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -435,7 +435,7 @@
           "11999"
         ],
         "x-ms-request-id": [
-          "0de26629-959d-46cb-bcae-1330bf91d67c"
+          "c0b6e36e-4c1d-4a08-b550-1249f4a788be"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -444,13 +444,13 @@
           "nosniff"
         ],
         "x-ms-correlation-request-id": [
-          "48caec43-61e6-44d7-a7e4-30fdfafcf7d8"
+          "0d28d4ec-78cc-4931-97bd-13b855326b26"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235343Z:48caec43-61e6-44d7-a7e4-30fdfafcf7d8"
+          "WESTUS2:20190423T215651Z:0d28d4ec-78cc-4931-97bd-13b855326b26"
         ],
         "Content-Length": [
-          "659"
+          "656"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -459,20 +459,20 @@
           "-1"
         ],
         "Last-Modified": [
-          "Mon, 22 Apr 2019 23:53:43 GMT"
+          "Tue, 23 Apr 2019 21:56:51 GMT"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.Batch/batchAccounts/azsmnet3625\",\r\n  \"name\": \"azsmnet3625\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"accountEndpoint\": \"azsmnet3625.eastus.batch.azure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"dedicatedCoreQuotaPerVMFamilyEnforced\": false,\r\n    \"poolQuota\": 100,\r\n    \"activeJobAndJobScheduleQuota\": 300,\r\n    \"poolAllocationMode\": \"UserSubscription\",\r\n    \"keyVaultReference\": {\r\n      \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.KeyVault/vaults/azsmnet8008\",\r\n      \"url\": \"https://azsmnet8008.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.Batch/batchAccounts/azsmnet497\",\r\n  \"name\": \"azsmnet497\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"accountEndpoint\": \"azsmnet497.eastus.batch.azure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"dedicatedCoreQuotaPerVMFamilyEnforced\": false,\r\n    \"poolQuota\": 100,\r\n    \"activeJobAndJobScheduleQuota\": 300,\r\n    \"poolAllocationMode\": \"UserSubscription\",\r\n    \"keyVaultReference\": {\r\n      \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.KeyVault/vaults/azsmnet8858\",\r\n      \"url\": \"https://azsmnet8858.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.Batch/batchAccounts/azsmnet3625?api-version=2019-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1MjEyL3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0MzYyNT9hcGktdmVyc2lvbj0yMDE5LTA0LTAx",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.Batch/batchAccounts/azsmnet497?api-version=2019-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ5ODE2L3Byb3ZpZGVycy9NaWNyb3NvZnQuQmF0Y2gvYmF0Y2hBY2NvdW50cy9henNtbmV0NDk3P2FwaS12ZXJzaW9uPTIwMTktMDQtMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "94a9e518-1b15-4493-9b89-913df293e91d"
+          "1029145f-4f35-4314-95d9-06e2dc114eaf"
         ],
         "accept-language": [
           "en-US"
@@ -481,7 +481,7 @@
           "FxVersion/4.6.25921.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Batch.BatchManagementClient/7.0.0.0"
+          "Microsoft.Azure.Management.Batch.BatchManagementClient/8.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -489,13 +489,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:53:42 GMT"
+          "Tue, 23 Apr 2019 21:56:52 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "\"0x8D6C77DB72E7DA2\""
+          "\"0x8D6C8368E7FD1B8\""
         ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
@@ -504,7 +504,7 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "c9c61027-ed90-4216-8a9e-1d80137f4393"
+          "87952b3d-ff32-4072-bdcb-c01aba1acd44"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -513,13 +513,13 @@
           "nosniff"
         ],
         "x-ms-correlation-request-id": [
-          "02d74aac-5aeb-4fd5-98e1-b21a1404a499"
+          "da982085-46cd-4fbc-8c92-90ac1c55cb4b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235343Z:02d74aac-5aeb-4fd5-98e1-b21a1404a499"
+          "WESTUS2:20190423T215652Z:da982085-46cd-4fbc-8c92-90ac1c55cb4b"
         ],
         "Content-Length": [
-          "659"
+          "656"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -528,20 +528,20 @@
           "-1"
         ],
         "Last-Modified": [
-          "Mon, 22 Apr 2019 23:53:27 GMT"
+          "Tue, 23 Apr 2019 21:56:36 GMT"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.Batch/batchAccounts/azsmnet3625\",\r\n  \"name\": \"azsmnet3625\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"accountEndpoint\": \"azsmnet3625.eastus.batch.azure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"dedicatedCoreQuotaPerVMFamilyEnforced\": false,\r\n    \"poolQuota\": 100,\r\n    \"activeJobAndJobScheduleQuota\": 300,\r\n    \"poolAllocationMode\": \"UserSubscription\",\r\n    \"keyVaultReference\": {\r\n      \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet5212/providers/Microsoft.KeyVault/vaults/azsmnet8008\",\r\n      \"url\": \"https://azsmnet8008.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.Batch/batchAccounts/azsmnet497\",\r\n  \"name\": \"azsmnet497\",\r\n  \"type\": \"Microsoft.Batch/batchAccounts\",\r\n  \"location\": \"eastus\",\r\n  \"properties\": {\r\n    \"accountEndpoint\": \"azsmnet497.eastus.batch.azure.com\",\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"dedicatedCoreQuotaPerVMFamilyEnforced\": false,\r\n    \"poolQuota\": 100,\r\n    \"activeJobAndJobScheduleQuota\": 300,\r\n    \"poolAllocationMode\": \"UserSubscription\",\r\n    \"keyVaultReference\": {\r\n      \"id\": \"/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourceGroups/azsmnet9816/providers/Microsoft.KeyVault/vaults/azsmnet8858\",\r\n      \"url\": \"https://azsmnet8858.vault.azure.net/\"\r\n    }\r\n  }\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet5212?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1MjEyP2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/resourcegroups/azsmnet9816?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ5ODE2P2FwaS12ZXJzaW9uPTIwMTctMDUtMTA=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "af61c7fa-704a-448e-b23d-4748b4117e41"
+          "b6992913-4a2e-4fa5-b1d7-db6103e44d9f"
         ],
         "accept-language": [
           "en-US"
@@ -558,13 +558,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:53:43 GMT"
+          "Tue, 23 Apr 2019 21:56:53 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -573,13 +573,13 @@
           "14999"
         ],
         "x-ms-request-id": [
-          "1ebc8ea1-ba34-448e-826e-d7c45efe43bb"
+          "ebfbcfd6-d402-41c3-8877-0160b6f5822c"
         ],
         "x-ms-correlation-request-id": [
-          "1ebc8ea1-ba34-448e-826e-d7c45efe43bb"
+          "ebfbcfd6-d402-41c3-8877-0160b6f5822c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235344Z:1ebc8ea1-ba34-448e-826e-d7c45efe43bb"
+          "WESTUS2:20190423T215653Z:ebfbcfd6-d402-41c3-8877-0160b6f5822c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -598,8 +598,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -615,13 +615,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:53:59 GMT"
+          "Tue, 23 Apr 2019 21:57:08 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -630,13 +630,13 @@
           "11998"
         ],
         "x-ms-request-id": [
-          "b5fc37a6-381e-4021-91ad-a6225795ca81"
+          "b568e9bb-5be6-413f-acac-9eb467f6cd0b"
         ],
         "x-ms-correlation-request-id": [
-          "b5fc37a6-381e-4021-91ad-a6225795ca81"
+          "b568e9bb-5be6-413f-acac-9eb467f6cd0b"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235359Z:b5fc37a6-381e-4021-91ad-a6225795ca81"
+          "WESTUS2:20190423T215708Z:b568e9bb-5be6-413f-acac-9eb467f6cd0b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -655,8 +655,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -672,13 +672,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:54:14 GMT"
+          "Tue, 23 Apr 2019 21:57:23 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -687,13 +687,13 @@
           "11997"
         ],
         "x-ms-request-id": [
-          "e4fee294-6559-4051-8d51-40dd470a96a7"
+          "f4acb459-dbb1-4ea5-904c-b658d7893c38"
         ],
         "x-ms-correlation-request-id": [
-          "e4fee294-6559-4051-8d51-40dd470a96a7"
+          "f4acb459-dbb1-4ea5-904c-b658d7893c38"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235414Z:e4fee294-6559-4051-8d51-40dd470a96a7"
+          "WESTUS2:20190423T215724Z:f4acb459-dbb1-4ea5-904c-b658d7893c38"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -712,8 +712,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -729,13 +729,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:54:29 GMT"
+          "Tue, 23 Apr 2019 21:57:38 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -744,13 +744,13 @@
           "11996"
         ],
         "x-ms-request-id": [
-          "06384190-d145-487a-8178-7c7ee6e596b3"
+          "85af4330-b717-4c6e-ab5e-fb097ecfbc60"
         ],
         "x-ms-correlation-request-id": [
-          "06384190-d145-487a-8178-7c7ee6e596b3"
+          "85af4330-b717-4c6e-ab5e-fb097ecfbc60"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235429Z:06384190-d145-487a-8178-7c7ee6e596b3"
+          "WESTUS2:20190423T215739Z:85af4330-b717-4c6e-ab5e-fb097ecfbc60"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -769,8 +769,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -786,13 +786,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:54:45 GMT"
+          "Tue, 23 Apr 2019 21:57:53 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -801,13 +801,13 @@
           "11995"
         ],
         "x-ms-request-id": [
-          "65ceaf33-ec6c-4278-b1a1-76c4de4ad470"
+          "1bb15cb4-f4c3-4a37-a8cd-24f46b180bbd"
         ],
         "x-ms-correlation-request-id": [
-          "65ceaf33-ec6c-4278-b1a1-76c4de4ad470"
+          "1bb15cb4-f4c3-4a37-a8cd-24f46b180bbd"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235445Z:65ceaf33-ec6c-4278-b1a1-76c4de4ad470"
+          "WESTUS2:20190423T215754Z:1bb15cb4-f4c3-4a37-a8cd-24f46b180bbd"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -826,8 +826,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -843,13 +843,13 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:55:00 GMT"
+          "Tue, 23 Apr 2019 21:58:08 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
@@ -858,13 +858,13 @@
           "11994"
         ],
         "x-ms-request-id": [
-          "b2018d5b-c012-4df1-b5fb-6d57301995be"
+          "577d3374-3c94-4c5a-97d5-446d6cf33d3c"
         ],
         "x-ms-correlation-request-id": [
-          "b2018d5b-c012-4df1-b5fb-6d57301995be"
+          "577d3374-3c94-4c5a-97d5-446d6cf33d3c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235500Z:b2018d5b-c012-4df1-b5fb-6d57301995be"
+          "WESTUS2:20190423T215809Z:577d3374-3c94-4c5a-97d5-446d6cf33d3c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -883,8 +883,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -900,28 +900,28 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:55:14 GMT"
+          "Tue, 23 Apr 2019 21:58:24 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
+          "https://management.azure.com/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10"
         ],
         "Retry-After": [
           "15"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11993"
+          "11999"
         ],
         "x-ms-request-id": [
-          "ea67c4c7-0bd8-4210-a9fc-b85c87fc3be4"
+          "e6318211-94cf-431a-a3e8-3187d4714b09"
         ],
         "x-ms-correlation-request-id": [
-          "ea67c4c7-0bd8-4210-a9fc-b85c87fc3be4"
+          "e6318211-94cf-431a-a3e8-3187d4714b09"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235515Z:ea67c4c7-0bd8-4210-a9fc-b85c87fc3be4"
+          "WESTUS2:20190423T215824Z:e6318211-94cf-431a-a3e8-3187d4714b09"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -940,8 +940,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -957,22 +957,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:55:29 GMT"
+          "Tue, 23 Apr 2019 21:58:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11992"
+          "11999"
         ],
         "x-ms-request-id": [
-          "abc407a2-b52f-4bf8-bea2-66f84723f91d"
+          "c3151615-d915-469a-89b1-745a7fa75510"
         ],
         "x-ms-correlation-request-id": [
-          "abc407a2-b52f-4bf8-bea2-66f84723f91d"
+          "c3151615-d915-469a-89b1-745a7fa75510"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235530Z:abc407a2-b52f-4bf8-bea2-66f84723f91d"
+          "WESTUS2:20190423T215840Z:c3151615-d915-469a-89b1-745a7fa75510"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -991,8 +991,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUNTIxMi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVOVEl4TWkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
+      "RequestUri": "/subscriptions/0add380e-d91b-4aaf-aa97-814326a8ab7f/operationresults/eyJqb2JJZCI6IlJFU09VUkNFR1JPVVBERUxFVElPTkpPQi1BWlNNTkVUOTgxNi1FQVNUVVMiLCJqb2JMb2NhdGlvbiI6ImVhc3R1cyJ9?api-version=2017-05-10",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGFkZDM4MGUtZDkxYi00YWFmLWFhOTctODE0MzI2YThhYjdmL29wZXJhdGlvbnJlc3VsdHMvZXlKcWIySkpaQ0k2SWxKRlUwOVZVa05GUjFKUFZWQkVSVXhGVkVsUFRrcFBRaTFCV2xOTlRrVlVPVGd4TmkxRlFWTlVWVk1pTENKcWIySk1iMk5oZEdsdmJpSTZJbVZoYzNSMWN5Sjk/YXBpLXZlcnNpb249MjAxNy0wNS0xMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -1008,22 +1008,22 @@
           "no-cache"
         ],
         "Date": [
-          "Mon, 22 Apr 2019 23:55:30 GMT"
+          "Tue, 23 Apr 2019 21:58:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "11991"
+          "11998"
         ],
         "x-ms-request-id": [
-          "8fdee9a0-4af3-48f4-89b0-0be907ee2af7"
+          "f7c256c4-199c-4d0e-ad24-efa5cca458d6"
         ],
         "x-ms-correlation-request-id": [
-          "8fdee9a0-4af3-48f4-89b0-0be907ee2af7"
+          "f7c256c4-199c-4d0e-ad24-efa5cca458d6"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS2:20190422T235530Z:8fdee9a0-4af3-48f4-89b0-0be907ee2af7"
+          "WESTUS2:20190423T215840Z:f7c256c4-199c-4d0e-ad24-efa5cca458d6"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1044,9 +1044,9 @@
   ],
   "Names": {
     "BatchAccountCanCreateWithBYOSEnabled": [
-      "azsmnet5212",
-      "azsmnet3625",
-      "azsmnet8008"
+      "azsmnet9816",
+      "azsmnet497",
+      "azsmnet8858"
     ]
   },
   "Variables": {
