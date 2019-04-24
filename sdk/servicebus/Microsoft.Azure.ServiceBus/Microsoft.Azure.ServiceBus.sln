@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ServiceBus"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ServiceBus.Tests", "tests\Microsoft.Azure.ServiceBus.Tests.csproj", "{4F476D56-DDE7-43D3-8CB4-BA1E77F5A300}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ServiceBus.Performance", "tests\Microsoft.Azure.ServiceBus.Performance\Microsoft.Azure.ServiceBus.Performance.csproj", "{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ServiceBus.Performance", "tests\Performance\Microsoft.Azure.ServiceBus.Performance.csproj", "{BA46F80E-1A79-4185-BD75-2F0E541DA1C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
