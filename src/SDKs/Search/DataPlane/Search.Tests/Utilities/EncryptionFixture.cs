@@ -108,45 +108,39 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             Provider provider = client.Providers.Register("Microsoft.KeyVault");
         }
 
-        private AccessPolicyEntry CreateReadOnlyAccess(string securityPrincipalId)
+        private AccessPolicyEntry CreateReadOnlyAccess(string securityPrincipalId) => new AccessPolicyEntry
         {
-            return new AccessPolicyEntry
+            TenantId = Guid.Parse(TestEnvironmentFactory.GetTestEnvironment().Tenant),
+            ObjectId = securityPrincipalId,
+            Permissions = new Permissions()
             {
-                TenantId = Guid.Parse(TestEnvironmentFactory.GetTestEnvironment().Tenant),
-                ObjectId = securityPrincipalId,
-                Permissions = new Permissions()
+                Keys = new List<string>()
                 {
-                    Keys = new List<string>()
-                    {
-                        KeyPermissions.Get,
-                        KeyPermissions.WrapKey,
-                        KeyPermissions.UnwrapKey,
-                    }
+                    KeyPermissions.Get,
+                    KeyPermissions.WrapKey,
+                    KeyPermissions.UnwrapKey,
                 }
-            };
-        }
+            }
+        };
 
-        private AccessPolicyEntry CreateReadAndWriteAccess(string securityPrincipalId)
+        private AccessPolicyEntry CreateReadAndWriteAccess(string securityPrincipalId) => new AccessPolicyEntry
         {
-            return new AccessPolicyEntry
+            TenantId = Guid.Parse(TestEnvironmentFactory.GetTestEnvironment().Tenant),
+            ObjectId = securityPrincipalId,
+            Permissions = new Permissions()
             {
-                TenantId = Guid.Parse(TestEnvironmentFactory.GetTestEnvironment().Tenant),
-                ObjectId = securityPrincipalId,
-                Permissions = new Permissions()
+                Keys = new List<string>()
                 {
-                    Keys = new List<string>()
-                    {
-                         KeyPermissions.Get,
-                        KeyPermissions.WrapKey,
-                        KeyPermissions.UnwrapKey,
-                        KeyPermissions.Create,
-                        KeyPermissions.Delete,
-                        KeyPermissions.Get,
-                        KeyPermissions.List
-                    }
+                    KeyPermissions.Get,
+                    KeyPermissions.WrapKey,
+                    KeyPermissions.UnwrapKey,
+                    KeyPermissions.Create,
+                    KeyPermissions.Delete,
+                    KeyPermissions.Get,
+                    KeyPermissions.List
                 }
-            };
-        }
+            }
+        };
 
         private Vault CreateKeyVault(List<AccessPolicyEntry> accessPolicies)
         {
@@ -154,6 +148,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             string keyVaultName = TestUtilities.GenerateName("keyvault");
             return keyVaultMgmtClient.Vaults.CreateOrUpdate(ResourceGroupName, keyVaultName, new VaultCreateOrUpdateParameters
             {
+                // KeyVault is only available in those regions: eastus2, centralus, northcentralus, southcentralus
                 Location = "northcentralus",
                 Properties = new VaultProperties
                 {
@@ -170,7 +165,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             KeyVaultClient keyVaultClient = GetKeyVaultClient();
 
-            int keySize = 2048;
+            const int keySize = 2048;
             return keyVaultClient.CreateKeyAsync(
                 keyVault.Properties.VaultUri, 
                 keyName, 
@@ -178,7 +173,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 keySize,
                 JsonWebKeyOperation.AllOperations, 
                 new KeyAttributes()
-           ).GetAwaiter().GetResult();
+           ).ConfigureAwait(false).GetAwaiter().GetResult();
         }
 
         private static KeyVaultClient GetKeyVaultClient()
@@ -210,7 +205,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             public override Task ProcessHttpRequestAsync(HttpRequestMessage request,
                 CancellationToken cancellationToken)
             {
-                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                if (HttpMockServer.Mode != HttpRecorderMode.Playback)
                 {
                     return base.ProcessHttpRequestAsync(request, cancellationToken);
                 }
