@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the TriggerProperties class.
         /// </summary>
-        /// <param name="schedulerTriggers">The collection of scheduler
+        /// <param name="timerTriggers">The collection of timer
         /// triggers.</param>
         /// <param name="sourceTriggers">The collection of triggers based on
         /// source code repository.</param>
         /// <param name="baseImageTrigger">The trigger based on base image
         /// dependencies.</param>
-        public TriggerProperties(IList<SchedulerTrigger> schedulerTriggers = default(IList<SchedulerTrigger>), IList<SourceTrigger> sourceTriggers = default(IList<SourceTrigger>), BaseImageTrigger baseImageTrigger = default(BaseImageTrigger))
+        public TriggerProperties(IList<TimerTrigger> timerTriggers = default(IList<TimerTrigger>), IList<SourceTrigger> sourceTriggers = default(IList<SourceTrigger>), BaseImageTrigger baseImageTrigger = default(BaseImageTrigger))
         {
-            SchedulerTriggers = schedulerTriggers;
+            TimerTriggers = timerTriggers;
             SourceTriggers = sourceTriggers;
             BaseImageTrigger = baseImageTrigger;
             CustomInit();
@@ -51,10 +51,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the collection of scheduler triggers.
+        /// Gets or sets the collection of timer triggers.
         /// </summary>
-        [JsonProperty(PropertyName = "schedulerTriggers")]
-        public IList<SchedulerTrigger> SchedulerTriggers { get; set; }
+        [JsonProperty(PropertyName = "timerTriggers")]
+        public IList<TimerTrigger> TimerTriggers { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of triggers based on source code
@@ -77,9 +77,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (SchedulerTriggers != null)
+            if (TimerTriggers != null)
             {
-                foreach (var element in SchedulerTriggers)
+                foreach (var element in TimerTriggers)
                 {
                     if (element != null)
                     {

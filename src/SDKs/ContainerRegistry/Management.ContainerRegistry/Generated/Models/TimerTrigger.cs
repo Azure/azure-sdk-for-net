@@ -15,27 +15,27 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The properties of a scheduler trigger.
+    /// The properties of a timer trigger.
     /// </summary>
-    public partial class SchedulerTrigger
+    public partial class TimerTrigger
     {
         /// <summary>
-        /// Initializes a new instance of the SchedulerTrigger class.
+        /// Initializes a new instance of the TimerTrigger class.
         /// </summary>
-        public SchedulerTrigger()
+        public TimerTrigger()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SchedulerTrigger class.
+        /// Initializes a new instance of the TimerTrigger class.
         /// </summary>
         /// <param name="schedule">The CRON expression for the task
         /// schedule</param>
         /// <param name="name">The name of the trigger.</param>
         /// <param name="status">The current status of trigger. Possible values
         /// include: 'Disabled', 'Enabled'</param>
-        public SchedulerTrigger(string schedule, string name, string status = default(string))
+        public TimerTrigger(string schedule, string name, string status = default(string))
         {
             Schedule = schedule;
             Status = status;
