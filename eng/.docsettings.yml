@@ -18,6 +18,7 @@ known_presence_issues:
   - ['sdk/keyvault','#5499']
   - ['sdk/servicebus','#5857']
   - ['sdk/eventhub','#5499']
+  - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5945']
 known_content_issues:
   - ['README.md','Root readme']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
