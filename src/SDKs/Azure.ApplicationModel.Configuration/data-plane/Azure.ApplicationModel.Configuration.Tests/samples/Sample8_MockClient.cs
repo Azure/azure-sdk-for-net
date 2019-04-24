@@ -2,19 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using Azure.Core.Pipeline;
-using Azure.Core.Pipeline.Policies;
-using NUnit.Framework;
 using System;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
-using Azure.Core.Testing;
+using NUnit.Framework;
 
 namespace Azure.ApplicationModel.Configuration.Samples
 {
-    [Category("Live")]
     public partial class ConfigurationSamples
     {
         [Test]
