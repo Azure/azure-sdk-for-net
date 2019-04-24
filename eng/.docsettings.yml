@@ -17,7 +17,9 @@ required_readme_sections:
 known_presence_issues:
   - ['sdk/keyvault','#5499']
   - ['sdk/servicebus','#5857']
+  - ['sdk/eventhub','#5499']
 known_content_issues:
   - ['README.md','Root readme']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5857']
+  - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']

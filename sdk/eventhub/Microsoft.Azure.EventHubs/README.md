@@ -25,7 +25,7 @@ Use the client library for Event Hubs to:
 
 - Receive events from one or more publishers, transform them to better meet the needs of your ecosystem, then publish the transformed events to a new stream for consumers to observe.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/EventHub/data-plane) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) | [API reference documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/event-hubs?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/eventhub/Microsoft.Azure.EventHubs) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.EventHubs/) | [API reference documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/event-hubs?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
 
 ## Getting started
 
@@ -48,7 +48,7 @@ Code samples for the Azure Event Hubs client library that detail how to get star
 - [Azure Code Samples](https://azure.microsoft.com/en-us/resources/samples/?sort=0&service=event-hubs&platform=dotnet)
 - [Azure Event Hubs Documentation](https://docs.microsoft.com/en-us/azure/event-hubs/)
 - [Azure Event Hubs Sample Repository](https://github.com/Azure/azure-event-hubs/tree/master/samples)
-- [Azure Event Hubs Notification Sample](event-hubs-dotnet-user-notifications)
+- [Azure Event Hubs Notification Sample](https://github.com/Azure-Samples/event-hubs-dotnet-user-notifications)
 - [Azure Event Hubs Publishing Sample](https://github.com/Azure-Samples/event-hubs-dotnet-ingest)
 
 ## To build
@@ -57,19 +57,19 @@ For information on building the Azure Event Hubs client library, please see [Bui
 
 ## Running tests
 
-1. Deploy the Azure Resource Manager template located at [/assets/azure-deploy-test-dependencies.json](https://github.com/Azure/azure-sdk-for-net/blob/master/src/SDKs/EventHub/data-plane/assets/azure-deploy-test-dependencies.json) by clicking the following button:
+1. Deploy the Azure Resource Manager template located at [/sdk/eventhub/Microsoft.Azure.EventHubs/assets/azure-deploy-test-dependencies.json](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Microsoft.Azure.EventHubs/assets/azure-deploy-test-dependencies.json) by clicking the following button:
 
-    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsrc%2FSDKs%2FEventHub%2Fdata-plane%2Fassets%2Fazure-deploy-test-dependencies.json" target="_blank">
+    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Feventhub%2FMicrosoft.Azure.EventHubs%2Fassets%2Fazure-deploy-test-dependencies.json" target="_blank">
         <img src="http://azuredeploy.net/deploybutton.png"/>
     </a>
 
     *Running the above template will provision a standard Event Hubs namespace along with the required entities to successfully run the unit tests.*
 
-1. Add an Environment Variable named `AZ_EVENT_HUBS_CONNECTION` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
+1. Add an Environment Variable named `EVENT_HUBS_CONNECTION_STRING` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
 
-1. Add an Environment Variable named `AZ_EVENT_HUBS_STORAGE_CONNECTION` and set the value as the connection string of the newly created storage account. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
+1. Add an Environment Variable named `EVENT_HUBS_STORAGE_CONNECTION_STRING` and set the value as the connection string of the newly created storage account. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
 
-Once you have completed the above, you can run `dotnet test` from the `/src/SDKs/EventHub/data-plane/tests/Microsoft.Azure.EventHubs.Tests` directory.
+Once you have completed the above, you can run `dotnet test` from the `/sdk/eventhub/Microsoft.Azure.EventHubs/tests` directory.
 
 ## Versioning information
 
@@ -89,4 +89,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 - [Azure Event Hubs REST API Reference](https://docs.microsoft.com/en-us/rest/api/eventhub/)
 - [Azure Event Hubs SDK for .NET Documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/event-hubs?view=azure-dotnet)
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FEventHub%2Fdata-plane%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Feventhub%2FMicrosoft.Azure.EventHubs%2FFREADME.png)

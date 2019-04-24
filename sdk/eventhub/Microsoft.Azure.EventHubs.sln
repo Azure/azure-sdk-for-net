@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28729.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs", "src\Microsoft.Azure.EventHubs\Microsoft.Azure.EventHubs.csproj", "{126D946D-CE0F-4F14-9F13-8FD7098B81D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs", "Microsoft.Azure.EventHubs\src\Microsoft.Azure.EventHubs.csproj", "{126D946D-CE0F-4F14-9F13-8FD7098B81D8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs.Tests", "tests\Microsoft.Azure.EventHubs.Tests\Microsoft.Azure.EventHubs.Tests.csproj", "{154F7B4C-B998-4FA0-933F-F34DB0CA9B88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs.Tests", "Microsoft.Azure.EventHubs\tests\Microsoft.Azure.EventHubs.Tests.csproj", "{154F7B4C-B998-4FA0-933F-F34DB0CA9B88}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs.Processor", "src\Microsoft.Azure.EventHubs.Processor\Microsoft.Azure.EventHubs.Processor.csproj", "{8C89967A-4E1F-46B0-8458-81B545C822B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs.Processor", "Microsoft.Azure.EventHubs.Processor\src\Microsoft.Azure.EventHubs.Processor.csproj", "{8C89967A-4E1F-46B0-8458-81B545C822B2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs.ServiceFabricProcessor", "src\Microsoft.Azure.EventHubs.ServiceFabricProcessor\Microsoft.Azure.EventHubs.ServiceFabricProcessor.csproj", "{D96BCC8F-D5EE-464A-9C15-EF59613F9F82}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.EventHubs.ServiceFabricProcessor", "Microsoft.Azure.EventHubs.ServiceFabricProcessor\src\Microsoft.Azure.EventHubs.ServiceFabricProcessor.csproj", "{D96BCC8F-D5EE-464A-9C15-EF59613F9F82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
