@@ -5,7 +5,7 @@ using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using Azure.Core.Attributes;
+using Azure.Core;
 
 namespace Azure.Core.Pipeline.Policies
 {

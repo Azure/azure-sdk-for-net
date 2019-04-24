@@ -1,3 +1,3 @@
-﻿using Azure.Core.Attributes;
+﻿using Azure.Core;
 
 [assembly: AzureSdkClientLibrary("base-test")]
