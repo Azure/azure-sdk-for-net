@@ -1,12 +1,15 @@
-﻿using Microsoft.Azure.ServiceBus;
-using Microsoft.Azure.ServiceBus.Core;
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
+﻿// Copyright (c) Microsoft. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 namespace Microsoft.Azure.ServiceBus.Performance
 {
+    using Microsoft.Azure.ServiceBus;
+    using Microsoft.Azure.ServiceBus.Core;
+    using System;
+    using System.Diagnostics;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     class Program
     {
         private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
