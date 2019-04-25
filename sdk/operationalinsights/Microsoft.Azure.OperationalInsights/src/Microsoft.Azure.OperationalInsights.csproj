@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <PropertyGroup>
-    <Description>Microsoft Azure Operational Insights Data Library</Description>
-    <PackageId>Microsoft.Azure.OperationalInsights</PackageId>
     <Description>Provides Microsoft Azure Operational Insights data operations</Description>
-    <AssemblyName>Microsoft.Azure.OperationalInsights</AssemblyName>
+    <AssemblyTitle>Microsoft Azure Operational Insights Data Library</AssemblyTitle>
     <VersionPrefix>0.10.0-preview</VersionPrefix>
     <PackageTags>Microsoft Azure OperationalInsights;OperationalInsights</PackageTags>    
 	  <PackageReleaseNotes>Taking dependency on 10.0.3 version of Newtonsoft nuget package.</PackageReleaseNotes>
-  </PropertyGroup>
-  <PropertyGroup>
-    <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 </Project>

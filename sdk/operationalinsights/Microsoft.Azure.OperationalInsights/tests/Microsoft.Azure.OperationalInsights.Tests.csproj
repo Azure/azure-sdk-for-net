@@ -1,11 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.OperationalInsights.Tests</PackageId>
     <Description>Microsoft.Azure.OperationalInsights.Tests Class Library</Description>
-    <AssemblyName>Microsoft.Azure.OperationalInsights.Tests</AssemblyName>
-    <Version>1.0.0</Version>
+    <AssemblyTitle>Microsoft Azure OperationalInsights Tests</AssemblyTitle>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
@@ -14,7 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
-    <ProjectReference Include="..\OperationalInsights\Microsoft.Azure.OperationalInsights.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.OperationalInsights.csproj" />
     <!-- Enable below line in local to work around the bug that cannot find test cases -->
     <!--<PackageReference Update="Microsoft.NET.Test.Sdk" Version="15.3.0" />-->
   </ItemGroup>
