@@ -40,11 +40,19 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='skipToken'>
-            /// Optional continuation token for the list operation.
+            /// Optional. Continuation token for the list operation.
             /// </param>
-            public static ListContainerItems List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string))
+            /// <param name='maxpagesize'>
+            /// Optional. Specified maximum number of containers that can be included in
+            /// the list.
+            /// </param>
+            /// <param name='filter'>
+            /// Optional. When specified, only container names starting with the filter
+            /// will be listed.
+            /// </param>
+            public static ListContainerItems List(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string))
             {
-                return operations.ListAsync(resourceGroupName, accountName, skipToken).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,14 +72,22 @@ namespace Microsoft.Azure.Management.Storage
             /// numbers and lower-case letters only.
             /// </param>
             /// <param name='skipToken'>
-            /// Optional continuation token for the list operation.
+            /// Optional. Continuation token for the list operation.
+            /// </param>
+            /// <param name='maxpagesize'>
+            /// Optional. Specified maximum number of containers that can be included in
+            /// the list.
+            /// </param>
+            /// <param name='filter'>
+            /// Optional. When specified, only container names starting with the filter
+            /// will be listed.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListContainerItems> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ListContainerItems> ListAsync(this IBlobContainersOperations operations, string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, accountName, skipToken, maxpagesize, filter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

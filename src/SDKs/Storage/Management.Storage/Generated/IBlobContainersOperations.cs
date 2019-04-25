@@ -37,7 +37,15 @@ namespace Microsoft.Azure.Management.Storage
         /// length and use numbers and lower-case letters only.
         /// </param>
         /// <param name='skipToken'>
-        /// Optional continuation token for the list operation.
+        /// Optional. Continuation token for the list operation.
+        /// </param>
+        /// <param name='maxpagesize'>
+        /// Optional. Specified maximum number of containers that can be
+        /// included in the list.
+        /// </param>
+        /// <param name='filter'>
+        /// Optional. When specified, only container names starting with the
+        /// filter will be listed.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -54,7 +62,7 @@ namespace Microsoft.Azure.Management.Storage
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ListContainerItems>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ListContainerItems>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string skipToken = default(string), string maxpagesize = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new container under the specified account as described by
         /// request body. The container resource includes metadata and
