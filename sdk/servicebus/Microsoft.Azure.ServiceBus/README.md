@@ -14,7 +14,7 @@ Use the client library for Azure Service Bus to:
 
 - Implement complex workflows: message sessions support scenarios that require message ordering or message deferral.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/src/SDKs/ServiceBus/data-plane) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/service-bus?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/en-us/azure/service-bus-messaging/)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/servicebus) | [Package (NuGet)](https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/) | [API reference documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/service-bus?view=azure-dotnet) | [Product documentation](https://docs.microsoft.com/en-us/azure/service-bus-messaging/)
 
 ## Getting started
 
@@ -44,9 +44,9 @@ For information on building the Azure Service bus client library, please see [Bu
 
 ## Running tests
 
-1. Deploy the Azure Resource Manager template located at [/assets/azure-deploy-test-dependencies.json](https://github.com/Azure/azure-sdk-for-net/blob/master/src/SDKs/ServiceBus/data-plane/assets/azure-deploy-test-dependencies.json) by clicking the following button:
+1. Deploy the Azure Resource Manager template located at [/assets/azure-deploy-test-dependencies.json](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/assets/azure-deploy-test-dependencies.json) by clicking the following button:
 
-    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsrc%2FSDKs%2FServiceBus%2Fdata-plane%2Fassets%2Fazure-deploy-test-dependencies.json" target="_blank">
+    <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FMicrosoft.Azure.ServiceBus%2Fassets%2Fazure-deploy-test-dependencies.json" target="_blank">
         <img src="http://azuredeploy.net/deploybutton.png"/>
     </a>
 
@@ -54,7 +54,7 @@ For information on building the Azure Service bus client library, please see [Bu
 
 1. Add an Environment Variable named `AZ_SERVICE_BUS_CONNECTION` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
 
-Once you have completed the above, you can run `dotnet test` from the `/src/SDKs/ServiceBus/data-plane/tests/Microsoft.Azure.ServiceBus.Tests` directory.
+Once you have completed the above, you can run `dotnet test` from the `/sdk/servicebus/Microsoft.Azure.ServiceBus/tests` directory.
 
 ## Versioning information
 
@@ -74,4 +74,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 - [Azure Service Bus REST API Reference](https://docs.microsoft.com/en-us/rest/api/servicebus/)
 - [Azure Service Bus SDK for .NET Documentation](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/service-bus?view=azure-dotnet)
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsrc%2FSDKs%2FServiceBus%2Fdata-plane%2FREADME.png)
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fservicebus%2FMicrosoft.Azure.ServiceBus%2FREADME.png)

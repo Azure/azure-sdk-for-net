@@ -16,6 +16,8 @@ required_readme_sections:
   - ^Contributing$
 known_presence_issues:
   - ['sdk/keyvault','#5499']
+  - ['sdk/servicebus','#5857']
 known_content_issues:
   - ['README.md','Root readme']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
+  - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5857']
