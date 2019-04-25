@@ -353,7 +353,8 @@ namespace Compute.Tests
                         OsType = OperatingSystemTypes.Windows,
                     },
                     ZoneResilient = true
-                }
+                },
+                HyperVGeneration = HyperVGenerationTypes.V1
             };
             m_CrpClient.Images.CreateOrUpdate(rgName, imageName, imageInput);
             Image getImage = m_CrpClient.Images.Get(rgName, imageName);
