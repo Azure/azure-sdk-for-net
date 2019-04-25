@@ -24,7 +24,7 @@
    </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.EventHubs\Microsoft.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.EventHubs\src\Microsoft.Azure.EventHubs.csproj" />
   </ItemGroup>
 
   <ItemGroup>

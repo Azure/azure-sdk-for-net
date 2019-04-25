@@ -34,9 +34,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Microsoft.Azure.EventHubs.Processor\Microsoft.Azure.EventHubs.Processor.csproj" />
-    <ProjectReference Include="..\..\src\Microsoft.Azure.EventHubs.ServiceFabricProcessor\Microsoft.Azure.EventHubs.ServiceFabricProcessor.csproj" />
-    <ProjectReference Include="..\..\src\Microsoft.Azure.EventHubs\Microsoft.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.EventHubs.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.EventHubs.ServiceFabricProcessor\src\Microsoft.Azure.EventHubs.ServiceFabricProcessor.csproj" />
+    <ProjectReference Include="..\..\Microsoft.Azure.EventHubs.Processor\src\Microsoft.Azure.EventHubs.Processor.csproj" />    
   </ItemGroup>
 
   <ItemGroup>
