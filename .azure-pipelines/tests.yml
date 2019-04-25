@@ -32,9 +32,6 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
-      - powershell: Get-Item $(ProjectFile)
-        displayName: 'Verify $(ProjectFile) exists'
-
       - powershell: |
           Invoke-WebRequest -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
           -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
@@ -52,7 +49,7 @@ jobs:
         inputs:
           version: '$(DotNetCoreVersion)'
 
-      - task: DotNetCoreCLI@2
+      - script: 'dotnet test $(ProjectFile) --logger trx'
         displayName: 'Build & Test (all tests)'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -62,12 +59,6 @@ jobs:
           SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)
           EVENT_HUBS_CONNECTION_STRING: $(net-eventhubs-internal-namespace-connection-string)
           EVENT_HUBS_STORAGE_CONNECTION_STRING: $(net-eventhubs-internal-storage-connection-string)
-
-        inputs:
-          command: test
-          projects: '$(ProjectFile)'
-          arguments: --logger trx
-          publishTestResults: false
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
