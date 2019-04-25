@@ -132,6 +132,101 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task RespectsRetryAfterHeaderWithInt()
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("Retry-After", "25"));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await gate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            Assert.AreEqual(TimeSpan.FromSeconds(25), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
+        [Test]
+        public async Task RespectsRetryAfterHeaderWithDate()
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            // Use large value to avoid time based flakiness
+            mockResponse.AddHeader(new HttpHeader("Retry-After", DateTimeOffset.Now.AddHours(5).ToString("R")));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await gate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            Assert.Less(TimeSpan.FromHours(4), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
+        [Test]
+        public async Task RetryAfterWithInvalidValueIsIgnored()
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("Retry-After", "Invalid-value"));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await gate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            Assert.Less(TimeSpan.Zero, retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
+        [Theory]
+        [TestCase("retry-after-ms")]
+        [TestCase("x-ms-retry-after-ms")]
+        public async Task RespectsRetryAfterMSHeader(string headerName)
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader(headerName, "120000"));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await gate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            Assert.AreEqual(TimeSpan.FromMilliseconds(120000), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
+        [Test]
         [NonParallelizable]
         public async Task RetryingEmitsEventSourceEvent()
         {
