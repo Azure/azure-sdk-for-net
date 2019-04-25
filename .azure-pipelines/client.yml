@@ -89,6 +89,9 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
+      - powershell: Test-Path $(ProjectFile)
+        displayName: 'Verify \$\(ProjectFile\) exists'
+
       - powershell: |
           Invoke-WebRequest -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
           -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
