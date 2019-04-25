@@ -14,18 +14,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
     /// <summary>
     /// Response of the Train API call.
     /// </summary>
-    public partial class TrainResponse
+    public partial class TrainResult
     {
         /// <summary>
-        /// Initializes a new instance of the TrainResponse class.
+        /// Initializes a new instance of the TrainResult class.
         /// </summary>
-        public TrainResponse()
+        public TrainResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrainResponse class.
+        /// Initializes a new instance of the TrainResult class.
         /// </summary>
         /// <param name="modelId">Identifier of the model.</param>
         /// <param name="trainingDocuments">List of documents used to train the
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// train operation error reported by each.</param>
         /// <param name="errors">Errors returned during the training
         /// operation.</param>
-        public TrainResponse(string modelId = default(string), IList<FormDocumentReport> trainingDocuments = default(IList<FormDocumentReport>), IList<FormOperationError> errors = default(IList<FormOperationError>))
+        public TrainResult(System.Guid modelId = default(System.Guid), IList<FormDocumentReport> trainingDocuments = default(IList<FormDocumentReport>), IList<FormOperationError> errors = default(IList<FormOperationError>))
         {
             ModelId = modelId;
             TrainingDocuments = trainingDocuments;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// Gets or sets identifier of the model.
         /// </summary>
         [JsonProperty(PropertyName = "modelId")]
-        public string ModelId { get; set; }
+        public System.Guid ModelId { get; set; }
 
         /// <summary>
         /// Gets or sets list of documents used to train the model and the

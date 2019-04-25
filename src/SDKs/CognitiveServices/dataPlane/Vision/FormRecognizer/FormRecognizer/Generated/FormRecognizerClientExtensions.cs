@@ -19,16 +19,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
     public static partial class FormRecognizerClientExtensions
     {
             /// <summary>
-            /// Train a model to analyze using a set of documents of supported types.
+            /// Train Model
             /// </summary>
             /// <remarks>
-            /// The train request must include a 'Source' parameter that is
-            /// either a Azure Storage Blob Container SAS Uri or a path to a locally
-            /// mounted
-            /// drive. When local paths are specified, they must always follow the
-            /// Linux/Unix style
-            /// absolute path convention and be rooted to the {Mounts:Input}
-            /// configuration setting value.
+            /// The train request must include a source parameter that is either an
+            /// externally accessible Azure Storage blob container Uri (preferably a Shared
+            /// Access Signature Uri) or valid path to a data folder in a locally mounted
+            /// drive. When local paths are specified, they must follow the Linux/Unix path
+            /// format and be an absolute path rooted to the input mount configuration
+            /// setting value e.g., if '{Mounts:Input}' configuration setting value is
+            /// '/input' then a valid source path would be '/input/contosodataset'. All
+            /// data to be trained are expected to be under the source. Models are trained
+            /// using documents that are of the following content type - 'application/pdf',
+            /// 'image/jpeg' and 'image/png'."
+            /// Other content is ignored when training a model.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,22 +40,26 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='trainRequest'>
             /// Request object for training.
             /// </param>
-            public static TrainResponse FormrecognizerV10CustomTrainPost(this IFormRecognizerClient operations, TrainRequest trainRequest = default(TrainRequest))
+            public static TrainResult TrainCustomModel(this IFormRecognizerClient operations, TrainRequest trainRequest)
             {
-                return operations.FormrecognizerV10CustomTrainPostAsync(trainRequest).GetAwaiter().GetResult();
+                return operations.TrainCustomModelAsync(trainRequest).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Train a model to analyze using a set of documents of supported types.
+            /// Train Model
             /// </summary>
             /// <remarks>
-            /// The train request must include a 'Source' parameter that is
-            /// either a Azure Storage Blob Container SAS Uri or a path to a locally
-            /// mounted
-            /// drive. When local paths are specified, they must always follow the
-            /// Linux/Unix style
-            /// absolute path convention and be rooted to the {Mounts:Input}
-            /// configuration setting value.
+            /// The train request must include a source parameter that is either an
+            /// externally accessible Azure Storage blob container Uri (preferably a Shared
+            /// Access Signature Uri) or valid path to a data folder in a locally mounted
+            /// drive. When local paths are specified, they must follow the Linux/Unix path
+            /// format and be an absolute path rooted to the input mount configuration
+            /// setting value e.g., if '{Mounts:Input}' configuration setting value is
+            /// '/input' then a valid source path would be '/input/contosodataset'. All
+            /// data to be trained are expected to be under the source. Models are trained
+            /// using documents that are of the following content type - 'application/pdf',
+            /// 'image/jpeg' and 'image/png'."
+            /// Other content is ignored when training a model.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -62,20 +70,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TrainResponse> FormrecognizerV10CustomTrainPostAsync(this IFormRecognizerClient operations, TrainRequest trainRequest = default(TrainRequest), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TrainResult> TrainCustomModelAsync(this IFormRecognizerClient operations, TrainRequest trainRequest, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.FormrecognizerV10CustomTrainPostWithHttpMessagesAsync(trainRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TrainCustomModelWithHttpMessagesAsync(trainRequest, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Get keys of a model.
+            /// Get Keys
             /// </summary>
             /// <remarks>
-            /// &lt;para&gt;Use the API to retrieve the keys that were
-            /// extracted by the specified model.&lt;/para&gt;
+            /// Use the API to retrieve the keys that were
+            /// extracted by the specified model.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,17 +91,17 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='id'>
             /// Model identifier.
             /// </param>
-            public static void FormrecognizerV10CustomModelByIdKeysGet(this IFormRecognizerClient operations, string id)
+            public static KeysResult GetExtractedKeysByCustomModelId(this IFormRecognizerClient operations, System.Guid id)
             {
-                operations.FormrecognizerV10CustomModelByIdKeysGetAsync(id).GetAwaiter().GetResult();
+                return operations.GetExtractedKeysByCustomModelIdAsync(id).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Get keys of a model.
+            /// Get Keys
             /// </summary>
             /// <remarks>
-            /// &lt;para&gt;Use the API to retrieve the keys that were
-            /// extracted by the specified model.&lt;/para&gt;
+            /// Use the API to retrieve the keys that were
+            /// extracted by the specified model.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -104,148 +112,180 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task FormrecognizerV10CustomModelByIdKeysGetAsync(this IFormRecognizerClient operations, string id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<KeysResult> GetExtractedKeysByCustomModelIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.FormrecognizerV10CustomModelByIdKeysGetWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Get information about a model.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// Model identifier.
-            /// </param>
-            public static void FormrecognizerV10CustomModelByIdGet(this IFormRecognizerClient operations, string id)
-            {
-                operations.FormrecognizerV10CustomModelByIdGetAsync(id).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get information about a model.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// Model identifier.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task FormrecognizerV10CustomModelByIdGetAsync(this IFormRecognizerClient operations, string id, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.FormrecognizerV10CustomModelByIdGetWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Delete a model and all associated pre-processing data.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// The identifier of the model to delete.
-            /// </param>
-            public static void FormrecognizerV10CustomModelByIdDelete(this IFormRecognizerClient operations, string id)
-            {
-                operations.FormrecognizerV10CustomModelByIdDeleteAsync(id).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete a model and all associated pre-processing data.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// The identifier of the model to delete.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task FormrecognizerV10CustomModelByIdDeleteAsync(this IFormRecognizerClient operations, string id, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.FormrecognizerV10CustomModelByIdDeleteWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Analyze a document to extract key-value pairs and table
-            /// information.
-            /// </summary>
-            /// <remarks>
-            /// &lt;para&gt;The document to analyze must be must be of expected
-            /// media type - currently supported types are application/pdf, image/jpg or
-            /// image/png.&lt;/para&gt;
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// Identifier of the model to analyze the document with.
-            /// </param>
-            /// <param name='keys'>
-            /// An optional list of known keys to extract the values for.
-            /// </param>
-            /// <param name='form'>
-            /// Upload image or pdf content for processing.
-            /// </param>
-            public static AnalyzeResponse FormrecognizerV10CustomModelByIdAnalyzePost(this IFormRecognizerClient operations, string id, IList<string> keys = default(IList<string>), Stream form = default(Stream))
-            {
-                return operations.FormrecognizerV10CustomModelByIdAnalyzePostAsync(id, keys, form).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Analyze a document to extract key-value pairs and table
-            /// information.
-            /// </summary>
-            /// <remarks>
-            /// &lt;para&gt;The document to analyze must be must be of expected
-            /// media type - currently supported types are application/pdf, image/jpg or
-            /// image/png.&lt;/para&gt;
-            /// </remarks>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='id'>
-            /// Identifier of the model to analyze the document with.
-            /// </param>
-            /// <param name='keys'>
-            /// An optional list of known keys to extract the values for.
-            /// </param>
-            /// <param name='form'>
-            /// Upload image or pdf content for processing.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<AnalyzeResponse> FormrecognizerV10CustomModelByIdAnalyzePostAsync(this IFormRecognizerClient operations, string id, IList<string> keys = default(IList<string>), Stream form = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.FormrecognizerV10CustomModelByIdAnalyzePostWithHttpMessagesAsync(id, keys, form, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetExtractedKeysByCustomModelIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
+            /// <summary>
+            /// Get Models
+            /// </summary>
+            /// <remarks>
+            /// Get information about all trained models
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static ContainerStatus StatusGet(this IFormRecognizerClient operations)
+            public static IList<ModelInfo> GetListOfCustomModels(this IFormRecognizerClient operations)
             {
-                return operations.StatusGetAsync().GetAwaiter().GetResult();
+                return operations.GetListOfCustomModelsAsync().GetAwaiter().GetResult();
             }
 
+            /// <summary>
+            /// Get Models
+            /// </summary>
+            /// <remarks>
+            /// Get information about all trained models
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContainerStatus> StatusGetAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ModelInfo>> GetListOfCustomModelsAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.StatusGetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetListOfCustomModelsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get Model
+            /// </summary>
+            /// <remarks>
+            /// Get information about a model.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// Model identifier.
+            /// </param>
+            public static ModelInfo GetCustomModelById(this IFormRecognizerClient operations, System.Guid id)
+            {
+                return operations.GetCustomModelByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get Model
+            /// </summary>
+            /// <remarks>
+            /// Get information about a model.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// Model identifier.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ModelInfo> GetCustomModelByIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetCustomModelByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Delete Model
+            /// </summary>
+            /// <remarks>
+            /// Delete model artifacts.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// The identifier of the model to delete.
+            /// </param>
+            public static void DeleteCustomModelById(this IFormRecognizerClient operations, System.Guid id)
+            {
+                operations.DeleteCustomModelByIdAsync(id).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Delete Model
+            /// </summary>
+            /// <remarks>
+            /// Delete model artifacts.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// The identifier of the model to delete.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task DeleteCustomModelByIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.DeleteCustomModelByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Analyze Form
+            /// </summary>
+            /// <remarks>
+            /// The document to analyze must be of a supported content type -
+            /// 'application/pdf', 'image/jpeg' or 'image/png'. The response contains not
+            /// just the extracted information of the analyzed form but also information
+            /// about content that was not extracted along with a reason.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// Model Identifier to analyze the document with.
+            /// </param>
+            /// <param name='formStream'>
+            /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
+            /// processing.
+            /// </param>
+            /// <param name='keys'>
+            /// An optional list of known keys to extract the values for.
+            /// </param>
+            public static AnalyzeResult AnalyzeCustomModel(this IFormRecognizerClient operations, string id, Stream formStream, IList<string> keys = default(IList<string>))
+            {
+                return operations.AnalyzeCustomModelAsync(id, formStream, keys).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Analyze Form
+            /// </summary>
+            /// <remarks>
+            /// The document to analyze must be of a supported content type -
+            /// 'application/pdf', 'image/jpeg' or 'image/png'. The response contains not
+            /// just the extracted information of the analyzed form but also information
+            /// about content that was not extracted along with a reason.
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='id'>
+            /// Model Identifier to analyze the document with.
+            /// </param>
+            /// <param name='formStream'>
+            /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
+            /// processing.
+            /// </param>
+            /// <param name='keys'>
+            /// An optional list of known keys to extract the values for.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AnalyzeResult> AnalyzeCustomModelAsync(this IFormRecognizerClient operations, string id, Stream formStream, IList<string> keys = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AnalyzeCustomModelWithHttpMessagesAsync(id, formStream, keys, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

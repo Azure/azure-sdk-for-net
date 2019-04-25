@@ -14,18 +14,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
     /// <summary>
     /// Canonical representation of single extracted text.
     /// </summary>
-    public partial class Token
+    public partial class ExtractedToken
     {
         /// <summary>
-        /// Initializes a new instance of the Token class.
+        /// Initializes a new instance of the ExtractedToken class.
         /// </summary>
-        public Token()
+        public ExtractedToken()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Token class.
+        /// Initializes a new instance of the ExtractedToken class.
         /// </summary>
         /// <param name="text">String value of the extracted text.</param>
         /// <param name="boundingBox">Bounding box of the extracted text.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// with origin reference from the bottom-left of the page.</param>
         /// <param name="confidence">A measure of accuracy of the extracted
         /// text.</param>
-        public Token(string text = default(string), IList<double?> boundingBox = default(IList<double?>), double? confidence = default(double?))
+        public ExtractedToken(string text = default(string), IList<double?> boundingBox = default(IList<double?>), double? confidence = default(double?))
         {
             Text = text;
             BoundingBox = boundingBox;

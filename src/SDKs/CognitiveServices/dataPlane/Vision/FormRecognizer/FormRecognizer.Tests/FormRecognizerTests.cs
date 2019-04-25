@@ -21,12 +21,10 @@ namespace FormRecognizerSDK.Tests
 
                 IFormRecognizerClient client = GetFormRecognizerClient(HttpMockServer.CreateInstance());
 
-                TrainRequest trainRequest = new TrainRequest("/input/data");
+                TrainResult trainResult = client.TrainCustomModel(new TrainRequest("/input/data"));
 
-                TrainResponse trainResponse = client.FormRecognizer.CustomTrain(trainRequest);
-
-                Assert.True(trainResponse.Errors.Count == 0);
-                Assert.True(!string.IsNullOrEmpty(trainResponse.ModelId));
+                Assert.True(trainResult.Errors.Count == 0);
+                Assert.True(!string.IsNullOrEmpty(trainResult.ModelId.ToString()));
             }
         }
     }

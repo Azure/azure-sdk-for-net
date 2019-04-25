@@ -12,20 +12,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
     using System.Linq;
 
     /// <summary>
-    /// Analyze API response.
+    /// Analyze API call result.
     /// </summary>
-    public partial class AnalyzeResponse
+    public partial class AnalyzeResult
     {
         /// <summary>
-        /// Initializes a new instance of the AnalyzeResponse class.
+        /// Initializes a new instance of the AnalyzeResult class.
         /// </summary>
-        public AnalyzeResponse()
+        public AnalyzeResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalyzeResponse class.
+        /// Initializes a new instance of the AnalyzeResult class.
         /// </summary>
         /// <param name="status">Status of the analyze operation. Possible
         /// values include: 'success', 'partialSuccess', 'failure'</param>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// document.</param>
         /// <param name="errors">List of errors reported during the analyze
         /// operation.</param>
-        public AnalyzeResponse(string status = default(string), IList<Page> pages = default(IList<Page>), IList<FormOperationError> errors = default(IList<FormOperationError>))
+        public AnalyzeResult(string status = default(string), IList<ExtractedPage> pages = default(IList<ExtractedPage>), IList<FormOperationError> errors = default(IList<FormOperationError>))
         {
             Status = status;
             Pages = pages;
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// document.
         /// </summary>
         [JsonProperty(PropertyName = "pages")]
-        public IList<Page> Pages { get; set; }
+        public IList<ExtractedPage> Pages { get; set; }
 
         /// <summary>
         /// Gets or sets list of errors reported during the analyze

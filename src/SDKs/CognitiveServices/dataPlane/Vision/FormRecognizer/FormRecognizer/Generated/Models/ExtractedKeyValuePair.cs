@@ -15,24 +15,24 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
     /// Representation of a key-value pair as a list
     /// of key and value tokens.
     /// </summary>
-    public partial class KeyValuePair
+    public partial class ExtractedKeyValuePair
     {
         /// <summary>
-        /// Initializes a new instance of the KeyValuePair class.
+        /// Initializes a new instance of the ExtractedKeyValuePair class.
         /// </summary>
-        public KeyValuePair()
+        public ExtractedKeyValuePair()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the KeyValuePair class.
+        /// Initializes a new instance of the ExtractedKeyValuePair class.
         /// </summary>
         /// <param name="key">List of tokens for the extracted key in a
         /// key-value pair.</param>
         /// <param name="value">List of tokens for the extracted value in a
         /// key-value pair.</param>
-        public KeyValuePair(IList<Token> key = default(IList<Token>), IList<Token> value = default(IList<Token>))
+        public ExtractedKeyValuePair(IList<ExtractedToken> key = default(IList<ExtractedToken>), IList<ExtractedToken> value = default(IList<ExtractedToken>))
         {
             Key = key;
             Value = value;
@@ -49,14 +49,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// pair.
         /// </summary>
         [JsonProperty(PropertyName = "key")]
-        public IList<Token> Key { get; set; }
+        public IList<ExtractedToken> Key { get; set; }
 
         /// <summary>
         /// Gets or sets list of tokens for the extracted value in a key-value
         /// pair.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Token> Value { get; set; }
+        public IList<ExtractedToken> Value { get; set; }
 
     }
 }

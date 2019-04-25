@@ -15,25 +15,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
     /// Extraction information of a column in
     /// a table.
     /// </summary>
-    public partial class TableColumn
+    public partial class ExtractedTableColumn
     {
         /// <summary>
-        /// Initializes a new instance of the TableColumn class.
+        /// Initializes a new instance of the ExtractedTableColumn class.
         /// </summary>
-        public TableColumn()
+        public ExtractedTableColumn()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TableColumn class.
+        /// Initializes a new instance of the ExtractedTableColumn class.
         /// </summary>
         /// <param name="header">List of extracted tokens for the column
         /// header.</param>
         /// <param name="entries">Extracted text for each cell of a column.
         /// Each cell
         /// in the column can have a list of one or more tokens.</param>
-        public TableColumn(IList<Token> header = default(IList<Token>), IList<IList<Token>> entries = default(IList<IList<Token>>))
+        public ExtractedTableColumn(IList<ExtractedToken> header = default(IList<ExtractedToken>), IList<IList<ExtractedToken>> entries = default(IList<IList<ExtractedToken>>))
         {
             Header = header;
             Entries = entries;
@@ -49,14 +49,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// Gets or sets list of extracted tokens for the column header.
         /// </summary>
         [JsonProperty(PropertyName = "header")]
-        public IList<Token> Header { get; set; }
+        public IList<ExtractedToken> Header { get; set; }
 
         /// <summary>
         /// Gets or sets extracted text for each cell of a column. Each cell
         /// in the column can have a list of one or more tokens.
         /// </summary>
         [JsonProperty(PropertyName = "entries")]
-        public IList<IList<Token>> Entries { get; set; }
+        public IList<IList<ExtractedToken>> Entries { get; set; }
 
     }
 }

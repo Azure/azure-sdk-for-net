@@ -15,23 +15,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
     /// Extraction information about a table
     /// contained in a page.
     /// </summary>
-    public partial class Table
+    public partial class ExtractedTable
     {
         /// <summary>
-        /// Initializes a new instance of the Table class.
+        /// Initializes a new instance of the ExtractedTable class.
         /// </summary>
-        public Table()
+        public ExtractedTable()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Table class.
+        /// Initializes a new instance of the ExtractedTable class.
         /// </summary>
         /// <param name="id">Table identifier.</param>
         /// <param name="columns">List of columns contained in the
         /// table.</param>
-        public Table(string id = default(string), IList<TableColumn> columns = default(IList<TableColumn>))
+        public ExtractedTable(string id = default(string), IList<ExtractedTableColumn> columns = default(IList<ExtractedTableColumn>))
         {
             Id = id;
             Columns = columns;
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// Gets or sets list of columns contained in the table.
         /// </summary>
         [JsonProperty(PropertyName = "columns")]
-        public IList<TableColumn> Columns { get; set; }
+        public IList<ExtractedTableColumn> Columns { get; set; }
 
     }
 }

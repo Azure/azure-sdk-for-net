@@ -15,18 +15,18 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
     /// Extraction information of a single page in a
     /// with a document.
     /// </summary>
-    public partial class Page
+    public partial class ExtractedPage
     {
         /// <summary>
-        /// Initializes a new instance of the Page class.
+        /// Initializes a new instance of the ExtractedPage class.
         /// </summary>
-        public Page()
+        public ExtractedPage()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Page class.
+        /// Initializes a new instance of the ExtractedPage class.
         /// </summary>
         /// <param name="number">Page number.</param>
         /// <param name="height">Height of the page (in pixels).</param>
@@ -34,16 +34,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// <param name="clusterId">Cluster identifier.</param>
         /// <param name="keyValuePairs">List of Key-Value pairs extracted from
         /// the page.</param>
-        /// <param name="tables">List of Tables and their information extracted
-        /// from the page.</param>
-        public Page(int? number = default(int?), int? height = default(int?), int? width = default(int?), int? clusterId = default(int?), IList<KeyValuePair> keyValuePairs = default(IList<KeyValuePair>), IList<Table> tables = default(IList<Table>))
+        /// <param name="extractedtables">List of Tables and their information
+        /// extracted from the page.</param>
+        public ExtractedPage(int? number = default(int?), int? height = default(int?), int? width = default(int?), int? clusterId = default(int?), IList<ExtractedKeyValuePair> keyValuePairs = default(IList<ExtractedKeyValuePair>), IList<ExtractedTable> extractedtables = default(IList<ExtractedTable>))
         {
             Number = number;
             Height = height;
             Width = width;
             ClusterId = clusterId;
             KeyValuePairs = keyValuePairs;
-            Tables = tables;
+            Extractedtables = extractedtables;
             CustomInit();
         }
 
@@ -80,14 +80,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// Gets or sets list of Key-Value pairs extracted from the page.
         /// </summary>
         [JsonProperty(PropertyName = "keyValuePairs")]
-        public IList<KeyValuePair> KeyValuePairs { get; set; }
+        public IList<ExtractedKeyValuePair> KeyValuePairs { get; set; }
 
         /// <summary>
         /// Gets or sets list of Tables and their information extracted from
         /// the page.
         /// </summary>
-        [JsonProperty(PropertyName = "tables")]
-        public IList<Table> Tables { get; set; }
+        [JsonProperty(PropertyName = "extractedtables")]
+        public IList<ExtractedTable> Extractedtables { get; set; }
 
     }
 }

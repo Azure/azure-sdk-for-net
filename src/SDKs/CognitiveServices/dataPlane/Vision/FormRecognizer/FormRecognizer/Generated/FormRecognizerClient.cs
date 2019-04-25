@@ -25,12 +25,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
     /// </summary>
     public partial class FormRecognizerClient : ServiceClient<FormRecognizerClient>, IFormRecognizerClient
     {
-        public string Endpoint { get; set; }
-
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        public System.Uri BaseUri { get; set; }
+        internal string BaseUri {get; set;}
 
         /// <summary>
         /// Gets or sets json serialization settings.
@@ -43,14 +41,15 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
+        /// Supported Cognitive Services endpoints (protocol and hostname, for example:
+        /// https://westus2.api.cognitive.microsoft.com).
+        /// </summary>
+        public string Endpoint { get; set; }
+
+        /// <summary>
         /// Subscription credentials which uniquely identify client subscription.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
-
-        /// <summary>
-        /// Gets the IFormRecognizerOperations.
-        /// </summary>
-        public virtual IFormRecognizerOperations FormRecognizer { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the FormRecognizerClient class.
@@ -75,51 +74,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         protected FormRecognizerClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the FormRecognizerClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected FormRecognizerClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the FormRecognizerClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        protected FormRecognizerClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            BaseUri = baseUri;
         }
 
         /// <summary>
@@ -176,75 +130,6 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         }
 
         /// <summary>
-        /// Initializes a new instance of the FormRecognizerClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public FormRecognizerClient(System.Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the FormRecognizerClient class.
-        /// </summary>
-        /// <param name='baseUri'>
-        /// Optional. The base URI of the service.
-        /// </param>
-        /// <param name='credentials'>
-        /// Required. Subscription credentials which uniquely identify client subscription.
-        /// </param>
-        /// <param name='rootHandler'>
-        /// Optional. The http client handler used to handle http transport.
-        /// </param>
-        /// <param name='handlers'>
-        /// Optional. The delegating handlers to add to the http client pipeline.
-        /// </param>
-        /// <exception cref="System.ArgumentNullException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        public FormRecognizerClient(System.Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
-        {
-            if (baseUri == null)
-            {
-                throw new System.ArgumentNullException("baseUri");
-            }
-            if (credentials == null)
-            {
-                throw new System.ArgumentNullException("credentials");
-            }
-            BaseUri = baseUri;
-            Credentials = credentials;
-            if (Credentials != null)
-            {
-                Credentials.InitializeServiceClient(this);
-            }
-        }
-
-        /// <summary>
         /// An optional partial-method to perform custom initialization.
         ///</summary>
         partial void CustomInitialize();
@@ -253,8 +138,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// </summary>
         private void Initialize()
         {
-            FormRecognizer = new FormRecognizerOperations(this);
-            BaseUri = new System.Uri("http://localhost");
+            BaseUri = "{Endpoint}/formrecognizer/v1.0-preview/custom";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -283,16 +167,20 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             CustomInitialize();
         }
         /// <summary>
-        /// Train a model to analyze using a set of documents of supported types.
+        /// Train Model
         /// </summary>
         /// <remarks>
-        /// The train request must include a 'Source' parameter that is
-        /// either a Azure Storage Blob Container SAS Uri or a path to a locally
-        /// mounted
-        /// drive. When local paths are specified, they must always follow the
-        /// Linux/Unix style
-        /// absolute path convention and be rooted to the {Mounts:Input}
-        /// configuration setting value.
+        /// The train request must include a source parameter that is either an
+        /// externally accessible Azure Storage blob container Uri (preferably a Shared
+        /// Access Signature Uri) or valid path to a data folder in a locally mounted
+        /// drive. When local paths are specified, they must follow the Linux/Unix path
+        /// format and be an absolute path rooted to the input mount configuration
+        /// setting value e.g., if '{Mounts:Input}' configuration setting value is
+        /// '/input' then a valid source path would be '/input/contosodataset'. All
+        /// data to be trained are expected to be under the source. Models are trained
+        /// using documents that are of the following content type - 'application/pdf',
+        /// 'image/jpeg' and 'image/png'."
+        /// Other content is ignored when training a model.
         /// </remarks>
         /// <param name='trainRequest'>
         /// Request object for training.
@@ -309,11 +197,25 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<TrainResponse>> FormrecognizerV10CustomTrainPostWithHttpMessagesAsync(TrainRequest trainRequest = default(TrainRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<TrainResult>> TrainCustomModelWithHttpMessagesAsync(TrainRequest trainRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (trainRequest == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "trainRequest");
+            }
             if (trainRequest != null)
             {
                 trainRequest.Validate();
@@ -327,11 +229,12 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("trainRequest", trainRequest);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "FormrecognizerV10CustomTrainPost", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "TrainCustomModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "formrecognizer/v1.0/custom/train").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "train";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -410,7 +313,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<TrainResponse>();
+            var _result = new HttpOperationResponse<TrainResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -419,7 +322,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<TrainResponse>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<TrainResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -439,11 +342,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         }
 
         /// <summary>
-        /// Get keys of a model.
+        /// Get Keys
         /// </summary>
         /// <remarks>
-        /// &lt;para&gt;Use the API to retrieve the keys that were
-        /// extracted by the specified model.&lt;/para&gt;
+        /// Use the API to retrieve the keys that were
+        /// extracted by the specified model.
         /// </remarks>
         /// <param name='id'>
         /// Model identifier.
@@ -457,6 +360,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -466,11 +372,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> FormrecognizerV10CustomModelByIdKeysGetWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<KeysResult>> GetExtractedKeysByCustomModelIdWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (id == null)
+            if (Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -481,12 +387,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "FormrecognizerV10CustomModelByIdKeysGet", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetExtractedKeysByCustomModelId", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "formrecognizer/v1.0/custom/model/{id}/keys").ToString();
-            _url = _url.Replace("{id}", System.Uri.EscapeDataString(id));
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/keys";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -559,9 +466,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<KeysResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<KeysResult>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -570,8 +495,158 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         }
 
         /// <summary>
-        /// Get information about a model.
+        /// Get Models
         /// </summary>
+        /// <remarks>
+        /// Get information about all trained models
+        /// </remarks>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<IList<ModelInfo>>> GetListOfCustomModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetListOfCustomModels", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<IList<ModelInfo>>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<ModelInfo>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get Model
+        /// </summary>
+        /// <remarks>
+        /// Get information about a model.
+        /// </remarks>
         /// <param name='id'>
         /// Model identifier.
         /// </param>
@@ -584,6 +659,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
@@ -593,11 +671,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> FormrecognizerV10CustomModelByIdGetWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ModelInfo>> GetCustomModelByIdWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (id == null)
+            if (Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -608,12 +686,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "FormrecognizerV10CustomModelByIdGet", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCustomModelById", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "formrecognizer/v1.0/custom/model/{id}").ToString();
-            _url = _url.Replace("{id}", System.Uri.EscapeDataString(id));
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -686,9 +765,27 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse();
+            var _result = new HttpOperationResponse<ModelInfo>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ModelInfo>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -697,8 +794,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         }
 
         /// <summary>
-        /// Delete a model and all associated pre-processing data.
+        /// Delete Model
         /// </summary>
+        /// <remarks>
+        /// Delete model artifacts.
+        /// </remarks>
         /// <param name='id'>
         /// The identifier of the model to delete.
         /// </param>
@@ -720,11 +820,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> FormrecognizerV10CustomModelByIdDeleteWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteCustomModelByIdWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (id == null)
+            if (Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "id");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -735,12 +835,13 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "FormrecognizerV10CustomModelByIdDelete", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteCustomModelById", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "formrecognizer/v1.0/custom/model/{id}").ToString();
-            _url = _url.Replace("{id}", System.Uri.EscapeDataString(id));
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/";
+            _url = _url.Replace("{Endpoint}", Endpoint);
+            _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -824,22 +925,23 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         }
 
         /// <summary>
-        /// Analyze a document to extract key-value pairs and table
-        /// information.
+        /// Analyze Form
         /// </summary>
         /// <remarks>
-        /// &lt;para&gt;The document to analyze must be must be of expected
-        /// media type - currently supported types are application/pdf, image/jpg or
-        /// image/png.&lt;/para&gt;
+        /// The document to analyze must be of a supported content type -
+        /// 'application/pdf', 'image/jpeg' or 'image/png'. The response contains not
+        /// just the extracted information of the analyzed form but also information
+        /// about content that was not extracted along with a reason.
         /// </remarks>
         /// <param name='id'>
-        /// Identifier of the model to analyze the document with.
+        /// Model Identifier to analyze the document with.
+        /// </param>
+        /// <param name='formStream'>
+        /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
+        /// processing.
         /// </param>
         /// <param name='keys'>
         /// An optional list of known keys to extract the values for.
-        /// </param>
-        /// <param name='form'>
-        /// Upload image or pdf content for processing.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -862,11 +964,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<AnalyzeResponse>> FormrecognizerV10CustomModelByIdAnalyzePostWithHttpMessagesAsync(string id, IList<string> keys = default(IList<string>), Stream form = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<AnalyzeResult>> AnalyzeCustomModelWithHttpMessagesAsync(string id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (Endpoint == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
             if (id == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "id");
+            }
+            if (formStream == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "formStream");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -877,13 +987,14 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("keys", keys);
-                tracingParameters.Add("form", form);
+                tracingParameters.Add("formStream", formStream);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "FormrecognizerV10CustomModelByIdAnalyzePost", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AnalyzeCustomModel", tracingParameters);
             }
             // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "formrecognizer/v1.0/custom/model/{id}/analyze").ToString();
+            var _baseUrl = BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/analyze";
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(id));
             List<string> _queryParameters = new List<string>();
             if (keys != null)
@@ -927,19 +1038,19 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             // Serialize Request
             string _requestContent = null;
             MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
-            if (form != null)
+            if (formStream != null)
             {
-                 StreamContent _form = new StreamContent(form);
-                _form.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-                FileStream _formAsFileStream = form as FileStream;
-                if (_formAsFileStream != null)
+                 StreamContent _formStream = new StreamContent(formStream);
+                _formStream.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                FileStream _formStreamAsFileStream = formStream as FileStream;
+                if (_formStreamAsFileStream != null)
                 {
                     ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
-                    _contentDispositionHeaderValue.Name = "form";
-                    _contentDispositionHeaderValue.FileName = _formAsFileStream.Name;
-                    _form.Headers.ContentDisposition = _contentDispositionHeaderValue;
+                    _contentDispositionHeaderValue.Name = "form_stream";
+                    _contentDispositionHeaderValue.FileName = _formStreamAsFileStream.Name;
+                    _formStream.Headers.ContentDisposition = _contentDispositionHeaderValue;
                 }
-                _multiPartContent.Add(_form, "form");
+                _multiPartContent.Add(_formStream, "form_stream");
             }
             _httpRequest.Content = _multiPartContent;
             // Set Credentials
@@ -992,7 +1103,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<AnalyzeResponse>();
+            var _result = new HttpOperationResponse<AnalyzeResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -1001,130 +1112,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<AnalyzeResponse>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<ContainerStatus>> StatusGetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "StatusGet", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "status").ToString();
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<ContainerStatus>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ContainerStatus>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<AnalyzeResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
