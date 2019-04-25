@@ -26,6 +26,24 @@ known_content_issues:
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
+package_indexing_exclusion_list:
+  - 'AutoRest-AzureDotNetSDK'
+  - 'NetCoreTestPublish'
+  - 'ObjectModelCodeGenerator'
+  - 'ProxyLayerParser'
+  - 'IntegrationTestCommon'
+  - 'Azure.Template'
+  - 'SampleSDKTestPublish'
+  - 'CSProjTestPublish'
+  - 'ConfigureAwaitAnalyzer'
+  - 'Microsoft.WindowsAzure.Build.Tasks'
+  - 'Microsoft.Azure.Services.AppAuthentication.TestCommon'
+  - 'RP2_Sdk'
+  - 'RP1_MgmtPlane'
+  - 'RP1_DataPlane'
+  - 'Gallery'
+  - 'Intune'
+  - 'Common'
 package_indexing_traversal_stops:
   - 'sdk/'
   - 'src/SDKs/'
