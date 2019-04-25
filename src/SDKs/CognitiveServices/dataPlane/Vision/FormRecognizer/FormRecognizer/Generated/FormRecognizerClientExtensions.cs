@@ -129,7 +129,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<ModelInfo> GetListOfCustomModels(this IFormRecognizerClient operations)
+            public static IList<ModelResult> GetListOfCustomModels(this IFormRecognizerClient operations)
             {
                 return operations.GetListOfCustomModelsAsync().GetAwaiter().GetResult();
             }
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelInfo>> GetListOfCustomModelsAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<ModelResult>> GetListOfCustomModelsAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetListOfCustomModelsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='id'>
             /// Model identifier.
             /// </param>
-            public static ModelInfo GetCustomModelById(this IFormRecognizerClient operations, System.Guid id)
+            public static ModelResult GetCustomModelById(this IFormRecognizerClient operations, System.Guid id)
             {
                 return operations.GetCustomModelByIdAsync(id).GetAwaiter().GetResult();
             }
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ModelInfo> GetCustomModelByIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ModelResult> GetCustomModelByIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCustomModelByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {

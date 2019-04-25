@@ -7,10 +7,13 @@
 namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// Response of the Keys API call.
+    /// Result of an operation to get
+    /// the keys extracted by a model.
     /// </summary>
     public partial class KeysResult
     {
@@ -25,8 +28,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// <summary>
         /// Initializes a new instance of the KeysResult class.
         /// </summary>
-        /// <param name="clusters">Cluster of keys</param>
-        public KeysResult(object clusters = default(object))
+        /// <param name="clusters">Object mapping ClusterIds to Key
+        /// lists.</param>
+        public KeysResult(IDictionary<string, IList<string>> clusters = default(IDictionary<string, IList<string>>))
         {
             Clusters = clusters;
             CustomInit();
@@ -38,10 +42,10 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets cluster of keys
+        /// Gets or sets object mapping ClusterIds to Key lists.
         /// </summary>
         [JsonProperty(PropertyName = "clusters")]
-        public object Clusters { get; set; }
+        public IDictionary<string, IList<string>> Clusters { get; set; }
 
     }
 }
