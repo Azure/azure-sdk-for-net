@@ -206,10 +206,10 @@ namespace Azure.Core.Tests
 
             request.Headers.Add(headerName, headerValue);
 
-            Assert.True(request.TryGetHeader(headerName, out var value));
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
 
-            Assert.True(request.TryGetHeader(headerName.ToUpper(), out value));
+            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
             CollectionAssert.AreEqual(new []
@@ -240,10 +240,10 @@ namespace Azure.Core.Tests
             request.Headers.Add(headerName, "Random value");
             request.Headers.SetValue(headerName, headerValue);
 
-            Assert.True(request.TryGetHeader(headerName, out var value));
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
 
-            Assert.True(request.TryGetHeader(headerName.ToUpper(), out value));
+            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
             CollectionAssert.AreEqual(new []
@@ -270,12 +270,12 @@ namespace Azure.Core.Tests
             Request request = CreateRequest(transport);
 
             request.Headers.Add(headerName, headerValue);
-            Assert.True(request.RemoveHeader(headerName));
-            Assert.False(request.RemoveHeader(headerName));
+            Assert.True(request.Headers.Remove(headerName));
+            Assert.False(request.Headers.Remove(headerName));
 
-            Assert.False(request.TryGetHeader(headerName, out _));
-            Assert.False(request.TryGetHeader(headerName.ToUpper(), out _));
-            Assert.False(request.ContainsHeader(headerName.ToUpper()));
+            Assert.False(request.Headers.TryGetValue(headerName, out _));
+            Assert.False(request.Headers.TryGetValue(headerName.ToUpper(), out _));
+            Assert.False(request.Headers.Contains(headerName.ToUpper()));
 
             await ExecuteRequest(request, transport);
         }
@@ -306,10 +306,10 @@ namespace Azure.Core.Tests
 
             var response = await ExecuteRequest(request, transport);
 
-            Assert.True(response.TryGetHeader(headerName, out var value));
+            Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
 
-            Assert.True(response.TryGetHeader(headerName.ToUpper(), out value));
+            Assert.True(response.Headers.TryGetValue(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
@@ -352,12 +352,12 @@ namespace Azure.Core.Tests
             request.Headers.Add(headerName, headerValue);
             request.Headers.Add(headerName, anotherHeaderValue);
 
-            Assert.True(request.ContainsHeader(headerName));
+            Assert.True(request.Headers.Contains(headerName));
 
-            Assert.True(request.TryGetHeader(headerName, out var value));
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(joinedHeaderValues, value);
 
-            Assert.True(request.TryGetHeaderValues(headerName, out var values));
+            Assert.True(request.Headers.TryGetValues(headerName, out var values));
             CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
 
             CollectionAssert.AreEqual(new []
@@ -401,12 +401,12 @@ namespace Azure.Core.Tests
 
             var response = await ExecuteRequest(request, transport);
 
-            Assert.True(response.ContainsHeader(headerName));
+            Assert.True(response.Headers.Contains(headerName));
 
-            Assert.True(response.TryGetHeader(headerName, out var value));
+            Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(joinedHeaderValues, value);
 
-            Assert.True(response.TryGetHeaderValues(headerName, out var values));
+            Assert.True(response.Headers.TryGetValues(headerName, out var values));
             CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
 
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
