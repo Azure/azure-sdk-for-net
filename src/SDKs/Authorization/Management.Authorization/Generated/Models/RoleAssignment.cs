@@ -43,8 +43,8 @@ namespace Microsoft.Azure.Management.Authorization.Models
         /// 'ServicePrincipal', 'Unknown', 'DirectoryRoleTemplate',
         /// 'ForeignGroup', 'Application', 'MSI', 'DirectoryObjectOrGroup',
         /// 'Everyone'</param>
-        /// <param name="canDelegate">The Delegation flag for the
-        /// roleassignment</param>
+        /// <param name="canDelegate">The Delegation flag for the role
+        /// assignment</param>
         public RoleAssignment(string id = default(string), string name = default(string), string type = default(string), string scope = default(string), string roleDefinitionId = default(string), string principalId = default(string), string principalType = default(string), bool? canDelegate = default(bool?))
         {
             Id = id;
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Authorization.Models
         public string PrincipalType { get; set; }
 
         /// <summary>
-        /// Gets or sets the Delegation flag for the roleassignment
+        /// Gets or sets the Delegation flag for the role assignment
         /// </summary>
         [JsonProperty(PropertyName = "properties.canDelegate")]
         public bool? CanDelegate { get; set; }

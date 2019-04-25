@@ -1,4 +1,4 @@
-﻿using Azure.Base.Attributes;
+﻿using Azure.Core.Attributes;
 using System.Runtime.CompilerServices;
 
 [assembly:AzureSdkClientLibrary("config")]

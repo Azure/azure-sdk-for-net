@@ -38,18 +38,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="displayName">The billing account name.</param>
-        /// <param name="company">The Company this billing account belongs
-        /// to.</param>
         /// <param name="accountType">The billing account Type. Possible values
         /// include: 'Organization', 'Enrollment'</param>
         /// <param name="address">The address associated with billing
         /// account.</param>
-        /// <param name="country">The country associated with billing
-        /// account..</param>
+        /// <param name="company">Company Name.</param>
+        /// <param name="country">Country Name.</param>
         /// <param name="invoiceSections">The invoice sections associated to
-        /// the billing account.</param>
+        /// the billing account. By default this is not populated, unless it's
+        /// specified in $expand.</param>
         /// <param name="billingProfiles">The billing profiles associated to
-        /// the billing account.</param>
+        /// the billing account. By default this is not populated, unless it's
+        /// specified in $expand.</param>
         /// <param name="enrollmentDetails">The details about the associated
         /// legacy enrollment. By default this is not populated, unless it's
         /// specified in $expand.</param>
@@ -57,19 +57,22 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// enrollment.</param>
         /// <param name="enrollmentAccounts">The accounts associated to the
         /// enrollment.</param>
-        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string company = default(string), string accountType = default(string), Address address = default(Address), string country = default(string), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>))
+        /// <param name="hasReadAccess">Specifies whether the user has read
+        /// access on billing account.</param>
+        public BillingAccount(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string accountType = default(string), Address address = default(Address), string company = default(string), string country = default(string), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>), IList<BillingProfile> billingProfiles = default(IList<BillingProfile>), Enrollment enrollmentDetails = default(Enrollment), IList<Department> departments = default(IList<Department>), IList<EnrollmentAccount> enrollmentAccounts = default(IList<EnrollmentAccount>), bool? hasReadAccess = default(bool?))
             : base(id, name, type)
         {
             DisplayName = displayName;
-            Company = company;
             AccountType = accountType;
             Address = address;
+            Company = company;
             Country = country;
             InvoiceSections = invoiceSections;
             BillingProfiles = billingProfiles;
             EnrollmentDetails = enrollmentDetails;
             Departments = departments;
             EnrollmentAccounts = enrollmentAccounts;
+            HasReadAccess = hasReadAccess;
             CustomInit();
         }
 
@@ -85,12 +88,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets the Company this billing account belongs to.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.company")]
-        public string Company { get; private set; }
-
-        /// <summary>
         /// Gets the billing account Type. Possible values include:
         /// 'Organization', 'Enrollment'
         /// </summary>
@@ -104,21 +101,29 @@ namespace Microsoft.Azure.Management.Billing.Models
         public Address Address { get; set; }
 
         /// <summary>
-        /// Gets the country associated with billing account..
+        /// Gets company Name.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.company")]
+        public string Company { get; private set; }
+
+        /// <summary>
+        /// Gets country Name.
         /// </summary>
         [JsonProperty(PropertyName = "properties.country")]
         public string Country { get; private set; }
 
         /// <summary>
         /// Gets or sets the invoice sections associated to the billing
-        /// account.
+        /// account. By default this is not populated, unless it's specified in
+        /// $expand.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceSections")]
         public IList<InvoiceSection> InvoiceSections { get; set; }
 
         /// <summary>
         /// Gets or sets the billing profiles associated to the billing
-        /// account.
+        /// account. By default this is not populated, unless it's specified in
+        /// $expand.
         /// </summary>
         [JsonProperty(PropertyName = "properties.billingProfiles")]
         public IList<BillingProfile> BillingProfiles { get; set; }
@@ -141,6 +146,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enrollmentAccounts")]
         public IList<EnrollmentAccount> EnrollmentAccounts { get; set; }
+
+        /// <summary>
+        /// Gets specifies whether the user has read access on billing account.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hasReadAccess")]
+        public bool? HasReadAccess { get; private set; }
 
     }
 }

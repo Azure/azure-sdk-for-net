@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -33,11 +34,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the GetVpnSitesConfigurationRequest
         /// class.
         /// </summary>
-        /// <param name="vpnSites">List of resource-ids of the vpn-sites for
-        /// which config is to be downloaded.</param>
         /// <param name="outputBlobSasUrl">The sas-url to download the
         /// configurations for vpn-sites</param>
-        public GetVpnSitesConfigurationRequest(IList<string> vpnSites = default(IList<string>), string outputBlobSasUrl = default(string))
+        /// <param name="vpnSites">List of resource-ids of the vpn-sites for
+        /// which config is to be downloaded.</param>
+        public GetVpnSitesConfigurationRequest(string outputBlobSasUrl, IList<string> vpnSites = default(IList<string>))
         {
             VpnSites = vpnSites;
             OutputBlobSasUrl = outputBlobSasUrl;
@@ -63,5 +64,18 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "outputBlobSasUrl")]
         public string OutputBlobSasUrl { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (OutputBlobSasUrl == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "OutputBlobSasUrl");
+            }
+        }
     }
 }

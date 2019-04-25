@@ -33,13 +33,11 @@ namespace Microsoft.Azure.Management.Reservations.Models
         /// <param name="reservedResourceType">Possible values include:
         /// 'VirtualMachines', 'SqlDatabases', 'SuseLinux', 'CosmosDb'</param>
         /// <param name="instanceFlexibility">Possible values include: 'On',
-        /// 'Off', 'NotSupported'</param>
+        /// 'Off'</param>
         /// <param name="displayName">Friendly name for user to easily identify
         /// the reservation</param>
         /// <param name="appliedScopeType">Possible values include: 'Single',
         /// 'Shared'</param>
-        /// <param name="quantity">Quantity of the SKUs that are part of the
-        /// Reservation.</param>
         /// <param name="provisioningState">Current state of the
         /// reservation.</param>
         /// <param name="effectiveDateTime">DateTime of the Reservation
@@ -82,7 +80,7 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string ReservedResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets possible values include: 'On', 'Off', 'NotSupported'
+        /// Gets or sets possible values include: 'On', 'Off'
         /// </summary>
         [JsonProperty(PropertyName = "instanceFlexibility")]
         public string InstanceFlexibility { get; set; }
@@ -106,7 +104,6 @@ namespace Microsoft.Azure.Management.Reservations.Models
         public string AppliedScopeType { get; set; }
 
         /// <summary>
-        /// Gets or sets quantity of the SKUs that are part of the Reservation.
         /// </summary>
         [JsonProperty(PropertyName = "quantity")]
         public int? Quantity { get; set; }

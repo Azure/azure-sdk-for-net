@@ -69,10 +69,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// outage.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count for each
         /// placement group.</param>
+        /// <param name="proximityPlacementGroup">Specifies information about
+        /// the proximity placement group that the virtual machine scale set
+        /// should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// 2018-04-01.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -86,6 +90,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             SinglePlacementGroup = singlePlacementGroup;
             ZoneBalance = zoneBalance;
             PlatformFaultDomainCount = platformFaultDomainCount;
+            ProximityPlacementGroup = proximityPlacementGroup;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -174,6 +179,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.platformFaultDomainCount")]
         public int? PlatformFaultDomainCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the proximity placement
+        /// group that the virtual machine scale set should be assigned to.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2018-04-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
+        public SubResource ProximityPlacementGroup { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if

@@ -9,7 +9,6 @@ namespace Azure.ApplicationModel.Configuration
     [Flags]
     public enum SettingFields : uint
     {
-        None = 0x0000,
         Key = 0x0001,
         Label = 0x0002,
         Value = 0x0004,

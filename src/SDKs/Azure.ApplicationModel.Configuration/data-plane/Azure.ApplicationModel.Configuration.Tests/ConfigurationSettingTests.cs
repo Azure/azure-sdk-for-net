@@ -7,7 +7,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 {
     public class ConfigurationSettingTests
     {
-        static readonly string s_connectionString = "Endpoint=https://contoso.azconfig.io;Id=b1d9b31;Secret=aabbccdd";
+        static readonly string s_connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
 
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting(
             string.Concat("key-", Guid.NewGuid().ToString("N")),
@@ -33,10 +33,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "my_label", "label,label" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, @"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label");
+            Assert.AreEqual(@"http://localhost/?key=my_key,key%5C,key&label=my_label,label%5C,label", builder.Uri.AbsoluteUri);
 
         }
 
@@ -50,10 +51,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "*label*" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*key*&label=*label*");
+            Assert.AreEqual("http://localhost/?key=*key*&label=*label*", builder.Uri.AbsoluteUri);
         }
 
         [Test]
@@ -65,10 +67,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Labels = new List<string>() { "" },
             };
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, "http://localhost/?key=*&label=%00");
+            Assert.AreEqual("http://localhost/?key=*&label=%00", builder.Uri.AbsoluteUri);
         }
 
         [Test]
@@ -79,10 +82,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var key = "my-key";
             var selector = new SettingSelector(key);
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key={key}");
+            Assert.AreEqual($"http://localhost/?key={key}", builder.Uri.AbsoluteUri);
         }
 
         [Test]
@@ -93,10 +97,45 @@ namespace Azure.ApplicationModel.Configuration.Tests
             var label = "my-label";
             var selector = new SettingSelector(null, label);
 
-            var builder = new UriBuilder();
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
             service.BuildBatchQuery(builder, selector);
 
-            Assert.AreEqual(builder.Uri.AbsoluteUri, $"http://localhost/?key=*&label={label}");
+            Assert.AreEqual($"http://localhost/?key=*&label={label}", builder.Uri.AbsoluteUri);
+        }
+
+        [Test]
+        public void SettingSomeFields()
+        {
+            var service = new ConfigurationClient(s_connectionString);
+
+            var selector = new SettingSelector("key")
+            {
+                Fields = SettingFields.Key | SettingFields.Value
+            };
+
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
+            service.BuildBatchQuery(builder, selector);
+
+            Assert.AreEqual($"http://localhost/?key=key&$select=key,%20value", builder.Uri.AbsoluteUri);
+        }
+
+        [Test]
+        public void SettingAllFields()
+        {
+            var service = new ConfigurationClient(s_connectionString);
+
+            var selector = new SettingSelector("key")
+            {
+                Fields = SettingFields.All
+            };
+
+            var builder = new HttpPipelineUriBuilder();
+            builder.Uri = new Uri("http://localhost/");
+            service.BuildBatchQuery(builder, selector);
+
+            Assert.AreEqual($"http://localhost/?key=key", builder.Uri.AbsoluteUri);
         }
 
         [Test]
@@ -111,7 +150,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreNotEqual(testSettingUpperCase, testSettingLowerCase);
 
             var testSettingsameCase = s_testSetting.Clone();
-            Assert.AreEqual(testSettingsameCase, s_testSetting);
+            Assert.AreEqual(s_testSetting, testSettingsameCase);
 
             //Etag tests
             var testSettingEtagDiff = testSettingsameCase.Clone();

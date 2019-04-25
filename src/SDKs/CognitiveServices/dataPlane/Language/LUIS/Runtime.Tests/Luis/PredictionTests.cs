@@ -14,7 +14,7 @@
             UseClientFor(async client =>
             {
                 var utterance = "this is a test with post";
-                var result = await client.Prediction.ResolveAsync(appId, utterance);
+                var result = await client.Prediction.ResolveAsync(System.Guid.Parse(appId), utterance);
 
                 Assert.Equal("None", result.TopScoringIntent.Intent);
                 Assert.Equal(utterance, result.Query);
@@ -27,7 +27,7 @@
             UseClientFor(async client =>
             {
                 var utterance = "helo, what dai is todey?";
-                var result = await client.Prediction.ResolveAsync(appId, utterance, spellCheck: true, bingSpellCheckSubscriptionKey: "00000000000000000000000000000000");
+                var result = await client.Prediction.ResolveAsync(System.Guid.Parse(appId), utterance, spellCheck: true, bingSpellCheckSubscriptionKey: "00000000000000000000000000000000");
 
                 Assert.True(!string.IsNullOrWhiteSpace(result.AlteredQuery));
                 Assert.Equal("hello, what day is today?", result.AlteredQuery);
@@ -44,7 +44,7 @@
             {
                 var ex = await Assert.ThrowsAsync<APIErrorException>(async () =>
                 {
-                    await client.Prediction.ResolveWithHttpMessagesAsync(appId, "this is a test with post", customHeaders: headers);
+                    await client.Prediction.ResolveWithHttpMessagesAsync(System.Guid.Parse(appId), "this is a test with post", customHeaders: headers);
                 });
 
                 Assert.Equal("401", ex.Body.StatusCode);
@@ -59,7 +59,7 @@
                 var query = string.Empty.PadLeft(501, 'x');
                 var ex = await Assert.ThrowsAsync<ValidationException>(async () =>
                 {
-                    await client.Prediction.ResolveWithHttpMessagesAsync(appId, query);
+                    await client.Prediction.ResolveWithHttpMessagesAsync(System.Guid.Parse(appId), query);
                 });
 
                 Assert.Equal("query", ex.Target);

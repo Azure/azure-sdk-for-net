@@ -6,8 +6,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Core.Pipeline;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -56,7 +55,7 @@ namespace Azure.ApplicationModel.Configuration
 
             using (var hmac = new HMACSHA256(_secret))
             {
-                var uri = message.Request.Uri;
+                var uri = message.Request.UriBuilder.Uri;
                 var host = uri.Host;
                 var pathAndQuery = uri.PathAndQuery;
 

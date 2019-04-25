@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class OpenIdConnectProviderOperationsExtensions
     {
             /// <summary>
-            /// Lists all OpenID Connect Providers.
+            /// Lists of all the OpenId Connect Providers.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all OpenID Connect Providers.
+            /// Lists of all the OpenId Connect Providers.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all OpenID Connect Providers.
+            /// Lists of all the OpenId Connect Providers.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists all OpenID Connect Providers.
+            /// Lists of all the OpenId Connect Providers.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

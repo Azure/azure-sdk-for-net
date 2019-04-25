@@ -36,11 +36,14 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// receiver.</param>
         /// <param name="callbackUrl">The callback url where http request sent
         /// to.</param>
-        public LogicAppReceiver(string name, string resourceId, string callbackUrl)
+        /// <param name="useCommonAlertSchema">Indicates whether to use common
+        /// alert schema.</param>
+        public LogicAppReceiver(string name, string resourceId, string callbackUrl, bool useCommonAlertSchema)
         {
             Name = name;
             ResourceId = resourceId;
             CallbackUrl = callbackUrl;
+            UseCommonAlertSchema = useCommonAlertSchema;
             CustomInit();
         }
 
@@ -67,6 +70,12 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         [JsonProperty(PropertyName = "callbackUrl")]
         public string CallbackUrl { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates whether to use common alert schema.
+        /// </summary>
+        [JsonProperty(PropertyName = "useCommonAlertSchema")]
+        public bool UseCommonAlertSchema { get; set; }
 
         /// <summary>
         /// Validate the object.

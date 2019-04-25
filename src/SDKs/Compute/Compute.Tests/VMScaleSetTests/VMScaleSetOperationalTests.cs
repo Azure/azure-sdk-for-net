@@ -151,6 +151,54 @@ namespace Compute.Tests
             }
         }
 
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create VMSS
+        /// Start VMSS
+        /// Shutdown VMSS with skipShutdown = true
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMScaleSetOperations_PowerOffWithSkipShutdown()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string rgName = TestUtilities.GenerateName(TestPrefix) + 1;
+                string vmssName = TestUtilities.GenerateName("vmss");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachineScaleSet inputVMScaleSet;
+
+                bool passed = false;
+
+                try
+                {
+                    EnsureClientsInitialized(context);
+
+                    ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+                    StorageAccount storageAccountOutput = CreateStorageAccount(rgName, storageAccountName);
+
+                    VirtualMachineScaleSet vmScaleSet = CreateVMScaleSet_NoAsyncTracking(rgName, vmssName,
+                        storageAccountOutput, imageRef, out inputVMScaleSet, createWithManagedDisks: true);
+
+                    m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
+                    // Shutdown VM with SkipShutdown = true
+                    m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name, true);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    m_ResourcesClient.ResourceGroups.DeleteIfExists(rgName);
+                }
+
+                Assert.True(passed);
+            }
+        }
+
         [Fact]
         public void TestVMScaleSetOperations_PerformMaintenance()
         {
@@ -258,7 +306,7 @@ namespace Compute.Tests
                     };
                     m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name, virtualMachineScaleSetReimageParameters);
                     m_CrpClient.VirtualMachineScaleSets.ReimageAll(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
-                    m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
+                    m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name, null, virtualMachineScaleSetInstanceIDs);
                     m_CrpClient.VirtualMachineScaleSets.UpdateInstances(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);
                     virtualMachineScaleSetInstanceIDs = new List<string>() { "1" };
                     m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name, virtualMachineScaleSetInstanceIDs);

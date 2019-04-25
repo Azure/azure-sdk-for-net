@@ -3,13 +3,12 @@
 // license information.
 
 using System;
-using System.Collections;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Base.Diagnostics;
-using Azure.Base.Http;
-using Azure.Base.Http.Pipeline;
+using Azure.Core.Diagnostics;
+using Azure.Core.Pipeline;
+using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
@@ -17,6 +16,14 @@ namespace Azure.ApplicationModel.Configuration
     {
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
+
+
+        /// <summary>
+        /// Protected constructor to allow mocking
+        /// </summary>
+        protected ConfigurationClient()
+        {
+        }
 
         public ConfigurationClient(string connectionString)
             : this(connectionString, new ConfigurationClientOptions())
@@ -33,17 +40,15 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipeline.Build(options,
+                    options.ResponseClassifier,
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
                     new AuthenticationPolicy(credential, secret),
-                    options.LoggingPolicy);
+                    options.LoggingPolicy,
+                    BufferResponsePolicy.Singleton);
         }
 
-        [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
-        [HttpError(typeof(RequestFailedException), 412, Message = "Matching item is already in the store")]
-        [HttpError(typeof(RequestFailedException), 429, Message = "Too many requests")]
-        [UsageErrors(typeof(RequestFailedException), 401, 409, 408, 500, 502, 503, 504)]
-        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             using (var request = CreateGetRequest(setting))
             {
@@ -87,7 +92,9 @@ namespace Azure.ApplicationModel.Configuration
 
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-            request.SetRequestLine(HttpPipelineMethod.Put, uri);
+                request.Method = HttpPipelineMethod.Put;
+
+                BuildUriForKvRoute(request.UriBuilder, setting);
 
             request.AddHeader(IfNoneMatch, "*");
             request.AddHeader(MediaTypeKeyValueApplicationHeader);
@@ -97,28 +104,26 @@ namespace Azure.ApplicationModel.Configuration
             return request;
         }
 
-        public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null)
                 throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key))
                 throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Uri uri = BuildUriForKvRoute(setting);
-
             using (var request = _pipeline.CreateRequest())
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpPipelineMethod.Put, uri);
-
+                request.Method = HttpPipelineMethod.Put;
+                BuildUriForKvRoute(request.UriBuilder, setting);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
 
@@ -142,28 +147,26 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
             return await SetAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null)
                 throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key))
                 throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            Uri uri = BuildUriForKvRoute(setting);
-
             using (var request = _pipeline.CreateRequest())
             {
                 ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.SetRequestLine(HttpPipelineMethod.Put, uri);
-
+                request.Method = HttpPipelineMethod.Put;
+                BuildUriForKvRoute(request.UriBuilder, setting);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 request.AddHeader(HttpHeader.Common.JsonContentType);
 
@@ -189,23 +192,22 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
+        public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
 
-            Uri uri = BuildUriForKvRoute(key, label);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpPipelineMethod.Delete, uri);
+                request.Method  = HttpPipelineMethod.Delete;
+                BuildUriForKvRoute(request.UriBuilder, key, label);
 
                 if (etag != default)
                 {
@@ -223,18 +225,17 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
 
-            Uri uri = BuildUriForKvRoute(key, label);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpPipelineMethod.Get, uri);
-
+                request.Method = HttpPipelineMethod.Get;
+                BuildUriForKvRoute(request.UriBuilder, key, label);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
+
                 if (acceptDateTime != default)
                 {
                     var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
@@ -253,14 +254,12 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
+        public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
-            var uri = BuildUriForGetBatch(selector);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpPipelineMethod.Get, uri);
-
+                request.Method = HttpPipelineMethod.Get;
+                BuildUriForGetBatch(request.UriBuilder, selector);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {
@@ -279,14 +278,12 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
+        public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
-            var uri = BuildUriForRevisions(selector);
-
             using (var request = _pipeline.CreateRequest())
             {
-                request.SetRequestLine(HttpPipelineMethod.Get, uri);
-
+                request.Method = HttpPipelineMethod.Get;
+                BuildUriForRevisions(request.UriBuilder, selector);
                 request.AddHeader(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {

@@ -331,6 +331,34 @@ namespace Microsoft.Azure.Management.IotCentral
             }
 
             /// <summary>
+            /// Get all available application templates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<AppTemplate> ListTemplates(this IAppsOperations operations)
+            {
+                return operations.ListTemplatesAsync().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all available application templates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AppTemplate>> ListTemplatesAsync(this IAppsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTemplatesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update the metadata of an IoT Central application. The usual
             /// pattern to modify a property is to retrieve the IoT Central application
             /// metadata and security metadata, and then combine them with the modified
@@ -528,6 +556,40 @@ namespace Microsoft.Azure.Management.IotCentral
             public static async Task<IPage<App>> ListByResourceGroupNextAsync(this IAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get all available application templates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<AppTemplate> ListTemplatesNext(this IAppsOperations operations, string nextPageLink)
+            {
+                return operations.ListTemplatesNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get all available application templates.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<AppTemplate>> ListTemplatesNextAsync(this IAppsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListTemplatesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

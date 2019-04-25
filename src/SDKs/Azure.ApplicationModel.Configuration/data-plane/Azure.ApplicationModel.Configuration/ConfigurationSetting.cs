@@ -5,13 +5,13 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
 {
     public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
     {
-        string _key;
-        IDictionary<string, string> _tags;
+        private IDictionary<string, string> _tags;
 
         // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
         internal ConfigurationSetting() { }
@@ -27,13 +27,7 @@ namespace Azure.ApplicationModel.Configuration
         /// The primary identifier of a key-value.
         /// The key is used in unison with the label to uniquely identify a key-value.
         /// </summary>
-        public string Key {
-            get => _key;
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(Key));
-                _key = value;
-            }
-        }
+        public string Key { get; set; }
 
         /// <summary>
         /// A value used to group key-values.
@@ -72,20 +66,8 @@ namespace Azure.ApplicationModel.Configuration
         /// A dictionary of tags that can help identify what a key-value may be applicable for.
         /// </summary>
         public IDictionary<string, string> Tags {
-            get {
-                if (_tags == null) {
-                    lock (_key) {
-                        if (_tags == null) {
-                            _tags = new Dictionary<string, string>();
-                        }
-                    }
-                }
-                return _tags;
-            }
-            set
-            {
-                _tags = value;
-            }
+            get => _tags ?? (_tags = new Dictionary<string, string>());
+            set => _tags = value;
         }
 
         public bool Equals(ConfigurationSetting other)
@@ -102,7 +84,7 @@ namespace Azure.ApplicationModel.Configuration
             if (!string.Equals(Label, other.Label, StringComparison.Ordinal)) return false;
             if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal)) return false;
             if (!TagsEquals(other.Tags)) return false;
-            
+
             return true;
         }
 
@@ -131,13 +113,16 @@ namespace Azure.ApplicationModel.Configuration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            int hash = 17;
-            if (Key!=null) hash = hash * 23 + Key.GetHashCode();
-            if (Value != null) hash = hash * 23 + Value.GetHashCode();
-            if (Label != null) hash = hash * 23 + Label.GetHashCode();
-            if (ETag != null) hash = hash * 23 + ETag.GetHashCode();
-            hash = hash * 23 + LastModified.GetHashCode();
-            return hash;
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Key, StringComparer.Ordinal);
+            hashCode.Add(Label, StringComparer.Ordinal);
+            hashCode.Add(Value, StringComparer.Ordinal);
+            hashCode.Add(ContentType, StringComparer.Ordinal);
+            hashCode.Add(LastModified);
+            hashCode.Add(ETag);
+            hashCode.Add(Locked);
+            hashCode.Add(Tags);
+            return hashCode.ToHashCode();
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

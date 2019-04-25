@@ -229,6 +229,11 @@ namespace Microsoft.Azure.Management.Network
         public virtual ILoadBalancerProbesOperations LoadBalancerProbes { get; private set; }
 
         /// <summary>
+        /// Gets the INatGatewaysOperations.
+        /// </summary>
+        public virtual INatGatewaysOperations NatGateways { get; private set; }
+
+        /// <summary>
         /// Gets the INetworkInterfacesOperations.
         /// </summary>
         public virtual INetworkInterfacesOperations NetworkInterfaces { get; private set; }
@@ -695,6 +700,7 @@ namespace Microsoft.Azure.Management.Network
             LoadBalancerOutboundRules = new LoadBalancerOutboundRulesOperations(this);
             LoadBalancerNetworkInterfaces = new LoadBalancerNetworkInterfacesOperations(this);
             LoadBalancerProbes = new LoadBalancerProbesOperations(this);
+            NatGateways = new NatGatewaysOperations(this);
             NetworkInterfaces = new NetworkInterfacesOperations(this);
             NetworkInterfaceIPConfigurations = new NetworkInterfaceIPConfigurationsOperations(this);
             NetworkInterfaceLoadBalancers = new NetworkInterfaceLoadBalancersOperations(this);
@@ -814,7 +820,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1012,7 +1018,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWANName");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

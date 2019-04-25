@@ -226,6 +226,11 @@ namespace Microsoft.Azure.Management.Network
         ILoadBalancerProbesOperations LoadBalancerProbes { get; }
 
         /// <summary>
+        /// Gets the INatGatewaysOperations.
+        /// </summary>
+        INatGatewaysOperations NatGateways { get; }
+
+        /// <summary>
         /// Gets the INetworkInterfacesOperations.
         /// </summary>
         INetworkInterfacesOperations NetworkInterfaces { get; }

@@ -33,10 +33,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the Route class.
         /// </summary>
         /// <param name="nextHopType">The type of Azure hop the packet should
-        /// be sent to. Possible values are: 'VirtualNetworkGateway',
-        /// 'VnetLocal', 'Internet', 'VirtualAppliance', and 'None'. Possible
-        /// values include: 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
-        /// 'VirtualAppliance', 'None'</param>
+        /// be sent to. Possible values include: 'VirtualNetworkGateway',
+        /// 'VnetLocal', 'Internet', 'VirtualAppliance', 'None'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="addressPrefix">The destination CIDR to which the route
         /// applies.</param>
@@ -76,10 +74,8 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the type of Azure hop the packet should be sent to.
-        /// Possible values are: 'VirtualNetworkGateway', 'VnetLocal',
-        /// 'Internet', 'VirtualAppliance', and 'None'. Possible values
-        /// include: 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
-        /// 'VirtualAppliance', 'None'
+        /// Possible values include: 'VirtualNetworkGateway', 'VnetLocal',
+        /// 'Internet', 'VirtualAppliance', 'None'
         /// </summary>
         [JsonProperty(PropertyName = "properties.nextHopType")]
         public string NextHopType { get; set; }

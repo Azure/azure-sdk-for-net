@@ -32,9 +32,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// NetworkConfigurationDiagnosticProfile class.
         /// </summary>
-        /// <param name="direction">The direction of the traffic. Accepted
-        /// values are 'Inbound' and 'Outbound'. Possible values include:
-        /// 'Inbound', 'Outbound'</param>
+        /// <param name="direction">The direction of the traffic. Possible
+        /// values include: 'Inbound', 'Outbound'</param>
         /// <param name="protocol">Protocol to be verified on. Accepted values
         /// are '*', TCP, UDP.</param>
         /// <param name="source">Traffic source. Accepted values are '*', IP
@@ -60,9 +59,8 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the direction of the traffic. Accepted values are
-        /// 'Inbound' and 'Outbound'. Possible values include: 'Inbound',
-        /// 'Outbound'
+        /// Gets or sets the direction of the traffic. Possible values include:
+        /// 'Inbound', 'Outbound'
         /// </summary>
         [JsonProperty(PropertyName = "direction")]
         public string Direction { get; set; }

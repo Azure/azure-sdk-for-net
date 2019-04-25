@@ -55,8 +55,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(createdApiContract);
 
                     var policyContract = new PolicyContract();
-                    policyContract.PolicyContent = ApiValid;
-                    policyContract.ContentFormat = PolicyContentFormat.XmlLink;
+                    policyContract.Value = ApiValid;
+                    policyContract.Format = PolicyContentFormat.XmlLink;
 
                     var apiPolicyContract = await testBase.client.ApiPolicy.CreateOrUpdateAsync(
                         testBase.rgName,
@@ -64,7 +64,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                         newApiId,
                         policyContract);
                     Assert.NotNull(apiPolicyContract);
-                    Assert.NotNull(apiPolicyContract.PolicyContent);
+                    Assert.NotNull(apiPolicyContract.Value);
 
                     // get policy tag
                     var apiPolicyTag = await testBase.client.ApiPolicy.GetEntityTagAsync(
@@ -122,8 +122,8 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 // create product policy contract
                 var productPolicyContract = new PolicyContract();
-                productPolicyContract.PolicyContent = ProductValid;
-                productPolicyContract.ContentFormat = PolicyContentFormat.XmlLink;
+                productPolicyContract.Value = ProductValid;
+                productPolicyContract.Format = PolicyContentFormat.XmlLink;
 
                 var productPolicyResponse = testBase.client.ProductPolicy.CreateOrUpdate(
                     testBase.rgName,
@@ -132,7 +132,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     productPolicyContract);
 
                 Assert.NotNull(productPolicyResponse);
-                Assert.NotNull(productPolicyResponse.PolicyContent);
+                Assert.NotNull(productPolicyResponse.Value);
                 Assert.Equal("policy", productPolicyResponse.Name); // there can be only one policy per product
 
                 // get policy to check it was added
@@ -142,7 +142,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     product.Name);
 
                 Assert.NotNull(getProductPolicy);
-                Assert.NotNull(getProductPolicy.PolicyContent);
+                Assert.NotNull(getProductPolicy.Format);
 
                 // get product policy etag                
                 var productPolicyTag = await testBase.client.ProductPolicy.GetEntityTagAsync(
