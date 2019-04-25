@@ -27,16 +27,18 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// The name of the invoice section.
             /// </param>
             /// <param name='body'>
             /// The subscription creation parameters.
             /// </param>
-            public static SubscriptionCreationResult CreateSubscriptionInEnrollmentAccount(this ISubscriptionFactoryOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body)
+            public static SubscriptionCreationResult CreateSubscription(this ISubscriptionFactoryOperations operations, string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body)
             {
-                return operations.CreateSubscriptionInEnrollmentAccountAsync(enrollmentAccountName, body).GetAwaiter().GetResult();
+                return operations.CreateSubscriptionAsync(billingAccountName, invoiceSectionName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -45,9 +47,11 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// The name of the invoice section.
             /// </param>
             /// <param name='body'>
             /// The subscription creation parameters.
@@ -55,9 +59,55 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionCreationResult> CreateSubscriptionInEnrollmentAccountAsync(this ISubscriptionFactoryOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionCreationResult> CreateSubscriptionAsync(this ISubscriptionFactoryOperations operations, string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(enrollmentAccountName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateSubscriptionWithHttpMessagesAsync(billingAccountName, invoiceSectionName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates an Azure subscription on behalf of a customer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='customerName'>
+            /// The customer for which the subscription is to be created.
+            /// </param>
+            /// <param name='body'>
+            /// The subscription creation parameters.
+            /// </param>
+            public static SubscriptionCreationResult CustomerCreateSubscription(this ISubscriptionFactoryOperations operations, string billingAccountName, string customerName, CustomerSubscriptionCreationParameters body)
+            {
+                return operations.CustomerCreateSubscriptionAsync(billingAccountName, customerName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates an Azure subscription on behalf of a customer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='customerName'>
+            /// The customer for which the subscription is to be created.
+            /// </param>
+            /// <param name='body'>
+            /// The subscription creation parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SubscriptionCreationResult> CustomerCreateSubscriptionAsync(this ISubscriptionFactoryOperations operations, string billingAccountName, string customerName, CustomerSubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CustomerCreateSubscriptionWithHttpMessagesAsync(billingAccountName, customerName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -69,16 +119,18 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// The name of the invoice section.
             /// </param>
             /// <param name='body'>
             /// The subscription creation parameters.
             /// </param>
-            public static SubscriptionCreationResult BeginCreateSubscriptionInEnrollmentAccount(this ISubscriptionFactoryOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body)
+            public static SubscriptionCreationResult BeginCreateSubscription(this ISubscriptionFactoryOperations operations, string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body)
             {
-                return operations.BeginCreateSubscriptionInEnrollmentAccountAsync(enrollmentAccountName, body).GetAwaiter().GetResult();
+                return operations.BeginCreateSubscriptionAsync(billingAccountName, invoiceSectionName, body).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -87,9 +139,11 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='enrollmentAccountName'>
-            /// The name of the enrollment account to which the subscription will be
-            /// billed.
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='invoiceSectionName'>
+            /// The name of the invoice section.
             /// </param>
             /// <param name='body'>
             /// The subscription creation parameters.
@@ -97,9 +151,55 @@ namespace Microsoft.Azure.Management.Subscription
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionCreationResult> BeginCreateSubscriptionInEnrollmentAccountAsync(this ISubscriptionFactoryOperations operations, string enrollmentAccountName, SubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionCreationResult> BeginCreateSubscriptionAsync(this ISubscriptionFactoryOperations operations, string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(enrollmentAccountName, body, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateSubscriptionWithHttpMessagesAsync(billingAccountName, invoiceSectionName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Creates an Azure subscription on behalf of a customer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='customerName'>
+            /// The customer for which the subscription is to be created.
+            /// </param>
+            /// <param name='body'>
+            /// The subscription creation parameters.
+            /// </param>
+            public static SubscriptionCreationResult BeginCustomerCreateSubscription(this ISubscriptionFactoryOperations operations, string billingAccountName, string customerName, CustomerSubscriptionCreationParameters body)
+            {
+                return operations.BeginCustomerCreateSubscriptionAsync(billingAccountName, customerName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates an Azure subscription on behalf of a customer
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// The name of the commerce root billing account.
+            /// </param>
+            /// <param name='customerName'>
+            /// The customer for which the subscription is to be created.
+            /// </param>
+            /// <param name='body'>
+            /// The subscription creation parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SubscriptionCreationResult> BeginCustomerCreateSubscriptionAsync(this ISubscriptionFactoryOperations operations, string billingAccountName, string customerName, CustomerSubscriptionCreationParameters body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCustomerCreateSubscriptionWithHttpMessagesAsync(billingAccountName, customerName, body, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

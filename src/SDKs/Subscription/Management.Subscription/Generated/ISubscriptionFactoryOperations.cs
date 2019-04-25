@@ -26,9 +26,11 @@ namespace Microsoft.Azure.Management.Subscription
         /// <summary>
         /// Creates an Azure subscription
         /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will
-        /// be billed.
+        /// <param name='billingAccountName'>
+        /// The name of the commerce root billing account.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The name of the invoice section.
         /// </param>
         /// <param name='body'>
         /// The subscription creation parameters.
@@ -48,13 +50,43 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> CreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> CreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates an Azure subscription on behalf of a customer
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The name of the commerce root billing account.
+        /// </param>
+        /// <param name='customerName'>
+        /// The customer for which the subscription is to be created.
+        /// </param>
+        /// <param name='body'>
+        /// The subscription creation parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCustomerCreateSubscriptionHeaders>> CustomerCreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string customerName, CustomerSubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates an Azure subscription
         /// </summary>
-        /// <param name='enrollmentAccountName'>
-        /// The name of the enrollment account to which the subscription will
-        /// be billed.
+        /// <param name='billingAccountName'>
+        /// The name of the commerce root billing account.
+        /// </param>
+        /// <param name='invoiceSectionName'>
+        /// The name of the invoice section.
         /// </param>
         /// <param name='body'>
         /// The subscription creation parameters.
@@ -74,6 +106,34 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionInEnrollmentAccountHeaders>> BeginCreateSubscriptionInEnrollmentAccountWithHttpMessagesAsync(string enrollmentAccountName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCreateSubscriptionHeaders>> BeginCreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, SubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Creates an Azure subscription on behalf of a customer
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// The name of the commerce root billing account.
+        /// </param>
+        /// <param name='customerName'>
+        /// The customer for which the subscription is to be created.
+        /// </param>
+        /// <param name='body'>
+        /// The subscription creation parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionFactoryCustomerCreateSubscriptionHeaders>> BeginCustomerCreateSubscriptionWithHttpMessagesAsync(string billingAccountName, string customerName, CustomerSubscriptionCreationParameters body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
