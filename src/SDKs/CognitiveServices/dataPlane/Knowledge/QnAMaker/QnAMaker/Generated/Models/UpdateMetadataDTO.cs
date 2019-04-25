@@ -33,7 +33,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         /// <param name="delete">List of Metadata associated with answer to be
         /// deleted</param>
-        /// <param name="add">List of Metadat associated with answer to be
+        /// <param name="add">List of metadata associated with answer to be
         /// added</param>
         public UpdateMetadataDTO(IList<MetadataDTO> delete = default(IList<MetadataDTO>), IList<MetadataDTO> add = default(IList<MetadataDTO>))
         {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         public IList<MetadataDTO> Delete { get; set; }
 
         /// <summary>
-        /// Gets or sets list of Metadat associated with answer to be added
+        /// Gets or sets list of metadata associated with answer to be added
         /// </summary>
         [JsonProperty(PropertyName = "add")]
         public IList<MetadataDTO> Add { get; set; }

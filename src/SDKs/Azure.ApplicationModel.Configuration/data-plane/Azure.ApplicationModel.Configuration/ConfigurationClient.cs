@@ -96,9 +96,9 @@ namespace Azure.ApplicationModel.Configuration
 
                 BuildUriForKvRoute(request.UriBuilder, setting);
 
-            request.AddHeader(IfNoneMatch, "*");
-            request.AddHeader(MediaTypeKeyValueApplicationHeader);
-            request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(IfNoneMatch, "*");
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
             request.Content = HttpPipelineRequestContent.Create(content);
             return request;
@@ -124,12 +124,12 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.Method = HttpPipelineMethod.Put;
                 BuildUriForKvRoute(request.UriBuilder, setting);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
                 if (setting.ETag != default)
                 {
-                    request.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
+                    request.Headers.Add(IfMatchName, $"\"{setting.ETag.ToString()}\"");
                 }
 
                 request.Content = HttpPipelineRequestContent.Create(content);
@@ -167,16 +167,16 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.Method = HttpPipelineMethod.Put;
                 BuildUriForKvRoute(request.UriBuilder, setting);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
                 if (setting.ETag != default)
                 {
-                    request.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                    request.Headers.Add(IfMatchName, $"\"{setting.ETag}\"");
                 }
                 else
                 {
-                    request.AddHeader(IfMatchName, "*");
+                    request.Headers.Add(IfMatchName, "*");
                 }
 
                 request.Content = HttpPipelineRequestContent.Create(content);
@@ -211,7 +211,7 @@ namespace Azure.ApplicationModel.Configuration
 
                 if (etag != default)
                 {
-                    request.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
+                    request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
                 }
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
@@ -234,14 +234,14 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.Method = HttpPipelineMethod.Get;
                 BuildUriForKvRoute(request.UriBuilder, key, label);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
 
                 if (acceptDateTime != default)
                 {
                     var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
                 }
-                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -260,11 +260,11 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.Method = HttpPipelineMethod.Get;
                 BuildUriForGetBatch(request.UriBuilder, selector);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {
                     var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
                 }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -284,11 +284,11 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.Method = HttpPipelineMethod.Get;
                 BuildUriForRevisions(request.UriBuilder, selector);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {
                     var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
                 }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 

@@ -53,7 +53,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {
-                message.Request.AddHeader("User-Agent", "ConfiguraingPipelineSample");
+                message.Request.Headers.Add("User-Agent", "ConfiguraingPipelineSample");
             }
         }
 

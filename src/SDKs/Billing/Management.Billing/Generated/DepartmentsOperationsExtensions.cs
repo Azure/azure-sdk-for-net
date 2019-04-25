@@ -22,6 +22,56 @@ namespace Microsoft.Azure.Management.Billing
     public static partial class DepartmentsOperationsExtensions
     {
             /// <summary>
+            /// Lists all departments for a user which he has access to.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='expand'>
+            /// May be used to expand the enrollmentAccounts.
+            /// </param>
+            /// <param name='filter'>
+            /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
+            /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
+            /// string where key and value is separated by a colon (:).
+            /// </param>
+            public static DepartmentListResult ListByBillingAccountName(this IDepartmentsOperations operations, string billingAccountName, string expand = default(string), string filter = default(string))
+            {
+                return operations.ListByBillingAccountNameAsync(billingAccountName, expand, filter).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all departments for a user which he has access to.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingAccountName'>
+            /// billing Account Id.
+            /// </param>
+            /// <param name='expand'>
+            /// May be used to expand the enrollmentAccounts.
+            /// </param>
+            /// <param name='filter'>
+            /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
+            /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
+            /// string where key and value is separated by a colon (:).
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<DepartmentListResult> ListByBillingAccountNameAsync(this IDepartmentsOperations operations, string billingAccountName, string expand = default(string), string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListByBillingAccountNameWithHttpMessagesAsync(billingAccountName, expand, filter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Get the department by id.
             /// </summary>
             /// <param name='operations'>

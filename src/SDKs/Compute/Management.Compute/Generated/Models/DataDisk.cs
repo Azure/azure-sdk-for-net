@@ -63,7 +63,10 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// disk in a virtual machine image. &lt;br&gt;&lt;br&gt; This value
         /// cannot be larger than 1023 GB</param>
         /// <param name="managedDisk">The managed disk parameters.</param>
-        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters))
+        /// <param name="toBeDetached">Specifies whether the datadisk is in
+        /// process of detachment from the
+        /// VirtualMachine/VirtualMachineScaleset</param>
+        public DataDisk(int lun, string createOption, string name = default(string), VirtualHardDisk vhd = default(VirtualHardDisk), VirtualHardDisk image = default(VirtualHardDisk), CachingTypes? caching = default(CachingTypes?), bool? writeAcceleratorEnabled = default(bool?), int? diskSizeGB = default(int?), ManagedDiskParameters managedDisk = default(ManagedDiskParameters), bool? toBeDetached = default(bool?))
         {
             Lun = lun;
             Name = name;
@@ -74,6 +77,7 @@ namespace Microsoft.Azure.Management.Compute.Models
             CreateOption = createOption;
             DiskSizeGB = diskSizeGB;
             ManagedDisk = managedDisk;
+            ToBeDetached = toBeDetached;
             CustomInit();
         }
 
@@ -160,6 +164,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "managedDisk")]
         public ManagedDiskParameters ManagedDisk { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether the datadisk is in process of
+        /// detachment from the VirtualMachine/VirtualMachineScaleset
+        /// </summary>
+        [JsonProperty(PropertyName = "toBeDetached")]
+        public bool? ToBeDetached { get; set; }
 
         /// <summary>
         /// Validate the object.

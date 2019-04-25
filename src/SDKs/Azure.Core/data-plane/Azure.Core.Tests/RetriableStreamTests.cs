@@ -73,6 +73,30 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task DoesntCallLengthPrematurely()
+        {
+            var stream1 = new NoLengthStream();
+            var stream2 = new MockReadStream(50);
+
+            var mockTransport = new MockTransport(
+                new MockResponse(200) { ContentStream = stream1 },
+                new MockResponse(200) { ContentStream = stream2 }
+            );
+            var pipeline = new HttpPipeline(mockTransport);
+
+            var reliableStream = RetriableStream.Create(await SendTestRequestAsync(pipeline, 0), offset => SendTestRequestAsync(pipeline, offset), new ResponseClassifier(), maxRetries: 5);
+
+            Assert.AreEqual(50, await reliableStream.ReadAsync(_buffer, 0, 50));
+            Assert.AreEqual(50, reliableStream.Position);
+
+            Assert.AreEqual(0, await reliableStream.ReadAsync(_buffer, 0, 50));
+
+            Assert.Throws<NotSupportedException>(() => _ = reliableStream.Length);
+
+            AssertReads(_buffer, 50);
+        }
+
+        [Test]
         public void ThrowsIfInitialRequestThrow()
         {
             Assert.ThrowsAsync<InvalidOperationException>(() => RetriableStream.Create(_ => throw new InvalidOperationException(), new ResponseClassifier(), 5));
@@ -152,10 +176,28 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
-                request.AddHeader("Range", "bytes=" + offset);
+                request.Headers.Add("Range", "bytes=" + offset);
 
                 return pipeline.SendRequestAsync(request, CancellationToken.None);
             }
+        }
+
+        private class NoLengthStream : ReadOnlyStream
+        {
+            public override int Read(byte[] buffer, int offset, int count)
+            {
+                throw new IOException();
+            }
+
+            public override long Seek(long offset, SeekOrigin origin)
+            {
+                throw new NotSupportedException();
+            }
+
+            public override bool CanRead { get; } = true;
+            public override bool CanSeek { get; } = false;
+            public override long Length => throw new NotSupportedException();
+            public override long Position { get; set; }
         }
 
         private class MockReadStream: ReadOnlyStream

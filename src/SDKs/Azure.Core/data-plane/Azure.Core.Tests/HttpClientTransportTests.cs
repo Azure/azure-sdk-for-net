@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
             var request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
             request.Content = HttpPipelineRequestContent.Create(new byte[10]);
-            request.AddHeader("Content-Length", "50");
+            request.Headers.Add("Content-Length", "50");
 
             await ExecuteRequest(request, transport);
 
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
-            request.AddHeader("Host", "example.org");
+            request.Headers.Add("Host", "example.org");
 
             await ExecuteRequest(request, transport);
 
@@ -108,6 +108,7 @@ namespace Azure.Core.Tests
         [TestCase(HttpPipelineMethod.Patch, "PATCH")]
         [TestCase(HttpPipelineMethod.Post, "POST")]
         [TestCase(HttpPipelineMethod.Put, "PUT")]
+        [TestCase(HttpPipelineMethod.Head, "HEAD")]
         public async Task CanGetAndSetMethod(HttpPipelineMethod method, string expectedMethod)
         {
             HttpMethod httpMethod = null;
@@ -190,7 +191,7 @@ namespace Azure.Core.Tests
             };
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
-        public async Task CanGetAndSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
+        public async Task CanGetAndAddRequestHeaders(string headerName, string headerValue, bool contentHeader)
         {
             IEnumerable<string> httpHeaderValues = null;
 
@@ -202,16 +203,14 @@ namespace Azure.Core.Tests
                 });
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
-            var request = transport.CreateRequest(null);
-            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
-            request.Content = HttpPipelineRequestContent.Create(Array.Empty<byte>());
+            Request request = CreateRequest(transport);
 
-            request.AddHeader(headerName, headerValue);
+            request.Headers.Add(headerName, headerValue);
 
-            Assert.True(request.TryGetHeader(headerName, out var value));
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
 
-            Assert.True(request.TryGetHeader(headerName.ToUpper(), out value));
+            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
             CollectionAssert.AreEqual(new []
@@ -222,6 +221,64 @@ namespace Azure.Core.Tests
             await ExecuteRequest(request, transport);
 
             Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanSetRequestHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            IEnumerable<string> httpHeaderValues = null;
+
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    Assert.True(
+                        httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
+                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            Request request = CreateRequest(transport);
+
+            request.Headers.Add(headerName, "Random value");
+            request.Headers.SetValue(headerName, headerValue);
+
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(headerValue, value);
+
+            Assert.True(request.Headers.TryGetValue(headerName.ToUpper(), out value));
+            Assert.AreEqual(headerValue, value);
+
+            CollectionAssert.AreEqual(new []
+            {
+                new HttpHeader(headerName, headerValue),
+            }, request.Headers);
+
+            await ExecuteRequest(request, transport);
+
+            Assert.AreEqual(headerValue, string.Join(",", httpHeaderValues));
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanRemoveHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    Assert.False(
+                        httpRequestMessage.Headers.TryGetValues(headerName, out _) &&
+                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out _));
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            Request request = CreateRequest(transport);
+
+            request.Headers.Add(headerName, headerValue);
+            Assert.True(request.Headers.Remove(headerName));
+            Assert.False(request.Headers.Remove(headerName));
+
+            Assert.False(request.Headers.TryGetValue(headerName, out _));
+            Assert.False(request.Headers.TryGetValue(headerName.ToUpper(), out _));
+            Assert.False(request.Headers.Contains(headerName.ToUpper()));
+
+            await ExecuteRequest(request, transport);
         }
 
         [TestCaseSource(nameof(HeadersWithValuesAndType))]
@@ -250,10 +307,10 @@ namespace Azure.Core.Tests
 
             var response = await ExecuteRequest(request, transport);
 
-            Assert.True(response.TryGetHeader(headerName, out var value));
+            Assert.True(response.Headers.TryGetValue(headerName, out var value));
             Assert.AreEqual(headerValue, value);
 
-            Assert.True(response.TryGetHeader(headerName.ToUpper(), out value));
+            Assert.True(response.Headers.TryGetValue(headerName.ToUpper(), out value));
             Assert.AreEqual(headerValue, value);
 
             CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, headerValue));
@@ -268,11 +325,100 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
-            request.AddHeader(headerName, headerValue);
+            request.Headers.Add(headerName, headerValue);
 
             await ExecuteRequest(request, transport);
 
             Assert.Null(httpMessageContent);
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanAddMultipleValuesToRequestHeader(string headerName, string headerValue, bool contentHeader)
+        {
+            var anotherHeaderValue = headerValue + "1";
+            var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+            IEnumerable<string> httpHeaderValues = null;
+
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    Assert.True(
+                        httpRequestMessage.Headers.TryGetValues(headerName, out httpHeaderValues) ||
+                        httpRequestMessage.Content.Headers.TryGetValues(headerName, out httpHeaderValues));
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            Request request = CreateRequest(transport);
+
+            request.Headers.Add(headerName, headerValue);
+            request.Headers.Add(headerName, anotherHeaderValue);
+
+            Assert.True(request.Headers.Contains(headerName));
+
+            Assert.True(request.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(joinedHeaderValues, value);
+
+            Assert.True(request.Headers.TryGetValues(headerName, out var values));
+            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
+
+            CollectionAssert.AreEqual(new []
+            {
+                new HttpHeader(headerName, joinedHeaderValues),
+            }, request.Headers);
+
+            await ExecuteRequest(request, transport);
+
+            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, httpHeaderValues);
+        }
+
+        [TestCaseSource(nameof(HeadersWithValuesAndType))]
+        public async Task CanGetAndSetMultiValueResponseHeaders(string headerName, string headerValue, bool contentHeader)
+        {
+            var anotherHeaderValue = headerValue + "1";
+            var joinedHeaderValues = headerValue + "," + anotherHeaderValue;
+
+            var mockHandler = new MockHttpClientHandler(
+                httpRequestMessage => {
+                    var responseMessage = new HttpResponseMessage((HttpStatusCode)200);
+
+                    if (contentHeader)
+                    {
+                        responseMessage.Content = new StreamContent(new MemoryStream());
+                        Assert.True(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, headerValue));
+                        Assert.True(responseMessage.Content.Headers.TryAddWithoutValidation(headerName, anotherHeaderValue));
+                    }
+                    else
+                    {
+                        Assert.True(responseMessage.Headers.TryAddWithoutValidation(headerName, headerValue));
+                        Assert.True(responseMessage.Headers.TryAddWithoutValidation(headerName, anotherHeaderValue));
+                    }
+
+                    return Task.FromResult(responseMessage);
+                });
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
+
+            var response = await ExecuteRequest(request, transport);
+
+            Assert.True(response.Headers.Contains(headerName));
+
+            Assert.True(response.Headers.TryGetValue(headerName, out var value));
+            Assert.AreEqual(joinedHeaderValues, value);
+
+            Assert.True(response.Headers.TryGetValues(headerName, out var values));
+            CollectionAssert.AreEqual(new [] { headerValue, anotherHeaderValue }, values);
+
+            CollectionAssert.Contains(response.Headers, new HttpHeader(headerName, joinedHeaderValues));
+        }
+
+        private static Request CreateRequest(HttpClientTransport transport, byte[] bytes = null)
+        {
+            var request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
+            request.Content = HttpPipelineRequestContent.Create(bytes ?? Array.Empty<byte>());
+            return request;
         }
 
         [Test]

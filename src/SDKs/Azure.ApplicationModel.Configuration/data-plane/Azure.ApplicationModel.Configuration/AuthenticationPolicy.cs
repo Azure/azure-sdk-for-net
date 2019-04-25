@@ -67,9 +67,9 @@ namespace Azure.ApplicationModel.Configuration
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
                 // TODO (pri 3): should date header writing be moved out from here?
-                message.Request.AddHeader("Date", utcNowString);
-                message.Request.AddHeader("x-ms-content-sha256", contentHash);
-                message.Request.AddHeader("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                message.Request.Headers.Add("Date", utcNowString);
+                message.Request.Headers.Add("x-ms-content-sha256", contentHash);
+                message.Request.Headers.Add("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
         }
 

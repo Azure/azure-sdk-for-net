@@ -81,7 +81,7 @@ namespace Compute.Tests
                 Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
             }
         }
-        
+
         /// <summary>
         /// To record this test case, you need to run it in region which support local diff disks.
         /// </summary>
@@ -96,7 +96,27 @@ namespace Compute.Tests
                 using (MockContext context = MockContext.Start(this.GetType().FullName))
                 {
                     TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS1V2, hasManagedDisks: true,
-                    hasDiffDisks: true);
+                        hasDiffDisks: true);
+                }
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+            }
+        }
+
+        [Fact]
+        [Trait("Name", "TestVMScaleSetScenarioOperations_UltraSSD")]
+        public void TestVMScaleSetScenarioOperations_UltraSSD()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus2euap");
+                using (MockContext context = MockContext.Start(this.GetType().FullName))
+                {
+                    TestScaleSetOperationsInternal(context, vmSize: VirtualMachineSizeTypes.StandardDS12V2, hasManagedDisks: true,
+                        useVmssExtension: false, zones: new List<string> { "3" }, enableUltraSSD: true, osDiskSizeInGB: 175);
                 }
             }
             finally
@@ -155,7 +175,7 @@ namespace Compute.Tests
         }
 
         private void TestScaleSetOperationsInternal(MockContext context, string vmSize = null, bool hasManagedDisks = false, bool useVmssExtension = true, 
-            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false)
+            bool hasDiffDisks = false, IList<string> zones = null, int? osDiskSizeInGB = null, bool isPpgScenario = false, bool? enableUltraSSD = false)
         {
             EnsureClientsInitialized(context);
 
@@ -188,7 +208,7 @@ namespace Compute.Tests
                     ppgId = CreateProximityPlacementGroup(rgName, ppgName);
                 }
 
-                var getResponse = CreateVMScaleSet_NoAsyncTracking(
+                VirtualMachineScaleSet getResponse = CreateVMScaleSet_NoAsyncTracking(
                     rgName,
                     vmssName,
                     storageAccountOutput,
@@ -206,7 +226,8 @@ namespace Compute.Tests
                     hasDiffDisks : hasDiffDisks,
                     zones: zones,
                     osDiskSizeInGB: osDiskSizeInGB,
-                    ppgId: ppgId);
+                    ppgId: ppgId,
+                    enableUltraSSD: enableUltraSSD);
 
                 ValidateVMScaleSet(inputVMScaleSet, getResponse, hasManagedDisks, ppgId: ppgId);
 
