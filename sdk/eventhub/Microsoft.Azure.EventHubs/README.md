@@ -71,6 +71,10 @@ For information on building the Azure Event Hubs client library, please see [Bui
 
 Once you have completed the above, you can run `dotnet test` from the `/sdk/eventhub/Microsoft.Azure.EventHubs/tests` directory.
 
+## Development history
+
+For additional insight and context, the development, release, and issue history for the Azure Event Hubs client library will continue to be available in read-only form, located in the stand-alone [Azure Event Hubs .NET repository](https://github.com/Azure/azure-event-hubs-dotnet).
+
 ## Versioning information
 
 The Azure Event Hubs client library uses [the semantic versioning scheme.](http://semver.org/)
