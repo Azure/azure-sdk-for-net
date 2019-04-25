@@ -98,8 +98,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// usageDetails.
         /// </param>
         /// <param name='metric'>
-        /// Allows to select different type of cost/usage records. Allowed values:
-        /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+        /// Allows to select different type of cost/usage records. Possible values
+        /// include: 'UsageMetricType', 'ActualCostMetricType',
+        /// 'AmortizedCostMetricType'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

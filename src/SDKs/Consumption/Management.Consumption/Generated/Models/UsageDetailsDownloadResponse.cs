@@ -41,13 +41,13 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
         /// <param name="downloadUrlProperty">The URL to the csv file.</param>
-        /// <param name="expiryTime">The time in UTC at which this download URL
+        /// <param name="validTill">The time in UTC at which this download URL
         /// will expire.</param>
-        public UsageDetailsDownloadResponse(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string downloadUrlProperty = default(string), string expiryTime = default(string))
+        public UsageDetailsDownloadResponse(string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string downloadUrlProperty = default(string), string validTill = default(string))
             : base(id, name, type, tags)
         {
             DownloadUrlProperty = downloadUrlProperty;
-            ExpiryTime = expiryTime;
+            ValidTill = validTill;
             CustomInit();
         }
 
@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <summary>
         /// Gets the time in UTC at which this download URL will expire.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.expiryTime")]
-        public string ExpiryTime { get; private set; }
+        [JsonProperty(PropertyName = "properties.validTill")]
+        public string ValidTill { get; private set; }
 
     }
 }

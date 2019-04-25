@@ -50,6 +50,45 @@ namespace Microsoft.Azure.Management.Consumption
         /// </summary>
         public ConsumptionManagementClient Client { get; private set; }
 
+        /// <summary>
+        /// Download usage details data.
+        /// </summary>
+        /// <param name='scope'>
+        /// The scope associated with usage details operations. This includes
+        /// '/subscriptions/{subscriptionId}/' for subscription scope,
+        /// '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}' for
+        /// resourceGroup scope,
+        /// '/providers/Microsoft.Billing/billingAccounts/{billingAccountId}' for
+        /// Billing Account scope,
+        /// '/providers/Microsoft.Billing/departments/{departmentId}' for Department
+        /// scope,
+        /// '/providers/Microsoft.Billing/enrollmentAccounts/{enrollmentAccountId}' for
+        /// EnrollmentAccount scope and
+        /// '/providers/Microsoft.Management/managementGroups/{managementGroupId}' for
+        /// Management Group scope. For subscription, billing account, department,
+        /// enrollment account and management group, you can also add billing period to
+        /// the scope using
+        /// '/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'. For e.g.
+        /// to specify billing period at department scope use
+        /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
+        /// </param>
+        /// <param name='metric'>
+        /// Allows to select different type of cost/usage records. Possible values
+        /// include: 'UsageMetricType', 'ActualCostMetricType',
+        /// 'AmortizedCostMetricType'
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders>> DownloadWithHttpMessagesAsync(string scope, string metric = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<UsageDetailsDownloadResponse,UsageDetailsListDownloadHeaders> _response = await BeginDownloadWithHttpMessagesAsync(scope, metric, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
 
         /// <summary>
         /// Download usage details data.
@@ -74,8 +113,9 @@ namespace Microsoft.Azure.Management.Consumption
         /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
         /// </param>
         /// <param name='metric'>
-        /// Allows to select different type of cost/usage records. Allowed values:
-        /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+        /// Allows to select different type of cost/usage records. Possible values
+        /// include: 'UsageMetricType', 'ActualCostMetricType',
+        /// 'AmortizedCostMetricType'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -140,7 +180,7 @@ namespace Microsoft.Azure.Management.Consumption
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)

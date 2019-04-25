@@ -47,8 +47,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
             /// <param name='metric'>
-            /// Allows to select different type of cost/usage records. Allowed values:
-            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// Allows to select different type of cost/usage records. Possible values
+            /// include: 'UsageMetricType', 'ActualCostMetricType',
+            /// 'AmortizedCostMetricType'
             /// </param>
             public static UsageDetailsDownloadResponse Download(this IUsageDetailsListOperations operations, string scope, string metric = default(string))
             {
@@ -81,8 +82,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
             /// <param name='metric'>
-            /// Allows to select different type of cost/usage records. Allowed values:
-            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// Allows to select different type of cost/usage records. Possible values
+            /// include: 'UsageMetricType', 'ActualCostMetricType',
+            /// 'AmortizedCostMetricType'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -121,8 +123,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
             /// <param name='metric'>
-            /// Allows to select different type of cost/usage records. Allowed values:
-            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// Allows to select different type of cost/usage records. Possible values
+            /// include: 'UsageMetricType', 'ActualCostMetricType',
+            /// 'AmortizedCostMetricType'
             /// </param>
             public static UsageDetailsDownloadResponse BeginDownload(this IUsageDetailsListOperations operations, string scope, string metric = default(string))
             {
@@ -155,8 +158,9 @@ namespace Microsoft.Azure.Management.Consumption
             /// '/providers/Microsoft.Billing/departments/{departmentId}/providers/Microsoft.Billing/billingPeriods/{billingPeriodName}'
             /// </param>
             /// <param name='metric'>
-            /// Allows to select different type of cost/usage records. Allowed values:
-            /// Usage, ActualCost, AmortizedCost. Default is ActualCost.
+            /// Allows to select different type of cost/usage records. Possible values
+            /// include: 'UsageMetricType', 'ActualCostMetricType',
+            /// 'AmortizedCostMetricType'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
