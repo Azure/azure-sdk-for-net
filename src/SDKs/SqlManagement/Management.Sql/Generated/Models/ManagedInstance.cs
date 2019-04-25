@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="storageSizeInGB">Storage size in GB. Minimum value:
         /// 32. Maximum value: 8192. Increments of 32 GB allowed only.</param>
         /// <param name="collation">Collation of the managed instance.</param>
-        /// <param name="dnsZone">The Dns Zone taht the managed instance is
+        /// <param name="dnsZone">The Dns Zone that the managed instance is
         /// in.</param>
         /// <param name="dnsZonePartner">The resource id of another managed
         /// instance whose DNS zone this managed instance will share after
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// instance.</param>
         /// <param name="timezoneId">Id of the timezone. Allowed values are
         /// timezones supported by Windows.
-        /// Winodws keeps details on supported timezones, including the id, in
+        /// Windows keeps details on supported timezones, including the id, in
         /// registry under
         /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time
         /// Zones.
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         public string Collation { get; set; }
 
         /// <summary>
-        /// Gets the Dns Zone taht the managed instance is in.
+        /// Gets the Dns Zone that the managed instance is in.
         /// </summary>
         [JsonProperty(PropertyName = "properties.dnsZone")]
         public string DnsZone { get; private set; }
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <summary>
         /// Gets or sets id of the timezone. Allowed values are timezones
         /// supported by Windows.
-        /// Winodws keeps details on supported timezones, including the id, in
+        /// Windows keeps details on supported timezones, including the id, in
         /// registry under
         /// KEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time
         /// Zones.
