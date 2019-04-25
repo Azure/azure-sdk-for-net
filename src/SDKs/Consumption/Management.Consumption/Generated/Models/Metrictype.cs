@@ -17,10 +17,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
     public static class Metrictype
     {
         /// <summary>
-        /// Usage data.
-        /// </summary>
-        public const string UsageMetricType = "usage";
-        /// <summary>
         /// Actual cost data.
         /// </summary>
         public const string ActualCostMetricType = "actualcost";
@@ -28,5 +24,9 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// Amortized cost data.
         /// </summary>
         public const string AmortizedCostMetricType = "amortizedcost";
+        /// <summary>
+        /// Usage data.
+        /// </summary>
+        public const string UsageMetricType = "usage";
     }
 }

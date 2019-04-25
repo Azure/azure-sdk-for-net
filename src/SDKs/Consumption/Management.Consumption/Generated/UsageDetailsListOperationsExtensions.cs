@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.Consumption
             /// </param>
             /// <param name='metric'>
             /// Allows to select different type of cost/usage records. Possible values
-            /// include: 'UsageMetricType', 'ActualCostMetricType',
-            /// 'AmortizedCostMetricType'
+            /// include: 'ActualCostMetricType', 'AmortizedCostMetricType',
+            /// 'UsageMetricType'
             /// </param>
             public static UsageDetailsDownloadResponse Download(this IUsageDetailsListOperations operations, string scope, string metric = default(string))
             {
@@ -83,8 +83,8 @@ namespace Microsoft.Azure.Management.Consumption
             /// </param>
             /// <param name='metric'>
             /// Allows to select different type of cost/usage records. Possible values
-            /// include: 'UsageMetricType', 'ActualCostMetricType',
-            /// 'AmortizedCostMetricType'
+            /// include: 'ActualCostMetricType', 'AmortizedCostMetricType',
+            /// 'UsageMetricType'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -124,8 +124,8 @@ namespace Microsoft.Azure.Management.Consumption
             /// </param>
             /// <param name='metric'>
             /// Allows to select different type of cost/usage records. Possible values
-            /// include: 'UsageMetricType', 'ActualCostMetricType',
-            /// 'AmortizedCostMetricType'
+            /// include: 'ActualCostMetricType', 'AmortizedCostMetricType',
+            /// 'UsageMetricType'
             /// </param>
             public static UsageDetailsDownloadResponse BeginDownload(this IUsageDetailsListOperations operations, string scope, string metric = default(string))
             {
@@ -159,8 +159,8 @@ namespace Microsoft.Azure.Management.Consumption
             /// </param>
             /// <param name='metric'>
             /// Allows to select different type of cost/usage records. Possible values
-            /// include: 'UsageMetricType', 'ActualCostMetricType',
-            /// 'AmortizedCostMetricType'
+            /// include: 'ActualCostMetricType', 'AmortizedCostMetricType',
+            /// 'UsageMetricType'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
