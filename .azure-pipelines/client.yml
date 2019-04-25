@@ -106,17 +106,12 @@ jobs:
         inputs:
           version: '$(DotNetCoreVersion)'
 
-      - task: DotNetCoreCLI@2
+      - script: 'dotnet test $(ProjectFile) --filter TestCategory!=Live --logger trx'
         displayName: 'Build & Test'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-        inputs:
-          command: test
-          projects: '$(ProjectFile)'
-          arguments: --filter TestCategory!=Live --logger trx
-          publishTestResults: false
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()
