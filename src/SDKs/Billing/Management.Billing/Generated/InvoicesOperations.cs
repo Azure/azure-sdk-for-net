@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// EnrollmentAccountsOperations operations.
+    /// InvoicesOperations operations.
     /// </summary>
-    internal partial class EnrollmentAccountsOperations : IServiceOperations<BillingManagementClient>, IEnrollmentAccountsOperations
+    internal partial class InvoicesOperations : IServiceOperations<BillingManagementClient>, IInvoicesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the EnrollmentAccountsOperations class.
+        /// Initializes a new instance of the InvoicesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal EnrollmentAccountsOperations(BillingManagementClient client)
+        internal InvoicesOperations(BillingManagementClient client)
         {
             if (client == null)
             {
@@ -51,18 +51,16 @@ namespace Microsoft.Azure.Management.Billing
         public BillingManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all Enrollment Accounts for a user which he has access to.
+        /// List of invoices for a billing account.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the department.
+        /// <param name='periodStartDate'>
+        /// Invoice period start date.
         /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
-        /// string where key and value is separated by a colon (:).
+        /// <param name='periodEndDate'>
+        /// Invoice period end date.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -85,7 +83,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EnrollmentAccountListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<InvoiceListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -95,6 +93,14 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
+            if (periodStartDate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodStartDate");
+            }
+            if (periodEndDate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodEndDate");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -103,27 +109,27 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("expand", expand);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("periodStartDate", periodStartDate);
+                tracingParameters.Add("periodEndDate", periodEndDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByBillingAccountName", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/invoices").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (expand != null)
+            if (periodStartDate != null)
             {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+                _queryParameters.Add(string.Format("periodStartDate={0}", System.Uri.EscapeDataString(periodStartDate)));
             }
-            if (filter != null)
+            if (periodEndDate != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+                _queryParameters.Add(string.Format("periodEndDate={0}", System.Uri.EscapeDataString(periodEndDate)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -213,7 +219,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EnrollmentAccountListResult>();
+            var _result = new AzureOperationResponse<InvoiceListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -226,7 +232,7 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EnrollmentAccountListResult>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<InvoiceListResult>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -246,21 +252,19 @@ namespace Microsoft.Azure.Management.Billing
         }
 
         /// <summary>
-        /// Get the enrollment account by id.
+        /// List of invoices for a billing profile.
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='enrollmentAccountName'>
-        /// Enrollment Account Id.
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the Department.
+        /// <param name='periodStartDate'>
+        /// Invoice period start date.
         /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not
-        /// currently support 'ne', 'or', or 'not'. Tag filter is a key value pair
-        /// string where key and value is separated by a colon (:).
+        /// <param name='periodEndDate'>
+        /// Invoice period end date.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -283,7 +287,7 @@ namespace Microsoft.Azure.Management.Billing
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EnrollmentAccount>> GetByEnrollmentAccountIdWithHttpMessagesAsync(string billingAccountName, string enrollmentAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<InvoiceListResult>> ListByBillingProfileWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string periodStartDate, string periodEndDate, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -293,9 +297,17 @@ namespace Microsoft.Azure.Management.Billing
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
             }
-            if (enrollmentAccountName == null)
+            if (billingProfileName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "enrollmentAccountName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
+            }
+            if (periodStartDate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodStartDate");
+            }
+            if (periodEndDate == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "periodEndDate");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -305,29 +317,29 @@ namespace Microsoft.Azure.Management.Billing
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingAccountName", billingAccountName);
-                tracingParameters.Add("enrollmentAccountName", enrollmentAccountName);
-                tracingParameters.Add("expand", expand);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("billingProfileName", billingProfileName);
+                tracingParameters.Add("periodStartDate", periodStartDate);
+                tracingParameters.Add("periodEndDate", periodEndDate);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetByEnrollmentAccountId", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByBillingProfile", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/enrollmentAccounts/{enrollmentAccountName}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices").ToString();
             _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
-            _url = _url.Replace("{enrollmentAccountName}", System.Uri.EscapeDataString(enrollmentAccountName));
+            _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
-            if (expand != null)
+            if (periodStartDate != null)
             {
-                _queryParameters.Add(string.Format("$expand={0}", System.Uri.EscapeDataString(expand)));
+                _queryParameters.Add(string.Format("periodStartDate={0}", System.Uri.EscapeDataString(periodStartDate)));
             }
-            if (filter != null)
+            if (periodEndDate != null)
             {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
+                _queryParameters.Add(string.Format("periodEndDate={0}", System.Uri.EscapeDataString(periodEndDate)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -417,7 +429,7 @@ namespace Microsoft.Azure.Management.Billing
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<EnrollmentAccount>();
+            var _result = new AzureOperationResponse<InvoiceListResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -430,7 +442,202 @@ namespace Microsoft.Azure.Management.Billing
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<EnrollmentAccount>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<InvoiceListResult>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get the invoice by name.
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
+        /// <param name='invoiceName'>
+        /// Invoice Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<InvoiceSummary>> GetWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            if (billingAccountName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingAccountName");
+            }
+            if (billingProfileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "billingProfileName");
+            }
+            if (invoiceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "invoiceName");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("billingAccountName", billingAccountName);
+                tracingParameters.Add("billingProfileName", billingProfileName);
+                tracingParameters.Add("invoiceName", invoiceName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = Client.BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingProfiles/{billingProfileName}/invoices/{invoiceName}").ToString();
+            _url = _url.Replace("{billingAccountName}", System.Uri.EscapeDataString(billingAccountName));
+            _url = _url.Replace("{billingProfileName}", System.Uri.EscapeDataString(billingProfileName));
+            _url = _url.Replace("{invoiceName}", System.Uri.EscapeDataString(invoiceName));
+            List<string> _queryParameters = new List<string>();
+            if (Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (Client.GenerateClientRequestId != null && Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", Client.AcceptLanguage);
+            }
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<InvoiceSummary>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<InvoiceSummary>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

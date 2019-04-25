@@ -19,24 +19,19 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DepartmentsOperations operations.
+    /// PaymentMethodsOperations operations.
     /// </summary>
-    public partial interface IDepartmentsOperations
+    public partial interface IPaymentMethodsOperations
     {
         /// <summary>
-        /// Lists all departments for a user which he has access to.
+        /// Lists the Payment Methods by billing profile Id.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the enrollmentAccounts.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
-        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
-        /// key value pair string where key and value is separated by a colon
-        /// (:).
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,24 +48,13 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DepartmentListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the department by id.
+        /// Lists the Payment Methods by billing profile Id.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='departmentName'>
-        /// Department Id.
-        /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the enrollmentAccounts.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
-        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
-        /// key value pair string where key and value is separated by a colon
-        /// (:).
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,6 +71,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Department>> GetWithHttpMessagesAsync(string billingAccountName, string departmentName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<PaymentMethod>>> ListByBillingProfileNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

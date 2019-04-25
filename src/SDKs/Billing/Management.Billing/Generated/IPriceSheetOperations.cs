@@ -19,24 +19,18 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// DepartmentsOperations operations.
+    /// PriceSheetOperations operations.
     /// </summary>
-    public partial interface IDepartmentsOperations
+    public partial interface IPriceSheetOperations
     {
         /// <summary>
-        /// Lists all departments for a user which he has access to.
+        /// Download price sheet for an invoice.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// Azure Billing Account ID.
         /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the enrollmentAccounts.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
-        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
-        /// key value pair string where key and value is separated by a colon
-        /// (:).
+        /// <param name='invoiceName'>
+        /// The name of an invoice resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -53,24 +47,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<DepartmentListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadHeaders>> DownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the department by id.
+        /// Download price sheet for an invoice.
         /// </summary>
         /// <param name='billingAccountName'>
-        /// billing Account Id.
+        /// Azure Billing Account ID.
         /// </param>
-        /// <param name='departmentName'>
-        /// Department Id.
-        /// </param>
-        /// <param name='expand'>
-        /// May be used to expand the enrollmentAccounts.
-        /// </param>
-        /// <param name='filter'>
-        /// The filter supports 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It
-        /// does not currently support 'ne', 'or', or 'not'. Tag filter is a
-        /// key value pair string where key and value is separated by a colon
-        /// (:).
+        /// <param name='invoiceName'>
+        /// The name of an invoice resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -87,6 +72,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<Department>> GetWithHttpMessagesAsync(string billingAccountName, string departmentName, string expand = default(string), string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<DownloadUrl,PriceSheetDownloadHeaders>> BeginDownloadWithHttpMessagesAsync(string billingAccountName, string invoiceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

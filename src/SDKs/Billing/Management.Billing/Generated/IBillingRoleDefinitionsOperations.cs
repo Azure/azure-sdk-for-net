@@ -19,12 +19,37 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TransfersOperations operations.
+    /// BillingRoleDefinitionsOperations operations.
     /// </summary>
-    public partial interface ITransfersOperations
+    public partial interface IBillingRoleDefinitionsOperations
     {
         /// <summary>
-        /// Initiates the request to transfer the legacy subscriptions or RIs.
+        /// Gets the role definition for a role
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='billingRoleDefinitionName'>
+        /// role definition id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BillingRoleDefinition>> GetByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the role definition for a role
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -32,8 +57,8 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
-        /// <param name='body'>
-        /// Initiate transfer parameters.
+        /// <param name='billingRoleDefinitionName'>
+        /// role definition id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,9 +75,59 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferDetails>> InitiateWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, InitiateTransferRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingRoleDefinition>> GetByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the transfer details for given transfer Id.
+        /// Gets the role definition for a role
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
+        /// </param>
+        /// <param name='billingRoleDefinitionName'>
+        /// role definition id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BillingRoleDefinition>> GetByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string billingRoleDefinitionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the role definition for a billing account
+        /// </summary>
+        /// <param name='billingAccountName'>
+        /// billing Account Id.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists the role definition for an invoice Section
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -60,9 +135,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
-        /// <param name='transferName'>
-        /// Transfer Name.
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -78,18 +150,15 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferDetails>> GetWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Cancels the transfer for given transfer Id.
+        /// Lists the role definition for a Billing Profile
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
-        /// </param>
-        /// <param name='transferName'>
-        /// Transfer Name.
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,53 +175,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferDetails>> CancelWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all transfer's details initiated from given invoice section.
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TransferDetails>>> ListWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all transfer's details initiated from given invoice section.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TransferDetails>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<BillingRoleDefinitionListResult>> ListByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

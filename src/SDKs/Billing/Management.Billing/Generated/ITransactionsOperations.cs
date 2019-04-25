@@ -19,21 +19,29 @@ namespace Microsoft.Azure.Management.Billing
     using System.Threading.Tasks;
 
     /// <summary>
-    /// TransfersOperations operations.
+    /// TransactionsOperations operations.
     /// </summary>
-    public partial interface ITransfersOperations
+    public partial interface ITransactionsOperations
     {
         /// <summary>
-        /// Initiates the request to transfer the legacy subscriptions or RIs.
+        /// Lists the transactions by billing account name for given start and
+        /// end date.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// <param name='startDate'>
+        /// Start date
         /// </param>
-        /// <param name='body'>
-        /// Initiate transfer parameters.
+        /// <param name='endDate'>
+        /// End date
+        /// </param>
+        /// <param name='filter'>
+        /// May be used to filter by transaction kind. The filter supports
+        /// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
+        /// support 'ne', 'or', or 'not'. Tag filter is a key value pair string
+        /// where key and value is separated by a colon (:).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -50,18 +58,29 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferDetails>> InitiateWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, InitiateTransferRequest body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TransactionsSummary>>> ListByBillingAccountNameWithHttpMessagesAsync(string billingAccountName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Gets the transfer details for given transfer Id.
+        /// Lists the transactions by billing profile name for given start date
+        /// and end date.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
         /// </param>
-        /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
+        /// <param name='billingProfileName'>
+        /// Billing Profile Id.
         /// </param>
-        /// <param name='transferName'>
-        /// Transfer Name.
+        /// <param name='startDate'>
+        /// Start date
+        /// </param>
+        /// <param name='endDate'>
+        /// End date
+        /// </param>
+        /// <param name='filter'>
+        /// May be used to filter by transaction kind. The filter supports
+        /// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
+        /// support 'ne', 'or', or 'not'. Tag filter is a key value pair string
+        /// where key and value is separated by a colon (:).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -78,9 +97,11 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferDetails>> GetWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TransactionsListResult>> ListByBillingProfileNameWithHttpMessagesAsync(string billingAccountName, string billingProfileName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Cancels the transfer for given transfer Id.
+        /// Lists the transactions by invoice section name for given start date
+        /// and end date.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='billingAccountName'>
         /// billing Account Id.
@@ -88,8 +109,17 @@ namespace Microsoft.Azure.Management.Billing
         /// <param name='invoiceSectionName'>
         /// InvoiceSection Id.
         /// </param>
-        /// <param name='transferName'>
-        /// Transfer Name.
+        /// <param name='startDate'>
+        /// Start date
+        /// </param>
+        /// <param name='endDate'>
+        /// End date
+        /// </param>
+        /// <param name='filter'>
+        /// May be used to filter by transaction kind. The filter supports
+        /// 'eq', 'lt', 'gt', 'le', 'ge', and 'and'. It does not currently
+        /// support 'ne', 'or', or 'not'. Tag filter is a key value pair string
+        /// where key and value is separated by a colon (:).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -106,34 +136,11 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<TransferDetails>> CancelWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string transferName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TransactionsListResult>> ListByInvoiceSectionNameWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, string startDate, string endDate, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lists all transfer's details initiated from given invoice section.
-        /// </summary>
-        /// <param name='billingAccountName'>
-        /// billing Account Id.
-        /// </param>
-        /// <param name='invoiceSectionName'>
-        /// InvoiceSection Id.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<TransferDetails>>> ListWithHttpMessagesAsync(string billingAccountName, string invoiceSectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists all transfer's details initiated from given invoice section.
+        /// Lists the transactions by billing account name for given start and
+        /// end date.
+        /// <see href="https://docs.microsoft.com/en-us/rest/api/consumption/" />
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -153,6 +160,6 @@ namespace Microsoft.Azure.Management.Billing
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<TransferDetails>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<TransactionsSummary>>> ListByBillingAccountNameNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
