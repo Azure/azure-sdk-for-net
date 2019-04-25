@@ -15,13 +15,13 @@ namespace Azure.Core.Pipeline.Policies
 
         protected override void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
-            base.GetDelay(message, attempted, out delay);
-            if (delay > TimeSpan.Zero)
-            {
-                return;
-            }
-
             delay = Delay;
+
+            TimeSpan serverDelay = GetServerDelay(message);
+            if (serverDelay > delay)
+            {
+                delay = serverDelay;
+            }
         }
 
         protected override void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)

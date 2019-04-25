@@ -140,7 +140,7 @@ namespace Azure.Core.Tests
             var task = SendRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
-            mockResponse.AddHeader(new HttpHeader("Retry-After", "2"));
+            mockResponse.AddHeader(new HttpHeader("Retry-After", "25"));
 
             await mockTransport.RequestGate.Cycle(mockResponse);
 
@@ -150,7 +150,7 @@ namespace Azure.Core.Tests
 
             var response = await task.TimeoutAfterDefault();
 
-            Assert.AreEqual(TimeSpan.FromSeconds(2), retryDelay);
+            Assert.AreEqual(TimeSpan.FromSeconds(25), retryDelay);
             Assert.AreEqual(501, response.Status);
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Core.Tests
             var task = SendRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
-            mockResponse.AddHeader(new HttpHeader(headerName, "200"));
+            mockResponse.AddHeader(new HttpHeader(headerName, "120000"));
 
             await mockTransport.RequestGate.Cycle(mockResponse);
 
@@ -222,7 +222,7 @@ namespace Azure.Core.Tests
 
             var response = await task.TimeoutAfterDefault();
 
-            Assert.AreEqual(TimeSpan.FromMilliseconds(200), retryDelay);
+            Assert.AreEqual(TimeSpan.FromMilliseconds(120000), retryDelay);
             Assert.AreEqual(501, response.Status);
         }
 

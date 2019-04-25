@@ -97,18 +97,17 @@ namespace Azure.Core.Pipeline.Policies
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
         }
 
-        protected virtual void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        protected virtual TimeSpan GetServerDelay(HttpPipelineMessage message)
         {
-            delay = TimeSpan.Zero;
             if (message.Response.TryGetHeader(RetryAfterHeaderName, out var retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out var delaySeconds))
                 {
-                    delay = TimeSpan.FromSeconds(delaySeconds);
+                    return TimeSpan.FromSeconds(delaySeconds);
                 }
-                else if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
+                if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
                 {
-                    delay = delayTime - DateTimeOffset.Now;
+                    return delayTime - DateTimeOffset.Now;
                 }
             }
 
@@ -117,10 +116,14 @@ namespace Azure.Core.Pipeline.Policies
             {
                 if (int.TryParse(retryAfterValue, out var delaySeconds))
                 {
-                    delay = TimeSpan.FromMilliseconds(delaySeconds);
+                    return TimeSpan.FromMilliseconds(delaySeconds);
                 }
             }
+
+            return TimeSpan.Zero;
         }
+
+        protected abstract void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay);
 
         protected abstract void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay);
     }
