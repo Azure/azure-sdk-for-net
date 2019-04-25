@@ -47,7 +47,7 @@ namespace Azure.Core.Testing
             values.Add(header.Value);
         }
 
-        public override bool TryGetHeader(string name, out string value)
+        protected internal override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out var values))
             {
@@ -59,19 +59,19 @@ namespace Azure.Core.Testing
             return false;
         }
 
-        public override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+        protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
             var result = _headers.TryGetValue(name, out var valuesList);
             values = valuesList;
             return result;
         }
 
-        public override bool ContainsHeader(string name)
+        protected internal override bool ContainsHeader(string name)
         {
             return TryGetHeaderValues(name, out _);
         }
 
-        public override IEnumerable<HttpHeader> Headers => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
+        protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
 
         private static string JoinHeaderValue(IEnumerable<string> values)
         {

@@ -17,17 +17,17 @@ namespace Azure.Core.Testing
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        public override void AddHeader(HttpHeader header)
+        protected internal override void AddHeader(string name, string value)
         {
-            if (!_headers.TryGetValue(header.Name, out var values))
+            if (!_headers.TryGetValue(name, out var values))
             {
-                _headers[header.Name] = values = new List<string>();
+                _headers[name] = values = new List<string>();
             }
 
-            values.Add(header.Value);
+            values.Add(value);
         }
 
-        public override bool TryGetHeader(string name, out string value)
+        protected internal override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out var values))
             {
@@ -39,24 +39,24 @@ namespace Azure.Core.Testing
             return false;
         }
 
-        public override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+        protected internal  override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
             var result = _headers.TryGetValue(name, out var valuesList);
             values = valuesList;
             return result;
         }
 
-        public override bool ContainsHeader(string name)
+        protected internal  override bool ContainsHeader(string name)
         {
             return TryGetHeaderValues(name, out _);
         }
 
-        public override bool RemoveHeader(string name)
+        protected internal  override bool RemoveHeader(string name)
         {
             return _headers.Remove(name);
         }
 
-        public override IEnumerable<HttpHeader> Headers => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
+        protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
 
         private static string JoinHeaderValue(IEnumerable<string> values)
         {

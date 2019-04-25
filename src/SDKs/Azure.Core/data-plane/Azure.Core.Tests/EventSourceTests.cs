@@ -140,7 +140,7 @@ namespace Azure.Core.Tests
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-                request.AddHeader(new HttpHeader("Content-Type", "text/json"));
+                request.Headers.Add("Content-Type", "text/json");
                 requestId = request.RequestId;
 
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
