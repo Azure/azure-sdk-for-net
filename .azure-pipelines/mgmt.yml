@@ -44,3 +44,10 @@ jobs:
             version: '$(DotNetCoreVersion)'
         - script: './tools/linuxScripts/runNetCoreSdkTests.sh'
           displayName: 'Build and test on Non-windows machine'
+        - task: PublishTestResults@2
+          condition: succeededOrFailed()
+          inputs:
+            testResultsFiles: '**/*.trx'
+            testRunTitle: 'Ubuntu Test Results'
+            testResultsFormat: 'VSTest'
+            mergeTestResults: true
