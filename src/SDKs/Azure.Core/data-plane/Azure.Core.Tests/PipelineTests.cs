@@ -47,36 +47,5 @@ namespace Azure.Core.Tests
                 return IsRetriableResponse(response);
             }
         }
-
-        class TestClientOptions : HttpClientOptions
-        {
-        }
-
-        class NullPipelineContext : Request
-        {
-            public override void AddHeader(HttpHeader header)
-            {
-            }
-
-            public override bool TryGetHeader(string name, out string value)
-            {
-                value = null;
-                return false;
-            }
-
-            public override IEnumerable<HttpHeader> Headers
-            {
-                get
-                {
-                    yield break;
-                }
-            }
-
-            public override string RequestId { get; set; }
-
-            public override void Dispose()
-            {
-            }
-        }
     }
 }

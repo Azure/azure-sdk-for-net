@@ -53,7 +53,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
-                message.Request.AddHeader("User-Agent", "ConfiguraingPipelineSample");
+                message.Request.Headers.Add("User-Agent", "ConfiguraingPipelineSample");
                 await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
         }
