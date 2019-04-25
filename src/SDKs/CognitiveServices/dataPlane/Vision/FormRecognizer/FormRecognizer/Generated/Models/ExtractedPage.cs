@@ -34,16 +34,16 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// <param name="clusterId">Cluster identifier.</param>
         /// <param name="keyValuePairs">List of Key-Value pairs extracted from
         /// the page.</param>
-        /// <param name="extractedtables">List of Tables and their information
-        /// extracted from the page.</param>
-        public ExtractedPage(int? number = default(int?), int? height = default(int?), int? width = default(int?), int? clusterId = default(int?), IList<ExtractedKeyValuePair> keyValuePairs = default(IList<ExtractedKeyValuePair>), IList<ExtractedTable> extractedtables = default(IList<ExtractedTable>))
+        /// <param name="tables">List of Tables and their information extracted
+        /// from the page.</param>
+        public ExtractedPage(int? number = default(int?), int? height = default(int?), int? width = default(int?), int? clusterId = default(int?), IList<ExtractedKeyValuePair> keyValuePairs = default(IList<ExtractedKeyValuePair>), IList<ExtractedTable> tables = default(IList<ExtractedTable>))
         {
             Number = number;
             Height = height;
             Width = width;
             ClusterId = clusterId;
             KeyValuePairs = keyValuePairs;
-            Extractedtables = extractedtables;
+            Tables = tables;
             CustomInit();
         }
 
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// Gets or sets list of Tables and their information extracted from
         /// the page.
         /// </summary>
-        [JsonProperty(PropertyName = "extractedtables")]
-        public IList<ExtractedTable> Extractedtables { get; set; }
+        [JsonProperty(PropertyName = "tables")]
+        public IList<ExtractedTable> Tables { get; set; }
 
     }
 }

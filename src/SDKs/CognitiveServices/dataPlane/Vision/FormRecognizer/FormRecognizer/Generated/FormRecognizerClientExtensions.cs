@@ -253,7 +253,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='keys'>
             /// An optional list of known keys to extract the values for.
             /// </param>
-            public static AnalyzeResult AnalyzeCustomModel(this IFormRecognizerClient operations, string id, Stream formStream, IList<string> keys = default(IList<string>))
+            public static AnalyzeResult AnalyzeCustomModel(this IFormRecognizerClient operations, System.Guid id, Stream formStream, IList<string> keys = default(IList<string>))
             {
                 return operations.AnalyzeCustomModelAsync(id, formStream, keys).GetAwaiter().GetResult();
             }
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AnalyzeResult> AnalyzeCustomModelAsync(this IFormRecognizerClient operations, string id, Stream formStream, IList<string> keys = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AnalyzeResult> AnalyzeCustomModelAsync(this IFormRecognizerClient operations, System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.AnalyzeCustomModelWithHttpMessagesAsync(id, formStream, keys, null, cancellationToken).ConfigureAwait(false))
                 {

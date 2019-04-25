@@ -964,15 +964,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<AnalyzeResult>> AnalyzeCustomModelWithHttpMessagesAsync(string id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<AnalyzeResult>> AnalyzeCustomModelWithHttpMessagesAsync(System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
-            }
-            if (id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "id");
             }
             if (formStream == null)
             {
@@ -995,7 +991,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/analyze";
             _url = _url.Replace("{Endpoint}", Endpoint);
-            _url = _url.Replace("{id}", System.Uri.EscapeDataString(id));
+            _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (keys != null)
             {

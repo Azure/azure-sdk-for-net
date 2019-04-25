@@ -169,7 +169,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<AnalyzeResult>> AnalyzeCustomModelWithHttpMessagesAsync(string id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<AnalyzeResult>> AnalyzeCustomModelWithHttpMessagesAsync(System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
