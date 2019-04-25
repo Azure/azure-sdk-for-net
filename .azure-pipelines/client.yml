@@ -89,8 +89,8 @@ jobs:
       vmImage: '$(OSVmImage)'
 
     steps:
-      - powershell: Test-Path $(ProjectFile)
-        displayName: 'Verify \$\(ProjectFile\) exists'
+      - powershell: Get-Item $(ProjectFile)
+        displayName: 'Verify $(ProjectFile) exists'
 
       - powershell: |
           Invoke-WebRequest -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
