@@ -38,7 +38,7 @@ namespace Azure.Core.Pipeline.Policies
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.Request.AddHeader(HttpHeader.Names.UserAgent, _header);
+            message.Request.Headers.Add(HttpHeader.Names.UserAgent, _header);
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
     }

@@ -39,19 +39,19 @@ namespace Azure.Core.Testing
             return false;
         }
 
-        protected internal  override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+        protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
             var result = _headers.TryGetValue(name, out var valuesList);
             values = valuesList;
             return result;
         }
 
-        protected internal  override bool ContainsHeader(string name)
+        protected internal override bool ContainsHeader(string name)
         {
             return TryGetHeaderValues(name, out _);
         }
 
-        protected internal  override bool RemoveHeader(string name)
+        protected internal override bool RemoveHeader(string name)
         {
             return _headers.Remove(name);
         }

@@ -55,7 +55,7 @@ namespace Azure.Core.Tests
             var request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
             request.Content = HttpPipelineRequestContent.Create(new byte[10]);
-            request.AddHeader("Content-Length", "50");
+            request.Headers.Add("Content-Length", "50");
 
             await ExecuteRequest(request, transport);
 
@@ -96,7 +96,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
-            request.AddHeader("Host", "example.org");
+            request.Headers.Add("Host", "example.org");
 
             await ExecuteRequest(request, transport);
 
@@ -204,7 +204,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = CreateRequest(transport);
 
-            request.AddHeader(headerName, headerValue);
+            request.Headers.Add(headerName, headerValue);
 
             Assert.True(request.TryGetHeader(headerName, out var value));
             Assert.AreEqual(headerValue, value);
@@ -237,8 +237,8 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = CreateRequest(transport);
 
-            request.AddHeader(headerName, "Random value");
-            request.SetHeader(headerName, headerValue);
+            request.Headers.Add(headerName, "Random value");
+            request.Headers.SetValue(headerName, headerValue);
 
             Assert.True(request.TryGetHeader(headerName, out var value));
             Assert.AreEqual(headerValue, value);
@@ -269,7 +269,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = CreateRequest(transport);
 
-            request.AddHeader(headerName, headerValue);
+            request.Headers.Add(headerName, headerValue);
             Assert.True(request.RemoveHeader(headerName));
             Assert.False(request.RemoveHeader(headerName));
 
@@ -324,7 +324,7 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
-            request.AddHeader(headerName, headerValue);
+            request.Headers.Add(headerName, headerValue);
 
             await ExecuteRequest(request, transport);
 
@@ -349,8 +349,8 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             Request request = CreateRequest(transport);
 
-            request.AddHeader(headerName, headerValue);
-            request.AddHeader(headerName, anotherHeaderValue);
+            request.Headers.Add(headerName, headerValue);
+            request.Headers.Add(headerName, anotherHeaderValue);
 
             Assert.True(request.ContainsHeader(headerName));
 
