@@ -188,7 +188,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             {
                 DefaultMessageTimeToLive = TestConstants.QueueDefaultMessageTimeToLive,
                 LockDuration = TestConstants.QueueDefaultLockDuration,
-                DuplicateDetectionHistoryTimeWindow = TestConstants.QueueDefaultDeuplicateDetectionHistory,
+                DuplicateDetectionHistoryTimeWindow = TestConstants.QueueDefaultDuplicateDetectionHistory,
                 MaxSizeInMB = TestConstants.QueueDefaultMaxSizeMegabytes,
                 EnablePartitioning = partitioned,
                 RequiresSession = sessionEnabled
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             new TopicDescription(name)
             {
                 DefaultMessageTimeToLive = TestConstants.TopicDefaultMessageTimeToLive,
-                DuplicateDetectionHistoryTimeWindow = TestConstants.TopicDefaultDeuplicateDetectionHistory,
+                DuplicateDetectionHistoryTimeWindow = TestConstants.TopicDefaultDuplicateDetectionHistory,
                 MaxSizeInMB = TestConstants.TopicDefaultMaxSizeMegabytes,
                 EnablePartitioning = partitioned
             };

@@ -44,7 +44,7 @@ For information on building the Azure Service bus client library, please see [Bu
 
 ## Running tests
 
-1. Deploy the Azure Resource Manager template located at [/assets/azure-deploy-test-dependencies.json](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/assets/azure-deploy-test-dependencies.json) by clicking the following button:
+1. Deploy the Azure Resource Manager template located at [sdk/servicebus/Microsoft.Azure.ServiceBus/assets/azure-deploy-test-dependencies.json](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/servicebus/Microsoft.Azure.ServiceBus/assets/azure-deploy-test-dependencies.json) by clicking the following button:
 
     <a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FAzure%2Fazure-sdk-for-net%2Fmaster%2Fsdk%2Fservicebus%2FMicrosoft.Azure.ServiceBus%2Fassets%2Fazure-deploy-test-dependencies.json" target="_blank">
         <img src="http://azuredeploy.net/deploybutton.png"/>
@@ -52,13 +52,17 @@ For information on building the Azure Service bus client library, please see [Bu
 
     *Running the above template will provision a standard Service Bus namespace along with the required entities to successfully run the unit tests.*
 
-1. Add an Environment Variable named `AZ_SERVICE_BUS_CONNECTION` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
+1. Add an Environment Variable named `SERVICE_BUS_CONNECTION_STRING` and set the value as the connection string of the newly created namespace. **Please note that if you are using Visual Studio, you must restart Visual Studio in order to use new Environment Variables.**
 
 Once you have completed the above, you can run `dotnet test` from the `/sdk/servicebus/Microsoft.Azure.ServiceBus/tests` directory.
 
+## Development history
+
+For additional insight and context, the development, release, and issue history for the Azure Service Bus client library will continue to be available in read-only form, located in the stand-alone [Azure Service Bus .NET repository](https://github.com/Azure/azure-service-bus-dotnet).  
+
 ## Versioning information
 
-The Azure Service Bus client library uses [the semantic versioning scheme.](http://semver.org/)
+The Azure Service Bus client library uses [the semantic versioning scheme](http://semver.org/).  
 
 ## Target frameworks
 
