@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
+namespace Microsoft.Azure.CognitiveServices.FormRecognizer
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;

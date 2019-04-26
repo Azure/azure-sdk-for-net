@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Vision.FormRecognizer", "FormRecognizer\Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.csproj", "{6807B854-8528-4FEE-A25D-C43C3AA2D601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.FormRecognizer", "FormRecognizer\Microsoft.Azure.CognitiveServices.FormRecognizer.csproj", "{6807B854-8528-4FEE-A25D-C43C3AA2D601}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Tests", "FormRecognizer.Tests\Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Tests.csproj", "{5987D97A-E532-450C-BF22-A1F595C927F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.FormRecognizer.Tests", "FormRecognizer.Tests\Microsoft.Azure.CognitiveServices.FormRecognizer.Tests.csproj", "{5987D97A-E532-450C-BF22-A1F595C927F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

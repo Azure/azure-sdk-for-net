@@ -1,5 +1,5 @@
-﻿using Microsoft.Azure.CognitiveServices.Vision.FormRecognizer;
-using Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models;
+﻿using Microsoft.Azure.CognitiveServices.FormRecognizer;
+using Microsoft.Azure.CognitiveServices.FormRecognizer.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;

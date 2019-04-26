@@ -4,7 +4,7 @@
 // regenerated.
 // </auto-generated>
 
-namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
+namespace Microsoft.Azure.CognitiveServices.FormRecognizer.Models
 {
     using Newtonsoft.Json;
     using System.Collections;
