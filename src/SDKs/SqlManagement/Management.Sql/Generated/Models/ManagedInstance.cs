@@ -85,8 +85,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="restorePointInTime">Specifies the point in time
         /// (ISO8601 format) of the source database that will be restored to
         /// create the new database.</param>
-        /// <param name="proxyOverride">Proxy override of the managed
-        /// instance.</param>
+        /// <param name="proxyOverride">Connection type used for connecting to
+        /// the instance. Possible values include: 'Proxy', 'Redirect',
+        /// 'Default'</param>
         /// <param name="timezoneId">Id of the timezone. Allowed values are
         /// timezones supported by Windows.
         /// Windows keeps details on supported timezones, including the id, in
@@ -255,7 +256,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         public System.DateTime? RestorePointInTime { get; set; }
 
         /// <summary>
-        /// Gets or sets proxy override of the managed instance.
+        /// Gets or sets connection type used for connecting to the instance.
+        /// Possible values include: 'Proxy', 'Redirect', 'Default'
         /// </summary>
         [JsonProperty(PropertyName = "properties.proxyOverride")]
         public string ProxyOverride { get; set; }
