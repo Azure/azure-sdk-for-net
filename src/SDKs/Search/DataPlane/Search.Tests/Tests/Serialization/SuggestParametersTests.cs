@@ -53,10 +53,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Theory]
-        [InlineData(null)]
-        [InlineData()]
-        public void EnsureSelectConvertsNullOrEmptyToSelectStar(params string[] select)
+        [InlineData(true)]
+        [InlineData(false)]
+        public void EnsureSelectConvertsNullOrEmptyToSelectStar(bool isNull)
         {
+            string[] select = isNull ? null : new string[0];
+
             SuggestParameters parameters = CreateTestParameters(select);
 
             Assert.Same(select, parameters.Select);
@@ -67,10 +69,12 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Theory]
-        [InlineData(null)]
-        [InlineData()]
-        public void EnsureSelectLeavesOtherPropertiesUnchanged(params string[] select)
+        [InlineData(true)]
+        [InlineData(false)]
+        public void EnsureSelectLeavesOtherPropertiesUnchanged(bool isNull)
         {
+            string[] select = isNull ? null : new string[0];
+
             SuggestParameters parameters = CreateTestParameters(select);
             SuggestParameters newParameters = parameters.EnsureSelect();
 
