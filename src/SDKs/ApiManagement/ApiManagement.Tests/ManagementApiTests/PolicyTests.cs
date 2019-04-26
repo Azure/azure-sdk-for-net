@@ -90,7 +90,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                     // get policy to check it was added
                     var getPolicyResponse = await testBase.client.Policy.GetAsync(
                         testBase.rgName,
-                        testBase.serviceName);
+                        testBase.serviceName,
+                        PolicyExportFormat.Xml);
 
                     Assert.NotNull(getPolicyResponse);
                     Assert.NotNull(getPolicyResponse.Value);
@@ -172,6 +173,17 @@ namespace ApiManagement.Tests.ManagementApiTests
                 Assert.NotNull(getApiPolicy);
                 Assert.NotNull(getApiPolicy.Value);
 
+                // get policy in a blob link                
+                var getApiPolicyRawXml = await testBase.client.ApiPolicy.GetAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    api.Name,
+                    PolicyExportFormat.Rawxml);
+
+                Assert.NotNull(getApiPolicyRawXml);
+                Assert.Equal(PolicyExportFormat.Rawxml, getApiPolicyRawXml.Format);
+                Assert.NotNull(getApiPolicyRawXml.Value);
+
                 // get the api policy tag
                 var apiPolicyTag = await testBase.client.ApiPolicy.GetEntityTagAsync(
                     testBase.rgName,
@@ -240,9 +252,11 @@ namespace ApiManagement.Tests.ManagementApiTests
                     testBase.rgName,
                     testBase.serviceName,
                     api.Name,
-                    operation.Name);
+                    operation.Name,
+                    PolicyExportFormat.Xml);
 
                 Assert.NotNull(getOperationPolicy);
+                Assert.Equal(PolicyExportFormat.Xml, getOperationPolicy.Format);
                 Assert.NotNull(getOperationPolicy.Value);
 
                 // get operation policy tag
@@ -322,6 +336,17 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 Assert.NotNull(getProductPolicy);
                 Assert.NotNull(getProductPolicy.Value);
+
+                // get policy in a blob link                
+                var getProductPolicyXml = await testBase.client.ProductPolicy.GetAsync(
+                    testBase.rgName,
+                    testBase.serviceName,
+                    product.Name,
+                    PolicyExportFormat.Xml);
+
+                Assert.NotNull(getProductPolicyXml);
+                Assert.Equal(PolicyExportFormat.Xml, getProductPolicyXml.Format);
+                Assert.NotNull(getProductPolicyXml.Value);
 
                 // get product policy tag
                 var productPolicyTag = await testBase.client.ProductPolicy.GetEntityTagAsync(

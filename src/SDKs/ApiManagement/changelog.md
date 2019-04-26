@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.9.0-preview
+
+- Added support for retrieving Policies from Global, Api, Product and Operation level in Raw Xml format.
+
 ### Changes in 4.8.0-preview
 
 - Switch the .NET client to use api-version `2019-01-01`
