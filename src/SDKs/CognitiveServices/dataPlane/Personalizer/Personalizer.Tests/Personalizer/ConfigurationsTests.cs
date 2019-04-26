@@ -18,7 +18,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                ServiceConfiguration defaultConfig = await client.GetServiceConfigurationAsync();
+                ServiceConfiguration defaultConfig = await client.ServiceConfiguration.GetAsync();
                 Assert.Equal("00:01:00", defaultConfig.RewardWaitTime);
                 Assert.Equal("01:00:00", defaultConfig.ModelExportFrequency);
                 Assert.Equal(0D, defaultConfig.DefaultReward);
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                 };
 
 
-                ServiceConfiguration result = await client.UpdateServiceConfigurationAsync(config);
+                ServiceConfiguration result = await client.ServiceConfiguration.UpdateAsync(config);
 
                 Assert.Equal(config.DefaultReward, result.DefaultReward);
                 Assert.True(Math.Abs(config.ExplorationPercentage - result.ExplorationPercentage) < 1e-3);
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                PolicyContract policy = await client.GetPolicyAsync();
+                PolicyContract policy = await client.Policy.GetAsync();
 
                 Assert.Equal("app1", policy.Name);
                 Assert.Equal("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                     Arguments = "--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2"
                 };
 
-                var updatedPolicy = await client.UpdatePolicyAsync(policy);
+                var updatedPolicy = await client.Policy.UpdateAsync(policy);
 
                 Assert.NotNull(updatedPolicy);
                 Assert.Equal(policy.Arguments, updatedPolicy.Arguments);
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                PolicyContract policy = await client.DeletePolicyAsync();
+                PolicyContract policy = await client.Policy.DeleteAsync();
 
                 Assert.Equal("--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2",
                 policy.Arguments);

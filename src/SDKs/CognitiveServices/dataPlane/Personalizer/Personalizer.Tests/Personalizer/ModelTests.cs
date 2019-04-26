@@ -18,7 +18,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                Stream stream = await client.GetModelAsync();
+                Stream stream = await client.Model.GetAsync();
                 Assert.NotEqual(stream.ReadByte(), -1);
             }
         }
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                await client.DeleteModelAsync();
+                await client.Model.DeleteAsync();
             }
         }
 
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                ModelProperties modelProperties = await client.GetModelPropertiesAsync();
+                ModelProperties modelProperties = await client.Model.GetPropertiesAsync();
                 Assert.True(modelProperties.CreationTime != null);
                 Assert.True(modelProperties.LastModifiedTime != null);
             }

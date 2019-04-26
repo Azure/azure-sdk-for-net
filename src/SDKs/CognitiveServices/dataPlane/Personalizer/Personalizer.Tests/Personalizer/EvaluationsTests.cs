@@ -4,6 +4,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using System.Collections.Generic;
 using System;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 {
@@ -18,7 +19,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                IList<Evaluation> evaluations = client.GetEvaluations();
+                IList<Evaluation> evaluations = client.Evaluations.List();
 
                 Assert.Equal(2, evaluations.Count);
                 Assert.Equal("myFirstEvaluation", evaluations[0].Name);
@@ -50,7 +51,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                     }
                 };
 
-                Evaluation createdEvaluation = client.CreateEvaluation(evaluation);
+                Evaluation createdEvaluation = client.Evaluations.Create(evaluation);
 
                 Assert.Equal(evaluation.Name, createdEvaluation.Name);
             }
@@ -66,7 +67,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
                 string evaluationId = "b58c6d92-b727-48c1-9487-4be2782c9e0a";
-                Evaluation evaluation = client.GetEvaluation(evaluationId);
+                Evaluation evaluation = client.Evaluations.Get(evaluationId);
 
                 Assert.Equal(evaluationId, evaluation.Id);
             }
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
                 string evaluationId = "b58c6d92-b727-48c1-9487-4be2782c9e0a";
-                client.DeleteEvaluation(evaluationId);
+                client.Evaluations.Delete(evaluationId);
             }
         }
     }
