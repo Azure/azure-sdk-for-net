@@ -33,7 +33,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
         /// </summary>
         /// <param name="age">Age in years</param>
         /// <param name="gender">Possible gender of the face. Possible values
-        /// include: 'male', 'female', 'genderless'</param>
+        /// include: 'male', 'female'</param>
         /// <param name="smile">Smile intensity, a number between [0,1]
         /// </param>
         /// <param name="facialHair">Properties describing facial hair
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.Face.Models
 
         /// <summary>
         /// Gets or sets possible gender of the face. Possible values include:
-        /// 'male', 'female', 'genderless'
+        /// 'male', 'female'
         /// </summary>
         [JsonProperty(PropertyName = "gender")]
         public Gender? Gender { get; set; }
