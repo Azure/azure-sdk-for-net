@@ -46,8 +46,7 @@ namespace Azure.Core.Pipeline
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
         {
-            if (headers.TryGetValues(name, out var values) ||
-                (content != null && content.Headers.TryGetValues(name, out values)))
+            if (TryGetHeader(headers, content, name, out IEnumerable<string> values))
             {
                 value = JoinHeaderValues(values);
                 return true;
@@ -55,6 +54,11 @@ namespace Azure.Core.Pipeline
 
             value = null;
             return false;
+        }
+
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out IEnumerable<string> values)
+        {
+            return headers.TryGetValues(name, out values) || content?.Headers.TryGetValues(name, out values) == true;
         }
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent content)
@@ -71,6 +75,28 @@ namespace Azure.Core.Pipeline
                     yield return new HttpHeader(header.Key, JoinHeaderValues(header.Value));
                 }
             }
+        }
+
+        internal static bool RemoveHeader(HttpHeaders headers, HttpContent content, string name)
+        {
+            // .Remove throws on invalid header name so use TryGet here to check
+            if (headers.TryGetValues(name, out _ ) && headers.Remove(name))
+            {
+                return true;
+            }
+
+            return content?.Headers.TryGetValues(name, out _ ) == true && content.Headers.Remove(name);
+        }
+
+        internal static bool ContainsHeader(HttpHeaders headers, HttpContent content, string name)
+        {
+            // .Contains throws on invalid header name so use TryGet here
+            if (headers.TryGetValues(name, out _))
+            {
+                return true;
+            }
+
+            return content?.Headers.TryGetValues(name, out _) == true;
         }
 
         internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
@@ -120,12 +146,7 @@ namespace Azure.Core.Pipeline
 
             public override string RequestId { get; set; }
 
-            public override void AddHeader(HttpHeader header)
-            {
-                AddHeader(header.Name, header.Value);
-            }
-
-            public override void AddHeader(string name, string value)
+            protected internal override void AddHeader(string name, string value)
             {
                 if (_requestMessage.Headers.TryAddWithoutValidation(name, value))
                 {
@@ -139,9 +160,15 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
+            protected internal override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
 
-            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
+
+            protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_requestMessage.Headers, _requestContent, name);
+
+            protected internal override bool RemoveHeader(string name) => HttpClientTransport.RemoveHeader(_requestMessage.Headers, _requestContent, name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
@@ -290,9 +317,13 @@ namespace Azure.Core.Pipeline
 
             public override string RequestId { get; set; }
 
-            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
+            protected internal override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
-            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out values);
+
+            protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_responseMessage.Headers, _responseMessage.Content, name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
 
             public override void Dispose()
             {

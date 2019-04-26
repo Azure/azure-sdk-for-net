@@ -1,7 +1,5 @@
 <Project Sdk="Microsoft.Build.Traversal">
   <ItemGroup>
-    <!-- Issue https://github.com/Azure/azure-sdk-for-net/issues/5089 some KeyVault tests don't work on linux -->
-    <ExcludeDataPlaneProjects Include="$(RepoRoot)\sdk\keyvault\**\Microsoft.Azure.KeyVault.Tests.csproj" Condition="'$(OS)' != 'Windows_NT'" />
     <ExcludeDataPlaneProjects Include="$(RepoSrcPath)\*\data-plane\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
     <ExcludeDataPlaneProjects Include="$(RepoRoot)\sdk\*\Microsoft.Azure.*\**\*.Tests.*proj" Condition="'$(SkipTests)' == 'true'" />
     <DataPlaneProjectReference Include="$(RepoSrcPath)\*\data-plane\**\*.*proj" Exclude="@(ExcludeDataPlaneProjects)" />

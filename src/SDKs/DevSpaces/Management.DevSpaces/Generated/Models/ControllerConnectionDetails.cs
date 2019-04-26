@@ -28,11 +28,8 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// Initializes a new instance of the ControllerConnectionDetails
         /// class.
         /// </summary>
-        /// <param name="authKey">Authentication key for communicating with
-        /// services.</param>
-        public ControllerConnectionDetails(string authKey = default(string), OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = default(OrchestratorSpecificConnectionDetails))
+        public ControllerConnectionDetails(OrchestratorSpecificConnectionDetails orchestratorSpecificConnectionDetails = default(OrchestratorSpecificConnectionDetails))
         {
-            AuthKey = authKey;
             OrchestratorSpecificConnectionDetails = orchestratorSpecificConnectionDetails;
             CustomInit();
         }
@@ -41,12 +38,6 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets authentication key for communicating with services.
-        /// </summary>
-        [JsonProperty(PropertyName = "authKey")]
-        public string AuthKey { get; private set; }
 
         /// <summary>
         /// </summary>

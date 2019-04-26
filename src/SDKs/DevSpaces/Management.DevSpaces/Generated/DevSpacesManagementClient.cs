@@ -334,7 +334,7 @@ namespace Microsoft.Azure.Management.DevSpaces
             Operations = new Operations(this);
             Controllers = new ControllersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-01-01-preview";
+            ApiVersion = "2019-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

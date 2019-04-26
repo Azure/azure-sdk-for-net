@@ -12,14 +12,21 @@ namespace Azure
     {
         public abstract int Status { get; }
 
-        public abstract bool TryGetHeader(string name, out string value);
-
         public abstract Stream ContentStream { get; set; }
 
         public abstract string RequestId { get; set; }
 
-        public abstract IEnumerable<HttpHeader> Headers { get; }
+        public virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
         public abstract void Dispose();
+
+        protected internal abstract bool TryGetHeader(string name, out string value);
+
+        protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string> values);
+
+        protected internal abstract bool ContainsHeader(string name);
+
+        protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
+
     }
 }

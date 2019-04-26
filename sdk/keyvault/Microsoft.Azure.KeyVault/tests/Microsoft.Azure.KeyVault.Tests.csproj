@@ -14,6 +14,10 @@
 
   <ItemGroup>
     <Compile Remove="TestFramework\**\*.cs" />
+
+    <!-- Issue https://github.com/Azure/azure-sdk-for-net/issues/5089 some KeyVault tests don't work on linux -->
+    <Compile Remove="KeyVaultOperationsTest.cs" Condition="'$(OS)' != 'Windows_NT'" />
+    
     <ProjectReference Include="..\src\Microsoft.Azure.KeyVault.csproj" />
     <ProjectReference Include="TestFramework\Microsoft.Azure.KeyVault.TestFramework.csproj" />
   </ItemGroup>

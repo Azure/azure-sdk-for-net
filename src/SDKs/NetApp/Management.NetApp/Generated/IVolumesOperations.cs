@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public partial interface IVolumesOperations
     {
         /// <summary>
-        /// List volumes
+        /// Describe all volumes
         /// </summary>
+        /// <remarks>
+        /// List all volumes within the capacity pool
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -41,7 +44,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -52,8 +55,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<Volume>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a volume
+        /// Describe a volume
         /// </summary>
+        /// <remarks>
+        /// Get the details of the specified volume
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -72,7 +78,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -83,8 +89,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<Volume>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update a volume
+        /// Create or Update a volume
         /// </summary>
+        /// <remarks>
+        /// Create or update the specified volume within the capacity pool
+        /// </remarks>
         /// <param name='body'>
         /// Volume object supplied in the body of the operation.
         /// </param>
@@ -106,7 +115,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -117,8 +126,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<Volume>> CreateOrUpdateWithHttpMessagesAsync(Volume body, string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patch a volume
+        /// Update a volume
         /// </summary>
+        /// <remarks>
+        /// Patch the specified volume
+        /// </remarks>
         /// <param name='body'>
         /// Volume object supplied in the body of the operation.
         /// </param>
@@ -140,7 +152,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -153,6 +165,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Delete a volume
         /// </summary>
+        /// <remarks>
+        /// Delete the specified volume
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -171,7 +186,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -179,8 +194,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update a volume
+        /// Create or Update a volume
         /// </summary>
+        /// <remarks>
+        /// Create or update the specified volume within the capacity pool
+        /// </remarks>
         /// <param name='body'>
         /// Volume object supplied in the body of the operation.
         /// </param>
@@ -202,7 +220,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -215,6 +233,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Delete a volume
         /// </summary>
+        /// <remarks>
+        /// Delete the specified volume
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -233,7 +254,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">

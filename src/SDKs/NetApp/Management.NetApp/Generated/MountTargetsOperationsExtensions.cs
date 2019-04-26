@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class MountTargetsOperationsExtensions
     {
             /// <summary>
-            /// List mount targets
+            /// Describe all mount targets
             /// </summary>
+            /// <remarks>
+            /// List all mount targets associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -47,8 +50,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// List mount targets
+            /// Describe all mount targets
             /// </summary>
+            /// <remarks>
+            /// List all mount targets associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

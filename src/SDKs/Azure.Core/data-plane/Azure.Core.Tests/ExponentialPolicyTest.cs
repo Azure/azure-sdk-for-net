@@ -79,6 +79,32 @@ namespace Azure.Core.Tests
             Assert.AreEqual(500, response.Status);
         }
 
+        [Theory]
+        [TestCase(2, 3, 3)]
+        [TestCase(3, 2, 3)]
+        [TestCase(3, 10, 10)]
+        public async Task UsesLargerOfDelayAndServerDelay(int delay, int retryAfter, int expected)
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("Retry-After", retryAfter.ToString()));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await policy.DelayGate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            AssertExponentialDelay(TimeSpan.FromSeconds(expected), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
         private void AssertExponentialDelay(TimeSpan expected, TimeSpan actual)
         {
             // Expect maximum 25% variance

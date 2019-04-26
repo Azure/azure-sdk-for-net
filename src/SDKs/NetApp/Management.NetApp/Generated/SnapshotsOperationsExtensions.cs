@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class SnapshotsOperationsExtensions
     {
             /// <summary>
-            /// List snapshots
+            /// Describe all snapshots
             /// </summary>
+            /// <remarks>
+            /// List all snapshots associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -47,8 +50,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// List snapshots
+            /// Describe all snapshots
             /// </summary>
+            /// <remarks>
+            /// List all snapshots associated with the volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -76,8 +82,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get a snapshot
+            /// Describe a snapshot
             /// </summary>
+            /// <remarks>
+            /// Get details of the specified snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -102,8 +111,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get a snapshot
+            /// Describe a snapshot
             /// </summary>
+            /// <remarks>
+            /// Get details of the specified snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -136,6 +148,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -165,6 +180,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -198,8 +216,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a snapshot
+            /// Update a snapshot
             /// </summary>
+            /// <remarks>
+            /// Patch a snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -227,8 +248,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a snapshot
+            /// Update a snapshot
             /// </summary>
+            /// <remarks>
+            /// Patch a snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -262,8 +286,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -288,8 +315,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -319,6 +349,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -348,6 +381,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Create a snapshot
             /// </summary>
+            /// <remarks>
+            /// Create the specified snapshot within the given volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -381,8 +417,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -407,8 +446,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Delete snapshot
+            /// Delete a snapshot
             /// </summary>
+            /// <remarks>
+            /// Delete snapshot
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

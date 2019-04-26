@@ -49,22 +49,16 @@ jobs:
         inputs:
           version: '$(DotNetCoreVersion)'
 
-      - task: DotNetCoreCLI@2
+      - script: 'dotnet test $(ProjectFile) --logger trx'
         displayName: 'Build & Test (all tests)'
         env:
           DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
           DOTNET_CLI_TELEMETRY_OPTOUT: 1
           DOTNET_MULTILEVEL_LOOKUP: 0
-          APP_CONFIG_CONNECTION: $(AppConfigConnectionString)
-          AZ_SERVICE_BUS_CONNECTION: $(ServiceBusConnectionString)
-          AZ_EVENT_HUBS_CONNECTION: $(EventHubsConnectionString)
-          AZ_EVENT_HUBS_STORAGE_CONNECTION: $(EventHubsStorageConnectionString)
-
-        inputs:
-          command: test
-          projects: '$(ProjectFile)'
-          arguments: --logger trx
-          publishTestResults: false
+          APP_CONFIG_CONNECTION: $(net-azconfig-test-connection-string)
+          SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)
+          EVENT_HUBS_CONNECTION_STRING: $(net-eventhubs-internal-namespace-connection-string)
+          EVENT_HUBS_STORAGE_CONNECTION_STRING: $(net-eventhubs-internal-storage-connection-string)
 
       - task: PublishTestResults@2
         condition: succeededOrFailed()

@@ -22,16 +22,27 @@ namespace Azure
 
         public virtual HttpPipelineRequestContent Content { get; set; }
 
-        public abstract void AddHeader(HttpHeader header);
+        protected internal abstract void AddHeader(string name, string value);
 
-        public virtual void AddHeader(string name, string value)
-            => AddHeader(new HttpHeader(name, value));
+        protected internal abstract bool TryGetHeader(string name, out string value);
 
-        public abstract bool TryGetHeader(string name, out string value);
+        protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string> values);
 
-        public abstract IEnumerable<HttpHeader> Headers { get; }
+        protected internal abstract bool ContainsHeader(string name);
+
+        protected internal virtual void SetHeader(string name, string value)
+        {
+            RemoveHeader(name);
+            AddHeader(name, value);
+        }
+
+        protected internal abstract bool RemoveHeader(string name);
+
+        protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
         public abstract string RequestId { get; set; }
+
+        public RequestHeaders Headers => new RequestHeaders(this);
 
         public abstract void Dispose();
     }

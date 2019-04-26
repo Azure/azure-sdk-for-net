@@ -42,11 +42,13 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="fileSystemId">FileSystem ID</param>
         /// <param name="usageThreshold">usageThreshold</param>
-        /// <param name="exportPolicy">Export policy rule</param>
+        /// <param name="exportPolicy">exportPolicy</param>
         /// <param name="provisioningState">Azure lifecycle management</param>
+        /// <param name="snapshotId">Snapshot ID</param>
+        /// <param name="baremetalTenantId">Baremetal Tenant ID</param>
         /// <param name="subnetId">The Azure Resource URI for a delegated
         /// subnet. Must have the delegation Microsoft.NetApp/volumes</param>
-        public Volume(string location, string creationToken, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), long? usageThreshold = default(long?), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), string provisioningState = default(string), string subnetId = default(string))
+        public Volume(string location, string creationToken, string serviceLevel, string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string fileSystemId = default(string), long? usageThreshold = default(long?), VolumePropertiesExportPolicy exportPolicy = default(VolumePropertiesExportPolicy), string provisioningState = default(string), string snapshotId = default(string), string baremetalTenantId = default(string), string subnetId = default(string))
         {
             Location = location;
             Id = id;
@@ -59,6 +61,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
             UsageThreshold = usageThreshold;
             ExportPolicy = exportPolicy;
             ProvisioningState = provisioningState;
+            SnapshotId = snapshotId;
+            BaremetalTenantId = baremetalTenantId;
             SubnetId = subnetId;
             CustomInit();
         }
@@ -138,8 +142,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         public long? UsageThreshold { get; set; }
 
         /// <summary>
-        /// Gets or sets export policy rule
+        /// Gets or sets exportPolicy
         /// </summary>
+        /// <remarks>
+        /// Set of export policy rules
+        /// </remarks>
         [JsonProperty(PropertyName = "properties.exportPolicy")]
         public VolumePropertiesExportPolicy ExportPolicy { get; set; }
 
@@ -148,6 +155,24 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets snapshot ID
+        /// </summary>
+        /// <remarks>
+        /// UUID v4 used to identify the Snapshot
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.snapshotId")]
+        public string SnapshotId { get; set; }
+
+        /// <summary>
+        /// Gets baremetal Tenant ID
+        /// </summary>
+        /// <remarks>
+        /// Unique Baremetal Tenant Identifier.
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.baremetalTenantId")]
+        public string BaremetalTenantId { get; private set; }
 
         /// <summary>
         /// Gets or sets the Azure Resource URI for a delegated subnet. Must
@@ -198,6 +223,36 @@ namespace Microsoft.Azure.Management.NetApp.Models
             if (UsageThreshold < 107374182400)
             {
                 throw new ValidationException(ValidationRules.InclusiveMinimum, "UsageThreshold", 107374182400);
+            }
+            if (SnapshotId != null)
+            {
+                if (SnapshotId.Length > 36)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "SnapshotId", 36);
+                }
+                if (SnapshotId.Length < 36)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "SnapshotId", 36);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(SnapshotId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "SnapshotId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
+                }
+            }
+            if (BaremetalTenantId != null)
+            {
+                if (BaremetalTenantId.Length > 36)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "BaremetalTenantId", 36);
+                }
+                if (BaremetalTenantId.Length < 36)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "BaremetalTenantId", 36);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(BaremetalTenantId, "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "BaremetalTenantId", "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$");
+                }
             }
         }
     }

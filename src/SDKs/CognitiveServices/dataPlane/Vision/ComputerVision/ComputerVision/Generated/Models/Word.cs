@@ -17,7 +17,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// Json object representing a recognized word.
+    /// An object representing a recognized word.
     /// </summary>
     public partial class Word
     {

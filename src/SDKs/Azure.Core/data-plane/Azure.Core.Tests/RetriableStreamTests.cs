@@ -176,7 +176,7 @@ namespace Azure.Core.Tests
             using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com"));
-                request.AddHeader("Range", "bytes=" + offset);
+                request.Headers.Add("Range", "bytes=" + offset);
 
                 return pipeline.SendRequestAsync(request, CancellationToken.None);
             }

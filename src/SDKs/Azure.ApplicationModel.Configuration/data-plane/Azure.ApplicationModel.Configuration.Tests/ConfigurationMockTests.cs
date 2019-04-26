@@ -103,7 +103,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
-            Assert.True(request.TryGetHeader("If-None-Match", out var ifNoneMatch));
+            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
@@ -145,7 +145,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
-            Assert.True(request.TryGetHeader("If-Match", out var ifMatch));
+            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("*", ifMatch);
         }
 
@@ -293,7 +293,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private void AssertRequestCommon(MockRequest request)
         {
-            Assert.True(request.TryGetHeader("User-Agent", out var value));
+            Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
             StringAssert.Contains("azsdk-net-config/1.0.0.0", value);
         }
 

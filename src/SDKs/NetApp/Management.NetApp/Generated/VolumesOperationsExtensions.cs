@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class VolumesOperationsExtensions
     {
             /// <summary>
-            /// List volumes
+            /// Describe all volumes
             /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -44,8 +47,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// List volumes
+            /// Describe all volumes
             /// </summary>
+            /// <remarks>
+            /// List all volumes within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -70,8 +76,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get a volume
+            /// Describe a volume
             /// </summary>
+            /// <remarks>
+            /// Get the details of the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -93,8 +102,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Get a volume
+            /// Describe a volume
             /// </summary>
+            /// <remarks>
+            /// Get the details of the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -122,8 +134,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or update a volume
+            /// Create or Update a volume
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -148,8 +163,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or update a volume
+            /// Create or Update a volume
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -180,8 +198,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a volume
+            /// Update a volume
             /// </summary>
+            /// <remarks>
+            /// Patch the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -206,8 +227,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Patch a volume
+            /// Update a volume
             /// </summary>
+            /// <remarks>
+            /// Patch the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -240,6 +264,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a volume
             /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -263,6 +290,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a volume
             /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -287,8 +317,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or update a volume
+            /// Create or Update a volume
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -313,8 +346,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Create or update a volume
+            /// Create or Update a volume
             /// </summary>
+            /// <remarks>
+            /// Create or update the specified volume within the capacity pool
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -347,6 +383,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a volume
             /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -370,6 +409,9 @@ namespace Microsoft.Azure.Management.NetApp
             /// <summary>
             /// Delete a volume
             /// </summary>
+            /// <remarks>
+            /// Delete the specified volume
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
