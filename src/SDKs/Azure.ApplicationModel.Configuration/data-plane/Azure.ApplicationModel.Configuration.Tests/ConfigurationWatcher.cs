@@ -28,7 +28,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         }
 
         public TimeSpan Interval { get; set; } = TimeSpan.FromSeconds(1);
-        
+
         public void Start(CancellationToken token = default)
         {
             lock (_sync) {
@@ -84,7 +84,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 for (int i = 0; i < _keysToWatch.Count; i++) {
 
                     var response = await _client.GetAsync(_keysToWatch[i], null, default, cancellationToken).ConfigureAwait(false);
-                    if (response.Status == 200) {
+                    if (response.Raw.Status == 200) {
                         var setting = response.Value;
                         _lastPolled[setting.Key] = setting;
                     }
@@ -110,7 +110,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             foreach(var task in tasks) {
                 var response = task.Result;
-                if (response.Status == 200) {
+                if (response.Raw.Status == 200) {
                     ConfigurationSetting current = response.Value;
                     _lastPolled.TryGetValue(current.Key, out var previous);
                     if (CompareSetting(current, previous)) {
