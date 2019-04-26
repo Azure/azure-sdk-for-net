@@ -31,7 +31,11 @@ namespace Microsoft.Azure.Search.Tests
 
                 Index createdEncryptedIndex = searchClient.Indexes.Create(encryptedIndex);
 
-                AssertIndexesEqual(encryptedIndex, createdEncryptedIndex);
+                // Secrets get nulled out on retrieval.
+                Index expectedIndex = encryptedIndex;
+                expectedIndex.EncryptionKey.AccessCredentials.ApplicationSecret = null;
+
+                AssertIndexesEqual(expectedIndex, createdEncryptedIndex);
             });
         }
 
@@ -73,7 +77,12 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
                 SynonymMap createdEncryptedSynonyMap = searchClient.SynonymMaps.Create(encryptedSynonymMap);
-                AssertSynonymMapsEqual(encryptedSynonymMap, createdEncryptedSynonyMap);
+
+                // Secrets get nulled out on retrieval.
+                SynonymMap expectedSynonymMap = encryptedSynonymMap;
+                expectedSynonymMap.EncryptionKey.AccessCredentials.ApplicationSecret = null;
+
+                AssertSynonymMapsEqual(expectedSynonymMap, createdEncryptedSynonyMap);
             });
         }
 
