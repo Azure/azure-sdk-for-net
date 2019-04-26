@@ -7,7 +7,7 @@
     <AssemblyTitle>Microsoft Azure Search Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search</AssemblyName>
     <Version>8.0.0-preview</Version>
-    <PackageReleaseNotes>This is a preview of the newest major version of the Azure Search .NET SDK, based on version 2017-11-11-Preview of the Azure Search REST API. New in this version is support for Cognitive Search and the new Autocomplete API. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
+    <PackageReleaseNotes>This is a preview of the newest major version of the Azure Search .NET SDK, based on version 2017-11-11-Preview of the Azure Search REST API. New in this version is support for complex types, encryption at rest with customer-managed keys, filter support in the Autocomplete API, and the new NER (named entity recognition) skill for Cognitive Search. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
