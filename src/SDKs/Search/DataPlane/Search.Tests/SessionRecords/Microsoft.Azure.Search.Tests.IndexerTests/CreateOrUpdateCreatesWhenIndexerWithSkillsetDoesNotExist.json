@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "7cc8dcbb-5dcf-45cb-b5f4-88281a76cb1b"
+          "8ee6d559-9460-4500-b9b4-38b331081ec2"
         ],
         "accept-language": [
           "en-US"
@@ -24,22 +24,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:24 GMT"
+          "Fri, 26 Apr 2019 20:04:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1143"
+          "1160"
         ],
         "x-ms-request-id": [
-          "b057b22c-54d8-4ca2-b990-23edaa075d0a"
+          "fc321f18-5323-4f25-a46e-e5d1c4439766"
         ],
         "x-ms-correlation-request-id": [
-          "b057b22c-54d8-4ca2-b990-23edaa075d0a"
+          "fc321f18-5323-4f25-a46e-e5d1c4439766"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T034625Z:b057b22c-54d8-4ca2-b990-23edaa075d0a"
+          "NORTHEUROPE:20190426T200417Z:fc321f18-5323-4f25-a46e-e5d1c4439766"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet7232?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ3MjMyP2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet510?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQ1MTA/YXBpLXZlcnNpb249MjAxNi0wOS0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "717715ca-e23d-4bf3-8b01-19aae2b4b623"
+          "2bcba019-7834-4ff4-bdf9-f3a1e23188ce"
         ],
         "accept-language": [
           "en-US"
@@ -90,22 +90,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:25 GMT"
+          "Fri, 26 Apr 2019 20:04:17 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1143"
+          "1161"
         ],
         "x-ms-request-id": [
-          "8defa403-67d3-4109-8449-bcdea3e71a20"
+          "61713301-efe3-4d22-bac7-8b716b21d3c3"
         ],
         "x-ms-correlation-request-id": [
-          "8defa403-67d3-4109-8449-bcdea3e71a20"
+          "61713301-efe3-4d22-bac7-8b716b21d3c3"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T034626Z:8defa403-67d3-4109-8449-bcdea3e71a20"
+          "NORTHEUROPE:20190426T200418Z:61713301-efe3-4d22-bac7-8b716b21d3c3"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -114,7 +114,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "175"
+          "173"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet7232\",\r\n  \"name\": \"azsmnet7232\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet510\",\r\n  \"name\": \"azsmnet510\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet7232/providers/Microsoft.Search/searchServices/azs-5122?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MjMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MTIyP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet510/providers/Microsoft.Search/searchServices/azs-1902?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1MTAvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWFyY2gvc2VhcmNoU2VydmljZXMvYXpzLTE5MDI/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  },\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8e9df8e7-0322-48ce-9989-164f7b93ec67"
+          "88f32a50-5f0a-4346-9684-d79d34eb74d2"
         ],
         "accept-language": [
           "en-US"
@@ -142,7 +142,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -156,40 +156,40 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:28 GMT"
+          "Fri, 26 Apr 2019 20:04:22 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"datetime'2019-03-19T03%3A46%3A28.7547184Z'\""
+          "W/\"datetime'2019-04-26T20%3A04%3A21.5845872Z'\""
         ],
         "x-ms-request-id": [
-          "8e9df8e7-0322-48ce-9989-164f7b93ec67"
+          "88f32a50-5f0a-4346-9684-d79d34eb74d2"
         ],
         "request-id": [
-          "8e9df8e7-0322-48ce-9989-164f7b93ec67"
+          "88f32a50-5f0a-4346-9684-d79d34eb74d2"
         ],
         "elapsed-time": [
-          "861"
+          "991"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1156"
+          "1167"
         ],
         "x-ms-correlation-request-id": [
-          "141978fe-3c2c-4762-80ce-3d87eae3b564"
+          "563b7941-e58c-42cb-aebe-52066e04c7c7"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T034629Z:141978fe-3c2c-4762-80ce-3d87eae3b564"
+          "NORTHEUROPE:20190426T200422Z:563b7941-e58c-42cb-aebe-52066e04c7c7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "385"
+          "384"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -198,17 +198,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet7232/providers/Microsoft.Search/searchServices/azs-5122\",\r\n  \"name\": \"azs-5122\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet510/providers/Microsoft.Search/searchServices/azs-1902\",\r\n  \"name\": \"azs-1902\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet7232/providers/Microsoft.Search/searchServices/azs-5122/listAdminKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MjMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MTIyL2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet510/providers/Microsoft.Search/searchServices/azs-1902/listAdminKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1MTAvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWFyY2gvc2VhcmNoU2VydmljZXMvYXpzLTE5MDIvbGlzdEFkbWluS2V5cz9hcGktdmVyc2lvbj0yMDE1LTA4LTE5",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "c14b1d71-3702-42be-8f21-cd77fe084960"
+          "24ea0784-b740-49f2-afd3-4f3bd17d5697"
         ],
         "accept-language": [
           "en-US"
@@ -217,7 +217,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -225,7 +225,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:30 GMT"
+          "Fri, 26 Apr 2019 20:04:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -234,25 +234,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "c14b1d71-3702-42be-8f21-cd77fe084960"
+          "24ea0784-b740-49f2-afd3-4f3bd17d5697"
         ],
         "request-id": [
-          "c14b1d71-3702-42be-8f21-cd77fe084960"
+          "24ea0784-b740-49f2-afd3-4f3bd17d5697"
         ],
         "elapsed-time": [
-          "220"
+          "116"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1156"
+          "1168"
         ],
         "x-ms-correlation-request-id": [
-          "5f2c5e67-5afe-4d97-9736-9aff12d2a1ec"
+          "22221983-de70-4431-91af-c014598344c7"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T034630Z:5f2c5e67-5afe-4d97-9736-9aff12d2a1ec"
+          "NORTHEUROPE:20190426T200425Z:22221983-de70-4431-91af-c014598344c7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -267,17 +267,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"B8BD53F4CEEDFB2DFE55B57A980E0B9B\",\r\n  \"secondaryKey\": \"2310430CBC42787F3E2915EE8F43387C\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"4987F4388CA5B1CEAD35146514F896ED\",\r\n  \"secondaryKey\": \"23B30E9B3B6026520E492F2E5CDB36CA\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet7232/providers/Microsoft.Search/searchServices/azs-5122/listQueryKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MjMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MTIyL2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet510/providers/Microsoft.Search/searchServices/azs-1902/listQueryKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1MTAvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWFyY2gvc2VhcmNoU2VydmljZXMvYXpzLTE5MDIvbGlzdFF1ZXJ5S2V5cz9hcGktdmVyc2lvbj0yMDE1LTA4LTE5",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "df2d3f37-5df1-4e9d-ab5a-0dbfebc11ae1"
+          "43f74a06-4b03-4b8a-afe9-46179db9f7fc"
         ],
         "accept-language": [
           "en-US"
@@ -286,7 +286,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -294,7 +294,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:30 GMT"
+          "Fri, 26 Apr 2019 20:04:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -303,25 +303,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "df2d3f37-5df1-4e9d-ab5a-0dbfebc11ae1"
+          "43f74a06-4b03-4b8a-afe9-46179db9f7fc"
         ],
         "request-id": [
-          "df2d3f37-5df1-4e9d-ab5a-0dbfebc11ae1"
+          "43f74a06-4b03-4b8a-afe9-46179db9f7fc"
         ],
         "elapsed-time": [
-          "213"
+          "92"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14978"
+          "14985"
         ],
         "x-ms-correlation-request-id": [
-          "ae8fd817-01cf-4ea1-b5c1-919c06937dbd"
+          "f8315b2f-a3df-4469-b768-8a007a8864f1"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T034631Z:ae8fd817-01cf-4ea1-b5c1-919c06937dbd"
+          "NORTHEUROPE:20190426T200426Z:f8315b2f-a3df-4469-b768-8a007a8864f1"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -336,23 +336,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"C47EAA1939958D01EF474E6B97B01829\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"AC772A52BED80FB50D186E16278CC6AE\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/indexes?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2luZGV4ZXM/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet2001\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"feature_id\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": true,\r\n      \"retrievable\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"feature_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"feature_class\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"state\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"county_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"elevation\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"map_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"history\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"myEntities\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"myText\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet4890\",\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"feature_id\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": true,\r\n      \"retrievable\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"feature_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"feature_class\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"state\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"county_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"elevation\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"map_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"history\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"myEntities\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    },\r\n    {\r\n      \"name\": \"myText\",\r\n      \"type\": \"Edm.String\",\r\n      \"key\": false,\r\n      \"retrievable\": true,\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"sortable\": false,\r\n      \"facetable\": false\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "843a37b8-e639-469c-b2a8-7901be40025e"
+          "99507c0f-c930-4edb-9a97-ea4daf7953d2"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B8BD53F4CEEDFB2DFE55B57A980E0B9B"
+          "4987F4388CA5B1CEAD35146514F896ED"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -372,22 +372,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:33 GMT"
+          "Fri, 26 Apr 2019 20:04:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC1D7AEF6258\""
+          "W/\"0x8D6CA8263D5B008\""
         ],
         "Location": [
-          "https://azs-5122.search-dogfood.windows-int.net/indexes('azsmnet2001')?api-version=2017-11-11-Preview"
+          "https://azs-1902.search-dogfood.windows-int.net/indexes('azsmnet4890')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "843a37b8-e639-469c-b2a8-7901be40025e"
+          "99507c0f-c930-4edb-9a97-ea4daf7953d2"
         ],
         "elapsed-time": [
-          "1288"
+          "1429"
         ],
         "OData-Version": [
           "4.0"
@@ -399,7 +399,7 @@
           "max-age=15724800; includeSubDomains"
         ],
         "Content-Length": [
-          "2536"
+          "2557"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal"
@@ -408,23 +408,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5122.search-dogfood.windows-int.net/$metadata#indexes/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC1D7AEF6258\\\"\",\r\n  \"name\": \"azsmnet2001\",\r\n  \"defaultScoringProfile\": null,\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"feature_id\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": true,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"feature_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"feature_class\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"state\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"county_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"elevation\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"map_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"history\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"myEntities\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"myText\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [],\r\n  \"corsOptions\": null,\r\n  \"suggesters\": [],\r\n  \"analyzers\": [],\r\n  \"tokenizers\": [],\r\n  \"tokenFilters\": [],\r\n  \"charFilters\": []\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-1902.search-dogfood.windows-int.net/$metadata#indexes/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA8263D5B008\\\"\",\r\n  \"name\": \"azsmnet4890\",\r\n  \"defaultScoringProfile\": null,\r\n  \"fields\": [\r\n    {\r\n      \"name\": \"feature_id\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": true,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"feature_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"feature_class\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": false,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"state\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"county_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"elevation\",\r\n      \"type\": \"Edm.Int32\",\r\n      \"searchable\": false,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"map_name\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": true,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"history\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"myEntities\",\r\n      \"type\": \"Collection(Edm.String)\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    },\r\n    {\r\n      \"name\": \"myText\",\r\n      \"type\": \"Edm.String\",\r\n      \"searchable\": true,\r\n      \"filterable\": false,\r\n      \"retrievable\": true,\r\n      \"sortable\": false,\r\n      \"facetable\": false,\r\n      \"key\": false,\r\n      \"indexAnalyzer\": null,\r\n      \"searchAnalyzer\": null,\r\n      \"analyzer\": null,\r\n      \"synonymMaps\": []\r\n    }\r\n  ],\r\n  \"scoringProfiles\": [],\r\n  \"corsOptions\": null,\r\n  \"suggesters\": [],\r\n  \"analyzers\": [],\r\n  \"tokenizers\": [],\r\n  \"tokenFilters\": [],\r\n  \"charFilters\": [],\r\n  \"encryptionKey\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet7443\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet4894\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "007be587-7400-41f6-bf30-483ee32021da"
+          "9d857067-fb2d-462e-906c-186da3aa735f"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B8BD53F4CEEDFB2DFE55B57A980E0B9B"
+          "4987F4388CA5B1CEAD35146514F896ED"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -444,22 +444,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:33 GMT"
+          "Fri, 26 Apr 2019 20:04:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC1D7B075CEB\""
+          "W/\"0x8D6CA8263EA4E82\""
         ],
         "Location": [
-          "https://azs-5122.search-dogfood.windows-int.net/datasources('azsmnet7443')?api-version=2017-11-11-Preview"
+          "https://azs-1902.search-dogfood.windows-int.net/datasources('azsmnet4894')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "007be587-7400-41f6-bf30-483ee32021da"
+          "9d857067-fb2d-462e-906c-186da3aa735f"
         ],
         "elapsed-time": [
-          "35"
+          "31"
         ],
         "OData-Version": [
           "4.0"
@@ -480,17 +480,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5122.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC1D7B075CEB\\\"\",\r\n  \"name\": \"azsmnet7443\",\r\n  \"description\": null,\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-1902.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA8263EA4E82\\\"\",\r\n  \"name\": \"azsmnet4894\",\r\n  \"description\": null,\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/skillsets('testskillset')?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L3NraWxsc2V0cygndGVzdHNraWxsc2V0Jyk/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.EntityRecognitionSkill\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"description\": \"Tested Entity Recognition skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"entities\",\r\n          \"targetName\": \"myEntities\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.EntityRecognitionSkill\",\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"minimumPrecision\": 0.5,\r\n      \"description\": \"Tested Entity Recognition skill\",\r\n      \"context\": \"/document\",\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"entities\",\r\n          \"targetName\": \"myEntities\"\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "fe4fe1bd-37ca-4b96-b7f1-26eb4d95ca6a"
+          "e69d70a6-cde7-4df3-81eb-c9f04bc62347"
         ],
         "Prefer": [
           "return=representation"
@@ -499,7 +499,7 @@
           "en-US"
         ],
         "api-key": [
-          "B8BD53F4CEEDFB2DFE55B57A980E0B9B"
+          "4987F4388CA5B1CEAD35146514F896ED"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -511,7 +511,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "1051"
+          "1083"
         ]
       },
       "ResponseHeaders": {
@@ -519,22 +519,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:34 GMT"
+          "Fri, 26 Apr 2019 20:04:30 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC1D7B95DC8A\""
+          "W/\"0x8D6CA8264F06580\""
         ],
         "Location": [
-          "https://azs-5122.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2017-11-11-Preview"
+          "https://azs-1902.search-dogfood.windows-int.net/skillsets('testskillset')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "fe4fe1bd-37ca-4b96-b7f1-26eb4d95ca6a"
+          "e69d70a6-cde7-4df3-81eb-c9f04bc62347"
         ],
         "elapsed-time": [
-          "97"
+          "293"
         ],
         "OData-Version": [
           "4.0"
@@ -546,7 +546,7 @@
           "max-age=15724800; includeSubDomains"
         ],
         "Content-Length": [
-          "963"
+          "1061"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal"
@@ -555,17 +555,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5122.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC1D7B95DC8A\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"textExtractionAlgorithm\": null,\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\"\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.EntityRecognitionSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested Entity Recognition skill\",\r\n      \"context\": \"/document\",\r\n      \"categories\": [],\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"minimumPrecision\": null,\r\n      \"includeTypelessEntities\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\"\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"entities\",\r\n          \"targetName\": \"myEntities\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-1902.search-dogfood.windows-int.net/$metadata#skillsets/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA8264F06580\\\"\",\r\n  \"name\": \"testskillset\",\r\n  \"description\": \"Skillset for testing\",\r\n  \"skills\": [\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Vision.OcrSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested OCR skill\",\r\n      \"context\": \"/document\",\r\n      \"textExtractionAlgorithm\": null,\r\n      \"lineEnding\": null,\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"detectOrientation\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"url\",\r\n          \"source\": \"/document/url\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        },\r\n        {\r\n          \"name\": \"queryString\",\r\n          \"source\": \"/document/queryString\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"targetName\": \"mytext\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"@odata.type\": \"#Microsoft.Skills.Text.EntityRecognitionSkill\",\r\n      \"name\": null,\r\n      \"description\": \"Tested Entity Recognition skill\",\r\n      \"context\": \"/document\",\r\n      \"categories\": [],\r\n      \"defaultLanguageCode\": \"en\",\r\n      \"minimumPrecision\": 0.5,\r\n      \"includeTypelessEntities\": null,\r\n      \"inputs\": [\r\n        {\r\n          \"name\": \"text\",\r\n          \"source\": \"/document/mytext\",\r\n          \"sourceContext\": null,\r\n          \"inputs\": []\r\n        }\r\n      ],\r\n      \"outputs\": [\r\n        {\r\n          \"name\": \"entities\",\r\n          \"targetName\": \"myEntities\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"cognitiveServices\": null\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/indexers('azsmnet7759')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2luZGV4ZXJzKCdhenNtbmV0Nzc1OScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/indexers('azsmnet1224')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2luZGV4ZXJzKCdhenNtbmV0MTIyNCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet7759\",\r\n  \"dataSourceName\": \"azsmnet7443\",\r\n  \"skillsetName\": \"testskillset\",\r\n  \"targetIndexName\": \"azsmnet2001\",\r\n  \"schedule\": {\r\n    \"interval\": \"P1D\"\r\n  },\r\n  \"outputFieldMappings\": [\r\n    {\r\n      \"sourceFieldName\": \"/document/myEntities\",\r\n      \"targetFieldName\": \"myEntities\"\r\n    },\r\n    {\r\n      \"sourceFieldName\": \"/document/myText\",\r\n      \"targetFieldName\": \"myText\"\r\n    }\r\n  ]\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet1224\",\r\n  \"dataSourceName\": \"azsmnet4894\",\r\n  \"skillsetName\": \"testskillset\",\r\n  \"targetIndexName\": \"azsmnet4890\",\r\n  \"schedule\": {\r\n    \"interval\": \"P1D\"\r\n  },\r\n  \"outputFieldMappings\": [\r\n    {\r\n      \"sourceFieldName\": \"/document/myEntities\",\r\n      \"targetFieldName\": \"myEntities\"\r\n    },\r\n    {\r\n      \"sourceFieldName\": \"/document/myText\",\r\n      \"targetFieldName\": \"myText\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "92d5d876-45a1-4438-a226-69728c266d39"
+          "61b604ff-f9e0-417d-b35d-75c16386c934"
         ],
         "Prefer": [
           "return=representation"
@@ -574,7 +574,7 @@
           "en-US"
         ],
         "api-key": [
-          "B8BD53F4CEEDFB2DFE55B57A980E0B9B"
+          "4987F4388CA5B1CEAD35146514F896ED"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -594,22 +594,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:34 GMT"
+          "Fri, 26 Apr 2019 20:04:32 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC1D7C016282\""
+          "W/\"0x8D6CA8265A1913C\""
         ],
         "Location": [
-          "https://azs-5122.search-dogfood.windows-int.net/indexers('azsmnet7759')?api-version=2017-11-11-Preview"
+          "https://azs-1902.search-dogfood.windows-int.net/indexers('azsmnet1224')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "92d5d876-45a1-4438-a226-69728c266d39"
+          "61b604ff-f9e0-417d-b35d-75c16386c934"
         ],
         "elapsed-time": [
-          "698"
+          "1193"
         ],
         "OData-Version": [
           "4.0"
@@ -630,17 +630,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5122.search-dogfood.windows-int.net/$metadata#indexers/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC1D7C016282\\\"\",\r\n  \"name\": \"azsmnet7759\",\r\n  \"description\": null,\r\n  \"dataSourceName\": \"azsmnet7443\",\r\n  \"skillsetName\": \"testskillset\",\r\n  \"targetIndexName\": \"azsmnet2001\",\r\n  \"disabled\": null,\r\n  \"schedule\": {\r\n    \"interval\": \"P1D\",\r\n    \"startTime\": \"0001-01-01T00:00:00Z\"\r\n  },\r\n  \"parameters\": null,\r\n  \"fieldMappings\": [],\r\n  \"outputFieldMappings\": [\r\n    {\r\n      \"sourceFieldName\": \"/document/myEntities\",\r\n      \"targetFieldName\": \"myEntities\",\r\n      \"mappingFunction\": null\r\n    },\r\n    {\r\n      \"sourceFieldName\": \"/document/myText\",\r\n      \"targetFieldName\": \"myText\",\r\n      \"mappingFunction\": null\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-1902.search-dogfood.windows-int.net/$metadata#indexers/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA8265A1913C\\\"\",\r\n  \"name\": \"azsmnet1224\",\r\n  \"description\": null,\r\n  \"dataSourceName\": \"azsmnet4894\",\r\n  \"skillsetName\": \"testskillset\",\r\n  \"targetIndexName\": \"azsmnet4890\",\r\n  \"disabled\": null,\r\n  \"schedule\": {\r\n    \"interval\": \"P1D\",\r\n    \"startTime\": \"0001-01-01T00:00:00Z\"\r\n  },\r\n  \"parameters\": null,\r\n  \"fieldMappings\": [],\r\n  \"outputFieldMappings\": [\r\n    {\r\n      \"sourceFieldName\": \"/document/myEntities\",\r\n      \"targetFieldName\": \"myEntities\",\r\n      \"mappingFunction\": null\r\n    },\r\n    {\r\n      \"sourceFieldName\": \"/document/myText\",\r\n      \"targetFieldName\": \"myText\",\r\n      \"mappingFunction\": null\r\n    }\r\n  ]\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet7232/providers/Microsoft.Search/searchServices/azs-5122?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ3MjMyL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MTIyP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet510/providers/Microsoft.Search/searchServices/azs-1902?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQ1MTAvcHJvdmlkZXJzL01pY3Jvc29mdC5TZWFyY2gvc2VhcmNoU2VydmljZXMvYXpzLTE5MDI/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "62285c47-2b5e-43fe-96ec-037837858459"
+          "5d509632-9ee8-45e4-814c-3769ede06bb6"
         ],
         "accept-language": [
           "en-US"
@@ -649,7 +649,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -657,31 +657,31 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 03:46:38 GMT"
+          "Fri, 26 Apr 2019 20:04:33 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "62285c47-2b5e-43fe-96ec-037837858459"
+          "5d509632-9ee8-45e4-814c-3769ede06bb6"
         ],
         "request-id": [
-          "62285c47-2b5e-43fe-96ec-037837858459"
+          "5d509632-9ee8-45e4-814c-3769ede06bb6"
         ],
         "elapsed-time": [
-          "693"
+          "636"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14952"
+          "14975"
         ],
         "x-ms-correlation-request-id": [
-          "307556d8-b935-4e50-a57c-cdbccc820017"
+          "f8735ea0-f4ea-4e57-9e34-7ceb6d21ce44"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T034638Z:307556d8-b935-4e50-a57c-cdbccc820017"
+          "NORTHEUROPE:20190426T200434Z:f8735ea0-f4ea-4e57-9e34-7ceb6d21ce44"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -699,13 +699,13 @@
   ],
   "Names": {
     "GenerateName": [
-      "azsmnet7232",
-      "azsmnet2001",
-      "azsmnet7443",
-      "azsmnet7759"
+      "azsmnet510",
+      "azsmnet4890",
+      "azsmnet4894",
+      "azsmnet1224"
     ],
     "GenerateServiceName": [
-      "azs-5122"
+      "azs-1902"
     ]
   },
   "Variables": {

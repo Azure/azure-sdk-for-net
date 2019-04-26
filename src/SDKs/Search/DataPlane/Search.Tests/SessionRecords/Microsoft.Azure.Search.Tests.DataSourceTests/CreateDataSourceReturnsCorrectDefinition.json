@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9fa6cc3c-3bd4-4596-a165-8488431e19a8"
+          "f1f5a17a-7fb6-480a-b407-6097284f1497"
         ],
         "accept-language": [
           "en-US"
@@ -24,22 +24,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:46 GMT"
+          "Fri, 26 Apr 2019 19:00:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1135"
+          "1164"
         ],
         "x-ms-request-id": [
-          "40d30266-27b0-4cd2-8a45-1e864aa5a24d"
+          "364bff0c-e2fc-41c3-b002-c24c1eaf7e83"
         ],
         "x-ms-correlation-request-id": [
-          "40d30266-27b0-4cd2-8a45-1e864aa5a24d"
+          "364bff0c-e2fc-41c3-b002-c24c1eaf7e83"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T044146Z:40d30266-27b0-4cd2-8a45-1e864aa5a24d"
+          "NORTHEUROPE:20190426T190016Z:364bff0c-e2fc-41c3-b002-c24c1eaf7e83"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,13 +61,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet2178?api-version=2016-09-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQyMTc4P2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourcegroups/azsmnet11?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlZ3JvdXBzL2F6c21uZXQxMT9hcGktdmVyc2lvbj0yMDE2LTA5LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "22878ab1-287c-4f48-a1e0-d1cc11315168"
+          "df1ebef3-2de6-4411-b531-699da5f0bc16"
         ],
         "accept-language": [
           "en-US"
@@ -90,22 +90,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:47 GMT"
+          "Fri, 26 Apr 2019 19:00:17 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1135"
+          "1164"
         ],
         "x-ms-request-id": [
-          "186b198b-535d-4012-8190-d22ec951fcd9"
+          "53c959d3-5f90-49b1-a894-e0a1c5ffc628"
         ],
         "x-ms-correlation-request-id": [
-          "186b198b-535d-4012-8190-d22ec951fcd9"
+          "53c959d3-5f90-49b1-a894-e0a1c5ffc628"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T044147Z:186b198b-535d-4012-8190-d22ec951fcd9"
+          "NORTHEUROPE:20190426T190018Z:53c959d3-5f90-49b1-a894-e0a1c5ffc628"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -114,7 +114,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "175"
+          "171"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -123,17 +123,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet2178\",\r\n  \"name\": \"azsmnet2178\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet11\",\r\n  \"name\": \"azsmnet11\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet2178/providers/Microsoft.Search/searchServices/azs-5305?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQyMTc4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MzA1P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet11/providers/Microsoft.Search/searchServices/azs-9207?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQxMS9wcm92aWRlcnMvTWljcm9zb2Z0LlNlYXJjaC9zZWFyY2hTZXJ2aWNlcy9henMtOTIwNz9hcGktdmVyc2lvbj0yMDE1LTA4LTE5",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  },\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1625bcdd-3b08-4298-83eb-3e7b4f7f0bbb"
+          "73a05455-7a58-43df-ba87-960b02717ad4"
         ],
         "accept-language": [
           "en-US"
@@ -142,7 +142,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -156,40 +156,40 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:49 GMT"
+          "Fri, 26 Apr 2019 19:00:20 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"datetime'2019-03-19T04%3A41%3A49.2861981Z'\""
+          "W/\"datetime'2019-04-26T19%3A00%3A20.5798509Z'\""
         ],
         "x-ms-request-id": [
-          "1625bcdd-3b08-4298-83eb-3e7b4f7f0bbb"
+          "73a05455-7a58-43df-ba87-960b02717ad4"
         ],
         "request-id": [
-          "1625bcdd-3b08-4298-83eb-3e7b4f7f0bbb"
+          "73a05455-7a58-43df-ba87-960b02717ad4"
         ],
         "elapsed-time": [
-          "849"
+          "887"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1134"
+          "1162"
         ],
         "x-ms-correlation-request-id": [
-          "00a82238-3427-44bf-bbfa-43d35404c20d"
+          "fadee184-31b5-4a14-9e3c-03f5720965eb"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T044149Z:00a82238-3427-44bf-bbfa-43d35404c20d"
+          "NORTHEUROPE:20190426T190021Z:fadee184-31b5-4a14-9e3c-03f5720965eb"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Content-Length": [
-          "385"
+          "383"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -198,17 +198,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet2178/providers/Microsoft.Search/searchServices/azs-5305\",\r\n  \"name\": \"azs-5305\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet11/providers/Microsoft.Search/searchServices/azs-9207\",\r\n  \"name\": \"azs-9207\",\r\n  \"type\": \"Microsoft.Search/searchServices\",\r\n  \"location\": \"West US\",\r\n  \"properties\": {\r\n    \"replicaCount\": 1,\r\n    \"partitionCount\": 1,\r\n    \"status\": \"running\",\r\n    \"statusDetails\": \"\",\r\n    \"provisioningState\": \"succeeded\",\r\n    \"hostingMode\": \"Default\"\r\n  },\r\n  \"sku\": {\r\n    \"name\": \"free\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet2178/providers/Microsoft.Search/searchServices/azs-5305/listAdminKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQyMTc4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MzA1L2xpc3RBZG1pbktleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet11/providers/Microsoft.Search/searchServices/azs-9207/listAdminKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQxMS9wcm92aWRlcnMvTWljcm9zb2Z0LlNlYXJjaC9zZWFyY2hTZXJ2aWNlcy9henMtOTIwNy9saXN0QWRtaW5LZXlzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "5ac58155-93be-4756-9b7c-03cccbc75324"
+          "cc6e37fa-92a6-4669-a7bc-c0b70be881e9"
         ],
         "accept-language": [
           "en-US"
@@ -217,7 +217,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -225,7 +225,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:50 GMT"
+          "Fri, 26 Apr 2019 19:00:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -234,25 +234,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "5ac58155-93be-4756-9b7c-03cccbc75324"
+          "cc6e37fa-92a6-4669-a7bc-c0b70be881e9"
         ],
         "request-id": [
-          "5ac58155-93be-4756-9b7c-03cccbc75324"
+          "cc6e37fa-92a6-4669-a7bc-c0b70be881e9"
         ],
         "elapsed-time": [
-          "118"
+          "144"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1134"
+          "1162"
         ],
         "x-ms-correlation-request-id": [
-          "07fcff43-3ea2-4d12-a48e-7b6d706cf735"
+          "ddaad535-da13-4267-b26a-3bab35d5c3f7"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T044151Z:07fcff43-3ea2-4d12-a48e-7b6d706cf735"
+          "NORTHEUROPE:20190426T190023Z:ddaad535-da13-4267-b26a-3bab35d5c3f7"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -267,17 +267,17 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"B15F3584BF4ABC87020A8C254BBA97BD\",\r\n  \"secondaryKey\": \"85E0D515C44FAC5B1BE5B10CAFD4F979\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"FB8BB200C55F6496F21CD5EFBBEABB95\",\r\n  \"secondaryKey\": \"B736D18564F0ECA7F7ED23012212B4E5\"\r\n}",
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet2178/providers/Microsoft.Search/searchServices/azs-5305/listQueryKeys?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQyMTc4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MzA1L2xpc3RRdWVyeUtleXM/YXBpLXZlcnNpb249MjAxNS0wOC0xOQ==",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet11/providers/Microsoft.Search/searchServices/azs-9207/listQueryKeys?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQxMS9wcm92aWRlcnMvTWljcm9zb2Z0LlNlYXJjaC9zZWFyY2hTZXJ2aWNlcy9henMtOTIwNy9saXN0UXVlcnlLZXlzP2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "052c943c-c63e-4975-a9f9-9b47b9bf0beb"
+          "9066e12a-3243-4e9a-81b0-37aeb66d69ae"
         ],
         "accept-language": [
           "en-US"
@@ -286,7 +286,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -294,7 +294,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:51 GMT"
+          "Fri, 26 Apr 2019 19:00:23 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -303,25 +303,25 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "052c943c-c63e-4975-a9f9-9b47b9bf0beb"
+          "9066e12a-3243-4e9a-81b0-37aeb66d69ae"
         ],
         "request-id": [
-          "052c943c-c63e-4975-a9f9-9b47b9bf0beb"
+          "9066e12a-3243-4e9a-81b0-37aeb66d69ae"
         ],
         "elapsed-time": [
-          "101"
+          "85"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14955"
+          "14981"
         ],
         "x-ms-correlation-request-id": [
-          "f13bff2c-c510-490a-a432-781b8b604936"
+          "fa4b1d1d-9291-43fd-a440-414a4968ead0"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T044151Z:f13bff2c-c510-490a-a432-781b8b604936"
+          "NORTHEUROPE:20190426T190024Z:fa4b1d1d-9291-43fd-a440-414a4968ead0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -336,23 +336,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"E2119B5FD8FA34624075CB5F39819245\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": null,\r\n      \"key\": \"53F622D9BC82471EED131ACF1821CEE8\"\r\n    }\r\n  ],\r\n  \"nextLink\": null\r\n}",
       "StatusCode": 200
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet7662\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet5920\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "269fcf1f-0cac-4842-a1f7-ca7c01e77aa2"
+          "51248bfd-6f53-4791-bc38-0dc3666e3aee"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -372,22 +372,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:52 GMT"
+          "Fri, 26 Apr 2019 19:00:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC253533E0D1\""
+          "W/\"0x8D6CA79711125BF\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet7662')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet5920')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "269fcf1f-0cac-4842-a1f7-ca7c01e77aa2"
+          "51248bfd-6f53-4791-bc38-0dc3666e3aee"
         ],
         "elapsed-time": [
-          "59"
+          "63"
         ],
         "OData-Version": [
           "4.0"
@@ -408,23 +408,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC253533E0D1\\\"\",\r\n  \"name\": \"azsmnet7662\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA79711125BF\\\"\",\r\n  \"name\": \"azsmnet5920\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet6588\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet71\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "a4950c88-eb0b-44a3-b854-101326ed3dac"
+          "07a52579-7f8e-40eb-9dba-08b082236a86"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -436,7 +436,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "564"
+          "562"
         ]
       },
       "ResponseHeaders": {
@@ -444,22 +444,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:52 GMT"
+          "Fri, 26 Apr 2019 19:00:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25354809FA\""
+          "W/\"0x8D6CA797122B63B\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet6588')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet71')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "a4950c88-eb0b-44a3-b854-101326ed3dac"
+          "07a52579-7f8e-40eb-9dba-08b082236a86"
         ],
         "elapsed-time": [
-          "35"
+          "37"
         ],
         "OData-Version": [
           "4.0"
@@ -471,7 +471,7 @@
           "max-age=15724800; includeSubDomains"
         ],
         "Content-Length": [
-          "681"
+          "679"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal"
@@ -480,23 +480,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25354809FA\\\"\",\r\n  \"name\": \"azsmnet6588\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA797122B63B\\\"\",\r\n  \"name\": \"azsmnet71\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet9151\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet5834\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "6deb4089-2dc7-4827-895b-2bae42bf6993"
+          "0899f5fb-6f85-47ae-8a3c-c1632cb12905"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -516,22 +516,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC2535FB3164\""
+          "W/\"0x8D6CA79723FB627\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet9151')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet5834')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "6deb4089-2dc7-4827-895b-2bae42bf6993"
+          "0899f5fb-6f85-47ae-8a3c-c1632cb12905"
         ],
         "elapsed-time": [
-          "1102"
+          "1799"
         ],
         "OData-Version": [
           "4.0"
@@ -552,23 +552,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC2535FB3164\\\"\",\r\n  \"name\": \"azsmnet9151\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA79723FB627\\\"\",\r\n  \"name\": \"azsmnet5834\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet3450\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet8866\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "f2c4bc65-c31d-4ea3-962a-ed30ccc40f52"
+          "0142e456-05a0-410b-8de5-9f12e564bb47"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -588,22 +588,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25360C73A3\""
+          "W/\"0x8D6CA79724ED505\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet3450')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet8866')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "f2c4bc65-c31d-4ea3-962a-ed30ccc40f52"
+          "0142e456-05a0-410b-8de5-9f12e564bb47"
         ],
         "elapsed-time": [
-          "31"
+          "29"
         ],
         "OData-Version": [
           "4.0"
@@ -624,23 +624,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25360C73A3\\\"\",\r\n  \"name\": \"azsmnet3450\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA79724ED505\\\"\",\r\n  \"name\": \"azsmnet8866\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet3521\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet2148\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "a8310830-a831-4438-bc2b-223162cc75da"
+          "4d18b987-9eb7-4e05-8144-933b98969529"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -660,22 +660,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25361BE09E\""
+          "W/\"0x8D6CA79725CBB1C\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet3521')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet2148')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "a8310830-a831-4438-bc2b-223162cc75da"
+          "4d18b987-9eb7-4e05-8144-933b98969529"
         ],
         "elapsed-time": [
-          "29"
+          "26"
         ],
         "OData-Version": [
           "4.0"
@@ -696,23 +696,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25361BE09E\\\"\",\r\n  \"name\": \"azsmnet3521\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA79725CBB1C\\\"\",\r\n  \"name\": \"azsmnet2148\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet8984\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet6929\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "7d1022cd-25e5-4fdd-a965-af976d59d25e"
+          "1ed8f137-e5aa-4c79-8bec-69df3cf3ef71"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -732,22 +732,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25362A8A26\""
+          "W/\"0x8D6CA79726BB2E7\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet8984')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet6929')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "7d1022cd-25e5-4fdd-a965-af976d59d25e"
+          "1ed8f137-e5aa-4c79-8bec-69df3cf3ef71"
         ],
         "elapsed-time": [
-          "29"
+          "28"
         ],
         "OData-Version": [
           "4.0"
@@ -768,23 +768,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25362A8A26\\\"\",\r\n  \"name\": \"azsmnet8984\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA79726BB2E7\\\"\",\r\n  \"name\": \"azsmnet6929\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet203\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet8108\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "1c3468be-3408-4060-b037-700d6fad3eb8"
+          "d0e546bf-1911-4e95-bf6a-8ff3104b411f"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -796,7 +796,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "478"
+          "479"
         ]
       },
       "ResponseHeaders": {
@@ -804,22 +804,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC2536425DAC\""
+          "W/\"0x8D6CA7972849824\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet203')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet8108')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "1c3468be-3408-4060-b037-700d6fad3eb8"
+          "d0e546bf-1911-4e95-bf6a-8ff3104b411f"
         ],
         "elapsed-time": [
-          "88"
+          "98"
         ],
         "OData-Version": [
           "4.0"
@@ -831,7 +831,7 @@
           "max-age=15724800; includeSubDomains"
         ],
         "Content-Length": [
-          "611"
+          "612"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal"
@@ -840,23 +840,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC2536425DAC\\\"\",\r\n  \"name\": \"azsmnet203\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972849824\\\"\",\r\n  \"name\": \"azsmnet8108\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SqlIntegratedChangeTrackingPolicy\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet2491\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet2498\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "367b197d-7749-40ce-abdc-3e3a5a61820e"
+          "99ca14c1-3761-4d15-8888-eadf64e00f3b"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -876,22 +876,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC253651CABA\""
+          "W/\"0x8D6CA7972931AA5\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet2491')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet2498')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "367b197d-7749-40ce-abdc-3e3a5a61820e"
+          "99ca14c1-3761-4d15-8888-eadf64e00f3b"
         ],
         "elapsed-time": [
-          "29"
+          "27"
         ],
         "OData-Version": [
           "4.0"
@@ -912,23 +912,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC253651CABA\\\"\",\r\n  \"name\": \"azsmnet2491\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972931AA5\\\"\",\r\n  \"name\": \"azsmnet2498\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuresql\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"Server=tcp:azs-playground.database.windows.net,1433;Database=usgs;User ID=reader;Password=EdrERBt3j6mZDP;Trusted_Connection=False;Encrypt=True;Connection Timeout=30;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"GeoNamesRI\",\r\n    \"query\": null\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"fakecolumn\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet2220\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet2881\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "9dd150b3-a0e6-4a56-9d1b-143fe14560ff"
+          "2737ad04-6df2-435f-ad08-4fe6f5a51f1d"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -948,22 +948,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25366E815B\""
+          "W/\"0x8D6CA7972AEE6C9\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet2220')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet2881')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "9dd150b3-a0e6-4a56-9d1b-143fe14560ff"
+          "2737ad04-6df2-435f-ad08-4fe6f5a51f1d"
         ],
         "elapsed-time": [
-          "123"
+          "115"
         ],
         "OData-Version": [
           "4.0"
@@ -984,23 +984,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25366E815B\\\"\",\r\n  \"name\": \"azsmnet2220\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972AEE6C9\\\"\",\r\n  \"name\": \"azsmnet2881\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet7623\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet2519\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "5a6589aa-b0fb-4480-a4a7-34e7e7dc0b70"
+          "7bbf4a53-1f2e-4e95-9d19-8c7af3154efe"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1020,22 +1020,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25367DC749\""
+          "W/\"0x8D6CA7972BD1B13\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet7623')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet2519')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "5a6589aa-b0fb-4480-a4a7-34e7e7dc0b70"
+          "7bbf4a53-1f2e-4e95-9d19-8c7af3154efe"
         ],
         "elapsed-time": [
-          "44"
+          "29"
         ],
         "OData-Version": [
           "4.0"
@@ -1056,23 +1056,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25367DC749\\\"\",\r\n  \"name\": \"azsmnet7623\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972BD1B13\\\"\",\r\n  \"name\": \"azsmnet2519\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet7832\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet3442\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "ecd59acd-6d5b-49a8-a420-16591dba0865"
+          "7be097f4-de47-4a12-a6c9-247d4500994a"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1092,22 +1092,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25368E6D1D\""
+          "W/\"0x8D6CA7972CADA09\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet7832')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet3442')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "ecd59acd-6d5b-49a8-a420-16591dba0865"
+          "7be097f4-de47-4a12-a6c9-247d4500994a"
         ],
         "elapsed-time": [
-          "30"
+          "25"
         ],
         "OData-Version": [
           "4.0"
@@ -1128,23 +1128,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25368E6D1D\\\"\",\r\n  \"name\": \"azsmnet7832\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972CADA09\\\"\",\r\n  \"name\": \"azsmnet3442\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet9957\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet8359\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "32a7871f-a405-4ba0-94d5-73636656df6d"
+          "95c0b1fd-23ec-49f4-85fc-ee9019065c64"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1164,19 +1164,19 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC25369D3DB8\""
+          "W/\"0x8D6CA7972D9356A\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet9957')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet8359')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "32a7871f-a405-4ba0-94d5-73636656df6d"
+          "95c0b1fd-23ec-49f4-85fc-ee9019065c64"
         ],
         "elapsed-time": [
           "29"
@@ -1200,23 +1200,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC25369D3DB8\\\"\",\r\n  \"name\": \"azsmnet9957\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972D9356A\\\"\",\r\n  \"name\": \"azsmnet8359\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"cosmosdb\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"SELECT ... FROM x where x._ts > @HighWaterMark\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy\",\r\n    \"highWaterMarkColumnName\": \"_ts\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet652\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet7751\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "25395cc7-7b0a-4fcc-b53b-1882b0d125f6"
+          "80305cf4-9ac1-49b3-a546-b2c9fd2b5b2f"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1228,7 +1228,7 @@
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "302"
+          "303"
         ]
       },
       "ResponseHeaders": {
@@ -1236,22 +1236,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC2536ABE749\""
+          "W/\"0x8D6CA7972E917CA\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet652')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet7751')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "25395cc7-7b0a-4fcc-b53b-1882b0d125f6"
+          "80305cf4-9ac1-49b3-a546-b2c9fd2b5b2f"
         ],
         "elapsed-time": [
-          "31"
+          "30"
         ],
         "OData-Version": [
           "4.0"
@@ -1263,7 +1263,7 @@
           "max-age=15724800; includeSubDomains"
         ],
         "Content-Length": [
-          "464"
+          "465"
         ],
         "Content-Type": [
           "application/json; odata.metadata=minimal"
@@ -1272,23 +1272,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC2536ABE749\\\"\",\r\n  \"name\": \"azsmnet652\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972E917CA\\\"\",\r\n  \"name\": \"azsmnet7751\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet7393\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet4374\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "9c77d49a-cc58-4285-9299-502fc0de9178"
+          "d3c926a7-5c2d-40e6-8592-313f2e7e857e"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1308,22 +1308,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC2536BAB7F1\""
+          "W/\"0x8D6CA7972F6D6CA\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet7393')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet4374')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "9c77d49a-cc58-4285-9299-502fc0de9178"
+          "d3c926a7-5c2d-40e6-8592-313f2e7e857e"
         ],
         "elapsed-time": [
-          "28"
+          "27"
         ],
         "OData-Version": [
           "4.0"
@@ -1344,23 +1344,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC2536BAB7F1\\\"\",\r\n  \"name\": \"azsmnet7393\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7972F6D6CA\\\"\",\r\n  \"name\": \"azsmnet4374\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azureblob\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"fakecontainer\",\r\n    \"query\": \"/fakefolder/\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet1012\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet1021\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "13a44408-8840-4291-af7a-d0aebbcaa82e"
+          "b1988296-3b30-42cc-9802-b192a7327861"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1380,22 +1380,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC2536C9AFA3\""
+          "W/\"0x8D6CA797305A775\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet1012')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet1021')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "13a44408-8840-4291-af7a-d0aebbcaa82e"
+          "b1988296-3b30-42cc-9802-b192a7327861"
         ],
         "elapsed-time": [
-          "33"
+          "32"
         ],
         "OData-Version": [
           "4.0"
@@ -1416,23 +1416,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC2536C9AFA3\\\"\",\r\n  \"name\": \"azsmnet1012\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA797305A775\\\"\",\r\n  \"name\": \"azsmnet1021\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": null\r\n}",
       "StatusCode": 201
     },
     {
       "RequestUri": "/datasources?api-version=2017-11-11-Preview",
       "EncodedRequestUri": "L2RhdGFzb3VyY2VzP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"name\": \"azsmnet9968\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"name\": \"azsmnet7993\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  },\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "RequestHeaders": {
         "client-request-id": [
-          "a5adc67b-6269-4662-8e5b-65f8798dcedf"
+          "c249b573-8927-4224-a36b-bd4b567e4dc5"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1452,22 +1452,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "ETag": [
-          "W/\"0x8D6AC2536D8CE7E\""
+          "W/\"0x8D6CA7973138D8B\""
         ],
         "Location": [
-          "https://azs-5305.search-dogfood.windows-int.net/datasources('azsmnet9968')?api-version=2017-11-11-Preview"
+          "https://azs-9207.search-dogfood.windows-int.net/datasources('azsmnet7993')?api-version=2017-11-11-Preview"
         ],
         "request-id": [
-          "a5adc67b-6269-4662-8e5b-65f8798dcedf"
+          "c249b573-8927-4224-a36b-bd4b567e4dc5"
         ],
         "elapsed-time": [
-          "31"
+          "28"
         ],
         "OData-Version": [
           "4.0"
@@ -1488,23 +1488,23 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-5305.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6AC2536D8CE7E\\\"\",\r\n  \"name\": \"azsmnet9968\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"@odata.context\": \"https://azs-9207.search-dogfood.windows-int.net/$metadata#datasources/$entity\",\r\n  \"@odata.etag\": \"\\\"0x8D6CA7973138D8B\\\"\",\r\n  \"name\": \"azsmnet7993\",\r\n  \"description\": \"Some data source\",\r\n  \"type\": \"azuretable\",\r\n  \"subtype\": null,\r\n  \"credentials\": {\r\n    \"connectionString\": \"DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;\"\r\n  },\r\n  \"container\": {\r\n    \"name\": \"faketable\",\r\n    \"query\": \"fake query\"\r\n  },\r\n  \"dataChangeDetectionPolicy\": null,\r\n  \"dataDeletionDetectionPolicy\": {\r\n    \"@odata.type\": \"#Microsoft.Azure.Search.SoftDeleteColumnDeletionDetectionPolicy\",\r\n    \"softDeleteColumnName\": \"isDeleted\",\r\n    \"softDeleteMarkerValue\": \"1\"\r\n  }\r\n}",
       "StatusCode": 201
     },
     {
-      "RequestUri": "/datasources('azsmnet7662')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NzY2MicpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet5920')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NTkyMCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "c3eabe80-14b8-4061-96e8-dc245e3ffa1c"
+          "8f5f1ab8-c527-47fd-bda3-5ea9d81f6111"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1518,13 +1518,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:52 GMT"
+          "Fri, 26 Apr 2019 19:00:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "c3eabe80-14b8-4061-96e8-dc245e3ffa1c"
+          "8f5f1ab8-c527-47fd-bda3-5ea9d81f6111"
         ],
         "elapsed-time": [
           "21"
@@ -1540,19 +1540,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet6588')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NjU4OCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet71')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NzEnKT9hcGktdmVyc2lvbj0yMDE3LTExLTExLVByZXZpZXc=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "78289fe1-d71a-4f62-832a-091564ce837e"
+          "451ba52c-c3a1-4d8e-aafd-c94d386576a8"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1566,61 +1566,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:52 GMT"
+          "Fri, 26 Apr 2019 19:00:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "78289fe1-d71a-4f62-832a-091564ce837e"
-        ],
-        "elapsed-time": [
-          "19"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=15724800; includeSubDomains"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
-    },
-    {
-      "RequestUri": "/datasources('azsmnet9151')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0OTE1MScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "client-request-id": [
-          "eaed59d4-1adf-4864-8d89-45e91ff82327"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Search.SearchServiceClient/8.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "request-id": [
-          "eaed59d4-1adf-4864-8d89-45e91ff82327"
+          "451ba52c-c3a1-4d8e-aafd-c94d386576a8"
         ],
         "elapsed-time": [
           "20"
@@ -1636,19 +1588,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet3450')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MzQ1MCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet5834')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NTgzNCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "fe4e4a95-cb41-4842-a4e3-d35fd331592b"
+          "284907b2-3d98-4370-8edb-604112d5dae4"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1662,13 +1614,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "fe4e4a95-cb41-4842-a4e3-d35fd331592b"
+          "284907b2-3d98-4370-8edb-604112d5dae4"
         ],
         "elapsed-time": [
           "19"
@@ -1684,19 +1636,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet3521')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MzUyMScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet8866')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0ODg2NicpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "41560ac8-c49e-4072-8422-b409cca6f3db"
+          "4c2ccff7-4da5-481e-bac8-a4b18afb39e5"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1710,13 +1662,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "41560ac8-c49e-4072-8422-b409cca6f3db"
+          "4c2ccff7-4da5-481e-bac8-a4b18afb39e5"
         ],
         "elapsed-time": [
           "19"
@@ -1732,19 +1684,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet8984')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0ODk4NCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet2148')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MjE0OCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "260b20c6-7032-4d91-b2f0-508159663a9b"
+          "fa8285d5-01ec-4c55-b026-c4392bf30021"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1758,13 +1710,61 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "260b20c6-7032-4d91-b2f0-508159663a9b"
+          "fa8285d5-01ec-4c55-b026-c4392bf30021"
+        ],
+        "elapsed-time": [
+          "23"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/datasources('azsmnet6929')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NjkyOScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "client-request-id": [
+          "9ba4b1f9-c015-47f0-88d9-4ffaa3fe6e15"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "api-key": [
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Search.SearchServiceClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Apr 2019 19:00:27 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "request-id": [
+          "9ba4b1f9-c015-47f0-88d9-4ffaa3fe6e15"
         ],
         "elapsed-time": [
           "19"
@@ -1780,19 +1780,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet203')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MjAzJyk/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
+      "RequestUri": "/datasources('azsmnet8108')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0ODEwOCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "99b6fe98-5699-436f-8379-aea9326f9a86"
+          "bcf8b2e0-7553-41b4-bddd-f0734ac2b75c"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1806,16 +1806,16 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "99b6fe98-5699-436f-8379-aea9326f9a86"
+          "bcf8b2e0-7553-41b4-bddd-f0734ac2b75c"
         ],
         "elapsed-time": [
-          "22"
+          "19"
         ],
         "Strict-Transport-Security": [
           "max-age=15724800; includeSubDomains"
@@ -1828,19 +1828,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet2491')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MjQ5MScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet2498')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MjQ5OCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "6a0c6f39-b75e-46f3-82e7-8f9a5ea0d882"
+          "04d65cf3-6334-4d52-9e35-4f7f66ca552e"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1854,13 +1854,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "6a0c6f39-b75e-46f3-82e7-8f9a5ea0d882"
+          "04d65cf3-6334-4d52-9e35-4f7f66ca552e"
         ],
         "elapsed-time": [
           "20"
@@ -1876,19 +1876,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet2220')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MjIyMCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet2881')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0Mjg4MScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "64c2a28b-b190-4d52-b06e-aa6b0a77ca12"
+          "3e0375fd-a641-4f42-9ea8-8a372ced09cb"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1902,16 +1902,16 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "64c2a28b-b190-4d52-b06e-aa6b0a77ca12"
+          "3e0375fd-a641-4f42-9ea8-8a372ced09cb"
         ],
         "elapsed-time": [
-          "21"
+          "17"
         ],
         "Strict-Transport-Security": [
           "max-age=15724800; includeSubDomains"
@@ -1924,19 +1924,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet7623')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NzYyMycpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet2519')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MjUxOScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "fa1291a0-ea0d-4b3c-91cb-4936f02b2fb2"
+          "34f0f9d0-275a-4f6f-8190-e216243c5fde"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1950,16 +1950,16 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:53 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "fa1291a0-ea0d-4b3c-91cb-4936f02b2fb2"
+          "34f0f9d0-275a-4f6f-8190-e216243c5fde"
         ],
         "elapsed-time": [
-          "21"
+          "18"
         ],
         "Strict-Transport-Security": [
           "max-age=15724800; includeSubDomains"
@@ -1972,19 +1972,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet7832')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NzgzMicpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet3442')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MzQ0MicpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "943c8ee7-c43c-4c60-bac7-aa80ba494765"
+          "e5ea890e-ca50-4b21-bee0-26bab1493e22"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -1998,13 +1998,13 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:27 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "943c8ee7-c43c-4c60-bac7-aa80ba494765"
+          "e5ea890e-ca50-4b21-bee0-26bab1493e22"
         ],
         "elapsed-time": [
           "20"
@@ -2020,19 +2020,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet9957')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0OTk1NycpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet8359')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0ODM1OScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "59f54fbb-a61f-4ba1-a557-9afa5a5c58e2"
+          "a4c26334-f6a8-46db-9a52-7e75a7e484fb"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -2046,13 +2046,109 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "59f54fbb-a61f-4ba1-a557-9afa5a5c58e2"
+          "a4c26334-f6a8-46db-9a52-7e75a7e484fb"
+        ],
+        "elapsed-time": [
+          "26"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/datasources('azsmnet7751')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0Nzc1MScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "client-request-id": [
+          "969b4973-bac5-49e3-8734-6a034c0aa7dd"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "api-key": [
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Search.SearchServiceClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Apr 2019 19:00:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "request-id": [
+          "969b4973-bac5-49e3-8734-6a034c0aa7dd"
+        ],
+        "elapsed-time": [
+          "18"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=15724800; includeSubDomains"
+        ],
+        "Expires": [
+          "-1"
+        ]
+      },
+      "ResponseBody": "",
+      "StatusCode": 204
+    },
+    {
+      "RequestUri": "/datasources('azsmnet4374')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NDM3NCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "client-request-id": [
+          "5b0f7b17-2ea5-4133-adfb-69ec8fb59a4a"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "api-key": [
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Search.SearchServiceClient/8.0.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 26 Apr 2019 19:00:28 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "request-id": [
+          "5b0f7b17-2ea5-4133-adfb-69ec8fb59a4a"
         ],
         "elapsed-time": [
           "19"
@@ -2068,19 +2164,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet652')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NjUyJyk/YXBpLXZlcnNpb249MjAxNy0xMS0xMS1QcmV2aWV3",
+      "RequestUri": "/datasources('azsmnet1021')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MTAyMScpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "a1acc71a-e13b-4baa-99ec-7c938af16474"
+          "9a8d8d54-3040-42f6-91c5-565f0933ade2"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -2094,16 +2190,16 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "a1acc71a-e13b-4baa-99ec-7c938af16474"
+          "9a8d8d54-3040-42f6-91c5-565f0933ade2"
         ],
         "elapsed-time": [
-          "20"
+          "17"
         ],
         "Strict-Transport-Security": [
           "max-age=15724800; includeSubDomains"
@@ -2116,19 +2212,19 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet7393')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0NzM5MycpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
+      "RequestUri": "/datasources('azsmnet7993')?api-version=2017-11-11-Preview",
+      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0Nzk5MycpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "client-request-id": [
-          "f1b6bce7-62de-440c-818d-b97348b9d981"
+          "18547249-41a7-4d72-8ee5-52e86d657fbf"
         ],
         "accept-language": [
           "en-US"
         ],
         "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
+          "FB8BB200C55F6496F21CD5EFBBEABB95"
         ],
         "User-Agent": [
           "FxVersion/4.6.26614.01",
@@ -2142,16 +2238,16 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
+          "Fri, 26 Apr 2019 19:00:28 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "request-id": [
-          "f1b6bce7-62de-440c-818d-b97348b9d981"
+          "18547249-41a7-4d72-8ee5-52e86d657fbf"
         ],
         "elapsed-time": [
-          "20"
+          "39"
         ],
         "Strict-Transport-Security": [
           "max-age=15724800; includeSubDomains"
@@ -2164,109 +2260,13 @@
       "StatusCode": 204
     },
     {
-      "RequestUri": "/datasources('azsmnet1012')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0MTAxMicpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "client-request-id": [
-          "71b85ebe-34cb-493f-804d-138419d6c64e"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Search.SearchServiceClient/8.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "request-id": [
-          "71b85ebe-34cb-493f-804d-138419d6c64e"
-        ],
-        "elapsed-time": [
-          "21"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=15724800; includeSubDomains"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
-    },
-    {
-      "RequestUri": "/datasources('azsmnet9968')?api-version=2017-11-11-Preview",
-      "EncodedRequestUri": "L2RhdGFzb3VyY2VzKCdhenNtbmV0OTk2OCcpP2FwaS12ZXJzaW9uPTIwMTctMTEtMTEtUHJldmlldw==",
-      "RequestMethod": "DELETE",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "client-request-id": [
-          "429dae0e-73c2-4264-8031-5da412274d1d"
-        ],
-        "accept-language": [
-          "en-US"
-        ],
-        "api-key": [
-          "B15F3584BF4ABC87020A8C254BBA97BD"
-        ],
-        "User-Agent": [
-          "FxVersion/4.6.26614.01",
-          "OSName/Windows",
-          "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Search.SearchServiceClient/8.0.0.0"
-        ]
-      },
-      "ResponseHeaders": {
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Tue, 19 Mar 2019 04:41:54 GMT"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "request-id": [
-          "429dae0e-73c2-4264-8031-5da412274d1d"
-        ],
-        "elapsed-time": [
-          "19"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=15724800; includeSubDomains"
-        ],
-        "Expires": [
-          "-1"
-        ]
-      },
-      "ResponseBody": "",
-      "StatusCode": 204
-    },
-    {
-      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet2178/providers/Microsoft.Search/searchServices/azs-5305?api-version=2015-08-19",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQyMTc4L3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VhcmNoL3NlYXJjaFNlcnZpY2VzL2F6cy01MzA1P2FwaS12ZXJzaW9uPTIwMTUtMDgtMTk=",
+      "RequestUri": "/subscriptions/3c729b2a-4f86-4bb2-abe8-4b8647af156c/resourceGroups/azsmnet11/providers/Microsoft.Search/searchServices/azs-9207?api-version=2015-08-19",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2M3MjliMmEtNGY4Ni00YmIyLWFiZTgtNGI4NjQ3YWYxNTZjL3Jlc291cmNlR3JvdXBzL2F6c21uZXQxMS9wcm92aWRlcnMvTWljcm9zb2Z0LlNlYXJjaC9zZWFyY2hTZXJ2aWNlcy9henMtOTIwNz9hcGktdmVyc2lvbj0yMDE1LTA4LTE5",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "e02e70e1-1612-406e-9eee-68e8a39127fe"
+          "08d99d2e-6e11-4fd4-b6e4-d08fb3bb576b"
         ],
         "accept-language": [
           "en-US"
@@ -2275,7 +2275,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.Management.Search.SearchManagementClient/2.0.1.0"
+          "Microsoft.Azure.Management.Search.SearchManagementClient/3.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -2283,31 +2283,31 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 19 Mar 2019 04:41:58 GMT"
+          "Fri, 26 Apr 2019 19:00:31 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "e02e70e1-1612-406e-9eee-68e8a39127fe"
+          "08d99d2e-6e11-4fd4-b6e4-d08fb3bb576b"
         ],
         "request-id": [
-          "e02e70e1-1612-406e-9eee-68e8a39127fe"
+          "08d99d2e-6e11-4fd4-b6e4-d08fb3bb576b"
         ],
         "elapsed-time": [
-          "1130"
+          "980"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-deletes": [
-          "14946"
+          "14960"
         ],
         "x-ms-correlation-request-id": [
-          "99251d30-ac87-4998-a863-1451787bdf0c"
+          "13a06993-6586-495f-be6f-cae290869356"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20190319T044158Z:99251d30-ac87-4998-a863-1451787bdf0c"
+          "NORTHEUROPE:20190426T190032Z:13a06993-6586-495f-be6f-cae290869356"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -2325,26 +2325,26 @@
   ],
   "Names": {
     "GenerateName": [
-      "azsmnet2178",
-      "azsmnet7662",
-      "azsmnet6588",
-      "azsmnet9151",
-      "azsmnet3450",
-      "azsmnet3521",
-      "azsmnet8984",
-      "azsmnet203",
-      "azsmnet2491",
-      "azsmnet2220",
-      "azsmnet7623",
-      "azsmnet7832",
-      "azsmnet9957",
-      "azsmnet652",
-      "azsmnet7393",
-      "azsmnet1012",
-      "azsmnet9968"
+      "azsmnet11",
+      "azsmnet5920",
+      "azsmnet71",
+      "azsmnet5834",
+      "azsmnet8866",
+      "azsmnet2148",
+      "azsmnet6929",
+      "azsmnet8108",
+      "azsmnet2498",
+      "azsmnet2881",
+      "azsmnet2519",
+      "azsmnet3442",
+      "azsmnet8359",
+      "azsmnet7751",
+      "azsmnet4374",
+      "azsmnet1021",
+      "azsmnet7993"
     ],
     "GenerateServiceName": [
-      "azs-5305"
+      "azs-9207"
     ]
   },
   "Variables": {
