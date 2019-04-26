@@ -82,11 +82,6 @@ namespace Microsoft.Azure.Management.Consumption
         public virtual IUsageDetailsOperations UsageDetails { get; private set; }
 
         /// <summary>
-        /// Gets the IUsageDetailsListOperations.
-        /// </summary>
-        public virtual IUsageDetailsListOperations UsageDetailsList { get; private set; }
-
-        /// <summary>
         /// Gets the IMarketplacesOperations.
         /// </summary>
         public virtual IMarketplacesOperations Marketplaces { get; private set; }
@@ -388,7 +383,6 @@ namespace Microsoft.Azure.Management.Consumption
         private void Initialize()
         {
             UsageDetails = new UsageDetailsOperations(this);
-            UsageDetailsList = new UsageDetailsListOperations(this);
             Marketplaces = new MarketplacesOperations(this);
             Budgets = new BudgetsOperations(this);
             Tags = new TagsOperations(this);

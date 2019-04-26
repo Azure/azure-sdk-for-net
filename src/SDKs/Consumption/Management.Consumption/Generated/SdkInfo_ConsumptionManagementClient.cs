@@ -32,7 +32,6 @@ namespace Microsoft.Azure.Management.Consumption
                 new Tuple<string, string, string>("Consumption", "ReservationRecommendations", "2019-04-01-preview"),
                 new Tuple<string, string, string>("Consumption", "Tags", "2019-04-01-preview"),
                 new Tuple<string, string, string>("Consumption", "UsageDetails", "2019-04-01-preview"),
-                new Tuple<string, string, string>("Consumption", "UsageDetailsList", "2019-04-01-preview"),
                 new Tuple<string, string, string>("Management", "AggregatedCost", "2019-04-01-preview"),
               }.AsEnumerable();
           }

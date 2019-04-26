@@ -77,11 +77,6 @@ namespace Microsoft.Azure.Management.Consumption
         IUsageDetailsOperations UsageDetails { get; }
 
         /// <summary>
-        /// Gets the IUsageDetailsListOperations.
-        /// </summary>
-        IUsageDetailsListOperations UsageDetailsList { get; }
-
-        /// <summary>
         /// Gets the IMarketplacesOperations.
         /// </summary>
         IMarketplacesOperations Marketplaces { get; }

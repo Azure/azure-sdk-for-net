@@ -16,19 +16,19 @@ namespace Microsoft.Azure.Management.Consumption.Models
     /// <summary>
     /// Defines headers for Download operation.
     /// </summary>
-    public partial class UsageDetailsListDownloadHeaders
+    public partial class UsageDetailsDownloadHeaders
     {
         /// <summary>
-        /// Initializes a new instance of the UsageDetailsListDownloadHeaders
+        /// Initializes a new instance of the UsageDetailsDownloadHeaders
         /// class.
         /// </summary>
-        public UsageDetailsListDownloadHeaders()
+        public UsageDetailsDownloadHeaders()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the UsageDetailsListDownloadHeaders
+        /// Initializes a new instance of the UsageDetailsDownloadHeaders
         /// class.
         /// </summary>
         /// <param name="location">GET this URL to retrieve the status of the
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="azureAsyncOperation">To get the progress of the
         /// operation, call GET operation on the URL in Azure-AsyncOperation
         /// header field.</param>
-        public UsageDetailsListDownloadHeaders(string location = default(string), string retryAfter = default(string), string azureAsyncOperation = default(string))
+        public UsageDetailsDownloadHeaders(string location = default(string), string retryAfter = default(string), string azureAsyncOperation = default(string))
         {
             Location = location;
             RetryAfter = retryAfter;
