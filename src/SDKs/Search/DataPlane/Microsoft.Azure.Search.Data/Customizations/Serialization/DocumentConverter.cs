@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Search.Serialization
                     }
                 }
 
-                return typedValues.ToArray();
+                return typedValues;
             }
 
             Array ConvertToArrayOfReferenceType<T>(bool allowNull = false) where T : class =>
