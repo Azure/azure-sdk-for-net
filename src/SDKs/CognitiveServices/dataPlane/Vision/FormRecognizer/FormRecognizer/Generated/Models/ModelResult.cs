@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// the model.</param>
         /// <param name="lastUpdatedDateTime">Get or set the model last updated
         /// datetime.</param>
-        public ModelResult(string modelId = default(string), string status = default(string), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?))
+        public ModelResult(System.Guid modelId = default(System.Guid), string status = default(string), System.DateTime? createdDateTime = default(System.DateTime?), System.DateTime? lastUpdatedDateTime = default(System.DateTime?))
         {
             ModelId = modelId;
             Status = status;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer.Models
         /// Gets or sets get or set model identifier.
         /// </summary>
         [JsonProperty(PropertyName = "modelId")]
-        public string ModelId { get; set; }
+        public System.Guid ModelId { get; set; }
 
         /// <summary>
         /// Gets or sets get or set the status of model. Possible values

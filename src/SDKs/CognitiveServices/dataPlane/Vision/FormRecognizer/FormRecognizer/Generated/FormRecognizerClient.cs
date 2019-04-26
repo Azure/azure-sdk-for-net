@@ -391,7 +391,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/keys";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/keys";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -690,7 +690,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -839,7 +839,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -989,7 +989,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.FormRecognizer
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "model/{id}/analyze";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/analyze";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
