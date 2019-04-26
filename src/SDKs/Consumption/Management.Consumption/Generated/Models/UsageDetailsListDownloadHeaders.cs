@@ -39,13 +39,11 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// <param name="azureAsyncOperation">To get the progress of the
         /// operation, call GET operation on the URL in Azure-AsyncOperation
         /// header field.</param>
-        /// <param name="oDataEntityId">The operation entity Id GUID.</param>
-        public UsageDetailsListDownloadHeaders(string location = default(string), string retryAfter = default(string), string azureAsyncOperation = default(string), string oDataEntityId = default(string))
+        public UsageDetailsListDownloadHeaders(string location = default(string), string retryAfter = default(string), string azureAsyncOperation = default(string))
         {
             Location = location;
             RetryAfter = retryAfter;
             AzureAsyncOperation = azureAsyncOperation;
-            ODataEntityId = oDataEntityId;
             CustomInit();
         }
 
@@ -74,12 +72,6 @@ namespace Microsoft.Azure.Management.Consumption.Models
         /// </summary>
         [JsonProperty(PropertyName = "Azure-AsyncOperation")]
         public string AzureAsyncOperation { get; set; }
-
-        /// <summary>
-        /// Gets or sets the operation entity Id GUID.
-        /// </summary>
-        [JsonProperty(PropertyName = "OData-EntityId")]
-        public string ODataEntityId { get; set; }
 
     }
 }
