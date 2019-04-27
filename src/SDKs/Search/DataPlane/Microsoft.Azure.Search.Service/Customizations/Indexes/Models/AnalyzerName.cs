@@ -945,7 +945,7 @@ namespace Microsoft.Azure.Search.Models
             /// Standard ASCII Folding Lucene analyzer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers" /> 
             /// </summary>
-            public static readonly string StandardAsciiFoldingLucene = "standardasciifolding.lucene";
+            public const string StandardAsciiFoldingLucene = "standardasciifolding.lucene";
 
             /// <summary>
             /// Treats the entire content of a field as a single token. This is useful
