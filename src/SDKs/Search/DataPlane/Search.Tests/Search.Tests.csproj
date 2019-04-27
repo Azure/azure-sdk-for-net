@@ -10,8 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.WebUtilities" Version="1.0.2" />
-    <PackageReference Include="Microsoft.Azure.KeyVault" Version="2.3.2" />
-    <PackageReference Include="Microsoft.Azure.Management.KeyVault" Version="2.4.3" />
     <ProjectReference Include="..\Microsoft.Azure.Search\Microsoft.Azure.Search.csproj" />
     <ProjectReference Include="..\..\Management\Search.Management.Tests\Search.Management.Tests.csproj" />
   </ItemGroup>
