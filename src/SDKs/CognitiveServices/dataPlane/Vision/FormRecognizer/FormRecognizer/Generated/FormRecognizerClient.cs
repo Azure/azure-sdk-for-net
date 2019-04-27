@@ -521,7 +521,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<ModelResult>>> GetListOfCustomModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ModelsResult>> GetListOfCustomModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -613,7 +613,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<IList<ModelResult>>();
+            var _result = new HttpOperationResponse<ModelsResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             // Deserialize Response
@@ -622,7 +622,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IList<ModelResult>>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<ModelsResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

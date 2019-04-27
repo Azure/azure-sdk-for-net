@@ -129,7 +129,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<ModelResult> GetListOfCustomModels(this IFormRecognizerClient operations)
+            public static ModelsResult GetListOfCustomModels(this IFormRecognizerClient operations)
             {
                 return operations.GetListOfCustomModelsAsync().GetAwaiter().GetResult();
             }
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<ModelResult>> GetListOfCustomModelsAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ModelsResult> GetListOfCustomModelsAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetListOfCustomModelsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
