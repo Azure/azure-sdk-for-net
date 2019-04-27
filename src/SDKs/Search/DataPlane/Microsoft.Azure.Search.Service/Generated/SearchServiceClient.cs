@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Search
             SynonymMaps = new SynonymMapsOperations(this);
             Indexes = new IndexesOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}";
-            ApiVersion = "2017-11-11-Preview";
+            ApiVersion = "2019-05-06";
             SearchDnsSuffix = "search.windows.net";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

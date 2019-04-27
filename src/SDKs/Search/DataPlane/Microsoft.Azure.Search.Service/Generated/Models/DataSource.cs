@@ -131,10 +131,6 @@ namespace Microsoft.Azure.Search.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Container");
             }
-            if (Credentials != null)
-            {
-                Credentials.Validate();
-            }
             if (Container != null)
             {
                 Container.Validate();

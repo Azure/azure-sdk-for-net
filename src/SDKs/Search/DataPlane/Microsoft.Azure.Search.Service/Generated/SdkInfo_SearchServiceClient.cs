@@ -19,22 +19,22 @@ namespace Microsoft.Azure.Search
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("SearchServiceClient", "DataSources", "2017-11-11-Preview"),
-                new Tuple<string, string, string>("SearchServiceClient", "GetServiceStatistics", "2017-11-11-Preview"),
-                new Tuple<string, string, string>("SearchServiceClient", "Indexers", "2017-11-11-Preview"),
-                new Tuple<string, string, string>("SearchServiceClient", "Indexes", "2017-11-11-Preview"),
-                new Tuple<string, string, string>("SearchServiceClient", "Skillsets", "2017-11-11-Preview"),
-                new Tuple<string, string, string>("SearchServiceClient", "SynonymMaps", "2017-11-11-Preview"),
+                new Tuple<string, string, string>("SearchServiceClient", "DataSources", "2019-05-06"),
+                new Tuple<string, string, string>("SearchServiceClient", "GetServiceStatistics", "2019-05-06"),
+                new Tuple<string, string, string>("SearchServiceClient", "Indexers", "2019-05-06"),
+                new Tuple<string, string, string>("SearchServiceClient", "Indexes", "2019-05-06"),
+                new Tuple<string, string, string>("SearchServiceClient", "Skillsets", "2019-05-06"),
+                new Tuple<string, string, string>("SearchServiceClient", "SynonymMaps", "2019-05-06"),
               }.AsEnumerable();
           }
       }
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "eea61e4c373ff0e55ddbf61dd9e5359de64f0536";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/brjohnstmsft/azure-rest-api-specs/blob/new-search-api/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=E:\\github\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "brjohnstmsft";
+      public static readonly String GithubBranchName = "new-search-api";
+      public static readonly String GithubCommidId = "fb904adec6cdd5eb58fd0d2d0229cc46e58337f2";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
