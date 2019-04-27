@@ -13,10 +13,10 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/0.8.0.0"
         ],
         "Content-Type": [
-          "application/json-patch+json; charset=utf-8"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
           "280"
@@ -27,7 +27,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Tue, 23 Apr 2019 00:48:03 GMT"
+          "Sat, 27 Apr 2019 04:33:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,7 +39,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=c8793395b5aa4d17909a65474fb65964; expires=Sun, 20 Oct 2019 00:48:03 GMT; domain=; path=/; samesite=lax"
+          "pid=94c61999d3bb48dc9de2093bc58c968d; expires=Thu, 24 Oct 2019 04:33:00 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"
@@ -51,7 +51,7 @@
           "0"
         ]
       },
-      "ResponseBody": "{\r\n  \"ranking\": [\r\n    {\r\n      \"id\": \"Person\",\r\n      \"probability\": 1.0\r\n    }\r\n  ],\r\n  \"eventId\": \"444d434ced8e4ffca9ee8840f043cf9d-3pJ4L\",\r\n  \"rewardActionId\": \"Person\"\r\n}",
+      "ResponseBody": "{\r\n  \"ranking\": [\r\n    {\r\n      \"id\": \"Person\",\r\n      \"probability\": 1.0\r\n    }\r\n  ],\r\n  \"eventId\": \"725b8c598bd64f1d9edb21502ea0a216-3reuE\",\r\n  \"rewardActionId\": \"Person\"\r\n}",
       "StatusCode": 201
     }
   ],

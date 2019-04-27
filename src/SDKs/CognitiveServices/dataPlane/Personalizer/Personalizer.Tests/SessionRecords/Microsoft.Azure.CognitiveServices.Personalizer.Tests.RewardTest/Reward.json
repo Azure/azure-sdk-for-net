@@ -13,10 +13,10 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/0.8.0.0"
         ],
         "Content-Type": [
-          "application/json-patch+json; charset=utf-8"
+          "application/json; charset=utf-8"
         ],
         "Content-Length": [
           "20"
@@ -27,7 +27,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Tue, 23 Apr 2019 00:48:03 GMT"
+          "Sat, 27 Apr 2019 04:31:47 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -36,7 +36,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=19ce45c9c9f445b18ff867250dcfa9d7; expires=Sun, 20 Oct 2019 00:48:04 GMT; domain=; path=/; samesite=lax"
+          "pid=f8cbf86992b34c2eb8bdadf7abe66628; expires=Thu, 24 Oct 2019 04:31:47 GMT; domain=; path=/; samesite=lax"
         ],
         "Expires": [
           "0"

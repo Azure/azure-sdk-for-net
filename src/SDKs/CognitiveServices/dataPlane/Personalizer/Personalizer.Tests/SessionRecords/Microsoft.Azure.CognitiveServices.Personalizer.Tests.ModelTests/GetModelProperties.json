@@ -13,7 +13,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/0.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -21,7 +21,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Tue, 23 Apr 2019 01:03:16 GMT"
+          "Sat, 27 Apr 2019 04:32:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,7 +33,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=91ae5e84bac44df9b9852778de5706ac; expires=Sun, 20 Oct 2019 01:03:17 GMT; domain=; path=/; samesite=lax"
+          "pid=20fe90df3e4f4d49b8a5864377946eaa; expires=Thu, 24 Oct 2019 04:32:38 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"

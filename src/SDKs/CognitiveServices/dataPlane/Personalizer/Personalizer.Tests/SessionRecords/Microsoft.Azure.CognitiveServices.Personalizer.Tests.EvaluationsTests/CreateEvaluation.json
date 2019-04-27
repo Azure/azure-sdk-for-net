@@ -4,7 +4,7 @@
       "RequestUri": "/personalizer/v1.0/evaluations",
       "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2V2YWx1YXRpb25z",
       "RequestMethod": "POST",
-      "RequestBody": "",
+      "RequestBody": "{\r\n  \"enableOfflineExperimentation\": true,\r\n  \"name\": \"myFirstEvaluation\",\r\n  \"startTime\": \"2018-12-19T00:00:00Z\",\r\n  \"endTime\": \"2019-01-19T00:00:00Z\",\r\n  \"policies\": [\r\n    {\r\n      \"name\": \"Custom Policy 1\",\r\n      \"arguments\": \"--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5\"\r\n    }\r\n  ]\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           "000"
@@ -13,12 +13,24 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/0.8.0.0"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "333"
         ]
       },
       "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
+        ],
         "Date": [
-          "Tue, 23 Apr 2019 05:36:59 GMT"
+          "Sat, 27 Apr 2019 04:32:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -26,12 +38,18 @@
         "Server": [
           "Kestrel"
         ],
+        "Timing-Allow-Origin": [
+          "*"
+        ],
         "Content-Type": [
           "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"b58c6d92-b727-48c1-9487-4be2782c9e0a\",\r\n  \"name\": \"myFirstEvaluation\",\r\n  \"startTime\": \"2018-12-19T00:00:00Z\",\r\n  \"endTime\": \"2019-01-19T00:00:00Z\",\r\n  \"status\": \"completed\",\r\n  \"policyResults\": [\r\n    {\r\n      \"name\": \"Custom Policy 1\",\r\n      \"arguments\": \"--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5\"\r\n    }\r\n  ]\r\n}",
-      "StatusCode": 201 
+      "ResponseBody": "{\r\n  \"id\": \"490b1f2d-c5b6-4e54-bb8a-2b44fc8a5911\",\r\n  \"name\": \"myFirstEvaluation\",\r\n  \"startTime\": \"2018-12-19T00:00:00Z\",\r\n  \"endTime\": \"2019-01-19T00:00:00Z\",\r\n  \"jobId\": \"app1-490b1f2d-c5b6-4e54-bb8a-2b44fc8a5911\",\r\n  \"status\": \"pending\",\r\n  \"policyResults\": [\r\n    {\r\n      \"name\": \"Custom Policy 1\",\r\n      \"arguments\": \"--cb_explore_adf --epsilon 0.2 --dsjson --cb_type ips -l 0.5 --l1 1E-07 --power_t 0.5\"\r\n    }\r\n  ]\r\n}",
+      "StatusCode": 201
     }
   ],
   "Names": {},

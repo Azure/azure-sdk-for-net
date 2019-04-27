@@ -13,25 +13,31 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/0.8.0.0"
         ]
       },
       "ResponseHeaders": {
-        "Date": [
-          "Tue, 23 Apr 2019 05:37:00 GMT"
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
+        "Date": [
+          "Sat, 27 Apr 2019 04:32:07 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
         ],
         "Server": [
           "Kestrel"
         ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
+        "Timing-Allow-Origin": [
+          "*"
+        ],
+        "Expires": [
+          "0"
         ]
       },
       "ResponseBody": "",
-      "StatusCode": 200
+      "StatusCode": 204
     }
   ],
   "Names": {},

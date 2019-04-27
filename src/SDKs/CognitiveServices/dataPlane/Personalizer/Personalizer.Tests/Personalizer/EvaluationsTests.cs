@@ -21,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IList<Evaluation> evaluations = client.Evaluations.List();
 
-                Assert.Equal(2, evaluations.Count);
+                Assert.True(evaluations.Count > 0);
                 Assert.Equal("myFirstEvaluation", evaluations[0].Name);
             }
         }
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
-                string evaluationId = "b58c6d92-b727-48c1-9487-4be2782c9e0a";
+                string evaluationId = "0f3cf6a9-f33f-4bb0-967e-3607cefef74e";
                 Evaluation evaluation = client.Evaluations.Get(evaluationId);
 
                 Assert.Equal(evaluationId, evaluation.Id);

@@ -13,7 +13,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/1.0.0.0"
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/0.8.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -21,7 +21,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Tue, 23 Apr 2019 01:35:23 GMT"
+          "Sat, 27 Apr 2019 04:33:00 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,7 +33,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=d26f177096a246da86e6b2d4764d539a; expires=Sun, 20 Oct 2019 01:35:23 GMT; domain=; path=/; samesite=lax"
+          "pid=d1396e87fd4b4f05b26f99bef72f40f9; expires=Thu, 24 Oct 2019 04:33:00 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"
@@ -45,7 +45,7 @@
           "0"
         ]
       },
-      "ResponseBody": "{\r\n  \"dateRange\": {\r\n    \"from\": \"2019-04-12T18:35:23.3649317-07:00\",\r\n    \"to\": \"2019-04-22T18:35:23.3649325-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"dateRange\": {\r\n    \"from\": \"2019-04-26T21:33:00.446541-07:00\",\r\n    \"to\": \"2019-04-27T21:33:00.4465419-07:00\"\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],
