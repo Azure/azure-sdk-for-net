@@ -12,43 +12,9 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class SearchContinuationTokenConverterTests
     {
-        private const string TokenJson =
- @"{
-  ""@odata.nextLink"": ""https://tempuri.org?api-version=2017-11-11-Preview"",
-  ""@search.nextPageParameters"": {
-    ""count"": true,
-    ""facets"": [
-      ""testfacets""
-    ],
-    ""filter"": ""testfilter"",
-    ""highlight"": ""testhighlight"",
-    ""highlightPostTag"": ""</b>"",
-    ""highlightPreTag"": ""<b>"",
-    ""minimumCoverage"": 50.0,
-    ""orderby"": ""testorderby"",
-    ""queryType"": ""full"",
-    ""scoringParameters"": [
-      ""testscoringparameter""
-    ],
-    ""scoringProfile"": ""testscoringprofile"",
-    ""search"": ""some words"",
-    ""searchFields"": ""somefields"",
-    ""searchMode"": ""all"",
-    ""select"": ""*"",
-    ""skip"": 100,
-    ""top"": 10
-  }
-}";
-
-        private const string TokenWithOnlyLinkJson =
- @"{
-  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2017-11-11-Preview"",
-  ""@search.nextPageParameters"": null
-}";
-
         private readonly SearchContinuationToken _token =
             new SearchContinuationToken(
-                "https://tempuri.org?api-version=2017-11-11-Preview",
+                $"https://tempuri.org?api-version={ApiVersion}",
                 new SearchRequest()
                 {
                     IncludeTotalResultCount = true,
@@ -71,9 +37,50 @@ namespace Microsoft.Azure.Search.Tests
                 });
 
         private readonly SearchContinuationToken _tokenWithOnlyLink =
-            new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2017-11-11-Preview", null);
+            new SearchContinuationToken($"https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version={ApiVersion}", null);
 
         private readonly TokenComparer _tokenComparer = new TokenComparer();
+
+        /// <summary>
+        /// Returns the api-version from the generated code. Using this in the tests ensures that the object under test has its api-version
+        /// updated when publishing new versions of the SDK.
+        /// </summary>
+        private static string ApiVersion =>
+            new SearchServiceClient("thisservicedoesnotexist", new SearchCredentials("thisapikeydoesnotexist")).ApiVersion;
+
+        private static string TokenJson =>
+$@"{{
+  ""@odata.nextLink"": ""https://tempuri.org?api-version={ApiVersion}"",
+  ""@search.nextPageParameters"": {{
+    ""count"": true,
+    ""facets"": [
+      ""testfacets""
+    ],
+    ""filter"": ""testfilter"",
+    ""highlight"": ""testhighlight"",
+    ""highlightPostTag"": ""</b>"",
+    ""highlightPreTag"": ""<b>"",
+    ""minimumCoverage"": 50.0,
+    ""orderby"": ""testorderby"",
+    ""queryType"": ""full"",
+    ""scoringParameters"": [
+      ""testscoringparameter""
+    ],
+    ""scoringProfile"": ""testscoringprofile"",
+    ""search"": ""some words"",
+    ""searchFields"": ""somefields"",
+    ""searchMode"": ""all"",
+    ""select"": ""*"",
+    ""skip"": 100,
+    ""top"": 10
+  }}
+}}";
+
+        private static string TokenWithOnlyLinkJson =>
+ $@"{{
+  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version={ApiVersion}"",
+  ""@search.nextPageParameters"": null
+}}";
 
         [Fact]
         public void CanSerializeToken()
@@ -107,17 +114,17 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void DeserializeTokenWithWrongVersionThrowsException()
         {
-            string tokenJson = TokenJson.Replace("2017-11-11-Preview", "1999-12-31");
+            string tokenJson = TokenJson.Replace(ApiVersion, "1999-12-31");
 
             JsonSerializationException e =
                 Assert.Throws<JsonSerializationException>(
                     () => JsonConvert.DeserializeObject<SearchContinuationToken>(tokenJson));
 
-            const string ExpectedMessage =
+            string expectedMessage =
                 "Cannot deserialize a continuation token for a different api-version. Token contains version " +
-                "'1999-12-31'; Expected version '2017-11-11-Preview'.";
+                $"'1999-12-31'; Expected version '{ApiVersion}'.";
 
-            Assert.Equal(ExpectedMessage, e.Message);
+            Assert.Equal(expectedMessage, e.Message);
         }
 
         [Fact]
@@ -136,7 +143,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void DeserializeTokenWithMissingVersionValueThrowsException()
         {
-            string tokenJson = TokenJson.Replace("2017-11-11-Preview", string.Empty);
+            string tokenJson = TokenJson.Replace(ApiVersion, string.Empty);
 
             JsonSerializationException e =
                 Assert.Throws<JsonSerializationException>(

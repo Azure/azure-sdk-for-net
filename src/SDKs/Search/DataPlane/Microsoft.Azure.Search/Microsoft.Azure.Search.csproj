@@ -6,16 +6,16 @@
     <Description>Makes it easy to develop a .NET application that uses Azure Search.</Description>
     <AssemblyTitle>Microsoft Azure Search Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Search</AssemblyName>
-    <Version>8.0.0-preview</Version>
-    <PackageReleaseNotes>This is a preview of the newest major version of the Azure Search .NET SDK, based on version 2017-11-11-Preview of the Azure Search REST API. New in this version is support for complex types, encryption at rest with customer-managed keys, filter support in the Autocomplete API, and the new NER (named entity recognition) skill for Cognitive Search. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
+    <Version>9.0.0</Version>
+    <PackageReleaseNotes>This is the newest major version of the Azure Search .NET SDK, based on version 2019-05-06 of the Azure Search REST API. New in this GA version is support for Cognitive Search, complex types for richer data modeling, the Autocomplete API, and additional parsing modes for Blob indexers. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Search.Data" Version="[8.0.0-preview, 9.0.0)" />
-    <PackageReference Include="Microsoft.Azure.Search.Service" Version="[8.0.0-preview, 9.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Data" Version="[9.0.0, 10.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Service" Version="[9.0.0, 10.0.0)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Search.Data\Microsoft.Azure.Search.Data.csproj" />
