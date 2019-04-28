@@ -79,6 +79,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 DataSource updatedActual = searchClient.DataSources.CreateOrUpdate(updatedExpected);
 
+                updatedExpected.Credentials.ConnectionString = null;    // Create doesn't return connection strings.
                 AssertDataSourcesEqual(updatedExpected, updatedActual);
             });
         }
@@ -314,6 +315,7 @@ namespace Microsoft.Azure.Search.Tests
 
             try
             {
+                expectedDataSource.Credentials.ConnectionString = null; // Create doesn't return connection strings.
                 AssertDataSourcesEqual(expectedDataSource, actualDataSource);
             }
             finally

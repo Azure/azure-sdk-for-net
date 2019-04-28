@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search.Tests
                     {
                         MaxFieldsPerIndex = 1000,
                         MaxFieldNestingDepthPerIndex = 10,
-                        MaxComplexCollectionFieldsPerIndex = 100
+                        MaxComplexCollectionFieldsPerIndex = 40
                     }
                 };
 
