@@ -20,18 +20,18 @@ namespace Microsoft.Azure.Management.Monitor.Models
     /// Criterion to filter metrics.
     /// </summary>
     [Newtonsoft.Json.JsonObject("StaticThresholdCriterion")]
-    public partial class StaticMetricCriteria : MultiMetricCriteria
+    public partial class MetricCriteria : MultiMetricCriteria
     {
         /// <summary>
-        /// Initializes a new instance of the StaticMetricCriteria class.
+        /// Initializes a new instance of the MetricCriteria class.
         /// </summary>
-        public StaticMetricCriteria()
+        public MetricCriteria()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the StaticMetricCriteria class.
+        /// Initializes a new instance of the MetricCriteria class.
         /// </summary>
         /// <param name="name">Name of the criteria.</param>
         /// <param name="metricName">Name of the metric.</param>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
-        public StaticMetricCriteria(string name, string metricName, object timeAggregation, object operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        public MetricCriteria(string name, string metricName, object timeAggregation, object operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
             : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions)
         {
             OperatorProperty = operatorProperty;
