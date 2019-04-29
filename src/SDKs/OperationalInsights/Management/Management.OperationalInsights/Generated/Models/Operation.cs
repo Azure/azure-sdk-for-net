@@ -10,32 +10,33 @@
 
 namespace Microsoft.Azure.Management.OperationalInsights.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The SKU (tier) of a workspace.
+    /// Supported operation of OperationalInsights resource provider.
     /// </summary>
-    public partial class Sku
+    public partial class Operation
     {
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        public Sku()
+        public Operation()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sku class.
+        /// Initializes a new instance of the Operation class.
         /// </summary>
-        /// <param name="name">The name of the SKU. Possible values include:
-        /// 'Free', 'Standard', 'Premium', 'PerNode', 'PerGB2018',
-        /// 'Standalone'</param>
-        public Sku(string name)
+        /// <param name="name">Operation name:
+        /// {provider}/{resource}/{operation}</param>
+        /// <param name="display">Display metadata associated with the
+        /// operation.</param>
+        public Operation(string name = default(string), OperationDisplay display = default(OperationDisplay))
         {
             Name = name;
+            Display = display;
             CustomInit();
         }
 
@@ -45,24 +46,16 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the SKU. Possible values include: 'Free',
-        /// 'Standard', 'Premium', 'PerNode', 'PerGB2018', 'Standalone'
+        /// Gets or sets operation name: {provider}/{resource}/{operation}
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Validate the object.
+        /// Gets or sets display metadata associated with the operation.
         /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-        }
+        [JsonProperty(PropertyName = "display")]
+        public OperationDisplay Display { get; set; }
+
     }
 }
