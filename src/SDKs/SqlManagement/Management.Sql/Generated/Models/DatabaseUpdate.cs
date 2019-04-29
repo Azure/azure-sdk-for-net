@@ -91,8 +91,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Online', 'Restoring', 'RecoveryPending', 'Recovering',
         /// 'Suspect', 'Offline', 'Standby', 'Shutdown', 'EmergencyMode',
         /// 'AutoClosed', 'Copying', 'Creating', 'Inaccessible',
-        /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming',
-        /// 'Scaling'</param>
+        /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers'</param>
         /// <param name="databaseId">The ID of the database.</param>
         /// <param name="creationDate">The creation date of the database
         /// (ISO8601 format).</param>
@@ -141,13 +142,8 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the same region. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
-        /// <param name="autoPauseDelay">Time in minutes after which database
-        /// is automatically paused. A value of -1 means that automatic pause
-        /// is disabled</param>
-        /// <param name="minCapacity">Minimal capacity that database will
-        /// always have allocated, if not paused</param>
         /// <param name="tags">Resource tags.</param>
-        public DatabaseUpdate(Sku sku = default(Sku), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), double? minCapacity = default(double?), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public DatabaseUpdate(Sku sku = default(Sku), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), Sku currentSku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Sku = sku;
             CreateMode = createMode;
@@ -176,8 +172,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             EarliestRestoreDate = earliestRestoreDate;
             ReadScale = readScale;
             CurrentSku = currentSku;
-            AutoPauseDelay = autoPauseDelay;
-            MinCapacity = minCapacity;
             Tags = tags;
             CustomInit();
         }
@@ -277,7 +271,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Restoring', 'RecoveryPending', 'Recovering', 'Suspect', 'Offline',
         /// 'Standby', 'Shutdown', 'EmergencyMode', 'AutoClosed', 'Copying',
         /// 'Creating', 'Inaccessible', 'OfflineSecondary', 'Pausing',
-        /// 'Paused', 'Resuming', 'Scaling'
+        /// 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -409,20 +405,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.currentSku")]
         public Sku CurrentSku { get; private set; }
-
-        /// <summary>
-        /// Gets or sets time in minutes after which database is automatically
-        /// paused. A value of -1 means that automatic pause is disabled
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.autoPauseDelay")]
-        public int? AutoPauseDelay { get; set; }
-
-        /// <summary>
-        /// Gets or sets minimal capacity that database will always have
-        /// allocated, if not paused
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.minCapacity")]
-        public double? MinCapacity { get; set; }
 
         /// <summary>
         /// Gets or sets resource tags.

@@ -39,7 +39,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
         /// <param name="tags">Resource tags.</param>
-        /// <param name="sku">The name and tier of the SKU.</param>
+        /// <param name="sku">The database SKU.
+        ///
+        /// The list of SKUs may vary by region and support offer. To determine
+        /// the SKUs (including the SKU name, tier/edition, family, and
+        /// capacity) that are available to your subscription in an Azure
+        /// region, use the `Capabilities_ListByLocation` REST API or one of
+        /// the following commands:
+        ///
+        /// ```azurecli
+        /// az sql db list-editions -l &lt;location&gt; -o table
+        /// ````
+        ///
+        /// ```powershell
+        /// Get-AzSqlServerServiceObjective -Location &lt;location&gt;
+        /// ````
+        /// </param>
         /// <param name="kind">Kind of database. This is metadata used for the
         /// Azure portal experience.</param>
         /// <param name="managedBy">Resource that manages the database.</param>
@@ -99,8 +114,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// include: 'Online', 'Restoring', 'RecoveryPending', 'Recovering',
         /// 'Suspect', 'Offline', 'Standby', 'Shutdown', 'EmergencyMode',
         /// 'AutoClosed', 'Copying', 'Creating', 'Inaccessible',
-        /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming',
-        /// 'Scaling'</param>
+        /// 'OfflineSecondary', 'Pausing', 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers'</param>
         /// <param name="databaseId">The ID of the database.</param>
         /// <param name="creationDate">The creation date of the database
         /// (ISO8601 format).</param>
@@ -149,12 +165,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// the same region. Possible values include: 'Enabled',
         /// 'Disabled'</param>
         /// <param name="currentSku">The name and tier of the SKU.</param>
-        /// <param name="autoPauseDelay">Time in minutes after which database
-        /// is automatically paused. A value of -1 means that automatic pause
-        /// is disabled</param>
-        /// <param name="minCapacity">Minimal capacity that database will
-        /// always have allocated, if not paused</param>
-        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), Sku currentSku = default(Sku), int? autoPauseDelay = default(int?), double? minCapacity = default(double?))
+        public Database(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string kind = default(string), string managedBy = default(string), string createMode = default(string), string collation = default(string), long? maxSizeBytes = default(long?), string sampleName = default(string), string elasticPoolId = default(string), string sourceDatabaseId = default(string), string status = default(string), System.Guid? databaseId = default(System.Guid?), System.DateTime? creationDate = default(System.DateTime?), string currentServiceObjectiveName = default(string), string requestedServiceObjectiveName = default(string), string defaultSecondaryLocation = default(string), string failoverGroupId = default(string), System.DateTime? restorePointInTime = default(System.DateTime?), System.DateTime? sourceDatabaseDeletionDate = default(System.DateTime?), string recoveryServicesRecoveryPointId = default(string), string longTermRetentionBackupResourceId = default(string), string recoverableDatabaseId = default(string), string restorableDroppedDatabaseId = default(string), string catalogCollation = default(string), bool? zoneRedundant = default(bool?), string licenseType = default(string), long? maxLogSizeBytes = default(long?), System.DateTime? earliestRestoreDate = default(System.DateTime?), string readScale = default(string), Sku currentSku = default(Sku))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -186,8 +197,6 @@ namespace Microsoft.Azure.Management.Sql.Models
             EarliestRestoreDate = earliestRestoreDate;
             ReadScale = readScale;
             CurrentSku = currentSku;
-            AutoPauseDelay = autoPauseDelay;
-            MinCapacity = minCapacity;
             CustomInit();
         }
 
@@ -197,7 +206,22 @@ namespace Microsoft.Azure.Management.Sql.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name and tier of the SKU.
+        /// Gets or sets the database SKU.
+        ///
+        /// The list of SKUs may vary by region and support offer. To determine
+        /// the SKUs (including the SKU name, tier/edition, family, and
+        /// capacity) that are available to your subscription in an Azure
+        /// region, use the `Capabilities_ListByLocation` REST API or one of
+        /// the following commands:
+        ///
+        /// ```azurecli
+        /// az sql db list-editions -l &amp;lt;location&amp;gt; -o table
+        /// ````
+        ///
+        /// ```powershell
+        /// Get-AzSqlServerServiceObjective -Location &amp;lt;location&amp;gt;
+        /// ````
+        ///
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
@@ -299,7 +323,9 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// 'Restoring', 'RecoveryPending', 'Recovering', 'Suspect', 'Offline',
         /// 'Standby', 'Shutdown', 'EmergencyMode', 'AutoClosed', 'Copying',
         /// 'Creating', 'Inaccessible', 'OfflineSecondary', 'Pausing',
-        /// 'Paused', 'Resuming', 'Scaling'
+        /// 'Paused', 'Resuming', 'Scaling',
+        /// 'OfflineChangingDwPerformanceTiers',
+        /// 'OnlineChangingDwPerformanceTiers'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
         public string Status { get; private set; }
@@ -431,20 +457,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.currentSku")]
         public Sku CurrentSku { get; private set; }
-
-        /// <summary>
-        /// Gets or sets time in minutes after which database is automatically
-        /// paused. A value of -1 means that automatic pause is disabled
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.autoPauseDelay")]
-        public int? AutoPauseDelay { get; set; }
-
-        /// <summary>
-        /// Gets or sets minimal capacity that database will always have
-        /// allocated, if not paused
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.minCapacity")]
-        public double? MinCapacity { get; set; }
 
         /// <summary>
         /// Validate the object.

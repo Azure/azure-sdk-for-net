@@ -39,18 +39,13 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// <param name="labelId">The label ID.</param>
         /// <param name="informationType">The information type.</param>
         /// <param name="informationTypeId">The information type ID.</param>
-        /// <param name="isDisabled">Is sensitivity recommendation disabled.
-        /// Applicable for recommended sensitivity label only. Specifies
-        /// whether the sensitivity recommendation on this column is disabled
-        /// (dismissed) or not.</param>
-        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string), bool? isDisabled = default(bool?))
+        public SensitivityLabel(string id = default(string), string name = default(string), string type = default(string), string labelName = default(string), string labelId = default(string), string informationType = default(string), string informationTypeId = default(string))
             : base(id, name, type)
         {
             LabelName = labelName;
             LabelId = labelId;
             InformationType = informationType;
             InformationTypeId = informationTypeId;
-            IsDisabled = isDisabled;
             CustomInit();
         }
 
@@ -82,15 +77,6 @@ namespace Microsoft.Azure.Management.Sql.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.informationTypeId")]
         public string InformationTypeId { get; set; }
-
-        /// <summary>
-        /// Gets is sensitivity recommendation disabled. Applicable for
-        /// recommended sensitivity label only. Specifies whether the
-        /// sensitivity recommendation on this column is disabled (dismissed)
-        /// or not.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isDisabled")]
-        public bool? IsDisabled { get; private set; }
 
     }
 }
