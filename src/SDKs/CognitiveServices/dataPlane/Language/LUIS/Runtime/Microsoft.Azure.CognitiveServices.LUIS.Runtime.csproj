@@ -13,7 +13,8 @@
     <![CDATA[
     This is a public release of the Cognitive Services LUIS Runtime SDK.
 
-    This package calls the API version 3.0-preview.
+    Changes in this release:
+      - Support the runtime v3.0-preview APIs.
     ]]></PackageReleaseNotes>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
