@@ -13,9 +13,9 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
     using Microsoft.Rest;
 
     /// <summary>
-    /// Exception thrown for an invalid response with APIError information.
+    /// Exception thrown for an invalid response with Error information.
     /// </summary>
-    public partial class APIErrorException : RestException
+    public partial class ErrorException : RestException
     {
         /// <summary>
         /// Gets information about the associated HTTP request.
@@ -30,30 +30,30 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         /// <summary>
         /// Gets or sets the body object.
         /// </summary>
-        public APIError Body { get; set; }
+        public Error Body { get; set; }
 
         /// <summary>
-        /// Initializes a new instance of the APIErrorException class.
+        /// Initializes a new instance of the ErrorException class.
         /// </summary>
-        public APIErrorException()
+        public ErrorException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the APIErrorException class.
+        /// Initializes a new instance of the ErrorException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
-        public APIErrorException(string message)
+        public ErrorException(string message)
             : this(message, null)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the APIErrorException class.
+        /// Initializes a new instance of the ErrorException class.
         /// </summary>
         /// <param name="message">The exception message.</param>
         /// <param name="innerException">Inner exception.</param>
-        public APIErrorException(string message, System.Exception innerException)
+        public ErrorException(string message, System.Exception innerException)
             : base(message, innerException)
         {
         }

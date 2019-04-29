@@ -10,32 +10,32 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Child entity in a LUIS Composite Entity.
+    /// Represents an intent prediction.
     /// </summary>
-    public partial class CompositeChildModel
+    public partial class Intent
     {
         /// <summary>
-        /// Initializes a new instance of the CompositeChildModel class.
+        /// Initializes a new instance of the Intent class.
         /// </summary>
-        public CompositeChildModel()
+        public Intent()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the CompositeChildModel class.
+        /// Initializes a new instance of the Intent class.
         /// </summary>
-        /// <param name="type">Type of child entity.</param>
-        /// <param name="value">Value extracted by LUIS.</param>
-        public CompositeChildModel(string type, string value)
+        /// <param name="score">The score of the fired intent.</param>
+        /// <param name="childApp">The prediction of the dispatched
+        /// application.</param>
+        public Intent(double? score = default(double?), Prediction childApp = default(Prediction))
         {
-            Type = type;
-            Value = value;
+            Score = score;
+            ChildApp = childApp;
             CustomInit();
         }
 
@@ -45,32 +45,28 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of child entity.
+        /// Gets or sets the score of the fired intent.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "score")]
+        public double? Score { get; set; }
 
         /// <summary>
-        /// Gets or sets value extracted by LUIS.
+        /// Gets or sets the prediction of the dispatched application.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "childApp")]
+        public Prediction ChildApp { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (Type == null)
+            if (ChildApp != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
-            }
-            if (Value == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+                ChildApp.Validate();
             }
         }
     }
