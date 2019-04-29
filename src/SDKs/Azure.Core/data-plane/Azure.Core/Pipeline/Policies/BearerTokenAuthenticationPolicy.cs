@@ -10,8 +10,8 @@ namespace Azure.Base.Http.Pipeline
 {
     public class BearerTokenAuthenticationPolicy : HttpPipelinePolicy
     {   
-        TokenCredential _credential;
-        string[] _scopes;
+        private TokenCredential _credential;
+        private string[] _scopes;
 
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope)
         {
@@ -23,7 +23,7 @@ namespace Azure.Base.Http.Pipeline
         {
             string token = await _credential.GetTokenAsync(_scopes, message.Cancellation).ConfigureAwait(false);
             
-            message.Request.AddHeader(new HttpHeader(HttpHeader.Names.Authorization, "Bearer " + token));
+            message.Request.AddHeader(HttpHeader.Names.Authorization, "Bearer " + token);
 
             await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }

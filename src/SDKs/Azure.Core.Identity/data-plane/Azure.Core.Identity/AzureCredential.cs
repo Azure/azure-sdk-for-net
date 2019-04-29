@@ -1,4 +1,7 @@
-﻿using Azure.Core.Credentials;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Credentials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +30,7 @@ namespace Azure.Core.Identity
 
         public override async ValueTask<string> GetTokenAsync(IEnumerable<string> scopes, CancellationToken cancellationToken = default)
         {
-            if ((_cachedResponse != null) && !_cachedResponse.NeedsRefresh())
+            if ((_cachedResponse != null) && !_cachedResponse.NeedsRefresh)
             {
                 return _cachedResponse.AccessToken;
             }
@@ -36,7 +39,7 @@ namespace Azure.Core.Identity
 
             try
             {
-                if ((_cachedResponse == null) || _cachedResponse.NeedsRefresh())
+                if ((_cachedResponse == null) || _cachedResponse.NeedsRefresh)
                 {
                     _cachedResponse = await Authenticate(scopes, cancellationToken).ConfigureAwait(false);
                 }
@@ -49,11 +52,9 @@ namespace Azure.Core.Identity
             }
         }
 
-        internal virtual async Task<AuthenticationResponse> Authenticate(IEnumerable<string> scopes, CancellationToken cancellationToken)
+        internal virtual Task<AuthenticationResponse> Authenticate(IEnumerable<string> scopes, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask.ConfigureAwait(false);
-
-            return null;
+            return default;
         }
 
         internal IdentityClient Client => _client;

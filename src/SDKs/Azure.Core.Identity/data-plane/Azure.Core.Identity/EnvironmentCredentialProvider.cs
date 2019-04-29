@@ -1,4 +1,7 @@
-﻿using Azure.Core.Credentials;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using Azure.Core.Credentials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,20 +19,18 @@ namespace Azure.Core.Identity
 
         private static readonly string s_AzureClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
 
-        private TokenCredential _credential = null;
+        private ValueTask<TokenCredential> _credential = default;
 
         public EnvironmentCredentialProvider()
         {
             if (s_AzureClientId != null && s_AzureTenantId != null && s_AzureClientSecret != null)
             {
-                _credential = new ClientSecretCredential();
+                _credential = new ValueTask<TokenCredential>(new ClientSecretCredential());
             }
         }
 
-        protected override async ValueTask<TokenCredential> GetCredentialAsync(IEnumerable<string> scopes, CancellationToken cancellationToken)
+        protected override ValueTask<TokenCredential> GetCredentialAsync(IEnumerable<string> scopes, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask.ConfigureAwait(false);
-
             return _credential;
         }
     }

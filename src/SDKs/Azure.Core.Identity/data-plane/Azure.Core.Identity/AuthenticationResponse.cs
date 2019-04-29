@@ -1,12 +1,15 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System;
 using System.Collections.Generic;
 using Azure.Core.Credentials;
 
 namespace Azure.Core.Identity
 {
-    class AuthenticationResponse
+    internal class AuthenticationResponse
     {
-        Dictionary<string, string> _response;
+        private Dictionary<string, string> _response;
 
         public AuthenticationResponse(Dictionary<string, string> response)
         {
@@ -32,9 +35,6 @@ namespace Azure.Core.Identity
 
         public DateTimeOffset ExpiresOn { get; private set; }
 
-        public bool NeedsRefresh()
-        {
-            return (DateTime.UtcNow + TimeSpan.FromMinutes(2)) >= ExpiresOn;
-        }
+        public bool NeedsRefresh => (DateTime.UtcNow + TimeSpan.FromMinutes(2)) >= ExpiresOn;
     }
 }
