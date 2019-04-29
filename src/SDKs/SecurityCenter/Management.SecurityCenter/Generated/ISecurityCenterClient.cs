@@ -87,21 +87,6 @@ namespace Microsoft.Azure.Management.Security
         ISettingsOperations Settings { get; }
 
         /// <summary>
-        /// Gets the IRegulatoryComplianceStandardsOperations.
-        /// </summary>
-        IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceControlsOperations.
-        /// </summary>
-        IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceAssessmentsOperations.
-        /// </summary>
-        IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; }
-
-        /// <summary>
         /// Gets the IAllowedConnectionsOperations.
         /// </summary>
         IAllowedConnectionsOperations AllowedConnections { get; }
@@ -170,6 +155,21 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IWorkspaceSettingsOperations.
         /// </summary>
         IWorkspaceSettingsOperations WorkspaceSettings { get; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceStandardsOperations.
+        /// </summary>
+        IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceControlsOperations.
+        /// </summary>
+        IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceAssessmentsOperations.
+        /// </summary>
+        IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; }
 
     }
 }
