@@ -56,7 +56,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         }
 
         private void NoFailures(string name, EHErrorInjector injector)
-        { 
+        {
             TestState state = new TestState();
             state.Initialize(name, 1, 0);
 
@@ -193,14 +193,15 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         {
             GeneralStartupFailure("NontransientGetRuntimeInfoFailure", EHErrorLocation.GetRuntimeInformation, true);
         }
-
+#if !FullNetFx
+        // Issue https://github.com/Azure/azure-sdk-for-net/issues/5995 tracking this test being re-enabled for netfx
         [Fact]
         [DisplayTestMethodName]
         public void HardGetRuntimeInfoFailure()
         {
             GeneralStartupFailure("HardGetRuntimeInfoFailure", EHErrorLocation.GetRuntimeInformation, false);
         }
-
+#endif
         [Fact]
         [DisplayTestMethodName]
         public void NontransientReceiverCreationFailure()
@@ -366,7 +367,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
         }
 
         private void EventHubReceiveFailure(string name, Exception error, bool isEventHubsException)
-        { 
+        {
             TestState state = new TestState();
             state.Initialize(name + "EventHubReceiveFailure", 1, 0);
 
@@ -395,7 +396,7 @@ namespace Microsoft.Azure.EventHubs.Tests.ServiceFabricProcessor
                 EventHubMocks.PartitionReceiverMock.receivers[InjectorEventHubClientFactoryMock.Tag];
             testReceiver.ForceReceiveError(error);
 
-            // EXPECTED RESULT: RunAsync will throw (Task completed exceptionally) 
+            // EXPECTED RESULT: RunAsync will throw (Task completed exceptionally)
             // due to nontransient EventHubsException or other exception type from EH operation.
             // The Wait call bundles the exception into an AggregateException and rethrows.
             state.OuterTask.Wait();
