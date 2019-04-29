@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.539
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\Azure.Core\data-plane\Azure.Core\Azure.Core.csproj", "{5E64C180-1558-42C8-948D-DF07FF53D2F3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Identity", "Azure.Core.Identity\Azure.Core.Identity.csproj", "{1EE5A141-57C6-4918-89FD-6547A0F6E4F1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E64C180-1558-42C8-948D-DF07FF53D2F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E64C180-1558-42C8-948D-DF07FF53D2F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E64C180-1558-42C8-948D-DF07FF53D2F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E64C180-1558-42C8-948D-DF07FF53D2F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EE5A141-57C6-4918-89FD-6547A0F6E4F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EE5A141-57C6-4918-89FD-6547A0F6E4F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EE5A141-57C6-4918-89FD-6547A0F6E4F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EE5A141-57C6-4918-89FD-6547A0F6E4F1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {36982DAA-E15D-4703-BA9D-A78417EE15E8}
+	EndGlobalSection
+EndGlobal

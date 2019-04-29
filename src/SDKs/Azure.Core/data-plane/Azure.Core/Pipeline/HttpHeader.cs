@@ -55,6 +55,7 @@ namespace Azure.Core.Pipeline
             public static string ContentType => "Content-Type";
             public static string UserAgent => "User-Agent";
             public static string Accept => "Accept";
+            public static string Authorization => "Authorization";
         }
 
         public static class Common
