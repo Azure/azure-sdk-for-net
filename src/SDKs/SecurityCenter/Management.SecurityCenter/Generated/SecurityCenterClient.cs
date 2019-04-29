@@ -162,21 +162,6 @@ namespace Microsoft.Azure.Management.Security
         public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
 
         /// <summary>
-        /// Gets the IRegulatoryComplianceStandardsOperations.
-        /// </summary>
-        public virtual IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; private set; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceControlsOperations.
-        /// </summary>
-        public virtual IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; private set; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceAssessmentsOperations.
-        /// </summary>
-        public virtual IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; private set; }
-
-        /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -434,9 +419,6 @@ namespace Microsoft.Azure.Management.Security
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             SecurityContacts = new SecurityContactsOperations(this);
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
-            RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
-            RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
-            RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
