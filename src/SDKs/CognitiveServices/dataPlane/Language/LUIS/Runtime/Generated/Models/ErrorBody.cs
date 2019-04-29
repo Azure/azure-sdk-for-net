@@ -10,32 +10,32 @@
 
 namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// The result of the sentiment analaysis.
+    /// Represents the definition of the error that occurred.
     /// </summary>
-    public partial class Sentiment
+    public partial class ErrorBody
     {
         /// <summary>
-        /// Initializes a new instance of the Sentiment class.
+        /// Initializes a new instance of the ErrorBody class.
         /// </summary>
-        public Sentiment()
+        public ErrorBody()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Sentiment class.
+        /// Initializes a new instance of the ErrorBody class.
         /// </summary>
-        /// <param name="score">The sentiment score of the query.</param>
-        /// <param name="label">The label of the sentiment analysis
-        /// result.</param>
-        public Sentiment(double score, string label = default(string))
+        /// <param name="code">The error code.</param>
+        /// <param name="message">The error message.</param>
+        public ErrorBody(string code, string message)
         {
-            Score = score;
-            Label = label;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -45,26 +45,33 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the sentiment score of the query.
+        /// Gets or sets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "score")]
-        public double Score { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets the label of the sentiment analysis result.
+        /// Gets or sets the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "label")]
-        public string Label { get; set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (Code == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
+            }
+            if (Message == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Message");
+            }
         }
     }
 }
