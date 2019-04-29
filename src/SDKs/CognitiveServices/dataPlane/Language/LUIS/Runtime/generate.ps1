@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider  "cognitiveservices/data-plane/LUIS/Runtime" -AutoRestVersion "latest" -ConfigFileTag "runtime_3_0_preview"
+Start-AutoRestCodeGeneration -ResourceProvider  "cognitiveservices/data-plane/LUIS/Runtime" -AutoRestVersion "latest"
