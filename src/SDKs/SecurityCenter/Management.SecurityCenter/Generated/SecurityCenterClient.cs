@@ -92,6 +92,21 @@ namespace Microsoft.Azure.Management.Security
         public virtual ISettingsOperations Settings { get; private set; }
 
         /// <summary>
+        /// Gets the IRegulatoryComplianceStandardsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceControlsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; private set; }
+
+        /// <summary>
+        /// Gets the IRegulatoryComplianceAssessmentsOperations.
+        /// </summary>
+        public virtual IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; private set; }
+
+        /// <summary>
         /// Gets the IAllowedConnectionsOperations.
         /// </summary>
         public virtual IAllowedConnectionsOperations AllowedConnections { get; private set; }
@@ -405,6 +420,9 @@ namespace Microsoft.Azure.Management.Security
             Pricings = new PricingsOperations(this);
             Alerts = new AlertsOperations(this);
             Settings = new SettingsOperations(this);
+            RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
+            RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
+            RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
             AllowedConnections = new AllowedConnectionsOperations(this);
             DiscoveredSecuritySolutions = new DiscoveredSecuritySolutionsOperations(this);
             ExternalSecuritySolutions = new ExternalSecuritySolutionsOperations(this);
