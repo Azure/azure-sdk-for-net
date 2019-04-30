@@ -55,12 +55,12 @@ namespace Microsoft.Azure.Management.Storage.Models
         public IList<ListContainerItem> Value { get; private set; }
 
         /// <summary>
-        /// Gets or sets request URL that can be used to query next page of
-        /// containers. Returned when total number of requested containers
-        /// exceed maximum page size.
+        /// Gets request URL that can be used to query next page of containers.
+        /// Returned when total number of requested containers exceed maximum
+        /// page size.
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
-        public string NextLink { get; set; }
+        public string NextLink { get; private set; }
 
     }
 }
