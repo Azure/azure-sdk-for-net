@@ -75,19 +75,28 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task SendingPartitionKeyBatchOnPartitionSenderShouldFail()
         {
-            var partitionSender = this.EventHubClient.CreatePartitionSender("0");
-            var batchOptions = new BatchOptions()
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionSender = ehClient.CreatePartitionSender("0");
+            try
             {
-                PartitionKey = "this is the partition key"
-            };
-            var batcher = this.EventHubClient.CreateBatch(batchOptions);
+                var batchOptions = new BatchOptions()
+                {
+                    PartitionKey = "this is the partition key"
+                };
+                var batcher = ehClient.CreateBatch(batchOptions);
 
-            await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                {
+                    TestUtility.Log("Attempting to send a partition-key batch on partition sender. This should fail.");
+                    await partitionSender.SendAsync(batcher);
+                });
+            }
+            finally
             {
-                TestUtility.Log("Attempting to send a partition-key batch on partition sender. This should fail.");
-                await partitionSender.SendAsync(batcher);
-                throw new InvalidOperationException("SendAsync call should have failed");
-            });
+                await Task.WhenAll(
+                    partitionSender.CloseAsync(),
+                    ehClient.CloseAsync());
+            }
         }
 
         /// <summary>
@@ -98,17 +107,26 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task CreatingPartitionKeyBatchOnPartitionSenderShouldFail()
         {
-            var partitionSender = this.EventHubClient.CreatePartitionSender("0");
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionSender = ehClient.CreatePartitionSender("0");
 
-            await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            try
             {
-                TestUtility.Log("Attempting to create a partition-key batch on partition sender. This should fail.");
-                partitionSender.CreateBatch(new BatchOptions()
+                Assert.Throws<InvalidOperationException>(() =>
                 {
-                    PartitionKey = "this is the key to fail"
+                    TestUtility.Log("Attempting to create a partition-key batch on partition sender. This should fail.");
+                    partitionSender.CreateBatch(new BatchOptions()
+                    {
+                        PartitionKey = "this is the key to fail"
+                    });
                 });
-                throw new InvalidOperationException("CreateBatch call should have failed");
-            });
+            }
+            finally
+            {
+               await Task.WhenAll(
+                   partitionSender.CloseAsync(),
+                   ehClient.CloseAsync());
+            }
         }
 
         protected async Task SendWithEventDataBatch(
@@ -116,14 +134,16 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             int maxPayloadSize = 1024,
             int minimumNumberOfMessagesToSend = 1000)
         {
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitions = await this.GetPartitionsAsync(ehClient);
             var receivers = new List<PartitionReceiver>();
 
             // Create partition receivers starting from the end of the stream.
             TestUtility.Log("Discovering end of stream on each partition.");
-            foreach (var partitionId in this.PartitionIds)
+            foreach (var partitionId in partitions)
             {
-                var lastEvent = await this.EventHubClient.GetPartitionRuntimeInformationAsync(partitionId);
-                receivers.Add(this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromOffset(lastEvent.LastEnqueuedOffset)));
+                var lastEvent = await ehClient.GetPartitionRuntimeInformationAsync(partitionId);
+                receivers.Add(ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromOffset(lastEvent.LastEnqueuedOffset)));
             }
 
             try
@@ -149,14 +169,14 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                         // Exercise both CreateBatch overloads.
                         if (partitionKey != null)
                         {
-                            batcher = this.EventHubClient.CreateBatch(new BatchOptions()
+                            batcher = ehClient.CreateBatch(new BatchOptions()
                             {
                                 PartitionKey = partitionKey
                             });
                         }
                         else
                         {
-                            batcher = this.EventHubClient.CreateBatch();
+                            batcher = ehClient.CreateBatch();
                         }
                     }
 
@@ -164,7 +184,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     var ed = new EventData(new byte[rnd.Next(0, maxPayloadSize)]);
                     if (!batcher.TryAdd(ed) || totalSent + batcher.Count >= minimumNumberOfMessagesToSend)
                     {
-                        await this.EventHubClient.SendAsync(batcher);
+                        await ehClient.SendAsync(batcher);
                         totalSent += batcher.Count;
                         TestUtility.Log($"Sent {batcher.Count} messages in the batch.");
                         batcher = null;
@@ -198,6 +218,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             finally
             {
                 await Task.WhenAll(receivers.Select(r => r.CloseAsync()));
+                await ehClient.CloseAsync();
             }
         }
     }

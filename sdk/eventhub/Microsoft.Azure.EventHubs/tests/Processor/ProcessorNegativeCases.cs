@@ -26,27 +26,17 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 TestUtility.StorageConnectionString,
                 this.LeaseContainerName);
 
-            // Calling register for the first time should succeed.
-            TestUtility.Log("Registering EventProcessorHost for the first time.");
-            await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
-
             try
             {
-                // Calling register for the second time should fail.
-                TestUtility.Log("Registering EventProcessorHost for the second time which should fail.");
+                // Calling register for the first time should succeed.
+                TestUtility.Log("Registering EventProcessorHost for the first time.");
                 await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
-                throw new InvalidOperationException("Second RegisterEventProcessorAsync call should have failed.");
-            }
-            catch (InvalidOperationException ex)
-            {
-                if (ex.Message.Contains("A PartitionManager cannot be started multiple times."))
+
+                await Assert.ThrowsAsync<InvalidOperationException>(async () =>
                 {
-                    TestUtility.Log($"Caught {ex.GetType()} as expected");
-                }
-                else
-                {
-                    throw;
-                }
+                    TestUtility.Log("Registering EventProcessorHost for the second time which should fail.");
+                    await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
+                });
             }
             finally
             {
@@ -74,7 +64,6 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
             var ex = await Assert.ThrowsAsync<EventProcessorConfigurationException>(async () =>
             {
                 await eventProcessorHost.RegisterEventProcessorAsync<TestEventProcessor>();
-                throw new InvalidOperationException("RegisterEventProcessorAsync call should have failed.");
             });
 
             Assert.NotNull(ex.InnerException);
@@ -84,7 +73,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
         [Fact]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task InvalidPartitionManagerOptions()
+        public void InvalidPartitionManagerOptions()
         {
             var pmo = new PartitionManagerOptions()
             {
@@ -92,25 +81,22 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                 RenewInterval = TimeSpan.FromSeconds(20)
             };
 
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 TestUtility.Log("Setting lease duration smaller than the renew interval should fail.");
                 pmo.LeaseDuration = TimeSpan.FromSeconds(15);
-                throw new InvalidOperationException("Setting LeaseDuration should have failed");
             });
 
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 TestUtility.Log("Setting renew interval greater than the lease duration should fail.");
                 pmo.RenewInterval = TimeSpan.FromSeconds(45);
-                throw new InvalidOperationException("Setting RenewInterval should have failed.");
             });
 
-            await Assert.ThrowsAsync<ArgumentException>(() =>
+            Assert.Throws<ArgumentException>(() =>
             {
                 TestUtility.Log("Setting lease duration outside of allowed range should fail.");
                 pmo.LeaseDuration = TimeSpan.FromSeconds(65);
-                throw new InvalidOperationException("Setting LeaseDuration should have failed.");
             });
         }
     }

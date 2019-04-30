@@ -4,10 +4,7 @@
 namespace Microsoft.Azure.EventHubs.Tests.Client
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -23,22 +20,34 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task BasicValidation()
         {
-            // Send some number of messages to target partition.
-            await TestUtility.SendToPartitionAsync(this.EventHubClient, targetPartitionId, "this is the message body", 10);
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionReceiver = default(PartitionReceiver);
 
-            // Get partition runtime info so we can compare with runtime metrics.
-            var pInfo = await this.EventHubClient.GetPartitionRuntimeInformationAsync(targetPartitionId);
+            try
+            {
+                // Send some number of messages to target partition.
+                await TestUtility.SendToPartitionAsync(ehClient, targetPartitionId, "this is the message body", 10);
 
-            // Create a new receiver with ReceiverOptions setting to enable runtime metrics.
-            var partitionReceiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName,
-                targetPartitionId,
-                EventPosition.FromStart(),
-                new ReceiverOptions()
-                {
-                    EnableReceiverRuntimeMetric = true
-                });
+                // Get partition runtime info so we can compare with runtime metrics.
+                var pInfo = await ehClient.GetPartitionRuntimeInformationAsync(targetPartitionId);
 
-            await ValidateEnabledBehavior(partitionReceiver, pInfo);
+                // Create a new receiver with ReceiverOptions setting to enable runtime metrics.
+                partitionReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName,
+                    targetPartitionId,
+                    EventPosition.FromStart(),
+                    new ReceiverOptions()
+                    {
+                        EnableReceiverRuntimeMetric = true
+                    });
+
+                await ValidateEnabledBehavior(partitionReceiver, pInfo);
+            }
+            finally
+            {
+                await Task.WhenAll(
+                    partitionReceiver?.CloseAsync(),
+                    ehClient.CloseAsync());
+            }
         }
 
         /// <summary>
@@ -49,12 +58,24 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task DefaultBehaviorDisabled()
         {
-            // Send single event
-            await TestUtility.SendToPartitionAsync(this.EventHubClient, targetPartitionId, "this is the message body");
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionReceiver = default(PartitionReceiver);
 
-            // Create a new receiver and validate ReceiverRuntimeMetricEnabled.
-            var partitionReceiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
-            await ValidateDisabledBehavior(partitionReceiver);
+            try
+            {
+                // Send single event
+                await TestUtility.SendToPartitionAsync(ehClient, targetPartitionId, "this is the message body");
+
+                // Create a new receiver and validate ReceiverRuntimeMetricEnabled.
+                partitionReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
+                await ValidateDisabledBehavior(partitionReceiver);
+            }
+            finally
+            {
+                await Task.WhenAll(
+                    partitionReceiver?.CloseAsync(),
+                    ehClient.CloseAsync());
+            }
         }
 
         /// <summary>
@@ -65,18 +86,20 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task DisableWithReceiverOptions()
         {
-            // Send single event
-            await TestUtility.SendToPartitionAsync(this.EventHubClient, targetPartitionId, "this is the message body");
-
-            // Enable runtime metrics on the client.
-            var defaultReceiverRuntimeMetricSetting = this.EventHubClient.EnableReceiverRuntimeMetric;
-            this.EventHubClient.EnableReceiverRuntimeMetric = true;
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionReceiver = default(PartitionReceiver);
 
             try
             {
+                // Send single event
+                await TestUtility.SendToPartitionAsync(ehClient, targetPartitionId, "this is the message body");
+
+                // Enable runtime metrics on the client.
+                ehClient.EnableReceiverRuntimeMetric = true;
+
                 // Create a new receiver and disable runtime metrics via ReceiverOptions.
-                var partitionReceiver =
-                    this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart(),
+                partitionReceiver =
+                    ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart(),
                     new ReceiverOptions()
                     {
                         EnableReceiverRuntimeMetric = false
@@ -86,7 +109,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
             finally
             {
-                this.EventHubClient.EnableReceiverRuntimeMetric = defaultReceiverRuntimeMetricSetting;
+                await Task.WhenAll(
+                    partitionReceiver?.CloseAsync(),
+                    ehClient.CloseAsync());
             }
         }
 
@@ -98,30 +123,36 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task ClientSettingInherited()
         {
-            // Send some number of messages to target partition.
-            await TestUtility.SendToPartitionAsync(this.EventHubClient, targetPartitionId, "this is the message body", 10);
-
-            // Get partition runtime info so we can compare with runtime metrics.
-            var pInfo = await this.EventHubClient.GetPartitionRuntimeInformationAsync(targetPartitionId);
-
-            // Enable runtime metrics on the client.
-            var defaultReceiverRuntimeMetricSetting = this.EventHubClient.EnableReceiverRuntimeMetric;
-            this.EventHubClient.EnableReceiverRuntimeMetric = true;
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionReceiver1 = default(PartitionReceiver);
+            var partitionReceiver2 = default(PartitionReceiver);
 
             try
             {
+                // Send some number of messages to target partition.
+                await TestUtility.SendToPartitionAsync(ehClient, targetPartitionId, "this is the message body", 10);
+
+                // Get partition runtime info so we can compare with runtime metrics.
+                var pInfo = await ehClient.GetPartitionRuntimeInformationAsync(targetPartitionId);
+
+                // Enable runtime metrics on the client.
+                ehClient.EnableReceiverRuntimeMetric = true;
+
                 // Create 2 new receivers. These receivers are expected to show runtime metrics since their parent client is enabled.
-                var partitionReceiver1 =
-                    this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
-                var partitionReceiver2 =
-                    this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
+                partitionReceiver1 =
+                    ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
+                partitionReceiver2 =
+                    ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, targetPartitionId, EventPosition.FromStart());
 
                 await ValidateEnabledBehavior(partitionReceiver1, pInfo);
                 await ValidateEnabledBehavior(partitionReceiver2, pInfo);
             }
             finally
             {
-                this.EventHubClient.EnableReceiverRuntimeMetric = defaultReceiverRuntimeMetricSetting;
+                await Task.WhenAll(
+                    partitionReceiver1?.CloseAsync(),
+                    partitionReceiver2?.CloseAsync(),
+                    ehClient.CloseAsync());
             }
         }
 

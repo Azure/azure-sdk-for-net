@@ -11,33 +11,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
     using Microsoft.Azure.EventHubs.Primitives;
     using Xunit;
 
-    public class ClientTestBase : IDisposable
+    public class ClientTestBase
     {
-        protected string[] PartitionIds;
-        protected EventHubClient EventHubClient;
-
-        public ClientTestBase()
-        {
-            // Create default EH client.
-            this.EventHubClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-
-            // Discover partition ids.
-            var eventHubInfo = this.EventHubClient.GetRuntimeInformationAsync().WaitAndUnwrapException();
-            this.PartitionIds = eventHubInfo.PartitionIds;
-            TestUtility.Log($"EventHub has {PartitionIds.Length} partitions");
-        }
-
         // Send and receive given event on given partition.
-        protected async Task<EventData> SendAndReceiveEventAsync(string partitionId, EventData sendEvent, EventHubClient ehClient = null)
+        protected async Task<EventData> SendAndReceiveEventAsync(string partitionId, EventData sendEvent, EventHubClient client)
         {
-            // Use default EH client if not provided one.
-            if (ehClient == null)
-            {
-                ehClient = this.EventHubClient;
-            }
-
-            PartitionSender partitionSender = ehClient.CreatePartitionSender(partitionId);
-            PartitionReceiver partitionReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(-10)));
+            PartitionSender partitionSender = client.CreatePartitionSender(partitionId);
+            PartitionReceiver partitionReceiver = client.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(-10)));
 
             EventData receivedEvent = null;
 
@@ -110,9 +90,17 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             return messages;
         }
 
-        public virtual void Dispose()
+        protected async Task<string[]> GetPartitionsAsync(EventHubClient client)
         {
-            this.EventHubClient.CloseAsync().GetAwaiter().GetResult();
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+
+            var partitions = (await client.GetRuntimeInformationAsync()).PartitionIds;
+            TestUtility.Log($"EventHub has {partitions.Length} partitions");
+
+            return partitions;
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.EventHubs.Processor
     class AzureStorageCheckpointLeaseManager : ICheckpointManager, ILeaseManager
     {
         static string MetaDataOwnerName = "OWNINGHOST";
-            
+
         EventProcessorHost host;
         TimeSpan leaseDuration;
         TimeSpan leaseRenewInterval;
@@ -248,7 +248,7 @@ namespace Microsoft.Azure.EventHubs.Processor
 
                 foreach (CloudBlockBlob leaseBlob in leaseBlobsResult.Results)
                 {
-                    // Try getting owner name from existing blob. 
+                    // Try getting owner name from existing blob.
                     // This might return null when run on the existing lease after SDK upgrade.
                     leaseBlob.Metadata.TryGetValue(MetaDataOwnerName, out var owner);
 
@@ -359,9 +359,9 @@ namespace Microsoft.Azure.EventHubs.Processor
                 {
                     ProcessorEventSource.Log.AzureStorageManagerInfo(this.host.HostName, lease.PartitionId, "Need to AcquireLease");
                     newToken = await leaseBlob.AcquireLeaseAsync(
-                        leaseDuration, 
-                        newLeaseId, 
-                        null, 
+                        leaseDuration,
+                        newLeaseId,
+                        null,
                         null,
                         this.operationContext).ConfigureAwait(false);
                 }
