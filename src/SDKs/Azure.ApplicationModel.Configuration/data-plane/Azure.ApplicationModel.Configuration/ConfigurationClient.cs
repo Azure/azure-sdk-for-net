@@ -111,7 +111,7 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        public virtual Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateAddRequest(setting))
             {
