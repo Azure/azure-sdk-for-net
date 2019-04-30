@@ -60,43 +60,41 @@ namespace Microsoft.Azure.Management.DataMigration.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the name of the driver package
+        /// Gets the name of the driver package
         /// </summary>
         [JsonProperty(PropertyName = "driverName")]
-        public string DriverName { get; set; }
+        public string DriverName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the size in bytes of the driver package
+        /// Gets the size in bytes of the driver package
         /// </summary>
         [JsonProperty(PropertyName = "driverSize")]
-        public string DriverSize { get; set; }
+        public string DriverSize { get; private set; }
 
         /// <summary>
-        /// Gets or sets the MD5 Base64 encoded checksum for the driver
-        /// package.
+        /// Gets the MD5 Base64 encoded checksum for the driver package.
         /// </summary>
         [JsonProperty(PropertyName = "archiveChecksum")]
-        public string ArchiveChecksum { get; set; }
+        public string ArchiveChecksum { get; private set; }
 
         /// <summary>
-        /// Gets or sets the checksum for the driver package provided by
-        /// Oracle.
+        /// Gets the checksum for the driver package provided by Oracle.
         /// </summary>
         [JsonProperty(PropertyName = "oracleChecksum")]
-        public string OracleChecksum { get; set; }
+        public string OracleChecksum { get; private set; }
 
         /// <summary>
-        /// Gets or sets version listed in the OCI assembly 'oci.dll'
+        /// Gets version listed in the OCI assembly 'oci.dll'
         /// </summary>
         [JsonProperty(PropertyName = "assemblyVersion")]
-        public string AssemblyVersion { get; set; }
+        public string AssemblyVersion { get; private set; }
 
         /// <summary>
-        /// Gets or sets list of Oracle database versions supported by this
-        /// driver. Only major minor of the version is listed.
+        /// Gets list of Oracle database versions supported by this driver.
+        /// Only major minor of the version is listed.
         /// </summary>
         [JsonProperty(PropertyName = "supportedOracleVersions")]
-        public IList<string> SupportedOracleVersions { get; set; }
+        public IList<string> SupportedOracleVersions { get; private set; }
 
     }
 }
