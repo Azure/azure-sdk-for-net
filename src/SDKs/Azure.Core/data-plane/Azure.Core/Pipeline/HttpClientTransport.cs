@@ -29,31 +29,28 @@ namespace Azure.Core.Pipeline
 
         public override void Process(HttpPipelineMessage message)
         {
-            var pipelineRequest = message.Request as PipelineRequest;
-            if (pipelineRequest == null)
-                throw new InvalidOperationException("the request is not compatible with the transport");
-
-            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
-            {
-                HttpResponseMessage responseMessage = _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
-                    .ConfigureAwait(false)
-                    .GetAwaiter().GetResult();
-                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
-            }
+            // Intentionally blocking here
+            ProcessAsync(message).GetAwaiter().GetResult();
         }
 
         public sealed override async Task ProcessAsync(HttpPipelineMessage message)
         {
-            var pipelineRequest = message.Request as PipelineRequest;
-            if (pipelineRequest == null)
-                throw new InvalidOperationException("the request is not compatible with the transport");
-
-            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
+            using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
                 HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
                     .ConfigureAwait(false);
                 message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
             }
+        }
+
+        private static HttpRequestMessage BuildRequestMessage(HttpPipelineMessage message)
+        {
+            var pipelineRequest = message.Request as PipelineRequest;
+            if (pipelineRequest == null)
+            {
+                throw new InvalidOperationException("the request is not compatible with the transport");
+            }
+            return pipelineRequest.BuildRequestMessage(message.Cancellation);
         }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
