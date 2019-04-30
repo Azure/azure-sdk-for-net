@@ -20,7 +20,7 @@
   <PropertyGroup Condition="'$(SignAssembly)' == 'true' and ('$(IsTestProject)' == 'true' or '$(IsPerformanceTestProject)' == 'true')">
     <!-- Always fully sign test assemblies since we have a full public/private key -->
     <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
+    <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
