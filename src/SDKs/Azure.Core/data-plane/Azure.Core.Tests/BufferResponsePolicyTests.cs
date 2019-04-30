@@ -10,8 +10,12 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class BufferResponsePolicyTests: PolicyTestBase
+    public abstract class BufferResponsePolicyTests: SyncAsyncPolicyTestBase
     {
+        private BufferResponsePolicyTests(bool isAsync) : base(isAsync) { }
+        public class Sync: BufferResponsePolicyTests { public Sync() : base(false) {}}
+        public class Async: BufferResponsePolicyTests { public Async() : base(false) {}}
+
         [Test]
         public async Task ReadsEntireBodyIntoMemoryStream()
         {
@@ -19,7 +23,7 @@ namespace Azure.Core.Tests
             var readTrackingStream = new ReadTrackingStream(128, int.MaxValue);
             mockResponse.ContentStream = readTrackingStream;
 
-            var mockTransport = new MockTransport(mockResponse);
+            var mockTransport = CreateMockTransport(mockResponse);
             var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
 
             Assert.IsInstanceOf<MemoryStream>(response.ContentStream);
@@ -42,7 +46,7 @@ namespace Azure.Core.Tests
                 ContentStream = new ReadTrackingStream(128, 64)
             };
 
-            var mockTransport = new MockTransport(mockResponse);
+            var mockTransport = CreateMockTransport(mockResponse);
             Assert.ThrowsAsync<IOException>(async () => await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton));
         }
 
@@ -51,7 +55,7 @@ namespace Azure.Core.Tests
         {
             MockResponse mockResponse = new MockResponse(200);
 
-            var mockTransport = new MockTransport(mockResponse);
+            var mockTransport = CreateMockTransport(mockResponse);
             var response = await SendGetRequest(mockTransport, BufferResponsePolicy.Singleton);
             Assert.Null(response.ContentStream);
         }

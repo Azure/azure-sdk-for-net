@@ -3,10 +3,8 @@
 // license information.
 
 using System;
-using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Diagnostics;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 
@@ -48,39 +46,53 @@ namespace Azure.ApplicationModel.Configuration
                     BufferResponsePolicy.Singleton);
         }
 
-        public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
-            using (var request = CreateGetRequest(setting))
-            {
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken);
+        }
 
-                if (response.Status == 200 || response.Status == 201)
+        public virtual Response<ConfigurationSetting> Add(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            return Add(new ConfigurationSetting(key, value, label), cancellationToken);
+        }
+
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateAddRequest(setting))
+            {
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
                 {
-                    return await CreateResponseAsync(response, cancellation);
-                }
-                else
-                {
-                    throw new RequestFailedException(response);
+                    case 200:
+                    case 201:
+                        return await CreateResponseAsync(response, cancellationToken);
+                    default:
+                        throw new RequestFailedException(response);
                 }
             }
         }
 
-        public Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellation = default)
+        public Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
-            using (var request = CreateGetRequest(setting))
+            using (Request request = CreateAddRequest(setting))
             {
-                var response = _pipeline.SendRequest(request, cancellation);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
-                if (response.Status == 200 || response.Status == 201)
+                switch (response.Status)
                 {
-                    return CreateResponse(response, cancellation);
+                    case 200:
+                    case 201:
+                        return CreateResponse(response, cancellationToken);
+                    default:
+                        throw new RequestFailedException(response);
                 }
-                else
-                    throw new RequestFailedException(response);
             }
         }
 
-        private HttpPipelineRequest CreateGetRequest(ConfigurationSetting setting)
+        private Request CreateAddRequest(ConfigurationSetting setting)
         {
             if (setting == null)
                 throw new ArgumentNullException(nameof(setting));
@@ -88,218 +100,357 @@ namespace Azure.ApplicationModel.Configuration
                 throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
             var request = _pipeline.CreateRequest();
-            Uri uri = BuildUriForKvRoute(setting);
 
             ReadOnlyMemory<byte> content = Serialize(setting);
 
-                request.Method = HttpPipelineMethod.Put;
+            request.Method = HttpPipelineMethod.Put;
 
-                BuildUriForKvRoute(request.UriBuilder, setting);
+            BuildUriForKvRoute(request.UriBuilder, setting);
 
-                request.Headers.Add(IfNoneMatch, "*");
-                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
-                request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Headers.Add(IfNoneMatch, "*");
+            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = HttpPipelineRequestContent.Create(content);
+
+            return request;
+        }
+
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateSetRequest(setting))
+            {
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return await CreateResponseAsync(response, cancellationToken);
+                    case 409:
+                        throw new RequestFailedException(response, "the item is locked");
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
+        }
+
+        public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateSetRequest(setting))
+            {
+                var response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response, cancellationToken);
+                    case 409:
+                        throw new RequestFailedException(response, "the item is locked");
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
+        }
+
+        private Request CreateSetRequest(ConfigurationSetting setting)
+        {
+            if (setting == null)
+                throw new ArgumentNullException(nameof(setting));
+            if (string.IsNullOrEmpty(setting.Key))
+                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
+
+            Request request = _pipeline.CreateRequest();
+            ReadOnlyMemory<byte> content = Serialize(setting);
+
+            request.Method = HttpPipelineMethod.Put;
+            BuildUriForKvRoute(request.UriBuilder, setting);
+            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+
+            if (setting.ETag != default)
+            {
+                request.Headers.Add(IfMatchName, $"\"{setting.ETag.ToString()}\"");
+            }
 
             request.Content = HttpPipelineRequestContent.Create(content);
             return request;
         }
 
-        public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
-            return await AddAsync(new ConfigurationSetting(key, value, label), cancellation);
+            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
-        {
-            if (setting == null)
-                throw new ArgumentNullException(nameof(setting));
-            if (string.IsNullOrEmpty(setting.Key))
-                throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
-
-            using (var request = _pipeline.CreateRequest())
-            {
-                ReadOnlyMemory<byte> content = Serialize(setting);
-
-                request.Method = HttpPipelineMethod.Put;
-                BuildUriForKvRoute(request.UriBuilder, setting);
-                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
-                request.Headers.Add(HttpHeader.Common.JsonContentType);
-
-                if (setting.ETag != default)
-                {
-                    request.Headers.Add(IfMatchName, $"\"{setting.ETag.ToString()}\"");
-                }
-
-                request.Content = HttpPipelineRequestContent.Create(content);
-
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
-
-                if (response.Status == 200)
-                {
-                    return await CreateResponseAsync(response, cancellation);
-                }
-                if (response.Status == 409)
-                    throw new RequestFailedException(response, "the item is locked");
-                else
-                    throw new RequestFailedException(response);
-            }
-        }
-
-        public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual Response<ConfigurationSetting> Update(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
-            return await SetAsync(new ConfigurationSetting(key, value, label), cancellation);
+            return Update(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
         public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
+            using (Request request = CreateUpdateRequest(setting))
+            {
+                Response response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return await CreateResponseAsync(response, cancellation);
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
+        }
+
+        public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellation = default)
+        {
+            using (Request request = CreateUpdateRequest(setting))
+            {
+                Response response = _pipeline.SendRequest(request, cancellation);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response, cancellation);
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
+        }
+
+        private Request CreateUpdateRequest(ConfigurationSetting setting)
+        {
             if (setting == null)
                 throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key))
                 throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
 
-            using (var request = _pipeline.CreateRequest())
+            Request request = _pipeline.CreateRequest();
+            ReadOnlyMemory<byte> content = Serialize(setting);
+
+            request.Method = HttpPipelineMethod.Put;
+            BuildUriForKvRoute(request.UriBuilder, setting);
+            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+
+            if (setting.ETag != default)
             {
-                ReadOnlyMemory<byte> content = Serialize(setting);
+                request.Headers.Add(IfMatchName, $"\"{setting.ETag}\"");
+            }
+            else
+            {
+                request.Headers.Add(IfMatchName, "*");
+            }
 
-                request.Method = HttpPipelineMethod.Put;
-                BuildUriForKvRoute(request.UriBuilder, setting);
-                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
-                request.Headers.Add(HttpHeader.Common.JsonContentType);
+            request.Content = HttpPipelineRequestContent.Create(content);
+            return request;
+        }
 
-                if (setting.ETag != default)
+        public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateDeleteRequest(key, label, etag))
+            {
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
                 {
-                    request.Headers.Add(IfMatchName, $"\"{setting.ETag}\"");
+                    case 200:
+                    case 204:
+                        return response;
+                    default:
+                        throw new RequestFailedException(response);
                 }
-                else
-                {
-                    request.Headers.Add(IfMatchName, "*");
-                }
-
-                request.Content = HttpPipelineRequestContent.Create(content);
-
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
-
-                if (response.Status == 200)
-                {
-                    return await CreateResponseAsync(response, cancellation);
-                }
-                else
-                    throw new RequestFailedException(response);
             }
         }
 
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        public virtual Response Delete(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
-            if (string.IsNullOrEmpty(key))
-                throw new ArgumentNullException($"{nameof(key)}");
-            return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellation);
+            using (Request request = CreateDeleteRequest(key, label, etag))
+            {
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                    case 204:
+                        return response;
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
         }
 
-        public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
+        private Request CreateDeleteRequest(string key, string label, ETag etag)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException(nameof(key));
 
-            using (var request = _pipeline.CreateRequest())
+            Request request = _pipeline.CreateRequest();
+            request.Method = HttpPipelineMethod.Delete;
+            BuildUriForKvRoute(request.UriBuilder, key, label);
+
+            if (etag != default)
             {
-                request.Method  = HttpPipelineMethod.Delete;
-                BuildUriForKvRoute(request.UriBuilder, key, label);
+                request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
+            }
 
-                if (etag != default)
+            return request;
+        }
+
+        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateGetRequest(key, label, acceptDateTime))
+            {
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+
+                switch (response.Status)
                 {
-                    request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
+                    case 200:
+                        return await CreateResponseAsync(response, cancellationToken);
+                    default:
+                        throw new RequestFailedException(response);
                 }
-
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
-
-                if (response.Status == 200 || response.Status == 204)
-                {
-                    return response;
-                }
-                else
-                    throw new RequestFailedException(response);
             }
         }
 
-        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
+        public virtual Response<ConfigurationSetting> Get(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateGetRequest(key, label, acceptDateTime))
+            {
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+
+                switch (response.Status)
+                {
+                    case 200:
+                        return CreateResponse(response, cancellationToken);
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
+        }
+
+        private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime)
         {
             if (string.IsNullOrEmpty(key))
                 throw new ArgumentNullException($"{nameof(key)}");
 
-            using (var request = _pipeline.CreateRequest())
+            Request request = _pipeline.CreateRequest();
+            request.Method = HttpPipelineMethod.Get;
+            BuildUriForKvRoute(request.UriBuilder, key, label);
+            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+
+            if (acceptDateTime != default)
             {
-                request.Method = HttpPipelineMethod.Get;
-                BuildUriForKvRoute(request.UriBuilder, key, label);
-                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
-
-                if (acceptDateTime != default)
-                {
-                    var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
-                }
-                request.Headers.Add(HttpHeader.Common.JsonContentType);
-
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
-
-                if (response.Status == 200)
-                {
-                    return await CreateResponseAsync(response, cancellation);
-                }
-                else
-                    throw new RequestFailedException(response);
+                var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
+                request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
+
+            request.Headers.Add(HttpHeader.Common.JsonContentType);
+            return request;
         }
 
         public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
-            using (var request = _pipeline.CreateRequest())
+            using (Request request = CreateBatchRequest(selector))
             {
-                request.Method = HttpPipelineMethod.Get;
-                BuildUriForGetBatch(request.UriBuilder, selector);
-                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
-                if (selector.AsOf.HasValue)
-                {
-                    var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
-                }
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+                Response response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
-                if (response.Status == 200 || response.Status == 206 /* partial */)
+                switch (response.Status)
                 {
-                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation);
-                    return new Response<SettingBatch>(response, batch);
+                    case 200:
+                    case 206:
+                        return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation));
+                    default:
+                        throw new RequestFailedException(response);
                 }
-                else
-                    throw new RequestFailedException(response);
+            }
+
+        }
+
+        public virtual Response<SettingBatch> GetBatch(SettingSelector selector, CancellationToken cancellation = default)
+        {
+            using (Request request = CreateBatchRequest(selector))
+            {
+                Response response = _pipeline.SendRequest(request, cancellation);
+
+                switch (response.Status)
+                {
+                    case 200:
+                    case 206:
+                        return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellation));
+                    default:
+                        throw new RequestFailedException(response);
+                }
             }
         }
 
-        public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
+        private Request CreateBatchRequest(SettingSelector selector)
         {
-            using (var request = _pipeline.CreateRequest())
+            Request request = _pipeline.CreateRequest();
+            request.Method = HttpPipelineMethod.Get;
+            BuildUriForGetBatch(request.UriBuilder, selector);
+            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            if (selector.AsOf.HasValue)
             {
-                request.Method = HttpPipelineMethod.Get;
-                BuildUriForRevisions(request.UriBuilder, selector);
-                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
-                if (selector.AsOf.HasValue)
-                {
-                    var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
-                }
-                var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
-
-                if (response.Status == 200 || response.Status == 206 /* partial */)
-                {
-                    var batch = await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation);
-                    return new Response<SettingBatch>(response, batch);
-                }
-                else
-                    throw new RequestFailedException(response);
+                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                request.Headers.Add(AcceptDatetimeHeader, dateTime);
             }
+
+            return request;
+        }
+
+        public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateGetRevisionsRequest(selector))
+            {
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
+                switch (response.Status)
+                {
+                    case 200:
+                    case 206:
+                    {
+                        return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken));
+                    }
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
+        }
+
+        public virtual Response<SettingBatch> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateGetRevisionsRequest(selector))
+            {
+                Response response = _pipeline.SendRequest(request, cancellationToken);
+                switch (response.Status)
+                {
+                    case 200:
+                    case 206:
+                    {
+                        return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken));
+                    }
+                    default:
+                        throw new RequestFailedException(response);
+                }
+            }
+        }
+
+        private Request CreateGetRevisionsRequest(SettingSelector selector)
+        {
+            var request = _pipeline.CreateRequest();
+            request.Method = HttpPipelineMethod.Get;
+            BuildUriForRevisions(request.UriBuilder, selector);
+            request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+            if (selector.AsOf.HasValue)
+            {
+                var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
+                request.Headers.Add(AcceptDatetimeHeader, dateTime);
+            }
+
+            return request;
         }
     }
 }

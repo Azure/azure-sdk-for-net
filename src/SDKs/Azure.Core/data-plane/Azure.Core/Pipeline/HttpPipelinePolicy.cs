@@ -7,27 +7,6 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline
 {
-    public abstract class HttpPipelineIOAgnosticPolicy: HttpPipelinePolicy
-    {
-        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            OnSendingRequest(message);
-            ProcessNext(pipeline, message);
-            OnReceivedResponse(message);
-        }
-
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
-        {
-            OnSendingRequest(message);
-            await ProcessNextAsync(pipeline, message);
-            OnReceivedResponse(message);
-        }
-
-        public virtual void OnSendingRequest(HttpPipelineMessage message) { }
-
-        public virtual void OnReceivedResponse(HttpPipelineMessage message) { }
-    }
-
     public abstract class HttpPipelinePolicy
     {
         /// <summary>

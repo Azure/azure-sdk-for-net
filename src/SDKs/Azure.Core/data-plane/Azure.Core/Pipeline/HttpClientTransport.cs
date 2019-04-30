@@ -27,6 +27,21 @@ namespace Azure.Core.Pipeline
         public sealed override Request CreateRequest(IServiceProvider services)
             => new PipelineRequest();
 
+        public override void Process(HttpPipelineMessage message)
+        {
+            var pipelineRequest = message.Request as PipelineRequest;
+            if (pipelineRequest == null)
+                throw new InvalidOperationException("the request is not compatible with the transport");
+
+            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
+            {
+                HttpResponseMessage responseMessage = _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
+                    .ConfigureAwait(false)
+                    .GetAwaiter().GetResult();
+                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
+            }
+        }
+
         public sealed override async Task ProcessAsync(HttpPipelineMessage message)
         {
             var pipelineRequest = message.Request as PipelineRequest;
@@ -35,14 +50,11 @@ namespace Azure.Core.Pipeline
 
             using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
             {
-                HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
+                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
+                    .ConfigureAwait(false);
                 message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
             }
         }
-
-        protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
-            => await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellation).ConfigureAwait(false);
-
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
         {
@@ -249,7 +261,7 @@ namespace Azure.Core.Pipeline
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
                 {
                     Debug.Assert(PipelineContent != null);
-                    await PipelineContent.WriteTo(stream, CancellationToken).ConfigureAwait(false);
+                    await PipelineContent.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
                 }
 
                 protected override bool TryComputeLength(out long length)

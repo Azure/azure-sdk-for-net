@@ -49,7 +49,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             await client.DeleteAsync("some_key");
         }
 
-        class AddHeaderPolicy : HttpPipelineIOAgnosticPolicy
+        class AddHeaderPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {
@@ -57,7 +57,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             }
         }
 
-        class CustomLogPolicy : HttpPipelineIOAgnosticPolicy
+        class CustomLogPolicy : SynchronousHttpPipelinePolicy
         {
             public override void OnSendingRequest(HttpPipelineMessage message)
             {

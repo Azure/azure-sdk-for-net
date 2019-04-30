@@ -21,6 +21,6 @@ namespace Azure.Core.Pipeline.Policies
         protected override void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
         {
             delay = Delay;
-        } 
+        }
     }
 }

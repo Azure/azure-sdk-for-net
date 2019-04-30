@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Testing
 {
-    public class TestLoggingPolicy : HttpPipelineIOAgnosticPolicy
+    public class TestLoggingPolicy : SynchronousHttpPipelinePolicy
     {
         StringBuilder _logged = new StringBuilder();
 

@@ -40,8 +40,6 @@ namespace Azure.Core.Pipeline
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public async Task<Response> SendRequestAsync(Request request, CancellationToken cancellationToken)
         {
-            if (_pipeline.IsEmpty) return default;
-
             using (var message = new HttpPipelineMessage(cancellationToken))
             {
                 message.Request = request;
@@ -52,18 +50,14 @@ namespace Azure.Core.Pipeline
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public Response SendRequest(HttpPipelineRequest request, CancellationToken cancellationToken)
+        public Response SendRequest(Request request, CancellationToken cancellationToken)
         {
-            if (_pipeline.IsEmpty)
-            {
-                return default;
-            }
-
             using (var message = new HttpPipelineMessage(cancellationToken))
             {
                 message.Request = request;
+                message.ResponseClassifier = _responseClassifier;
                 _pipeline.Span[0].Process(message, _pipeline.Slice(1));
-                return new Response(message.Response);
+                return message.Response;
             }
         }
 

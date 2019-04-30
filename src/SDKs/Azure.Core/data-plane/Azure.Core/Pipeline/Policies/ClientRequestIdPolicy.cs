@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class ClientRequestIdPolicy : HttpPipelineIOAgnosticPolicy
+    public class ClientRequestIdPolicy : SynchronousHttpPipelinePolicy
     {
         private const string ClientRequestIdHeader = "x-ms-client-request-id";
         private const string EchoClientRequestId = "x-ms-return-client-request-id";

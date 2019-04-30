@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
 {
     // Avoid running these tests in parallel with anything else that's sharing the event source
     [NonParallelizable]
-    public class EventSourceTests
+    public abstract class EventSourceTests: SyncAsyncPolicyTestBase
     {
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
@@ -35,6 +35,13 @@ namespace Azure.Core.Tests
         private const int ErrorResponseContentTextBlockEvent = 16;
 
         private TestEventListener _listener;
+
+        private EventSourceTests(bool isAsync) : base(isAsync)
+        {
+        }
+
+        public class Sync: EventSourceTests { public Sync() : base(false) {}}
+        public class Async: EventSourceTests { public Async() : base(false) {}}
 
         [SetUp]
         public void Setup()
@@ -69,7 +76,7 @@ namespace Azure.Core.Tests
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
             response.AddHeader(new HttpHeader("Custom-Response-Header", "Improved value"));
 
-            var mockTransport = new MockTransport(response);
+            var mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
@@ -82,7 +89,7 @@ namespace Azure.Core.Tests
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.RequestId;
 
-                await pipeline.SendRequestAsync(request, CancellationToken.None);
+                await SendRequestAsync(pipeline, request, CancellationToken.None);
             }
 
             var e = _listener.SingleEventById(RequestEvent);
@@ -131,7 +138,7 @@ namespace Azure.Core.Tests
         public async Task RequestContentIsLoggedAsText()
         {
             var response = new MockResponse(500);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
@@ -143,7 +150,7 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Content-Type", "text/json");
                 requestId = request.RequestId;
 
-                await pipeline.SendRequestAsync(request, CancellationToken.None);
+                await SendRequestAsync(pipeline, request, CancellationToken.None);
             }
 
             var e = _listener.SingleEventById(RequestContentTextEvent);
@@ -289,7 +296,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Hello world", errorContentEvent.GetProperty<string>("content"));
         }
 
-        private static async Task<Response> SendRequest(bool isSeekable, Action<MockResponse> setupRequest = null)
+        private async Task<Response> SendRequest(bool isSeekable, Action<MockResponse> setupRequest = null)
         {
             var mockResponse = new MockResponse(500);
             byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
@@ -303,14 +310,14 @@ namespace Azure.Core.Tests
             }
             setupRequest?.Invoke(mockResponse);
 
-            var mockTransport = new MockTransport(mockResponse);
+            var mockTransport = CreateMockTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
 
             using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
 
-                Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+                Response response = await SendRequestAsync(pipeline, request, CancellationToken.None);
 
                 var buffer = new byte[11];
                 Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));

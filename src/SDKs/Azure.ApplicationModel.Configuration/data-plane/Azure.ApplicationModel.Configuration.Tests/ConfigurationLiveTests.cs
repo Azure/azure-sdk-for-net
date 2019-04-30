@@ -336,7 +336,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         public async Task AddKeyValue()
         {
             ConfigurationClient service = TestEnvironment.GetClient();
-            
+
             string key = GenerateKeyId("key-");
 
             try
@@ -357,7 +357,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         public async Task AddKeyValueLabel()
         {
             ConfigurationClient service = TestEnvironment.GetClient();
-            
+
             string key = GenerateKeyId("key-");
             string value = "my_value";
             string label = "my_label";

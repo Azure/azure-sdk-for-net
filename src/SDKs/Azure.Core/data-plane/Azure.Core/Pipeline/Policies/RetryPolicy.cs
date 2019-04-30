@@ -20,7 +20,7 @@ namespace Azure.Core.Pipeline.Policies
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessAsync(message, pipeline, false).GetAwaiter().GetResult();
+            ProcessAsync(message, pipeline, false).AssertCompleted();
         }
 
         public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
@@ -59,7 +59,7 @@ namespace Azure.Core.Pipeline.Policies
                     lastException = ex;
                 }
 
-                TimeSpan delay = TimeSpan.Zero;
+                TimeSpan delay;
 
                 attempt++;
 
@@ -102,11 +102,11 @@ namespace Azure.Core.Pipeline.Policies
                 {
                     if (async)
                     {
-                        await DelayAsync(delay, message.Cancellation);
+                        await WaitAsync(delay, message.Cancellation);
                     }
                     else
                     {
-                        Delay(delay, message.Cancellation);
+                        Wait(delay, message.Cancellation);
                     }
                 }
 
@@ -114,12 +114,12 @@ namespace Azure.Core.Pipeline.Policies
             }
         }
 
-        internal virtual async Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
+        internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
         {
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
         }
 
-        internal virtual void Delay(TimeSpan time, CancellationToken cancellationToken)
+        internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
         {
             cancellationToken.WaitHandle.WaitOne(time);
         }
