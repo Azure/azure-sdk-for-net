@@ -157,19 +157,9 @@ namespace Microsoft.Azure.Management.Security
         IWorkspaceSettingsOperations WorkspaceSettings { get; }
 
         /// <summary>
-        /// Gets the IRegulatoryComplianceStandardsOperations.
+        /// Gets the IServerVulnerabilityAssessmentOperations.
         /// </summary>
-        IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceControlsOperations.
-        /// </summary>
-        IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceAssessmentsOperations.
-        /// </summary>
-        IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; }
+        IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; }
 
     }
 }

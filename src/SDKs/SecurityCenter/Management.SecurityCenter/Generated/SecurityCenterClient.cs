@@ -162,19 +162,9 @@ namespace Microsoft.Azure.Management.Security
         public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
 
         /// <summary>
-        /// Gets the IRegulatoryComplianceStandardsOperations.
+        /// Gets the IServerVulnerabilityAssessmentOperations.
         /// </summary>
-        public virtual IRegulatoryComplianceStandardsOperations RegulatoryComplianceStandards { get; private set; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceControlsOperations.
-        /// </summary>
-        public virtual IRegulatoryComplianceControlsOperations RegulatoryComplianceControls { get; private set; }
-
-        /// <summary>
-        /// Gets the IRegulatoryComplianceAssessmentsOperations.
-        /// </summary>
-        public virtual IRegulatoryComplianceAssessmentsOperations RegulatoryComplianceAssessments { get; private set; }
+        public virtual IServerVulnerabilityAssessmentOperations ServerVulnerabilityAssessment { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the SecurityCenterClient class.
@@ -434,9 +424,7 @@ namespace Microsoft.Azure.Management.Security
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             SecurityContacts = new SecurityContactsOperations(this);
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
-            RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
-            RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
-            RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
+            ServerVulnerabilityAssessment = new ServerVulnerabilityAssessmentOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
