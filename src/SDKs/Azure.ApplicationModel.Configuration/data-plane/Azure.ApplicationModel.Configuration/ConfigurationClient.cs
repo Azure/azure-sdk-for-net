@@ -13,7 +13,7 @@ using Azure.Core.Pipeline.Policies;
 namespace Azure.ApplicationModel.Configuration
 {
     /// <summary>
-    /// ConfigurationClient can be used for all operations with a <see cref="ConfigurationSetting"/> in the Azure Configuration Store.
+    /// The client to use for interacting with the Azure Configuration Store.
     /// </summary>
     public partial class ConfigurationClient
     {
@@ -41,7 +41,7 @@ namespace Azure.ApplicationModel.Configuration
         /// Creates a <see cref="ConfigurationClient"/> that sends requests to the configuration store.
         /// </summary>
         /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
-        /// <param name="options">Options that allow configure the management of the request sent to the configuration store.</param>
+        /// <param name="options">Options that allow to configure the management of the request sent to the configuration store.</param>
         public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
@@ -244,7 +244,7 @@ namespace Azure.ApplicationModel.Configuration
         /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings</param>
+        /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
         /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
@@ -276,7 +276,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <summary>
         /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
         /// </summary>
-        /// <param name="selector">Set of options for selecting settings from the configuration store</param>
+        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
@@ -305,7 +305,7 @@ namespace Azure.ApplicationModel.Configuration
         /// Lists chronological/historical representation of <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
         /// </summary>
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
-        /// <param name="selector">Set of options for selecting settings from the configuration store</param>
+        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
         {

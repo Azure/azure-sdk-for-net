@@ -10,7 +10,7 @@ using Azure.Core;
 namespace Azure.ApplicationModel.Configuration
 {
     /// <summary>
-    /// ConfigurationSetting is a resource identified by unique combination of key and label.
+    /// A setting, defined by a unique combination of a key and label.
     /// </summary>
     public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
     {
