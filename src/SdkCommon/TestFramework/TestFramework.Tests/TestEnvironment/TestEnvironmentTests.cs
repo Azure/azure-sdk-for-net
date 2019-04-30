@@ -29,8 +29,8 @@ namespace TestFramework.Tests.TestEnvironment
             Assert.Equal<string>("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
         }
 
-        //[Fact(Skip = "Live Test")]
-        [Fact]
+        [Fact(Skip = "Live Test")]
+        //[Fact]
         public void TestEnvWithConnString()
         {
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "<connstr>");
