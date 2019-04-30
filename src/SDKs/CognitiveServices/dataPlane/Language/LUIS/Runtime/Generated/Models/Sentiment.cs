@@ -14,7 +14,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
     using System.Linq;
 
     /// <summary>
-    /// The result of the sentiment analaysis.
+    /// The result of the sentiment analysis.
     /// </summary>
     public partial class Sentiment
     {
