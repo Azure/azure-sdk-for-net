@@ -107,6 +107,31 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CreateOrUpdateCreatesWhenIndexerWithSkillsetDoesNotExist()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                Skillset skillset = SkillsetsTests.CreateTestSkillsetOcrEntity(null, null);
+
+                AzureOperationResponse<Skillset> response =
+                        searchClient.Skillsets.CreateOrUpdateWithHttpMessagesAsync(skillset.Name, skillset).Result;
+                Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
+
+                Indexer indexer = Data.CreateTestIndexerWithSkillset(skillset.Name, new[]
+                {
+                    new FieldMapping(sourceFieldName: "/document/myEntities", targetFieldName: "myEntities"),
+                    new FieldMapping(sourceFieldName: "/document/myText", targetFieldName: "myText")
+                });
+
+                AzureOperationResponse<Indexer> response1 =
+                    searchClient.Indexers.CreateOrUpdateWithHttpMessagesAsync(indexer).Result;
+                Assert.Equal(HttpStatusCode.Created, response1.Response.StatusCode);
+            });
+        }
+
+        [Fact]
         public void CreateOrUpdateIndexerIfNotExistsFailsOnExistingResource()
         {
             Run(() =>

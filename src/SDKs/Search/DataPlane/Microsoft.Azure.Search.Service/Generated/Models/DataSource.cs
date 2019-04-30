@@ -32,7 +32,8 @@ namespace Microsoft.Azure.Search.Models
         /// Initializes a new instance of the DataSource class.
         /// </summary>
         /// <param name="name">The name of the datasource.</param>
-        /// <param name="type">The type of the datasource.</param>
+        /// <param name="type">The type of the datasource. Possible values
+        /// include: 'azuresql', 'cosmosdb', 'azureblob', 'azuretable'</param>
         /// <param name="credentials">Credentials for the datasource.</param>
         /// <param name="container">The data container for the
         /// datasource.</param>
@@ -74,7 +75,8 @@ namespace Microsoft.Azure.Search.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the datasource.
+        /// Gets or sets the type of the datasource. Possible values include:
+        /// 'azuresql', 'cosmosdb', 'azureblob', 'azuretable'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public DataSourceType Type { get; set; }
@@ -120,10 +122,6 @@ namespace Microsoft.Azure.Search.Models
             if (Name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (Type == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Type");
             }
             if (Credentials == null)
             {

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Search.Tests
     {
         private const string TokenJson =
  @"{
-  ""@odata.nextLink"": ""https://tempuri.org?api-version=2017-11-11"",
+  ""@odata.nextLink"": ""https://tempuri.org?api-version=2017-11-11-Preview"",
   ""@search.nextPageParameters"": {
     ""count"": true,
     ""facets"": [
@@ -42,19 +42,19 @@ namespace Microsoft.Azure.Search.Tests
 
         private const string TokenWithOnlyLinkJson =
  @"{
-  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2017-11-11"",
+  ""@odata.nextLink"": ""https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2017-11-11-Preview"",
   ""@search.nextPageParameters"": null
 }";
 
-        private SearchContinuationToken _token =
+        private readonly SearchContinuationToken _token =
             new SearchContinuationToken(
-                "https://tempuri.org?api-version=2017-11-11",
-                new SearchParametersPayload()
+                "https://tempuri.org?api-version=2017-11-11-Preview",
+                new SearchRequest()
                 {
-                    Count = true,
+                    IncludeTotalResultCount = true,
                     Facets = new[] { "testfacets" },
                     Filter = "testfilter",
-                    Highlight = "testhighlight",
+                    HighlightFields = "testhighlight",
                     HighlightPostTag = "</b>",
                     HighlightPreTag = "<b>",
                     MinimumCoverage = 50,
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Search.Tests
                     QueryType = QueryType.Full,
                     ScoringParameters = new[] { "testscoringparameter" },
                     ScoringProfile = "testscoringprofile",
-                    Search = "some words",
+                    SearchText = "some words",
                     SearchFields = "somefields",
                     SearchMode = SearchMode.All,
                     Select = "*",
@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Search.Tests
                     Top = 10
                 });
 
-        private SearchContinuationToken _tokenWithOnlyLink =
-            new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2017-11-11", null);
+        private readonly SearchContinuationToken _tokenWithOnlyLink =
+            new SearchContinuationToken("https://tempuri.org?=&a=&=a&a=b=c&a=b&api-version=2017-11-11-Preview", null);
 
-        private TokenComparer _tokenComparer = new TokenComparer();
+        private readonly TokenComparer _tokenComparer = new TokenComparer();
 
         [Fact]
         public void CanSerializeToken()
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void DeserializeTokenWithWrongVersionThrowsException()
         {
-            string tokenJson = TokenJson.Replace("2017-11-11", "1999-12-31");
+            string tokenJson = TokenJson.Replace("2017-11-11-Preview", "1999-12-31");
 
             JsonSerializationException e =
                 Assert.Throws<JsonSerializationException>(
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Search.Tests
 
             const string ExpectedMessage =
                 "Cannot deserialize a continuation token for a different api-version. Token contains version " +
-                "'1999-12-31'; Expected version '2017-11-11'.";
+                "'1999-12-31'; Expected version '2017-11-11-Preview'.";
 
             Assert.Equal(ExpectedMessage, e.Message);
         }
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Search.Tests
         [Fact]
         public void DeserializeTokenWithMissingVersionValueThrowsException()
         {
-            string tokenJson = TokenJson.Replace("2017-11-11", string.Empty);
+            string tokenJson = TokenJson.Replace("2017-11-11-Preview", string.Empty);
 
             JsonSerializationException e =
                 Assert.Throws<JsonSerializationException>(
@@ -188,7 +188,7 @@ namespace Microsoft.Azure.Search.Tests
                 return obj.GetHashCode();
             }
 
-            private static bool NextPageParametersEquals(SearchParametersPayload x, SearchParametersPayload y)
+            private static bool NextPageParametersEquals(SearchRequest x, SearchRequest y)
             {
                 if (x == null && y == null)
                 {
@@ -201,10 +201,10 @@ namespace Microsoft.Azure.Search.Tests
                 }
 
                 return
-                    x.Count == y.Count &&
+                    x.IncludeTotalResultCount == y.IncludeTotalResultCount &&
                     ((x.Facets == null && y.Facets == null) || x.Facets.SequenceEqual(y.Facets)) &&
                     x.Filter == y.Filter &&
-                    x.Highlight == y.Highlight &&
+                    x.HighlightFields == y.HighlightFields &&
                     x.HighlightPostTag == y.HighlightPostTag &&
                     x.HighlightPreTag == y.HighlightPreTag &&
                     x.MinimumCoverage == y.MinimumCoverage &&
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Search.Tests
                     ((x.ScoringParameters == null && y.ScoringParameters == null) ||
                       x.ScoringParameters.SequenceEqual(y.ScoringParameters)) &&
                     x.ScoringProfile == y.ScoringProfile &&
-                    x.Search == y.Search &&
+                    x.SearchText == y.SearchText &&
                     x.SearchFields == y.SearchFields &&
                     x.SearchMode == y.SearchMode &&
                     x.Select == y.Select &&

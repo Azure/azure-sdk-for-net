@@ -31,12 +31,12 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
                 DataSource dataSource = CreateTestDataSource();
-                dataSource.Type = DataSourceType.Create("thistypedoesnotexist");
+                dataSource.Type = "thistypedoesnotexist";
 
                 SearchAssert.ThrowsCloudException(
                     () => searchClient.DataSources.Create(dataSource),
                     HttpStatusCode.BadRequest,
-                    "Unsupported data source type 'thistypedoesnotexist'");
+                    "Data source type 'thistypedoesnotexist' is not supported");
             });
         }
 
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 // Create a datasource of each supported type
                 DataSource dataSource1 = CreateTestSqlDataSource();
-                DataSource dataSource2 = CreateTestDocDbDataSource();
+                DataSource dataSource2 = CreateTestCosmosDbDataSource();
 
                 searchClient.DataSources.Create(dataSource1);
                 searchClient.DataSources.Create(dataSource2);
@@ -293,11 +293,11 @@ namespace Microsoft.Azure.Search.Tests
             testMethod(searchClient, CreateTestSqlDataSource(new SqlIntegratedChangeTrackingPolicy(), useSqlVm: true));
             testMethod(searchClient, CreateTestSqlDataSource(changeDetectionPolicy, deletionDetectionPolicy, useSqlVm: true));
 
-            // DocumentDB
-            testMethod(searchClient, CreateTestDocDbDataSource());
-            testMethod(searchClient, CreateTestDocDbDataSource(useChangeDetection: true));
-            testMethod(searchClient, CreateTestDocDbDataSource(deletionDetectionPolicy));
-            testMethod(searchClient, CreateTestDocDbDataSource(deletionDetectionPolicy, useChangeDetection: true));
+            // CosmosDB
+            testMethod(searchClient, CreateTestCosmosDbDataSource());
+            testMethod(searchClient, CreateTestCosmosDbDataSource(useChangeDetection: true));
+            testMethod(searchClient, CreateTestCosmosDbDataSource(deletionDetectionPolicy));
+            testMethod(searchClient, CreateTestCosmosDbDataSource(deletionDetectionPolicy, useChangeDetection: true));
 
             // Azure Blob Storage
             testMethod(searchClient, CreateTestBlobDataSource());
@@ -429,15 +429,15 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private static DataSource CreateTestDocDbDataSource(
+        private static DataSource CreateTestCosmosDbDataSource(
             DataDeletionDetectionPolicy deletionDetectionPolicy = null,
             bool useChangeDetection = false)
         {
-            return DataSource.DocumentDb(
+            return DataSource.CosmosDb(
                 name: SearchTestUtilities.GenerateName(),
-                documentDbConnectionString: "fake",
+                cosmosDbConnectionString: "AccountEndpoint=https://NotaRealAccount.documents.azure.com;AccountKey=fake;Database=someFakeDatabase", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                 collectionName: "faketable",
-                query: "fake query",
+                query: "SELECT ... FROM x where x._ts > @HighWaterMark",
                 useChangeDetection: useChangeDetection,
                 deletionDetectionPolicy: deletionDetectionPolicy,
                 description: FakeDescription);
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.AzureBlobStorage(
                 name: SearchTestUtilities.GenerateName(),
-                storageConnectionString: "fake",
+                storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                 containerName: "fakecontainer",
                 pathPrefix: "/fakefolder/",
                 deletionDetectionPolicy: deletionDetectionPolicy,
@@ -458,7 +458,7 @@ namespace Microsoft.Azure.Search.Tests
         {
             return DataSource.AzureTableStorage(
                 name: SearchTestUtilities.GenerateName(),
-                storageConnectionString: "fake",
+                storageConnectionString: "DefaultEndpointsProtocol=https;AccountName=NotaRealAccount;AccountKey=fake;", // [SuppressMessage("Microsoft.Security", "CS001:SecretInline", Justification = "This is not a real secret")]
                 tableName: "faketable",
                 query: "fake query",
                 deletionDetectionPolicy: deletionDetectionPolicy,

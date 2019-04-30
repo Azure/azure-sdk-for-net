@@ -16,52 +16,35 @@ namespace Microsoft.Azure.Search.Serialization
     /// <typeparam name="T">
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
-    internal class IndexActionConverter<T> : JsonConverter where T : class
+    internal class IndexActionConverter<T> : JsonConverter
     {
-        public override bool CanRead
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override bool CanRead => false;
 
-        public override bool CanWrite
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool CanWrite => true;
 
         public override bool CanConvert(Type objectType)
         {
-            return typeof(IndexActionBase<T>).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
+            return typeof(IndexAction<T>).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
         }
 
-        public override object ReadJson(
-            JsonReader reader, 
-            Type objectType, 
-            object existingValue, 
-            JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             throw new NotImplementedException();
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var action = (IndexActionBase<T>)value;
+            var action = (IndexAction<T>)value;
 
-            var injectingWriter = new InjectingJsonWriter(writer);
-            injectingWriter.OnStart = 
-                w =>
-                {
-                    w.WritePropertyName("@search.action");
+            void WriteActionAnnotation(JsonWriter innerWriter)
+            {
+                innerWriter.WritePropertyName("@search.action");
 
-                    var converter = new StringEnumConverter();
-                    converter.WriteJson(w, action.ActionType, serializer);
-                };
+                var converter = new StringEnumConverter();
+                converter.WriteJson(innerWriter, action.ActionType, serializer);
+            }
 
+            var injectingWriter = new InjectingJsonWriter(writer) { OnStart = WriteActionAnnotation };
             serializer.Serialize(injectingWriter, action.Document);
         }
     }

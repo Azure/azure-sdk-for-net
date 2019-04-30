@@ -69,26 +69,40 @@ namespace Microsoft.Azure.Search
         public string IndexName { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IDocumentsOperations.
+        /// Gets the IDocumentsProxyOperations.
         /// </summary>
-        public virtual IDocumentsOperations Documents { get; private set; }
+        internal IDocumentsProxyOperations DocumentsProxy { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchIndexClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SearchIndexClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected SearchIndexClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SearchIndexClient class.
@@ -146,6 +160,33 @@ namespace Microsoft.Azure.Search
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SearchIndexClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SearchIndexClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchIndexClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
         /// </param>
@@ -177,9 +218,9 @@ namespace Microsoft.Azure.Search
         /// </summary>
         private void Initialize()
         {
-            Documents = new DocumentsOperations(this);
+            DocumentsProxy = new DocumentsProxyOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}/indexes('{indexName}')";
-            ApiVersion = "2017-11-11";
+            ApiVersion = "2017-11-11-Preview";
             SearchDnsSuffix = "search.windows.net";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;

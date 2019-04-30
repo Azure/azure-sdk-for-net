@@ -6,14 +6,17 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
     using Microsoft.Spatial;
     using Xunit;
+    using FacetResults = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Models.FacetResult>>;
+    using HitHighlights = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>>;
+    using DataType = Models.DataType;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestCanSearchDynamicDocuments()
         {
             SearchIndexClient client = GetClientForQuery();
-            DocumentSearchResult response = client.Documents.Search("*");
+            DocumentSearchResult<Document> response = client.Documents.Search("*");
 
             Assert.Null(response.ContinuationToken);
             Assert.Null(response.Count);
@@ -159,7 +162,7 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<string> expectedDescriptionHighlights =
                 new[] 
                 { 
-                    "Best <b>hotel</b> in town if you like <b>luxury</b> hotels.",
+                    "Best <b>hotel</b> in town if you like <b>luxury</b> <b>hotels</b>.",
                     "We highly recommend this <b>hotel</b>."
                 };
 
@@ -184,18 +187,18 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("*", searchParameters);
 
-            AssertKeySequenceEqual(response, "1", "4", "3", "5", "2", "6");
+            AssertKeySequenceEqual(response, "1", "9", "4", "3", "5", "10", "2", "6", "7", "8");
         }
 
         protected void TestSearchWithoutOrderBySortsByScore()
         {
             SearchIndexClient client = GetClientForQuery();
 
-            var searchParameters = new SearchParameters() { Filter = "baseRate gt 190" };
+            var searchParameters = new SearchParameters() { Filter = "rating lt 4" };
             DocumentSearchResult<Hotel> response =
-                client.Documents.Search<Hotel>("surprisingly expensive hotel", searchParameters);
+                client.Documents.Search<Hotel>("cheapest hotel in town", searchParameters);
 
-            AssertKeySequenceEqual(response, "6", "1");
+            AssertKeySequenceEqual(response, "2", "10");
             Assert.True(response.Results[0].Score > response.Results[1].Score);
         }
 
@@ -207,17 +210,27 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     SearchFields = new[] { "category", "hotelName" },
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating", "address/city", "rooms/type" }
                 };
 
             DocumentSearchResult<Hotel> response =
-                client.Documents.Search<Hotel>("fancy luxury", searchParameters);
+                client.Documents.Search<Hotel>("fancy luxury secret", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
+            var expectedDocs = new[]
+            {
+                new Hotel() { HotelName = "Fancy Stay", Rating = 5 },
+                new Hotel()
+                {
+                    HotelName = "Secret Point Motel",
+                    Rating = 4,
+                    Address = new HotelAddress() { City = "New York" },
+                    Rooms = new[] { new HotelRoom() { Type = "Budget Room" }, new HotelRoom() { Type = "Budget Room" } }
+                }
+            }.OrderBy(hotel => hotel.HotelName);
 
-            Assert.NotNull(response.Results);
-            Assert.Equal(1, response.Results.Count);
-            Assert.Equal(expectedDoc, response.Results.First().Document);
+            var actualDocs = response.Results.Select(r => r.Document).OrderBy(hotel => hotel.HotelName);
+
+            Assert.Equal(expectedDocs, actualDocs);
         }
 
         protected void TestCanSearchWithLuceneSyntax()
@@ -228,13 +241,13 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     QueryType = QueryType.Full,
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("hotelName:roch~", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 1 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -245,28 +258,34 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-            const string synonymMapName = "names";
-            SynonymMap synonymMap = new SynonymMap(name: synonymMapName, format: SynonymMapFormat.Solr, synonyms: "luxury,fancy");
+            const string SynonymMapName = "names";
+            var synonymMap = new SynonymMap(name: SynonymMapName, synonyms: "luxury,fancy");
             searchClient.SynonymMaps.Create(synonymMap);
 
             SearchIndexClient client = GetClientForQuery();
             Index index = searchClient.Indexes.Get(client.IndexName);
-            index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { synonymMapName };
+            index.Fields.First(f => f.Name == "hotelName").SynonymMaps = new[] { SynonymMapName };
 
             searchClient.Indexes.CreateOrUpdate(index);
+
+            // When this test runs live, it runs against a free service that has 3 replicas.
+            // Sometimes the synonym map update doesn't make it to the replica that handles
+            // the query below, causing a test failure. We wait here to increase the odds of
+            // consistency and decrease the likelihood of spurious test failures.
+            SearchTestUtilities.WaitForSynonymMapUpdate();
 
             var searchParameters =
                 new SearchParameters()
                 {
                     QueryType = QueryType.Full,
                     SearchFields = new[] { "hotelName" },
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("luxury", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199 };
+            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", Rating = 5 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -281,13 +300,13 @@ namespace Microsoft.Azure.Search.Tests
                 new SearchParameters()
                 {
                     QueryType = QueryType.Full,
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating" }
                 };
 
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>(@"hotelName:/.*oach.*\/?/", searchParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", Rating = 1 };
 
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
@@ -300,7 +319,7 @@ namespace Microsoft.Azure.Search.Tests
 
             var searchParameters = new SearchParameters() { QueryType = QueryType.Full };
 
-            DocumentSearchResult response =
+            DocumentSearchResult<Document> response =
                 client.Documents.Search(@"/\+\-\&\|\!\(\)\{\}\[\]\^\""\\~\*\?\:\\\//", searchParameters);
 
             Assert.NotNull(response.Results);
@@ -326,12 +345,12 @@ namespace Microsoft.Azure.Search.Tests
             var searchParameters = new SearchParameters() { Top = 3, Skip = 0, OrderBy = new[] { "hotelId" } };
             DocumentSearchResult<Hotel> response = client.Documents.Search<Hotel>("*", searchParameters);
 
-            AssertKeySequenceEqual(response, "1", "2", "3");
+            AssertKeySequenceEqual(response, "1", "10", "2");
 
             searchParameters.Skip = 3;
             response = client.Documents.Search<Hotel>("*", searchParameters);
 
-            AssertKeySequenceEqual(response, "4", "5", "6");
+            AssertKeySequenceEqual(response, "3", "4", "5");
         }
 
         protected void TestSearchWithScoringProfileBoostsScore()
@@ -360,7 +379,7 @@ namespace Microsoft.Azure.Search.Tests
                 {
                     Facets = new[]
                     { 
-                        "baseRate,values:80|150|200",
+                        "rooms/baseRate,values:5|8|10",
                         "lastRenovationDate,values:2000-01-01T00:00:00Z"
                     }
                 };
@@ -370,21 +389,21 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.NotNull(response.Facets);
 
-            RangeFacetResult<double>[] baseRateFacets = GetRangeFacetsForField<double>(response.Facets, "baseRate", 4);
+            RangeFacetResult<double>[] baseRateFacets = GetRangeFacetsForField<double>(response.Facets, "rooms/baseRate", 4);
                 
             Assert.False(baseRateFacets[0].From.HasValue);
-            Assert.Equal(80.0, baseRateFacets[0].To);
-            Assert.Equal(80.0, baseRateFacets[1].From);
-            Assert.Equal(150.0, baseRateFacets[1].To);
-            Assert.Equal(150.0, baseRateFacets[2].From);
-            Assert.Equal(200.0, baseRateFacets[2].To);
-            Assert.Equal(200.0, baseRateFacets[3].From);
+            Assert.Equal(5.0, baseRateFacets[0].To);
+            Assert.Equal(5.0, baseRateFacets[1].From);
+            Assert.Equal(8.0, baseRateFacets[1].To);
+            Assert.Equal(8.0, baseRateFacets[2].From);
+            Assert.Equal(10.0, baseRateFacets[2].To);
+            Assert.Equal(10.0, baseRateFacets[3].From);
             Assert.False(baseRateFacets[3].To.HasValue);
 
             Assert.Equal(1, baseRateFacets[0].Count);
-            Assert.Equal(3, baseRateFacets[1].Count);
+            Assert.Equal(1, baseRateFacets[1].Count);
             Assert.Equal(1, baseRateFacets[2].Count);
-            Assert.Equal(1, baseRateFacets[3].Count);
+            Assert.Equal(0, baseRateFacets[3].Count);
 
             RangeFacetResult<DateTimeOffset>[] lastRenovationDateFacets =
                 GetRangeFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 2);
@@ -394,7 +413,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(new DateTimeOffset(2000, 1, 1, 0, 0, 0, TimeSpan.Zero), lastRenovationDateFacets[1].From);
             Assert.False(lastRenovationDateFacets[1].To.HasValue);
 
-            Assert.Equal(3, lastRenovationDateFacets[0].Count);
+            Assert.Equal(5, lastRenovationDateFacets[0].Count);
             Assert.Equal(2, lastRenovationDateFacets[1].Count);
         }
 
@@ -411,7 +430,7 @@ namespace Microsoft.Azure.Search.Tests
                         "smokingAllowed,sort:count",
                         "category",
                         "lastRenovationDate,interval:year",
-                        "baseRate,sort:value",
+                        "rooms/baseRate,sort:value",
                         "tags,sort:value"
                     }
                 };
@@ -424,38 +443,45 @@ namespace Microsoft.Azure.Search.Tests
             AssertValueFacetsEqual(
                 GetValueFacetsForField<long>(response.Facets, "rating", 2), 
                 new ValueFacetResult<long>(1, 5), 
-                new ValueFacetResult<long>(3, 4));
+                new ValueFacetResult<long>(4, 4));
                 
             AssertValueFacetsEqual(
                 GetValueFacetsForField<bool>(response.Facets, "smokingAllowed", 2), 
                 new ValueFacetResult<bool>(4, false), 
-                new ValueFacetResult<bool>(1, true));
+                new ValueFacetResult<bool>(3, true));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<string>(response.Facets, "category", 2),
-                new ValueFacetResult<string>(4, "Budget"),
+                GetValueFacetsForField<string>(response.Facets, "category", 3),
+                new ValueFacetResult<string>(5, "Budget"),
+                new ValueFacetResult<string>(1, "Boutique"),
                 new ValueFacetResult<string>(1, "Luxury"));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 4),
+                GetValueFacetsForField<DateTimeOffset>(response.Facets, "lastRenovationDate", 6),
+                new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(1982, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(2, new DateTimeOffset(1995, 1, 1, 0, 0, 0, TimeSpan.Zero)),
+                new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(1999, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(2010, 1, 1, 0, 0, 0, TimeSpan.Zero)),
                 new ValueFacetResult<DateTimeOffset>(1, new DateTimeOffset(2012, 1, 1, 0, 0, 0, TimeSpan.Zero)));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<double>(response.Facets, "baseRate", 4),
-                new ValueFacetResult<double>(1, 79.99),
-                new ValueFacetResult<double>(3, 129.99),
-                new ValueFacetResult<double>(1, 199.0),
-                new ValueFacetResult<double>(1, 279.99));
+                GetValueFacetsForField<double>(response.Facets, "rooms/baseRate", 4),
+                new ValueFacetResult<double>(1, 2.44),
+                new ValueFacetResult<double>(1, 7.69),
+                new ValueFacetResult<double>(1, 8.09),
+                new ValueFacetResult<double>(1, 9.69));
 
             AssertValueFacetsEqual(
-                GetValueFacetsForField<string>(response.Facets, "tags", 6),
+                GetValueFacetsForField<string>(response.Facets, "tags", 10),
+                new ValueFacetResult<string>(1, "24-hour front desk service"),
+                new ValueFacetResult<string>(1, "air conditioning"),
                 new ValueFacetResult<string>(4, "budget"),
-                new ValueFacetResult<string>(1, "concierge"),
+                new ValueFacetResult<string>(1, "coffee in lobby"),
+                new ValueFacetResult<string>(2, "concierge"),
                 new ValueFacetResult<string>(1, "motel"),
-                new ValueFacetResult<string>(1, "pool"),
+                new ValueFacetResult<string>(2, "pool"),
+                new ValueFacetResult<string>(1, "restaurant"),
                 new ValueFacetResult<string>(1, "view"),
                 new ValueFacetResult<string>(4, "wifi"));
         }
@@ -514,7 +540,7 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<string> expectedIds =
                 Data.TestDocuments.Select(d => d.HotelId).Concat(hotelIds).OrderBy(id => id);
 
-            DocumentSearchResult response = client.Documents.Search("*", searchParameters);
+            DocumentSearchResult<Document> response = client.Documents.Search("*", searchParameters);
             AssertKeySequenceEqual(response, expectedIds.Take(1000).ToArray());
 
             Assert.NotNull(response.ContinuationToken);
@@ -590,7 +616,8 @@ namespace Microsoft.Azure.Search.Tests
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
+            var tolkien = new Author() { FirstName = "J.R.R.", LastName = "Tolkien" };
+            var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = tolkien };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
                 
@@ -606,25 +633,16 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index = new Index()
+            var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
-                Fields = new[]
-                {
-                    new Field("Key", DataType.String) { IsKey = true },
-                    new Field("Rating", DataType.Int32),
-                    new Field("Count", DataType.Int64),
-                    new Field("IsEnabled", DataType.Boolean),
-                    new Field("Ratio", DataType.Double),
-                    new Field("StartDate", DataType.DateTimeOffset),
-                    new Field("EndDate", DataType.DateTimeOffset)
-                }
+                Fields = FieldBuilder.BuildForType<NonNullableModel>()
             };
 
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            DateTimeOffset startDate = new DateTimeOffset(2015, 11, 24, 14, 01, 00, TimeSpan.FromHours(-8));
+            var startDate = new DateTimeOffset(2015, 11, 24, 14, 01, 00, TimeSpan.FromHours(-8));
             DateTime endDate = startDate.UtcDateTime + TimeSpan.FromDays(15);
 
             var doc1 = new NonNullableModel() 
@@ -635,7 +653,13 @@ namespace Microsoft.Azure.Search.Tests
                 IsEnabled = true, 
                 Rating = 5, 
                 Ratio = 3.14, 
-                StartDate = startDate
+                StartDate = startDate,
+                TopLevelBucket = new Bucket() { BucketName =  "A", Count = 12 },
+                Buckets = new[]
+                {
+                    new Bucket() { BucketName = "B", Count = 20 },
+                    new Bucket() { BucketName = "C", Count = 7 }
+                }
             };
 
             var doc2 = new NonNullableModel()
@@ -646,7 +670,9 @@ namespace Microsoft.Azure.Search.Tests
                 IsEnabled = default(bool),
                 Rating = default(int),
                 Ratio = default(double),
-                StartDate = default(DateTimeOffset)
+                StartDate = default(DateTimeOffset),
+                TopLevelBucket = default(Bucket),
+                Buckets = new[] { default(Bucket) }
             };
 
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
@@ -665,62 +691,75 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index = new Index()
+            var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
-                Fields = new[]
-                {
-                    new Field("Key", DataType.String) { IsKey = true },
-                    new Field("IntValue", DataType.Int32)
-                }
+                Fields = FieldBuilder.BuildForType<ModelWithNullableValueTypes>()
             };
 
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            var doc = new ModelWithNullableInt()
-            {
-                Key = "123",
-                IntValue = null
-            };
-
-            var batch = IndexBatch.Upload(new[] { doc });
+            var batch =
+                IndexBatch.Upload(new[]
+                {
+                    new ModelWithNullableValueTypes()
+                    {
+                        Key = "123",
+                        IntValue = null,
+                        Bucket = new Bucket() { BucketName = "Z", Count = 1 }
+                    },
+                    new ModelWithNullableValueTypes()
+                    {
+                        Key = "456",
+                        IntValue = 5,
+                        Bucket = null
+                    }
+                });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
 
-            SerializationException e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
+            SerializationException e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithValueTypes>("123"));
             Assert.Contains("Error converting value {null} to type 'System.Int32'. Path 'IntValue'.", e.ToString());
+
+            e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithValueTypes>("456"));
+            Assert.Contains("Error converting value {null} to type 'Microsoft.Azure.Search.Tests.SearchTests+Bucket'. Path 'Bucket'.", e.ToString());
         }
 
         protected void TestCanFilterNonNullableType()
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index = new Index()
+            var index = new Index()
             {
                 Name = SearchTestUtilities.GenerateName(),
-                Fields = new[]
-                {
-                    new Field("Key", DataType.String) { IsKey = true },
-                    new Field("IntValue", DataType.Int32) { IsFilterable = true }
-                }
+                Fields = FieldBuilder.BuildForType<ModelWithValueTypes>()
             };
 
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            var doc = new ModelWithInt() { Key = "123", IntValue = 0 };
-            var batch = IndexBatch.Upload(new[] { doc });
+            var docs = new[]
+            {
+                new ModelWithValueTypes() { Key = "123", IntValue = 0, Bucket = new Bucket() { BucketName = "A", Count = 3 } },
+                new ModelWithValueTypes() { Key = "456", IntValue = 7, Bucket = new Bucket() { BucketName = "B", Count = 5 } },
+                new ModelWithValueTypes() { Key = "789", IntValue = 1, Bucket = new Bucket() { BucketName = "B", Count = 99 } }
+            };
 
-            indexClient.Documents.Index(batch);
+            IEnumerable<ModelWithValueTypes> expectedDocs = docs.Where(d => d.Key != "789");
+
+            indexClient.Documents.Index(IndexBatch.Upload(docs));
             SearchTestUtilities.WaitForIndexing();
 
-            var parameters = new SearchParameters() { Filter = "IntValue eq 0" };
-            DocumentSearchResult<ModelWithInt> response = indexClient.Documents.Search<ModelWithInt>("*", parameters);
+            var parameters = new SearchParameters()
+            {
+                Filter = "IntValue eq 0 or (Bucket/BucketName eq 'B' and Bucket/Count lt 10)"
+            };
 
-            Assert.Equal(1, response.Results.Count);
-            Assert.Equal(doc.IntValue, response.Results[0].Document.IntValue);
+            DocumentSearchResult<ModelWithValueTypes> response = indexClient.Documents.Search<ModelWithValueTypes>("*", parameters);
+
+            Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
         }
 
         protected void TestCanSearchWithCustomContractResolver()
@@ -736,23 +775,26 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestCanSearchWithCustomConverter()
         {
-            TestCanSearchWithCustomConverter<CustomBookWithConverter>();
+            TestCanSearchWithCustomConverter<CustomBookWithConverter, CustomAuthorWithConverter>();
         }
 
         protected void TestCanSearchWithCustomConverterViaSettings()
         {
-            Action<SearchIndexClient> customizeSettings =
-                client =>
-                {
-                    var converter = new CustomBookConverter<CustomBook>();
-                    converter.Install(client);
-                };
+            void CustomizeSettings(SearchIndexClient client)
+            {
+                var bookConverter = new CustomBookConverter<CustomBook, CustomAuthor>();
+                bookConverter.Install(client);
 
-            TestCanSearchWithCustomConverter<CustomBook>(customizeSettings);
+                var authorConverter = new CustomAuthorConverter<CustomAuthor>();
+                authorConverter.Install(client);
+            }
+
+            TestCanSearchWithCustomConverter<CustomBook, CustomAuthor>(CustomizeSettings);
         }
 
-        private void TestCanSearchWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
-            where T : CustomBook, new()
+        private void TestCanSearchWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null)
+            where TBook : CustomBookBase<TAuthor>, new()
+            where TAuthor : CustomAuthor, new()
         {
             customizeSettings = customizeSettings ?? (client => { });
 
@@ -763,11 +805,11 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
             customizeSettings(indexClient);
 
-            var doc = new T()
+            var doc = new TBook()
             {
                 InternationalStandardBookNumber = "123",
                 Name = "Lord of the Rings",
-                AuthorName = "J.R.R. Tolkien",
+                AuthorName = new TAuthor() { FullName = "J.R.R. Tolkien" },
                 PublishDateTime = new DateTime(1954, 7, 29)
             };
 
@@ -776,7 +818,7 @@ namespace Microsoft.Azure.Search.Tests
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
 
-            DocumentSearchResult<T> response = indexClient.Documents.Search<T>("*");
+            DocumentSearchResult<TBook> response = indexClient.Documents.Search<TBook>("*");
 
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc, response.Results[0].Document);
@@ -790,7 +832,7 @@ namespace Microsoft.Azure.Search.Tests
                 Enumerable.Range(existingDocumentCount + 1, totalDocCount - existingDocumentCount)
                 .Select(id => id.ToString());
 
-            List<Hotel> hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
+            var hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
 
             for (int i = 0; i < hotels.Count; i += 1000)
             {
@@ -818,7 +860,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedKeys, actualKeys);
         }
 
-        private void AssertKeySequenceEqual(DocumentSearchResult response, params string[] expectedKeys)
+        private void AssertKeySequenceEqual(DocumentSearchResult<Document> response, params string[] expectedKeys)
         {
             Assert.NotNull(response.Results);
 
@@ -837,7 +879,7 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private void AssertContainsKeys(DocumentSearchResult response, params string[] expectedKeys)
+        private void AssertContainsKeys(DocumentSearchResult<Document> response, params string[] expectedKeys)
         {
             Assert.NotNull(response.Results);
 
@@ -850,7 +892,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private IList<FacetResult> GetFacetsForField(FacetResults facets, string expectedField, int expectedCount)
         {
-            Assert.True(facets.ContainsKey(expectedField));
+            Assert.True(facets.ContainsKey(expectedField), $"Expecting facets to contain {expectedField}");
             IList<FacetResult> facetCollection = facets[expectedField];
             Assert.Equal(expectedCount, facetCollection.Count);
             return facetCollection;
@@ -880,8 +922,25 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
+        private struct Bucket
+        {
+            [IsFilterable]
+            public string BucketName { get; set; }
+
+            [IsFilterable]
+            public int Count { get; set; }
+
+            public override bool Equals(object obj) =>
+                obj is Bucket other &&
+                BucketName == other.BucketName &&
+                Count == other.Count;
+
+            public override int GetHashCode() => (BucketName?.GetHashCode() ?? 0) ^ Count.GetHashCode();
+        }
+
         private class NonNullableModel
         {
+            [Key]
             public string Key { get; set; }
 
             public int Rating { get; set; }
@@ -896,29 +955,63 @@ namespace Microsoft.Azure.Search.Tests
 
             public DateTime EndDate { get; set; }
 
-            public override bool Equals(object obj)
-            {
-                NonNullableModel other = obj as NonNullableModel;
+            public Bucket TopLevelBucket { get; set; }
 
-                if (other == null)
-                {
-                    return false;
-                }
+            public Bucket[] Buckets { get; set; }
 
-                return
-                    this.Count == other.Count &&
-                    this.EndDate == other.EndDate &&
-                    this.IsEnabled == other.IsEnabled &&
-                    this.Key == other.Key &&
-                    this.Rating == other.Rating &&
-                    this.Ratio == other.Ratio &&
-                    this.StartDate == other.StartDate;
-            }
+            public override bool Equals(object obj) =>
+                obj is NonNullableModel other &&
+                Count == other.Count &&
+                EndDate == other.EndDate &&
+                IsEnabled == other.IsEnabled &&
+                Key == other.Key &&
+                Rating == other.Rating &&
+                Ratio == other.Ratio &&
+                StartDate == other.StartDate &&
+                TopLevelBucket.Equals(other.TopLevelBucket) &&
+                Buckets.SequenceEqualsNullSafe(other.Buckets);
 
-            public override int GetHashCode()
-            {
-                return (this.Key != null) ? this.Key.GetHashCode() : 0;
-            }
+            public override int GetHashCode() => Key?.GetHashCode() ?? 0;
+        }
+
+        private class ModelWithValueTypes
+        {
+            [Key]
+            [IsSearchable]
+            public string Key { get; set; }
+
+            [IsFilterable]
+            public int IntValue { get; set; }
+
+            public Bucket Bucket { get; set; }
+
+            public override bool Equals(object obj) =>
+                obj is ModelWithValueTypes other &&
+                Key == other.Key &&
+                IntValue == other.IntValue &&
+                Bucket.Equals(other.Bucket);
+
+            public override int GetHashCode() => Key?.GetHashCode() ?? 0;
+        }
+
+        private class ModelWithNullableValueTypes
+        {
+            [Key]
+            [IsSearchable]
+            public string Key { get; set; }
+
+            [IsFilterable]
+            public int? IntValue { get; set; }
+
+            public Bucket? Bucket { get; set; }
+
+            public override bool Equals(object obj) =>
+                obj is ModelWithValueTypes other &&
+                Key == other.Key &&
+                IntValue == other.IntValue &&
+                Bucket.Equals(other.Bucket);
+
+            public override int GetHashCode() => Key?.GetHashCode() ?? 0;
         }
     }
 }
