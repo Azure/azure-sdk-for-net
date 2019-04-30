@@ -1,12 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
-
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.HDInsight.Job.Tests</PackageId>
     <Description>Microsoft.Azure.HDInsight.Job.Tests Class Library</Description>
-    <AssemblyName>Microsoft.Azure.HDInsight.Job.Tests</AssemblyName>
-    <Version>1.0.0</Version>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AssemblyTitle>Microsoft Azure HDInsight Job tests</AssemblyTitle>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -15,7 +11,7 @@
     <PackageReference Include="Microsoft.Azure.Management.HDInsight" Version="4.1.0-preview" />
     <PackageReference Include="Microsoft.Azure.Management.Sql" Version="1.22.0-preview" />
     <PackageReference Include="System.Data.SqlClient" Version="4.3.1" />
-    <ProjectReference Include="..\Microsoft.Azure.HDInsight.Job\Microsoft.Azure.HDInsight.Job.csproj" />
+    <ProjectReference Include="..\src\Microsoft.Azure.HDInsight.Job.csproj" />
   </ItemGroup>
 
   <ItemGroup>
