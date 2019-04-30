@@ -35,9 +35,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="id">Resource ID.</param>
         /// <param name="privateIPAddress">The private IP address of the IP
         /// configuration.</param>
-        /// <param name="privateIPAllocationMethod">The private IP allocation
-        /// method. Possible values are 'Static' and 'Dynamic'. Possible values
-        /// include: 'Static', 'Dynamic'</param>
+        /// <param name="privateIPAllocationMethod">The private IP address
+        /// allocation method. Possible values include: 'Static',
+        /// 'Dynamic'</param>
         /// <param name="subnet">The reference of the subnet resource.</param>
         /// <param name="publicIPAddress">The reference of the public IP
         /// resource.</param>
@@ -74,9 +74,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets the private IP allocation method. Possible values are
-        /// 'Static' and 'Dynamic'. Possible values include: 'Static',
-        /// 'Dynamic'
+        /// Gets or sets the private IP address allocation method. Possible
+        /// values include: 'Static', 'Dynamic'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }

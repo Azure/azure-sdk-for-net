@@ -5,12 +5,11 @@
     <Description>Provides ADAL based authentication for Azure management client libraries</Description>
     <AssemblyName>Microsoft.Rest.ClientRuntime.Azure.Authentication</AssemblyName>
     <AssemblyTitle>Authentication for Azure Management Clients</AssemblyTitle>
-    <Version>2.3.7</Version>    
+    <Version>2.3.8</Version>    
     <PackageTags>Microsoft AutoRest ClientRuntime Authentication $(NugetCommonTags) $(NugetCommonProfileTags)</PackageTags>
 	<PackageReleaseNotes>
       <![CDATA[
-        1) Fixed null ref exception when RSA private key is not found in the provided X509Certificate2
-        2) Adding support to target .NET Standard 2.0 framework
+        1) Added support for KeyVault/dSMS assisted Cert Rotation 
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
@@ -37,17 +36,17 @@
     <Reference Include="System.Runtime" />
     <Reference Include="System.Runtime.Serialization" />
     
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[4.3.0, 6.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.4' ">
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[4.3.0, 6.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[3.14.0, 4.0.0)" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="[4.3.0, 6.0.0)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="[5.1.2, 6.0.0)" />
   </ItemGroup>
 </Project>

@@ -11,21 +11,6 @@ namespace Azure.Core.Pipeline.Policies
         private readonly Random _random = new ThreadSafeRandom();
 
         /// <summary>
-        /// Gets or sets the list of response status codes to retry.
-        /// </summary>
-        public int[] RetriableCodes { get; set; } = Array.Empty<int>();
-
-        /// <summary>
-        /// Gets or sets the delegate to specify is exception should be retried.
-        /// </summary>
-        public Func<Exception, bool> ShouldRetryException { get; set; } = _ => false;
-
-        /// <summary>
-        /// Gets or sets the maximum number of retry attempts before giving up.
-        /// </summary>
-        public int MaxRetries { get; set; } = 10;
-
-        /// <summary>
         /// Gets or sets the timespan used as a base for exponential backoff.
         /// </summary>
         public TimeSpan Delay { get; set; } = TimeSpan.FromSeconds(1);
@@ -42,28 +27,19 @@ namespace Azure.Core.Pipeline.Policies
         {
         }
 
-        protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+        protected override void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay)
         {
             delay = CalculateDelay(attempted);
-
-            if (attempted > MaxRetries)
+            TimeSpan serverDelay = GetServerDelay(message);
+            if (serverDelay > delay)
             {
-                return false;
+                delay = serverDelay;
             }
-
-            return Array.IndexOf(RetriableCodes, message.Response.Status) >= 0;
         }
 
-        protected override bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay)
+        protected override void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay)
         {
             delay = CalculateDelay(attempted);
-
-            if (attempted > MaxRetries)
-            {
-                return false;
-            }
-
-            return ShouldRetryException != null && ShouldRetryException(exception);
         }
 
         private TimeSpan CalculateDelay(int attempted)

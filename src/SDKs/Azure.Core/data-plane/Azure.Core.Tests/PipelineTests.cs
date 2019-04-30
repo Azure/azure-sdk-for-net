@@ -14,8 +14,6 @@ namespace Azure.Core.Tests
 {
     public class PipelineTests
     {
-/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5773 test skipped for net461 */
-#if !FullNetFx
         [Test]
         public async Task Basics()
         {
@@ -23,7 +21,7 @@ namespace Azure.Core.Tests
                 new MockResponse(500),
                 new MockResponse(1));
 
-            var pipeline = new HttpPipeline(mockTransport, new [] { new CustomRetryPolicy() });
+            var pipeline = new HttpPipeline(mockTransport, new [] { new FixedRetryPolicy() { Delay = TimeSpan.Zero, MaxRetries = 5 } }, responseClassifier: new CustomResponseClassifier());
 
             var request = pipeline.CreateRequest();
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
@@ -31,55 +29,22 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(1, response.Status);
         }
-#endif
 
-/* Issue https://github.com/Azure/azure-sdk-for-net/issues/5773 test skipped for net461 */
-#if !FullNetFx
-        class CustomRetryPolicy : RetryPolicy
+        class CustomResponseClassifier : ResponseClassifier
         {
-            protected override bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay)
+            public override bool IsRetriableResponse(Response response)
             {
-                delay = TimeSpan.Zero;
-                if (attempted > 5) return false;
-                if (message.Response.Status == 1) return false;
-                return true;
+                return response.Status == 500;
             }
 
-            protected override bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay)
+            public override bool IsRetriableException(Exception exception)
             {
                 return false;
             }
-        }
-#endif
 
-        class TestClientOptions : HttpClientOptions
-        {
-        }
-
-        class NullPipelineContext : HttpPipelineRequest
-        {
-            public override void AddHeader(HttpHeader header)
+            public override bool IsErrorResponse(Response response)
             {
-            }
-
-            public override bool TryGetHeader(string name, out string value)
-            {
-                value = null;
-                return false;
-            }
-
-            public override IEnumerable<HttpHeader> Headers
-            {
-                get
-                {
-                    yield break;
-                }
-            }
-
-            public override string RequestId { get; set; }
-
-            public override void Dispose()
-            {
+                return IsRetriableResponse(response);
             }
         }
     }

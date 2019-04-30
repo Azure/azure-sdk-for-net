@@ -12,6 +12,15 @@ namespace Azure.Core.Pipeline.Policies
 {
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
+        private const string RetryAfterHeaderName = "Retry-After";
+        private const string RetryAfterMsHeaderName = "retry-after-ms";
+        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+
+        /// <summary>
+        /// Gets or sets the maximum number of retry attempts before giving up.
+        /// </summary>
+        public int MaxRetries { get; set; } = 10;
+
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             int attempt = 0;
@@ -35,13 +44,19 @@ namespace Azure.Core.Pipeline.Policies
                     lastException = ex;
                 }
 
-                TimeSpan delay;
+                TimeSpan delay = TimeSpan.Zero;
 
                 attempt++;
 
+                var shouldRetry = attempt <= MaxRetries;
+
                 if (lastException != null)
                 {
-                    if (!IsRetriableException(lastException, attempt, out delay))
+                    if (shouldRetry && message.ResponseClassifier.IsRetriableException(lastException))
+                    {
+                        GetDelay(message, lastException, attempt, out delay);
+                    }
+                    else
                     {
                         // Rethrow a singular exception
                         if (exceptions.Count == 1)
@@ -52,7 +67,18 @@ namespace Azure.Core.Pipeline.Policies
                         throw new AggregateException($"Retry failed after {attempt} tries.", exceptions);
                     }
                 }
-                else if (!IsRetriableResponse(message, attempt, out delay))
+                else if (message.ResponseClassifier.IsErrorResponse(message.Response))
+                {
+                    if (shouldRetry && message.ResponseClassifier.IsRetriableResponse(message.Response))
+                    {
+                        GetDelay(message, attempt, out delay);
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                else
                 {
                     return;
                 }
@@ -71,8 +97,34 @@ namespace Azure.Core.Pipeline.Policies
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
         }
 
-        protected abstract bool IsRetriableResponse(HttpPipelineMessage message, int attempted, out TimeSpan delay);
+        protected virtual TimeSpan GetServerDelay(HttpPipelineMessage message)
+        {
+            if (message.Response.TryGetHeader(RetryAfterHeaderName, out var retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    return TimeSpan.FromSeconds(delaySeconds);
+                }
+                if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
+                {
+                    return delayTime - DateTimeOffset.Now;
+                }
+            }
 
-        protected abstract bool IsRetriableException(Exception exception, int attempted, out TimeSpan delay);
+            if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out retryAfterValue) ||
+                message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    return TimeSpan.FromMilliseconds(delaySeconds);
+                }
+            }
+
+            return TimeSpan.Zero;
+        }
+
+        protected abstract void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay);
+
+        protected abstract void GetDelay(HttpPipelineMessage message, Exception exception, int attempted, out TimeSpan delay);
     }
 }

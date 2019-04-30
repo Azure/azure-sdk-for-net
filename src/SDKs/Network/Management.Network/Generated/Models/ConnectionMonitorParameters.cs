@@ -32,6 +32,10 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ConnectionMonitorParameters
         /// class.
         /// </summary>
+        /// <param name="source">Describes the source of connection
+        /// monitor.</param>
+        /// <param name="destination">Describes the destination of connection
+        /// monitor.</param>
         /// <param name="autoStart">Determines if the connection monitor will
         /// start automatically once created.</param>
         /// <param name="monitoringIntervalInSeconds">Monitoring interval in
@@ -51,11 +55,13 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets describes the source of connection monitor.
         /// </summary>
         [JsonProperty(PropertyName = "source")]
         public ConnectionMonitorSource Source { get; set; }
 
         /// <summary>
+        /// Gets or sets describes the destination of connection monitor.
         /// </summary>
         [JsonProperty(PropertyName = "destination")]
         public ConnectionMonitorDestination Destination { get; set; }

@@ -133,9 +133,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Product identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static PolicyContract Get(this IProductPolicyOperations operations, string resourceGroupName, string serviceName, string productId)
+            /// <param name='format'>
+            /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+            /// </param>
+            public static PolicyContract Get(this IProductPolicyOperations operations, string resourceGroupName, string serviceName, string productId, string format = default(string))
             {
-                return operations.GetAsync(resourceGroupName, serviceName, productId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, productId, format).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -154,12 +157,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Product identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
+            /// <param name='format'>
+            /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyContract> GetAsync(this IProductPolicyOperations operations, string resourceGroupName, string serviceName, string productId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyContract> GetAsync(this IProductPolicyOperations operations, string resourceGroupName, string serviceName, string productId, string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, productId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, productId, format, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

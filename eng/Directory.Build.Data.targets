@@ -13,17 +13,18 @@
   <PropertyGroup>
     <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
     <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
-    <EnableClientSdkAnalyzers Condition="'$(EnableClientSdkAnalyzers)' == '' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
+    <IsPerformanceTestProject Condition="'$(IsPerformanceTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Performance'))">true</IsPerformanceTestProject>
+    <EnableClientSdkAnalyzers Condition="'$(EnableClientSdkAnalyzers)' == '' and '$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsPerformanceTestProject)' != 'true'">true</EnableClientSdkAnalyzers>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(SignAssembly)' == 'true' and '$(IsTestProject)' == 'true'">
+  <PropertyGroup Condition="'$(SignAssembly)' == 'true' and ('$(IsTestProject)' == 'true' or '$(IsPerformanceTestProject)' == 'true')">
     <!-- Always fully sign test assemblies since we have a full public/private key -->
     <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
+    <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsPerformanceTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
     <IsPackable>false</IsPackable>
     <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.0;net461</RequiredTargetFrameworks>

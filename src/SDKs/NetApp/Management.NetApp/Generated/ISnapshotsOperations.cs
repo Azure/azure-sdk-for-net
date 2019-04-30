@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public partial interface ISnapshotsOperations
     {
         /// <summary>
-        /// List snapshots
+        /// Describe all snapshots
         /// </summary>
+        /// <remarks>
+        /// List all snapshots associated with the volume
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -55,8 +58,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<Snapshot>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get a snapshot
+        /// Describe a snapshot
         /// </summary>
+        /// <remarks>
+        /// Get details of the specified snapshot
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -78,7 +84,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -91,6 +97,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Create a snapshot
         /// </summary>
+        /// <remarks>
+        /// Create the specified snapshot within the given volume
+        /// </remarks>
         /// <param name='body'>
         /// Snapshot object supplied in the body of the operation.
         /// </param>
@@ -115,7 +124,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -126,8 +135,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<Snapshot>> CreateWithHttpMessagesAsync(Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patch a snapshot
+        /// Update a snapshot
         /// </summary>
+        /// <remarks>
+        /// Patch a snapshot
+        /// </remarks>
         /// <param name='body'>
         /// Snapshot object supplied in the body of the operation.
         /// </param>
@@ -152,7 +164,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -163,8 +175,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<Snapshot>> UpdateWithHttpMessagesAsync(SnapshotPatch body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete snapshot
+        /// Delete a snapshot
         /// </summary>
+        /// <remarks>
+        /// Delete snapshot
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -186,7 +201,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -196,6 +211,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Create a snapshot
         /// </summary>
+        /// <remarks>
+        /// Create the specified snapshot within the given volume
+        /// </remarks>
         /// <param name='body'>
         /// Snapshot object supplied in the body of the operation.
         /// </param>
@@ -220,7 +238,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -231,8 +249,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<Snapshot>> BeginCreateWithHttpMessagesAsync(Snapshot body, string resourceGroupName, string accountName, string poolName, string volumeName, string snapshotName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete snapshot
+        /// Delete a snapshot
         /// </summary>
+        /// <remarks>
+        /// Delete snapshot
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -254,7 +275,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">

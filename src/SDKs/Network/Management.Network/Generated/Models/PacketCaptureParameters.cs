@@ -34,12 +34,15 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="target">The ID of the targeted resource, only VM is
         /// currently supported.</param>
+        /// <param name="storageLocation">Describes the storage location for a
+        /// packet capture session.</param>
         /// <param name="bytesToCapturePerPacket">Number of bytes captured per
         /// packet, the remaining bytes are truncated.</param>
         /// <param name="totalBytesPerSession">Maximum size of the capture
         /// output.</param>
         /// <param name="timeLimitInSeconds">Maximum duration of the capture
         /// session in seconds.</param>
+        /// <param name="filters">A list of packet capture filters.</param>
         public PacketCaptureParameters(string target, PacketCaptureStorageLocation storageLocation, int? bytesToCapturePerPacket = default(int?), int? totalBytesPerSession = default(int?), int? timeLimitInSeconds = default(int?), IList<PacketCaptureFilter> filters = default(IList<PacketCaptureFilter>))
         {
             Target = target;
@@ -83,11 +86,14 @@ namespace Microsoft.Azure.Management.Network.Models
         public int? TimeLimitInSeconds { get; set; }
 
         /// <summary>
+        /// Gets or sets describes the storage location for a packet capture
+        /// session.
         /// </summary>
         [JsonProperty(PropertyName = "storageLocation")]
         public PacketCaptureStorageLocation StorageLocation { get; set; }
 
         /// <summary>
+        /// Gets or sets a list of packet capture filters.
         /// </summary>
         [JsonProperty(PropertyName = "filters")]
         public IList<PacketCaptureFilter> Filters { get; set; }

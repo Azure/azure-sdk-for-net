@@ -32,11 +32,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             options.RetryPolicy = new FixedRetryPolicy()
             {
                 MaxRetries = 10,
-                Delay = TimeSpan.FromSeconds(1),
-                RetriableCodes = new [] {
-                    500, // Internal Server Error
-                    504  // Gateway Timeout
-                }
+                Delay = TimeSpan.FromSeconds(1)
             };
 
             // add a policy (custom behavior) that executes once per client call
@@ -45,7 +41,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // add a policy that executes once per retry
             options.PerRetryPolicies.Add(new CustomLogPolicy());
 
-            var connectionString = Environment.GetEnvironmentVariable("AZ_CONFIG_CONNECTION");
+            var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
@@ -57,7 +53,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         {
             public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
             {
-                message.Request.AddHeader("User-Agent", "ConfiguraingPipelineSample");
+                message.Request.Headers.Add("User-Agent", "ConfiguraingPipelineSample");
                 await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
             }
         }

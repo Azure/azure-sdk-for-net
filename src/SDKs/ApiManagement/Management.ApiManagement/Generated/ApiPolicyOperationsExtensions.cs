@@ -140,9 +140,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            public static PolicyContract Get(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string apiId)
+            /// <param name='format'>
+            /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+            /// </param>
+            public static PolicyContract Get(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string format = default(string))
             {
-                return operations.GetAsync(resourceGroupName, serviceName, apiId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, apiId, format).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -162,12 +165,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
+            /// <param name='format'>
+            /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyContract> GetAsync(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyContract> GetAsync(this IApiPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, format, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

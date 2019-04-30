@@ -74,11 +74,11 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
-                request.AddHeader("Date", "3/26/2019");
-                request.AddHeader("Custom-Header", "Value");
+                request.Headers.Add("Date", "3/26/2019");
+                request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
                 requestId = request.RequestId;
 
@@ -136,11 +136,11 @@ namespace Azure.Core.Tests
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-                request.AddHeader(new HttpHeader("Content-Type", "text/json"));
+                request.Headers.Add("Content-Type", "text/json");
                 requestId = request.RequestId;
 
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
@@ -158,7 +158,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesAreLoggedInBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(isSeekable: false);
+            Response response = await SendRequest(isSeekable: false);
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
 
@@ -182,7 +182,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(isSeekable: false);
+            Response response = await SendRequest(isSeekable: false);
 
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentBlockEvent).ToArray();
 
@@ -206,7 +206,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesAreLoggedInTextBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: false,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -233,7 +233,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInTextBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: false,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -260,7 +260,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task SeekableTextResponsesAreLoggedInText()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: true,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -276,7 +276,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task SeekableTextResponsesErrorsAreLoggedInText()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: true,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -289,24 +289,24 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Hello world", errorContentEvent.GetProperty<string>("content"));
         }
 
-        private static async Task<HttpPipelineResponse> SendRequest(bool isSeekable, Action<MockResponse> setupRequest = null)
+        private static async Task<Response> SendRequest(bool isSeekable, Action<MockResponse> setupRequest = null)
         {
             var mockResponse = new MockResponse(500);
             byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
             if (isSeekable)
             {
-                mockResponse.ResponseContentStream = new MemoryStream(responseContent);
+                mockResponse.ContentStream = new MemoryStream(responseContent);
             }
             else
             {
-                mockResponse.ResponseContentStream = new NonSeekableMemoryStream(responseContent);
+                mockResponse.ContentStream = new NonSeekableMemoryStream(responseContent);
             }
             setupRequest?.Invoke(mockResponse);
 
             var mockTransport = new MockTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
 

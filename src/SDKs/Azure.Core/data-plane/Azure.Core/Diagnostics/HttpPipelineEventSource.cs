@@ -45,7 +45,7 @@ namespace Azure.Core.Diagnostics
 
         // TODO (pri 2): this logs just the URI. We need more
         [NonEvent]
-        public void Request(HttpPipelineRequest request)
+        public void Request(Request request)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
@@ -54,7 +54,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentAsync(HttpPipelineRequest request, CancellationToken cancellationToken)
+        public async Task RequestContentAsync(Request request, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -63,7 +63,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task RequestContentTextAsync(HttpPipelineRequest request, Encoding encoding, CancellationToken cancellationToken)
+        public async Task RequestContentTextAsync(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
@@ -72,7 +72,7 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void Response(HttpPipelineResponse response)
+        public void Response(Response response)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
@@ -81,11 +81,11 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task ResponseContentAsync(HttpPipelineResponse response, CancellationToken cancellationToken)
+        public async Task ResponseContentAsync(Response response, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                ResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream));
+                ResponseContent(response.RequestId, await FormatContentAsync(response.ContentStream));
             }
         }
 
@@ -99,16 +99,16 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task ResponseContentTextAsync(HttpPipelineResponse response, Encoding encoding, CancellationToken cancellationToken)
+        public async Task ResponseContentTextAsync(Response response, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                ResponseContentText(response.RequestId, await FormatContentStringAsync(response.ResponseContentStream, encoding).ConfigureAwait(false));
+                ResponseContentText(response.RequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
             }
         }
 
         [NonEvent]
-        public void ErrorResponse(HttpPipelineResponse response)
+        public void ErrorResponse(Response response)
         {
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
             {
@@ -117,19 +117,19 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public async Task ErrorResponseContentAsync(HttpPipelineResponse response, CancellationToken cancellationToken)
+        public async Task ErrorResponseContentAsync(Response response, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                ErrorResponseContent(response.RequestId, await FormatContentAsync(response.ResponseContentStream).ConfigureAwait(false));
+                ErrorResponseContent(response.RequestId, await FormatContentAsync(response.ContentStream).ConfigureAwait(false));
             }
         }
         [NonEvent]
-        public async Task ErrorResponseContentTextAsync(HttpPipelineResponse response, Encoding encoding, CancellationToken cancellationToken)
+        public async Task ErrorResponseContentTextAsync(Response response, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                ErrorResponseContentText(response.RequestId, await FormatContentStringAsync(response.ResponseContentStream, encoding).ConfigureAwait(false));
+                ErrorResponseContentText(response.RequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
             }
         }
 
@@ -143,13 +143,13 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
-        public void ResponseDelay(HttpPipelineResponse response, long delayMilliseconds)
+        public void ResponseDelay(Response response, long delayMilliseconds)
         {
             ResponseDelayCore(delayMilliseconds);
         }
 
         [NonEvent]
-        public void RequestRetrying(HttpPipelineRequest request, int retryNumber)
+        public void RequestRetrying(Request request, int retryNumber)
         {
             RequestRetrying(request.RequestId, retryNumber);
         }

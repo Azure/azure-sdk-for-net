@@ -19,13 +19,13 @@ namespace Azure.Core.Pipeline.Policies
         {
             await ProcessNextAsync(pipeline, message);
 
-            if (message.Response.ResponseContentStream != null)
+            if (message.Response.ContentStream != null && !message.Response.ContentStream.CanSeek)
             {
-                Stream responseContentStream = message.Response.ResponseContentStream;
+                Stream responseContentStream = message.Response.ContentStream;
                 var bufferedStream = new MemoryStream();
                 await responseContentStream.CopyToAsync(bufferedStream);
                 bufferedStream.Position = 0;
-                message.Response.ResponseContentStream = bufferedStream;
+                message.Response.ContentStream = bufferedStream;
             }
         }
     }

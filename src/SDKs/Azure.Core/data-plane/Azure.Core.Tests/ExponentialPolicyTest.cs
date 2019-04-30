@@ -17,9 +17,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitsBetweenRetries()
         {
-            var policy = new ExponentialRetryPolicyMock(retriableCodes: new [] { 500 }, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -35,9 +36,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task WaitsSameAmountEveryTime()
         {
-            var policy = new ExponentialRetryPolicyMock(retriableCodes: new [] { 500 }, maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new ExponentialRetryPolicyMock(maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 8 };
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
@@ -57,9 +59,10 @@ namespace Azure.Core.Tests
         [Test]
         public async Task RespectsMaxDelay()
         {
-            var policy = new ExponentialRetryPolicyMock(retriableCodes: new [] { 500 }, maxRetries: 6, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(5));
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new ExponentialRetryPolicyMock(maxRetries: 6, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(5));
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy);
+            var task = SendRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 5, 5, 5 };
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
@@ -76,15 +79,41 @@ namespace Azure.Core.Tests
             Assert.AreEqual(500, response.Status);
         }
 
+        [Theory]
+        [TestCase(2, 3, 3)]
+        [TestCase(3, 2, 3)]
+        [TestCase(3, 10, 10)]
+        public async Task UsesLargerOfDelayAndServerDelay(int delay, int retryAfter, int expected)
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("Retry-After", retryAfter.ToString()));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await policy.DelayGate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            AssertExponentialDelay(TimeSpan.FromSeconds(expected), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
         private void AssertExponentialDelay(TimeSpan expected, TimeSpan actual)
         {
             // Expect maximum 25% variance
             Assert.LessOrEqual(Math.Abs(expected.TotalMilliseconds / actual.TotalMilliseconds - 1), 0.25, "Expected {0} to be around {1}", actual, expected);
         }
 
-        protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int[] retriableCodes, Func<Exception, bool> exceptionFilter = null, int maxRetries = 3)
+        protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
         {
-            var policy = new ExponentialRetryPolicyMock(retriableCodes, exceptionFilter, maxRetries, TimeSpan.FromSeconds(3), maxDelay: TimeSpan.MaxValue);
+            var policy = new ExponentialRetryPolicyMock(maxRetries, TimeSpan.FromSeconds(3), maxDelay: TimeSpan.MaxValue);
             return (policy, policy.DelayGate);
         }
 
@@ -92,10 +121,8 @@ namespace Azure.Core.Tests
         {
             public AsyncGate<TimeSpan, object> DelayGate { get; } = new AsyncGate<TimeSpan, object>();
 
-            public ExponentialRetryPolicyMock(int[] retriableCodes, Func<Exception, bool> shouldRetryException = null, int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
+            public ExponentialRetryPolicyMock(int maxRetries = 3, TimeSpan delay = default, TimeSpan maxDelay = default)
             {
-                RetriableCodes = retriableCodes;
-                ShouldRetryException = shouldRetryException;
                 MaxRetries = maxRetries;
                 Delay = delay;
                 MaxDelay = maxDelay;

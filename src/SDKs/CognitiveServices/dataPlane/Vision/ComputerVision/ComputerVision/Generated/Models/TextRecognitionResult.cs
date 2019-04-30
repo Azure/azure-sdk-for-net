@@ -17,7 +17,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// Json object representing a recognized text region
+    /// An object representing a recognized text region
     /// </summary>
     public partial class TextRecognitionResult
     {
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// <param name="height">The height of the image in pixels or the PDF
         /// in inches.</param>
         /// <param name="unit">The unit used in the Width, Height and
-        /// BoundingBox. For images, the unit is "pixel". For PDF, the unit is
-        /// "inch". Possible values include: 'pixel', 'inch'</param>
+        /// BoundingBox. For images, the unit is 'pixel'. For PDF, the unit is
+        /// 'inch'. Possible values include: 'pixel', 'inch'</param>
         public TextRecognitionResult(IList<Line> lines, int? page = default(int?), double? clockwiseOrientation = default(double?), double? width = default(double?), double? height = default(double?), TextRecognitionResultDimensionUnit? unit = default(TextRecognitionResultDimensionUnit?))
         {
             Page = page;
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
 
         /// <summary>
         /// Gets or sets the unit used in the Width, Height and BoundingBox.
-        /// For images, the unit is "pixel". For PDF, the unit is "inch".
+        /// For images, the unit is 'pixel'. For PDF, the unit is 'inch'.
         /// Possible values include: 'pixel', 'inch'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]

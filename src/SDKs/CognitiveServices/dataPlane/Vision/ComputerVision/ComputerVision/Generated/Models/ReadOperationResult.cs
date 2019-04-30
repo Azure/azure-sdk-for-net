@@ -33,8 +33,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         /// </summary>
         /// <param name="status">Status of the read operation. Possible values
         /// include: 'Not Started', 'Running', 'Failed', 'Succeeded'</param>
-        /// <param name="recognitionResults">A array of text recognition result
-        /// of the read operation.</param>
+        /// <param name="recognitionResults">An array of text recognition
+        /// result of the read operation.</param>
         public ReadOperationResult(TextOperationStatusCodes status = default(TextOperationStatusCodes), IList<TextRecognitionResult> recognitionResults = default(IList<TextRecognitionResult>))
         {
             Status = status;
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
         public TextOperationStatusCodes Status { get; set; }
 
         /// <summary>
-        /// Gets or sets a array of text recognition result of the read
+        /// Gets or sets an array of text recognition result of the read
         /// operation.
         /// </summary>
         [JsonProperty(PropertyName = "recognitionResults")]

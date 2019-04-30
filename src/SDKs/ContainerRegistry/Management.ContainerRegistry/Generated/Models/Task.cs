@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="name">The name of the resource.</param>
         /// <param name="type">The type of the resource.</param>
         /// <param name="tags">The tags of the resource.</param>
+        /// <param name="identity">Identity for the resource.</param>
         /// <param name="provisioningState">The provisioning state of the task.
         /// Possible values include: 'Creating', 'Updating', 'Deleting',
         /// 'Succeeded', 'Failed', 'Canceled'</param>
@@ -57,9 +58,10 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// the task.</param>
         /// <param name="credentials">The properties that describes a set of
         /// credentials that will be used when this run is invoked.</param>
-        public Task(string location, PlatformProperties platform, TaskStepProperties step, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TriggerProperties trigger = default(TriggerProperties), Credentials credentials = default(Credentials))
+        public Task(string location, PlatformProperties platform, TaskStepProperties step, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IdentityProperties identity = default(IdentityProperties), string provisioningState = default(string), System.DateTime? creationDate = default(System.DateTime?), string status = default(string), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TriggerProperties trigger = default(TriggerProperties), Credentials credentials = default(Credentials))
             : base(location, id, name, type, tags)
         {
+            Identity = identity;
             ProvisioningState = provisioningState;
             CreationDate = creationDate;
             Status = status;
@@ -76,6 +78,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets identity for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityProperties Identity { get; set; }
 
         /// <summary>
         /// Gets the provisioning state of the task. Possible values include:

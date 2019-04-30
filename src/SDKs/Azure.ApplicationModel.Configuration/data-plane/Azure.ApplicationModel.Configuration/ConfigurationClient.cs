@@ -12,16 +12,36 @@ using Azure.Core.Pipeline.Policies;
 
 namespace Azure.ApplicationModel.Configuration
 {
+    /// <summary>
+    /// The client to use for interacting with the Azure Configuration Store.
+    /// </summary>
     public partial class ConfigurationClient
     {
         private readonly Uri _baseUri;
         private readonly HttpPipeline _pipeline;
 
+
+        /// <summary>
+        /// Protected constructor to allow mocking
+        /// </summary>
+        protected ConfigurationClient()
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConfigurationClient"/>.
+        /// </summary>
+        /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
         public ConfigurationClient(string connectionString)
             : this(connectionString, new ConfigurationClientOptions())
         {
         }
 
+        /// <summary>
+        /// Creates a <see cref="ConfigurationClient"/> that sends requests to the configuration store.
+        /// </summary>
+        /// <param name="connectionString">Connection string with authentication option and related parameters.</param>
+        /// <param name="options">Options that allow to configure the management of the request sent to the configuration store.</param>
         public ConfigurationClient(string connectionString, ConfigurationClientOptions options)
         {
             if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
@@ -30,6 +50,7 @@ namespace Azure.ApplicationModel.Configuration
             ParseConnectionString(connectionString, out _baseUri, out var credential, out var secret);
 
             _pipeline = HttpPipeline.Build(options,
+                    options.ResponseClassifier,
                     options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
                     new AuthenticationPolicy(credential, secret),
@@ -37,11 +58,12 @@ namespace Azure.ApplicationModel.Configuration
                     BufferResponsePolicy.Singleton);
         }
 
-        [KnownException(typeof(HttpRequestException), Message = "The request failed due to an underlying issue such as network connectivity, DNS failure, or timeout.")]
-        [HttpError(typeof(RequestFailedException), 412, Message = "Matching item is already in the store")]
-        [HttpError(typeof(RequestFailedException), 429, Message = "Too many requests")]
-        [UsageErrors(typeof(RequestFailedException), 401, 409, 408, 500, 502, 503, 504)]
-        public async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -54,9 +76,9 @@ namespace Azure.ApplicationModel.Configuration
 
                 BuildUriForKvRoute(request.UriBuilder, setting);
 
-                request.AddHeader(IfNoneMatch, "*");
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(IfNoneMatch, "*");
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
                 request.Content = HttpPipelineRequestContent.Create(content);
 
@@ -70,13 +92,25 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// </summary>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -87,12 +121,12 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.Method = HttpPipelineMethod.Put;
                 BuildUriForKvRoute(request.UriBuilder, setting);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
                 if (setting.ETag != default)
                 {
-                    request.AddHeader(IfMatchName, $"\"{setting.ETag.ToString()}\"");
+                    request.Headers.Add(IfMatchName, $"\"{setting.ETag.ToString()}\"");
                 }
 
                 request.Content = HttpPipelineRequestContent.Create(content);
@@ -107,13 +141,25 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return await SetAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        /// <summary>
+        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             if (setting == null) throw new ArgumentNullException(nameof(setting));
             if (string.IsNullOrEmpty(setting.Key)) throw new ArgumentNullException($"{nameof(setting)}.{nameof(setting.Key)}");
@@ -124,16 +170,16 @@ namespace Azure.ApplicationModel.Configuration
 
                 request.Method = HttpPipelineMethod.Put;
                 BuildUriForKvRoute(request.UriBuilder, setting);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
-                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
                 if (setting.ETag != default)
                 {
-                    request.AddHeader(IfMatchName, $"\"{setting.ETag}\"");
+                    request.Headers.Add(IfMatchName, $"\"{setting.ETag}\"");
                 }
                 else
                 {
-                    request.AddHeader(IfMatchName, "*");
+                    request.Headers.Add(IfMatchName, "*");
                 }
 
                 request.Content = HttpPipelineRequestContent.Create(content);
@@ -148,13 +194,29 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
+        /// <summary>
+        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellation);
         }
 
-        public async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
+        /// <summary>
+        /// Deletes an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only deleted if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always deleted.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException(nameof(key));
 
@@ -165,7 +227,7 @@ namespace Azure.ApplicationModel.Configuration
 
                 if (etag != default)
                 {
-                    request.AddHeader(IfMatchName, $"\"{etag.ToString()}\"");
+                    request.Headers.Add(IfMatchName, $"\"{etag.ToString()}\"");
                 }
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
@@ -178,7 +240,14 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellation = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
 
@@ -186,14 +255,14 @@ namespace Azure.ApplicationModel.Configuration
             {
                 request.Method = HttpPipelineMethod.Get;
                 BuildUriForKvRoute(request.UriBuilder, key, label);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
 
                 if (acceptDateTime != default)
                 {
                     var dateTime = acceptDateTime.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
                 }
-                request.AddHeader(HttpHeader.Common.JsonContentType);
+                request.Headers.Add(HttpHeader.Common.JsonContentType);
 
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -204,17 +273,22 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
+        /// <summary>
+        /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
             using (var request = _pipeline.CreateRequest())
             {
                 request.Method = HttpPipelineMethod.Get;
                 BuildUriForGetBatch(request.UriBuilder, selector);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {
                     var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
                 }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 
@@ -227,17 +301,23 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        public async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
+        /// <summary>
+        /// Lists chronological/historical representation of <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
+        /// </summary>
+        /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
+        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellation = default)
         {
             using (var request = _pipeline.CreateRequest())
             {
                 request.Method = HttpPipelineMethod.Get;
                 BuildUriForRevisions(request.UriBuilder, selector);
-                request.AddHeader(MediaTypeKeyValueApplicationHeader);
+                request.Headers.Add(MediaTypeKeyValueApplicationHeader);
                 if (selector.AsOf.HasValue)
                 {
                     var dateTime = selector.AsOf.Value.UtcDateTime.ToString(AcceptDateTimeFormat);
-                    request.AddHeader(AcceptDatetimeHeader, dateTime);
+                    request.Headers.Add(AcceptDatetimeHeader, dateTime);
                 }
                 var response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
 

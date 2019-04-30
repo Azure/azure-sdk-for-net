@@ -2,51 +2,42 @@
 // Licensed under the MIT License.
 
 using System;
-using System.ComponentModel;
-using System.Text;
 
 namespace Azure
 {
     public readonly struct ETag : IEquatable<ETag>
     {
-        readonly byte[] _ascii;
+        private readonly string _value;
 
-        public ETag(string etag) => _ascii = Encoding.ASCII.GetBytes(etag);
+        public ETag(string etag) => _value = etag;
+
+        public static bool operator ==(ETag left, ETag right) => left.Equals(right);
+
+        public static bool operator !=(ETag left, ETag right) => !left.Equals(right);
 
         public bool Equals(ETag other)
         {
-            if(_ascii == null) {
-                if (other._ascii == null) return true;
-                return false;
-            }
-            if (other._ascii == null) return false;
-            
-            return _ascii.AsSpan().SequenceEqual(other._ascii);
+            return string.Equals(_value, other._value);
         }
 
-        public static bool operator ==(ETag left, ETag rigth) => left.Equals(rigth);
-
-        public static bool operator !=(ETag left, ETag rigth) => !left.Equals(rigth);
-
-        public override string ToString() => _ascii == null ? "<null>" : Encoding.ASCII.GetString(_ascii);
-
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode()
+        public bool Equals(string other)
         {
-            if (_ascii == null) return 0;
-            int hash = 17;
-            for (int i = 0; i < _ascii.Length; i+=2)
-            {
-                hash = hash * 23 + _ascii[i];
-            }
-            return hash;
+            return string.Equals(_value, other);
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj)
         {
-            if (obj is ETag other) return this == other;
-            return false;
+            return (obj is ETag other) && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return _value?.GetHashCode() ?? 0;
+        }
+
+        public override string ToString()
+        {
+            return _value ?? "<null>";
         }
     }
 }

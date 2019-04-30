@@ -40,12 +40,16 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="storageProfile">Specifies the storage settings for the
         /// virtual machine disks.</param>
         /// <param name="provisioningState">The provisioning state.</param>
-        public ImageUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string))
+        /// <param name="hyperVGeneration">Gets the HyperVGenerationType of the
+        /// VirtualMachine created from the image. Possible values include:
+        /// 'V1', 'V2'</param>
+        public ImageUpdate(IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource sourceVirtualMachine = default(SubResource), ImageStorageProfile storageProfile = default(ImageStorageProfile), string provisioningState = default(string), string hyperVGeneration = default(string))
             : base(tags)
         {
             SourceVirtualMachine = sourceVirtualMachine;
             StorageProfile = storageProfile;
             ProvisioningState = provisioningState;
+            HyperVGeneration = hyperVGeneration;
             CustomInit();
         }
 
@@ -73,6 +77,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets the HyperVGenerationType of the VirtualMachine created from
+        /// the image. Possible values include: 'V1', 'V2'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hyperVGeneration")]
+        public string HyperVGeneration { get; set; }
 
         /// <summary>
         /// Validate the object.

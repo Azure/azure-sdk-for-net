@@ -35,15 +35,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="reservationPurchasesAllowed">The
-        /// reservationPurchasesAllowed flag.</param>
         /// <param name="marketplacePurchasesAllowed">The
         /// marketplacePurchasesAllowed flag.</param>
-        public Policy(string id = default(string), string name = default(string), string type = default(string), bool? reservationPurchasesAllowed = default(bool?), bool? marketplacePurchasesAllowed = default(bool?))
+        /// <param name="reservationPurchasesAllowed">The
+        /// reservationPurchasesAllowed flag.</param>
+        /// <param name="subscriptionOwnerCanViewCharges">The
+        /// subscriptionOwnerCanViewCharges flag.</param>
+        public Policy(string id = default(string), string name = default(string), string type = default(string), bool? marketplacePurchasesAllowed = default(bool?), bool? reservationPurchasesAllowed = default(bool?), bool? subscriptionOwnerCanViewCharges = default(bool?))
             : base(id, name, type)
         {
-            ReservationPurchasesAllowed = reservationPurchasesAllowed;
             MarketplacePurchasesAllowed = marketplacePurchasesAllowed;
+            ReservationPurchasesAllowed = reservationPurchasesAllowed;
+            SubscriptionOwnerCanViewCharges = subscriptionOwnerCanViewCharges;
             CustomInit();
         }
 
@@ -53,16 +56,22 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets the marketplacePurchasesAllowed flag.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.marketplacePurchasesAllowed")]
+        public bool? MarketplacePurchasesAllowed { get; set; }
+
+        /// <summary>
         /// Gets or sets the reservationPurchasesAllowed flag.
         /// </summary>
         [JsonProperty(PropertyName = "properties.reservationPurchasesAllowed")]
         public bool? ReservationPurchasesAllowed { get; set; }
 
         /// <summary>
-        /// Gets or sets the marketplacePurchasesAllowed flag.
+        /// Gets or sets the subscriptionOwnerCanViewCharges flag.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.marketplacePurchasesAllowed")]
-        public bool? MarketplacePurchasesAllowed { get; set; }
+        [JsonProperty(PropertyName = "properties.subscriptionOwnerCanViewCharges")]
+        public bool? SubscriptionOwnerCanViewCharges { get; set; }
 
     }
 }

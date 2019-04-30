@@ -107,6 +107,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Operation identifier within an API. Must be unique in the current
         /// API Management service instance.
         /// </param>
+        /// <param name='format'>
+        /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -122,7 +125,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PolicyContract,ApiOperationPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PolicyContract,ApiOperationPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates policy configuration for the API Operation
         /// level.

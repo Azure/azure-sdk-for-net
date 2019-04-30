@@ -1,45 +1,32 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core.Pipeline;
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.IO;
+using Azure.Core.Pipeline;
 
 namespace Azure
 {
-    public readonly struct Response: IDisposable
+    public abstract class Response: IDisposable
     {
-        private readonly HttpPipelineResponse _httpResponse;
+        public abstract int Status { get; }
 
-        public Response(HttpPipelineResponse httpResponse)
-        {
-            if (httpResponse == null)
-            {
-                throw new ArgumentNullException(nameof(httpResponse));
-            }
+        public abstract Stream ContentStream { get; set; }
 
-            _httpResponse = httpResponse;
-        }
+        public abstract string RequestId { get; set; }
 
-        public int Status => _httpResponse.Status;
+        public virtual ResponseHeaders Headers => new ResponseHeaders(this);
 
-        public Stream ContentStream => _httpResponse.ResponseContentStream;
+        public abstract void Dispose();
 
-        public bool TryGetHeader(string name, out string values)
-        {
-            return _httpResponse.TryGetHeader(name, out values);
-        }
+        protected internal abstract bool TryGetHeader(string name, out string value);
 
-        public void Dispose() => _httpResponse.Dispose();
+        protected internal abstract bool TryGetHeaderValues(string name, out IEnumerable<string> values);
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
+        protected internal abstract bool ContainsHeader(string name);
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
+        protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => _httpResponse.ToString();
     }
 }

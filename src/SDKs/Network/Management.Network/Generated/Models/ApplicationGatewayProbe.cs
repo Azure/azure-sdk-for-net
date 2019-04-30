@@ -34,8 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="id">Resource ID.</param>
         /// <param name="protocol">The protocol used for the probe. Possible
-        /// values are 'Http' and 'Https'. Possible values include: 'Http',
-        /// 'Https'</param>
+        /// values include: 'Http', 'Https'</param>
         /// <param name="host">Host name to send the probe to.</param>
         /// <param name="path">Relative path of probe. Valid path starts from
         /// '/'. Probe is sent to
@@ -90,8 +89,8 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the protocol used for the probe. Possible values are
-        /// 'Http' and 'Https'. Possible values include: 'Http', 'Https'
+        /// Gets or sets the protocol used for the probe. Possible values
+        /// include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
