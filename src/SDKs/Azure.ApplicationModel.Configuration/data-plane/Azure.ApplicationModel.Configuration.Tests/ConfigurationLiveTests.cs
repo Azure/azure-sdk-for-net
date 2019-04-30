@@ -260,7 +260,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             try
             {
                 Response<ConfigurationSetting> response = await service.SetAsync(testSetting);
-                response.TryGetHeader("x-ms-client-request-id", out string requestId);
+                response.Raw.Headers.TryGetValue("x-ms-client-request-id", out string requestId);
                 Assert.IsNotEmpty(requestId);
                 response.Dispose();
             }

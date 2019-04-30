@@ -38,7 +38,7 @@ namespace Sql.Tests
                 string location = "westcentralus";
 
                 bool publicDataEndpointEnabled = true;
-                string proxyOverride = "Proxy";
+                string proxyOverride = ManagedInstanceProxyOverride.Proxy;
 
                 //Create server 
                 var managedInstance1 = sqlClient.ManagedInstances.CreateOrUpdate(resourceGroup.Name, managedInstanceName, new ManagedInstance()

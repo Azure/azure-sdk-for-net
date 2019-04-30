@@ -34,6 +34,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the TaskUpdateParameters class.
         /// </summary>
+        /// <param name="identity">Identity for the resource.</param>
         /// <param name="status">The current status of task. Possible values
         /// include: 'Disabled', 'Enabled'</param>
         /// <param name="platform">The platform properties against which the
@@ -47,8 +48,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <param name="credentials">The parameters that describes a set of
         /// credentials that will be used when this run is invoked.</param>
         /// <param name="tags">The ARM resource tags.</param>
-        public TaskUpdateParameters(string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public TaskUpdateParameters(IdentityProperties identity = default(IdentityProperties), string status = default(string), PlatformUpdateParameters platform = default(PlatformUpdateParameters), AgentProperties agentConfiguration = default(AgentProperties), int? timeout = default(int?), TaskStepUpdateParameters step = default(TaskStepUpdateParameters), TriggerUpdateParameters trigger = default(TriggerUpdateParameters), Credentials credentials = default(Credentials), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Identity = identity;
             Status = status;
             Platform = platform;
             AgentConfiguration = agentConfiguration;
@@ -64,6 +66,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets identity for the resource.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public IdentityProperties Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the current status of task. Possible values include:

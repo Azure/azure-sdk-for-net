@@ -61,5 +61,51 @@ namespace Microsoft.Azure.Management.DataFactory
                 }
             }
 
+            /// <summary>
+            /// Get exposure control feature for specific factory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='exposureControlRequest'>
+            /// The exposure control request.
+            /// </param>
+            public static ExposureControlResponse GetFeatureValueByFactory(this IExposureControlOperations operations, string resourceGroupName, string factoryName, ExposureControlRequest exposureControlRequest)
+            {
+                return operations.GetFeatureValueByFactoryAsync(resourceGroupName, factoryName, exposureControlRequest).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get exposure control feature for specific factory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='factoryName'>
+            /// The factory name.
+            /// </param>
+            /// <param name='exposureControlRequest'>
+            /// The exposure control request.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ExposureControlResponse> GetFeatureValueByFactoryAsync(this IExposureControlOperations operations, string resourceGroupName, string factoryName, ExposureControlRequest exposureControlRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetFeatureValueByFactoryWithHttpMessagesAsync(resourceGroupName, factoryName, exposureControlRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

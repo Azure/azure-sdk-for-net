@@ -12,6 +12,10 @@ namespace Azure.Core.Pipeline.Policies
 {
     public abstract class RetryPolicy : HttpPipelinePolicy
     {
+        private const string RetryAfterHeaderName = "Retry-After";
+        private const string RetryAfterMsHeaderName = "retry-after-ms";
+        private const string XRetryAfterMsHeaderName = "x-ms-retry-after-ms";
+
         /// <summary>
         /// Gets or sets the maximum number of retry attempts before giving up.
         /// </summary>
@@ -122,6 +126,32 @@ namespace Azure.Core.Pipeline.Policies
         internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
         {
             cancellationToken.WaitHandle.WaitOne(time);
+        }
+
+        protected virtual TimeSpan GetServerDelay(HttpPipelineMessage message)
+        {
+            if (message.Response.TryGetHeader(RetryAfterHeaderName, out var retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    return TimeSpan.FromSeconds(delaySeconds);
+                }
+                if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
+                {
+                    return delayTime - DateTimeOffset.Now;
+                }
+            }
+
+            if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out retryAfterValue) ||
+                message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    return TimeSpan.FromMilliseconds(delaySeconds);
+                }
+            }
+
+            return TimeSpan.Zero;
         }
 
         protected abstract void GetDelay(HttpPipelineMessage message, int attempted, out TimeSpan delay);

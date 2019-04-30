@@ -91,6 +91,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Product identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
+        /// <param name='format'>
+        /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -106,7 +109,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<PolicyContract,ProductPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<PolicyContract,ProductPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or updates policy configuration for the Product.
         /// </summary>

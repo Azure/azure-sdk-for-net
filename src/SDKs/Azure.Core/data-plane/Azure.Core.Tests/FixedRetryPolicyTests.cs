@@ -59,6 +59,31 @@ namespace Azure.Core.Tests
             Assert.AreEqual(500, response.Status);
         }
 
+        [Theory]
+        [TestCase(2, 3, 3)]
+        [TestCase(3, 2, 3)]
+        public async Task UsesLargerOfDelayAndServerDelay(int delay, int retryAfter, int expected)
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(delay));
+            var mockTransport = new MockTransport();
+            var task = SendRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("Retry-After", retryAfter.ToString()));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await policy.DelayGate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            Assert.AreEqual(TimeSpan.FromSeconds(expected), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
         protected override (HttpPipelinePolicy, AsyncGate<TimeSpan, object>) CreateRetryPolicy(int maxRetries = 3)
         {
             var policy = new FixedRetryPolicyMock(maxRetries, TimeSpan.FromSeconds(3));

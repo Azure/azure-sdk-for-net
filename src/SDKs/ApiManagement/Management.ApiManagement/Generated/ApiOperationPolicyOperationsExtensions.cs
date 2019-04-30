@@ -160,9 +160,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Operation identifier within an API. Must be unique in the current API
             /// Management service instance.
             /// </param>
-            public static PolicyContract Get(this IApiOperationPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId)
+            /// <param name='format'>
+            /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+            /// </param>
+            public static PolicyContract Get(this IApiOperationPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string format = default(string))
             {
-                return operations.GetAsync(resourceGroupName, serviceName, apiId, operationId).GetAwaiter().GetResult();
+                return operations.GetAsync(resourceGroupName, serviceName, apiId, operationId, format).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -186,12 +189,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Operation identifier within an API. Must be unique in the current API
             /// Management service instance.
             /// </param>
+            /// <param name='format'>
+            /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PolicyContract> GetAsync(this IApiOperationPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PolicyContract> GetAsync(this IApiOperationPolicyOperations operations, string resourceGroupName, string serviceName, string apiId, string operationId, string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, operationId, format, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
