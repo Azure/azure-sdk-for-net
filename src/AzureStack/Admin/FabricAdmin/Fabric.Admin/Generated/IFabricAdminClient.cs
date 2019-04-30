@@ -41,16 +41,16 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client API Version.
-        /// </summary>
-        string ApiVersion { get; }
-
-        /// <summary>
         /// Subscription credentials that uniquely identify Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every
         /// service call.
         /// </summary>
         string SubscriptionId { get; set; }
+
+        /// <summary>
+        /// Client API Version.
+        /// </summary>
+        string ApiVersion { get; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -70,16 +70,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
-
-        /// <summary>
-        /// Gets the IApplicationOperationResultsOperations.
-        /// </summary>
-        IApplicationOperationResultsOperations ApplicationOperationResults { get; }
-
-        /// <summary>
-        /// Gets the IComputeOperationResultsOperations.
-        /// </summary>
-        IComputeOperationResultsOperations ComputeOperationResults { get; }
 
         /// <summary>
         /// Gets the IFabricOperations.
@@ -152,11 +142,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         IMacAddressPoolsOperations MacAddressPools { get; }
 
         /// <summary>
-        /// Gets the INetworkOperationResultsOperations.
-        /// </summary>
-        INetworkOperationResultsOperations NetworkOperationResults { get; }
-
-        /// <summary>
         /// Gets the IScaleUnitsOperations.
         /// </summary>
         IScaleUnitsOperations ScaleUnits { get; }
@@ -170,11 +155,6 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
         /// Gets the ISlbMuxInstancesOperations.
         /// </summary>
         ISlbMuxInstancesOperations SlbMuxInstances { get; }
-
-        /// <summary>
-        /// Gets the IStorageOperationResultsOperations.
-        /// </summary>
-        IStorageOperationResultsOperations StorageOperationResults { get; }
 
     }
 }
