@@ -12,28 +12,21 @@ namespace Microsoft.Azure.Management.Security.Models
 {
 
     /// <summary>
-    /// Defines values for State.
+    /// Defines values for Severity.
     /// </summary>
-    public static class State
+    public static class Severity
     {
         /// <summary>
-        /// All supported regulatory compliance controls in the given standard
-        /// have a passed state
+        /// The resource is healthy
         /// </summary>
         public const string Passed = "Passed";
         /// <summary>
-        /// At least one supported regulatory compliance control in the given
-        /// standard has a state of failed
+        /// The resource has a security issue that needs to be addressed
         /// </summary>
         public const string Failed = "Failed";
         /// <summary>
-        /// All supported regulatory compliance controls in the given standard
-        /// have a state of skipped
+        /// Assessment for this resource did not happen
         /// </summary>
-        public const string Skipped = "Skipped";
-        /// <summary>
-        /// No supported regulatory compliance data for the given standard
-        /// </summary>
-        public const string Unsupported = "Unsupported";
+        public const string NotApplicable = "NotApplicable";
     }
 }

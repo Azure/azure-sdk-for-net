@@ -23,12 +23,12 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RegulatoryComplianceStandardsOperations operations.
+    /// AssessmentsOperations operations.
     /// </summary>
-    internal partial class RegulatoryComplianceStandardsOperations : IServiceOperations<SecurityCenterClient>, IRegulatoryComplianceStandardsOperations
+    internal partial class AssessmentsOperations : IServiceOperations<SecurityCenterClient>, IAssessmentsOperations
     {
         /// <summary>
-        /// Initializes a new instance of the RegulatoryComplianceStandardsOperations class.
+        /// Initializes a new instance of the AssessmentsOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal RegulatoryComplianceStandardsOperations(SecurityCenterClient client)
+        internal AssessmentsOperations(SecurityCenterClient client)
         {
             if (client == null)
             {
@@ -51,14 +51,12 @@ namespace Microsoft.Azure.Management.Security
         public SecurityCenterClient Client { get; private set; }
 
         /// <summary>
-        /// Supported regulatory compliance standards details and state
+        /// Get security assessments on all your scanned resources inside a scope
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
-        /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
+        /// <param name='scope'>
+        /// Scope of the query, can be subscription
+        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
+        /// (/providers/Microsoft.Management/managementGroups/mgName).
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -81,37 +79,11 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RegulatoryComplianceStandard>>> ListWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SecurityAssessment>>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (Client.SubscriptionId != null)
-            {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
+                throw new ValidationException(ValidationRules.CannotBeNull, "scope");
             }
             string apiVersion = "2019-01-01-preview";
             // Tracing
@@ -122,24 +94,18 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("scope", scope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/regulatoryComplianceStandards").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{scope}/providers/Microsoft.Security/assessments").ToString();
+            _url = _url.Replace("{scope}", System.Uri.EscapeDataString(scope));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
-            }
-            if (filter != null)
-            {
-                _queryParameters.Add(string.Format("$filter={0}", System.Uri.EscapeDataString(filter)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -234,7 +200,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<RegulatoryComplianceStandard>>();
+            var _result = new AzureOperationResponse<IPage<SecurityAssessment>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -247,7 +213,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RegulatoryComplianceStandard>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SecurityAssessment>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -267,14 +233,13 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Supported regulatory compliance details state for selected standard
+        /// Get a security assessment on your scanned resource
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
+        /// <param name='resourceId'>
+        /// The identifier of the resource.
         /// </param>
-        /// <param name='regulatoryComplianceStandardName'>
-        /// Name of the regulatory compliance standard object
+        /// <param name='assessmentName'>
+        /// The Assessment Key - Unique key for the assessment type
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -297,41 +262,15 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<RegulatoryComplianceStandard>> GetWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SecurityAssessment>> GetWithHttpMessagesAsync(string resourceId, string assessmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.SubscriptionId == null)
+            if (resourceId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceId");
             }
-            if (Client.SubscriptionId != null)
+            if (assessmentName == null)
             {
-                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-                }
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (resourceGroupName != null)
-            {
-                if (resourceGroupName.Length > 90)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
-                }
-                if (resourceGroupName.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
-                {
-                    throw new ValidationException(ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
-                }
-            }
-            if (regulatoryComplianceStandardName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "regulatoryComplianceStandardName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "assessmentName");
             }
             string apiVersion = "2019-01-01-preview";
             // Tracing
@@ -342,17 +281,16 @@ namespace Microsoft.Azure.Management.Security
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("apiVersion", apiVersion);
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("regulatoryComplianceStandardName", regulatoryComplianceStandardName);
+                tracingParameters.Add("resourceId", resourceId);
+                tracingParameters.Add("assessmentName", assessmentName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Security/regulatoryComplianceStandards/{regulatoryComplianceStandardName}").ToString();
-            _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
-            _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{regulatoryComplianceStandardName}", System.Uri.EscapeDataString(regulatoryComplianceStandardName));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}").ToString();
+            _url = _url.Replace("{resourceId}", System.Uri.EscapeDataString(resourceId));
+            _url = _url.Replace("{assessmentName}", System.Uri.EscapeDataString(assessmentName));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {
@@ -451,7 +389,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RegulatoryComplianceStandard>();
+            var _result = new AzureOperationResponse<SecurityAssessment>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -464,7 +402,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<RegulatoryComplianceStandard>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<SecurityAssessment>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -484,7 +422,7 @@ namespace Microsoft.Azure.Management.Security
         }
 
         /// <summary>
-        /// Supported regulatory compliance standards details and state
+        /// Get security assessments on all your scanned resources inside a scope
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -510,7 +448,7 @@ namespace Microsoft.Azure.Management.Security
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<RegulatoryComplianceStandard>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SecurityAssessment>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -624,7 +562,7 @@ namespace Microsoft.Azure.Management.Security
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<RegulatoryComplianceStandard>>();
+            var _result = new AzureOperationResponse<IPage<SecurityAssessment>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -637,7 +575,7 @@ namespace Microsoft.Azure.Management.Security
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<RegulatoryComplianceStandard>>(_responseContent, Client.DeserializationSettings);
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Page<SecurityAssessment>>(_responseContent, Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

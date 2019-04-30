@@ -19,26 +19,18 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// RegulatoryComplianceAssessmentsOperations operations.
+    /// AssessmentsOperations operations.
     /// </summary>
-    public partial interface IRegulatoryComplianceAssessmentsOperations
+    public partial interface IAssessmentsOperations
     {
         /// <summary>
-        /// Details and state of assessments mapped to selected regulatory
-        /// compliance control
+        /// Get security assessments on all your scanned resources inside a
+        /// scope
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
-        /// </param>
-        /// <param name='regulatoryComplianceStandardName'>
-        /// Name of the regulatory compliance standard object
-        /// </param>
-        /// <param name='regulatoryComplianceControlName'>
-        /// Name of the regulatory compliance control object
-        /// </param>
-        /// <param name='filter'>
-        /// OData filter. Optional.
+        /// <param name='scope'>
+        /// Scope of the query, can be subscription
+        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management
+        /// group (/providers/Microsoft.Management/managementGroups/mgName).
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -55,23 +47,15 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RegulatoryComplianceAssessment>>> ListWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SecurityAssessment>>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Supported regulatory compliance details and state for selected
-        /// assessment
+        /// Get a security assessment on your scanned resource
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The
-        /// name is case insensitive.
+        /// <param name='resourceId'>
+        /// The identifier of the resource.
         /// </param>
-        /// <param name='regulatoryComplianceStandardName'>
-        /// Name of the regulatory compliance standard object
-        /// </param>
-        /// <param name='regulatoryComplianceControlName'>
-        /// Name of the regulatory compliance control object
-        /// </param>
-        /// <param name='regulatoryComplianceAssessmentName'>
-        /// Name of the regulatory compliance assessment object
+        /// <param name='assessmentName'>
+        /// The Assessment Key - Unique key for the assessment type
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -88,10 +72,10 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegulatoryComplianceAssessment>> GetWithHttpMessagesAsync(string resourceGroupName, string regulatoryComplianceStandardName, string regulatoryComplianceControlName, string regulatoryComplianceAssessmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityAssessment>> GetWithHttpMessagesAsync(string resourceId, string assessmentName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Details and state of assessments mapped to selected regulatory
-        /// compliance control
+        /// Get security assessments on all your scanned resources inside a
+        /// scope
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -111,6 +95,6 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RegulatoryComplianceAssessment>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SecurityAssessment>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
