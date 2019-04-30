@@ -139,7 +139,7 @@ namespace Azure.Core.Tests
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader("Retry-After", "25"));
@@ -162,7 +162,7 @@ namespace Azure.Core.Tests
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             // Use large value to avoid time based flakiness
@@ -186,7 +186,7 @@ namespace Azure.Core.Tests
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader("Retry-After", "Invalid-value"));
@@ -211,7 +211,7 @@ namespace Azure.Core.Tests
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
             var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader(headerName, "120000"));

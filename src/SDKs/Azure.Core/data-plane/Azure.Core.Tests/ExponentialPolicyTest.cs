@@ -91,8 +91,8 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader("Retry-After", retryAfter.ToString()));

@@ -61,20 +61,34 @@ namespace Azure.ApplicationModel.Configuration
         /// <summary>
         /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
         /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return await AddAsync(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Add(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
             return Add(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> AddAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateAddRequest(setting))
@@ -92,6 +106,11 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// </summary>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public Response<ConfigurationSetting> Add(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateAddRequest(setting))
@@ -132,6 +151,37 @@ namespace Azure.ApplicationModel.Configuration
             return request;
         }
 
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> SetAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            return await SetAsync(new ConfigurationSetting(key, value, label), cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<ConfigurationSetting> Set(string key, string value, string label = default, CancellationToken cancellationToken = default)
+        {
+            if (string.IsNullOrEmpty(key)) throw new ArgumentNullException($"{nameof(key)}");
+            return Set(new ConfigurationSetting(key, value, label), cancellationToken);
+        }
+
+        /// <summary>
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// </summary>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> SetAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateSetRequest(setting))
@@ -143,7 +193,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return await CreateResponseAsync(response, cancellationToken);
                     case 409:
-                        throw new RequestFailedException(response, "the item is locked");
+                        throw new RequestFailedException(response, "The setting is locked");
                     default:
                         throw new RequestFailedException(response);
                 }
@@ -151,12 +201,10 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> only if the setting does not already exist in the configuration store.
+        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
         /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Set(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateSetRequest(setting))
@@ -168,16 +216,12 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return CreateResponse(response, cancellationToken);
                     case 409:
-                        throw new RequestFailedException(response, "the item is locked");
+                        throw new RequestFailedException(response, "The setting is locked");
                     default:
                         throw new RequestFailedException(response);
                 }
             }
         }
-        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
-        /// </summary>
-        /// <param name="setting"><see cref="ConfigurationSetting"/> to create.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         private Request CreateSetRequest(ConfigurationSetting setting)
         {
@@ -203,6 +247,13 @@ namespace Azure.ApplicationModel.Configuration
             return request;
         }
 
+        /// <summary>
+        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key))
@@ -210,13 +261,14 @@ namespace Azure.ApplicationModel.Configuration
             return await UpdateAsync(new ConfigurationSetting(key, value, label), cancellationToken);
         }
 
+
         /// <summary>
-        /// Creates a <see cref="ConfigurationSetting"/> if it doesn't exist or overrides an existing setting in the configuration store.
+        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="value">The value of the configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Update(string key, string value, string label = default, CancellationToken cancellationToken = default)
         {
             if (string.IsNullOrEmpty(key))
@@ -245,6 +297,11 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        /// <summary>
+        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
+        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellation = default)
         {
             using (Request request = CreateUpdateRequest(setting))
@@ -289,6 +346,15 @@ namespace Azure.ApplicationModel.Configuration
             return request;
         }
 
+        /// <summary>
+        /// Deletes an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only deleted if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response> DeleteAsync(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateDeleteRequest(key, label, etag))
@@ -307,12 +373,14 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         /// <summary>
-        /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
+        /// Deletes an existing <see cref="ConfigurationSetting"/> in the configuration store.
         /// </summary>
         /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="value">The value of the configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
+        /// If it is specified, the configuration setting is only deleted if etag value matches etag value in the configuration store.
+        /// If no etag value is passed in, then the setting is always deleted.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response Delete(string key, string label = default, ETag etag = default, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateDeleteRequest(key, label, etag))
@@ -329,14 +397,6 @@ namespace Azure.ApplicationModel.Configuration
                 }
             }
         }
-        /// Deletes an existing <see cref="ConfigurationSetting"/> in the configuration store.
-        /// </summary>
-        /// <param name="key">The primary identifier of a configuration setting.</param>
-        /// <param name="label">The value used to group configuration settings.</param>
-        /// <param name="etag">The value of an etag indicates the state of a configuration setting within a configuration store.
-        /// If it is specified, the configuration setting is only deleted if etag value matches etag value in the configuration store.
-        /// If no etag value is passed in, then the setting is always deleted.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
 
         private Request CreateDeleteRequest(string key, string label, ETag etag)
         {
@@ -355,6 +415,13 @@ namespace Azure.ApplicationModel.Configuration
             return request;
         }
 
+        /// <summary>
+        /// Retrieve an existing <see cref="ConfigurationSetting"/> from the configuration store.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
+        /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<ConfigurationSetting>> GetAsync(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateGetRequest(key, label, acceptDateTime))
@@ -377,7 +444,7 @@ namespace Azure.ApplicationModel.Configuration
         /// <param name="key">The primary identifier of a configuration setting.</param>
         /// <param name="label">The value used to group configuration settings.</param>
         /// <param name="acceptDateTime">The setting will be retrieved exactly as it existed at the provided time.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<ConfigurationSetting> Get(string key, string label = default, DateTimeOffset acceptDateTime = default, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateGetRequest(key, label, acceptDateTime))
@@ -414,17 +481,22 @@ namespace Azure.ApplicationModel.Configuration
             return request;
         }
 
-        public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellation = default)
+        /// <summary>
+        /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
+        /// </summary>
+        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateBatchRequest(selector))
             {
-                Response response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
                     case 200:
                     case 206:
-                        return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellation));
+                        return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken));
                     default:
                         throw new RequestFailedException(response);
                 }
@@ -436,18 +508,18 @@ namespace Azure.ApplicationModel.Configuration
         /// Fetches the <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
         /// </summary>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<SettingBatch> GetBatch(SettingSelector selector, CancellationToken cancellation = default)
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<SettingBatch> GetBatch(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateBatchRequest(selector))
             {
-                Response response = _pipeline.SendRequest(request, cancellation);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
                 {
                     case 200:
                     case 206:
-                        return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellation));
+                        return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken));
                     default:
                         throw new RequestFailedException(response);
                 }
@@ -469,6 +541,12 @@ namespace Azure.ApplicationModel.Configuration
             return request;
         }
 
+        /// <summary>
+        /// Lists chronological/historical representation of <see cref="ConfigurationSetting"/> from the configuration store that match the options selected in the <see cref="SettingSelector"/>.
+        /// </summary>
+        /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
+        /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateGetRevisionsRequest(selector))
@@ -492,7 +570,7 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public virtual Response<SettingBatch> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateGetRevisionsRequest(selector))

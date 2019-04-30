@@ -8,22 +8,16 @@ namespace Azure.Core.Pipeline.Policies
 {
     internal static class TaskExtensions
     {
-        public static T AssertCompleted<T>(this Task<T> task)
+        public static T EnsureCompleted<T>(this Task<T> task)
         {
-            AssertTaskCompleted(task);
+            Debug.Assert(task.IsCompleted);
             return task.GetAwaiter().GetResult();
         }
 
-        public static void AssertCompleted(this Task task)
-        {
-            AssertTaskCompleted(task);
-            task.GetAwaiter().GetResult();
-        }
-
-        [Conditional("DEBUG")]
-        private static void AssertTaskCompleted(Task task)
+        public static void EnsureCompleted(this Task task)
         {
             Debug.Assert(task.IsCompleted);
+            task.GetAwaiter().GetResult();
         }
     }
 }

@@ -155,7 +155,7 @@ namespace Azure.Core.Pipeline.Policies
 
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            ProcessAsync(message, pipeline, false).AssertCompleted();
+            ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
         private static bool IsTextContentType(string contentType)
