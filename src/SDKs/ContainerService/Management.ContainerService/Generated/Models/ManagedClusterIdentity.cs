@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="tenantId">The tenant id of the system assigned
         /// identity which is used by master components.</param>
         /// <param name="type">The type of identity used for the managed
-        /// cluster. Type 'SystemAssigned' will use an implicityly created
+        /// cluster. Type 'SystemAssigned' will use an implicitly created
         /// identity in master components and an auto-created user assigned
         /// identity in MC_ resource group in agent nodes. Type 'None' will not
         /// use MSI for the managed cluster, service principal will be used
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
 
         /// <summary>
         /// Gets or sets the type of identity used for the managed cluster.
-        /// Type 'SystemAssigned' will use an implicityly created identity in
+        /// Type 'SystemAssigned' will use an implicitly created identity in
         /// master components and an auto-created user assigned identity in MC_
         /// resource group in agent nodes. Type 'None' will not use MSI for the
         /// managed cluster, service principal will be used instead. Possible
