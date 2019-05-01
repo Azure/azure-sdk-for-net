@@ -80,7 +80,7 @@ namespace Azure.Core.Tests
                 request.Headers.Add("Date", "3/26/2019");
                 request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
-                requestId = request.RequestId;
+                requestId = request.ClientRequestId;
 
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
@@ -141,7 +141,7 @@ namespace Azure.Core.Tests
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
                 request.Headers.Add("Content-Type", "text/json");
-                requestId = request.RequestId;
+                requestId = request.ClientRequestId;
 
                 await pipeline.SendRequestAsync(request, CancellationToken.None);
             }
@@ -166,13 +166,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentBlock",  contentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
             Assert.AreEqual("ResponseContentBlock",  contentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetProperty<byte[]>("content"));
 
@@ -190,13 +190,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
             Assert.AreEqual("ErrorResponseContentBlock",  errorContentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
             Assert.AreEqual("ErrorResponseContentBlock",  errorContentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetProperty<byte[]>("content"));
 
@@ -217,13 +217,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentTextBlock",  contentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", contentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
             Assert.AreEqual("ResponseContentTextBlock",  contentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             Assert.AreEqual("world", contentEvents[1].GetProperty<string>("content"));
 
@@ -244,13 +244,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
             Assert.AreEqual("ErrorResponseContentTextBlock",  errorContentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", errorContentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
             Assert.AreEqual("ErrorResponseContentTextBlock",  errorContentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
             Assert.AreEqual("world", errorContentEvents[1].GetProperty<string>("content"));
 
@@ -269,7 +269,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
             Assert.AreEqual("ResponseContentText",  contentEvent.EventName);
-            Assert.AreEqual(response.RequestId,  contentEvent.GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
         }
 
@@ -285,7 +285,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvent.Level);
             Assert.AreEqual("ErrorResponseContentText",  errorContentEvent.EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvent.GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", errorContentEvent.GetProperty<string>("content"));
         }
 

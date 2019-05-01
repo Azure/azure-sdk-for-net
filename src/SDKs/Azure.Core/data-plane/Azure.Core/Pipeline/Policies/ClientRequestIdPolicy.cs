@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline.Policies
 
         public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
-            message.Request.Headers.Add(ClientRequestIdHeader, message.Request.RequestId);
+            message.Request.Headers.Add(ClientRequestIdHeader, message.Request.ClientRequestId);
             message.Request.Headers.Add(EchoClientRequestId, "true");
 
             return ProcessNextAsync(pipeline, message);

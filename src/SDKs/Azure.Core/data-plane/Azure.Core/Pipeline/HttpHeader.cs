@@ -49,10 +49,9 @@ namespace Azure.Core.Pipeline
 
         public static class Names
         {
-            public static string Host => "Host";
-            public static string TransferEncoding => "Transfer-Encoding";
-            public static string ContentLength => "Content-Length";
+            public static string Date => "Date";
             public static string ContentType => "Content-Type";
+            public static string RequestId => "x-ms-request-id";
             public static string UserAgent => "User-Agent";
             public static string Accept => "Accept";
         }

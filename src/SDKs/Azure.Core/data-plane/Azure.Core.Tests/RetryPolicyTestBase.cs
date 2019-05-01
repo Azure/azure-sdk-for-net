@@ -258,7 +258,7 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Informational, e.Level);
             Assert.AreEqual("RequestRetrying", e.EventName);
-            Assert.AreEqual(request.RequestId, e.GetProperty<string>("requestId"));
+            Assert.AreEqual(request.ClientRequestId, e.GetProperty<string>("requestId"));
         }
 
         protected static Task<Response> SendRequest(MockTransport mockTransport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier)

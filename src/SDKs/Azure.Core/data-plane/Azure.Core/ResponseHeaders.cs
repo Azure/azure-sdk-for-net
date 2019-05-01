@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Azure.Core.Pipeline;
@@ -15,6 +16,12 @@ namespace Azure
         {
             _response = response;
         }
+
+        public DateTimeOffset? Date => TryGetValue(HttpHeader.Names.Date, out var value) ? (DateTimeOffset?)DateTimeOffset.Parse(value) : null;
+
+        public string ContentType => TryGetValue(HttpHeader.Names.ContentType, out var value) ? value : null;
+
+        public string RequestId => TryGetValue(HttpHeader.Names.RequestId, out var value) ? value : null;
 
         public IEnumerator<HttpHeader> GetEnumerator()
         {

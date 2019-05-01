@@ -53,7 +53,7 @@ namespace Azure.Core.Testing
                 message.Response = _responseFactory(request);
             }
 
-            message.Response.RequestId = request.RequestId;
+            message.Response.ClientRequestId = request.ClientRequestId;
         }
 
         public MockRequest SingleRequest => Requests.Single();

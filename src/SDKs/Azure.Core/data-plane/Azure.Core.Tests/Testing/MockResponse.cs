@@ -23,7 +23,7 @@ namespace Azure.Core.Testing
 
         public override Stream ContentStream { get; set; }
 
-        public override string RequestId { get; set; }
+        public override string ClientRequestId { get; set; }
 
         public override string ToString() => $"{Status}";
 
