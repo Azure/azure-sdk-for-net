@@ -2,7 +2,6 @@ pr:
 - master
 
 trigger:
-  pr:
   branches:
     include:
     - users/mitchdenny/pr-pipelines
