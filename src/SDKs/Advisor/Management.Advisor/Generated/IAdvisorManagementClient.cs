@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.Advisor
 
 
         /// <summary>
+        /// Gets the IRecommendationMetadataOperations.
+        /// </summary>
+        IRecommendationMetadataOperations RecommendationMetadata { get; }
+
+        /// <summary>
         /// Gets the IConfigurationsOperations.
         /// </summary>
         IConfigurationsOperations Configurations { get; }
