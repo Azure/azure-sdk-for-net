@@ -19,18 +19,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
     /// Schema Contract details.
     /// </summary>
     [Rest.Serialization.JsonTransformation]
-    public partial class SchemaContract : Resource
+    public partial class SchemaCreateOrUpdateContract : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the SchemaContract class.
+        /// Initializes a new instance of the SchemaCreateOrUpdateContract
+        /// class.
         /// </summary>
-        public SchemaContract()
+        public SchemaCreateOrUpdateContract()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SchemaContract class.
+        /// Initializes a new instance of the SchemaCreateOrUpdateContract
+        /// class.
         /// </summary>
         /// <param name="contentType">Must be a valid a media type used in a
         /// Content-Type header as defined in the RFC 2616. Media type of the
@@ -41,17 +43,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi`
         /// Schema use `application/vnd.oai.openapi.components+json`
         /// &lt;/br&gt; - `WADL Schema` use
-        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`. </param>
+        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`.</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
-        /// <param name="document">Properties of the Schema Document.</param>
-        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), object document = default(object))
+        /// <param name="value">Json escaped string defining the document
+        /// representing the Schema.</param>
+        public SchemaCreateOrUpdateContract(string contentType, string id = default(string), string name = default(string), string type = default(string), string value = default(string))
             : base(id, name, type)
         {
             ContentType = contentType;
-            Document = document;
+            Value = value;
             CustomInit();
         }
 
@@ -76,10 +79,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets properties of the Schema Document.
+        /// Gets or sets json escaped string defining the document representing
+        /// the Schema.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.document")]
-        public object Document { get; set; }
+        [JsonProperty(PropertyName = "properties.document.value")]
+        public string Value { get; set; }
 
         /// <summary>
         /// Validate the object.
