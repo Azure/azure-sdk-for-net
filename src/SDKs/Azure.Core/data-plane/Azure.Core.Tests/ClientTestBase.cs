@@ -14,8 +14,8 @@ namespace Azure.Core.Tests
     {
         private static readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
 
-        private static readonly UseSyncMethodsInterceptor _interceptor = new UseSyncMethodsInterceptor();
-
+        private static readonly IInterceptor _useSyncInterceptor = new UseSyncMethodsInterceptor();
+        private static readonly IInterceptor _avoidSyncInterceptor = new AvoidSyncInterceptor();
 
         public bool IsAsync { get; }
 
@@ -39,6 +39,8 @@ namespace Azure.Core.Tests
                     if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
                     {
                         ClientValidation<TClient>.ValidationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
+
+                        break;
                     }
                 }
 
@@ -50,7 +52,9 @@ namespace Azure.Core.Tests
                 throw ClientValidation<TClient>.ValidationException;
             }
 
-            return !IsAsync ? _proxyGenerator.CreateClassProxyWithTarget(client, _interceptor) : client;
+            var interceptor = IsAsync ? _avoidSyncInterceptor : _useSyncInterceptor;
+
+            return _proxyGenerator.CreateClassProxyWithTarget(client, interceptor);
         }
 
 

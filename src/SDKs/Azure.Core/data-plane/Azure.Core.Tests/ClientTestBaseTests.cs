@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -19,7 +20,16 @@ namespace Azure.Core.Tests
             var client = WrapClient(new TestClient());
             var result = await client.MethodAsync(123);
 
-            Assert.AreEqual(IsAsync ? "Async 123" : "Sync 123", result);
+            Assert.AreEqual(IsAsync ? "Async 123 False" : "Sync 123 False", result);
+        }
+
+        [Test]
+        public async Task WorksWithCancellationToken()
+        {
+            var client = WrapClient(new TestClient());
+            var result = await client.MethodAsync(123, new CancellationTokenSource().Token );
+
+            Assert.AreEqual(IsAsync ? "Async 123 True" : "Sync 123 True", result);
         }
 
         [Test]
@@ -29,16 +39,27 @@ namespace Azure.Core.Tests
             Assert.AreEqual("Client type contains public non-virtual async method MethodAsync", exception.Message);
         }
 
+        [Test]
+        public void ThrowsForSyncCallsInAsyncContext()
+        {
+            if (IsAsync)
+            {
+                var client = WrapClient(new TestClient());
+                var exception = Assert.Throws<InvalidOperationException>(() => client.Method(123));
+                Assert.AreEqual("Async method call expected", exception.Message);
+            }
+        }
+
         public class TestClient
         {
-            public virtual Task<string> MethodAsync(int i)
+            public virtual Task<string> MethodAsync(int i, CancellationToken cancellationToken = default)
             {
-                return Task.FromResult("Async " + i);
+                return Task.FromResult("Async " + i + " " + cancellationToken.CanBeCanceled);
             }
 
-            public virtual string Method(int i)
+            public virtual string Method(int i, CancellationToken cancellationToken = default)
             {
-                return "Sync " + i;
+                return "Sync " + i + " " + cancellationToken.CanBeCanceled;
             }
         }
 

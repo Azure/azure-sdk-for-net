@@ -9,6 +9,23 @@ using Castle.DynamicProxy;
 
 namespace Azure.Core.Tests
 {
+
+    /// <summary>
+    /// Ensures that tests sticks to calling only async methods
+    /// </summary>
+    public class AvoidSyncInterceptor : IInterceptor
+    {
+        public void Intercept(IInvocation invocation)
+        {
+            if (!invocation.Method.Name.EndsWith("Async"))
+            {
+                throw new InvalidOperationException("Async method call expected");
+            }
+
+            invocation.Proceed();
+        }
+    }
+
     /// <summary>
     /// This interceptor forwards the async call to a sync method call with the same arguments
     /// </summary>
