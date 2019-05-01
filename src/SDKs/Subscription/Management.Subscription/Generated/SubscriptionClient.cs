@@ -47,6 +47,11 @@ namespace Microsoft.Azure.Management.Subscription
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
+        /// Subscription Id.
+        /// </summary>
+        public string SubscriptionId { get; set; }
+
+        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
@@ -63,21 +68,6 @@ namespace Microsoft.Azure.Management.Subscription
         /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
-
-        /// <summary>
-        /// Gets the IOperations.
-        /// </summary>
-        public virtual IOperations Operations { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubscriptionOperationOperations.
-        /// </summary>
-        public virtual ISubscriptionOperationOperations SubscriptionOperation { get; private set; }
-
-        /// <summary>
-        /// Gets the ISubscriptionFactoryOperations.
-        /// </summary>
-        public virtual ISubscriptionFactoryOperations SubscriptionFactory { get; private set; }
 
         /// <summary>
         /// Gets the ISubscriptionsOperations.
@@ -330,9 +320,6 @@ namespace Microsoft.Azure.Management.Subscription
         /// </summary>
         private void Initialize()
         {
-            Operations = new Operations(this);
-            SubscriptionOperation = new SubscriptionOperationOperations(this);
-            SubscriptionFactory = new SubscriptionFactoryOperations(this);
             Subscriptions = new SubscriptionsOperations(this);
             Tenants = new TenantsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
