@@ -25,3 +25,9 @@ known_content_issues:
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
   - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
+# .net climbs upwards. placing these to prevent assigning readmes to the wrong project
+package_indexing_traversal_stops:
+  - 'sdk/'
+  - 'src/SDKs/'
+  - 'src/SdkCommon/'
+  - 'src/AzureStack/'
