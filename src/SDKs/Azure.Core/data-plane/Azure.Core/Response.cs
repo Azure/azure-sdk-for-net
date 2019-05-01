@@ -14,7 +14,7 @@ namespace Azure
 
         public abstract Stream ContentStream { get; set; }
 
-        public abstract string RequestId { get; set; }
+        public abstract string ClientRequestId { get; set; }
 
         public virtual ResponseHeaders Headers => new ResponseHeaders(this);
 

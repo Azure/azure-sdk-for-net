@@ -428,12 +428,12 @@ namespace Azure.Core.Tests
 
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
-            Assert.IsNotEmpty(request.RequestId);
-            Assert.True(Guid.TryParse(request.RequestId, out _));
+            Assert.IsNotEmpty(request.ClientRequestId);
+            Assert.True(Guid.TryParse(request.ClientRequestId, out _));
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
 
             var response =  await ExecuteRequest(request, transport);
-            Assert.AreEqual(request.RequestId, response.RequestId);
+            Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
         }
 
         [Test]
@@ -444,11 +444,11 @@ namespace Azure.Core.Tests
             var transport = new HttpClientTransport(new HttpClient(mockHandler));
             var request = transport.CreateRequest(null);
 
-            request.RequestId = "123";
+            request.ClientRequestId = "123";
             request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
 
             var response =  await ExecuteRequest(request, transport);
-            Assert.AreEqual(request.RequestId, response.RequestId);
+            Assert.AreEqual(request.ClientRequestId, response.ClientRequestId);
         }
 
         [Test]

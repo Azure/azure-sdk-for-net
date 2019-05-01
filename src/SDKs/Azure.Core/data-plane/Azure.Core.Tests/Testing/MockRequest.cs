@@ -12,7 +12,7 @@ namespace Azure.Core.Testing
     {
         public MockRequest()
         {
-            RequestId = Guid.NewGuid().ToString();
+            ClientRequestId = Guid.NewGuid().ToString();
         }
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
@@ -63,7 +63,7 @@ namespace Azure.Core.Testing
             return string.Join(",", values);
         }
 
-        public override string RequestId { get; set; }
+        public override string ClientRequestId { get; set; }
 
         public override string ToString() => $"{Method} {UriBuilder}";
 

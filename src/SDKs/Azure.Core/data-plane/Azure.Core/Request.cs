@@ -40,7 +40,7 @@ namespace Azure
 
         protected internal abstract IEnumerable<HttpHeader> EnumerateHeaders();
 
-        public abstract string RequestId { get; set; }
+        public abstract string ClientRequestId { get; set; }
 
         public RequestHeaders Headers => new RequestHeaders(this);
 

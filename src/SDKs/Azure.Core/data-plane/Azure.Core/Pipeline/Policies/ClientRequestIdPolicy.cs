@@ -19,7 +19,7 @@ namespace Azure.Core.Pipeline.Policies
 
         public override void OnSendingRequest(HttpPipelineMessage message)
         {
-            message.Request.Headers.Add(ClientRequestIdHeader, message.Request.RequestId);
+            message.Request.Headers.Add(ClientRequestIdHeader, message.Request.ClientRequestId);
             message.Request.Headers.Add(EchoClientRequestId, "true");
         }
     }

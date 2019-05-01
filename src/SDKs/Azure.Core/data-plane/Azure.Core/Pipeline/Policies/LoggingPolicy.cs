@@ -98,7 +98,7 @@ namespace Azure.Core.Pipeline.Policies
             if (wrapResponseStream)
             {
                 message.Response.ContentStream = new LoggingStream(
-                    message.Response.RequestId, s_eventSource, message.Response.ContentStream, isError, responseTextEncoding);
+                    message.Response.ClientRequestId, s_eventSource, message.Response.ContentStream, isError, responseTextEncoding);
             }
 
             if (isError)

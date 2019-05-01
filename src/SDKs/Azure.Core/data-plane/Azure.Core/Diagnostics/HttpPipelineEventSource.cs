@@ -49,7 +49,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                Request(request.RequestId, request.Method.ToString().ToUpperInvariant(), request.UriBuilder.ToString(), FormatHeaders(request.Headers));
+                Request(request.ClientRequestId, request.Method.ToString().ToUpperInvariant(), request.UriBuilder.ToString(), FormatHeaders(request.Headers));
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                RequestContent(request.RequestId, await FormatContentAsync(request.Content, cancellationToken));
+                RequestContent(request.ClientRequestId, await FormatContentAsync(request.Content, cancellationToken));
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                RequestContent(request.RequestId, FormatContent(request.Content, cancellationToken));
+                RequestContent(request.ClientRequestId, FormatContent(request.Content, cancellationToken));
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                RequestContentText(request.RequestId, await FormatContentStringAsync(request.Content, encoding, cancellationToken));
+                RequestContentText(request.ClientRequestId, await FormatContentStringAsync(request.Content, encoding, cancellationToken));
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                RequestContentText(request.RequestId, FormatContentString(request.Content, encoding, cancellationToken));
+                RequestContentText(request.ClientRequestId, FormatContentString(request.Content, encoding, cancellationToken));
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                Response(response.RequestId, response.Status, FormatHeaders(response.Headers));
+                Response(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                ResponseContent(response.RequestId, await FormatContentAsync(response.ContentStream));
+                ResponseContent(response.ClientRequestId, await FormatContentAsync(response.ContentStream));
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                ResponseContent(response.RequestId, FormatContent(response.ContentStream));
+                ResponseContent(response.ClientRequestId, FormatContent(response.ContentStream));
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                ResponseContentText(response.RequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
+                ResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
-                ResponseContentText(response.RequestId, FormatContentString(response.ContentStream, encoding));
+                ResponseContentText(response.ClientRequestId, FormatContentString(response.ContentStream, encoding));
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Error, EventKeywords.None))
             {
-                ErrorResponse(response.RequestId, response.Status, FormatHeaders(response.Headers));
+                ErrorResponse(response.ClientRequestId, response.Status, FormatHeaders(response.Headers));
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                ErrorResponseContent(response.RequestId, await FormatContentAsync(response.ContentStream).ConfigureAwait(false));
+                ErrorResponseContent(response.ClientRequestId, await FormatContentAsync(response.ContentStream).ConfigureAwait(false));
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                ErrorResponseContent(response.RequestId, FormatContent(response.ContentStream));
+                ErrorResponseContent(response.ClientRequestId, FormatContent(response.ContentStream));
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                ErrorResponseContentText(response.RequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
+                ErrorResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.Core.Diagnostics
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                ErrorResponseContentText(response.RequestId, FormatContentString(response.ContentStream, encoding));
+                ErrorResponseContentText(response.ClientRequestId, FormatContentString(response.ContentStream, encoding));
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.Core.Diagnostics
         [NonEvent]
         public void RequestRetrying(Request request, int retryNumber)
         {
-            RequestRetrying(request.RequestId, retryNumber);
+            RequestRetrying(request.ClientRequestId, retryNumber);
         }
 
         // TODO (pri 2): there are more attribute properties we might want to set

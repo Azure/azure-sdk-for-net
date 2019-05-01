@@ -20,7 +20,7 @@ namespace Azure.Core.Tests
 
             Assert.True(request.TryGetHeader("x-ms-client-request-id", out string requestId));
             Assert.True(request.TryGetHeader("x-ms-return-client-request-id", out string returnRequestId));
-            Assert.AreEqual(request.RequestId, requestId);
+            Assert.AreEqual(request.ClientRequestId, requestId);
             Assert.AreEqual("true", returnRequestId);
         }
     }

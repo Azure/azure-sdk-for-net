@@ -39,7 +39,7 @@ namespace Azure.Core.Pipeline
             {
                 HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
                     .ConfigureAwait(false);
-                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
+                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Core.Pipeline
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
-                RequestId = Guid.NewGuid().ToString();
+                ClientRequestId = Guid.NewGuid().ToString();
             }
 
             public override HttpPipelineMethod Method
@@ -153,7 +153,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override string RequestId { get; set; }
+            public override string ClientRequestId { get; set; }
 
             protected internal override void AddHeader(string name, string value)
             {
@@ -285,7 +285,7 @@ namespace Azure.Core.Pipeline
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
-                RequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
+                ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
             }
 
@@ -324,7 +324,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override string RequestId { get; set; }
+            public override string ClientRequestId { get; set; }
 
             protected internal override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
