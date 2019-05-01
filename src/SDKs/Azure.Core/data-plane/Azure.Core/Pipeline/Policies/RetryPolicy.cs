@@ -130,7 +130,16 @@ namespace Azure.Core.Pipeline.Policies
 
         protected virtual TimeSpan GetServerDelay(HttpPipelineMessage message)
         {
-            if (message.Response.TryGetHeader(RetryAfterHeaderName, out var retryAfterValue))
+            if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out var retryAfterValue) ||
+                message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
+            {
+                if (int.TryParse(retryAfterValue, out var delaySeconds))
+                {
+                    return TimeSpan.FromMilliseconds(delaySeconds);
+                }
+            }
+
+            if (message.Response.TryGetHeader(RetryAfterHeaderName, out retryAfterValue))
             {
                 if (int.TryParse(retryAfterValue, out var delaySeconds))
                 {
@@ -139,15 +148,6 @@ namespace Azure.Core.Pipeline.Policies
                 if (DateTimeOffset.TryParse(retryAfterValue, out var delayTime))
                 {
                     return delayTime - DateTimeOffset.Now;
-                }
-            }
-
-            if (message.Response.TryGetHeader(RetryAfterMsHeaderName, out retryAfterValue) ||
-                message.Response.TryGetHeader(XRetryAfterMsHeaderName, out retryAfterValue))
-            {
-                if (int.TryParse(retryAfterValue, out var delaySeconds))
-                {
-                    return TimeSpan.FromMilliseconds(delaySeconds);
                 }
             }
 

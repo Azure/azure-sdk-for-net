@@ -228,6 +228,32 @@ namespace Azure.Core.Tests
             Assert.AreEqual(501, response.Status);
         }
 
+        [Theory]
+        [TestCase("retry-after-ms")]
+        [TestCase("x-ms-retry-after-ms")]
+        public async Task MsHeadersArePreferredOverRetryAfter(string headerName)
+        {
+            var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
+            var (policy, gate) = CreateRetryPolicy(maxRetries: 3);
+            var mockTransport = new MockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
+
+            MockResponse mockResponse = new MockResponse(500);
+            mockResponse.AddHeader(new HttpHeader("Retry-After", "1"));
+            mockResponse.AddHeader(new HttpHeader(headerName, "120000"));
+
+            await mockTransport.RequestGate.Cycle(mockResponse);
+
+            var retryDelay = await gate.Cycle();
+
+            await mockTransport.RequestGate.Cycle(new MockResponse(501));
+
+            var response = await task.TimeoutAfterDefault();
+
+            Assert.AreEqual(TimeSpan.FromMilliseconds(120000), retryDelay);
+            Assert.AreEqual(501, response.Status);
+        }
+
         [Test]
         [NonParallelizable]
         public async Task RetryingEmitsEventSourceEvent()

@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
 {
     // Avoid running these tests in parallel with anything else that's sharing the event source
     [NonParallelizable]
-    public abstract class EventSourceTests: SyncAsyncPolicyTestBase
+    public class EventSourceTests: SyncAsyncPolicyTestBase
     {
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
@@ -36,12 +36,9 @@ namespace Azure.Core.Tests
 
         private TestEventListener _listener;
 
-        private EventSourceTests(bool isAsync) : base(isAsync)
+        public EventSourceTests(bool isAsync) : base(isAsync)
         {
         }
-
-        public class Sync: EventSourceTests { public Sync() : base(false) {}}
-        public class Async: EventSourceTests { public Async() : base(false) {}}
 
         [SetUp]
         public void Setup()

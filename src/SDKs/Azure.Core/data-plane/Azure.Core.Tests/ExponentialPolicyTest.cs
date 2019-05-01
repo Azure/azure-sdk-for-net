@@ -12,11 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public abstract class ExponentialPolicyTest: RetryPolicyTestBase
+    public class ExponentialPolicyTest: RetryPolicyTestBase
     {
-        private ExponentialPolicyTest(bool isAsync) : base(isAsync) { }
-        public class Sync: ExponentialPolicyTest { public Sync() : base(false) {}}
-        public class Async: ExponentialPolicyTest { public Async() : base(false) {}}
+        public ExponentialPolicyTest(bool isAsync) : base(isAsync) { }
 
         [Test]
         public async Task WaitsBetweenRetries()
