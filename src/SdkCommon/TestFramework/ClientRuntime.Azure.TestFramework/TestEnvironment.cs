@@ -162,7 +162,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             if (!string.IsNullOrEmpty(envNameString))
             {
                 EnvironmentNames envName;
-                Enum.TryParse<EnvironmentNames>(envNameString, ignoreCase: true, out envName);
+                Enum.TryParse<EnvironmentNames>(envNameString, true, out envName);
                 this.Endpoints = new TestEndpoints(EnvEndpoints[envName], this.ConnectionString);
             }
             else
