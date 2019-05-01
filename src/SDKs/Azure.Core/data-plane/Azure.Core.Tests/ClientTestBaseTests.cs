@@ -3,12 +3,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core.Tests;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ClientTestBaseTests : ClientTestBase<ClientTestBaseTests.TestClient>
+    public class ClientTestBaseTests : ClientTestBase
     {
         public ClientTestBaseTests(bool isAsync) : base(isAsync)
         {
@@ -23,6 +22,13 @@ namespace Azure.Core.Tests
             Assert.AreEqual(IsAsync ? "Async 123" : "Sync 123", result);
         }
 
+        [Test]
+        public void ThrowsForInvalidClientTypes()
+        {
+            var exception = Assert.Throws<InvalidOperationException>(() => WrapClient(new InvalidTestClient()));
+            Assert.AreEqual("Client type contains public non-virtual async method MethodAsync", exception.Message);
+        }
+
         public class TestClient
         {
             public virtual Task<string> MethodAsync(int i)
@@ -35,22 +41,8 @@ namespace Azure.Core.Tests
                 return "Sync " + i;
             }
         }
-    }
 
-    public class ClientTestBaseValidationTests : ClientTestBase<ClientTestBaseValidationTests.TestClient>
-    {
-        public ClientTestBaseValidationTests(bool isAsync) : base(isAsync)
-        {
-        }
-
-        [Test]
-        public void ThrowsForInvalidClientTypes()
-        {
-            var exception = Assert.Throws<InvalidOperationException>(()=> WrapClient(new TestClient()));
-            Assert.AreEqual("Client type contains public non-virtual async method MethodAsync", exception.Message);
-        }
-
-        public class TestClient
+        public class InvalidTestClient
         {
             public Task<string> MethodAsync(int i)
             {

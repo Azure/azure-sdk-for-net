@@ -13,7 +13,7 @@ using Azure.Core.Tests;
 namespace Azure.ApplicationModel.Configuration.Tests
 {
     [Category("Live")]
-    public class ConfigurationLiveTests: ClientTestBase<ConfigurationClient>
+    public class ConfigurationLiveTests: ClientTestBase
     {
         public ConfigurationLiveTests(bool isAsync) : base(isAsync) { }
 

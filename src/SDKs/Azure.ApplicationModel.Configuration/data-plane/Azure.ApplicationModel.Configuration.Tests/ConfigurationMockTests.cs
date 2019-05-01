@@ -17,7 +17,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class ConfigurationMockTests: ClientTestBase<ConfigurationClient>
+    public class ConfigurationMockTests: ClientTestBase
     {
         static readonly string connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
@@ -273,7 +273,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             options.ApplicationId = "test_application";
             options.Transport = mockTransport;
 
-            var client = CreateClient(connectionString, options);
+            var client = CreateClient<ConfigurationClient>(connectionString, options);
 
             ConfigurationSetting setting = await client.GetAsync(s_testSetting.Key);
             Assert.AreEqual(s_testSetting, setting);

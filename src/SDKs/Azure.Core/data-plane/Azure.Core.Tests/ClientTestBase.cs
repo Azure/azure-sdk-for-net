@@ -10,15 +10,12 @@ namespace Azure.Core.Tests
 {
     [TestFixture(true)]
     [TestFixture(false)]
-    public class ClientTestBase<TClient> where TClient : class
+    public class ClientTestBase
     {
         private static readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
 
         private static readonly UseSyncMethodsInterceptor _interceptor = new UseSyncMethodsInterceptor();
 
-        private static bool _validated;
-
-        private static Exception _validationException;
 
         public bool IsAsync { get; }
 
@@ -27,33 +24,41 @@ namespace Azure.Core.Tests
             IsAsync = isAsync;
         }
 
-        public virtual TClient CreateClient(params object[] args)
+        public virtual TClient CreateClient<TClient>(params object[] args) where TClient: class
         {
 
             return WrapClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient WrapClient(TClient t)
+        public virtual TClient WrapClient<TClient>(TClient client) where TClient: class
         {
-            if (_validated == false)
+            if (ClientValidation<TClient>.Validated == false)
             {
                 foreach (var methodInfo in typeof(TClient).GetMethods(BindingFlags.Instance | BindingFlags.Public))
                 {
                     if (methodInfo.Name.EndsWith("Async") && !methodInfo.IsVirtual)
                     {
-                        _validationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
+                        ClientValidation<TClient>.ValidationException = new InvalidOperationException($"Client type contains public non-virtual async method {methodInfo.Name}");
                     }
                 }
 
-                _validated = true;
+                ClientValidation<TClient>.Validated = true;
             }
 
-            if (_validationException != null)
+            if (ClientValidation<TClient>.ValidationException != null)
             {
-                throw _validationException;
+                throw ClientValidation<TClient>.ValidationException;
             }
 
-            return !IsAsync ? _proxyGenerator.CreateClassProxyWithTarget(t, _interceptor) : t;
+            return !IsAsync ? _proxyGenerator.CreateClassProxyWithTarget(client, _interceptor) : client;
+        }
+
+
+        private static class ClientValidation<TClient>
+        {
+            public static bool Validated;
+
+            public static Exception ValidationException;
         }
     }
 }
