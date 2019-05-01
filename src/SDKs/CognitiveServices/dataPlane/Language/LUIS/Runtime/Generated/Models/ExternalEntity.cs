@@ -15,7 +15,7 @@ namespace Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines a user perdicted entity that extends an already existing one.
+    /// Defines a user predicted entity that extends an already existing one.
     /// </summary>
     public partial class ExternalEntity
     {
