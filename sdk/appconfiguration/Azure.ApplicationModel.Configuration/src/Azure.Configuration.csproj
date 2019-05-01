@@ -27,5 +27,5 @@
   </ItemGroup>
 
   <!-- Import the Azure.Core project -->  
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Azure.Core\data-plane\Azure.Core\Azure.Core.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>
