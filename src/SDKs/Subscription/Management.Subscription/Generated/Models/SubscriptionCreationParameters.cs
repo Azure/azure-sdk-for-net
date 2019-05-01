@@ -36,21 +36,20 @@ namespace Microsoft.Azure.Management.Subscription.Models
         /// </summary>
         /// <param name="displayName">The display name of the
         /// subscription.</param>
-        /// <param name="owners">The list of principals that should be granted
-        /// Owner access on the subscription. Principals should be of type
-        /// User, Service Principal or Security Group.</param>
-        /// <param name="offerType">The offer type of the subscription. For
-        /// example, MS-AZR-0017P (EnterpriseAgreement) and MS-AZR-0148P
-        /// (EnterpriseAgreement devTest) are available. Only valid when
-        /// creating a subscription in a enrollment account scope. Possible
-        /// values include: 'MS-AZR-0017P', 'MS-AZR-0148P'</param>
+        /// <param name="billingProfileId">The ARM id of the billing
+        /// profile.</param>
+        /// <param name="skuId">The commerce id of the sku.</param>
+        /// <param name="costCenter">optional customer cost center</param>
+        /// <param name="owner">rbac owner of the subscription</param>
         /// <param name="additionalParameters">Additional, untyped parameters
         /// to support custom subscription creation scenarios.</param>
-        public SubscriptionCreationParameters(string displayName = default(string), IList<AdPrincipal> owners = default(IList<AdPrincipal>), string offerType = default(string), IDictionary<string, object> additionalParameters = default(IDictionary<string, object>))
+        public SubscriptionCreationParameters(string displayName = default(string), string billingProfileId = default(string), string skuId = default(string), string costCenter = default(string), AdPrincipal owner = default(AdPrincipal), IDictionary<string, object> additionalParameters = default(IDictionary<string, object>))
         {
             DisplayName = displayName;
-            Owners = owners;
-            OfferType = offerType;
+            BillingProfileId = billingProfileId;
+            SkuId = skuId;
+            CostCenter = costCenter;
+            Owner = owner;
             AdditionalParameters = additionalParameters;
             CustomInit();
         }
@@ -67,22 +66,28 @@ namespace Microsoft.Azure.Management.Subscription.Models
         public string DisplayName { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of principals that should be granted Owner
-        /// access on the subscription. Principals should be of type User,
-        /// Service Principal or Security Group.
+        /// Gets or sets the ARM id of the billing profile.
         /// </summary>
-        [JsonProperty(PropertyName = "owners")]
-        public IList<AdPrincipal> Owners { get; set; }
+        [JsonProperty(PropertyName = "billingProfileId")]
+        public string BillingProfileId { get; set; }
 
         /// <summary>
-        /// Gets or sets the offer type of the subscription. For example,
-        /// MS-AZR-0017P (EnterpriseAgreement) and MS-AZR-0148P
-        /// (EnterpriseAgreement devTest) are available. Only valid when
-        /// creating a subscription in a enrollment account scope. Possible
-        /// values include: 'MS-AZR-0017P', 'MS-AZR-0148P'
+        /// Gets or sets the commerce id of the sku.
         /// </summary>
-        [JsonProperty(PropertyName = "offerType")]
-        public string OfferType { get; set; }
+        [JsonProperty(PropertyName = "skuId")]
+        public string SkuId { get; set; }
+
+        /// <summary>
+        /// Gets or sets optional customer cost center
+        /// </summary>
+        [JsonProperty(PropertyName = "costCenter")]
+        public string CostCenter { get; set; }
+
+        /// <summary>
+        /// Gets or sets rbac owner of the subscription
+        /// </summary>
+        [JsonProperty(PropertyName = "owner")]
+        public AdPrincipal Owner { get; set; }
 
         /// <summary>
         /// Gets or sets additional, untyped parameters to support custom
@@ -91,5 +96,18 @@ namespace Microsoft.Azure.Management.Subscription.Models
         [JsonProperty(PropertyName = "additionalParameters")]
         public IDictionary<string, object> AdditionalParameters { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Owner != null)
+            {
+                Owner.Validate();
+            }
+        }
     }
 }

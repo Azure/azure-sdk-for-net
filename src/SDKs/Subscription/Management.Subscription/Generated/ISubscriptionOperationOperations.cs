@@ -19,21 +19,25 @@ namespace Microsoft.Azure.Management.Subscription
     using System.Threading.Tasks;
 
     /// <summary>
-    /// SubscriptionOperations operations.
+    /// SubscriptionOperationOperations operations.
     /// </summary>
-    public partial interface ISubscriptionOperations
+    public partial interface ISubscriptionOperationOperations
     {
         /// <summary>
-        /// Lists all of the available pending Microsoft.Subscription API
+        /// Get the status of the pending Microsoft.Subscription API
         /// operations.
         /// </summary>
+        /// <param name='operationId'>
+        /// The operation ID, which can be found from the Location field in the
+        /// generate recommendation response header.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -42,6 +46,6 @@ namespace Microsoft.Azure.Management.Subscription
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<SubscriptionOperationListResult>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionCreationResult,SubscriptionOperationGetHeaders>> GetWithHttpMessagesAsync(string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
