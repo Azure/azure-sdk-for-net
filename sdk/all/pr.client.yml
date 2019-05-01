@@ -9,13 +9,14 @@ trigger:
     include:
     - users/mitchdenny/pr-pipelines
   paths:
-    include:
-    - sdk/eventhub/
+    include: # Changes in these directories cause us to build everything for validation purpoes.
+    - eng/
+    - .azure-pipelines/
 
 variables:
 - template: ../../../.azure-pipelines/templates/variables/globals.yml
 - name: ProjectFile
-  value: sdk/eventhub/Microsoft.Azure.EventHubs.sln
+  value: eng/data-plane.proj
 
 jobs:
 - template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
