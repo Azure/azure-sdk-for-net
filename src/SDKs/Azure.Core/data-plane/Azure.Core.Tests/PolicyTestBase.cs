@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
@@ -12,6 +13,8 @@ namespace Azure.Core.Tests
     {
         protected static Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
         {
+            Assert.IsInstanceOf<SynchronousHttpPipelinePolicy>(policy, "Use SyncAsyncPolicyTestBase base type for non-sync policies");
+
             using (Request request = transport.CreateRequest(null))
             {
                 request.Method = HttpPipelineMethod.Get;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class ClientRequestIdPolicy : HttpPipelinePolicy
+    public class ClientRequestIdPolicy : SynchronousHttpPipelinePolicy
     {
         private const string ClientRequestIdHeader = "x-ms-client-request-id";
         private const string EchoClientRequestId = "x-ms-return-client-request-id";
@@ -17,12 +17,10 @@ namespace Azure.Core.Pipeline.Policies
 
         public static ClientRequestIdPolicy Singleton { get; } = new ClientRequestIdPolicy();
 
-        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void OnSendingRequest(HttpPipelineMessage message)
         {
             message.Request.Headers.Add(ClientRequestIdHeader, message.Request.RequestId);
             message.Request.Headers.Add(EchoClientRequestId, "true");
-
-            return ProcessNextAsync(pipeline, message);
         }
     }
 }

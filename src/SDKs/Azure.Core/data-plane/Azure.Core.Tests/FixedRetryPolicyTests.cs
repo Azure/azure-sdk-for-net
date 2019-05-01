@@ -12,15 +12,19 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class FixedRetryPolicyTests: RetryPolicyTestBase
+    public abstract class FixedRetryPolicyTests: RetryPolicyTestBase
     {
+        private FixedRetryPolicyTests(bool isAsync) : base(isAsync) { }
+        public class Sync: FixedRetryPolicyTests { public Sync() : base(false) {}}
+        public class Async: FixedRetryPolicyTests { public Async() : base(false) {}}
+
         [Test]
         public async Task WaitsBetweenRetries()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(3));
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -38,8 +42,8 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(3), maxRetries: 3);
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -62,8 +66,8 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new FixedRetryPolicyMock(delay: TimeSpan.FromSeconds(delay));
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader("Retry-After", retryAfter.ToString()));
@@ -96,7 +100,12 @@ namespace Azure.Core.Tests
                 MaxRetries = maxRetries;
             }
 
-            internal override Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
+            internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
+            {
+                DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
+            }
+
+            internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
             {
                 return DelayGate.WaitForRelease(time);
             }
