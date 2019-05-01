@@ -120,8 +120,9 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// provisioning state, which only appears in the response.</param>
         /// <param name="availabilityZones">(PREVIEW) Availability zones for
         /// nodes. Must use VirtualMachineScaleSets AgentPoolType.</param>
-        public ManagedClusterAgentPoolProfile(int count, string vmSize, string name, int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>))
-            : base(count, vmSize, osDiskSizeGB, vnetSubnetID, maxPods, osType, maxCount, minCount, enableAutoScaling, type, orchestratorVersion, provisioningState, availabilityZones)
+        /// <param name="enableNodePublicIP">Enable public IP for nodes</param>
+        public ManagedClusterAgentPoolProfile(int count, string vmSize, string name, int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?))
+            : base(count, vmSize, osDiskSizeGB, vnetSubnetID, maxPods, osType, maxCount, minCount, enableAutoScaling, type, orchestratorVersion, provisioningState, availabilityZones, enableNodePublicIP)
         {
             Name = name;
             CustomInit();
