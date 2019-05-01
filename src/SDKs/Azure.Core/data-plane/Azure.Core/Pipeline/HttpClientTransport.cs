@@ -39,7 +39,7 @@ namespace Azure.Core.Pipeline
             {
                 HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
                     .ConfigureAwait(false);
-                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
+                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
         }
 
@@ -49,7 +49,6 @@ namespace Azure.Core.Pipeline
             if (pipelineRequest == null)
             {
                 throw new InvalidOperationException("the request is not compatible with the transport");
-                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
             return pipelineRequest.BuildRequestMessage(message.Cancellation);
         }
