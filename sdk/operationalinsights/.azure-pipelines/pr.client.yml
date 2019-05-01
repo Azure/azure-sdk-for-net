@@ -1,0 +1,16 @@
+trigger:
+  pr:
+  branches:
+    include:
+    - users/mitchdenny/pr-pipelines
+    include:
+    - .azure-pipelines/templates
+    - sdk/keyvault
+
+variables:
+- template: ../../../.azure-pipelines/templates/variables/globals.yml
+- name: ProjectFile
+  value: sdk/operationalinsights/Microsoft.Azure.OperationalInsights/Microsoft.Azure.OperationalInsights.sln
+
+jobs:
+- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml

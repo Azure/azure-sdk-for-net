@@ -1,0 +1,16 @@
+trigger:
+  pr:
+  branches:
+    include:
+    - users/mitchdenny/pr-pipelines
+    include:
+    - .azure-pipelines/templates
+    - sdk/servicebus
+
+variables:
+- template: ../../../.azure-pipelines/templates/variables/globals.yml
+- name: ProjectFile
+  value: sdk/servicebus/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.sln
+
+jobs:
+- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
