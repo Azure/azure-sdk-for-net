@@ -1,5 +1,5 @@
 
-# Package Index - azure-sdk-for-net
+# Package Index - sdk-for-net
 
 | Package Id     | Readme    | Changelog                 | Published Url       |
 |----------------|-----------|---------------------------|---------------------|
@@ -40,11 +40,11 @@
 | [`Microsoft.Azure.CognitiveServices.Vision.Face`]( src/SDKs/CognitiveServices/dataPlane/Vision/Face/Face/Microsoft.Azure.CognitiveServices.Vision.Face.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.CognitiveServices.Vision.Face/ ) |
 | [`Microsoft.Azure.ContainerRegistry`]( src/SDKs/ContainerRegistry/dataplane/Microsoft.Azure.ContainerRegistry/Microsoft.Azure.ContainerRegistry.csproj )|  N/A  |  N/A  |  N/A  |
 | [`Microsoft.Azure.EventGrid`]( src/SDKs/EventGrid/DataPlane/Microsoft.Azure.EventGrid/Microsoft.Azure.EventGrid.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.EventGrid/ ) |
-| [`Microsoft.Azure.EventHubs`]( src/SDKs/EventHub/data-plane/src/Microsoft.Azure.EventHubs/Microsoft.Azure.EventHubs.csproj )| [Readme](src/SDKs/EventHub/data-plane/ReadMe.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.EventHubs/ ) |
-| [`Microsoft.Azure.EventHubs.Processor`]( src/SDKs/EventHub/data-plane/src/Microsoft.Azure.EventHubs.Processor/Microsoft.Azure.EventHubs.Processor.csproj )| [Readme](src/SDKs/EventHub/data-plane/ReadMe.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/ ) |
-| [`Microsoft.Azure.EventHubs.ServiceFabricProcessor`]( src/SDKs/EventHub/data-plane/src/Microsoft.Azure.EventHubs.ServiceFabricProcessor/Microsoft.Azure.EventHubs.ServiceFabricProcessor.csproj )| [Readme](src/SDKs/EventHub/data-plane/ReadMe.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.EventHubs.ServiceFabricProcessor/ ) |
+| [`Microsoft.Azure.EventHubs`]( sdk/eventhub/Microsoft.Azure.EventHubs/src/Microsoft.Azure.EventHubs.csproj )| [Readme](sdk/eventhub/Microsoft.Azure.EventHubs/README.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.EventHubs/ ) |
+| [`Microsoft.Azure.EventHubs.Processor`]( sdk/eventhub/Microsoft.Azure.EventHubs.Processor/src/Microsoft.Azure.EventHubs.Processor.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.EventHubs.Processor/ ) |
+| [`Microsoft.Azure.EventHubs.ServiceFabricProcessor`]( sdk/eventhub/Microsoft.Azure.EventHubs.ServiceFabricProcessor/src/Microsoft.Azure.EventHubs.ServiceFabricProcessor.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.EventHubs.ServiceFabricProcessor/ ) |
 | [`Microsoft.Azure.Graph.RBAC`]( src/SDKs/Graph.RBAC/Graph.RBAC/Microsoft.Azure.Graph.RBAC.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Graph.RBAC/ ) |
-| [`Microsoft.Azure.HDInsight.Job`]( src/SDKs/HDInsight/DataPlane/Microsoft.Azure.HDInsight.Job/Microsoft.Azure.HDInsight.Job.csproj )|  N/A  |  N/A  |  N/A  |
+| [`Microsoft.Azure.HDInsight.Job`]( sdk/hdinsight/Microsoft.Azure.HDInsight.Job/src/Microsoft.Azure.HDInsight.Job.csproj )|  N/A  |  N/A  |  N/A  |
 | [`Microsoft.Azure.Insights`]( src/SDKs/Insights/Microsoft.Azure.Insights/Microsoft.Azure.Insights.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Insights/ ) |
 | [`Microsoft.Azure.KeyVault`]( sdk/keyvault/Microsoft.Azure.KeyVault/src/Microsoft.Azure.KeyVault.csproj )| [Readme](sdk/keyvault/Microsoft.Azure.KeyVault/README.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.KeyVault/ ) |
 | [`Microsoft.Azure.KeyVault.Core`]( sdk/keyvault/Microsoft.Azure.KeyVault.Core/src/Microsoft.Azure.KeyVault.Core.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.KeyVault.Core/ ) |
@@ -137,13 +137,13 @@
 | [`Microsoft.Azure.Management.Subscription`]( src/SDKs/Subscription/Management.Subscription/Microsoft.Azure.Management.Subscription.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Management.Subscription/ ) |
 | [`Microsoft.Azure.Management.TrafficManager`]( src/SDKs/TrafficManager/Management.TrafficManager/Microsoft.Azure.Management.TrafficManager.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Management.TrafficManager/ ) |
 | [`Microsoft.Azure.Management.Websites`]( src/SDKs/WebSites/Management.Websites/Microsoft.Azure.Management.Websites.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Management.Websites/ ) |
-| [`Microsoft.Azure.OperationalInsights`]( src/SDKs/OperationalInsights/DataPlane/OperationalInsights/Microsoft.Azure.OperationalInsights.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.OperationalInsights/ ) |
+| [`Microsoft.Azure.OperationalInsights`]( sdk/operationalinsights/Microsoft.Azure.OperationalInsights/src/Microsoft.Azure.OperationalInsights.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.OperationalInsights/ ) |
 | [`Microsoft.Azure.Search`]( src/SDKs/Search/DataPlane/Microsoft.Azure.Search/Microsoft.Azure.Search.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Search/ ) |
 | [`Microsoft.Azure.Search.Common`]( src/SDKs/Search/DataPlane/Microsoft.Azure.Search.Common/Microsoft.Azure.Search.Common.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Search.Common/ ) |
 | [`Microsoft.Azure.Search.Data`]( src/SDKs/Search/DataPlane/Microsoft.Azure.Search.Data/Microsoft.Azure.Search.Data.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Search.Data/ ) |
 | [`Microsoft.Azure.Search.Service`]( src/SDKs/Search/DataPlane/Microsoft.Azure.Search.Service/Microsoft.Azure.Search.Service.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Search.Service/ ) |
-| [`Microsoft.Azure.ServiceBus`]( src/SDKs/ServiceBus/data-plane/src/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.csproj )| [Readme](src/SDKs/ServiceBus/data-plane/README.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/ ) |
-| [`Microsoft.Azure.ServiceBus.Performance`]( src/SDKs/ServiceBus/data-plane/tests/Microsoft.Azure.ServiceBus.Performance/Microsoft.Azure.ServiceBus.Performance.csproj )| [Readme](src/SDKs/ServiceBus/data-plane/README.md) |  N/A  |  N/A  |
+| [`Microsoft.Azure.ServiceBus`]( sdk/servicebus/Microsoft.Azure.ServiceBus/src/Microsoft.Azure.ServiceBus.csproj )| [Readme](sdk/servicebus/Microsoft.Azure.ServiceBus/README.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.ServiceBus/ ) |
+| [`Microsoft.Azure.ServiceBus.Performance`]( sdk/servicebus/Microsoft.Azure.ServiceBus/tests/Performance/Microsoft.Azure.ServiceBus.Performance.csproj )| [Readme](sdk/servicebus/Microsoft.Azure.ServiceBus/README.md) |  N/A  |  N/A  |
 | [`Microsoft.Azure.Services.AppAuthentication`]( src/SdkCommon/AppAuthentication/Azure.Services.AppAuthentication/Microsoft.Azure.Services.AppAuthentication.csproj )| [Readme](src/SdkCommon/AppAuthentication/README.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Services.AppAuthentication/ ) |
 | [`Microsoft.Azure.Test.HttpRecorder`]( src/SdkCommon/TestFramework/Microsoft.Azure.Test.HttpRecorder/Microsoft.Azure.Test.HttpRecorder.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Azure.Test.HttpRecorder/ ) |
 | [`Microsoft.AzureStack.Management.AzureBridge.Admin`]( src/AzureStack/Admin/AzureBridgeAdmin/AzureBridge.Admin/Microsoft.AzureStack.Management.AzureBridge.Admin.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.AzureStack.Management.AzureBridge.Admin/ ) |
@@ -165,3 +165,4 @@
 | [`Microsoft.Rest.ClientRuntime.Azure.TestFramework`]( src/SdkCommon/TestFramework/ClientRuntime.Azure.TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework.csproj )|  N/A  |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Azure.TestFramework/ ) |
 | [`Microsoft.Rest.ClientRuntime.Etw`]( src/SdkCommon/ClientRuntime.Etw/Microsoft.Rest.ClientRuntime.Etw.csproj )| [Readme](src/SdkCommon/ClientRuntime.Etw/README.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Etw/ ) |
 | [`Microsoft.Rest.ClientRuntime.Log4Net`]( src/SdkCommon/ClientRuntime.Log4Net/Microsoft.Rest.ClientRuntime.Log4Net.csproj )| [Readme](src/SdkCommon/ClientRuntime.Log4Net/README.md) |  N/A  | [Nuget]( https://www.nuget.org/packages/Microsoft.Rest.ClientRuntime.Log4Net/ ) |
+| [`Personalizer`]( src/SDKs/CognitiveServices/dataPlane/Personalizer/Personalizer/Personalizer.csproj )| [Readme](src/SDKs/CognitiveServices/dataPlane/Personalizer/Personalizer/Readme.md) |  N/A  |  N/A  |
