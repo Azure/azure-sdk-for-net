@@ -10,11 +10,14 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Tests;
 using NUnit.Framework;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
-    public class ConfigurationMockTests
+    [TestFixture(true)]
+    [TestFixture(false)]
+    public class ConfigurationMockTests: ClientTestBase<ConfigurationClient>
     {
         static readonly string connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
@@ -28,11 +31,13 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         };
 
-        private static ConfigurationClient CreateTestService(HttpPipelineTransport transport)
+        public ConfigurationMockTests(bool isAsync) : base(isAsync) { }
+
+        private ConfigurationClient CreateTestService(HttpPipelineTransport transport)
         {
             var options = new ConfigurationClientOptions();
             options.Transport = transport;
-            return new ConfigurationClient(connectionString, options);
+            return WrapClient(new ConfigurationClient(connectionString, options));
         }
 
         [Test]
@@ -268,7 +273,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             options.ApplicationId = "test_application";
             options.Transport = mockTransport;
 
-            var client = new ConfigurationClient(connectionString, options);
+            var client = CreateClient(connectionString, options);
 
             ConfigurationSetting setting = await client.GetAsync(s_testSetting.Key);
             Assert.AreEqual(s_testSetting, setting);

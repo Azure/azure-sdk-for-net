@@ -5,10 +5,37 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
+using Castle.DynamicProxy;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
+    [TestFixture(true)]
+    [TestFixture(false)]
+    public class ClientTestBase<TClient> where TClient : class
+    {
+        private static readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
+
+        private static readonly UseSyncMethodsInterceptor _interceptor = new UseSyncMethodsInterceptor();
+
+        public bool IsAsync { get; }
+
+        public ClientTestBase(bool isAsync)
+        {
+            IsAsync = isAsync;
+        }
+
+        public virtual TClient CreateClient(params object[] args)
+        {
+            return WrapClient((TClient)Activator.CreateInstance(typeof(TClient), args));
+        }
+
+        public virtual TClient WrapClient(TClient t)
+        {
+            return !IsAsync ? _proxyGenerator.CreateClassProxyWithTarget(t, _interceptor) : t;
+        }
+    }
+
     public abstract class PolicyTestBase
     {
         protected static Task<Response> SendGetRequest(HttpPipelineTransport transport, HttpPipelinePolicy policy, ResponseClassifier responseClassifier = null)
