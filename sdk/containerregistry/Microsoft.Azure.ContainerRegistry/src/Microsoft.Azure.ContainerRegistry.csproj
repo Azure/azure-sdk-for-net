@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Provides management capabilities for Azure Container Registry.</Description>
+    <AssemblyTitle>Microsoft Azure Container Registry</AssemblyTitle>
+    <Version>0.9.0-preview</Version>
+    <PackageTags>Microsoft Azure Container Registry;Container Registry;</PackageTags>
+    <PackageReleaseNotes>Added capabilities to manage repository, tag and manifest.</PackageReleaseNotes>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AzureApiTag>2018-08-10-preview</AzureApiTag>
+    <PackageTags>$(PackageTags);$(CommonTags);$(AzureApiTag);</PackageTags>
+  </PropertyGroup>
+</Project>

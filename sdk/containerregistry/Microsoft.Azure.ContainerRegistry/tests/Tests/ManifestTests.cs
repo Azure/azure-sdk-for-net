@@ -36,7 +36,7 @@ namespace ContainerRegistry.Tests
             }
         };
 
-        [Fact]        
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]        
         public async Task GetAcrManifestAttributesMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesMR)))
@@ -51,7 +51,7 @@ namespace ContainerRegistry.Tests
             }            
         }
         
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrManifestAttributesCRReturnsNull()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestAttributesCRReturnsNull)))
@@ -64,7 +64,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrManifestsMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsMR)))
@@ -79,7 +79,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrManifestsCRThrowException()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrManifestsCRThrowException)))
@@ -89,7 +89,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetManifestMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestMR)))
@@ -116,7 +116,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetManifestCR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetManifestCR)))
@@ -143,7 +143,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task UpdateAcrManifestAttributesMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrManifestAttributesMR)))

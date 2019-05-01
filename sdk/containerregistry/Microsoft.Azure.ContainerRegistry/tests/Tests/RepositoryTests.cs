@@ -13,7 +13,7 @@ namespace ContainerRegistry.Tests
 
     public class RepositoryTests
     {
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task ListRepositoryCR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryCR)))
@@ -27,7 +27,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task ListRepositoryMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(ListRepositoryMR)))
@@ -41,7 +41,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrRepositoryDetailsMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoryDetailsMR)))
@@ -72,7 +72,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task GetAcrRepositoriesMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(GetAcrRepositoriesMR)))
@@ -96,7 +96,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task DeleteAcrRepositoryMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryMR)))
@@ -112,7 +112,7 @@ namespace ContainerRegistry.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task DeleteAcrRepositoryCRThrowException()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(DeleteAcrRepositoryCRThrowException)))
@@ -122,7 +122,7 @@ namespace ContainerRegistry.Tests
             }            
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6147")]
         public async Task UpdateAcrRepositoryAttributesMR()
         {
             using (var context = MockContext.Start(GetType().FullName, nameof(UpdateAcrRepositoryAttributesMR)))
