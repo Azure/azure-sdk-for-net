@@ -91,9 +91,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='id'>
             /// Model identifier.
             /// </param>
-            public static KeysResult GetExtractedKeysByCustomModelId(this IFormRecognizerClient operations, System.Guid id)
+            public static KeysResult GetExtractedKeys(this IFormRecognizerClient operations, System.Guid id)
             {
-                return operations.GetExtractedKeysByCustomModelIdAsync(id).GetAwaiter().GetResult();
+                return operations.GetExtractedKeysAsync(id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -112,9 +112,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<KeysResult> GetExtractedKeysByCustomModelIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<KeysResult> GetExtractedKeysAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetExtractedKeysByCustomModelIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetExtractedKeysWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -129,9 +129,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static ModelsResult GetListOfCustomModels(this IFormRecognizerClient operations)
+            public static ModelsResult GetCustomModels(this IFormRecognizerClient operations)
             {
-                return operations.GetListOfCustomModelsAsync().GetAwaiter().GetResult();
+                return operations.GetCustomModelsAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,9 +146,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ModelsResult> GetListOfCustomModelsAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ModelsResult> GetCustomModelsAsync(this IFormRecognizerClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetListOfCustomModelsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCustomModelsWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -166,9 +166,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='id'>
             /// Model identifier.
             /// </param>
-            public static ModelResult GetCustomModelById(this IFormRecognizerClient operations, System.Guid id)
+            public static ModelResult GetCustomModel(this IFormRecognizerClient operations, System.Guid id)
             {
-                return operations.GetCustomModelByIdAsync(id).GetAwaiter().GetResult();
+                return operations.GetCustomModelAsync(id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -186,9 +186,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ModelResult> GetCustomModelByIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ModelResult> GetCustomModelAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetCustomModelByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetCustomModelWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -206,9 +206,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='id'>
             /// The identifier of the model to delete.
             /// </param>
-            public static void DeleteCustomModelById(this IFormRecognizerClient operations, System.Guid id)
+            public static void DeleteCustomModel(this IFormRecognizerClient operations, System.Guid id)
             {
-                operations.DeleteCustomModelByIdAsync(id).GetAwaiter().GetResult();
+                operations.DeleteCustomModelAsync(id).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -226,9 +226,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteCustomModelByIdAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteCustomModelAsync(this IFormRecognizerClient operations, System.Guid id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteCustomModelByIdWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteCustomModelWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -247,15 +247,14 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// Model Identifier to analyze the document with.
             /// </param>
             /// <param name='formStream'>
-            /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
-            /// processing.
+            /// A pdf document or image (jpg,png) file to analyze.
             /// </param>
             /// <param name='keys'>
             /// An optional list of known keys to extract the values for.
             /// </param>
-            public static AnalyzeResult AnalyzeCustomModel(this IFormRecognizerClient operations, System.Guid id, Stream formStream, IList<string> keys = default(IList<string>))
+            public static AnalyzeResult AnalyzeWithCustomModel(this IFormRecognizerClient operations, System.Guid id, Stream formStream, IList<string> keys = default(IList<string>))
             {
-                return operations.AnalyzeCustomModelAsync(id, formStream, keys).GetAwaiter().GetResult();
+                return operations.AnalyzeWithCustomModelAsync(id, formStream, keys).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -274,8 +273,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// Model Identifier to analyze the document with.
             /// </param>
             /// <param name='formStream'>
-            /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
-            /// processing.
+            /// A pdf document or image (jpg,png) file to analyze.
             /// </param>
             /// <param name='keys'>
             /// An optional list of known keys to extract the values for.
@@ -283,9 +281,9 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AnalyzeResult> AnalyzeCustomModelAsync(this IFormRecognizerClient operations, System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<AnalyzeResult> AnalyzeWithCustomModelAsync(this IFormRecognizerClient operations, System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.AnalyzeCustomModelWithHttpMessagesAsync(id, formStream, keys, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.AnalyzeWithCustomModelWithHttpMessagesAsync(id, formStream, keys, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

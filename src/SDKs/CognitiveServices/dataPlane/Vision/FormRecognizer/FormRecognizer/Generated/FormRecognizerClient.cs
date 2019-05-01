@@ -138,7 +138,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// </summary>
         private void Initialize()
         {
-            BaseUri = "{Endpoint}/formrecognizer/v1.0-preview/custom";
+            BaseUri = "{Endpoint}/formrecognizer/v1.0-preview";
             SerializationSettings = new JsonSerializerSettings
             {
                 Formatting = Newtonsoft.Json.Formatting.Indented,
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "train";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "custom/train";
             _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
             {
                 _requestContent = SafeJsonConvert.SerializeObject(trainRequest, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Set Credentials
             if (Credentials != null)
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<KeysResult>> GetExtractedKeysByCustomModelIdWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<KeysResult>> GetExtractedKeysWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -387,11 +387,11 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetExtractedKeysByCustomModelId", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetExtractedKeys", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/keys";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "custom/models/{id}/keys";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -521,7 +521,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ModelsResult>> GetListOfCustomModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ModelsResult>> GetCustomModelsWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -535,11 +535,11 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetListOfCustomModels", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCustomModels", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "custom/models";
             _url = _url.Replace("{Endpoint}", Endpoint);
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ModelResult>> GetCustomModelByIdWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ModelResult>> GetCustomModelWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -686,11 +686,11 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetCustomModelById", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetCustomModel", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "custom/models/{id}";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -820,7 +820,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> DeleteCustomModelByIdWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> DeleteCustomModelWithHttpMessagesAsync(System.Guid id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -835,11 +835,11 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("id", id);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteCustomModelById", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteCustomModel", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "custom/models/{id}";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             // Create HTTP transport objects
@@ -937,8 +937,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// Model Identifier to analyze the document with.
         /// </param>
         /// <param name='formStream'>
-        /// Upload content of type 'application/pdf', 'image/jpeg' or 'image/png' for
-        /// processing.
+        /// A pdf document or image (jpg,png) file to analyze.
         /// </param>
         /// <param name='keys'>
         /// An optional list of known keys to extract the values for.
@@ -964,7 +963,7 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<AnalyzeResult>> AnalyzeCustomModelWithHttpMessagesAsync(System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<AnalyzeResult>> AnalyzeWithCustomModelWithHttpMessagesAsync(System.Guid id, Stream formStream, IList<string> keys = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Endpoint == null)
             {
@@ -985,27 +984,17 @@ namespace Microsoft.Azure.CognitiveServices.FormRecognizer
                 tracingParameters.Add("keys", keys);
                 tracingParameters.Add("formStream", formStream);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AnalyzeCustomModel", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "AnalyzeWithCustomModel", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "models/{id}/analyze";
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "custom/models/{id}/analyze";
             _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{id}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(id, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
             if (keys != null)
             {
-                if (keys.Count == 0)
-                {
-                    _queryParameters.Add(string.Format("keys={0}", System.Uri.EscapeDataString(string.Empty)));
-                }
-                else
-                {
-                    foreach (var _item in keys)
-                    {
-                        _queryParameters.Add(string.Format("keys={0}", System.Uri.EscapeDataString("" + _item)));
-                    }
-                }
+                _queryParameters.Add(string.Format("keys={0}", System.Uri.EscapeDataString(string.Join(",", keys))));
             }
             if (_queryParameters.Count > 0)
             {
