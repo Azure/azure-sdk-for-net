@@ -26,7 +26,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// <summary>
         /// Initializes a new instance of the PolicyResultSummary class.
         /// </summary>
-        public PolicyResultSummary(System.DateTime? timeStamp = default(System.DateTime?), double? ipsEstimatorNumerator = default(double?), double? ipsEstimatorDenominator = default(double?), double? snipsEstimatorDenominator = default(double?), string aggregateTimeWindow = default(string), double? nonZeroProbability = default(double?), double? confidenceInterval = default(double?), double? sumOfSquares = default(double?))
+        public PolicyResultSummary(System.DateTime? timeStamp = default(System.DateTime?), double? ipsEstimatorNumerator = default(double?), double? ipsEstimatorDenominator = default(double?), double? snipsEstimatorDenominator = default(double?), System.TimeSpan? aggregateTimeWindow = default(System.TimeSpan?), double? nonZeroProbability = default(double?), double? confidenceInterval = default(double?), double? sumOfSquares = default(double?))
         {
             TimeStamp = timeStamp;
             IpsEstimatorNumerator = ipsEstimatorNumerator;
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "aggregateTimeWindow")]
-        public string AggregateTimeWindow { get; private set; }
+        public System.TimeSpan? AggregateTimeWindow { get; private set; }
 
         /// <summary>
         /// </summary>

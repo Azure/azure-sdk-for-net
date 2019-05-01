@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// trained models.</param>
         /// <param name="logRetentionDays">Number of days historical logs are
         /// to be maintained.</param>
-        public ServiceConfiguration(string rewardWaitTime, double defaultReward, string rewardAggregation, double explorationPercentage, string modelExportFrequency, int logRetentionDays)
+        public ServiceConfiguration(System.TimeSpan rewardWaitTime, double defaultReward, string rewardAggregation, double explorationPercentage, System.TimeSpan modelExportFrequency, int logRetentionDays)
         {
             RewardWaitTime = rewardWaitTime;
             DefaultReward = defaultReward;
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// the default reward.
         /// </summary>
         [JsonProperty(PropertyName = "rewardWaitTime")]
-        public string RewardWaitTime { get; set; }
+        public System.TimeSpan RewardWaitTime { get; set; }
 
         /// <summary>
         /// Gets or sets the reward given if a reward is not received within
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// Gets or sets the time delay between exporting trained models.
         /// </summary>
         [JsonProperty(PropertyName = "modelExportFrequency")]
-        public string ModelExportFrequency { get; set; }
+        public System.TimeSpan ModelExportFrequency { get; set; }
 
         /// <summary>
         /// Gets or sets number of days historical logs are to be maintained.
@@ -107,17 +107,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (RewardWaitTime == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RewardWaitTime");
-            }
             if (RewardAggregation == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RewardAggregation");
-            }
-            if (ModelExportFrequency == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ModelExportFrequency");
             }
             if (ExplorationPercentage > 1)
             {
