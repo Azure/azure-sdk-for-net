@@ -11,8 +11,6 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
     public abstract class SearchTestBase<TTestFixture> : TestBase where TTestFixture : IResourceFixture, new()
     {
-        private const string JsonErrorMessage = "Some part of the SDK is using JsonConvert.DefaultSettings!";
-
         private MockContext _currentContext; // Changes as each test runs.
 
         protected TTestFixture Data { get; private set; }

@@ -9,68 +9,53 @@ namespace Microsoft.Azure.Search.Serialization
     using Microsoft.Azure.Search.Models;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
+    using HitHighlights = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>>;
 
     /// <summary>
     /// Deserializes SearchResult instances from OData-compliant JSON.
     /// </summary>
-    /// <typeparam name="TDoc">
+    /// <typeparam name="T">
     /// The CLR type that maps to the index schema. Instances of this type can be stored as documents in the index.
     /// </typeparam>
-    /// <typeparam name="TResult">
-    /// Type of the model class that encapsulates documents in a search response.
-    /// </typeparam>
-    internal class SearchResultConverter<TResult, TDoc> : JsonConverter
-        where TResult : SearchResultBase<TDoc>, new()
-        where TDoc : class
+    internal class SearchResultConverter<T> : JsonConverter
     {
-        public override bool CanRead
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public override bool CanRead => true;
 
-        public override bool CanWrite
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public override bool CanWrite => false;
 
-        public override bool CanConvert(Type objectType)
-        {
-            return typeof(TResult).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
-        }
+        public override bool CanConvert(Type objectType) =>
+            typeof(SearchResult<T>).GetTypeInfo().IsAssignableFrom(objectType.GetTypeInfo());
 
-        public override object ReadJson(
-            JsonReader reader,
-            Type objectType,
-            object existingValue,
-            JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             JObject propertyBag = serializer.Deserialize<JObject>(reader);
-            JToken score = propertyBag["@search.score"];
-            JToken highlights = propertyBag["@search.highlights"];
 
-            var result = new TResult();
-            result.Score = score.Value<double>();
-
-            if (highlights != null)
+            HitHighlights DeserializeHighlights()
             {
-                var highlightReader = new JTokenReader(highlights);
-                result.Highlights = serializer.Deserialize<HitHighlights>(highlightReader);
+                JToken highlights = propertyBag["@search.highlights"];
+
+                if (highlights != null)
+                {
+                    var highlightReader = new JTokenReader(highlights);
+                    return serializer.Deserialize<HitHighlights>(highlightReader);
+                }
+
+                return null;
             }
 
-            var docReader = new JTokenReader(propertyBag);
-            result.Document = serializer.Deserialize<TDoc>(docReader);
-            return result;
+            T DeserializeDocument()
+            {
+                var docReader = new JTokenReader(propertyBag);
+                return serializer.Deserialize<T>(docReader);
+            }
+
+            JToken score = propertyBag["@search.score"];
+            return new SearchResult<T>(
+                document: DeserializeDocument(), 
+                score: score.Value<double>(), 
+                highlights: DeserializeHighlights());
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) => throw new NotImplementedException();
     }
 }

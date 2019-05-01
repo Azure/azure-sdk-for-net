@@ -8,6 +8,7 @@ namespace Microsoft.Azure.Search.Tests
     using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.Azure.Search.Common;
     using Models;
     using Utilities;
     using Xunit;
@@ -368,18 +369,31 @@ namespace Microsoft.Azure.Search.Tests
             public string ETag { get; set; }
         }
 
-        private class FancyDirection : ExtensibleEnum<FancyDirection>
+        private struct FancyDirection : IEquatable<FancyDirection>
         {
+            private readonly string _value;
+
             public static readonly FancyDirection Left = new FancyDirection("left");
 
             public static readonly FancyDirection Right = new FancyDirection("right");
 
-            private FancyDirection(string name) : base(name)
+            private FancyDirection(string name)
             {
-                // Base class does all initialization.
+                Throw.IfArgumentNull(name, nameof(name));
+                _value = name;
             }
 
-            public static FancyDirection Create(string name) => Lookup(name) ?? new FancyDirection(name);
+            public static bool operator ==(FancyDirection lhs, FancyDirection rhs) => Equals(lhs, rhs);
+
+            public static bool operator !=(FancyDirection lhs, FancyDirection rhs) => !Equals(lhs, rhs);
+
+            public bool Equals(FancyDirection other) => _value == other._value;
+
+            public override bool Equals(object obj) => obj is FancyDirection ? Equals((FancyDirection)obj) : false;
+
+            public override int GetHashCode() => _value.GetHashCode();
+
+            public override string ToString() => _value;
         }
 
         // Biased lists only care about the first element when it comes to equality comparison.

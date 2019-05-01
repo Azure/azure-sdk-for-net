@@ -15,18 +15,18 @@ namespace Microsoft.Azure.Search.Models
     {
         internal ValueFacetResult(long count, T value)
         {
-            this.Value = value;
-            this.Count = count;
+            Value = value;
+            Count = count;
         }
 
         /// <summary>
         /// Gets the approximate count of documents falling within the bucket described by this facet.
         /// </summary>
-        public long Count { get; private set; }
+        public long Count { get; }
 
         /// <summary>
         /// Gets the value of the facet, or the inclusive lower bound if it's an interval facet.
         /// </summary>
-        public T Value { get; private set; }
+        public T Value { get; }
     }
 }

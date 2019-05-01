@@ -4,7 +4,6 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
-    using System;
     using Common;
     using Models;
     using Xunit;
@@ -12,115 +11,106 @@ namespace Microsoft.Azure.Search.Tests
     public sealed class SuggestParametersTests
     {
         [Fact]
-        public void AllOptionsUnsetGivesDefaultQueryString()
+        public void CanConvertToPostRequestPayload()
         {
-            Assert.Equal("$select=*&fuzzy=false", new SuggestParameters().ToString());
+            SuggestParameters parameters = CreateTestParameters();
+
+            SuggestRequest request = parameters.ToRequest("find me", "mySuggester");
+
+            Assert.Equal(parameters.Filter, request.Filter);
+            Assert.Equal(parameters.HighlightPostTag, request.HighlightPostTag);
+            Assert.Equal(parameters.HighlightPreTag, request.HighlightPreTag);
+            Assert.Equal(parameters.MinimumCoverage, request.MinimumCoverage);
+            Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), request.OrderBy);
+            Assert.Equal("find me", request.SearchText);
+            Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), request.SearchFields);
+            Assert.Equal(parameters.Select.ToCommaSeparatedString(), request.Select);
+            Assert.Equal("mySuggester", request.SuggesterName);
+            Assert.Equal(parameters.Top, request.Top);
+            Assert.Equal(parameters.UseFuzzyMatching, request.UseFuzzyMatching);
         }
 
         [Fact]
-        public void AllOptionsPropagatedToQueryString()
-        {
-            var parameters =
-                new SuggestParameters()
-                {
-                    Filter = "field eq value",
-                    HighlightPreTag = "<b>",
-                    HighlightPostTag = "</b>",
-                    MinimumCoverage = 33.33,
-                    OrderBy = new[] { "field1 asc", "field2 desc" },
-                    SearchFields = new[] { "field1", "field2" },
-                    Select = new[] { "field1", "field2" },
-                    Top = 5,
-                    UseFuzzyMatching = true
-                };
-
-            const string ExpectedQueryString =
-                "$filter=field%20eq%20value&highlightPreTag=%3Cb%3E&highlightPostTag=%3C%2Fb%3E&" +
-                "minimumCoverage=33.33&$orderby=field1 asc,field2 desc&searchFields=field1,field2&" +
-                "$select=field1,field2&$top=5&fuzzy=true";
-
-            Assert.Equal(ExpectedQueryString, parameters.ToString());
-        }
-
-        [Fact]
-        public void SelectStarPropagatesToQueryString()
-        {
-            var parameters = new SuggestParameters() { Select = new[] { "*" } };
-            Assert.Equal("$select=*&fuzzy=false", parameters.ToString());
-        }
-
-        [Fact]
-        public void AllOpenStringParametersAreEscaped()
-        {
-            const string UnescapedString = "a+%=@#b";
-            const string EscapedString = "a%2B%25%3D%40%23b";
-
-            var parameters =
-                new SuggestParameters()
-                {
-                    Filter = UnescapedString,
-                    HighlightPreTag = UnescapedString,
-                    HighlightPostTag = UnescapedString
-                };
-
-            const string ExpectedQueryStringFormat =
-                "$filter={0}&highlightPreTag={0}&highlightPostTag={0}&$select=*&fuzzy=false";
-
-            Assert.Equal(String.Format(ExpectedQueryStringFormat, EscapedString), parameters.ToString());
-        }
-
-        [Fact]
-        public void CanConvertToPostPayload()
-        {
-            var parameters =
-                new SuggestParameters()
-                {
-                    Filter = "x eq y",
-                    HighlightPostTag = "</em>",
-                    HighlightPreTag = "<em>",
-                    MinimumCoverage = 33.3,
-                    OrderBy = new[] { "a", "b desc" },
-                    SearchFields = new[] { "a", "b", "c" },
-                    Select = new[] { "e", "f", "g" },
-                    Top = 5,
-                    UseFuzzyMatching = true
-                };
-
-            SuggestParametersPayload payload = parameters.ToPayload("find me", "mySuggester");
-
-            Assert.Equal(parameters.Filter, payload.Filter);
-            Assert.Equal(parameters.HighlightPostTag, payload.HighlightPostTag);
-            Assert.Equal(parameters.HighlightPreTag, payload.HighlightPreTag);
-            Assert.Equal(parameters.MinimumCoverage, payload.MinimumCoverage);
-            Assert.Equal(parameters.OrderBy.ToCommaSeparatedString(), payload.OrderBy);
-            Assert.Equal("find me", payload.Search);
-            Assert.Equal(parameters.SearchFields.ToCommaSeparatedString(), payload.SearchFields);
-            Assert.Equal(parameters.Select.ToCommaSeparatedString(), payload.Select);
-            Assert.Equal("mySuggester", payload.SuggesterName);
-            Assert.Equal(parameters.Top, payload.Top);
-            Assert.Equal(parameters.UseFuzzyMatching, payload.Fuzzy);
-        }
-
-        [Fact]
-        public void MissingParametersAreMissingInThePayload()
+        public void MissingParametersAreMissingInTheRequest()
         {
             var parameters = new SuggestParameters();
 
             // Search text and suggester name can never be null.
-            SuggestParametersPayload payload = parameters.ToPayload("find me", "mySuggester");
+            SuggestRequest request = parameters.ToRequest("find me", "mySuggester");
 
-            Assert.Null(payload.Filter);
-            Assert.Null(payload.HighlightPostTag);
-            Assert.Null(payload.HighlightPreTag);
-            Assert.Null(payload.MinimumCoverage);
-            Assert.Null(payload.OrderBy);
-            Assert.Equal("find me", payload.Search);
-            Assert.Null(payload.SearchFields);
-            Assert.Equal("*", payload.Select);  // Nothing selected for Suggest means select everything.
-            Assert.Equal("mySuggester", payload.SuggesterName);
-            Assert.Null(payload.Top);
-            Assert.True(payload.Fuzzy.HasValue);
-            Assert.False(payload.Fuzzy.Value);  // Fuzzy is non-nullable in the client-side contract.
+            Assert.Null(request.Filter);
+            Assert.Null(request.HighlightPostTag);
+            Assert.Null(request.HighlightPreTag);
+            Assert.Null(request.MinimumCoverage);
+            Assert.Null(request.OrderBy);
+            Assert.Equal("find me", request.SearchText);
+            Assert.Null(request.SearchFields);
+            Assert.Equal("*", request.Select);  // Nothing selected for Suggest means select everything.
+            Assert.Equal("mySuggester", request.SuggesterName);
+            Assert.Null(request.Top);
+            Assert.True(request.UseFuzzyMatching.HasValue);
+            Assert.False(request.UseFuzzyMatching.Value);  // Fuzzy is non-nullable in the client-side contract.
         }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void EnsureSelectConvertsNullOrEmptyToSelectStar(bool isNull)
+        {
+            string[] select = isNull ? null : new string[0];
+
+            SuggestParameters parameters = CreateTestParameters(select);
+
+            Assert.Same(select, parameters.Select);
+
+            SuggestParameters newParameters = parameters.EnsureSelect();
+
+            Assert.Collection(newParameters.Select, s => Assert.Equal("*", s));
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public void EnsureSelectLeavesOtherPropertiesUnchanged(bool isNull)
+        {
+            string[] select = isNull ? null : new string[0];
+
+            SuggestParameters parameters = CreateTestParameters(select);
+            SuggestParameters newParameters = parameters.EnsureSelect();
+
+            Assert.Equal(parameters.Filter, newParameters.Filter);
+            Assert.Equal(parameters.HighlightPostTag, newParameters.HighlightPostTag);
+            Assert.Equal(parameters.HighlightPreTag, newParameters.HighlightPreTag);
+            Assert.Equal(parameters.MinimumCoverage, newParameters.MinimumCoverage);
+            Assert.Equal(parameters.OrderBy, newParameters.OrderBy);
+            Assert.Equal(parameters.SearchFields, newParameters.SearchFields);
+            Assert.Equal(parameters.Top, newParameters.Top);
+            Assert.Equal(parameters.UseFuzzyMatching, newParameters.UseFuzzyMatching);
+        }
+
+        [Fact]
+        public void EnsureSelectReturnsSelfWhenSelectIsPopulated()
+        {
+            SuggestParameters parameters = CreateTestParameters();
+            SuggestParameters newParameters = parameters.EnsureSelect();
+
+            Assert.Same(parameters, newParameters);
+        }
+
+        private static SuggestParameters CreateTestParameters() => CreateTestParameters(new[] { "e", "f", "g" });
+
+        private static SuggestParameters CreateTestParameters(string[] select) =>
+            new SuggestParameters()
+            {
+                Filter = "x eq y",
+                HighlightPostTag = "</em>",
+                HighlightPreTag = "<em>",
+                MinimumCoverage = 33.3,
+                OrderBy = new[] { "a", "b desc" },
+                SearchFields = new[] { "a", "b", "c" },
+                Select = select,
+                Top = 5,
+                UseFuzzyMatching = true
+            };
     }
 }
