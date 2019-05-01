@@ -26,9 +26,10 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// <summary>
         /// Initializes a new instance of the LogsProperties class.
         /// </summary>
-        public LogsProperties(LogsPropertiesDateRange dateRange = default(LogsPropertiesDateRange))
+        public LogsProperties(System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?))
         {
-            DateRange = dateRange;
+            StartTime = startTime;
+            EndTime = endTime;
             CustomInit();
         }
 
@@ -39,8 +40,13 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dateRange")]
-        public LogsPropertiesDateRange DateRange { get; private set; }
+        [JsonProperty(PropertyName = "startTime")]
+        public System.DateTime? StartTime { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; private set; }
 
     }
 }

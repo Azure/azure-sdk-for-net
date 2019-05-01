@@ -10,10 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer
 {
-    using Microsoft.Rest;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
@@ -23,17 +20,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     /// </summary>
     public static partial class ModelExtensions
     {
-            /// <summary>
-            /// Get current model.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static Stream Get(this IModel operations)
-            {
-                return operations.GetAsync().GetAwaiter().GetResult();
-            }
-
             /// <summary>
             /// Get current model.
             /// </summary>
@@ -51,31 +37,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Get current model.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<Stream> GetWithHttpMessages(this IModel operations, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Resets the model.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static void Delete(this IModel operations)
-            {
-                operations.DeleteAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Resets the model.
             /// </summary>
             /// <param name='operations'>
@@ -87,31 +48,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             public static async Task DeleteAsync(this IModel operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Resets the model.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse DeleteWithHttpMessages(this IModel operations, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get model properties.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static ModelProperties GetProperties(this IModel operations)
-            {
-                return operations.GetPropertiesAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,20 +65,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get model properties.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<ModelProperties> GetPropertiesWithHttpMessages(this IModel operations, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetPropertiesWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

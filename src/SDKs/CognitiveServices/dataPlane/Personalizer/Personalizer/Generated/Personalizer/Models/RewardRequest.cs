@@ -29,8 +29,8 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// <summary>
         /// Initializes a new instance of the RewardRequest class.
         /// </summary>
-        /// <param name="value">Reward to be assigned to an action. Value must
-        /// be between -1 and 1 inclusive.</param>
+        /// <param name="value">Reward to be assigned to an action. Value
+        /// should be between -1 and 1 inclusive.</param>
         public RewardRequest(double? value = default(double?))
         {
             Value = value;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reward to be assigned to an action. Value must be
+        /// Gets or sets reward to be assigned to an action. Value should be
         /// between -1 and 1 inclusive.
         /// </summary>
         [JsonProperty(PropertyName = "value")]

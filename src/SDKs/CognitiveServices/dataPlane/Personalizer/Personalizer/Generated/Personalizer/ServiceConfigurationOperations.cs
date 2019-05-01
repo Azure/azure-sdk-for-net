@@ -76,9 +76,13 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// </return>
         public async Task<HttpOperationResponse<ServiceConfiguration>> GetWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.Endpoint == null)
+            if (this.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (Client.ApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApplicationId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -92,8 +96,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "configurations/service";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{applicationId}/configurations/service";
+            _url = _url.Replace("{Endpoint}", this.Endpoint);
+            _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(Client.ApplicationId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -199,7 +204,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="HttpOperationException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -216,9 +221,13 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// </return>
         public async Task<HttpOperationResponse<ServiceConfiguration>> UpdateWithHttpMessagesAsync(ServiceConfiguration config, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (Client.Endpoint == null)
+            if (this.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
+            }
+            if (Client.ApplicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApplicationId");
             }
             if (config == null)
             {
@@ -237,8 +246,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
             // Construct URL
             var _baseUrl = Client.BaseUri;
-            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "configurations/service";
-            _url = _url.Replace("{Endpoint}", Client.Endpoint);
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{applicationId}/configurations/service";
+            _url = _url.Replace("{Endpoint}", this.Endpoint);
+            _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(Client.ApplicationId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -289,12 +299,19 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);

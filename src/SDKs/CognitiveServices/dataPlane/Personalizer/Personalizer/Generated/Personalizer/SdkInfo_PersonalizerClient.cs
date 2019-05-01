@@ -21,23 +21,13 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
               {
                 new Tuple<string, string, string>("PersonalizerClient", "Evaluations", "v1.0"),
                 new Tuple<string, string, string>("PersonalizerClient", "Events", "v1.0"),
-                new Tuple<string, string, string>("PersonalizerClient", "Log", "v1.0"),
+                new Tuple<string, string, string>("PersonalizerClient", "Logs", "v1.0"),
                 new Tuple<string, string, string>("PersonalizerClient", "Model", "v1.0"),
                 new Tuple<string, string, string>("PersonalizerClient", "Policy", "v1.0"),
+                new Tuple<string, string, string>("PersonalizerClient", "Rank", "v1.0"),
                 new Tuple<string, string, string>("PersonalizerClient", "ServiceConfiguration", "v1.0"),
               }.AsEnumerable();
           }
       }
-      // BEGIN: Code Generation Metadata Section
-      public static readonly String AutoRestVersion = "latest";
-      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/Personalizer/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=D:\\Repos\\azure-sdk-for-net\\src\\SDKs\\CognitiveServices\\dataPlane\\Personalizer\\Personalizer\\Generated\\Personalizer";
-      public static readonly String GithubForkName = "Azure";
-      public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "475083e8335bc798024b67f0c930ebf6c99a2c8c";
-      public static readonly String CodeGenerationErrors = "";
-      public static readonly String GithubRepoName = "azure-rest-api-specs";
-      // END: Code Generation Metadata Section
   }
 }
-

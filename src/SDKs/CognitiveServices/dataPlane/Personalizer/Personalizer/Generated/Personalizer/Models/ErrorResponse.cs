@@ -13,23 +13,29 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class DateRange
+    /// <summary>
+    /// Used to return an error to the client
+    /// </summary>
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the DateRange class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public DateRange()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DateRange class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public DateRange(System.DateTime? fromProperty = default(System.DateTime?), System.DateTime? to = default(System.DateTime?))
+        /// <param name="code">The error code.</param>
+        /// <param name="message">A message explaining the error reported by
+        /// the service.</param>
+        public ErrorResponse(int? code = default(int?), string message = default(string))
         {
-            FromProperty = fromProperty;
-            To = to;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -39,14 +45,16 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "from")]
-        public System.DateTime? FromProperty { get; private set; }
+        [JsonProperty(PropertyName = "code")]
+        public int? Code { get; private set; }
 
         /// <summary>
+        /// Gets a message explaining the error reported by the service.
         /// </summary>
-        [JsonProperty(PropertyName = "to")]
-        public System.DateTime? To { get; private set; }
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
 
     }
 }

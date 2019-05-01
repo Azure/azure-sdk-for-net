@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer
 {
-    using Microsoft.Rest;
     using Models;
     using System.Collections;
     using System.Collections.Generic;
@@ -28,17 +27,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<Evaluation> List(this IEvaluations operations)
-            {
-                return operations.ListAsync().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// List all submitted evaluations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
@@ -48,34 +36,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// List all submitted evaluations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<IList<Evaluation>> ListWithHttpMessages(this IEvaluations operations, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ListWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Submit a new evaluation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='evaluation'>
-            /// The evaluation job definition.
-            /// </param>
-            public static Evaluation Create(this IEvaluations operations, EvaluationContract evaluation)
-            {
-                return operations.CreateAsync(evaluation).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -99,37 +59,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Submit a new evaluation.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='evaluation'>
-            /// The evaluation job definition.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<Evaluation> CreateWithHttpMessages(this IEvaluations operations, EvaluationContract evaluation, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.CreateWithHttpMessagesAsync(evaluation, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the evaluation associated with the ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='evaluationId'>
-            /// ID of the evaluation in question.
-            /// </param>
-            public static Evaluation Get(this IEvaluations operations, string evaluationId)
-            {
-                return operations.GetAsync(evaluationId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Get the evaluation associated with the ID.
             /// </summary>
             /// <param name='operations'>
@@ -150,37 +79,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Get the evaluation associated with the ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='evaluationId'>
-            /// ID of the evaluation in question.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<Evaluation> GetWithHttpMessages(this IEvaluations operations, string evaluationId, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(evaluationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete the evaluation associated with the ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='evaluationId'>
-            /// ID of the evaluation to delete.
-            /// </param>
-            public static void Delete(this IEvaluations operations, string evaluationId)
-            {
-                operations.DeleteAsync(evaluationId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Delete the evaluation associated with the ID.
             /// </summary>
             /// <param name='operations'>
@@ -195,23 +93,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             public static async Task DeleteAsync(this IEvaluations operations, string evaluationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.DeleteWithHttpMessagesAsync(evaluationId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Delete the evaluation associated with the ID.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='evaluationId'>
-            /// ID of the evaluation to delete.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse DeleteWithHttpMessages(this IEvaluations operations, string evaluationId, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(evaluationId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

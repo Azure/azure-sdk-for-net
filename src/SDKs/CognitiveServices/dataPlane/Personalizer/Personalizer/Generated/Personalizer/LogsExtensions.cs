@@ -15,12 +15,12 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for ServiceConfigurationOperations.
+    /// Extension methods for Logs.
     /// </summary>
-    public static partial class ServiceConfigurationOperationsExtensions
+    public static partial class LogsExtensions
     {
             /// <summary>
-            /// Get the service configuration.
+            /// Deletes all the logs.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -28,29 +28,23 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceConfiguration> GetAsync(this IServiceConfigurationOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this ILogs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.DeleteWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Update the service configuration.
+            /// Gets logs properties.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='config'>
-            /// The personalizer service configuration.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ServiceConfiguration> UpdateAsync(this IServiceConfigurationOperations operations, ServiceConfiguration config, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<LogsProperties> GetPropertiesAsync(this ILogs operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(config, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetPropertiesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

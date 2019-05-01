@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -84,5 +85,36 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         [JsonProperty(PropertyName = "policyResults")]
         public IList<PolicyResult> PolicyResults { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id != null)
+            {
+                if (Id.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Id", 256);
+                }
+                if (Id.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Id", 1);
+                }
+            }
+            if (JobId != null)
+            {
+                if (JobId.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "JobId", 256);
+                }
+                if (JobId.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "JobId", 1);
+                }
+            }
+        }
     }
 }

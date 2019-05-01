@@ -10,10 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer
 {
-    using Microsoft.Rest;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -22,17 +19,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     /// </summary>
     public static partial class PolicyExtensions
     {
-            /// <summary>
-            /// Get the policy configuration.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static PolicyContract Get(this IPolicy operations)
-            {
-                return operations.GetAsync().GetAwaiter().GetResult();
-            }
-
             /// <summary>
             /// Get the policy configuration.
             /// </summary>
@@ -48,31 +34,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Get the policy configuration.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<PolicyContract> GetWithHttpMessages(this IPolicy operations, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.GetWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Delete the current policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            public static PolicyContract Delete(this IPolicy operations)
-            {
-                return operations.DeleteAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -93,34 +54,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Delete the current policy.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<PolicyContract> DeleteWithHttpMessages(this IPolicy operations, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.DeleteWithHttpMessagesAsync(customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Update the policy configuration.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='policy'>
-            /// The policy configuration.
-            /// </param>
-            public static PolicyContract Update(this IPolicy operations, PolicyContract policy)
-            {
-                return operations.UpdateAsync(policy).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Update the policy configuration.
             /// </summary>
             /// <param name='operations'>
@@ -138,23 +71,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Update the policy configuration.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='policy'>
-            /// The policy configuration.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<PolicyContract> UpdateWithHttpMessages(this IPolicy operations, PolicyContract policy, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.UpdateWithHttpMessagesAsync(policy, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

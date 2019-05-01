@@ -75,6 +75,17 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Features");
             }
+            if (Id != null)
+            {
+                if (Id.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Id", 256);
+                }
+                if (Id.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Id", 1);
+                }
+            }
         }
     }
 }

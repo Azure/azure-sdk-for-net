@@ -10,10 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer
 {
-    using Microsoft.Rest;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -22,23 +19,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     /// </summary>
     public static partial class EventsExtensions
     {
-            /// <summary>
-            /// Report reward to allocate to the top ranked action for the specified event.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='eventId'>
-            /// The event id this reward applies to.
-            /// </param>
-            /// <param name='reward'>
-            /// The reward should be a floating point number.
-            /// </param>
-            public static void Reward(this IEvents operations, string eventId, RewardRequest reward)
-            {
-                operations.RewardAsync(eventId, reward).GetAwaiter().GetResult();
-            }
-
             /// <summary>
             /// Report reward to allocate to the top ranked action for the specified event.
             /// </summary>
@@ -60,41 +40,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             }
 
             /// <summary>
-            /// Report reward to allocate to the top ranked action for the specified event.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='eventId'>
-            /// The event id this reward applies to.
-            /// </param>
-            /// <param name='reward'>
-            /// The reward should be a floating point number.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse RewardWithHttpMessages(this IEvents operations, string eventId, RewardRequest reward, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.RewardWithHttpMessagesAsync(eventId, reward, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Report that the specified event was actually displayed to the user and a
-            /// reward should be expected for it.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='eventId'>
-            /// The event ID this activation applies to.
-            /// </param>
-            public static void Activate(this IEvents operations, string eventId)
-            {
-                operations.ActivateAsync(eventId).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
             /// Report that the specified event was actually displayed to the user and a
             /// reward should be expected for it.
             /// </summary>
@@ -110,75 +55,6 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             public static async Task ActivateAsync(this IEvents operations, string eventId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.ActivateWithHttpMessagesAsync(eventId, null, cancellationToken).ConfigureAwait(false)).Dispose();
-            }
-
-            /// <summary>
-            /// Report that the specified event was actually displayed to the user and a
-            /// reward should be expected for it.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='eventId'>
-            /// The event ID this activation applies to.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse ActivateWithHttpMessages(this IEvents operations, string eventId, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.ActivateWithHttpMessagesAsync(eventId, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// A Personalizer rank request.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='rankRequest'>
-            /// A Personalizer request.
-            /// </param>
-            public static RankResponse Rank(this IEvents operations, RankRequest rankRequest)
-            {
-                return operations.RankAsync(rankRequest).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// A Personalizer rank request.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='rankRequest'>
-            /// A Personalizer request.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<RankResponse> RankAsync(this IEvents operations, RankRequest rankRequest, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.RankWithHttpMessagesAsync(rankRequest, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// A Personalizer rank request.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='rankRequest'>
-            /// A Personalizer request.
-            /// </param>
-            /// <param name='customHeaders'>
-            /// Headers that will be added to request.
-            /// </param>
-            public static HttpOperationResponse<RankResponse> RankWithHttpMessages(this IEvents operations, RankRequest rankRequest, Dictionary<string, List<string>> customHeaders = null)
-            {
-                return operations.RankWithHttpMessagesAsync(rankRequest, customHeaders, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
     }

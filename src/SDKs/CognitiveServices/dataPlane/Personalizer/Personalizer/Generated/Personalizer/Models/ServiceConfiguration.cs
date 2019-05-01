@@ -35,7 +35,8 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// <param name="defaultReward">The reward given if a reward is not
         /// received within the specified wait time.</param>
         /// <param name="rewardAggregation">The function used to process
-        /// rewards.</param>
+        /// rewards. Possible values include: 'earliest', 'average', 'median',
+        /// 'sum', 'min', 'max'</param>
         /// <param name="explorationPercentage">The percentage of rank
         /// responses that will use exploration.</param>
         /// <param name="modelExportFrequency">The time delay between exporting
@@ -73,7 +74,8 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         public double DefaultReward { get; set; }
 
         /// <summary>
-        /// Gets or sets the function used to process rewards.
+        /// Gets or sets the function used to process rewards. Possible values
+        /// include: 'earliest', 'average', 'median', 'sum', 'min', 'max'
         /// </summary>
         [JsonProperty(PropertyName = "rewardAggregation")]
         public string RewardAggregation { get; set; }
@@ -117,13 +119,21 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ModelExportFrequency");
             }
-            if (DefaultReward > 1)
+            if (ExplorationPercentage > 1)
             {
-                throw new ValidationException(ValidationRules.InclusiveMaximum, "DefaultReward", 1);
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "ExplorationPercentage", 1);
             }
-            if (DefaultReward < -1)
+            if (ExplorationPercentage < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "DefaultReward", -1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "ExplorationPercentage", 0);
+            }
+            if (LogRetentionDays > 1095)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "LogRetentionDays", 1095);
+            }
+            if (LogRetentionDays < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "LogRetentionDays", 0);
             }
         }
     }
