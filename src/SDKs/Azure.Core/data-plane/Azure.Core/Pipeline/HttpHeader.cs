@@ -51,7 +51,7 @@ namespace Azure.Core.Pipeline
         {
             public static string Date => "Date";
             public static string ContentType => "Content-Type";
-            public static string RequestId => "x-ms-request-id";
+            public static string XMsRequestId => "x-ms-request-id";
             public static string UserAgent => "User-Agent";
             public static string Accept => "Accept";
         }

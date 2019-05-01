@@ -21,7 +21,7 @@ namespace Azure
 
         public string ContentType => TryGetValue(HttpHeader.Names.ContentType, out var value) ? value : null;
 
-        public string RequestId => TryGetValue(HttpHeader.Names.RequestId, out var value) ? value : null;
+        public string RequestId => TryGetValue(HttpHeader.Names.XMsRequestId, out var value) ? value : null;
 
         public IEnumerator<HttpHeader> GetEnumerator()
         {
