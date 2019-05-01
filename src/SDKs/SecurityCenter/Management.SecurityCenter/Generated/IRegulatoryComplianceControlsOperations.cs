@@ -48,10 +48,10 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<RegulatoryComplianceControl>>> ListWithHttpMessagesAsync(string regulatoryComplianceStandardName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+       Task<AzureOperationResponse<IPage<RegulatoryComplianceControl>>> ListWithHttpMessagesAsync(string regulatoryComplianceStandardName, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Selected regulatory compliance control details and state
-        /// </summary>
+        /// </summary> 
         /// <param name='regulatoryComplianceStandardName'>
         /// Name of the regulatory compliance standard object
         /// </param>
@@ -73,11 +73,11 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<RegulatoryComplianceControl>> GetWithHttpMessagesAsync(string regulatoryComplianceStandardName, string regulatoryComplianceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// All supported regulatory compliance controls details and state for
         /// selected standard
         /// </summary>
+       Task<AzureOperationResponse<RegulatoryComplianceControl>> GetWithHttpMessagesAsync(string regulatoryComplianceStandardName, string regulatoryComplianceControlName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
         /// </param>

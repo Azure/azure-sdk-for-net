@@ -15,6 +15,10 @@ variables:
 jobs:
   - job: 'Test'
 
+    # Increase timeout so Event Hubs tests do not timeout
+    # https://github.com/Azure/azure-sdk-for-net/issues/5982
+    timeoutInMinutes: 90
+
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]
       matrix:

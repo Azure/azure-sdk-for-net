@@ -515,5 +515,45 @@ namespace Microsoft.Azure.Management.Storage
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ImmutabilityPolicy,BlobContainersExtendImmutabilityPolicyHeaders>> ExtendImmutabilityPolicyWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, string ifMatch, int immutabilityPeriodSinceCreationInDays, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The Lease Container operation establishes and manages a lock on a
+        /// container for delete operations. The lock duration can be 15 to 60
+        /// seconds, or can be infinite.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The
+        /// name is case insensitive.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the storage account within the specified resource
+        /// group. Storage account names must be between 3 and 24 characters in
+        /// length and use numbers and lower-case letters only.
+        /// </param>
+        /// <param name='containerName'>
+        /// The name of the blob container within the specified storage
+        /// account. Blob container names must be between 3 and 63 characters
+        /// in length and use numbers, lower-case letters and dash (-) only.
+        /// Every dash (-) character must be immediately preceded and followed
+        /// by a letter or number.
+        /// </param>
+        /// <param name='parameters'>
+        /// Lease Container request body.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<LeaseContainerResponse>> LeaseWithHttpMessagesAsync(string resourceGroupName, string accountName, string containerName, LeaseContainerRequest parameters = default(LeaseContainerRequest), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

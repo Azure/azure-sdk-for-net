@@ -10,21 +10,27 @@ using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
 {
+    /// <summary>
+    /// Set of options for selecting <see cref="ConfigurationSetting"/> from the configuration store.
+    /// </summary>
     public class SettingSelector
     {
+        /// <summary>
+        /// Wildcard that symbolizes any value when used in filters.
+        /// </summary>
         public static readonly string Any = "*";
         /// <summary>
         /// Keys that will be used to filter.
         /// </summary>
-        /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
+        /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public IList<string> Keys { get; set; }
         /// <summary>
         /// Labels that will be used to filter.
         /// </summary>
-        /// <remarks>See the documentation for this client library for details on the format of filter expressions</remarks>
+        /// <remarks>See the documentation for this client library for details on the format of filter expressions.</remarks>
         public IList<string> Labels { get; set; }
         /// <summary>
-        /// IKeyValue fields that will be retrieved.
+        /// Allows requesting a specific set of fields.
         /// </summary>
         public SettingFields Fields { get; set; } = SettingFields.All;
         /// <summary>

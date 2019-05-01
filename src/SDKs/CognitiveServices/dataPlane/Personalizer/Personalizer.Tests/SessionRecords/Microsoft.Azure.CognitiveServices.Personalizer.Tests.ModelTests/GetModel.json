@@ -1,0 +1,54 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/personalizer/v1.0/model",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL21vZGVs",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": [
+          "000"
+        ],
+        "User-Agent": [
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.CognitiveServices.Personalizer.PersonalizerClient/0.8.0.0"
+        ]
+      },
+      "ResponseHeaders": {
+        "Cache-Control": [
+          "no-store, must-revalidate, no-cache"
+        ],
+        "Date": [
+          "Sat, 27 Apr 2019 04:32:38 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Kestrel"
+        ],
+        "Set-Cookie": [
+          "pid=7b6ba9071da040b6bb9258411f72bad7; expires=Thu, 24 Oct 2019 04:32:38 GMT; domain=; path=/; samesite=lax"
+        ],
+        "Timing-Allow-Origin": [
+          "*"
+        ],
+        "Content-Type": [
+          "application/octet-stream"
+        ],
+        "Expires": [
+          "0"
+        ]
+      },
+      "ResponseBody": "BgAAADguNi4xAEoAAAAwNmYyMzYzMi1mNzBiLTRiM2MtYWY1Yi0wYjBjMmU4MjkyYmYvNGYyZGE1YjQtMjBlNi00MjZkLThhZTItNTg1NWUwYzFjNzEzAG0AAAzCAAAAABIAAAAAAAAAAAAAAAAAAABeAQAAIC0taGFzaF9zZWVkIDAgLS1pZ25vcmUgQSAtLXF1YWRyYXRpYyBHVCAtLXF1YWRyYXRpYyBNUiAtLXF1YWRyYXRpYyBHUiAtLXF1YWRyYXRpYyBNRSAtLXF1YWRyYXRpYyBPVCAtLXF1YWRyYXRpYyBPRSAtLXF1YWRyYXRpYyBPUiAtLXF1YWRyYXRpYyBNUyAtLXF1YWRyYXRpYyBHWCAtLXF1YWRyYXRpYyBGaSAtLWNiX2V4cGxvcmVfYWRmIC0tY2JfbWF4X2Nvc3QgMSAtLWNiX21pbl9jb3N0IDAgLS1lcHNpbG9uIDAuMiAtLWxhbWJkYSAtMSAtLW1lbGxvd25lc3MgMC4xIC0tcHNpIDEgLS1jYl9hZGYgLS1jYl90eXBlIGlwcyAtLWNzb2FhX2xkZiBtdWx0aWxpbmUgLS1jc29hYV9yYW5rIC0tbGluayBpZGVudGl0eQAEAAAAl64I6QAAAAAAAAAAAAAAAAAAAAAAphUAAJs2GD+NOAAAmkNjPt06AABZ6RE+VEUAAPwudT4ERwAAs5kLPsNlAADu0tO+L2oAAPLkDT7vbQAAsvERPYF7AADjvVI9jIAAAN/owj7kiAAAMsYtvBaUAAAaNtQ+bbsAAAogRr4rvgAAh70OvhfCAABRvRC9tMYAAOoRBb4f/QAAWtKXPlv/AAAHzdI+GwMBAKLZEz70DAEAUSQHP0lhAQAWoEk+/moBALLxET3zcQEA9NZfPnFyAQDRrMS9fXMBACiUQz63cwEAiMXZPm51AQA/azM9KncBAJ+Pez1EjQEAwZvrPraRAQBHvzc7g5kBAPmiwT3emQEAdA9+PsebAQBy1SU+pbYBAA4MS72LuwEAcG79PWO8AQDlD0k+zb4BAHCXBD8UwwEAjFR/PlzFAQDu0tO+fMsBALt0Mj5r6wEAI/gHvfbvAQBRvRC9ZvABAPLdrD0i8gEA9a8pPrj/AQAj+Ae9EQICADjqfj3QCQIA471SPa8hAgDTe7c+MiUCAKUw3r3HKQIAq6WYPhcrAgDGJBo/Wi0CAIo4Nb2eVAIAo+OIPnJbAgAW64S+Tm0CAF8vDb5PcQIAPTUFvgl0AgBfLw2+yXQCAO6Z1r4MkQIAGrGGPkiTAgAgH18+OqACAN2juz3IpAIAotkTPlKoAgAlhaK9p6oCAMaZt723wQIAX+SOPerBAgAjqoQ+rsMCAFIZcD7fyQIAQJsQOpPpAgCDeks71+sCALgm7j3V7AIAS16rPpHuAgA4o7E+K/kCABbrhL6SIAMAx11hPQ8kAwC/oUA8KiQDADvMMz1GMgMAVK0VPiBCAwDRrMS9oUMDANyHZzrPTQMAO8wzPaNbAwDM2+88pHYDAOQFEL3EoAMAPTUFviKhAwALIIE9mqUDACwjRD2/pQMA2sE4Pm+nAwDGI/w9B68DANKSw7t/zAMAEzoJPrjYAwDKkbM+NtoDAJ+0jjz82gMAAgY0PoTcAwALajK9q94DAEhkTj1g4gMABl0DvuvvAwD3ji4+",
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {}
+}

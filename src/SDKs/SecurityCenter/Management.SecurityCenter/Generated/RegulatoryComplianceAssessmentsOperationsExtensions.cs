@@ -41,7 +41,6 @@ namespace Microsoft.Azure.Management.Security
             {
                 return operations.ListAsync(regulatoryComplianceStandardName, regulatoryComplianceControlName, filter).GetAwaiter().GetResult();
             }
-
             /// <summary>
             /// Details and state of assessments mapped to selected regulatory compliance
             /// control
@@ -114,7 +113,6 @@ namespace Microsoft.Azure.Management.Security
                     return _result.Body;
                 }
             }
-
             /// <summary>
             /// Details and state of assessments mapped to selected regulatory compliance
             /// control

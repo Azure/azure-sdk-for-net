@@ -50,47 +50,52 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         public SecurityCenterClient Client { get; private set; }
 
-		/// <summary>
-		/// Supported regulatory compliance standards details and state
-		/// </summary>
-		/// <param name='filter'>
-		/// OData filter. Optional.
-		/// </param>
-		/// <param name='customHeaders'>
-		/// Headers that will be added to request.
-		/// </param>
-		/// <param name='cancellationToken'>
-		/// The cancellation token.
-		/// </param>
-		/// <exception cref="CloudException">
-		/// Thrown when the operation returned an invalid status code
-		/// </exception>
-		/// <exception cref="SerializationException">
-		/// Thrown when unable to deserialize the response
-		/// </exception>
-		/// <exception cref="ValidationException">
-		/// Thrown when a required parameter is null
-		/// </exception>
-		/// <exception cref="System.ArgumentNullException">
-		/// Thrown when a required parameter is null
-		/// </exception>
-		/// <return>
-		/// A response object containing the response body and response headers.
-		/// </return>
-		public async Task<AzureOperationResponse<IPage<RegulatoryComplianceStandard>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        /// <summary>
+        /// Supported regulatory compliance standards details and state
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group within the user's subscription. The name is
+        /// case insensitive.
+        /// </param>
+        /// <param name='filter'>
+        /// OData filter. Optional.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationResponse<IPage<RegulatoryComplianceStandard>>> ListWithHttpMessagesAsync(string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-			if (Client.SubscriptionId == null)
-			{
-				throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-			}
-			if (Client.SubscriptionId != null)
-			{
-				if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
-				{
-					throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
-				}
-			}
-			string apiVersion = "2019-01-01-preview";
+            if (Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (Client.SubscriptionId != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(Client.SubscriptionId, "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "Client.SubscriptionId", "^[0-9A-Fa-f]{8}-([0-9A-Fa-f]{4}-){3}[0-9A-Fa-f]{12}$");
+                }
+            }
+            string apiVersion = "2019-01-01-preview";
+
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -98,15 +103,16 @@ namespace Microsoft.Azure.Management.Security
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-				tracingParameters.Add("apiVersion", apiVersion);
-				tracingParameters.Add("filter", filter);
-				tracingParameters.Add("cancellationToken", cancellationToken);
-				ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
-			}
+                tracingParameters.Add("apiVersion", apiVersion);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
+            }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Security/regulatoryComplianceStandards").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
+
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)
             {

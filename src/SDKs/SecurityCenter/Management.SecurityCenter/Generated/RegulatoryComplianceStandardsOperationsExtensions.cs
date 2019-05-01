@@ -41,17 +41,13 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group within the user's subscription. The name is
-            /// case insensitive.
-            /// </param>
             /// <param name='filter'>
             /// OData filter. Optional.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RegulatoryComplianceStandard>> ListAsync(this IRegulatoryComplianceStandardsOperations operations, string resourceGroupName, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<RegulatoryComplianceStandard>> ListAsync(this IRegulatoryComplianceStandardsOperations operations, string filter = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(filter, null, cancellationToken).ConfigureAwait(false))
                 {
