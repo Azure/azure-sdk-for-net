@@ -18,6 +18,7 @@ known_presence_issues:
   - ['sdk/keyvault','#5499']
   - ['sdk/servicebus','#5499']
   - ['sdk/eventhub','#5499']
+  - ['sdk/eventgrid/Microsoft.Azure.EventGrid','#5499']
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
 known_content_issues:
