@@ -21,16 +21,21 @@ namespace Azure.Core.Pipeline
 
         public static HttpPipelineRequestContent Create(ReadOnlySequence<byte> bytes) => new ReadOnlySequenceContent(bytes);
 
-        public abstract Task WriteTo(Stream stream, CancellationToken cancellation);
+        public abstract Task WriteToAsync(Stream stream, CancellationToken cancellation);
+
+        public abstract void WriteTo(Stream stream, CancellationToken cancellation);
 
         public abstract bool TryComputeLength(out long length);
 
         public abstract void Dispose();
 
-        sealed class StreamContent : HttpPipelineRequestContent
+        private sealed class StreamContent : HttpPipelineRequestContent
         {
-            Stream _stream;
-            readonly long _origin;
+            private const int CopyToBufferSize = 81920;
+
+            private Stream _stream;
+
+            private readonly long _origin;
 
             public StreamContent(Stream stream)
             {
@@ -39,7 +44,13 @@ namespace Azure.Core.Pipeline
                 _stream = stream;
             }
 
-            public sealed override bool TryComputeLength(out long length)
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                _stream.Seek(_origin, SeekOrigin.Begin);
+                _stream.CopyTo(stream, CopyToBufferSize);
+            }
+
+            public override bool TryComputeLength(out long length)
             {
                 if (_stream.CanSeek)
                 {
@@ -50,11 +61,10 @@ namespace Azure.Core.Pipeline
                 return false;
             }
 
-            public sealed async override Task WriteTo(Stream stream, CancellationToken cancellation)
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
             {
                 _stream.Seek(_origin, SeekOrigin.Begin);
-                await _stream.CopyToAsync(stream, 81920, cancellation).ConfigureAwait(false);
-                await stream.FlushAsync(cancellation).ConfigureAwait(false);
+                await _stream.CopyToAsync(stream, CopyToBufferSize, cancellation).ConfigureAwait(false);
             }
 
             public override void Dispose()
@@ -64,11 +74,13 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        sealed class ArrayContent : HttpPipelineRequestContent
+        private sealed class ArrayContent : HttpPipelineRequestContent
         {
-            readonly byte[] _bytes;
-            readonly int _contentStart;
-            readonly int _contentLength;
+            private readonly byte[] _bytes;
+
+            private readonly int _contentStart;
+
+            private readonly int _contentLength;
 
             public ArrayContent(byte[] bytes, int index, int length)
             {
@@ -81,26 +93,37 @@ namespace Azure.Core.Pipeline
 
             public override void Dispose() { }
 
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                stream.Write(_bytes, _contentStart, _contentLength);
+            }
+
             public override bool TryComputeLength(out long length)
             {
                 length = _contentLength;
                 return true;
             }
 
-            public async override Task WriteTo(Stream stream, CancellationToken cancellation)
-                => await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                await stream.WriteAsync(_bytes, _contentStart, _contentLength, cancellation).ConfigureAwait(false);
+            }
         }
 
-        sealed class MemoryContent : HttpPipelineRequestContent
+        private sealed class MemoryContent : HttpPipelineRequestContent
         {
-            readonly ReadOnlyMemory<byte> _bytes;
+            private readonly ReadOnlyMemory<byte> _bytes;
 
             public MemoryContent(ReadOnlyMemory<byte> bytes)
                 => _bytes = bytes;
 
-            public ReadOnlyMemory<byte> Bytes => _bytes;
-
             public override void Dispose() { }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                byte[] buffer = _bytes.ToArray();
+                stream.Write(buffer, 0, buffer.Length);
+            }
 
             public override bool TryComputeLength(out long length)
             {
@@ -108,20 +131,26 @@ namespace Azure.Core.Pipeline
                 return true;
             }
 
-            public async override Task WriteTo(Stream stream, CancellationToken cancellation)
-                => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            }
         }
 
-        sealed class ReadOnlySequenceContent : HttpPipelineRequestContent
+        private sealed class ReadOnlySequenceContent : HttpPipelineRequestContent
         {
-            readonly ReadOnlySequence<byte> _bytes;
+            private readonly ReadOnlySequence<byte> _bytes;
 
             public ReadOnlySequenceContent(ReadOnlySequence<byte> bytes)
                 => _bytes = bytes;
 
-            public ReadOnlySequence<byte> Bytes => _bytes;
-
             public override void Dispose() { }
+
+            public override void WriteTo(Stream stream, CancellationToken cancellation)
+            {
+                byte[] buffer = _bytes.ToArray();
+                stream.Write(buffer, 0, buffer.Length);
+            }
 
             public override bool TryComputeLength(out long length)
             {
@@ -129,8 +158,10 @@ namespace Azure.Core.Pipeline
                 return true;
             }
 
-            public async override Task WriteTo(Stream stream, CancellationToken cancellation)
-                => await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            public override async Task WriteToAsync(Stream stream, CancellationToken cancellation)
+            {
+                await stream.WriteAsync(_bytes, cancellation).ConfigureAwait(false);
+            }
         }
     }
 }

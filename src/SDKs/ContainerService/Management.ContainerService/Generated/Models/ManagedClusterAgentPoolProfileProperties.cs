@@ -118,7 +118,8 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// provisioning state, which only appears in the response.</param>
         /// <param name="availabilityZones">(PREVIEW) Availability zones for
         /// nodes. Must use VirtualMachineScaleSets AgentPoolType.</param>
-        public ManagedClusterAgentPoolProfileProperties(int count, string vmSize, int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>))
+        /// <param name="enableNodePublicIP">Enable public IP for nodes</param>
+        public ManagedClusterAgentPoolProfileProperties(int count, string vmSize, int? osDiskSizeGB = default(int?), string vnetSubnetID = default(string), int? maxPods = default(int?), string osType = default(string), int? maxCount = default(int?), int? minCount = default(int?), bool? enableAutoScaling = default(bool?), string type = default(string), string orchestratorVersion = default(string), string provisioningState = default(string), IList<string> availabilityZones = default(IList<string>), bool? enableNodePublicIP = default(bool?))
         {
             Count = count;
             VmSize = vmSize;
@@ -133,6 +134,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
             OrchestratorVersion = orchestratorVersion;
             ProvisioningState = provisioningState;
             AvailabilityZones = availabilityZones;
+            EnableNodePublicIP = enableNodePublicIP;
             CustomInit();
         }
 
@@ -284,6 +286,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "availabilityZones")]
         public IList<string> AvailabilityZones { get; set; }
+
+        /// <summary>
+        /// Gets or sets enable public IP for nodes
+        /// </summary>
+        [JsonProperty(PropertyName = "enableNodePublicIP")]
+        public bool? EnableNodePublicIP { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -12,15 +12,19 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ExponentialPolicyTest: RetryPolicyTestBase
+    public abstract class ExponentialPolicyTest: RetryPolicyTestBase
     {
+        private ExponentialPolicyTest(bool isAsync) : base(isAsync) { }
+        public class Sync: ExponentialPolicyTest { public Sync() : base(false) {}}
+        public class Async: ExponentialPolicyTest { public Async() : base(false) {}}
+
         [Test]
         public async Task WaitsBetweenRetries()
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
 
@@ -38,8 +42,8 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new ExponentialRetryPolicyMock(maxRetries: 4, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(10));
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 8 };
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
@@ -61,8 +65,8 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new ExponentialRetryPolicyMock(maxRetries: 6, delay: TimeSpan.FromSeconds(1), maxDelay: TimeSpan.FromSeconds(5));
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
             var expectedDelaysInSeconds = new int[] { 1, 2, 4, 5, 5, 5 };
 
             await mockTransport.RequestGate.Cycle(new MockResponse(500));
@@ -87,8 +91,8 @@ namespace Azure.Core.Tests
         {
             var responseClassifier = new MockResponseClassifier(retriableCodes: new [] { 500 });
             var policy = new ExponentialRetryPolicyMock(delay: TimeSpan.FromSeconds(delay), maxDelay: TimeSpan.FromSeconds(5));
-            var mockTransport = new MockTransport();
-            var task = SendRequest(mockTransport, policy, responseClassifier);
+            var mockTransport = CreateMockTransport();
+            var task = SendGetRequest(mockTransport, policy, responseClassifier);
 
             MockResponse mockResponse = new MockResponse(500);
             mockResponse.AddHeader(new HttpHeader("Retry-After", retryAfter.ToString()));
@@ -128,7 +132,12 @@ namespace Azure.Core.Tests
                 MaxDelay = maxDelay;
             }
 
-            internal override Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
+            internal override void Wait(TimeSpan time, CancellationToken cancellationToken)
+            {
+                DelayGate.WaitForRelease(time).GetAwaiter().GetResult();
+            }
+
+            internal override Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
             {
                 return DelayGate.WaitForRelease(time);
             }

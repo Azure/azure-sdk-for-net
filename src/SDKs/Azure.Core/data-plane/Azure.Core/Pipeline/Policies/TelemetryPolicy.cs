@@ -4,12 +4,10 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class TelemetryPolicy : HttpPipelinePolicy
+    public class TelemetryPolicy : SynchronousHttpPipelinePolicy
     {
         private readonly string _header;
 
@@ -36,10 +34,9 @@ namespace Azure.Core.Pipeline.Policies
             }
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void OnSendingRequest(HttpPipelineMessage message)
         {
             message.Request.Headers.Add(HttpHeader.Names.UserAgent, _header);
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
         }
     }
 }

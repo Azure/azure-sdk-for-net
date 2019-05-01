@@ -63,11 +63,29 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
+        public void RequestContent(Request request, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                RequestContent(request.RequestId, FormatContent(request.Content, cancellationToken));
+            }
+        }
+
+        [NonEvent]
         public async Task RequestContentTextAsync(Request request, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 RequestContentText(request.ClientRequestId, await FormatContentStringAsync(request.Content, encoding, cancellationToken));
+            }
+        }
+
+        [NonEvent]
+        public void RequestContentText(Request request, Encoding encoding, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                RequestContentText(request.RequestId, FormatContentString(request.Content, encoding, cancellationToken));
             }
         }
 
@@ -90,6 +108,15 @@ namespace Azure.Core.Diagnostics
         }
 
         [NonEvent]
+        public void ResponseContent(Response response)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                ResponseContent(response.RequestId, FormatContent(response.ContentStream));
+            }
+        }
+
+        [NonEvent]
         public void ResponseContentBlock(string responseId, int blockNumber, byte[] data, int offset, int length)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
@@ -104,6 +131,15 @@ namespace Azure.Core.Diagnostics
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
                 ResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
+            }
+        }
+
+        [NonEvent]
+        public void ResponseContentText(Response response, Encoding encoding, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
+            {
+                ResponseContentText(response.RequestId, FormatContentString(response.ContentStream, encoding));
             }
         }
 
@@ -124,12 +160,31 @@ namespace Azure.Core.Diagnostics
                 ErrorResponseContent(response.ClientRequestId, await FormatContentAsync(response.ContentStream).ConfigureAwait(false));
             }
         }
+
+        [NonEvent]
+        public void ErrorResponseContent(Response response)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                ErrorResponseContent(response.RequestId, FormatContent(response.ContentStream));
+            }
+        }
+
         [NonEvent]
         public async Task ErrorResponseContentTextAsync(Response response, Encoding encoding, CancellationToken cancellationToken)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
                 ErrorResponseContentText(response.ClientRequestId, await FormatContentStringAsync(response.ContentStream, encoding).ConfigureAwait(false));
+            }
+        }
+
+        [NonEvent]
+        public void ErrorResponseContentText(Response response, Encoding encoding, CancellationToken cancellationToken)
+        {
+            if (IsEnabled(EventLevel.Informational, EventKeywords.None))
+            {
+                ErrorResponseContentText(response.RequestId, FormatContentString(response.ContentStream, encoding));
             }
         }
 
@@ -254,6 +309,18 @@ namespace Azure.Core.Diagnostics
                    IsEnabled(EventLevel.Verbose, EventKeywords.None);
         }
 
+        private static byte[] FormatContent(Stream responseContent)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                responseContent.CopyTo(memoryStream);
+
+                // Rewind the stream
+                responseContent.Position = 0;
+
+                return FormatContent(memoryStream.ToArray());
+            }
+        }
         private static async Task<byte[]> FormatContentAsync(Stream responseContent)
         {
             using (var memoryStream = new MemoryStream())
@@ -282,11 +349,36 @@ namespace Azure.Core.Diagnostics
             }
         }
 
+        private static string FormatContentString(Stream responseContent, Encoding encoding)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                responseContent.CopyTo(memoryStream);
+
+                // Rewind the stream
+                responseContent.Position = 0;
+
+                byte[] buffer = memoryStream.ToArray();
+
+                return encoding.GetString(FormatContent(buffer));
+            }
+        }
+
         private static async Task<byte[]> FormatContentAsync(HttpPipelineRequestContent requestContent, CancellationToken cancellationToken)
         {
             using (var memoryStream = new MemoryStream())
             {
-                await requestContent.WriteTo(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+                await requestContent.WriteToAsync(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+
+                return FormatContent(memoryStream.ToArray());
+            }
+        }
+
+        private static byte[] FormatContent(HttpPipelineRequestContent requestContent, CancellationToken cancellationToken)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                requestContent.WriteTo(memoryStream, cancellationToken);
 
                 return FormatContent(memoryStream.ToArray());
             }
@@ -296,7 +388,17 @@ namespace Azure.Core.Diagnostics
         {
             using (var memoryStream = new MemoryStream())
             {
-                await requestContent.WriteTo(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+                await requestContent.WriteToAsync(memoryStream, cancellation: cancellationToken).ConfigureAwait(false);
+
+                return encoding.GetString(FormatContent(memoryStream.ToArray()));
+            }
+        }
+
+        private static string FormatContentString(HttpPipelineRequestContent requestContent, Encoding encoding, CancellationToken cancellationToken)
+        {
+            using (var memoryStream = new MemoryStream())
+            {
+                requestContent.WriteTo(memoryStream, cancellationToken);
 
                 return encoding.GetString(FormatContent(memoryStream.ToArray()));
             }

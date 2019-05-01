@@ -22,5 +22,12 @@ namespace Azure.Core.Pipeline
 
             return _transport.ProcessAsync(message);
         }
+
+        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            Debug.Assert(pipeline.IsEmpty);
+
+            _transport.Process(message);
+        }
     }
 }

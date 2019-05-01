@@ -21,7 +21,18 @@ namespace Azure.Core.Pipeline.Policies
         /// </summary>
         public int MaxRetries { get; set; } = 10;
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+
+        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            ProcessAsync(message, pipeline, false).EnsureCompleted();
+        }
+
+        public override Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            return ProcessAsync(message, pipeline, true);
+        }
+
+        private async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
         {
             int attempt = 0;
             List<Exception> exceptions = null;
@@ -31,7 +42,14 @@ namespace Azure.Core.Pipeline.Policies
 
                 try
                 {
-                    await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                    if (async)
+                    {
+                        await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        ProcessNext(pipeline, message);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -39,12 +57,13 @@ namespace Azure.Core.Pipeline.Policies
                     {
                         exceptions = new List<Exception>();
                     }
+
                     exceptions.Add(ex);
 
                     lastException = ex;
                 }
 
-                TimeSpan delay = TimeSpan.Zero;
+                TimeSpan delay;
 
                 attempt++;
 
@@ -85,16 +104,28 @@ namespace Azure.Core.Pipeline.Policies
 
                 if (delay > TimeSpan.Zero)
                 {
-                    await DelayAsync(delay, message.Cancellation);
+                    if (async)
+                    {
+                        await WaitAsync(delay, message.Cancellation);
+                    }
+                    else
+                    {
+                        Wait(delay, message.Cancellation);
+                    }
                 }
 
                 HttpPipelineEventSource.Singleton.RequestRetrying(message.Request, attempt);
             }
         }
 
-        internal virtual async Task DelayAsync(TimeSpan time, CancellationToken cancellationToken)
+        internal virtual async Task WaitAsync(TimeSpan time, CancellationToken cancellationToken)
         {
             await Task.Delay(time, cancellationToken).ConfigureAwait(false);
+        }
+
+        internal virtual void Wait(TimeSpan time, CancellationToken cancellationToken)
+        {
+            cancellationToken.WaitHandle.WaitOne(time);
         }
 
         protected virtual TimeSpan GetServerDelay(HttpPipelineMessage message)
