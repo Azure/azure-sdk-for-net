@@ -10,11 +10,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public abstract class BufferResponsePolicyTests: SyncAsyncPolicyTestBase
+    public class BufferResponsePolicyTests: SyncAsyncPolicyTestBase
     {
-        private BufferResponsePolicyTests(bool isAsync) : base(isAsync) { }
-        public class Sync: BufferResponsePolicyTests { public Sync() : base(false) {}}
-        public class Async: BufferResponsePolicyTests { public Async() : base(false) {}}
+        public BufferResponsePolicyTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         public async Task ReadsEntireBodyIntoMemoryStream()

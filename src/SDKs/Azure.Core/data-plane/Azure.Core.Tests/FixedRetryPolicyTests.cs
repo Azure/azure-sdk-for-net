@@ -12,11 +12,9 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public abstract class FixedRetryPolicyTests: RetryPolicyTestBase
+    public class FixedRetryPolicyTests: RetryPolicyTestBase
     {
-        private FixedRetryPolicyTests(bool isAsync) : base(isAsync) { }
-        public class Sync: FixedRetryPolicyTests { public Sync() : base(false) {}}
-        public class Async: FixedRetryPolicyTests { public Async() : base(false) {}}
+        public FixedRetryPolicyTests(bool isAsync) : base(isAsync) { }
 
         [Test]
         public async Task WaitsBetweenRetries()
