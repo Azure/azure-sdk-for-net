@@ -53,10 +53,6 @@ namespace Microsoft.Azure.Management.Security
         /// <summary>
         /// Supported regulatory compliance standards details and state
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group within the user's subscription. The name is
-        /// case insensitive.
-        /// </param>
         /// <param name='filter'>
         /// OData filter. Optional.
         /// </param>
