@@ -21,6 +21,7 @@ known_presence_issues:
   - ['sdk/eventgrid/Microsoft.Azure.EventGrid','#5499']
   - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
   - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
+  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights','#5499']
 known_content_issues:
   - ['README.md','Root readme']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']

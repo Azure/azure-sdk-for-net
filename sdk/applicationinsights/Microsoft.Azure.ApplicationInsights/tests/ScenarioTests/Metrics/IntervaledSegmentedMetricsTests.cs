@@ -10,7 +10,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
 {
     public class IntervaledSegmentedMetricsTests : MetricsTestBase
     {
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetIntervaledSegmentedMetrics()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
@@ -84,7 +84,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetIntervaledMultiSegmentedMetrics()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
