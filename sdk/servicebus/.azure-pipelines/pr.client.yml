@@ -5,8 +5,10 @@ trigger:
   branches:
     include:
     - users/mitchdenny/pr-pipelines
+  paths:
     include:
-    - .azure-pipelines/templates
+    - eng/
+    - .azure-pipelines/templates/
     - sdk/servicebus
 
 variables:
