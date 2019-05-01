@@ -19,16 +19,16 @@ namespace Microsoft.Azure.Management.Cdn
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Cdn", "CheckNameAvailability", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "CheckNameAvailabilityWithSubscription", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "CustomDomains", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "EdgeNodes", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "Endpoints", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "Operations", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "Origins", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "Profiles", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "ResourceUsage", "2017-10-12"),
-                new Tuple<string, string, string>("Cdn", "ValidateProbe", "2017-10-12"),
+                new Tuple<string, string, string>("Cdn", "CheckNameAvailability", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "CheckNameAvailabilityWithSubscription", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "CustomDomains", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "EdgeNodes", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "Endpoints", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "Operations", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "Origins", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "Profiles", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "ResourceUsage", "12341234123412"),
+                new Tuple<string, string, string>("Cdn", "ValidateProbe", "12341234123412"),
               }.AsEnumerable();
           }
       }
