@@ -33,13 +33,10 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="orchestratorType">Orchestrator type.</param>
         /// <param name="orchestratorVersion">Orchestrator version (major,
         /// minor, patch).</param>
-        /// <param name="isPreview">Whether Kubernetes version is currently in
-        /// preview.</param>
-        public OrchestratorProfile(string orchestratorType, string orchestratorVersion, bool isPreview)
+        public OrchestratorProfile(string orchestratorType, string orchestratorVersion)
         {
             OrchestratorType = orchestratorType;
             OrchestratorVersion = orchestratorVersion;
-            IsPreview = isPreview;
             CustomInit();
         }
 
@@ -59,12 +56,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "orchestratorVersion")]
         public string OrchestratorVersion { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether Kubernetes version is currently in preview.
-        /// </summary>
-        [JsonProperty(PropertyName = "isPreview")]
-        public bool IsPreview { get; set; }
 
         /// <summary>
         /// Validate the object.

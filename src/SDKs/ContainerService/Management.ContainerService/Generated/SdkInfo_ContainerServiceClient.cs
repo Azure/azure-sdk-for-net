@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ContainerService
               {
                 new Tuple<string, string, string>("ContainerService", "AgentPools", "2019-04-01"),
                 new Tuple<string, string, string>("ContainerService", "ContainerServices", "2017-07-01"),
-                new Tuple<string, string, string>("ContainerService", "ContainerServices", "2019-04-01"),
+                new Tuple<string, string, string>("ContainerService", "ContainerServices", "2017-09-30"),
                 new Tuple<string, string, string>("ContainerService", "ManagedClusters", "2019-04-01"),
                 new Tuple<string, string, string>("ContainerService", "OpenShiftManagedClusters", "2019-04-30"),
                 new Tuple<string, string, string>("ContainerService", "Operations", "2019-04-01"),

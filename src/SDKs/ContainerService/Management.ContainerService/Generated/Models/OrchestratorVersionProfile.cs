@@ -37,16 +37,13 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// minor, patch).</param>
         /// <param name="defaultProperty">Installed by default if version is
         /// not specified.</param>
-        /// <param name="isPreview">Whether Kubernetes version is currently in
-        /// preview.</param>
         /// <param name="upgrades">The list of available upgrade
         /// versions.</param>
-        public OrchestratorVersionProfile(string orchestratorType, string orchestratorVersion, bool defaultProperty, bool isPreview, IList<OrchestratorProfile> upgrades)
+        public OrchestratorVersionProfile(string orchestratorType, string orchestratorVersion, bool defaultProperty, IList<OrchestratorProfile> upgrades)
         {
             OrchestratorType = orchestratorType;
             OrchestratorVersion = orchestratorVersion;
             DefaultProperty = defaultProperty;
-            IsPreview = isPreview;
             Upgrades = upgrades;
             CustomInit();
         }
@@ -73,12 +70,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </summary>
         [JsonProperty(PropertyName = "default")]
         public bool DefaultProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether Kubernetes version is currently in preview.
-        /// </summary>
-        [JsonProperty(PropertyName = "isPreview")]
-        public bool IsPreview { get; set; }
 
         /// <summary>
         /// Gets or sets the list of available upgrade versions.

@@ -695,8 +695,8 @@ namespace Microsoft.Azure.Management.ContainerService
         /// </summary>
         /// <remarks>
         /// Gets a list of supported orchestrators in the specified subscription. The
-        /// operation returns properties of each orchestrator including version,
-        /// available upgrades and whether that version or upgrades are in preview.
+        /// operation returns properties of each orchestrator including version and
+        /// available upgrades.
         /// </remarks>
         /// <param name='location'>
         /// The name of a supported Azure region.
@@ -735,7 +735,7 @@ namespace Microsoft.Azure.Management.ContainerService
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "location");
             }
-            string apiVersion = "2019-04-01";
+            string apiVersion = "2017-09-30";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
