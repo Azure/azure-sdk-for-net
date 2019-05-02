@@ -3,6 +3,19 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.reference.props'))" />
   <!-- Please do not move/edit code above this line -->
 
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.CognitiveServices.FormsRecognizer</PackageId>
+    <Description>This client library provides access to the Microsoft Cognitive Services Forms Recognizer APIs.</Description>
+    <Version>0.8.0-preview</Version>
+    <AssemblyName>Microsoft.Azure.CognitiveServices.FormRecognizer</AssemblyName>
+    <PackageTags>FormRecognizer;Form Recognizer;</PackageTags>
+    <PackageReleaseNotes>
+<![CDATA[
+This is a public preview release of the Cognitive Services Form Recognizer SDK.
+]]>
+	</PackageReleaseNotes>
+  </PropertyGroup>
+
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
