@@ -107,10 +107,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 var csb = new EventHubsConnectionStringBuilder(invalidString);
 
                 // ToString should throw.
-                Assert.ThrowsAsync<ArgumentException>(() =>
+                Assert.Throws<ArgumentException>(() =>
                 {
                     csb.ToString();
-                    throw new InvalidOperationException("ToString() should have failed");
                 });
             }
         }

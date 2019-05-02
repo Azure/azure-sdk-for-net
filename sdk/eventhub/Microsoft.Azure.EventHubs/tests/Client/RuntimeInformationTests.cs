@@ -17,17 +17,26 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task GetEventHubRuntimeInformation()
         {
-            TestUtility.Log("Getting  EventHubRuntimeInformation");
-            var eventHubRuntimeInformation = await this.EventHubClient.GetRuntimeInformationAsync();
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
 
-            Assert.True(eventHubRuntimeInformation != null, "eventHubRuntimeInformation was null!");
-            Assert.True(eventHubRuntimeInformation.PartitionIds != null, "eventHubRuntimeInformation.PartitionIds was null!");
-            Assert.True(eventHubRuntimeInformation.PartitionIds.Length != 0, "eventHubRuntimeInformation.PartitionIds.Length was 0!");
-
-            TestUtility.Log("Found partitions:");
-            foreach (string partitionId in eventHubRuntimeInformation.PartitionIds)
+            try
             {
-                TestUtility.Log(partitionId);
+                TestUtility.Log("Getting  EventHubRuntimeInformation");
+                var eventHubRuntimeInformation = await ehClient.GetRuntimeInformationAsync();
+
+                Assert.True(eventHubRuntimeInformation != null, "eventHubRuntimeInformation was null!");
+                Assert.True(eventHubRuntimeInformation.PartitionIds != null, "eventHubRuntimeInformation.PartitionIds was null!");
+                Assert.True(eventHubRuntimeInformation.PartitionIds.Length != 0, "eventHubRuntimeInformation.PartitionIds.Length was 0!");
+
+                TestUtility.Log("Found partitions:");
+                foreach (string partitionId in eventHubRuntimeInformation.PartitionIds)
+                {
+                    TestUtility.Log(partitionId);
+                }
+            }
+            finally
+            {
+                await ehClient.CloseAsync();
             }
         }
 
@@ -37,35 +46,52 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task GetEventHubPartitionRuntimeInformation()
         {
             var cbs = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitions = await this.GetPartitionsAsync(ehClient);
 
-            TestUtility.Log("Getting EventHubPartitionRuntimeInformation on each partition in parallel");
-            var tasks = this.PartitionIds.Select(async (pid) =>
+            try
             {
-                // Send some messages so we can have meaningful data returned from service call.
-                PartitionSender partitionSender = this.EventHubClient.CreatePartitionSender(pid);
-                TestUtility.Log($"Sending single event to partition {pid}");
-                var eDataToSend = new EventData(new byte[1]);
-                await partitionSender.SendAsync(eDataToSend);
+                TestUtility.Log("Getting EventHubPartitionRuntimeInformation on each partition in parallel");
+                var tasks = partitions.Select(async (pid) =>
+                {
+                    // Send some messages so we can have meaningful data returned from service call.
+                    PartitionSender partitionSender = ehClient.CreatePartitionSender(pid);
 
-                TestUtility.Log($"Getting partition runtime information on partition {pid}");
-                var p = await this.EventHubClient.GetPartitionRuntimeInformationAsync(pid);
-                TestUtility.Log($"Path:{p.Path} PartitionId:{p.PartitionId} BeginSequenceNumber:{p.BeginSequenceNumber} LastEnqueuedOffset:{p.LastEnqueuedOffset} LastEnqueuedTimeUtc:{p.LastEnqueuedTimeUtc} LastEnqueuedSequenceNumber:{p.LastEnqueuedSequenceNumber}");
+                    try
+                    {
+                        TestUtility.Log($"Sending single event to partition {pid}");
+                        var eDataToSend = new EventData(new byte[1]);
+                        await partitionSender.SendAsync(eDataToSend);
 
-                // Validations.
-                Assert.True(p.Path == cbs.EntityPath, $"Returned path {p.Path} is different than {cbs.EntityPath}");
-                Assert.True(p.PartitionId == pid, $"Returned partition id {p.PartitionId} is different than {pid}");
-                Assert.True(p.LastEnqueuedOffset != null, "Returned LastEnqueuedOffset is null");
-                Assert.True(p.LastEnqueuedTimeUtc != null, "Returned LastEnqueuedTimeUtc is null");
+                        TestUtility.Log($"Getting partition runtime information on partition {pid}");
+                        var partition = await ehClient.GetPartitionRuntimeInformationAsync(pid);
+                        TestUtility.Log($"Path:{partition.Path} PartitionId:{partition.PartitionId} BeginSequenceNumber:{partition.BeginSequenceNumber} LastEnqueuedOffset:{partition.LastEnqueuedOffset} LastEnqueuedTimeUtc:{partition.LastEnqueuedTimeUtc} LastEnqueuedSequenceNumber:{partition.LastEnqueuedSequenceNumber}");
 
-                // Validate returned data regarding recently sent event.
-                // Account 60 seconds of max clock skew.
-                Assert.True(p.LastEnqueuedOffset != "-1", $"Returned LastEnqueuedOffset is {p.LastEnqueuedOffset}");
-                Assert.True(p.BeginSequenceNumber >= 0, $"Returned BeginSequenceNumber is {p.BeginSequenceNumber}");
-                Assert.True(p.LastEnqueuedSequenceNumber >= 0, $"Returned LastEnqueuedSequenceNumber is {p.LastEnqueuedSequenceNumber}");
-                Assert.True(p.LastEnqueuedTimeUtc >= DateTime.UtcNow.AddSeconds(-60), $"Returned LastEnqueuedTimeUtc is {p.LastEnqueuedTimeUtc}");
-            });
+                        // Validations.
+                        Assert.True(partition.Path == cbs.EntityPath, $"Returned path {partition.Path} is different than {cbs.EntityPath}");
+                        Assert.True(partition.PartitionId == pid, $"Returned partition id {partition.PartitionId} is different than {pid}");
+                        Assert.True(partition.LastEnqueuedOffset != null, "Returned LastEnqueuedOffset is null");
+                        Assert.True(partition.LastEnqueuedTimeUtc != null, "Returned LastEnqueuedTimeUtc is null");
 
-            await Task.WhenAll(tasks);
+                        // Validate returned data regarding recently sent event.
+                        // Account 60 seconds of max clock skew.
+                        Assert.True(partition.LastEnqueuedOffset != "-1", $"Returned LastEnqueuedOffset is {partition.LastEnqueuedOffset}");
+                        Assert.True(partition.BeginSequenceNumber >= 0, $"Returned BeginSequenceNumber is {partition.BeginSequenceNumber}");
+                        Assert.True(partition.LastEnqueuedSequenceNumber >= 0, $"Returned LastEnqueuedSequenceNumber is {partition.LastEnqueuedSequenceNumber}");
+                        Assert.True(partition.LastEnqueuedTimeUtc >= DateTime.UtcNow.AddSeconds(-60), $"Returned LastEnqueuedTimeUtc is {partition.LastEnqueuedTimeUtc}");
+                    }
+                    finally
+                    {
+                        await partitionSender.CloseAsync();
+                    }
+                });
+
+                await Task.WhenAll(tasks);
+            }
+            finally
+            {
+                await ehClient.CloseAsync();
+            }
         }
 
         [Fact]
@@ -74,7 +100,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task MultipleClientsGetRuntimeInformation()
         {
             var maxNumberOfClients = 100;
-            var syncEvent = new ManualResetEventSlim(false);
+            var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
 
             TestUtility.Log($"Starting {maxNumberOfClients} GetRuntimeInformationAsync tasks in parallel.");
 
@@ -83,17 +109,24 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             {
                 var task = Task.Run(async () =>
                 {
-                    syncEvent.Wait();
+                    await tcs.Task;
                     var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-                    await ehClient.GetRuntimeInformationAsync();
+
+                    try
+                    {
+                        await ehClient.GetRuntimeInformationAsync();
+                    }
+                    finally
+                    {
+                        await ehClient.CloseAsync();
+                    }
                 });
 
                 tasks.Add(task);
             }
 
-            var waitForAccountToInitialize = Task.Delay(10000);
-            await waitForAccountToInitialize;
-            syncEvent.Set();
+            await Task.Delay(10000);
+            tcs.TrySetResult(true);
             await Task.WhenAll(tasks);
 
             TestUtility.Log("All GetRuntimeInformationAsync tasks have completed.");

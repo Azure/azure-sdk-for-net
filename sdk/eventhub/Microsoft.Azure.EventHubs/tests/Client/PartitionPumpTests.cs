@@ -19,9 +19,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task SendReceiveBasic()
         {
             TestUtility.Log("Receiving Events via PartitionReceiver.SetReceiveHandler()");
-            string partitionId = "1";
-            PartitionReceiver partitionReceiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(-10)));
-            PartitionSender partitionSender = this.EventHubClient.CreatePartitionSender(partitionId);
+
+            var partitionId = "1";
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(-10)));
+            var partitionSender = ehClient.CreatePartitionSender(partitionId);
 
             try
             {
@@ -80,8 +82,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 partitionReceiver.SetReceiveHandler(null);
 
                 // Close clients.
-                await partitionSender.CloseAsync();
-                await partitionReceiver.CloseAsync();
+
+                await Task.WhenAll(
+                    partitionSender.CloseAsync(),
+                    partitionReceiver.CloseAsync(),
+                    ehClient.CloseAsync());
             }
         }
 
@@ -90,13 +95,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task ReceiveHandlerReregister()
         {
-            int totalNumberOfMessagesToSend = 100;
-            string partitionId = "0";
+            var totalNumberOfMessagesToSend = 100;
+            var partitionId = "0";
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var pInfo = await ehClient.GetPartitionRuntimeInformationAsync(partitionId);
+            var partitionReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromOffset(pInfo.LastEnqueuedOffset));
 
-            var pInfo = await this.EventHubClient.GetPartitionRuntimeInformationAsync(partitionId);
-
-            PartitionReceiver partitionReceiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, partitionId, EventPosition.FromOffset(pInfo.LastEnqueuedOffset));
-            await TestUtility.SendToPartitionAsync(this.EventHubClient, partitionId, $"{partitionId} event.", totalNumberOfMessagesToSend);
+            await TestUtility.SendToPartitionAsync(ehClient, partitionId, $"{partitionId} event.", totalNumberOfMessagesToSend);
 
             try
             {
@@ -136,7 +141,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
                 // Send another set of messages.
                 // Since handler is still registered we should be able to receive these messages just fine.
-                await TestUtility.SendToPartitionAsync(this.EventHubClient, partitionId, $"{partitionId} event.", totalNumberOfMessagesToSend);
+                await TestUtility.SendToPartitionAsync(ehClient, partitionId, $"{partitionId} event.", totalNumberOfMessagesToSend);
 
                 // Allow 1 minute to receive all messages.
                 await Task.Delay(TimeSpan.FromSeconds(60));
@@ -149,7 +154,10 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 partitionReceiver.SetReceiveHandler(null);
 
                 // Close clients.
-                await partitionReceiver.CloseAsync();
+
+                await Task.WhenAll(
+                    partitionReceiver.CloseAsync(),
+                    ehClient.CloseAsync());
             }
         }
 
@@ -158,11 +166,12 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task InvokeOnNull()
         {
-            PartitionReceiver partitionReceiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnd());
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnd());
 
             try
             {
-                EventWaitHandle nullReceivedEvent = new EventWaitHandle(false, EventResetMode.ManualReset);
+                var tcs = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 var handler = new TestPartitionReceiveHandler();
 
                 handler.EventsReceived += (s, eventDatas) =>
@@ -170,16 +179,12 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     if (eventDatas == null)
                     {
                         TestUtility.Log("Received null.");
-                        nullReceivedEvent.Set();
+                        tcs.TrySetResult(true);
                     }
                 };
 
                 partitionReceiver.SetReceiveHandler(handler, true);
-
-                if (!nullReceivedEvent.WaitOne(TimeSpan.FromSeconds(120)))
-                {
-                    throw new InvalidOperationException("Did not receive null.");
-                }
+                await tcs.Task.WithTimeout(TimeSpan.FromSeconds(120));
             }
             finally
             {
@@ -187,7 +192,10 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 partitionReceiver.SetReceiveHandler(null);
 
                 // Close clients.
-                await partitionReceiver.CloseAsync();
+
+                await Task.WhenAll(
+                    partitionReceiver.CloseAsync(),
+                    ehClient.CloseAsync());
             }
         }
 
@@ -197,12 +205,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task DefaultBehaviorNoInvokeOnNull()
         {
-            PartitionReceiver partitionReceiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnd());
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var partitionReceiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnd());
 
             try
             {
-                EventWaitHandle nullReceivedEvent = new EventWaitHandle(false, EventResetMode.ManualReset);
-                EventWaitHandle dataReceivedEvent = new EventWaitHandle(false, EventResetMode.ManualReset);
+                var nullCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+                var dataCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
                 var handler = new TestPartitionReceiveHandler();
 
                 handler.EventsReceived += (s, eventDatas) =>
@@ -210,29 +219,21 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     if (eventDatas == null)
                     {
                         TestUtility.Log("Received null.");
-                        nullReceivedEvent.Set();
+                        nullCompletionSource.TrySetResult(true);
                     }
                     else
                     {
                         TestUtility.Log("Received message.");
-                        dataReceivedEvent.Set();
+                        dataCompletionSource.TrySetResult(true);
                     }
                 };
 
                 partitionReceiver.SetReceiveHandler(handler);
-
-                if (nullReceivedEvent.WaitOne(TimeSpan.FromSeconds(120)))
-                {
-                    throw new InvalidOperationException("Received null.");
-                }
+                await Assert.ThrowsAsync<TimeoutException>(() => nullCompletionSource.Task.WithTimeout(TimeSpan.FromSeconds(120)));
 
                 // Send one message. Pump should receive this.
-                await TestUtility.SendToPartitionAsync(this.EventHubClient, "0", "new event");
-
-                if (!dataReceivedEvent.WaitOne(TimeSpan.FromSeconds(60)))
-                {
-                    throw new InvalidOperationException("Data Received Event was not signaled.");
-                }
+                await TestUtility.SendToPartitionAsync(ehClient, "0", "new event");
+                await dataCompletionSource.Task.WithTimeout(TimeSpan.FromSeconds(60), timeoutCallback: () => throw new TimeoutException("The data event was not received"));
             }
             finally
             {
@@ -240,7 +241,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 partitionReceiver.SetReceiveHandler(null);
 
                 // Close clients.
-                await partitionReceiver.CloseAsync();
+                await Task.WhenAll(
+                    partitionReceiver.CloseAsync(),
+                    ehClient.CloseAsync());
             }
         }
 
