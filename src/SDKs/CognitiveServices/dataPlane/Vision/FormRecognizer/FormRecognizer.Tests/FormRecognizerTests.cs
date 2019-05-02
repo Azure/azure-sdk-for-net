@@ -2,30 +2,20 @@
 using Microsoft.Azure.CognitiveServices.FormRecognizer.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading;
+using Newtonsoft.Json;
 using Xunit;
+using System.IO;
 
 namespace FormRecognizerSDK.Tests
 {
     public class FormRecognizerTests : BaseTests
     {
         [Fact]
-        public void TrainModel()
+        public void VerifyFormClientObjectCreation()
         {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                HttpMockServer.Initialize(this.GetType().FullName, "FaceIdentificationPersonGroupPositive");
+            var client = GetFormRecognizerClient(null);
 
-                IFormRecognizerClient client = GetFormRecognizerClient(HttpMockServer.CreateInstance());
-
-                TrainResult trainResult = client.TrainCustomModel(new TrainRequest("/input/data"));
-
-                Assert.True(trainResult.Errors.Count == 0);
-                Assert.True(!string.IsNullOrEmpty(trainResult.ModelId.ToString()));
-            }
+            Assert.True(client.GetType() == typeof(IFormRecognizerClient));
         }
     }
 }
