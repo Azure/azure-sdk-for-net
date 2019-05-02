@@ -27,7 +27,7 @@
 
   <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
     <Reference Include="System.Transactions" />
-    <PackageReference Include="WindowsAzure.ServiceBus" Version="5.1.0" />
+    <PackageReference Include="WindowsAzure.ServiceBus" Version="5.2.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -38,8 +38,8 @@
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="PublicApiGenerator" Version="8.1.0" />
-    <PackageReference Include="ApprovalTests" Version="3.0.21" NoWarn="NU1701" />
-    <PackageReference Include="ApprovalUtilities" Version="3.0.21" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalTests" Version="3.0.22" NoWarn="NU1701" />
+    <PackageReference Include="ApprovalUtilities" Version="3.0.22" NoWarn="NU1701" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
   </ItemGroup>
 
