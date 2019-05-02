@@ -1,5 +1,9 @@
 ## Microsoft.Azure.Management.ApiManagment release notes
 
+### Changes in 4.10.0-preview
+
+- Fixed support for creating, updating Swagger, WSDL and Open Api Schema.
+
 ### Changes in 4.9.0-preview
 
 - Added support for retrieving Policies from Global, Api, Product and Operation level in Raw Xml format.

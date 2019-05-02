@@ -16,59 +16,70 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task NonexistentEntity()
         {
+            PartitionReceiver receiver = null;
+
             // Rebuild connection string with a nonexistent entity.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
             csb.EntityPath = Guid.NewGuid().ToString();
             var ehClient = EventHubClient.CreateFromConnectionString(csb.ToString());
 
-            // GetRuntimeInformationAsync on a nonexistent entity.
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+            try
             {
-                TestUtility.Log("Getting entity information from a nonexistent entity.");
-                await ehClient.GetRuntimeInformationAsync();
-                throw new InvalidOperationException("GetRuntimeInformation call should have failed");
-            });
+                // GetRuntimeInformationAsync on a nonexistent entity.
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+                {
+                    TestUtility.Log("Getting entity information from a nonexistent entity.");
+                    await ehClient.GetRuntimeInformationAsync();
+                });
 
-            // GetPartitionRuntimeInformationAsync on a nonexistent entity.
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
-            {
-                TestUtility.Log("Getting partition information from a nonexistent entity.");
-                await ehClient.GetPartitionRuntimeInformationAsync("0");
-                throw new InvalidOperationException("GetPartitionRuntimeInformation call should have failed");
-            });
+                // GetPartitionRuntimeInformationAsync on a nonexistent entity.
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+                {
+                    TestUtility.Log("Getting partition information from a nonexistent entity.");
+                    await ehClient.GetPartitionRuntimeInformationAsync("0");
+                });
 
-            // Try sending.
-            PartitionSender sender = null;
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
-            {
-                TestUtility.Log("Sending an event to nonexistent entity.");
-                sender = ehClient.CreatePartitionSender("0");
-                await sender.SendAsync(new EventData(Encoding.UTF8.GetBytes("this send should fail.")));
-                throw new InvalidOperationException("Send call should have failed");
-            });
-            await sender.CloseAsync();
+                // Try sending.
+                PartitionSender sender = null;
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+                {
+                    TestUtility.Log("Sending an event to nonexistent entity.");
+                    sender = ehClient.CreatePartitionSender("0");
+                    await sender.SendAsync(new EventData(Encoding.UTF8.GetBytes("this send should fail.")));
+                });
+                await sender.CloseAsync();
 
-            // Try receiving.
-            PartitionReceiver receiver = null;
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+                // Try receiving.
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+                {
+                    TestUtility.Log("Receiving from nonexistent entity.");
+                    receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
+                    await receiver.ReceiveAsync(1);
+                });
+                await receiver.CloseAsync();
+            }
+            finally
             {
-                TestUtility.Log("Receiving from nonexistent entity.");
-                receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
-                await receiver.ReceiveAsync(1);
-                throw new InvalidOperationException("Receive call should have failed");
-            });
-            await receiver.CloseAsync();
+                await ehClient.CloseAsync();
+            }
 
             // Try receiving on an nonexistent consumer group.
             ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
-            await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+
+            try
             {
-                TestUtility.Log("Receiving from nonexistent consumer group.");
-                receiver = ehClient.CreateReceiver(Guid.NewGuid().ToString(), "0", EventPosition.FromStart());
-                await receiver.ReceiveAsync(1);
-                throw new InvalidOperationException("Receive call should have failed");
-            });
-            await receiver.CloseAsync();
+                await Assert.ThrowsAsync<MessagingEntityNotFoundException>(async () =>
+                {
+                    TestUtility.Log("Receiving from nonexistent consumer group.");
+                    receiver = ehClient.CreateReceiver(Guid.NewGuid().ToString(), "0", EventPosition.FromStart());
+                    await receiver.ReceiveAsync(1);
+                });
+                await receiver.CloseAsync();
+            }
+            finally
+            {
+              await ehClient.CloseAsync();
+            }
         }
 
         [Fact]
@@ -76,34 +87,40 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task ReceiveFromInvalidPartition()
         {
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
             PartitionReceiver receiver = null;
 
-            // Some invalid partition values. These will fail on the service side.
-            var invalidPartitions = new List<string>() { "XYZ", "-1", "1000", "-" };
-            foreach (var invalidPartitionId in invalidPartitions)
+            try
             {
-                await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                // Some invalid partition values. These will fail on the service side.
+                var invalidPartitions = new List<string>() { "XYZ", "-1", "1000", "-" };
+                foreach (var invalidPartitionId in invalidPartitions)
                 {
-                    TestUtility.Log($"Receiving from invalid partition {invalidPartitionId}");
-                    receiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, invalidPartitionId, EventPosition.FromStart());
-                    await receiver.ReceiveAsync(1);
-                    throw new InvalidOperationException("Receive call should have failed");
-                });
-                await receiver.CloseAsync();
-            }
+                    await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                    {
+                        TestUtility.Log($"Receiving from invalid partition {invalidPartitionId}");
+                        receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, invalidPartitionId, EventPosition.FromStart());
+                        await receiver.ReceiveAsync(1);
+                    });
+                    await receiver.CloseAsync();
+                }
 
-            // Some invalid partition values. These will fail on the client side.
-            invalidPartitions = new List<string>() { " ", null, "" };
-            foreach (var invalidPartitionId in invalidPartitions)
-            {
-                await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                // Some invalid partition values. These will fail on the client side.
+                invalidPartitions = new List<string>() { " ", null, "" };
+                foreach (var invalidPartitionId in invalidPartitions)
                 {
-                    TestUtility.Log($"Receiving from invalid partition {invalidPartitionId}");
-                    receiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, invalidPartitionId, EventPosition.FromStart());
-                    await receiver.ReceiveAsync(1);
-                    throw new InvalidOperationException("Receive call should have failed");
-                });
-                await receiver.CloseAsync();
+                    await Assert.ThrowsAsync<InvalidOperationException>(async () =>
+                    {
+                        TestUtility.Log($"Receiving from invalid partition {invalidPartitionId}");
+                        receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, invalidPartitionId, EventPosition.FromStart());
+                        await receiver.ReceiveAsync(1);
+                    });
+                    await receiver.CloseAsync();
+                }
+            }
+            finally
+            {
+                await ehClient.CloseAsync();
             }
         }
 
@@ -112,35 +129,41 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task SendToInvalidPartition()
         {
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
             PartitionSender sender = null;
 
-            // Some invalid partition values.
-            var invalidPartitions = new List<string>() { "XYZ", "-1", "1000", "-" };
-
-            foreach (var invalidPartitionId in invalidPartitions)
+            try
             {
-                await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                // Some invalid partition values.
+                var invalidPartitions = new List<string>() { "XYZ", "-1", "1000", "-" };
+
+                foreach (var invalidPartitionId in invalidPartitions)
                 {
-                    TestUtility.Log($"Sending to invalid partition {invalidPartitionId}");
-                    sender = this.EventHubClient.CreatePartitionSender(invalidPartitionId);
-                    await sender.SendAsync(new EventData(new byte[1]));
-                    throw new InvalidOperationException("Send call should have failed");
-                });
-                await sender.CloseAsync();
+                    await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                    {
+                        TestUtility.Log($"Sending to invalid partition {invalidPartitionId}");
+                        sender = ehClient.CreatePartitionSender(invalidPartitionId);
+                        await sender.SendAsync(new EventData(new byte[1]));
+                    });
+                    await sender.CloseAsync();
+                }
+
+                // Some other invalid partition values. These will fail on the client side.
+                invalidPartitions = new List<string>() { "", " ", null };
+                foreach (var invalidPartitionId in invalidPartitions)
+                {
+                    await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+                    {
+                        TestUtility.Log($"Sending to invalid partition {invalidPartitionId}");
+                        sender = ehClient.CreatePartitionSender(invalidPartitionId);
+                        await sender.SendAsync(new EventData(new byte[1]));
+                    });
+                    await sender.CloseAsync();
+                }
             }
-
-            // Some other invalid partition values. These will fail on the client side.
-            invalidPartitions = new List<string>() { "", " ", null };
-            foreach (var invalidPartitionId in invalidPartitions)
+            finally
             {
-                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-                {
-                    TestUtility.Log($"Sending to invalid partition {invalidPartitionId}");
-                    sender = this.EventHubClient.CreatePartitionSender(invalidPartitionId);
-                    await sender.SendAsync(new EventData(new byte[1]));
-                    throw new InvalidOperationException("Send call should have failed");
-                });
-                await sender.CloseAsync();
+                await ehClient.CloseAsync();
             }
         }
 
@@ -149,29 +172,36 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task GetPartitionRuntimeInformationFromInvalidPartition()
         {
-            // Some invalid partition values. These will fail on the service side.
-            var invalidPartitions = new List<string>() { "XYZ", "-1", "1000", "-" };
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
 
-            foreach (var invalidPartitionId in invalidPartitions)
+            try
             {
-                await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                // Some invalid partition values. These will fail on the service side.
+                var invalidPartitions = new List<string>() { "XYZ", "-1", "1000", "-" };
+
+                foreach (var invalidPartitionId in invalidPartitions)
                 {
-                    TestUtility.Log($"Getting partition information from invalid partition {invalidPartitionId}");
-                    await this.EventHubClient.GetPartitionRuntimeInformationAsync(invalidPartitionId);
-                    throw new InvalidOperationException("GetPartitionRuntimeInformation call should have failed");
-                });
+                    await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () =>
+                    {
+                        TestUtility.Log($"Getting partition information from invalid partition {invalidPartitionId}");
+                        await ehClient.GetPartitionRuntimeInformationAsync(invalidPartitionId);
+                    });
+                }
+
+                // Some other invalid partition values. These will fail on the client side.
+                invalidPartitions = new List<string>() { "", " ", null };
+                foreach (var invalidPartitionId in invalidPartitions)
+                {
+                    await Assert.ThrowsAsync<ArgumentNullException>(async () =>
+                    {
+                        TestUtility.Log($"Getting partition information from invalid partition {invalidPartitionId}");
+                        await ehClient.GetPartitionRuntimeInformationAsync(invalidPartitionId);
+                    });
+                }
             }
-
-            // Some other invalid partition values. These will fail on the client side.
-            invalidPartitions = new List<string>() { "", " ", null };
-            foreach (var invalidPartitionId in invalidPartitions)
+            finally
             {
-                await Assert.ThrowsAsync<ArgumentNullException>(async () =>
-                {
-                    TestUtility.Log($"Getting partition information from invalid partition {invalidPartitionId}");
-                    await this.EventHubClient.GetPartitionRuntimeInformationAsync(invalidPartitionId);
-                    throw new InvalidOperationException("GetPartitionRuntimeInformation call should have failed");
-                });
+                await ehClient.CloseAsync();
             }
         }
 
@@ -196,13 +226,21 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task MessageSizeExceededException()
         {
-            await Assert.ThrowsAsync<MessageSizeExceededException>(async () =>
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+
+            try
             {
-                TestUtility.Log("Sending large event via EventHubClient.SendAsync(EventData)");
-                var eventData = new EventData(new byte[1100000]);
-                await this.EventHubClient.SendAsync(eventData);
-                throw new InvalidOperationException($"Send should have failed with { nameof(MessageSizeExceededException) }");
-            });
+                await Assert.ThrowsAsync<MessageSizeExceededException>(async () =>
+                {
+                    TestUtility.Log("Sending large event via EventHubClient.SendAsync(EventData)");
+                    var eventData = new EventData(new byte[1100000]);
+                    await ehClient.SendAsync(eventData);
+                });
+            }
+            finally
+            {
+                await ehClient.CloseAsync();
+            }
         }
 
         [Fact]
@@ -222,21 +260,31 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         [DisplayTestMethodName]
         public async Task InvalidPrefetchCount()
         {
-            var receiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var receiver =ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
 
-            await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
+            try
             {
-                receiver.PrefetchCount = 3;
-                throw new Exception("Setting PrefetchCount to 3 didn't fail.");
-            });
+                await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() =>
+                {
+                    receiver.PrefetchCount = 3;
+                    throw new Exception("Setting PrefetchCount to 3 didn't fail.");
+                });
 
-            TestUtility.Log("Setting PrefetchCount to 10.");
-            receiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
-            receiver.PrefetchCount = 10;
+                TestUtility.Log("Setting PrefetchCount to 10.");
+                receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
+                receiver.PrefetchCount = 10;
 
-            TestUtility.Log("Setting PrefetchCount to int.MaxValue.");
-            receiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
-            receiver.PrefetchCount = int.MaxValue;
+                TestUtility.Log("Setting PrefetchCount to int.MaxValue.");
+                receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromStart());
+                receiver.PrefetchCount = int.MaxValue;
+            }
+            finally
+            {
+                await Task.WhenAll(
+                    receiver.CloseAsync(),
+                    ehClient.CloseAsync());
+            }
         }
     }
 }
