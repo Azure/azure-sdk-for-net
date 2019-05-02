@@ -30,13 +30,16 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <summary>
         /// Initializes a new instance of the OrchestratorProfile class.
         /// </summary>
-        /// <param name="orchestratorType">Orchestrator type.</param>
         /// <param name="orchestratorVersion">Orchestrator version (major,
         /// minor, patch).</param>
-        public OrchestratorProfile(string orchestratorType, string orchestratorVersion)
+        /// <param name="orchestratorType">Orchestrator type.</param>
+        /// <param name="isPreview">Whether Kubernetes version is currently in
+        /// preview.</param>
+        public OrchestratorProfile(string orchestratorVersion, string orchestratorType = default(string), bool? isPreview = default(bool?))
         {
             OrchestratorType = orchestratorType;
             OrchestratorVersion = orchestratorVersion;
+            IsPreview = isPreview;
             CustomInit();
         }
 
@@ -58,6 +61,12 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         public string OrchestratorVersion { get; set; }
 
         /// <summary>
+        /// Gets or sets whether Kubernetes version is currently in preview.
+        /// </summary>
+        [JsonProperty(PropertyName = "isPreview")]
+        public bool? IsPreview { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -65,10 +74,6 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (OrchestratorType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OrchestratorType");
-            }
             if (OrchestratorVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OrchestratorVersion");

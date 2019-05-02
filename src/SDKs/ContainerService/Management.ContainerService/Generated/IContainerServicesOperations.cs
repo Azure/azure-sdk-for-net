@@ -185,7 +185,8 @@ namespace Microsoft.Azure.Management.ContainerService
         /// <remarks>
         /// Gets a list of supported orchestrators in the specified
         /// subscription. The operation returns properties of each orchestrator
-        /// including version and available upgrades.
+        /// including version, available upgrades and whether that version or
+        /// upgrades are in preview.
         /// </remarks>
         /// <param name='location'>
         /// The name of a supported Azure region.
