@@ -6,9 +6,6 @@ pr:
 - master
 
 trigger:
-  branches:
-    include:
-    - users/mitchdenny/pr-pipelines
   paths:
     include:
     - sdk/operationalinsights/
