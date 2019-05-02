@@ -22,9 +22,6 @@ This is a public preview release of the Cognitive Services Form Recognizer SDK.
 
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <PackageId>Microsoft.Azure.CognitiveServices.FormRecognizer</PackageId>
-    <Authors>Microsoft.Azure.CognitiveServices.FormRecognizer</Authors>
   </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->

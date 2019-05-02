@@ -8,7 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Provides access to the Microsoft Cognitive Services Form Recognizer APIs.")]
 
 [assembly: AssemblyVersion("0.8.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("0.8.0.0")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
 [assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
