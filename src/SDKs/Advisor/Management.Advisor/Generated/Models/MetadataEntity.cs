@@ -34,10 +34,9 @@ namespace Microsoft.Azure.Management.Advisor.Models
         /// <summary>
         /// Initializes a new instance of the MetadataEntity class.
         /// </summary>
-        /// <param name="id">The resource Id of the configuration
-        /// resource.</param>
-        /// <param name="type">The type of the configuration resource.</param>
-        /// <param name="name">The name of the configuration resource.</param>
+        /// <param name="id">The resource Id of the metadata entity.</param>
+        /// <param name="type">The type of the metadata entity.</param>
+        /// <param name="name">The name of the metadata entity.</param>
         /// <param name="displayName">The display name.</param>
         /// <param name="dependsOn">The list of keys on which this entity
         /// depends on.</param>
@@ -59,19 +58,19 @@ namespace Microsoft.Azure.Management.Advisor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the resource Id of the configuration resource.
+        /// Gets or sets the resource Id of the metadata entity.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the configuration resource.
+        /// Gets or sets the type of the metadata entity.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the configuration resource.
+        /// Gets or sets the name of the metadata entity.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
