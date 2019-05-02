@@ -65,11 +65,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Etag { get; set; }
 
         /// <summary>
-        /// Gets the provisioning state of the resource. Possible values
-        /// include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
+        /// Gets or sets the provisioning state of the resource. Possible
+        /// values include: 'Succeeded', 'Updating', 'Deleting', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
+        public string ProvisioningState { get; set; }
 
     }
 }

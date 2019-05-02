@@ -578,6 +578,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Operation identifier within an API. Must be unique in the current API
         /// Management service instance.
         /// </param>
+        /// <param name='format'>
+        /// Policy Export Format. Possible values include: 'xml', 'rawxml'
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -599,7 +602,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<PolicyContract,ApiOperationPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<PolicyContract,ApiOperationPolicyGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string operationId, string format = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -682,6 +685,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("operationId", operationId);
+                tracingParameters.Add("format", format);
                 tracingParameters.Add("policyId", policyId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
@@ -696,6 +700,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{policyId}", System.Uri.EscapeDataString(policyId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (format != null)
+            {
+                _queryParameters.Add(string.Format("format={0}", System.Uri.EscapeDataString(format)));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));

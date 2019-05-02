@@ -13,18 +13,14 @@ namespace Azure.ApplicationModel.Configuration.Samples
     public partial class ConfigurationSamples
     {
         [Test]
-        public async Task ConfiguringRetries()
+        public void ConfiguringRetries()
         {
             // specify retry policy options
             var options = new ConfigurationClientOptions();
             options.RetryPolicy = new FixedRetryPolicy()
             {
                 MaxRetries = 10,
-                Delay = TimeSpan.FromSeconds(1),
-                RetriableCodes = new [] {
-                    500, // Internal Server Error
-                    504  // Gateway Timeout
-                }
+                Delay = TimeSpan.FromSeconds(1)
             };
 
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
@@ -32,8 +28,8 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
-            await client.SetAsync(new ConfigurationSetting("some_key", "some_value"));
-            await client.DeleteAsync("some_key");
+            client.Set(new ConfigurationSetting("some_key", "some_value"));
+            client.Delete("some_key");
         }
     }
 }

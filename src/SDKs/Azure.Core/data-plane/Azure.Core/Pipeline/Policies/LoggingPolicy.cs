@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -17,16 +16,29 @@ namespace Azure.Core.Pipeline.Policies
         private static readonly long s_frequency = Stopwatch.Frequency;
         private static readonly HttpPipelineEventSource s_eventSource = HttpPipelineEventSource.Singleton;
 
-        private int[] _excludeErrors = Array.Empty<int>();
-
         public static readonly LoggingPolicy Shared = new LoggingPolicy();
-
-        public LoggingPolicy(params int[] excludeErrors)
-            => _excludeErrors = excludeErrors;
 
         // TODO (pri 1): we should remove sensitive information, e.g. keys
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            await ProcessAsync(message, pipeline, true);
+        }
+
+        private static async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline, bool async)
+        {
+            if (!s_eventSource.IsEnabled())
+            {
+                if (async)
+                {
+                    await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                }
+                else
+                {
+                    ProcessNext(pipeline, message);
+                }
+                return;
+            }
+
             s_eventSource.Request(message.Request);
 
             Encoding requestTextEncoding = null;
@@ -39,20 +51,41 @@ namespace Azure.Core.Pipeline.Policies
             {
                 if (requestTextEncoding != null)
                 {
-                    await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.Cancellation);
+                    if (async)
+                    {
+                        await s_eventSource.RequestContentTextAsync(message.Request, requestTextEncoding, message.Cancellation);
+                    }
+                    else
+                    {
+                        s_eventSource.RequestContentText(message.Request, requestTextEncoding, message.Cancellation);
+                    }
                 }
                 else
                 {
-                    await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                    if (async)
+                    {
+                        await s_eventSource.RequestContentAsync(message.Request, message.Cancellation);
+                    }
+                    else
+                    {
+                        s_eventSource.RequestContent(message.Request, message.Cancellation);
+                    }
                 }
             }
 
             var before = Stopwatch.GetTimestamp();
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            if (async)
+            {
+                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            }
+            else
+            {
+                ProcessNext(pipeline, message);
+            }
+
             var after = Stopwatch.GetTimestamp();
 
-            var status = message.Response.Status;
-            bool isError = status >= 400 && status <= 599 && (Array.IndexOf(_excludeErrors, status) == -1);
+            bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
 
             Encoding responseTextEncoding = null;
             if (message.Response.TryGetHeader(HttpHeader.Names.ContentType, out contentType) && IsTextContentType(contentType))
@@ -60,38 +93,52 @@ namespace Azure.Core.Pipeline.Policies
                 responseTextEncoding = Encoding.UTF8;
             }
 
-            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ResponseContentStream?.CanSeek == false;
+            bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
 
             if (wrapResponseStream)
             {
-                message.Response.ResponseContentStream = new LoggingStream(message.Response.RequestId, s_eventSource, message.Response.ResponseContentStream, isError, responseTextEncoding);
+                message.Response.ContentStream = new LoggingStream(
+                    message.Response.ClientRequestId, s_eventSource, message.Response.ContentStream, isError, responseTextEncoding);
             }
 
             if (isError)
             {
                 s_eventSource.ErrorResponse(message.Response);
 
-                if (!wrapResponseStream && message.Response.ResponseContentStream != null)
+                if (!wrapResponseStream && message.Response.ContentStream != null)
                 {
                     if (responseTextEncoding != null)
                     {
-                        await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
+                        if (async)
+                        {
+                            await s_eventSource.ErrorResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            s_eventSource.ErrorResponseContentText(message.Response, responseTextEncoding, message.Cancellation);
+                        }
                     }
                     else
                     {
-                        await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                        if (async)
+                        {
+                            await s_eventSource.ErrorResponseContentAsync(message.Response, message.Cancellation).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            s_eventSource.ErrorResponseContent(message.Response);
+                        }
                     }
                 }
             }
 
             s_eventSource.Response(message.Response);
 
-            if (!wrapResponseStream && message.Response.ResponseContentStream != null)
+            if (!wrapResponseStream && message.Response.ContentStream != null)
             {
                 if (responseTextEncoding != null)
                 {
                     await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
-
                 }
                 else
                 {
@@ -100,9 +147,15 @@ namespace Azure.Core.Pipeline.Policies
             }
 
             var elapsedMilliseconds = (after - before) * 1000 / s_frequency;
-            if (elapsedMilliseconds > s_delayWarningThreshold) {
+            if (elapsedMilliseconds > s_delayWarningThreshold)
+            {
                 s_eventSource.ResponseDelay(message.Response, elapsedMilliseconds);
             }
+        }
+
+        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            ProcessAsync(message, pipeline, false).EnsureCompleted();
         }
 
         private static bool IsTextContentType(string contentType)

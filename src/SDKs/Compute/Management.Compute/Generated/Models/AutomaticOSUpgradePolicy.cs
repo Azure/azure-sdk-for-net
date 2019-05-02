@@ -29,10 +29,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Initializes a new instance of the AutomaticOSUpgradePolicy class.
         /// </summary>
-        /// <param name="enableAutomaticOSUpgrade">Whether OS upgrades should
-        /// automatically be applied to scale set instances in a rolling
-        /// fashion when a newer version of the image becomes available.
-        /// Default value is false.</param>
+        /// <param name="enableAutomaticOSUpgrade">Indicates whether OS
+        /// upgrades should automatically be applied to scale set instances in
+        /// a rolling fashion when a newer version of the OS image becomes
+        /// available. Default value is false. If this is set to true for
+        /// Windows based scale sets, recommendation is to set
+        /// [enableAutomaticUpdates](https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.windowsconfiguration.enableautomaticupdates?view=azure-dotnet)
+        /// to false.</param>
         /// <param name="disableAutomaticRollback">Whether OS image rollback
         /// feature should be disabled. Default value is false.</param>
         public AutomaticOSUpgradePolicy(bool? enableAutomaticOSUpgrade = default(bool?), bool? disableAutomaticRollback = default(bool?))
@@ -48,9 +51,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets whether OS upgrades should automatically be applied to
-        /// scale set instances in a rolling fashion when a newer version of
-        /// the image becomes available. Default value is false.
+        /// Gets or sets indicates whether OS upgrades should automatically be
+        /// applied to scale set instances in a rolling fashion when a newer
+        /// version of the OS image becomes available. Default value is false.
+        /// If this is set to true for Windows based scale sets, recommendation
+        /// is to set
+        /// [enableAutomaticUpdates](https://docs.microsoft.com/dotnet/api/microsoft.azure.management.compute.models.windowsconfiguration.enableautomaticupdates?view=azure-dotnet)
+        /// to false.
         /// </summary>
         [JsonProperty(PropertyName = "enableAutomaticOSUpgrade")]
         public bool? EnableAutomaticOSUpgrade { get; set; }

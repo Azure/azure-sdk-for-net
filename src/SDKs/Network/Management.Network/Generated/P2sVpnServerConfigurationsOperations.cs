@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "p2SVpnServerConfigurationName");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualWanName");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -550,7 +550,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "p2SVpnServerConfigurationParameters");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -770,7 +770,7 @@ namespace Microsoft.Azure.Management.Network
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "p2SVpnServerConfigurationName");
             }
-            string apiVersion = "2018-12-01";
+            string apiVersion = "2019-02-01";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

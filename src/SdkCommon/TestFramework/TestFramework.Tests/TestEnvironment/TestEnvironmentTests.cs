@@ -18,6 +18,7 @@ namespace TestFramework.Tests.TestEnvironment
         }
 
         [Fact(Skip ="Live Test")]
+        //[Fact]
         public void DefaultTenantInTestEnvironment()
         {
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "<connstr>");
@@ -26,6 +27,18 @@ namespace TestFramework.Tests.TestEnvironment
             string tenantId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.AADTenantKey];
             Assert.False(string.IsNullOrEmpty(tenantId));
             Assert.Equal<string>("72f988bf-86f1-41af-91ab-2d7cd011db47", tenantId);
+        }
+
+        [Fact(Skip = "Live Test")]
+        //[Fact]
+        public void TestEnvWithConnString()
+        {
+            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "<connstr>");
+            HttpMockServer.Mode = HttpRecorderMode.Record;
+            TestEnvironment env = TestEnvironmentFactory.GetTestEnvironment();
+            string tenantId = env.ConnectionString.KeyValuePairs[ConnectionStringKeys.AADTenantKey];
+            Assert.False(string.IsNullOrEmpty(tenantId));
+            Assert.Equal<string>("<subId>", tenantId);
         }
 
         [Fact]

@@ -13,6 +13,9 @@ namespace Microsoft.Azure.Management.Network.Models
     using Newtonsoft.Json;
     using System.Linq;
 
+    /// <summary>
+    /// Reference to an express route circuit.
+    /// </summary>
     public partial class ExpressRouteCircuitReference
     {
         /// <summary>

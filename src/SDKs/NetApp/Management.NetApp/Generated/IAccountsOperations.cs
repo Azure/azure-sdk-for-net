@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public partial interface IAccountsOperations
     {
         /// <summary>
-        /// Lists all NetApp accounts in the resource group
+        /// Describe all NetApp Accounts in a resource group
         /// </summary>
+        /// <remarks>
+        /// List and describe all NetApp accounts in the resource group
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -35,7 +38,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -46,8 +49,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse<IEnumerable<NetAppAccount>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get the NetApp account
+        /// Describe a NetApp Account
         /// </summary>
+        /// <remarks>
+        /// Get the NetApp account
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -60,7 +66,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -73,6 +79,10 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Create or update a NetApp account
         /// </summary>
+        /// <remarks>
+        /// Create or update the specified NetApp account within the resource
+        /// group
+        /// </remarks>
         /// <param name='body'>
         /// NetApp Account object supplied in the body of the operation.
         /// </param>
@@ -88,7 +98,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -101,6 +111,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Delete a NetApp account
         /// </summary>
+        /// <remarks>
+        /// Delete the specified NetApp account
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -113,7 +126,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -121,8 +134,11 @@ namespace Microsoft.Azure.Management.NetApp
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Patch a NetApp account
+        /// Update a NetApp account
         /// </summary>
+        /// <remarks>
+        /// Patch the specified NetApp account
+        /// </remarks>
         /// <param name='body'>
         /// NetApp Account object supplied in the body of the operation.
         /// </param>
@@ -138,7 +154,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -151,6 +167,10 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Create or update a NetApp account
         /// </summary>
+        /// <remarks>
+        /// Create or update the specified NetApp account within the resource
+        /// group
+        /// </remarks>
         /// <param name='body'>
         /// NetApp Account object supplied in the body of the operation.
         /// </param>
@@ -166,7 +186,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -179,6 +199,9 @@ namespace Microsoft.Azure.Management.NetApp
         /// <summary>
         /// Delete a NetApp account
         /// </summary>
+        /// <remarks>
+        /// Delete the specified NetApp account
+        /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
@@ -191,7 +214,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">

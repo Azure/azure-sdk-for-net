@@ -4,14 +4,12 @@
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using Azure.Core.Attributes;
 
 namespace Azure.Core.Pipeline.Policies
 {
-    public class TelemetryPolicy : HttpPipelinePolicy
+    public class TelemetryPolicy : SynchronousHttpPipelinePolicy
     {
-        private readonly HttpHeader _header;
+        private readonly string _header;
 
         public TelemetryPolicy(Assembly clientAssembly, string applicationId)
         {
@@ -28,18 +26,17 @@ namespace Azure.Core.Pipeline.Policies
             var platformInformation = $"({RuntimeInformation.FrameworkDescription}; {RuntimeInformation.OSDescription})";
             if (applicationId != null)
             {
-                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"{applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+                _header = $"{applicationId} azsdk-net-{componentName}/{componentVersion} {platformInformation}";
             }
             else
             {
-                _header = new HttpHeader(HttpHeader.Names.UserAgent, $"azsdk-net-{componentName}/{componentVersion} {platformInformation}");
+                _header = $"azsdk-net-{componentName}/{componentVersion} {platformInformation}";
             }
         }
 
-        public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        public override void OnSendingRequest(HttpPipelineMessage message)
         {
-            message.Request.AddHeader(_header);
-            await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+            message.Request.Headers.Add(HttpHeader.Names.UserAgent, _header);
         }
     }
 }

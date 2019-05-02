@@ -18,6 +18,8 @@ namespace Azure.Core.Pipeline
         /// <returns></returns>
         public abstract Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
 
+        public abstract void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline);
+
         /// <summary>
         /// Invokes the next <see cref="HttpPipelinePolicy"/> in the <see cref="pipeline"/>.
         /// </summary>
@@ -30,6 +32,13 @@ namespace Azure.Core.Pipeline
             if (pipeline.IsEmpty) throw new InvalidOperationException("last policy in the pipeline must be a transport");
             var next = pipeline.Span[0];
             await next.ProcessAsync(message, pipeline.Slice(1)).ConfigureAwait(false);
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        protected static void ProcessNext(ReadOnlyMemory<HttpPipelinePolicy> pipeline, HttpPipelineMessage message)
+        {
+            if (pipeline.IsEmpty) throw new InvalidOperationException("last policy in the pipeline must be a transport");
+            pipeline.Span[0].Process(message, pipeline.Slice(1));
         }
     }
 }

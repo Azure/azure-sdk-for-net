@@ -24,30 +24,38 @@ namespace Azure.Core.Pipeline
 
         public readonly static HttpClientTransport Shared = new HttpClientTransport();
 
-        public sealed override HttpPipelineRequest CreateRequest(IServiceProvider services)
+        public sealed override Request CreateRequest(IServiceProvider services)
             => new PipelineRequest();
+
+        public override void Process(HttpPipelineMessage message)
+        {
+            // Intentionally blocking here
+            ProcessAsync(message).GetAwaiter().GetResult();
+        }
 
         public sealed override async Task ProcessAsync(HttpPipelineMessage message)
         {
-            var pipelineRequest = message.Request as PipelineRequest;
-            if (pipelineRequest == null)
-                throw new InvalidOperationException("the request is not compatible with the transport");
-
-            using (HttpRequestMessage httpRequest = pipelineRequest.BuildRequestMessage(message.Cancellation))
+            using (HttpRequestMessage httpRequest = BuildRequestMessage(message))
             {
-                HttpResponseMessage responseMessage = await ProcessCoreAsync(message.Cancellation, httpRequest).ConfigureAwait(false);
-                message.Response = new PipelineResponse(message.Request.RequestId, responseMessage);
+                HttpResponseMessage responseMessage = await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.Cancellation)
+                    .ConfigureAwait(false);
+                message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
         }
 
-        protected virtual async Task<HttpResponseMessage> ProcessCoreAsync(CancellationToken cancellation, HttpRequestMessage httpRequest)
-            => await _client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellation).ConfigureAwait(false);
-
+        private static HttpRequestMessage BuildRequestMessage(HttpPipelineMessage message)
+        {
+            var pipelineRequest = message.Request as PipelineRequest;
+            if (pipelineRequest == null)
+            {
+                throw new InvalidOperationException("the request is not compatible with the transport");
+            }
+            return pipelineRequest.BuildRequestMessage(message.Cancellation);
+        }
 
         internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out string value)
         {
-            if (headers.TryGetValues(name, out var values) ||
-                (content != null && content.Headers.TryGetValues(name, out values)))
+            if (TryGetHeader(headers, content, name, out IEnumerable<string> values))
             {
                 value = JoinHeaderValues(values);
                 return true;
@@ -55,6 +63,11 @@ namespace Azure.Core.Pipeline
 
             value = null;
             return false;
+        }
+
+        internal static bool TryGetHeader(HttpHeaders headers, HttpContent content, string name, out IEnumerable<string> values)
+        {
+            return headers.TryGetValues(name, out values) || content?.Headers.TryGetValues(name, out values) == true;
         }
 
         internal static IEnumerable<HttpHeader> GetHeaders(HttpHeaders headers, HttpContent content)
@@ -73,6 +86,28 @@ namespace Azure.Core.Pipeline
             }
         }
 
+        internal static bool RemoveHeader(HttpHeaders headers, HttpContent content, string name)
+        {
+            // .Remove throws on invalid header name so use TryGet here to check
+            if (headers.TryGetValues(name, out _ ) && headers.Remove(name))
+            {
+                return true;
+            }
+
+            return content?.Headers.TryGetValues(name, out _ ) == true && content.Headers.Remove(name);
+        }
+
+        internal static bool ContainsHeader(HttpHeaders headers, HttpContent content, string name)
+        {
+            // .Contains throws on invalid header name so use TryGet here
+            if (headers.TryGetValues(name, out _))
+            {
+                return true;
+            }
+
+            return content?.Headers.TryGetValues(name, out _) == true;
+        }
+
         internal static void CopyHeaders(HttpHeaders from, HttpHeaders to)
         {
             foreach (var header in from)
@@ -89,8 +124,9 @@ namespace Azure.Core.Pipeline
             return string.Join(",", values);
         }
 
-        sealed class PipelineRequest : HttpPipelineRequest
+        sealed class PipelineRequest : Request
         {
+            private bool _wasSent = false;
             private readonly HttpRequestMessage _requestMessage;
 
             private PipelineContentAdapter _requestContent;
@@ -98,7 +134,7 @@ namespace Azure.Core.Pipeline
             public PipelineRequest()
             {
                 _requestMessage = new HttpRequestMessage();
-                RequestId = Guid.NewGuid().ToString();
+                ClientRequestId = Guid.NewGuid().ToString();
             }
 
             public override HttpPipelineMethod Method
@@ -117,14 +153,9 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override string RequestId { get; set; }
+            public override string ClientRequestId { get; set; }
 
-            public override void AddHeader(HttpHeader header)
-            {
-                AddHeader(header.Name, header.Value);
-            }
-
-            public override void AddHeader(string name, string value)
+            protected internal override void AddHeader(string name, string value)
             {
                 if (_requestMessage.Headers.TryAddWithoutValidation(name, value))
                 {
@@ -138,29 +169,46 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
+            protected internal override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out value);
 
-            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_requestMessage.Headers, _requestContent, name, out values);
+
+            protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_requestMessage.Headers, _requestContent, name);
+
+            protected internal override bool RemoveHeader(string name) => HttpClientTransport.RemoveHeader(_requestMessage.Headers, _requestContent, name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => HttpClientTransport.GetHeaders(_requestMessage.Headers, _requestContent);
 
             public HttpRequestMessage BuildRequestMessage(CancellationToken cancellation)
             {
-                // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
-                // and so the retry logic fails.
-                var request = new HttpRequestMessage(_requestMessage.Method, UriBuilder.ToString());
+                HttpRequestMessage currentRequest;
+                if (_wasSent)
+                {
+                    // A copy of a message needs to be made because HttpClient does not allow sending the same message twice,
+                    // and so the retry logic fails.
+                    currentRequest = new HttpRequestMessage(_requestMessage.Method, UriBuilder.Uri);
+                    CopyHeaders(_requestMessage.Headers, currentRequest.Headers);
 
-                CopyHeaders(_requestMessage.Headers, request.Headers);
+                }
+                else
+                {
+                    currentRequest = _requestMessage;
+                    _wasSent = true;
+                }
+
+                currentRequest.RequestUri = UriBuilder.Uri;
 
                 if (_requestContent?.PipelineContent != null)
                 {
-                    request.Content = new PipelineContentAdapter()
+                    currentRequest.Content = new PipelineContentAdapter()
                     {
                         CancellationToken = cancellation,
                         PipelineContent = _requestContent.PipelineContent
                     };
-                    CopyHeaders(_requestContent.Headers, request.Content.Headers);
+                    CopyHeaders(_requestContent.Headers, currentRequest.Content.Headers);
                 }
 
-                return request;
+                return currentRequest;
             }
 
             public override void Dispose()
@@ -185,6 +233,8 @@ namespace Azure.Core.Pipeline
                         return HttpMethod.Delete;
                     case HttpPipelineMethod.Patch:
                         return s_patch;
+                    case HttpPipelineMethod.Head:
+                        return HttpMethod.Head;
 
                     default:
                         throw new NotImplementedException();
@@ -208,7 +258,7 @@ namespace Azure.Core.Pipeline
                 protected override async Task SerializeToStreamAsync(Stream stream, TransportContext context)
                 {
                     Debug.Assert(PipelineContent != null);
-                    await PipelineContent.WriteTo(stream, CancellationToken).ConfigureAwait(false);
+                    await PipelineContent.WriteToAsync(stream, CancellationToken).ConfigureAwait(false);
                 }
 
                 protected override bool TryComputeLength(out long length)
@@ -227,7 +277,7 @@ namespace Azure.Core.Pipeline
             }
         }
 
-        sealed class PipelineResponse : HttpPipelineResponse
+        sealed class PipelineResponse : Response
         {
             private readonly HttpResponseMessage _responseMessage;
 
@@ -235,13 +285,13 @@ namespace Azure.Core.Pipeline
 
             public PipelineResponse(string requestId, HttpResponseMessage responseMessage)
             {
-                RequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
+                ClientRequestId = requestId ?? throw new ArgumentNullException(nameof(requestId));
                 _responseMessage = responseMessage ?? throw new ArgumentNullException(nameof(responseMessage));
             }
 
             public override int Status => (int)_responseMessage.StatusCode;
 
-            public override Stream ResponseContentStream
+            public override Stream ContentStream
             {
                 get
                 {
@@ -274,11 +324,15 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            public override string RequestId { get; set; }
+            public override string ClientRequestId { get; set; }
 
-            public override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
+            protected internal override bool TryGetHeader(string name, out string value) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out value);
 
-            public override IEnumerable<HttpHeader> Headers => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
+            protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values) => HttpClientTransport.TryGetHeader(_responseMessage.Headers, _responseMessage.Content, name, out values);
+
+            protected internal override bool ContainsHeader(string name) => HttpClientTransport.ContainsHeader(_responseMessage.Headers, _responseMessage.Content, name);
+
+            protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => HttpClientTransport.GetHeaders(_responseMessage.Headers, _responseMessage.Content);
 
             public override void Dispose()
             {

@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Language.LUIS.Runtime</PackageId>
     <Description>Provides API functions for consuming the Microsoft Azure Cognitive Services LUIS Runtime API.</Description>
-    <Version>2.1.0</Version>
+    <Version>2.8.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Language.LUIS</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;LUIS;Language Understanding Intelligent Service;Language Understanding;REST HTTP client</PackageTags>
     <PackageReleaseNotes>
@@ -14,7 +14,7 @@
     This is a public release of the Cognitive Services LUIS Runtime SDK.
 
     Changes in this release:
-    1. Adding connectedServiceResult element in runtime response.
+      - Support the runtime v3.0-preview APIs.
     ]]></PackageReleaseNotes>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>

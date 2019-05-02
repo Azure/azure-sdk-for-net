@@ -5,17 +5,26 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration
 {
+    /// <summary>
+    /// A setting, defined by a unique combination of a key and label.
+    /// </summary>
     public sealed class ConfigurationSetting : IEquatable<ConfigurationSetting>
     {
-        string _key;
-        IDictionary<string, string> _tags;
+        private IDictionary<string, string> _tags;
 
         // TODO (pri 3): this is just for deserialization. We can remove after we move to JsonDocument
         internal ConfigurationSetting() { }
 
+        /// <summary>
+        /// Creates a configuration setting and sets the values from the passed in parameter to this setting.
+        /// </summary>
+        /// <param name="key">The primary identifier of a configuration setting.</param>
+        /// <param name="value">The value of the configuration setting.</param>
+        /// <param name="label">The value used to group configuration settings.</param>
         public ConfigurationSetting(string key, string value, string label = null)
         {
             Key = key;
@@ -24,68 +33,50 @@ namespace Azure.ApplicationModel.Configuration
         }
 
         /// <summary>
-        /// The primary identifier of a key-value.
-        /// The key is used in unison with the label to uniquely identify a key-value.
+        /// The primary identifier of a configuration setting.
+        /// The key is used in unison with the label to uniquely identify a configuration setting.
         /// </summary>
-        public string Key {
-            get => _key;
-            set {
-                if (value == null) throw new ArgumentNullException(nameof(Key));
-                _key = value;
-            }
-        }
+        public string Key { get; set; }
 
         /// <summary>
-        /// A value used to group key-values.
-        /// The label is used in unison with the key to uniquely identify a key-value.
+        /// A value used to group configuration settings.
+        /// The label is used in unison with the key to uniquely identify a configuration setting.
         /// </summary>
         public string Label { get; set; }
 
         /// <summary>
-        /// The value of the key-value.
+        /// The value of the configuration setting.
         /// </summary>
         public string Value { get; set; }
 
         /// <summary>
-        /// The content type of the key-value's value.
+        /// The content type of the configuration setting's value.
         /// Providing a proper content-type can enable transformations of values when they are retrieved by applications.
         /// </summary>
         public string ContentType { get; set; }
 
         /// <summary>
-        /// An ETag indicating the state of a key-value within a configuration store.
+        /// An ETag indicating the state of a configuration setting within a configuration store.
         /// </summary>
         public ETag ETag { get; set; }
 
         /// <summary>
-        /// The last time a modifying operation was performed on the given key-value.
+        /// The last time a modifying operation was performed on the given configuration setting.
         /// </summary>
         public DateTimeOffset? LastModified { get; internal set; }
 
         /// <summary>
-        /// A value indicating whether the key-value is locked.
-        /// A locked key-value may not be modified until it is unlocked.
+        /// A value indicating whether the configuration setting is locked.
+        /// A locked configuration setting may not be modified until it is unlocked.
         /// </summary>
         public bool? Locked { get; internal set; }
 
         /// <summary>
-        /// A dictionary of tags that can help identify what a key-value may be applicable for.
+        /// A dictionary of tags that can help identify what a configuration setting may be applicable for.
         /// </summary>
         public IDictionary<string, string> Tags {
-            get {
-                if (_tags == null) {
-                    lock (_key) {
-                        if (_tags == null) {
-                            _tags = new Dictionary<string, string>();
-                        }
-                    }
-                }
-                return _tags;
-            }
-            set
-            {
-                _tags = value;
-            }
+            get => _tags ?? (_tags = new Dictionary<string, string>());
+            set => _tags = value;
         }
 
         public bool Equals(ConfigurationSetting other)
@@ -102,7 +93,7 @@ namespace Azure.ApplicationModel.Configuration
             if (!string.Equals(Label, other.Label, StringComparison.Ordinal)) return false;
             if (!string.Equals(ContentType, other.ContentType, StringComparison.Ordinal)) return false;
             if (!TagsEquals(other.Tags)) return false;
-            
+
             return true;
         }
 
@@ -131,13 +122,16 @@ namespace Azure.ApplicationModel.Configuration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode()
         {
-            int hash = 17;
-            if (Key!=null) hash = hash * 23 + Key.GetHashCode();
-            if (Value != null) hash = hash * 23 + Value.GetHashCode();
-            if (Label != null) hash = hash * 23 + Label.GetHashCode();
-            if (ETag != null) hash = hash * 23 + ETag.GetHashCode();
-            hash = hash * 23 + LastModified.GetHashCode();
-            return hash;
+            var hashCode = new HashCodeBuilder();
+            hashCode.Add(Key, StringComparer.Ordinal);
+            hashCode.Add(Label, StringComparer.Ordinal);
+            hashCode.Add(Value, StringComparer.Ordinal);
+            hashCode.Add(ContentType, StringComparer.Ordinal);
+            hashCode.Add(LastModified);
+            hashCode.Add(ETag);
+            hashCode.Add(Locked);
+            hashCode.Add(Tags);
+            return hashCode.ToHashCode();
         }
 
         [EditorBrowsable(EditorBrowsableState.Never)]

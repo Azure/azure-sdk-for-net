@@ -34,18 +34,24 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         /// <param name="contentType">Must be a valid a media type used in a
         /// Content-Type header as defined in the RFC 2616. Media type of the
-        /// schema document (e.g. application/json, application/xml).</param>
+        /// schema document (e.g. application/json, application/xml).
+        /// &lt;/br&gt; - `Swagger` Schema use
+        /// `application/vnd.ms-azure-apim.swagger.definitions+json`
+        /// &lt;/br&gt; - `WSDL` Schema use
+        /// `application/vnd.ms-azure-apim.xsd+xml` &lt;/br&gt; - `OpenApi`
+        /// Schema use `application/vnd.oai.openapi.components+json`
+        /// &lt;/br&gt; - `WADL Schema` use
+        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`. </param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
-        /// <param name="value">Json escaped string defining the document
-        /// representing the Schema.</param>
-        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), string value = default(string))
+        /// <param name="document">Properties of the Schema Document.</param>
+        public SchemaContract(string contentType, string id = default(string), string name = default(string), string type = default(string), object document = default(object))
             : base(id, name, type)
         {
             ContentType = contentType;
-            Value = value;
+            Document = document;
             CustomInit();
         }
 
@@ -58,16 +64,22 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets must be a valid a media type used in a Content-Type
         /// header as defined in the RFC 2616. Media type of the schema
         /// document (e.g. application/json, application/xml).
+        /// &amp;lt;/br&amp;gt; - `Swagger` Schema use
+        /// `application/vnd.ms-azure-apim.swagger.definitions+json`
+        /// &amp;lt;/br&amp;gt; - `WSDL` Schema use
+        /// `application/vnd.ms-azure-apim.xsd+xml` &amp;lt;/br&amp;gt; -
+        /// `OpenApi` Schema use `application/vnd.oai.openapi.components+json`
+        /// &amp;lt;/br&amp;gt; - `WADL Schema` use
+        /// `application/vnd.ms-azure-apim.wadl.grammars+xml`.
         /// </summary>
         [JsonProperty(PropertyName = "properties.contentType")]
         public string ContentType { get; set; }
 
         /// <summary>
-        /// Gets or sets json escaped string defining the document representing
-        /// the Schema.
+        /// Gets or sets properties of the Schema Document.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.document.value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "properties.document")]
+        public object Document { get; set; }
 
         /// <summary>
         /// Validate the object.

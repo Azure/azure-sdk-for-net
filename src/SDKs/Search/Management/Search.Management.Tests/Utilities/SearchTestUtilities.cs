@@ -30,6 +30,11 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             TestUtilities.Wait(TimeSpan.FromSeconds(2));
         }
 
+        public static void WaitForSynonymMapUpdate()
+        {
+            TestUtilities.Wait(TimeSpan.FromSeconds(5));
+        }
+
         public static void WaitForServiceProvisioning()
         {
             TestUtilities.Wait(TimeSpan.FromSeconds(10));

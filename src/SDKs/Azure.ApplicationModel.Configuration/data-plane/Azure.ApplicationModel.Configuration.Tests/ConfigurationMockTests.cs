@@ -10,11 +10,14 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Tests;
 using NUnit.Framework;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
-    public class ConfigurationMockTests
+    [TestFixture(true)]
+    [TestFixture(false)]
+    public class ConfigurationMockTests: ClientTestBase
     {
         static readonly string connectionString = "Endpoint=https://contoso.appconfig.io;Id=b1d9b31;Secret=aabbccdd";
         static readonly ConfigurationSetting s_testSetting = new ConfigurationSetting("test_key", "test_value")
@@ -28,11 +31,13 @@ namespace Azure.ApplicationModel.Configuration.Tests
             }
         };
 
-        private static ConfigurationClient CreateTestService(HttpPipelineTransport transport)
+        public ConfigurationMockTests(bool isAsync) : base(isAsync) { }
+
+        private ConfigurationClient CreateTestService(HttpPipelineTransport transport)
         {
             var options = new ConfigurationClientOptions();
             options.Transport = transport;
-            return new ConfigurationClient(connectionString, options);
+            return InstrumentClient(new ConfigurationClient(connectionString, options));
         }
 
         [Test]
@@ -103,7 +108,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             AssertRequestCommon(request);
             Assert.AreEqual(HttpPipelineMethod.Put, request.Method);
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
-            Assert.True(request.TryGetHeader("If-None-Match", out var ifNoneMatch));
+            Assert.True(request.Headers.TryGetValue("If-None-Match", out var ifNoneMatch));
             Assert.AreEqual("*", ifNoneMatch);
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
@@ -145,7 +150,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             Assert.AreEqual("https://contoso.appconfig.io/kv/test_key?label=test_label", request.UriBuilder.ToString());
             AssertContent(SerializationHelpers.Serialize(s_testSetting, SerializeRequestSetting), request);
             Assert.AreEqual(s_testSetting, setting);
-            Assert.True(request.TryGetHeader("If-Match", out var ifMatch));
+            Assert.True(request.Headers.TryGetValue("If-Match", out var ifMatch));
             Assert.AreEqual("*", ifMatch);
         }
 
@@ -268,7 +273,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
             options.ApplicationId = "test_application";
             options.Transport = mockTransport;
 
-            var client = new ConfigurationClient(connectionString, options);
+            var client = CreateClient<ConfigurationClient>(connectionString, options);
 
             ConfigurationSetting setting = await client.GetAsync(s_testSetting.Key);
             Assert.AreEqual(s_testSetting, setting);
@@ -279,7 +284,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             using (var stream = new MemoryStream())
             {
-                request.Content.WriteTo(stream, CancellationToken.None).GetAwaiter().GetResult();
+                request.Content.WriteTo(stream, CancellationToken.None);
                 if (compareAsString)
                 {
                     Assert.AreEqual(Encoding.UTF8.GetString(expected), Encoding.UTF8.GetString(stream.ToArray()));
@@ -293,7 +298,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private void AssertRequestCommon(MockRequest request)
         {
-            Assert.True(request.TryGetHeader("User-Agent", out var value));
+            Assert.True(request.Headers.TryGetValue("User-Agent", out var value));
             StringAssert.Contains("azsdk-net-config/1.0.0.0", value);
         }
 

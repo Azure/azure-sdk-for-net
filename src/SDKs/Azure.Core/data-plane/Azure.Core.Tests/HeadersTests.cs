@@ -4,6 +4,7 @@ using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using Azure.Core.Pipeline;
+using Azure.Core.Testing;
 using NUnit.Framework;
 
 namespace Azure.Core.Tests
@@ -28,11 +29,53 @@ namespace Azure.Core.Tests
             Assert.AreEqual(header, header2);
             Assert.AreEqual(header.GetHashCode(), header2.GetHashCode());
         }
-    }
 
-    static class Utf8
-    {
-        public static string ToString(ReadOnlySpan<byte> utf8)
-            => Encoding.UTF8.GetString(utf8.ToArray());
+        [Test]
+        public void DateReturnsDateHeaderValue()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("Date", "Sun, 29 Sep 2013 01:02:03 GMT"));
+
+            Assert.AreEqual(new DateTimeOffset(2013, 9, 29, 1, 2, 3, TimeSpan.Zero), mockResponse.Headers.Date);
+        }
+
+        [Test]
+        public void DateReturnsNullForNoHeader()
+        {
+            var mockResponse = new MockResponse(200);
+            Assert.Null(mockResponse.Headers.Date);
+        }
+
+        [Test]
+        public void ContentTypeReturnsContentTypeHeaderValue()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"));
+
+            Assert.AreEqual("text/xml", mockResponse.Headers.ContentType);
+        }
+
+        [Test]
+        public void ContentTypeReturnsNullForNoHeader()
+        {
+            var mockResponse = new MockResponse(200);
+            Assert.Null(mockResponse.Headers.ContentType);
+        }
+
+        [Test]
+        public void RequestIdReturnsRequestIdHeaderValue()
+        {
+            var mockResponse = new MockResponse(200);
+            mockResponse.AddHeader(new HttpHeader("x-ms-request-id", "abcde"));
+
+            Assert.AreEqual("abcde", mockResponse.Headers.RequestId);
+        }
+
+        [Test]
+        public void RequestIdReturnsNullForNoHeader()
+        {
+            var mockResponse = new MockResponse(200);
+            Assert.Null(mockResponse.Headers.RequestId);
+        }
     }
 }

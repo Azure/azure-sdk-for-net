@@ -15,12 +15,12 @@ namespace Azure.Core.Tests
         {
             var mockTransport = new MockTransport();
             Task<Response> task = SendGetRequest(mockTransport, ClientRequestIdPolicy.Singleton);
-            MockRequest request =  await mockTransport.RequestGate.Cycle(new MockResponse(200));
+            MockRequest request = await mockTransport.RequestGate.Cycle(new MockResponse(200));
             await task;
 
             Assert.True(request.TryGetHeader("x-ms-client-request-id", out string requestId));
             Assert.True(request.TryGetHeader("x-ms-return-client-request-id", out string returnRequestId));
-            Assert.AreEqual(request.RequestId, requestId);
+            Assert.AreEqual(request.ClientRequestId, requestId);
             Assert.AreEqual("true", returnRequestId);
         }
     }

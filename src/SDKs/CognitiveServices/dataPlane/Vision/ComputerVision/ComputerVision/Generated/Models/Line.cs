@@ -16,7 +16,7 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models
     using System.Linq;
 
     /// <summary>
-    /// Json object representing a recognized text line.
+    /// An object representing a recognized text line.
     /// </summary>
     public partial class Line
     {

@@ -18,6 +18,8 @@ namespace Azure.Core.Testing
 
         public List<MockRequest> Requests { get; } = new List<MockRequest>();
 
+        public bool? ExpectSyncPipeline { get; set; }
+
         public MockTransport()
         {
             RequestGate = new AsyncGate<MockRequest, MockResponse>();
@@ -34,10 +36,30 @@ namespace Azure.Core.Testing
             _responseFactory = responseFactory;
         }
 
-        public override HttpPipelineRequest CreateRequest(IServiceProvider services)
+        public override Request CreateRequest(IServiceProvider services)
             => new MockRequest();
 
+        public override void Process(HttpPipelineMessage message)
+        {
+            if (ExpectSyncPipeline == false)
+            {
+                throw new InvalidOperationException("Sync pipeline invocation not expected");
+            }
+
+            ProcessCore(message).GetAwaiter().GetResult();
+        }
+
         public override async Task ProcessAsync(HttpPipelineMessage message)
+        {
+            if (ExpectSyncPipeline == true)
+            {
+                throw new InvalidOperationException("Async pipeline invocation not expected");
+            }
+
+            await ProcessCore(message);
+        }
+
+        private async Task ProcessCore(HttpPipelineMessage message)
         {
             var request = message.Request as MockRequest;
             if (request == null) throw new InvalidOperationException("the request is not compatible with the transport");
@@ -53,7 +75,7 @@ namespace Azure.Core.Testing
                 message.Response = _responseFactory(request);
             }
 
-            message.Response.RequestId = request.RequestId;
+            message.Response.ClientRequestId = request.ClientRequestId;
         }
 
         public MockRequest SingleRequest => Requests.Single();

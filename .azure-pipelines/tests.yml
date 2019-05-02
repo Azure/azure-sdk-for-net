@@ -1,0 +1,74 @@
+# External variables:
+# ProjectFile - The project to build and test. This variable is defined in pipeline web ui because we want to be able to provide it at queue time and that isn't supported in yaml yet.
+# MaxParallelTestJobs - Maximum number of parallel test jobs
+# AzConfigConnectionString - The connection string used for testing the AzConfig service. This is set in the pipeline web ui as it needs different values for public vs internal.
+# ServiceBusConnectionString - The connection string used for testing the Service Bus service. This is set in the pipeline web ui as it needs different values for public vs internal.
+# EventHubsConnectionString - The connection string to the namespace used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
+# EventHubsStorageConnectionString - The connection string to the storage account used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
+
+trigger:
+  - master
+
+variables:
+  DotNetCoreVersion: '2.1.503'
+
+jobs:
+  - job: 'Test'
+
+    # Increase timeout so Event Hubs tests do not timeout
+    # https://github.com/Azure/azure-sdk-for-net/issues/5982
+    timeoutInMinutes: 90
+
+    strategy:
+      maxParallel: $[ variables['MaxParallelTestJobs'] ]
+      matrix:
+        Linux:
+          OSName: 'Linux'
+          OSVmImage: 'ubuntu-16.04'
+        Windows:
+          OSName: 'Windows'
+          OSVmImage: 'vs2017-win2016'
+        MacOs:
+          OSName: 'MacOS'
+          OSVmImage: 'macOS-10.13'
+
+    pool:
+      vmImage: '$(OSVmImage)'
+
+    steps:
+      - powershell: |
+          Invoke-WebRequest -Uri "https://github.com/Azure/azure-sdk-tools/releases/download/sdk-tools_14793/sdk-tools.zip" `
+          -OutFile "sdk-tools.zip" | Wait-Process; Expand-Archive -Path "sdk-tools.zip" -DestinationPath "./sdk-tools/"
+        workingDirectory: '$(Build.BinariesDirectory)'
+        displayName: 'Download Tools Archive From Github Release and Extract it'
+
+      - task: PythonScript@0
+        displayName: 'Run VerifyAgentOS script'
+        inputs:
+          scriptPath: '$(Build.BinariesDirectory)/sdk-tools/scripts/python/verify_agent_os.py'
+          arguments: $(OSName)
+
+      - task: DotNetCoreInstaller@0
+        displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
+        inputs:
+          version: '$(DotNetCoreVersion)'
+
+      - script: 'dotnet test $(ProjectFile) --logger trx'
+        displayName: 'Build & Test (all tests)'
+        env:
+          DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+          DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          DOTNET_MULTILEVEL_LOOKUP: 0
+          APP_CONFIG_CONNECTION: $(net-azconfig-test-connection-string)
+          SERVICE_BUS_CONNECTION_STRING: $(net-service-bus-test-connection-string)
+          EVENT_HUBS_CONNECTION_STRING: $(net-eventhubs-internal-namespace-connection-string)
+          EVENT_HUBS_STORAGE_CONNECTION_STRING: $(net-eventhubs-internal-storage-connection-string)
+
+      - task: PublishTestResults@2
+        condition: succeededOrFailed()
+        inputs:
+          testResultsFiles: '**/*.trx'
+          testRunTitle: '$(OSName) DotNet $(DotNetCoreVersion)'
+          testResultsFormat: 'VSTest'
+          mergeTestResults: true
+          

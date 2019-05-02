@@ -66,19 +66,20 @@ namespace Microsoft.Azure.Search
         public string SearchDnsSuffix { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         public string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running Operations.
-        /// Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default value is
+        /// 30.
         /// </summary>
         public int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated and
-        /// included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When set to
+        /// true a unique x-ms-client-request-id value is generated and included in
+        /// each request. Default is true.
         /// </summary>
         public bool? GenerateClientRequestId { get; set; }
 
@@ -93,6 +94,11 @@ namespace Microsoft.Azure.Search
         public virtual IIndexersOperations Indexers { get; private set; }
 
         /// <summary>
+        /// Gets the ISkillsetsOperations.
+        /// </summary>
+        public virtual ISkillsetsOperations Skillsets { get; private set; }
+
+        /// <summary>
         /// Gets the ISynonymMapsOperations.
         /// </summary>
         public virtual ISynonymMapsOperations SynonymMaps { get; private set; }
@@ -101,6 +107,19 @@ namespace Microsoft.Azure.Search
         /// Gets the IIndexesOperations.
         /// </summary>
         public virtual IIndexesOperations Indexes { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchServiceClient class.
+        /// </summary>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SearchServiceClient.Dispose(). False: will not dispose provided httpClient</param>
+        protected SearchServiceClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        {
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes a new instance of the SearchServiceClient class.
@@ -158,6 +177,33 @@ namespace Microsoft.Azure.Search
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
+        /// <param name='httpClient'>
+        /// HttpClient to be used
+        /// </param>
+        /// <param name='disposeHttpClient'>
+        /// True: will dispose the provided httpClient on calling SearchServiceClient.Dispose(). False: will not dispose provided httpClient</param>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        public SearchServiceClient(ServiceClientCredentials credentials, HttpClient httpClient, bool disposeHttpClient) : this(httpClient, disposeHttpClient)
+        {
+            if (credentials == null)
+            {
+                throw new System.ArgumentNullException("credentials");
+            }
+            Credentials = credentials;
+            if (Credentials != null)
+            {
+                Credentials.InitializeServiceClient(this);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the SearchServiceClient class.
+        /// </summary>
+        /// <param name='credentials'>
+        /// Required. Credentials needed for the client to connect to Azure.
+        /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
         /// </param>
@@ -191,10 +237,11 @@ namespace Microsoft.Azure.Search
         {
             DataSources = new DataSourcesOperations(this);
             Indexers = new IndexersOperations(this);
+            Skillsets = new SkillsetsOperations(this);
             SynonymMaps = new SynonymMapsOperations(this);
             Indexes = new IndexesOperations(this);
             BaseUri = "https://{searchServiceName}.{searchDnsSuffix}";
-            ApiVersion = "2017-11-11";
+            ApiVersion = "2019-05-06";
             SearchDnsSuffix = "search.windows.net";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
@@ -238,6 +285,10 @@ namespace Microsoft.Azure.Search
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataDeletionDetectionPolicy>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScoringFunction>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScoringFunction>("type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Skill>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Skill>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CognitiveServices>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CognitiveServices>("@odata.type"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());
         }

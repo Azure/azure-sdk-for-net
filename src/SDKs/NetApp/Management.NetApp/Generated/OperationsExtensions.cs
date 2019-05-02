@@ -24,8 +24,11 @@ namespace Microsoft.Azure.Management.NetApp
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// Lists all of the available Microsoft.NetApp Rest API operations
+            /// Describes the Resource Provider
             /// </summary>
+            /// <remarks>
+            /// Lists all of the available Microsoft.NetApp Rest API operations
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
@@ -35,8 +38,11 @@ namespace Microsoft.Azure.Management.NetApp
             }
 
             /// <summary>
-            /// Lists all of the available Microsoft.NetApp Rest API operations
+            /// Describes the Resource Provider
             /// </summary>
+            /// <remarks>
+            /// Lists all of the available Microsoft.NetApp Rest API operations
+            /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>

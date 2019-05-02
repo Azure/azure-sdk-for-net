@@ -53,9 +53,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="expressRouteCircuit">The ExpressRouteCircuit</param>
         /// <param name="serviceProviderProvisioningState">The provisioning
         /// state of the circuit in the connectivity provider system. Possible
-        /// values are 'NotProvisioned', 'Provisioning', 'Provisioned'.
-        /// Possible values include: 'NotProvisioned', 'Provisioning',
-        /// 'Provisioned', 'Deprovisioning'</param>
+        /// values include: 'NotProvisioned', 'Provisioning', 'Provisioned',
+        /// 'Deprovisioning'</param>
         /// <param name="serviceProviderNotes">Additional read only notes set
         /// by the connectivity provider.</param>
         /// <param name="provisioningState">Gets the provisioning state of the
@@ -124,8 +123,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the provisioning state of the circuit in the
-        /// connectivity provider system. Possible values are 'NotProvisioned',
-        /// 'Provisioning', 'Provisioned'. Possible values include:
+        /// connectivity provider system. Possible values include:
         /// 'NotProvisioned', 'Provisioning', 'Provisioned', 'Deprovisioning'
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceProviderProvisioningState")]

@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="value">The list OF billingPermissions a caller has on
         /// a billing account.</param>
         /// <param name="roleName">The name of the role</param>
-        public BillingRoleDefinition(string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<BillingPermissions> value = default(IList<BillingPermissions>), string roleName = default(string))
+        public BillingRoleDefinition(string id = default(string), string name = default(string), string type = default(string), string description = default(string), IList<BillingPermissionsProperties> value = default(IList<BillingPermissionsProperties>), string roleName = default(string))
             : base(id, name, type)
         {
             Description = description;
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// account.
         /// </summary>
         [JsonProperty(PropertyName = "properties.permissions.value")]
-        public IList<BillingPermissions> Value { get; private set; }
+        public IList<BillingPermissionsProperties> Value { get; private set; }
 
         /// <summary>
         /// Gets the name of the role

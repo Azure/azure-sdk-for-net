@@ -18,14 +18,31 @@ namespace Azure.Core.Pipeline.Policies
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             await ProcessNextAsync(pipeline, message);
+            await BufferResponse(message, true);
+        }
 
-            if (message.Response.ResponseContentStream != null)
+        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            ProcessNext(pipeline, message);
+            BufferResponse(message, false).GetAwaiter().GetResult();
+        }
+
+        private static async Task BufferResponse(HttpPipelineMessage message, bool async)
+        {
+            if (message.Response.ContentStream != null && !message.Response.ContentStream.CanSeek)
             {
-                Stream responseContentStream = message.Response.ResponseContentStream;
+                Stream responseContentStream = message.Response.ContentStream;
                 var bufferedStream = new MemoryStream();
-                await responseContentStream.CopyToAsync(bufferedStream);
+                if (async)
+                {
+                    await responseContentStream.CopyToAsync(bufferedStream);
+                }
+                else
+                {
+                    responseContentStream.CopyTo(bufferedStream);
+                }
                 bufferedStream.Position = 0;
-                message.Response.ResponseContentStream = bufferedStream;
+                message.Response.ContentStream = bufferedStream;
             }
         }
     }

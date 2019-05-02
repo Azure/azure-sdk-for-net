@@ -171,8 +171,10 @@ namespace Batch.Tests.ScenarioTests
                     // Get the account and verify some properties
                     BatchAccount batchAccount = await this.BatchManagementClient.BatchAccount.GetAsync(resourceGroupName, batchAccountName);
                     Assert.Equal(batchAccountName, batchAccount.Name);
-                    Assert.True(batchAccount.DedicatedCoreQuota > 0);
-                    Assert.Equal(0, batchAccount.LowPriorityCoreQuota);
+                    Assert.Null(batchAccount.DedicatedCoreQuota);
+                    Assert.Null(batchAccount.DedicatedCoreQuotaPerVMFamily);
+                    Assert.False(batchAccount.DedicatedCoreQuotaPerVMFamilyEnforced); // TODO: change this when pfq enforcement happens
+                    Assert.Null(batchAccount.LowPriorityCoreQuota);
                     Assert.Equal(PoolAllocationMode.UserSubscription, batchAccount.PoolAllocationMode);
                     Assert.Equal(keyVaultReferenceId, batchAccount.KeyVaultReference.Id);
                     Assert.Equal(keyVaultReferenceUrl, batchAccount.KeyVaultReference.Url);

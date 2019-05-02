@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static SchemaContract CreateOrUpdate(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string))
+            public static SchemaContract CreateOrUpdate(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaCreateOrUpdateContract parameters, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch).GetAwaiter().GetResult();
             }
@@ -279,7 +279,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SchemaContract> CreateOrUpdateAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SchemaContract> CreateOrUpdateAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaCreateOrUpdateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {

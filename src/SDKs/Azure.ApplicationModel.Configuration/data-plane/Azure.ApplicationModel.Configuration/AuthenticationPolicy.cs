@@ -23,6 +23,13 @@ namespace Azure.ApplicationModel.Configuration
 
         public override async Task ProcessAsync(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
+            await ProcessAsync(message, async: true);
+
+            await ProcessNextAsync(pipeline, message);
+        }
+
+        private async Task ProcessAsync(HttpPipelineMessage message, bool async)
+        {
             string contentHash;
 
             using (var alg = SHA256.Create())
@@ -32,7 +39,14 @@ namespace Azure.ApplicationModel.Configuration
                 {
                     if (message.Request.Content != null)
                     {
-                        await message.Request.Content.WriteTo(contentHashStream, message.Cancellation);
+                        if (async)
+                        {
+                            await message.Request.Content.WriteToAsync(contentHashStream, message.Cancellation);
+                        }
+                        else
+                        {
+                            message.Request.Content.WriteTo(contentHashStream, message.Cancellation);
+                        }
                     }
                 }
 
@@ -53,13 +67,17 @@ namespace Azure.ApplicationModel.Configuration
                 string signedHeaders = "date;host;x-ms-content-sha256"; // Semicolon separated header names
 
                 // TODO (pri 3): should date header writing be moved out from here?
-                message.Request.AddHeader("Date", utcNowString);
-                message.Request.AddHeader("x-ms-content-sha256", contentHash);
-                message.Request.AddHeader("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
+                message.Request.Headers.Add("Date", utcNowString);
+                message.Request.Headers.Add("x-ms-content-sha256", contentHash);
+                message.Request.Headers.Add("Authorization", $"HMAC-SHA256 Credential={_credential}, SignedHeaders={signedHeaders}, Signature={signature}");
             }
-
-            await ProcessNextAsync(pipeline, message);
         }
 
+        public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+        {
+            ProcessAsync(message, async: false).GetAwaiter().GetResult();
+
+            ProcessNext(pipeline, message);
+        }
     }
 }

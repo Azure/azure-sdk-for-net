@@ -91,26 +91,48 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        public static ConfigurationSetting DeserializeSetting(Stream content, CancellationToken cancellation)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content, default))
+            {
+                JsonElement root = json.RootElement;
+                return ReadSetting(root);
+            }
+        }
+
         public static async Task<SettingBatch> ParseBatchAsync(Response response, SettingSelector selector, CancellationToken cancellation)
+        {
+            Stream content = response.ContentStream;
+            using (JsonDocument json = await JsonDocument.ParseAsync(content, cancellationToken: cancellation).ConfigureAwait(false))
+            {
+                return ParseSettingBatch(response, selector, json);
+            }
+        }
+
+        public static SettingBatch ParseBatch(Response response, SettingSelector selector, CancellationToken cancellation)
+        {
+            Stream content = response.ContentStream;
+            using (JsonDocument json = JsonDocument.Parse(content))
+            {
+                return ParseSettingBatch(response, selector, json);
+            }
+        }
+
+        private static SettingBatch ParseSettingBatch(Response response, SettingSelector selector, JsonDocument json)
         {
             TryGetNextAfterValue(ref response, out string nextBatchUri);
 
-            Stream content = response.ContentStream;
-            using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellation).ConfigureAwait(false))
+            JsonElement itemsArray = json.RootElement.GetProperty("items");
+            int length = itemsArray.GetArrayLength();
+            ConfigurationSetting[] settings = new ConfigurationSetting[length];
+
+            int i = 0;
+            foreach (JsonElement item in itemsArray.EnumerateArray())
             {
-                JsonElement itemsArray = json.RootElement.GetProperty("items");
-                int length = itemsArray.GetArrayLength();
-                ConfigurationSetting[] settings = new ConfigurationSetting[length];
-
-                int i = 0;
-                foreach(JsonElement item in  itemsArray.EnumerateArray())
-                {
-                    settings[i++] = ReadSetting(item);
-                }
-
-                var batch = new SettingBatch(settings, nextBatchUri, selector);
-                return batch;
+                settings[i++] = ReadSetting(item);
             }
+
+            return new SettingBatch(settings, nextBatchUri, selector);
         }
 
         static readonly string s_link = "Link";
@@ -118,7 +140,7 @@ namespace Azure.ApplicationModel.Configuration
         static bool TryGetNextAfterValue(ref Response response, out string afterValue)
         {
             afterValue = default;
-            if (!response.TryGetHeader(s_link, out var headerValue)) return false;
+            if (!response.Headers.TryGetValue(s_link, out var headerValue)) return false;
 
             // the headers value is something like this: "</kv?after={token}>; rel=\"next\""
             var afterIndex = headerValue.IndexOf(s_after);

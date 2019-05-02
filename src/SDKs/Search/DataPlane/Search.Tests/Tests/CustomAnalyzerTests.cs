@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Tests
                     Fields = new[]
                     {
                         new Field("id", DataType.String) { IsKey = true },
-                        new Field("message", AnalyzerName.Create(CustomAnalyzerName)) { IsSearchable = true }
+                        new Field("message", (AnalyzerName)CustomAnalyzerName) { IsSearchable = true }
                     },
                     Analyzers = new[]
                     {
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Search.Tests
                         {
                             Name = CustomAnalyzerName,
                             Tokenizer = TokenizerName.Standard,
-                            CharFilters = new[] { CharFilterName.Create(CustomCharFilterName) }
+                            CharFilters = new[] { (CharFilterName)CustomCharFilterName }
                         }
                     },
                     CharFilters = new[] { new PatternReplaceCharFilter(CustomCharFilterName, "@", "_") }
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Search.Tests
                 indexClient.Documents.Index(IndexBatch.Upload(documents));
                 SearchTestUtilities.WaitForIndexing();
 
-                DocumentSearchResult result = indexClient.Documents.Search("someone@somewhere.something");
+                DocumentSearchResult<Document> result = indexClient.Documents.Search("someone@somewhere.something");
 
                 Assert.Equal("1", result.Results.Single().Document["id"]);
             });
@@ -384,47 +384,47 @@ namespace Microsoft.Azure.Search.Tests
                 // We have to split up analysis components into two indexes, one where any components with optional properties have defaults that
                 // are zero or null (default(T)), and another where we need to specify the default values we expect to get back from the REST API.
 
-                Func<int, string> generateSimpleName = n => string.Format(CultureInfo.InvariantCulture, "a{0}", n);
+                string GenerateSimpleName(int n) => string.Format(CultureInfo.InvariantCulture, "a{0}", n);
 
                 int i = 0;
 
                 Index indexWithSpecialDefaults = CreateTestIndex();
                 indexWithSpecialDefaults.Analyzers = new Analyzer[]
                 {
-                    new PatternAnalyzer(generateSimpleName(i++)),
-                    new StandardAnalyzer(generateSimpleName(i++))
+                    new PatternAnalyzer(GenerateSimpleName(i++)),
+                    new StandardAnalyzer(GenerateSimpleName(i++))
                 };
 
                 indexWithSpecialDefaults.Tokenizers = new Tokenizer[]
                 {
-                    new EdgeNGramTokenizer(generateSimpleName(i++)),
-                    new NGramTokenizer(generateSimpleName(i++)),
-                    new ClassicTokenizer(generateSimpleName(i++)),
-                    new KeywordTokenizerV2(generateSimpleName(i++)),
-                    new MicrosoftLanguageStemmingTokenizer(generateSimpleName(i++)),
-                    new MicrosoftLanguageTokenizer(generateSimpleName(i++)),
-                    new PathHierarchyTokenizerV2(generateSimpleName(i++)),
-                    new PatternTokenizer(generateSimpleName(i++)),
-                    new StandardTokenizerV2(generateSimpleName(i++)),
-                    new UaxUrlEmailTokenizer(generateSimpleName(i++))
+                    new EdgeNGramTokenizer(GenerateSimpleName(i++)),
+                    new NGramTokenizer(GenerateSimpleName(i++)),
+                    new ClassicTokenizer(GenerateSimpleName(i++)),
+                    new KeywordTokenizerV2(GenerateSimpleName(i++)),
+                    new MicrosoftLanguageStemmingTokenizer(GenerateSimpleName(i++)),
+                    new MicrosoftLanguageTokenizer(GenerateSimpleName(i++)),
+                    new PathHierarchyTokenizerV2(GenerateSimpleName(i++)),
+                    new PatternTokenizer(GenerateSimpleName(i++)),
+                    new StandardTokenizerV2(GenerateSimpleName(i++)),
+                    new UaxUrlEmailTokenizer(GenerateSimpleName(i++))
                 };
 
                 indexWithSpecialDefaults.TokenFilters = new TokenFilter[]
                 {
                     new DictionaryDecompounderTokenFilter(
-                        generateSimpleName(i++),
+                        GenerateSimpleName(i++),
                         wordList: new[] { "Bahnhof" }),
-                    new EdgeNGramTokenFilterV2(generateSimpleName(i++)),
-                    new LengthTokenFilter(generateSimpleName(i++)),
-                    new LimitTokenFilter(generateSimpleName(i++)),
-                    new NGramTokenFilterV2(generateSimpleName(i++)),
-                    new PatternCaptureTokenFilter(generateSimpleName(i++), patterns: new[] { "[a-z]*" }),
-                    new PhoneticTokenFilter(generateSimpleName(i++)),
-                    new ShingleTokenFilter(generateSimpleName(i++)),
-                    new StopwordsTokenFilter(generateSimpleName(i++)),
-                    new SynonymTokenFilter(generateSimpleName(i++), synonyms: new[] { "mutt, canine => dog" }),
-                    new TruncateTokenFilter(generateSimpleName(i++)),
-                    new WordDelimiterTokenFilter(generateSimpleName(i++))
+                    new EdgeNGramTokenFilterV2(GenerateSimpleName(i++)),
+                    new LengthTokenFilter(GenerateSimpleName(i++)),
+                    new LimitTokenFilter(GenerateSimpleName(i++)),
+                    new NGramTokenFilterV2(GenerateSimpleName(i++)),
+                    new PatternCaptureTokenFilter(GenerateSimpleName(i++), patterns: new[] { "[a-z]*" }),
+                    new PhoneticTokenFilter(GenerateSimpleName(i++)),
+                    new ShingleTokenFilter(GenerateSimpleName(i++)),
+                    new StopwordsTokenFilter(GenerateSimpleName(i++)),
+                    new SynonymTokenFilter(GenerateSimpleName(i++), synonyms: new[] { "mutt, canine => dog" }),
+                    new TruncateTokenFilter(GenerateSimpleName(i++)),
+                    new WordDelimiterTokenFilter(GenerateSimpleName(i++))
                 };
 
                 i = 0;
@@ -433,58 +433,58 @@ namespace Microsoft.Azure.Search.Tests
                 expectedIndexWithSpecialDefaults.Name = indexWithSpecialDefaults.Name;
                 expectedIndexWithSpecialDefaults.Analyzers = new Analyzer[]
                 {
-                    new PatternAnalyzer(generateSimpleName(i++), lowerCaseTerms: true, pattern: @"\W+"),
-                    new StandardAnalyzer(generateSimpleName(i++), maxTokenLength: 255)
+                    new PatternAnalyzer(GenerateSimpleName(i++), lowerCaseTerms: true, pattern: @"\W+"),
+                    new StandardAnalyzer(GenerateSimpleName(i++), maxTokenLength: 255)
                 };
 
                 expectedIndexWithSpecialDefaults.Tokenizers = new Tokenizer[]
                 {
-                    new EdgeNGramTokenizer(generateSimpleName(i++), minGram: 1, maxGram: 2),
-                    new NGramTokenizer(generateSimpleName(i++), minGram: 1, maxGram: 2),
-                    new ClassicTokenizer(generateSimpleName(i++), maxTokenLength: 255),
-                    new KeywordTokenizerV2(generateSimpleName(i++), maxTokenLength: 256),
+                    new EdgeNGramTokenizer(GenerateSimpleName(i++), minGram: 1, maxGram: 2),
+                    new NGramTokenizer(GenerateSimpleName(i++), minGram: 1, maxGram: 2),
+                    new ClassicTokenizer(GenerateSimpleName(i++), maxTokenLength: 255),
+                    new KeywordTokenizerV2(GenerateSimpleName(i++), maxTokenLength: 256),
                     new MicrosoftLanguageStemmingTokenizer(
-                        generateSimpleName(i++), 
+                        GenerateSimpleName(i++), 
                         maxTokenLength: 255, 
                         isSearchTokenizer: false, 
                         language: MicrosoftStemmingTokenizerLanguage.English),
                     new MicrosoftLanguageTokenizer(
-                        generateSimpleName(i++), 
+                        GenerateSimpleName(i++), 
                         maxTokenLength: 255,
                         isSearchTokenizer: false,
                         language: MicrosoftTokenizerLanguage.English),
-                    new PathHierarchyTokenizerV2(generateSimpleName(i++), delimiter: '/', replacement: '/', maxTokenLength: 300),
-                    new PatternTokenizer(generateSimpleName(i++), pattern: @"\W+", group: -1),
-                    new StandardTokenizerV2(generateSimpleName(i++), maxTokenLength: 255),
-                    new UaxUrlEmailTokenizer(generateSimpleName(i++), maxTokenLength: 255)
+                    new PathHierarchyTokenizerV2(GenerateSimpleName(i++), delimiter: '/', replacement: '/', maxTokenLength: 300),
+                    new PatternTokenizer(GenerateSimpleName(i++), pattern: @"\W+", group: -1),
+                    new StandardTokenizerV2(GenerateSimpleName(i++), maxTokenLength: 255),
+                    new UaxUrlEmailTokenizer(GenerateSimpleName(i++), maxTokenLength: 255)
                 };
 
                 expectedIndexWithSpecialDefaults.TokenFilters = new TokenFilter[]
                 {
                     new DictionaryDecompounderTokenFilter(
-                        generateSimpleName(i++),
+                        GenerateSimpleName(i++),
                         wordList: new[] { "Bahnhof" },
                         minWordSize: 5,
                         minSubwordSize: 2,
                         maxSubwordSize: 15),
-                    new EdgeNGramTokenFilterV2(generateSimpleName(i++), minGram: 1, maxGram: 2, side: EdgeNGramTokenFilterSide.Front),
-                    new LengthTokenFilter(generateSimpleName(i++), max: 300),
-                    new LimitTokenFilter(generateSimpleName(i++), maxTokenCount: 1),
-                    new NGramTokenFilterV2(generateSimpleName(i++), minGram: 1, maxGram: 2),
-                    new PatternCaptureTokenFilter(generateSimpleName(i++), patterns: new[] { "[a-z]*" }, preserveOriginal: true),
-                    new PhoneticTokenFilter(generateSimpleName(i++), encoder: PhoneticEncoder.Metaphone, replaceOriginalTokens: true),
+                    new EdgeNGramTokenFilterV2(GenerateSimpleName(i++), minGram: 1, maxGram: 2, side: EdgeNGramTokenFilterSide.Front),
+                    new LengthTokenFilter(GenerateSimpleName(i++), max: 300),
+                    new LimitTokenFilter(GenerateSimpleName(i++), maxTokenCount: 1),
+                    new NGramTokenFilterV2(GenerateSimpleName(i++), minGram: 1, maxGram: 2),
+                    new PatternCaptureTokenFilter(GenerateSimpleName(i++), patterns: new[] { "[a-z]*" }, preserveOriginal: true),
+                    new PhoneticTokenFilter(GenerateSimpleName(i++), encoder: PhoneticEncoder.Metaphone, replaceOriginalTokens: true),
                     new ShingleTokenFilter(
-                        generateSimpleName(i++), 
+                        GenerateSimpleName(i++), 
                         maxShingleSize: 2, 
                         minShingleSize: 2, 
                         outputUnigrams: true, 
                         tokenSeparator: " ", 
                         filterToken: "_"),
-                    new StopwordsTokenFilter(generateSimpleName(i++), stopwordsList: StopwordsList.English, removeTrailingStopWords: true),
-                    new SynonymTokenFilter(generateSimpleName(i++), synonyms: new[] { "mutt, canine => dog" }, expand: true),
-                    new TruncateTokenFilter(generateSimpleName(i++), length: 300),
+                    new StopwordsTokenFilter(GenerateSimpleName(i++), stopwordsList: StopwordsList.English, removeTrailingStopWords: true),
+                    new SynonymTokenFilter(GenerateSimpleName(i++), synonyms: new[] { "mutt, canine => dog" }, expand: true),
+                    new TruncateTokenFilter(GenerateSimpleName(i++), length: 300),
                     new WordDelimiterTokenFilter(
-                        generateSimpleName(i++), 
+                        GenerateSimpleName(i++), 
                         generateWordParts: true, 
                         generateNumberParts: true, 
                         splitOnCaseChange: true, 
@@ -529,11 +529,11 @@ namespace Microsoft.Azure.Search.Tests
             {
                 RegexFlags[] allRegexFlags = GetAllExtensibleEnumValues<RegexFlags>();
 
-                Func<RegexFlags, Analyzer> createPatternAnalyzer = 
-                    rf => new PatternAnalyzer(SearchTestUtilities.GenerateName(), lowerCaseTerms: true, pattern: ".*", flags: rf);
+                Analyzer CreatePatternAnalyzer(RegexFlags rf) =>
+                    new PatternAnalyzer(SearchTestUtilities.GenerateName(), lowerCaseTerms: true, pattern: ".*", flags: rf);
 
                 Index index = CreateTestIndex();
-                index.Analyzers = allRegexFlags.Select(createPatternAnalyzer).ToArray();
+                index.Analyzers = allRegexFlags.Select(CreatePatternAnalyzer).ToArray();
 
                 TestAnalysisComponents(index);
             });
@@ -551,17 +551,17 @@ namespace Microsoft.Azure.Search.Tests
                         maxGram: 2, 
                         tokenChars: GetAllEnumValues<TokenCharacterKind>());
 
-                Func<MicrosoftTokenizerLanguage, Tokenizer> createMicrosoftLanguageTokenizer = mtl => 
+                Tokenizer CreateMicrosoftLanguageTokenizer(MicrosoftTokenizerLanguage mtl) =>
                     new MicrosoftLanguageTokenizer(
-                        SearchTestUtilities.GenerateName(), 
-                        maxTokenLength: 200, 
-                        isSearchTokenizer: false, 
+                        SearchTestUtilities.GenerateName(),
+                        maxTokenLength: 200,
+                        isSearchTokenizer: false,
                         language: mtl);
 
                 IEnumerable<Tokenizer> tokenizersWithAllMicrosoftLanguages = 
-                    GetAllEnumValues<MicrosoftTokenizerLanguage>().Select(createMicrosoftLanguageTokenizer);
+                    GetAllEnumValues<MicrosoftTokenizerLanguage>().Select(CreateMicrosoftLanguageTokenizer);
 
-                Func<MicrosoftStemmingTokenizerLanguage, Tokenizer> createMicrosoftStemmingLanguageTokenizer = mtl =>
+                Tokenizer CreateMicrosoftStemmingLanguageTokenizer(MicrosoftStemmingTokenizerLanguage mtl) =>
                     new MicrosoftLanguageStemmingTokenizer(
                         SearchTestUtilities.GenerateName(),
                         maxTokenLength: 200,
@@ -569,7 +569,7 @@ namespace Microsoft.Azure.Search.Tests
                         language: mtl);
 
                 IEnumerable<Tokenizer> tokenizersWithAllMicrosoftStemmingLanguages =
-                    GetAllEnumValues<MicrosoftStemmingTokenizerLanguage>().Select(createMicrosoftStemmingLanguageTokenizer);
+                    GetAllEnumValues<MicrosoftStemmingTokenizerLanguage>().Select(CreateMicrosoftStemmingLanguageTokenizer);
 
                 var tokenFilterWithAllCjkScripts =
                     new CjkBigramTokenFilter(
@@ -577,17 +577,17 @@ namespace Microsoft.Azure.Search.Tests
                         ignoreScripts: GetAllEnumValues<CjkBigramTokenFilterScripts>(), 
                         outputUnigrams: true);
 
-                Func<EdgeNGramTokenFilterSide, TokenFilter> createEdgeNGramTokenFilter =
-                    s => new EdgeNGramTokenFilterV2(SearchTestUtilities.GenerateName(), minGram: 1, maxGram: 2, side: s);
+                TokenFilter CreateEdgeNGramTokenFilter(EdgeNGramTokenFilterSide s) =>
+                    new EdgeNGramTokenFilterV2(SearchTestUtilities.GenerateName(), minGram: 1, maxGram: 2, side: s);
 
                 IEnumerable<TokenFilter> tokenFiltersWithAllEdgeNGramSides =
-                    GetAllEnumValues<EdgeNGramTokenFilterSide>().Select(createEdgeNGramTokenFilter);
+                    GetAllEnumValues<EdgeNGramTokenFilterSide>().Select(CreateEdgeNGramTokenFilter);
 
-                Func<PhoneticEncoder, TokenFilter> createPhoneticTokenFilter =
-                    pe => new PhoneticTokenFilter(SearchTestUtilities.GenerateName(), encoder: pe, replaceOriginalTokens: false);
+                TokenFilter CreatePhoneticTokenFilter(PhoneticEncoder pe) =>
+                    new PhoneticTokenFilter(SearchTestUtilities.GenerateName(), encoder: pe, replaceOriginalTokens: false);
 
                 IEnumerable<TokenFilter> tokenFiltersWithAllPhoneticEncoders =
-                    GetAllEnumValues<PhoneticEncoder>().Select(createPhoneticTokenFilter);
+                    GetAllEnumValues<PhoneticEncoder>().Select(CreatePhoneticTokenFilter);
 
                 IEnumerable<TokenFilter> tokenFiltersWithAllSnowballLanguages =
                     GetAllEnumValues<SnowballTokenFilterLanguage>().Select(l => new SnowballTokenFilter(SearchTestUtilities.GenerateName(), l));
@@ -595,14 +595,14 @@ namespace Microsoft.Azure.Search.Tests
                 IEnumerable<TokenFilter> tokenFiltersWithAllStemmerLanguages =
                     GetAllEnumValues<StemmerTokenFilterLanguage>().Select(l => new StemmerTokenFilter(SearchTestUtilities.GenerateName(), l));
 
-                Func<StopwordsList, TokenFilter> createStopTokenFilter = l => 
+                TokenFilter CreateStopTokenFilter(StopwordsList l) =>
                     new StopwordsTokenFilter(
-                        SearchTestUtilities.GenerateName(), 
-                        stopwordsList: l, 
-                        ignoreCase: false, 
+                        SearchTestUtilities.GenerateName(),
+                        stopwordsList: l,
+                        ignoreCase: false,
                         removeTrailingStopWords: true);
 
-                IEnumerable<TokenFilter> tokenFiltersWithAllStopwordLists = GetAllEnumValues<StopwordsList>().Select(createStopTokenFilter);
+                IEnumerable<TokenFilter> tokenFiltersWithAllStopwordLists = GetAllEnumValues<StopwordsList>().Select(CreateStopTokenFilter);
 
                 // Split the tokenizers and token filters into different indexes to get around the 50-item limit.
                 Index index = CreateTestIndex();
@@ -626,20 +626,20 @@ namespace Microsoft.Azure.Search.Tests
 
         private static void AssertIndexContainsAllAnalysisComponents(params Index[] indexes)
         {
-            Func<Index, IEnumerable<Analyzer>> getAnalyzers = index => index.Analyzers ?? Enumerable.Empty<Analyzer>();
-            Func<Index, IEnumerable<Tokenizer>> getTokenizers = index => index.Tokenizers ?? Enumerable.Empty<Tokenizer>();
-            Func<Index, IEnumerable<TokenFilter>> getTokenFilters = index => index.TokenFilters ?? Enumerable.Empty<TokenFilter>();
-            Func<Index, IEnumerable<CharFilter>> getCharFilters = index => index.CharFilters ?? Enumerable.Empty<CharFilter>();
+            IEnumerable<Analyzer> GetAnalyzers(Index index) => index.Analyzers ?? Enumerable.Empty<Analyzer>();
+            IEnumerable<Tokenizer> GetTokenizers(Index index) => index.Tokenizers ?? Enumerable.Empty<Tokenizer>();
+            IEnumerable<TokenFilter> GetTokenFilters(Index index) => index.TokenFilters ?? Enumerable.Empty<TokenFilter>();
+            IEnumerable<CharFilter> GetCharFilters(Index index) => index.CharFilters ?? Enumerable.Empty<CharFilter>();
 
-            Func<Index, IEnumerable<Type>> getAnalysisTypesPresentInIndex = index =>
-                getAnalyzers(index).Select(a => a.GetType())
-                .Concat(getTokenizers(index).Select(t => t.GetType()))
-                .Concat(getTokenFilters(index).Select(tf => tf.GetType()))
-                .Concat(getCharFilters(index).Select(c => c.GetType()));
+            IEnumerable<Type> GetAnalysisTypesPresentInIndex(Index index) =>
+                GetAnalyzers(index).Select(a => a.GetType())
+                .Concat(GetTokenizers(index).Select(t => t.GetType()))
+                .Concat(GetTokenFilters(index).Select(tf => tf.GetType()))
+                .Concat(GetCharFilters(index).Select(c => c.GetType()));
 
             var analysisTypesPresentInAllIndexes =
                 from index in indexes
-                from t in getAnalysisTypesPresentInIndex(index)
+                from t in GetAnalysisTypesPresentInIndex(index)
                 select t;
 
             // Count how many instances of each type appear in the given index definitions.
@@ -683,8 +683,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static bool IsTypePresentAtLeastOnce(Dictionary<Type, int> instanceCountMap, Type analysisType)
         {
-            int count;
-            if (instanceCountMap.TryGetValue(analysisType, out count))
+            if (instanceCountMap.TryGetValue(analysisType, out int count))
             {
                 return count >= 1;
             }
@@ -738,7 +737,7 @@ namespace Microsoft.Azure.Search.Tests
             }
         }
 
-        private static T[] GetAllExtensibleEnumValues<T>() where T : ExtensibleEnum<T> =>
+        private static T[] GetAllExtensibleEnumValues<T>() =>
             (from field in typeof(T).GetFields()
              where field.FieldType == typeof(T) && field.IsStatic
              select field.GetValue(null)).Cast<T>().ToArray();   // Force eager evaluation.

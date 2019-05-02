@@ -31,9 +31,17 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="maxFieldsPerIndex">The maximum allowed fields per
         /// index.</param>
-        public ServiceLimits(int? maxFieldsPerIndex = default(int?))
+        /// <param name="maxFieldNestingDepthPerIndex">The maximum depth which
+        /// you can nest sub-fields in an index, including the top-level
+        /// complex field. For example, a/b/c has a nesting depth of 3.</param>
+        /// <param name="maxComplexCollectionFieldsPerIndex">The maximum number
+        /// of fields of type Collection(Edm.ComplexType) allowed in an
+        /// index.</param>
+        public ServiceLimits(int? maxFieldsPerIndex = default(int?), int? maxFieldNestingDepthPerIndex = default(int?), int? maxComplexCollectionFieldsPerIndex = default(int?))
         {
             MaxFieldsPerIndex = maxFieldsPerIndex;
+            MaxFieldNestingDepthPerIndex = maxFieldNestingDepthPerIndex;
+            MaxComplexCollectionFieldsPerIndex = maxComplexCollectionFieldsPerIndex;
             CustomInit();
         }
 
@@ -47,6 +55,21 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "maxFieldsPerIndex")]
         public int? MaxFieldsPerIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum depth which you can nest sub-fields in an
+        /// index, including the top-level complex field. For example, a/b/c
+        /// has a nesting depth of 3.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxFieldNestingDepthPerIndex")]
+        public int? MaxFieldNestingDepthPerIndex { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum number of fields of type
+        /// Collection(Edm.ComplexType) allowed in an index.
+        /// </summary>
+        [JsonProperty(PropertyName = "maxComplexCollectionFieldsPerIndex")]
+        public int? MaxComplexCollectionFieldsPerIndex { get; set; }
 
     }
 }

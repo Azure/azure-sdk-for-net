@@ -18,7 +18,7 @@ namespace Azure.Core.Tests
 {
     // Avoid running these tests in parallel with anything else that's sharing the event source
     [NonParallelizable]
-    public class EventSourceTests
+    public class EventSourceTests: SyncAsyncPolicyTestBase
     {
         private const int RequestEvent = 1;
         private const int RequestContentEvent = 2;
@@ -35,6 +35,10 @@ namespace Azure.Core.Tests
         private const int ErrorResponseContentTextBlockEvent = 16;
 
         private TestEventListener _listener;
+
+        public EventSourceTests(bool isAsync) : base(isAsync)
+        {
+        }
 
         [SetUp]
         public void Setup()
@@ -69,20 +73,20 @@ namespace Azure.Core.Tests
             response.SetContent(new byte[] { 6, 7, 8, 9, 0 });
             response.AddHeader(new HttpHeader("Custom-Response-Header", "Improved value"));
 
-            var mockTransport = new MockTransport(response);
+            var mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
-                request.AddHeader("Date", "3/26/2019");
-                request.AddHeader("Custom-Header", "Value");
+                request.Headers.Add("Date", "3/26/2019");
+                request.Headers.Add("Custom-Header", "Value");
                 request.Content = HttpPipelineRequestContent.Create(new byte[] { 1, 2, 3, 4, 5 });
-                requestId = request.RequestId;
+                requestId = request.ClientRequestId;
 
-                await pipeline.SendRequestAsync(request, CancellationToken.None);
+                await SendRequestAsync(pipeline, request, CancellationToken.None);
             }
 
             var e = _listener.SingleEventById(RequestEvent);
@@ -131,19 +135,19 @@ namespace Azure.Core.Tests
         public async Task RequestContentIsLoggedAsText()
         {
             var response = new MockResponse(500);
-            var mockTransport = new MockTransport(response);
+            var mockTransport = CreateMockTransport(response);
 
             var pipeline = new HttpPipeline(mockTransport, new []{ LoggingPolicy.Shared });
             string requestId;
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
                 request.Content = HttpPipelineRequestContent.Create(Encoding.UTF8.GetBytes("Hello world"));
-                request.AddHeader(new HttpHeader("Content-Type", "text/json"));
-                requestId = request.RequestId;
+                request.Headers.Add("Content-Type", "text/json");
+                requestId = request.ClientRequestId;
 
-                await pipeline.SendRequestAsync(request, CancellationToken.None);
+                await SendRequestAsync(pipeline, request, CancellationToken.None);
             }
 
             var e = _listener.SingleEventById(RequestContentTextEvent);
@@ -158,7 +162,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesAreLoggedInBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(isSeekable: false);
+            Response response = await SendRequest(isSeekable: false);
 
             EventWrittenEventArgs[] contentEvents = _listener.EventsById(ResponseContentBlockEvent).ToArray();
 
@@ -166,13 +170,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentBlock",  contentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, contentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
             Assert.AreEqual("ResponseContentBlock",  contentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, contentEvents[1].GetProperty<byte[]>("content"));
 
@@ -182,7 +186,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(isSeekable: false);
+            Response response = await SendRequest(isSeekable: false);
 
             EventWrittenEventArgs[] errorContentEvents = _listener.EventsById(ErrorResponseContentBlockEvent).ToArray();
 
@@ -190,13 +194,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
             Assert.AreEqual("ErrorResponseContentBlock",  errorContentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 72, 101, 108, 108, 111, 32 }, errorContentEvents[0].GetProperty<byte[]>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
             Assert.AreEqual("ErrorResponseContentBlock",  errorContentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
             CollectionAssert.AreEqual(new byte[] { 119, 111, 114, 108, 100 }, errorContentEvents[1].GetProperty<byte[]>("content"));
 
@@ -206,7 +210,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesAreLoggedInTextBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: false,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -217,13 +221,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[0].Level);
             Assert.AreEqual("ResponseContentTextBlock",  contentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, contentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", contentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Verbose, contentEvents[1].Level);
             Assert.AreEqual("ResponseContentTextBlock",  contentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  contentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, contentEvents[1].GetProperty<int>("blockNumber"));
             Assert.AreEqual("world", contentEvents[1].GetProperty<string>("content"));
 
@@ -233,7 +237,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task NonSeekableResponsesErrorsAreLoggedInTextBlocks()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: false,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -244,13 +248,13 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[0].Level);
             Assert.AreEqual("ErrorResponseContentTextBlock",  errorContentEvents[0].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[0].GetProperty<string>("requestId"));
             Assert.AreEqual(0, errorContentEvents[0].GetProperty<int>("blockNumber"));
             Assert.AreEqual("Hello ", errorContentEvents[0].GetProperty<string>("content"));
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvents[1].Level);
             Assert.AreEqual("ErrorResponseContentTextBlock",  errorContentEvents[1].EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvents[1].GetProperty<string>("requestId"));
             Assert.AreEqual(1, errorContentEvents[1].GetProperty<int>("blockNumber"));
             Assert.AreEqual("world", errorContentEvents[1].GetProperty<string>("content"));
 
@@ -260,7 +264,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task SeekableTextResponsesAreLoggedInText()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: true,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -269,14 +273,14 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Verbose, contentEvent.Level);
             Assert.AreEqual("ResponseContentText",  contentEvent.EventName);
-            Assert.AreEqual(response.RequestId,  contentEvent.GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  contentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", contentEvent.GetProperty<string>("content"));
         }
 
         [Test]
         public async Task SeekableTextResponsesErrorsAreLoggedInText()
         {
-            HttpPipelineResponse response = await SendRequest(
+            Response response = await SendRequest(
                 isSeekable: true,
                 mockResponse => mockResponse.AddHeader(new HttpHeader("Content-Type", "text/xml"))
             );
@@ -285,32 +289,32 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(EventLevel.Informational, errorContentEvent.Level);
             Assert.AreEqual("ErrorResponseContentText",  errorContentEvent.EventName);
-            Assert.AreEqual(response.RequestId,  errorContentEvent.GetProperty<string>("requestId"));
+            Assert.AreEqual(response.ClientRequestId,  errorContentEvent.GetProperty<string>("requestId"));
             Assert.AreEqual("Hello world", errorContentEvent.GetProperty<string>("content"));
         }
 
-        private static async Task<HttpPipelineResponse> SendRequest(bool isSeekable, Action<MockResponse> setupRequest = null)
+        private async Task<Response> SendRequest(bool isSeekable, Action<MockResponse> setupRequest = null)
         {
             var mockResponse = new MockResponse(500);
             byte[] responseContent = Encoding.UTF8.GetBytes("Hello world");
             if (isSeekable)
             {
-                mockResponse.ResponseContentStream = new MemoryStream(responseContent);
+                mockResponse.ContentStream = new MemoryStream(responseContent);
             }
             else
             {
-                mockResponse.ResponseContentStream = new NonSeekableMemoryStream(responseContent);
+                mockResponse.ContentStream = new NonSeekableMemoryStream(responseContent);
             }
             setupRequest?.Invoke(mockResponse);
 
-            var mockTransport = new MockTransport(mockResponse);
+            var mockTransport = CreateMockTransport(mockResponse);
             var pipeline = new HttpPipeline(mockTransport, new[] { LoggingPolicy.Shared });
 
-            using (HttpPipelineRequest request = pipeline.CreateRequest())
+            using (Request request = pipeline.CreateRequest())
             {
                 request.SetRequestLine(HttpPipelineMethod.Get, new Uri("https://contoso.a.io"));
 
-                Response response = await pipeline.SendRequestAsync(request, CancellationToken.None);
+                Response response = await SendRequestAsync(pipeline, request, CancellationToken.None);
 
                 var buffer = new byte[11];
                 Assert.AreEqual(6, await response.ContentStream.ReadAsync(buffer, 5, 6));

@@ -16,7 +16,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         // ConfigurationClient logs lots of useful information automatically to .NET's EventSource.
         // This sample illustrate how to control and access the log information.
         [Test]
-        public async Task Logging()
+        public void Logging()
         {
             // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal.
@@ -27,13 +27,14 @@ namespace Azure.ApplicationModel.Configuration.Samples
             var listener = new ConsoleEventListener();
             listener.EnableEvents(EventLevel.LogAlways);
 
-            Response<ConfigurationSetting> setResponse = await client.SetAsync(new ConfigurationSetting("some_key", "some_value"));
-            if (setResponse.Status != 200) {
+            Response<ConfigurationSetting> setResponse = client.Set(new ConfigurationSetting("some_key", "some_value"));
+            if (setResponse.Raw.Status != 200)
+            {
                 throw new Exception("could not set configuration setting");
             }
 
             // Delete the setting when you don't need it anymore.
-            await client.DeleteAsync("some_key");
+            client.Delete("some_key");
         }
     }
 

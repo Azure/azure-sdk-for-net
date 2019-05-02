@@ -81,7 +81,7 @@ Properties of a Configuration Setting:
 ```
 
 ## Examples
-The following sections provide several code snippets covering some of the most common Configuration Service tasks, including:
+The following sections provide several code snippets covering some of the most common Configuration Service tasks. Note that there are sync and async methods available for both:
 - [Create a Configuration Setting](#create-a-Configuration-Setting)
 - [Retrieve a Configuration Setting](#retrieve-a-Configuration-Setting)
 - [Update an existing Configuration Setting](#update-an-existing-Configuration-Setting)
@@ -90,47 +90,47 @@ The following sections provide several code snippets covering some of the most c
 ### Create a Configuration Setting
 Create a Configuration Setting to be stored in the Configuration Store.
 There are two ways to store a Configuration Setting:
-- AddAsync creates a setting only if the setting does not already exist in the store.
-- SetAsync creates a setting if it doesn't exist or overrides an existing setting.
+- Add creates a setting only if the setting does not already exist in the store.
+- Set creates a setting if it doesn't exist or overrides an existing setting.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
-await client.SetAsync(setting);
+client.Set(setting);
 ```
 
 ### Retrieve a Configuration Setting
-Retrieve a previously stored Configuration Setting by calling GetAsync.
+Retrieve a previously stored Configuration Setting by calling Get.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
-await client.SetAsync(setting);
-ConfigurationSetting setting = await client.GetAsync("some_key");
+client.Set(setting);
+ConfigurationSetting setting = client.Get("some_key");
 ```
 
 ### Update an existing Configuration Setting
-Update an existing Configuration Setting by calling UpdateAsync.
+Update an existing Configuration Setting by calling Update.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
-await client.SetAsync(setting);
-ConfigurationSetting setting = await client.UpdateAsync("some_key", "new_value");
+client.Set(setting);
+ConfigurationSetting setting = client.Update("some_key", "new_value");
 ```
 
 ### Delete a Configuration Setting
-Delete an existing Configuration Setting by calling DeleteAsync
+Delete an existing Configuration Setting by calling Delete.
 
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
 var setting = new ConfigurationSetting("some_key", "some_value");
-await client.SetAsync(setting);
-ConfigurationSetting setting = await client.DeleteAsync("some_key");
+client.Set(setting);
+ConfigurationSetting setting = client.Delete("some_key");
 ```
 
 ## Troubleshooting
@@ -144,7 +144,7 @@ For example, if you try to retrieve a Configuration Setting that doesn't exist i
 ```c#
 string connectionString = <connection_string>;
 var client = new ConfigurationClient(connectionString);
-ConfigurationSetting setting = await client.GetAsync("some_key");
+ConfigurationSetting setting = client.Get("some_key");
 ````
 
 You will notice that additional information is logged, like the Client Request ID of the operation.
@@ -169,6 +169,8 @@ Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Foun
 The App Configuration client library, also includes additional functionality that can be set when creating the Configuration Client.
 These samples provide example of those scenarios:
 
+- [Hello world](Azure.ApplicationModel.Configuration.Tests/samples/Sample1_HelloWorld.cs)
+- [Hello world extended](Azure.ApplicationModel.Configuration.Tests/samples/Sample2_HelloWorldExtended.cs)
 - [How to access diagnostic logs](Azure.ApplicationModel.Configuration.Tests/samples/Sample4_Logging.cs)
 - [How to configure retry policy](Azure.ApplicationModel.Configuration.Tests/samples/Sample6_ConfiguringRetries.cs)
 - [How to configure service requests](Azure.ApplicationModel.Configuration.Tests/samples/Sample7_ConfiguringPipeline.cs)

@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// invoiced.</param>
         /// <param name="orderId">The reservation order id.</param>
         /// <param name="orderName">The reservation order name.</param>
+        /// <param name="productFamily">The product family.</param>
         /// <param name="productTypeId">The product type id.</param>
         /// <param name="productType">The type of product.</param>
         /// <param name="productDescription">Product description.</param>
@@ -60,7 +61,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// product belongs.</param>
         /// <param name="subscriptionId">The subscription id.</param>
         /// <param name="subscriptionName">The subscription name.</param>
-        public TransactionsSummary(string id = default(string), string name = default(string), string type = default(string), string kind = default(string), System.DateTime? date = default(System.DateTime?), string invoice = default(string), string orderId = default(string), string orderName = default(string), string productTypeId = default(string), string productType = default(string), string productDescription = default(string), string transactionType = default(string), Amount transactionAmount = default(Amount), int? quantity = default(int?), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string billingProfileId = default(string), string billingProfileName = default(string), string subscriptionId = default(string), string subscriptionName = default(string))
+        public TransactionsSummary(string id = default(string), string name = default(string), string type = default(string), string kind = default(string), System.DateTime? date = default(System.DateTime?), string invoice = default(string), string orderId = default(string), string orderName = default(string), string productFamily = default(string), string productTypeId = default(string), string productType = default(string), string productDescription = default(string), string transactionType = default(string), Amount transactionAmount = default(Amount), int? quantity = default(int?), string invoiceSectionId = default(string), string invoiceSectionName = default(string), string billingProfileId = default(string), string billingProfileName = default(string), string subscriptionId = default(string), string subscriptionName = default(string))
             : base(id, name, type)
         {
             Kind = kind;
@@ -68,6 +69,7 @@ namespace Microsoft.Azure.Management.Billing.Models
             Invoice = invoice;
             OrderId = orderId;
             OrderName = orderName;
+            ProductFamily = productFamily;
             ProductTypeId = productTypeId;
             ProductType = productType;
             ProductDescription = productDescription;
@@ -118,6 +120,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.orderName")]
         public string OrderName { get; private set; }
+
+        /// <summary>
+        /// Gets the product family.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.productFamily")]
+        public string ProductFamily { get; private set; }
 
         /// <summary>
         /// Gets the product type id.
