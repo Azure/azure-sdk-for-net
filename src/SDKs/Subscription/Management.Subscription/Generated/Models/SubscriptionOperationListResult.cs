@@ -11,29 +11,33 @@
 namespace Microsoft.Azure.Management.Subscription.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// New name of the subscription.
+    /// A list of pending subscription operations.
     /// </summary>
-    public partial class SubscriptionName
+    public partial class SubscriptionOperationListResult
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionName class.
+        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// class.
         /// </summary>
-        public SubscriptionName()
+        public SubscriptionOperationListResult()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionName class.
+        /// Initializes a new instance of the SubscriptionOperationListResult
+        /// class.
         /// </summary>
-        /// <param name="subscriptionNameProperty">New subscription
-        /// name</param>
-        public SubscriptionName(string subscriptionNameProperty = default(string))
+        /// <param name="value">A list of pending
+        /// SubscriptionOperations</param>
+        public SubscriptionOperationListResult(IList<SubscriptionOperation> value = default(IList<SubscriptionOperation>))
         {
-            SubscriptionNameProperty = subscriptionNameProperty;
+            Value = value;
             CustomInit();
         }
 
@@ -43,10 +47,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets new subscription name
+        /// Gets or sets a list of pending SubscriptionOperations
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionName")]
-        public string SubscriptionNameProperty { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public IList<SubscriptionOperation> Value { get; set; }
 
     }
 }
