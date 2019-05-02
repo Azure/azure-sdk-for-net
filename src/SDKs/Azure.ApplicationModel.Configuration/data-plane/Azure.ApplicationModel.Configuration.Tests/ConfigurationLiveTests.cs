@@ -24,7 +24,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private ConfigurationClient GetClient()
         {
-            return WrapClient(TestEnvironment.GetClient());
+            return InstrumentClient(TestEnvironment.GetClient());
         }
 
         private ConfigurationSetting CreateSetting()

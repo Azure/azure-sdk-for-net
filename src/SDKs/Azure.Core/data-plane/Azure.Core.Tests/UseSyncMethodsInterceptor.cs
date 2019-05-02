@@ -9,28 +9,18 @@ using Castle.DynamicProxy;
 
 namespace Azure.Core.Tests
 {
-
-    /// <summary>
-    /// Ensures that tests sticks to calling only async methods
-    /// </summary>
-    public class AvoidSyncInterceptor : IInterceptor
-    {
-        public void Intercept(IInvocation invocation)
-        {
-            if (!invocation.Method.Name.EndsWith("Async"))
-            {
-                throw new InvalidOperationException("Async method call expected");
-            }
-
-            invocation.Proceed();
-        }
-    }
-
     /// <summary>
     /// This interceptor forwards the async call to a sync method call with the same arguments
     /// </summary>
     public class UseSyncMethodsInterceptor : IInterceptor
     {
+        private readonly bool _forceSync;
+
+        public UseSyncMethodsInterceptor(bool forceSync)
+        {
+            _forceSync = forceSync;
+        }
+
         private const string AsyncSuffix = "Async";
 
         private readonly MethodInfo TaskFromResultMethod = typeof(Task)
@@ -42,20 +32,38 @@ namespace Azure.Core.Tests
 
         public void Intercept(IInvocation invocation)
         {
+            var parameterTypes = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
+
             var methodName = invocation.Method.Name;
             if (!methodName.EndsWith(AsyncSuffix))
             {
-                throw new InvalidOperationException("Async method call expected");
+                var asyncAlternative = GetMethod(invocation, methodName + AsyncSuffix, parameterTypes);
+
+                // Check if there is an async alternative to sync call
+                if (asyncAlternative != null)
+                {
+                    throw new InvalidOperationException("Async method call expected");
+                }
+                else
+                {
+                    invocation.Proceed();
+                    return;
+                }
+            }
+
+            if (!_forceSync)
+            {
+                invocation.Proceed();
+                return;
             }
 
             var nonAsyncMethodName = methodName.Substring(0, methodName.Length - AsyncSuffix.Length);
 
-            var types = invocation.Method.GetParameters().Select(p => p.ParameterType).ToArray();
-
-            var methodInfo = invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
+            var methodInfo = GetMethod(invocation, nonAsyncMethodName, parameterTypes);
             if (methodInfo == null)
             {
-                throw new InvalidOperationException($"Unable to find a method with name {nonAsyncMethodName} and {string.Join<Type>(",", types)} parameters");
+                throw new InvalidOperationException($"Unable to find a method with name {nonAsyncMethodName} and {string.Join<Type>(",", parameterTypes)} parameters. "
+                                                    + "Make sure both methods have the same signature including the cancellationToken parameter");
             }
 
             try
@@ -68,6 +76,11 @@ namespace Azure.Core.Tests
             {
                 invocation.ReturnValue = TaskFromExceptionMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new [] { exception.InnerException });
             }
+        }
+
+        private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
+        {
+            return invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
         }
     }
 }

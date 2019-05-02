@@ -14,8 +14,8 @@ namespace Azure.Core.Tests
     {
         private static readonly ProxyGenerator _proxyGenerator = new ProxyGenerator();
 
-        private static readonly IInterceptor _useSyncInterceptor = new UseSyncMethodsInterceptor();
-        private static readonly IInterceptor _avoidSyncInterceptor = new AvoidSyncInterceptor();
+        private static readonly IInterceptor _useSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: true);
+        private static readonly IInterceptor _avoidSyncInterceptor = new UseSyncMethodsInterceptor(forceSync: false);
 
         public bool IsAsync { get; }
 
@@ -27,10 +27,10 @@ namespace Azure.Core.Tests
         public virtual TClient CreateClient<TClient>(params object[] args) where TClient: class
         {
 
-            return WrapClient((TClient)Activator.CreateInstance(typeof(TClient), args));
+            return InstrumentClient((TClient)Activator.CreateInstance(typeof(TClient), args));
         }
 
-        public virtual TClient WrapClient<TClient>(TClient client) where TClient: class
+        public virtual TClient InstrumentClient<TClient>(TClient client) where TClient: class
         {
             if (ClientValidation<TClient>.Validated == false)
             {

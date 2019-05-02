@@ -37,7 +37,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
         {
             var options = new ConfigurationClientOptions();
             options.Transport = transport;
-            return WrapClient(new ConfigurationClient(connectionString, options));
+            return InstrumentClient(new ConfigurationClient(connectionString, options));
         }
 
         [Test]
