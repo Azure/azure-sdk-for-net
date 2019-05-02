@@ -456,6 +456,7 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(schemaContract);
                     Assert.Equal(schemaContractParams.ContentType, schemaContract.ContentType);
                     Assert.NotNull(schemaContract.Document);
+                    Assert.NotNull(schemaContract.WsdlSchema);
 
                     // list the schemas attached to the api
                     var schemasList = await testBase.client.ApiSchema.ListByApiAsync(
