@@ -26,10 +26,10 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/Personalizer/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=D:\\Repos\\azure-sdk-for-net\\src\\SDKs\\CognitiveServices\\dataPlane\\Personalizer\\Personalizer\\Generated\\Personalizer";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/Personalizer/readme.md --csharp --version=latest --reflect-api-versions --csharp.output-folder=D:\\Repos\\azure-sdk-for-net\\src\\SDKs\\CognitiveServices\\dataPlane\\Personalizer\\Personalizer\\Generated";
       public static readonly String GithubForkName = "Azure";
       public static readonly String GithubBranchName = "master";
-      public static readonly String GithubCommidId = "de7f39715addc2a88db504b8482cabb2dc7bf045";
+      public static readonly String GithubCommidId = "8ea38101ac1384d744a58a812028cf066f04f4cc";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
