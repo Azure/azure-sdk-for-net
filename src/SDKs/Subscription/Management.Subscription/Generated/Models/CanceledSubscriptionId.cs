@@ -14,26 +14,25 @@ namespace Microsoft.Azure.Management.Subscription.Models
     using System.Linq;
 
     /// <summary>
-    /// The created subscription object.
+    /// Canceled Subscription Id
     /// </summary>
-    public partial class SubscriptionCreationResult
+    public partial class CanceledSubscriptionId
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionCreationResult class.
+        /// Initializes a new instance of the CanceledSubscriptionId class.
         /// </summary>
-        public SubscriptionCreationResult()
+        public CanceledSubscriptionId()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionCreationResult class.
+        /// Initializes a new instance of the CanceledSubscriptionId class.
         /// </summary>
-        /// <param name="subscriptionLink">The link to the new
-        /// subscription.</param>
-        public SubscriptionCreationResult(string subscriptionLink = default(string))
+        /// <param name="value">Canceled Subscription Id</param>
+        public CanceledSubscriptionId(string value = default(string))
         {
-            SubscriptionLink = subscriptionLink;
+            Value = value;
             CustomInit();
         }
 
@@ -43,10 +42,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the link to the new subscription.
+        /// Gets canceled Subscription Id
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionLink")]
-        public string SubscriptionLink { get; set; }
+        [JsonProperty(PropertyName = "value")]
+        public string Value { get; private set; }
 
     }
 }

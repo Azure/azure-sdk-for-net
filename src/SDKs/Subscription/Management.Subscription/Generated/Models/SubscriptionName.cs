@@ -11,33 +11,29 @@
 namespace Microsoft.Azure.Management.Subscription.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
-    /// A list of pending subscription operations.
+    /// New name of the subscription.
     /// </summary>
-    public partial class SubscriptionOperationListResult
+    public partial class SubscriptionName
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionOperationListResult
-        /// class.
+        /// Initializes a new instance of the SubscriptionName class.
         /// </summary>
-        public SubscriptionOperationListResult()
+        public SubscriptionName()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the SubscriptionOperationListResult
-        /// class.
+        /// Initializes a new instance of the SubscriptionName class.
         /// </summary>
-        /// <param name="value">A list of pending
-        /// SubscriptionOperations</param>
-        public SubscriptionOperationListResult(IList<SubscriptionOperation> value = default(IList<SubscriptionOperation>))
+        /// <param name="subscriptionNameProperty">New subscription
+        /// name</param>
+        public SubscriptionName(string subscriptionNameProperty = default(string))
         {
-            Value = value;
+            SubscriptionNameProperty = subscriptionNameProperty;
             CustomInit();
         }
 
@@ -47,10 +43,10 @@ namespace Microsoft.Azure.Management.Subscription.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets a list of pending SubscriptionOperations
+        /// Gets or sets new subscription name
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<SubscriptionOperation> Value { get; set; }
+        [JsonProperty(PropertyName = "subscriptionName")]
+        public string SubscriptionNameProperty { get; set; }
 
     }
 }
