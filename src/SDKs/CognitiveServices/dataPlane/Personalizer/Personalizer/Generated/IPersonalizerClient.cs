@@ -52,34 +52,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
 
 
         /// <summary>
-        /// Gets the IServiceConfigurationOperations.
-        /// </summary>
-        IServiceConfigurationOperations ServiceConfiguration { get; }
-
-        /// <summary>
-        /// Gets the IPolicy.
-        /// </summary>
-        IPolicy Policy { get; }
-
-        /// <summary>
-        /// Gets the IEvaluations.
-        /// </summary>
-        IEvaluations Evaluations { get; }
-
-        /// <summary>
         /// Gets the IEvents.
         /// </summary>
         IEvents Events { get; }
-
-        /// <summary>
-        /// Gets the ILog.
-        /// </summary>
-        ILog Log { get; }
-
-        /// <summary>
-        /// Gets the IModel.
-        /// </summary>
-        IModel Model { get; }
 
     }
 }

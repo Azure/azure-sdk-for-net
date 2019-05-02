@@ -56,34 +56,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets the IServiceConfigurationOperations.
-        /// </summary>
-        public virtual IServiceConfigurationOperations ServiceConfiguration { get; private set; }
-
-        /// <summary>
-        /// Gets the IPolicy.
-        /// </summary>
-        public virtual IPolicy Policy { get; private set; }
-
-        /// <summary>
-        /// Gets the IEvaluations.
-        /// </summary>
-        public virtual IEvaluations Evaluations { get; private set; }
-
-        /// <summary>
         /// Gets the IEvents.
         /// </summary>
         public virtual IEvents Events { get; private set; }
-
-        /// <summary>
-        /// Gets the ILog.
-        /// </summary>
-        public virtual ILog Log { get; private set; }
-
-        /// <summary>
-        /// Gets the IModel.
-        /// </summary>
-        public virtual IModel Model { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the PersonalizerClient class.
@@ -212,12 +187,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// </summary>
         private void Initialize()
         {
-            ServiceConfiguration = new ServiceConfigurationOperations(this);
-            Policy = new Policy(this);
-            Evaluations = new Evaluations(this);
             Events = new Events(this);
-            Log = new Log(this);
-            Model = new Model(this);
             BaseUri = "{Endpoint}/personalizer/v1.0";
             SerializationSettings = new JsonSerializerSettings
             {
