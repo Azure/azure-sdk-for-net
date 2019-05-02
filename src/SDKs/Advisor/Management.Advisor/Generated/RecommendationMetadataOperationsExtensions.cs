@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static MetadataEntityListResult List(this IRecommendationMetadataOperations operations)
+            public static IPage<MetadataEntity> List(this IRecommendationMetadataOperations operations)
             {
                 return operations.ListAsync().GetAwaiter().GetResult();
             }
@@ -75,9 +75,43 @@ namespace Microsoft.Azure.Management.Advisor
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<MetadataEntityListResult> ListAsync(this IRecommendationMetadataOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<MetadataEntity>> ListAsync(this IRecommendationMetadataOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the list of metadata entities.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<MetadataEntity> ListNext(this IRecommendationMetadataOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the list of metadata entities.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<MetadataEntity>> ListNextAsync(this IRecommendationMetadataOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
