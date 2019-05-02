@@ -16,16 +16,13 @@
     This package calls the API version "v2.1"
 
     Changes in this release:
-    1. Add support for v2.1 API version which includes Entity Type and Wikipedia confidence score to the /Entities endpoint.
+    1. Add support for single document input.
+    2. Add support for synchronous call
     
     ]]></PackageReleaseNotes>
-    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
   <PropertyGroup>
     <TargetFrameworks>$(SdkTargetFx)</TargetFrameworks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
 
   <!-- Please do not move/edit code below this line -->
