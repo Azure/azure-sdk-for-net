@@ -13,7 +13,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
     public partial class ConfigurationSamples
     {
         [Test]
-        public async Task HelloWorld()
+        public void HelloWorld()
         {
             // Retrieve the connection string from the configuration store. 
             // You can get the string from your Azure portal.
@@ -28,14 +28,14 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // There are two ways to store a Configuration Setting:
             //   -AddAsync creates a setting only if the setting does not already exist in the store.
             //   -SetAsync creates a setting if it doesn't exist or overrides an existing setting
-            await client.SetAsync(setting);
+            client.Set(setting);
 
             // Retrieve a previously stored Configuration Setting by calling GetAsync.
-            ConfigurationSetting gotSetting = await client.GetAsync("some_key");
+            ConfigurationSetting gotSetting = client.Get("some_key");
             Debug.WriteLine(gotSetting.Value);
 
             // Delete the Configuration Setting from the Configuration Store when you don't need it anymore.
-            await client.DeleteAsync("some_key");
+            client.Delete("some_key");
         }
     }
 }

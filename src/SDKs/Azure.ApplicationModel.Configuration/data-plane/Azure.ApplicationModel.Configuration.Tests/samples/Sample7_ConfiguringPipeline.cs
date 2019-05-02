@@ -17,7 +17,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         HttpClient s_client = new HttpClient();
 
         [Test]
-        public async Task ConfiguringPipeline()
+        public void ConfiguringPipeline()
         {
             // this instance will hold pipeline creation options
             var options = new ConfigurationClientOptions();
@@ -45,8 +45,8 @@ namespace Azure.ApplicationModel.Configuration.Samples
             // pass the policy options to the client
             var client = new ConfigurationClient(connectionString, options);
 
-            await client.SetAsync(new ConfigurationSetting("some_key", "some_value"));
-            await client.DeleteAsync("some_key");
+            client.Set(new ConfigurationSetting("some_key", "some_value"));
+            client.Delete("some_key");
         }
 
         class AddHeaderPolicy : SynchronousHttpPipelinePolicy
