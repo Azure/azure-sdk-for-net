@@ -12,15 +12,22 @@ namespace Microsoft.Azure.EventGrid
     {
         // Keep this sorted by the name of the service publishing the events.
 
+        // AppConfiguration events
+        public const string AppConfigurationKeyValueDeletedEvent = "Microsoft.AppConfiguration.KeyValueDeleted";
+        public const string AppConfigurationKeyValueModifiedEvent = "Microsoft.AppConfiguration.KeyValueModified";
+
         // ContainerRegistry events
         public const string ContainerRegistryImagePushedEvent = "Microsoft.ContainerRegistry.ImagePushed";
         public const string ContainerRegistryImageDeletedEvent = "Microsoft.ContainerRegistry.ImageDeleted";
+        public const string ContainerRegistryChartDeletedEvent = "Microsoft.ContainerRegistry.ChartDeleted";
+        public const string ContainerRegistryChartPushedEvent = "Microsoft.ContainerRegistry.ChartPushed";
 
         // Device events
         public const string IoTHubDeviceCreatedEvent = "Microsoft.Devices.DeviceCreated";
         public const string IoTHubDeviceDeletedEvent = "Microsoft.Devices.DeviceDeleted";
         public const string IoTHubDeviceConnectedEvent = "Microsoft.Devices.DeviceConnected";
         public const string IoTHubDeviceDisconnectedEvent = "Microsoft.Devices.DeviceDisconnected";
+        public const string IotHubDeviceTelemetryEvent = "Microsoft.Devices.DeviceTelemetry";
 
         // EventGrid events
         public const string EventGridSubscriptionValidationEvent = "Microsoft.EventGrid.SubscriptionValidationEvent";
@@ -28,6 +35,11 @@ namespace Microsoft.Azure.EventGrid
 
         // Event Hub Events
         public const string EventHubCaptureFileCreatedEvent = "Microsoft.EventHub.CaptureFileCreated";
+
+        // Maps events
+        public const string MapsGeofenceEnteredEvent = "Microsoft.Maps.GeofenceEntered";
+        public const string MapsGeofenceExitedEvent = "Microsoft.Maps.GeofenceExited";
+        public const string MapsGeofenceResultEvent = "Microsoft.Maps.GeofenceResult";
 
         // Media Services events
         public const string MediaJobStateChangeEvent = "Microsoft.Media.JobStateChange";
