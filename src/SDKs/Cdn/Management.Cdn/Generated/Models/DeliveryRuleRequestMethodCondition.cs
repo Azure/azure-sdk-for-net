@@ -15,28 +15,28 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the UrlFileExtension condition for the delivery rule.
+    /// Defines the RequestMethod condition for the delivery rule.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("UrlFileExtension")]
-    public partial class DeliveryRuleUrlFileExtensionCondition : DeliveryRuleCondition
+    [Newtonsoft.Json.JsonObject("RequestMethod")]
+    public partial class DeliveryRuleRequestMethodCondition : DeliveryRuleCondition
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// DeliveryRuleRequestMethodCondition class.
         /// </summary>
-        public DeliveryRuleUrlFileExtensionCondition()
+        public DeliveryRuleRequestMethodCondition()
         {
-            Parameters = new UrlFileExtensionMatchConditionParameters();
+            Parameters = new RequestMethodMatchConditionParameters();
             CustomInit();
         }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// DeliveryRuleRequestMethodCondition class.
         /// </summary>
         /// <param name="parameters">Defines the parameters for the
         /// condition.</param>
-        public DeliveryRuleUrlFileExtensionCondition(UrlFileExtensionMatchConditionParameters parameters)
+        public DeliveryRuleRequestMethodCondition(RequestMethodMatchConditionParameters parameters)
         {
             Parameters = parameters;
             CustomInit();
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets defines the parameters for the condition.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public UrlFileExtensionMatchConditionParameters Parameters { get; set; }
+        public RequestMethodMatchConditionParameters Parameters { get; set; }
 
         /// <summary>
         /// Validate the object.
