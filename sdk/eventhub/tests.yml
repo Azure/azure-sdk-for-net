@@ -1,0 +1,5 @@
+variables:
+  ProjectFile: sdk/eventhub/Microsoft.Azure.EventHubs.sln
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/tests.yml

@@ -1,0 +1,5 @@
+variables:
+  ProjectFile: sdk/core/Azure.Core/Azure.Core.sln
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/tests.yml

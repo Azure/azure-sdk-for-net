@@ -6,14 +6,10 @@
 # EventHubsConnectionString - The connection string to the namespace used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
 # EventHubsStorageConnectionString - The connection string to the storage account used for testing the Event Hubs service.  This is set in the pipeline web ui and needs different values for public vs internal.
 
-trigger:
-  - master
-
-variables:
-  DotNetCoreVersion: '2.1.503'
-
 jobs:
   - job: 'Test'
+    variables: 
+    - template: ../variables/globals.yml
 
     # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 35m, on average due to having two target platforms)
     # https://github.com/Azure/azure-sdk-for-net/issues/5982
