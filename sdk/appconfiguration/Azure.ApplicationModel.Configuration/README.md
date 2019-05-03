@@ -169,11 +169,11 @@ Message: Azure.RequestFailedException : StatusCode: 404, ReasonPhrase: 'Not Foun
 The App Configuration client library, also includes additional functionality that can be set when creating the Configuration Client.
 These samples provide example of those scenarios:
 
-- [Hello world](Azure.ApplicationModel.Configuration.Tests/samples/Sample1_HelloWorld.cs)
-- [Hello world extended](Azure.ApplicationModel.Configuration.Tests/samples/Sample2_HelloWorldExtended.cs)
-- [How to access diagnostic logs](Azure.ApplicationModel.Configuration.Tests/samples/Sample4_Logging.cs)
-- [How to configure retry policy](Azure.ApplicationModel.Configuration.Tests/samples/Sample6_ConfiguringRetries.cs)
-- [How to configure service requests](Azure.ApplicationModel.Configuration.Tests/samples/Sample7_ConfiguringPipeline.cs)
+- [Hello world](samples/Sample1_HelloWorld.cs)
+- [Hello world async extended](samples/Sample2_HelloWorldExtended.cs)
+- [How to access diagnostic logs](samples/Sample4_Logging.cs)
+- [How to configure retry policy](samples/Sample6_ConfiguringRetries.cs)
+- [How to configure service requests](samples/Sample7_ConfiguringPipeline.cs)
 
 # Contributing
 If the changes you are working on span both Azure.Core and Azure.Configuration then you can set this environment variable before launching Visual Studio. That will use Project To Project references between Azure.Configuration and Azure.Core instead of package references.
