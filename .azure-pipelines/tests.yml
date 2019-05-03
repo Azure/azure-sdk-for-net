@@ -15,9 +15,9 @@ variables:
 jobs:
   - job: 'Test'
 
-    # Increase timeout so Event Hubs tests do not timeout
+    # Increase timeout so Event Hubs tests do not timeout (Windows runs for ~2h 25m, on average due to having two target platforms)
     # https://github.com/Azure/azure-sdk-for-net/issues/5982
-    timeoutInMinutes: 90
+    timeoutInMinutes: 155
 
     strategy:
       maxParallel: $[ variables['MaxParallelTestJobs'] ]

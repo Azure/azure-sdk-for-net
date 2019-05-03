@@ -1,1 +1,1 @@
-Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/Personalizer" -AutoRestVersion "latest" -SdkGenerationDirectory "$PSScriptRoot\Generated\Personalizer"
+Start-AutoRestCodeGeneration -ResourceProvider "cognitiveservices/data-plane/Personalizer" -AutoRestVersion "latest"

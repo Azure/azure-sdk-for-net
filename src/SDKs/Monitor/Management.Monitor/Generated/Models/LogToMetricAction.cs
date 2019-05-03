@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
 {
     using Microsoft.Rest;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -32,8 +34,8 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// <summary>
         /// Initializes a new instance of the LogToMetricAction class.
         /// </summary>
-        /// <param name="criteria">Severity of the alert</param>
-        public LogToMetricAction(Criteria criteria)
+        /// <param name="criteria">Criteria of Metric</param>
+        public LogToMetricAction(IList<Criteria> criteria)
         {
             Criteria = criteria;
             CustomInit();
@@ -45,10 +47,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets severity of the alert
+        /// Gets or sets criteria of Metric
         /// </summary>
         [JsonProperty(PropertyName = "criteria")]
-        public Criteria Criteria { get; set; }
+        public IList<Criteria> Criteria { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -64,7 +66,13 @@ namespace Microsoft.Azure.Management.Monitor.Models
             }
             if (Criteria != null)
             {
-                Criteria.Validate();
+                foreach (var element in Criteria)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
