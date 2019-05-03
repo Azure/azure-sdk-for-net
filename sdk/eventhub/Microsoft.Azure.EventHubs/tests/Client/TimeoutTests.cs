@@ -16,34 +16,41 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         public async Task ReceiveTimeout()
         {
             var testValues = new[] { 30, 60, 120 };
+            var ehClient = EventHubClient.CreateFromConnectionString(TestUtility.EventHubsConnectionString);
+            var receiver = default(PartitionReceiver);
 
-            PartitionReceiver receiver = null;
-
-            foreach (var receiveTimeoutInSeconds in testValues)
+            try
             {
-                TestUtility.Log($"Testing with {receiveTimeoutInSeconds} seconds.");
-
-                try
+                foreach (var receiveTimeoutInSeconds in testValues)
                 {
-                    // Start receiving from a future time so that Receive call won't be able to fetch any events.
-                    receiver = this.EventHubClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(1)));
+                    TestUtility.Log($"Testing with {receiveTimeoutInSeconds} seconds.");
 
-                    var startTime = DateTime.Now;
-                    await receiver.ReceiveAsync(1, TimeSpan.FromSeconds(receiveTimeoutInSeconds));
+                    try
+                    {
+                        // Start receiving from a future time so that Receive call won't be able to fetch any events.
+                        receiver = ehClient.CreateReceiver(PartitionReceiver.DefaultConsumerGroupName, "0", EventPosition.FromEnqueuedTime(DateTime.UtcNow.AddMinutes(1)));
 
-                    // Receive call should have waited more than receive timeout.
-                    // Give 100 milliseconds of buffer.
-                    var diff = DateTime.Now.Subtract(startTime).TotalSeconds;
-                    Assert.True(diff >= receiveTimeoutInSeconds - 0.1, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
+                        var startTime = DateTime.Now;
+                        await receiver.ReceiveAsync(1, TimeSpan.FromSeconds(receiveTimeoutInSeconds));
 
-                    // Timeout should not be late more than 5 seconds.
-                    // This is just a logical buffer for timeout behavior validation.
-                    Assert.True(diff < receiveTimeoutInSeconds + 5, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
+                        // Receive call should have waited more than receive timeout.
+                        // Give 100 milliseconds of buffer.
+                        var diff = DateTime.Now.Subtract(startTime).TotalSeconds;
+                        Assert.True(diff >= receiveTimeoutInSeconds - 0.1, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
+
+                        // Timeout should not be late more than 5 seconds.
+                        // This is just a logical buffer for timeout behavior validation.
+                        Assert.True(diff < receiveTimeoutInSeconds + 5, $"Hit timeout {diff} seconds into Receive call while testing {receiveTimeoutInSeconds} seconds timeout.");
+                    }
+                    finally
+                    {
+                        await receiver.CloseAsync();
+                    }
                 }
-                finally
-                {
-                    await receiver.CloseAsync();
-                }
+            }
+            finally
+            {
+                await ehClient.CloseAsync();
             }
         }
 

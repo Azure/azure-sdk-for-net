@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ProjectGuid>{84491222-6C36-4FA7-BBAE-1FA804129151}</ProjectGuid>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="nunit" Version="3.10.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
+    <PackageReference Include="Moq" Version="4.9.0" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\src\Azure.Core.csproj">
+      <Project>{FEC0AE57-E241-46DB-B7C7-9181F28E1D3F}</Project>
+      <Name>Azure.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

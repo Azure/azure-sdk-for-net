@@ -1,44 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <AssemblyTitle>Microsoft.Azure.EventHubs</AssemblyTitle>
     <Description>This is the next generation Azure Event Hubs .NET Standard client library. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
-    <Version>3.0.0</Version>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>
     <VersionPrefix>3.0.0</VersionPrefix>
-    <PackageId>Microsoft.Azure.EventHubs</PackageId>
     <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT</PackageTags>
     <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
     <DocumentationFile>$(OutputPath)$(TargetFramework)\Microsoft.Azure.EventHubs.xml</DocumentationFile>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
-    <RootNamespace>Microsoft.Azure.EventHubs</RootNamespace>
-  </PropertyGroup>
-
-  <!-- Only include UWP targets on Windows and when using MsBuild -->
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT' and '$(IsMsBuild)' == 'true'">
-    <TargetFrameworks>$(TargetFrameworks);uap10.0</TargetFrameworks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <DefineConstants>$(DefineConstants);NETSTANDARD2_0</DefineConstants>
-    <NetStandardImplicitPackageVersion>2.0.0</NetStandardImplicitPackageVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
-    <DefineConstants>$(DefineConstants);NETSTANDARD1_4</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(TargetFramework)' == 'uap10.0'">
-    <DefineConstants>$(DefineConstants);UAP10_0</DefineConstants>
-    <NugetTargetMoniker>UAP,Version=v10.0</NugetTargetMoniker>
-    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
-    <TargetFrameworkIdentifier>.NETCore</TargetFrameworkIdentifier>
-    <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
   </PropertyGroup>
 
   <!--
@@ -46,14 +13,14 @@
       assertions for their Xamarin.iOS10 and uap10.0 targets.  Builds for Xamarin.iOS10 targets will bind to the
       netstandard 1.4 version of the Event Hubs SDK and the Xamarin.iOS10 version of the Identity Model package.
 
-      Because newer versions of UWP are compatible with netstandard 2.0, there is no way to garantee that the would bind to
-      the netstandard 1.4 version.  In order to avoid removing the client certificate features from the Event Hubs netstandard 2.0
-      version, it will need to offer a uap10.0 target which all versions of UWP will prefer over the netstandard targers.
+      Because newer versions of UWP are compatible with netstandard 2.0 we need to ensure that we provide a uap10.0 asset
+      in the package that doesn't depend on client certificate support. In order to do that we will copy the netstandard1.4
+      asset into the uap10.0 target in the package to ensure it always gets chosen when running on uwp.
 
       Because of the missing support in the Identity Model Client for Azure Active Directory, the client certificate-related constructs
       in the Event Hubs client will be hidden during compilation for targets that Xamarin iOS and UWP will bind to.
   -->
-  <PropertyGroup Condition="'$(TargetFramework)' != 'netstandard1.4' and '$(TargetFramework)' != 'uap10.0'">
+  <PropertyGroup Condition="'$(TargetFramework)' != 'netstandard1.4'">
     <DefineConstants>$(DefineConstants);ALLOW_CERTIFICATE_IDENTITY</DefineConstants>
   </PropertyGroup>
 
@@ -93,7 +60,26 @@
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'uap10.0'">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform " Version="5.2.3" />
-  </ItemGroup>
+  <Target Name="AddUAPPackageAsset" BeforeTargets="BuiltProjectOutputGroup">
+    <!--
+      For compat with the older package we are keeping a uap10.0 asset
+      in the package but it will just be a copy of the netstandard1.4 asset,
+      as the library doesn't use any UAP specific APIs and we don't want to
+      complicate our cross-platform engineering system to pull in uap tools.
+    -->
+    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.4'">
+      <BuiltProjectOutputGroupKeyOutput Include="@(IntermediateAssembly->'%(FullPath)')">
+        <IsKeyOutput>true</IsKeyOutput>
+        <FinalOutputPath>$(TargetPath)</FinalOutputPath>
+        <TargetPath>$(TargetFileName)</TargetPath>
+        <TargetFramework>uap10.0</TargetFramework>
+      </BuiltProjectOutputGroupKeyOutput>
+      <DocumentationProjectOutputGroupOutput Include="@(DocFileItem->'%(FullPath)')">
+        <FinalOutputPath>@(FinalDocFile->'%(FullPath)')</FinalOutputPath>
+        <IsKeyOutput>true</IsKeyOutput>
+        <TargetPath>@(DocFileItem->'%(Filename)%(Extension)')</TargetPath>
+        <TargetFramework>uap10.0</TargetFramework>
+      </DocumentationProjectOutputGroupOutput>
+    </ItemGroup>
+  </Target>
 </Project>
