@@ -11,10 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Azure.ApplicationModel.Configuration\Azure.Configuration.csproj" />
+    <ProjectReference Include="..\..\src\Azure.Configuration.csproj" />
   </ItemGroup>
 
     <!-- Import the Azure.Core project -->
-  <Import Project="$(MSBuildThisFileDirectory)..\..\..\Azure.Core\data-plane\Azure.Core\Azure.Core.props" />
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\..\core\Azure.Core\src\Azure.Core.props" />
 
 </Project>
