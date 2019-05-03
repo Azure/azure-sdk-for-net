@@ -20,11 +20,6 @@
 
     public static partial class FormRecognizerClientExtensions
     {
-        public static AnalyzeResult AnalyzeWithCustomModel(this IFormRecognizerClient operations, System.Guid id, Stream formStream, string contentType, IList<string> keys = default(IList<string>))
-        {
-            return operations.AnalyzeWithCustomModelAsync(id, formStream, contentType, keys).GetAwaiter().GetResult();
-        }
-
         public static async Task<AnalyzeResult> AnalyzeWithCustomModelAsync(this IFormRecognizerClient operations, System.Guid id, Stream formStream, string contentType, IList<string> keys = default(IList<string>), CancellationToken cancellationToken = default(CancellationToken))
         {
             using (var _result = await operations.AnalyzeWithCustomModelWithHttpMessagesAsync2(id, formStream, keys, null, cancellationToken, contentType: contentType).ConfigureAwait(false))
