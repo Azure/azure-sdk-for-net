@@ -5,10 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Testing
 {
     [TestFixture(true)]
     [TestFixture(false)]

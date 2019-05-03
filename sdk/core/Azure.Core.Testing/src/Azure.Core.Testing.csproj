@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>A set of testing primitives for libraries that use Azure.Core</Description>
+    <AssemblyTitle>Microsoft Azure Client Pipeline Testing</AssemblyTitle>
+    <Version>1.0.0-preview.5</Version>
+    <PackageTags>Microsoft Azure Client Pipeline Testing</PackageTags>
+
+    <!-- Make sure that we don't pull in additional dependencies during build or package -->
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+
+    <!-- This is a workaorund until https://github.com/Azure/azure-sdk-for-net/issues/5214 is addressed -->
+    <RequiredTargetFrameworks>net461;netstandard2.0</RequiredTargetFrameworks>
+
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <LangVersion>7.3</LangVersion>
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq" Version="4.9.0" />
+    <PackageReference Include="nunit" Version="3.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Core\src\Azure.Core.csproj" />
+  </ItemGroup>
+</Project>

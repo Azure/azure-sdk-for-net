@@ -17,7 +17,7 @@ namespace Azure.Core.Testing
 
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        protected internal override void AddHeader(string name, string value)
+        protected override void AddHeader(string name, string value)
         {
             if (!_headers.TryGetValue(name, out var values))
             {
@@ -27,7 +27,7 @@ namespace Azure.Core.Testing
             values.Add(value);
         }
 
-        protected internal override bool TryGetHeader(string name, out string value)
+        protected override bool TryGetHeader(string name, out string value)
         {
             if (_headers.TryGetValue(name, out var values))
             {
@@ -39,24 +39,24 @@ namespace Azure.Core.Testing
             return false;
         }
 
-        protected internal override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
+        protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
         {
             var result = _headers.TryGetValue(name, out var valuesList);
             values = valuesList;
             return result;
         }
 
-        protected internal override bool ContainsHeader(string name)
+        protected override bool ContainsHeader(string name)
         {
             return TryGetHeaderValues(name, out _);
         }
 
-        protected internal override bool RemoveHeader(string name)
+        protected override bool RemoveHeader(string name)
         {
             return _headers.Remove(name);
         }
 
-        protected internal override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
+        protected override IEnumerable<HttpHeader> EnumerateHeaders() => _headers.Select(h => new HttpHeader(h.Key, JoinHeaderValue(h.Value)));
 
         private static string JoinHeaderValue(IEnumerable<string> values)
         {

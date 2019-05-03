@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Testing
 {
     /// <summary>
     /// This interceptor forwards the async call to a sync method call with the same arguments

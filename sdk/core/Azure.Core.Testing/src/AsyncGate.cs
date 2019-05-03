@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Tests.Testing
+namespace Azure.Core.Testing
 {
     public class AsyncGate<TIn, TOut>
     {
