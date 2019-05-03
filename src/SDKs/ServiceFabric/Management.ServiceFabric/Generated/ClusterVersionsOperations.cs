@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions/{clusterVersion}").ToString();
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{environment}", System.Uri.EscapeDataString(environment));
+            _url = _url.Replace("{environment}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(environment, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             _url = _url.Replace("{clusterVersion}", System.Uri.EscapeDataString(clusterVersion));
             List<string> _queryParameters = new List<string>();
@@ -719,7 +719,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             var _baseUrl = Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.ServiceFabric/locations/{location}/environments/{environment}/clusterVersions").ToString();
             _url = _url.Replace("{location}", System.Uri.EscapeDataString(location));
-            _url = _url.Replace("{environment}", System.Uri.EscapeDataString(environment));
+            _url = _url.Replace("{environment}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(environment, Client.SerializationSettings).Trim('"')));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (apiVersion != null)

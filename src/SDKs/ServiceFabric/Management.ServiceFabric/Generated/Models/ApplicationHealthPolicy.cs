@@ -38,33 +38,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="serviceTypeHealthPolicies">The map with service type
         /// health policy per service type name. The map is empty by
         /// default.</param>
-        /// <param name="considerWarningAsError">Indicates whether warnings are
-        /// treated with the same severity as errors.</param>
-        /// <param name="maxPercentUnhealthyDeployedApplications">The maximum
-        /// allowed percentage of unhealthy deployed applications. Allowed
-        /// values are Byte values from zero to 100.
-        /// The percentage represents the maximum tolerated percentage of
-        /// deployed applications that can be unhealthy before the application
-        /// is considered in error.
-        /// This is calculated by dividing the number of unhealthy deployed
-        /// applications over the number of nodes where the application is
-        /// currently deployed on in the cluster.
-        /// The computation rounds up to tolerate one failure on small numbers
-        /// of nodes. Default percentage is zero.
-        /// </param>
-        /// <param name="defaultServiceTypeHealthPolicy1">The health policy
-        /// used by default to evaluate the health of a service type.</param>
-        /// <param name="serviceTypeHealthPolicyMap">The map with service type
-        /// health policy per service type name. The map is empty by
-        /// default.</param>
-        public ApplicationHealthPolicy(ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default(ServiceTypeHealthPolicy), IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies = default(IDictionary<string, ServiceTypeHealthPolicy>), bool? considerWarningAsError = default(bool?), int? maxPercentUnhealthyDeployedApplications = default(int?), ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy1 = default(ServiceTypeHealthPolicy), IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default(IDictionary<string, ServiceTypeHealthPolicy>))
+        public ApplicationHealthPolicy(ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default(ServiceTypeHealthPolicy), IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicies = default(IDictionary<string, ServiceTypeHealthPolicy>))
         {
             DefaultServiceTypeHealthPolicy = defaultServiceTypeHealthPolicy;
             ServiceTypeHealthPolicies = serviceTypeHealthPolicies;
-            ConsiderWarningAsError = considerWarningAsError;
-            MaxPercentUnhealthyDeployedApplications = maxPercentUnhealthyDeployedApplications;
-            DefaultServiceTypeHealthPolicy1 = defaultServiceTypeHealthPolicy1;
-            ServiceTypeHealthPolicyMap = serviceTypeHealthPolicyMap;
             CustomInit();
         }
 
@@ -88,43 +65,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         public IDictionary<string, ServiceTypeHealthPolicy> ServiceTypeHealthPolicies { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether warnings are treated with the same
-        /// severity as errors.
-        /// </summary>
-        [JsonProperty(PropertyName = "ConsiderWarningAsError")]
-        public bool? ConsiderWarningAsError { get; set; }
-
-        /// <summary>
-        /// Gets or sets the maximum allowed percentage of unhealthy deployed
-        /// applications. Allowed values are Byte values from zero to 100.
-        /// The percentage represents the maximum tolerated percentage of
-        /// deployed applications that can be unhealthy before the application
-        /// is considered in error.
-        /// This is calculated by dividing the number of unhealthy deployed
-        /// applications over the number of nodes where the application is
-        /// currently deployed on in the cluster.
-        /// The computation rounds up to tolerate one failure on small numbers
-        /// of nodes. Default percentage is zero.
-        ///
-        /// </summary>
-        [JsonProperty(PropertyName = "MaxPercentUnhealthyDeployedApplications")]
-        public int? MaxPercentUnhealthyDeployedApplications { get; set; }
-
-        /// <summary>
-        /// Gets or sets the health policy used by default to evaluate the
-        /// health of a service type.
-        /// </summary>
-        [JsonProperty(PropertyName = "DefaultServiceTypeHealthPolicy")]
-        public ServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy1 { get; set; }
-
-        /// <summary>
-        /// Gets or sets the map with service type health policy per service
-        /// type name. The map is empty by default.
-        /// </summary>
-        [JsonProperty(PropertyName = "ServiceTypeHealthPolicyMap")]
-        public IDictionary<string, ServiceTypeHealthPolicy> ServiceTypeHealthPolicyMap { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Rest.ValidationException">
@@ -143,20 +83,6 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
                     if (valueElement != null)
                     {
                         valueElement.Validate();
-                    }
-                }
-            }
-            if (DefaultServiceTypeHealthPolicy1 != null)
-            {
-                DefaultServiceTypeHealthPolicy1.Validate();
-            }
-            if (ServiceTypeHealthPolicyMap != null)
-            {
-                foreach (var valueElement1 in ServiceTypeHealthPolicyMap.Values)
-                {
-                    if (valueElement1 != null)
-                    {
-                        valueElement1.Validate();
                     }
                 }
             }

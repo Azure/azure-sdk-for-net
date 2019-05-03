@@ -58,7 +58,10 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="serviceTypeName">The name of the service type</param>
         /// <param name="partitionDescription">Describes how the service is
         /// partitioned.</param>
-        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription))
+        /// <param name="servicePackageActivationMode">The activation Mode of
+        /// the service package. Possible values include: 'SharedProcess',
+        /// 'ExclusiveProcess'</param>
+        public ServiceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string placementConstraints = default(string), IList<ServiceCorrelationDescription> correlationScheme = default(IList<ServiceCorrelationDescription>), IList<ServiceLoadMetricDescription> serviceLoadMetrics = default(IList<ServiceLoadMetricDescription>), IList<ServicePlacementPolicyDescription> servicePlacementPolicies = default(IList<ServicePlacementPolicyDescription>), string defaultMoveCost = default(string), string provisioningState = default(string), string serviceTypeName = default(string), PartitionSchemeDescription partitionDescription = default(PartitionSchemeDescription), string servicePackageActivationMode = default(string))
             : base(id, name, type, location)
         {
             PlacementConstraints = placementConstraints;
@@ -69,6 +72,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
             ProvisioningState = provisioningState;
             ServiceTypeName = serviceTypeName;
             PartitionDescription = partitionDescription;
+            ServicePackageActivationMode = servicePackageActivationMode;
             CustomInit();
         }
 
@@ -133,6 +137,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.partitionDescription")]
         public PartitionSchemeDescription PartitionDescription { get; set; }
+
+        /// <summary>
+        /// Gets or sets the activation Mode of the service package. Possible
+        /// values include: 'SharedProcess', 'ExclusiveProcess'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.servicePackageActivationMode")]
+        public string ServicePackageActivationMode { get; set; }
 
     }
 }

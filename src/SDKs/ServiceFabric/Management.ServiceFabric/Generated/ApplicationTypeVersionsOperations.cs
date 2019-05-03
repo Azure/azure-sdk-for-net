@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
-            string apiVersion = "2017-07-01-preview";
+            string apiVersion = "2019-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -385,7 +385,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationTypeName");
             }
-            string apiVersion = "2017-07-01-preview";
+            string apiVersion = "2019-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -605,7 +605,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 parameters.Validate();
             }
-            string apiVersion = "2017-07-01-preview";
+            string apiVersion = "2019-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -820,7 +820,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
-            string apiVersion = "2017-07-01-preview";
+            string apiVersion = "2019-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

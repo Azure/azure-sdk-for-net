@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// to evaluate the health of an application or one of its children
         /// entities.
         /// </param>
-        public ApplicationUpgradePolicy(long? upgradeReplicaSetCheckTimeout = default(long?), bool? forceRestart = default(bool?), RollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default(RollingUpgradeMonitoringPolicy), ApplicationHealthPolicy applicationHealthPolicy = default(ApplicationHealthPolicy))
+        public ApplicationUpgradePolicy(long? upgradeReplicaSetCheckTimeout = default(long?), bool? forceRestart = default(bool?), RollingUpgradeMonitoringPolicy rollingUpgradeMonitoringPolicy = default(RollingUpgradeMonitoringPolicy), ArmApplicationHealthPolicy applicationHealthPolicy = default(ArmApplicationHealthPolicy))
         {
             UpgradeReplicaSetCheckTimeout = upgradeReplicaSetCheckTimeout;
             ForceRestart = forceRestart;
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         ///
         /// </summary>
         [JsonProperty(PropertyName = "applicationHealthPolicy")]
-        public ApplicationHealthPolicy ApplicationHealthPolicy { get; set; }
+        public ArmApplicationHealthPolicy ApplicationHealthPolicy { get; set; }
 
         /// <summary>
         /// Validate the object.
