@@ -15,28 +15,28 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the UrlFileExtension condition for the delivery rule.
+    /// Defines the RequestBody condition for the delivery rule.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("UrlFileExtension")]
-    public partial class DeliveryRuleUrlFileExtensionCondition : DeliveryRuleCondition
+    [Newtonsoft.Json.JsonObject("RequestBody")]
+    public partial class DeliveryRuleRequestBodyCondition : DeliveryRuleCondition
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// Initializes a new instance of the DeliveryRuleRequestBodyCondition
+        /// class.
         /// </summary>
-        public DeliveryRuleUrlFileExtensionCondition()
+        public DeliveryRuleRequestBodyCondition()
         {
-            Parameters = new UrlFileExtensionMatchConditionParameters();
+            Parameters = new RequestBodyMatchConditionParameters();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// Initializes a new instance of the DeliveryRuleRequestBodyCondition
+        /// class.
         /// </summary>
         /// <param name="parameters">Defines the parameters for the
         /// condition.</param>
-        public DeliveryRuleUrlFileExtensionCondition(UrlFileExtensionMatchConditionParameters parameters)
+        public DeliveryRuleRequestBodyCondition(RequestBodyMatchConditionParameters parameters)
         {
             Parameters = parameters;
             CustomInit();
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets defines the parameters for the condition.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public UrlFileExtensionMatchConditionParameters Parameters { get; set; }
+        public RequestBodyMatchConditionParameters Parameters { get; set; }
 
         /// <summary>
         /// Validate the object.
