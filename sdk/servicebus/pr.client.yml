@@ -2,9 +2,6 @@
 # This file is be generated automatically and any changes will be lost.
 
 
-pr:
-- master
-
 trigger:
   paths:
     include:
@@ -16,4 +13,4 @@ variables:
   value: sdk/servicebus/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.sln
 
 jobs:
-- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
+- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml 

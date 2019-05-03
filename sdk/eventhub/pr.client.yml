@@ -2,9 +2,6 @@
 # This file is be generated automatically and any changes will be lost.
 
 
-pr:
-- master
-
 trigger:
   paths:
     include:
