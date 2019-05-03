@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the parameters for generall match conditions
+    /// Defines the parameters for RequestHeader match conditions
     /// </summary>
     public partial class RequestHeaderMatchConditionParameters
     {

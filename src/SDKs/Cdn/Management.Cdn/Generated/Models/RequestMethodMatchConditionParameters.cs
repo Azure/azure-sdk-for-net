@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the parameters for match conditions for RequestMethod
+    /// Defines the parameters for RequestMethod match conditions
     /// </summary>
     public partial class RequestMethodMatchConditionParameters
     {
