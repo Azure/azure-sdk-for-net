@@ -14,7 +14,7 @@ namespace FormRecognizerSDK.Tests
             FormRecognizerSubscriptionKey = "";
         }
 
-        protected IFormRecognizerClient GetFormRecognizerClient(DelegatingHandler handler)
+        protected IFormRecognizerClient GetFormRecognizerClient(params DelegatingHandler[] handler)
         {
             IFormRecognizerClient client = new FormRecognizerClient(new ApiKeyServiceClientCredentials(FormRecognizerSubscriptionKey), handlers: handler)
             {
