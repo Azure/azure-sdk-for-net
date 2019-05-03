@@ -31,15 +31,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Initializes a new instance of the TriggerProperties class.
         /// </summary>
-        /// <param name="timerTriggers">The collection of timer
-        /// triggers.</param>
         /// <param name="sourceTriggers">The collection of triggers based on
         /// source code repository.</param>
         /// <param name="baseImageTrigger">The trigger based on base image
         /// dependencies.</param>
-        public TriggerProperties(IList<TimerTrigger> timerTriggers = default(IList<TimerTrigger>), IList<SourceTrigger> sourceTriggers = default(IList<SourceTrigger>), BaseImageTrigger baseImageTrigger = default(BaseImageTrigger))
+        public TriggerProperties(IList<SourceTrigger> sourceTriggers = default(IList<SourceTrigger>), BaseImageTrigger baseImageTrigger = default(BaseImageTrigger))
         {
-            TimerTriggers = timerTriggers;
             SourceTriggers = sourceTriggers;
             BaseImageTrigger = baseImageTrigger;
             CustomInit();
@@ -49,12 +46,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets the collection of timer triggers.
-        /// </summary>
-        [JsonProperty(PropertyName = "timerTriggers")]
-        public IList<TimerTrigger> TimerTriggers { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of triggers based on source code
@@ -77,23 +68,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (TimerTriggers != null)
+            if (SourceTriggers != null)
             {
-                foreach (var element in TimerTriggers)
+                foreach (var element in SourceTriggers)
                 {
                     if (element != null)
                     {
                         element.Validate();
-                    }
-                }
-            }
-            if (SourceTriggers != null)
-            {
-                foreach (var element1 in SourceTriggers)
-                {
-                    if (element1 != null)
-                    {
-                        element1.Validate();
                     }
                 }
             }

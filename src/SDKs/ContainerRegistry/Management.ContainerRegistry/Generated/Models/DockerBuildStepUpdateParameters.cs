@@ -50,9 +50,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// source context.</param>
         /// <param name="arguments">The collection of override arguments to be
         /// used when executing this build step.</param>
-        /// <param name="target">The name of the target build stage for the
-        /// docker build.</param>
-        public DockerBuildStepUpdateParameters(string contextPath = default(string), string contextAccessToken = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = default(string), IList<Argument> arguments = default(IList<Argument>), string target = default(string))
+        public DockerBuildStepUpdateParameters(string contextPath = default(string), string contextAccessToken = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string dockerFilePath = default(string), IList<Argument> arguments = default(IList<Argument>))
             : base(contextPath, contextAccessToken)
         {
             ImageNames = imageNames;
@@ -60,7 +58,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             NoCache = noCache;
             DockerFilePath = dockerFilePath;
             Arguments = arguments;
-            Target = target;
             CustomInit();
         }
 
@@ -102,13 +99,6 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "arguments")]
         public IList<Argument> Arguments { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the target build stage for the docker
-        /// build.
-        /// </summary>
-        [JsonProperty(PropertyName = "target")]
-        public string Target { get; set; }
 
     }
 }
