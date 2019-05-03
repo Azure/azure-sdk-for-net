@@ -10,4 +10,4 @@ variables:
   ProjectFile: sdk/eventhub/Microsoft.Azure.EventHubs.sln
 
 jobs:
-- template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
+- template: templates/jobs/archetype-sdk-client.yml
