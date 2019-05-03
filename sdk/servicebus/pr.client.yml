@@ -8,7 +8,6 @@ trigger:
     - sdk/servicebus/
 
 variables:
-- template: ../../../.azure-pipelines/templates/variables/globals.yml
 - name: ProjectFile
   value: sdk/servicebus/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.sln
 

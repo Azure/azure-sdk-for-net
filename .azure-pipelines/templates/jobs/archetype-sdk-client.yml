@@ -1,5 +1,7 @@
 jobs:
 - job: Build
+  variables:
+  - template: ../variables/globals.yml
   pool:
     vmImage: vs2017-win2016
   steps:
@@ -19,6 +21,8 @@ jobs:
       artifactName: packages
       targetPath: $(Build.ArtifactStagingDirectory)
 - job: 'Analyze'
+  variables:
+  - template: ../variables/globals.yml
   dependsOn:
     - Build
   pool:
@@ -45,6 +49,8 @@ jobs:
       # scheduled builds should be good enough.
       condition: and(succeededOrFailed(), ne(variables['Build.Reason'],'PullRequest'))
 - job: 'Test'
+  variables:
+  - template: ../variables/globals.yml
   strategy:
     maxParallel: $[ variables['MaxParallelTestJobs'] ]
     matrix:
