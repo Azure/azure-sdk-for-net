@@ -8,7 +8,7 @@ pr:
     - .azure-pipelines/
 
 trigger:
-- naster
+- master
 
 variables:
   ProjectFile: eng/data-plane.proj

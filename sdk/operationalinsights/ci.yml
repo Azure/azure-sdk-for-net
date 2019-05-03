@@ -10,4 +10,4 @@ variables:
   ProjectFile: sdk/operationalinsights/Microsoft.Azure.OperationalInsights/Microsoft.Azure.OperationalInsights.sln
 
 jobs:
-- template: templates/jobs/archetype-sdk-client.yml
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml

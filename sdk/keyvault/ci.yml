@@ -10,4 +10,4 @@ variables:
   ProjectFile: sdk/keyvault/Microsoft.Azure.KeyVault.sln
 
 jobs:
-- template: templates/jobs/archetype-sdk-client.yml
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml

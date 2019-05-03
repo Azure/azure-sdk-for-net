@@ -10,4 +10,4 @@ variables:
   ProjectFile: sdk/servicebus/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.sln
 
 jobs:
-- template: templates/jobs/archetype-sdk-client.yml 
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
