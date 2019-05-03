@@ -4,7 +4,7 @@ This repo contains official .NET client libraries for Microsoft Azure services.
 
 ## NuGet Packages
 
-[All Nuget Packages](https://github.com/Azure/azure-sdk-for-net/tree/master/Documentation/sdk-for-net-packages.md).
+[All Nuget Packages](https://github.com/Azure/azure-sdk-for-net/blob/master/packages.md).
 
 ## Getting Started
 
