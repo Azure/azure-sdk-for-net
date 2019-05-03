@@ -11,7 +11,7 @@ trigger:
     - .azure-pipelines/
 
 variables:
-- ProjectFile: eng/data-plane.proj
+  ProjectFile: eng/data-plane.proj
 
 jobs:
 - template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml

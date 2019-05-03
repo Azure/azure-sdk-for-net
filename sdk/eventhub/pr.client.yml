@@ -7,7 +7,7 @@ trigger:
     - sdk/eventhub/
 
 variables:
-- ProjectFile: sdk/eventhub/Microsoft.Azure.EventHubs.sln
+  ProjectFile: sdk/eventhub/Microsoft.Azure.EventHubs.sln
 
 jobs:
 - template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
