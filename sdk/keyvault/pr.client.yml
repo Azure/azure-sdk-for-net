@@ -8,7 +8,6 @@ trigger:
     - sdk/keyvault/
 
 variables:
-- template: ../../../.azure-pipelines/templates/variables/globals.yml
 - name: ProjectFile
   value: sdk/keyvault/Microsoft.Azure.KeyVault.sln
 

@@ -12,7 +12,6 @@ trigger:
     - .azure-pipelines/
 
 variables:
-- template: ../../../.azure-pipelines/templates/variables/globals.yml
 - name: ProjectFile
   value: eng/data-plane.proj
 

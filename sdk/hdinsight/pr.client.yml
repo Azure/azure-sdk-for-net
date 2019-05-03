@@ -8,7 +8,6 @@ trigger:
     - sdk/hdinsight/
 
 variables:
-- template: ../../../.azure-pipelines/templates/variables/globals.yml
 - name: ProjectFile
   value: sdk/hdinsight/Microsoft.Azure.HDInsight.Job/Microsoft.Azure.HDInsight.sln
 
