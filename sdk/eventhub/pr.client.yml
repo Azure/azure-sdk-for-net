@@ -13,4 +13,4 @@ variables:
   value: sdk/eventhub/Microsoft.Azure.EventHubs.sln
 
 jobs:
-- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
+- template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml

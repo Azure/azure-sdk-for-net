@@ -17,4 +17,4 @@ variables:
   value: eng/data-plane.proj
 
 jobs:
-- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
+- template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml

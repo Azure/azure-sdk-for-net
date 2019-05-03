@@ -13,4 +13,4 @@ variables:
   value: sdk/operationalinsights/Microsoft.Azure.OperationalInsights/Microsoft.Azure.OperationalInsights.sln
 
 jobs:
-- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
+- template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml

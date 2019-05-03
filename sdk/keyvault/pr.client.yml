@@ -13,4 +13,4 @@ variables:
   value: sdk/keyvault/Microsoft.Azure.KeyVault.sln
 
 jobs:
-- template: ../../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
+- template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
