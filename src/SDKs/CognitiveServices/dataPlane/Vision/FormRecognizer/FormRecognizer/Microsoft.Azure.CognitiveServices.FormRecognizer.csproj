@@ -4,8 +4,8 @@
   <!-- Please do not move/edit code above this line -->
 
   <PropertyGroup>
-    <PackageId>Microsoft.Azure.CognitiveServices.FormsRecognizer</PackageId>
-    <Description>This client library provides access to the Microsoft Cognitive Services Forms Recognizer APIs.</Description>
+    <PackageId>Microsoft.Azure.CognitiveServices.FormRecognizer</PackageId>
+    <Description>This client library provides access to the Microsoft Cognitive Services Form Recognizer APIs.</Description>
     <Version>0.8.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.FormRecognizer</AssemblyName>
     <PackageTags>FormRecognizer;Form Recognizer;</PackageTags>
