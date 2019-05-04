@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static RemoteAddressMatchConditionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleRemoteAddressConditionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRemoteAddressConditionParameters";
         }
 
         /// <summary>

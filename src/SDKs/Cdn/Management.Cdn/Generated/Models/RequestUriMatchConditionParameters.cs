@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static RequestUriMatchConditionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleRequestUriConditionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestUriConditionParameters";
         }
 
         /// <summary>

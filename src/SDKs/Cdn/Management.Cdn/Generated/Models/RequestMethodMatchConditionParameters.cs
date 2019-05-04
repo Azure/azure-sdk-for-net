@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static RequestMethodMatchConditionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleRequestMethodConditionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestMethodConditionParameters";
             OperatorProperty = "Equal";
         }
 

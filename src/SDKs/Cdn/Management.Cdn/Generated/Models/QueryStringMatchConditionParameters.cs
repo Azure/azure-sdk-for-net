@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static QueryStringMatchConditionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleQueryStringConditionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleQueryStringConditionParameters";
         }
 
         /// <summary>

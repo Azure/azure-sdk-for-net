@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static IsDeviceMatchConditionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleIsDeviceConditionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleIsDeviceConditionParameters";
             OperatorProperty = "Equal";
         }
 

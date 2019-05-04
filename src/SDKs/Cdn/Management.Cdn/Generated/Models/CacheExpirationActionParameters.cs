@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static CacheExpirationActionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleCacheExpirationActionParameters";
             CacheType = "All";
         }
 

@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static PostArgsMatchConditionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRulePostArgsConditionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRulePostArgsConditionParameters";
         }
 
         /// <summary>

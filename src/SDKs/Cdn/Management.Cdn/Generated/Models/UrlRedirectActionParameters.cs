@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static UrlRedirectActionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRedirectActionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleUrlRedirectActionParameters";
         }
 
         /// <summary>

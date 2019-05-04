@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static RequestHeaderMatchConditionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleRequestHeaderConditionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleRequestHeaderConditionParameters";
         }
 
         /// <summary>

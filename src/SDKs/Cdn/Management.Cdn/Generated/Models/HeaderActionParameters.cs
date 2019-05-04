@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         static HeaderActionParameters()
         {
-            Odatatype = "Microsoft.Azure.Cdn.Models.DeliveryRuleHeaderActionParameters";
+            Odatatype = "#Microsoft.Azure.Cdn.Models.DeliveryRuleHeaderActionParameters";
         }
 
         /// <summary>
