@@ -18,6 +18,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Azure.ApplicationModel.Configuration</AssemblyName>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <UseProjectReferenceToAzureBase>true</UseProjectReferenceToAzureBase>
   </PropertyGroup>
 
   <ItemGroup>
