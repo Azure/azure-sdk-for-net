@@ -14,7 +14,7 @@ namespace Azure.Core.Pipeline
 
         public HttpClientOptions()
         {
-            TelemetryPolicy = new TelemetryPolicy(GetType().Assembly);
+            Telemetry = new TelemetryPolicy(GetType().Assembly);
         }
 
         public HttpPipelineTransport Transport {
@@ -22,7 +22,7 @@ namespace Azure.Core.Pipeline
             set => _transport = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        public TelemetryPolicy TelemetryPolicy { get; set; }
+        public TelemetryPolicy Telemetry { get; set; }
 
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 

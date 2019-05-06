@@ -67,7 +67,7 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerCallPolicies);
 
-            policies.Add(options.TelemetryPolicy);
+            policies.Add(options.Telemetry);
 
             policies.AddRange(clientPolicies);
 
