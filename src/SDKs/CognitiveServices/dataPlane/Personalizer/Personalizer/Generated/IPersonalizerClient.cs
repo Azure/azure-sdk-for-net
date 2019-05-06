@@ -13,6 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Personalizer Service is an Azure Cognitive Service that makes it easy
@@ -40,6 +44,11 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
+        /// Application ID of the Personalizer Services.
+        /// </summary>
+        string ApplicationId { get; set; }
+
+        /// <summary>
         /// Supported Cognitive Services endpoint.
         /// </summary>
         string Endpoint { get; set; }
@@ -52,9 +61,48 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
 
 
         /// <summary>
+        /// Gets the IServiceConfigurationOperations.
+        /// </summary>
+        IServiceConfigurationOperations ServiceConfiguration { get; }
+
+        /// <summary>
+        /// Gets the IPolicy.
+        /// </summary>
+        IPolicy Policy { get; }
+
+        /// <summary>
+        /// Gets the IEvaluations.
+        /// </summary>
+        IEvaluations Evaluations { get; }
+
+        /// <summary>
         /// Gets the IEvents.
         /// </summary>
         IEvents Events { get; }
+
+        /// <summary>
+        /// Gets the ILogs.
+        /// </summary>
+        ILogs Logs { get; }
+
+        /// <summary>
+        /// Gets the IModel.
+        /// </summary>
+        IModel Model { get; }
+
+        /// <summary>
+        /// A Personalizer rank request.
+        /// </summary>
+        /// <param name='rankRequest'>
+        /// A Personalizer request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<RankResponse>> RankWithHttpMessagesAsync(RankRequest rankRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

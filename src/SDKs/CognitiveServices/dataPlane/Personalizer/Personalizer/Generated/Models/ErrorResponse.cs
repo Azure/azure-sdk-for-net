@@ -14,26 +14,28 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
     using System.Linq;
 
     /// <summary>
-    /// Reward given to a rank response.
+    /// Used to return an error to the client
     /// </summary>
-    public partial class RewardRequest
+    public partial class ErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        public RewardRequest()
+        public ErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ErrorResponse class.
         /// </summary>
-        /// <param name="value">Reward to be assigned to an action. Value
-        /// should be between -1 and 1 inclusive.</param>
-        public RewardRequest(double? value = default(double?))
+        /// <param name="code">The error code.</param>
+        /// <param name="message">A message explaining the error reported by
+        /// the service.</param>
+        public ErrorResponse(int? code = default(int?), string message = default(string))
         {
-            Value = value;
+            Code = code;
+            Message = message;
             CustomInit();
         }
 
@@ -43,11 +45,16 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reward to be assigned to an action. Value should be
-        /// between -1 and 1 inclusive.
+        /// Gets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public double? Value { get; set; }
+        [JsonProperty(PropertyName = "code")]
+        public int? Code { get; private set; }
+
+        /// <summary>
+        /// Gets a message explaining the error reported by the service.
+        /// </summary>
+        [JsonProperty(PropertyName = "message")]
+        public string Message { get; private set; }
 
     }
 }

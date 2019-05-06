@@ -13,27 +13,23 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Reward given to a rank response.
-    /// </summary>
-    public partial class RewardRequest
+    public partial class ModelProperties
     {
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ModelProperties class.
         /// </summary>
-        public RewardRequest()
+        public ModelProperties()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ModelProperties class.
         /// </summary>
-        /// <param name="value">Reward to be assigned to an action. Value
-        /// should be between -1 and 1 inclusive.</param>
-        public RewardRequest(double? value = default(double?))
+        public ModelProperties(System.DateTime? creationTime = default(System.DateTime?), System.DateTime? lastModifiedTime = default(System.DateTime?))
         {
-            Value = value;
+            CreationTime = creationTime;
+            LastModifiedTime = lastModifiedTime;
             CustomInit();
         }
 
@@ -43,11 +39,14 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reward to be assigned to an action. Value should be
-        /// between -1 and 1 inclusive.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public double? Value { get; set; }
+        [JsonProperty(PropertyName = "creationTime")]
+        public System.DateTime? CreationTime { get; private set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "lastModifiedTime")]
+        public System.DateTime? LastModifiedTime { get; private set; }
 
     }
 }

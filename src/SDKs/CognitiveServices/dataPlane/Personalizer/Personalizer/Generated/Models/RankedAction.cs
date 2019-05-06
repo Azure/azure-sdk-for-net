@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -55,5 +56,33 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         [JsonProperty(PropertyName = "probability")]
         public double? Probability { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Id != null)
+            {
+                if (Id.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Id", 256);
+                }
+                if (Id.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "Id", 1);
+                }
+            }
+            if (Probability > 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "Probability", 1);
+            }
+            if (Probability < 0)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "Probability", 0);
+            }
+        }
     }
 }

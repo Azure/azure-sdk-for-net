@@ -13,27 +13,24 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    /// <summary>
-    /// Reward given to a rank response.
-    /// </summary>
-    public partial class RewardRequest
+    public partial class ContainerStatus
     {
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ContainerStatus class.
         /// </summary>
-        public RewardRequest()
+        public ContainerStatus()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewardRequest class.
+        /// Initializes a new instance of the ContainerStatus class.
         /// </summary>
-        /// <param name="value">Reward to be assigned to an action. Value
-        /// should be between -1 and 1 inclusive.</param>
-        public RewardRequest(double? value = default(double?))
+        public ContainerStatus(string service = default(string), string apiStatus = default(string), string apiStatusMessage = default(string))
         {
-            Value = value;
+            Service = service;
+            ApiStatus = apiStatus;
+            ApiStatusMessage = apiStatusMessage;
             CustomInit();
         }
 
@@ -43,11 +40,19 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets reward to be assigned to an action. Value should be
-        /// between -1 and 1 inclusive.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public double? Value { get; set; }
+        [JsonProperty(PropertyName = "service")]
+        public string Service { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "apiStatus")]
+        public string ApiStatus { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "apiStatusMessage")]
+        public string ApiStatusMessage { get; set; }
 
     }
 }
