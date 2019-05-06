@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
                     connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};{thumbprintOrSubjectName};CertificateStoreLocation={Constants.CurrentUserStore};";
                     break;
                 case CertIdentifierType.KeyVaultCertificateSecretIdentifier:
-                    connectionString = $"RunAs=App;AppId={app.AppId};TenantId={_tenantId};KeyVaultSecretIdentifier={testCertUrl};";
+                    connectionString = $"RunAs=App;AppId={app.AppId};KeyVaultCertificateSecretIdentifier={testCertUrl};";
                     break;
             }
             
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.IntegrationTests
         {
             // register SqlAzureAppAuthProvider and create the connection string
             SqlAuthenticationProvider.SetProvider(SqlAuthenticationMethod.ActiveDirectoryInteractive, new SqlAppAuthenticationProvider());
-            string connectionString = $"server={Environment.GetEnvironmentVariable(Constants.TestSqlServerEndpoint)};Authentication=Active Directory Interactive;UID=";
+            string connectionString = $"server={Environment.GetEnvironmentVariable(Constants.TestSqlServerEndpoint)};Authentication=Active Directory Interactive;UID=AnyString";
 
             // verify the connection can be successfully opened
             var sqlConnection = new SqlConnection(connectionString);

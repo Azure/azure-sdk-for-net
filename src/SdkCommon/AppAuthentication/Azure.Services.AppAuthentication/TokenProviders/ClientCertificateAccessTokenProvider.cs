@@ -25,9 +25,9 @@ namespace Microsoft.Azure.Services.AppAuthentication
         // Enum which tells if subject, thumbprint, or Key Vault secret identifier is being used as identifier
         private readonly CertificateIdentifierType _certificateIdentifierType;
 
-        private readonly string _tenantId;
-
         private readonly string _azureAdInstance;
+
+        private string _tenantId;
 
         private readonly IAuthenticationContext _authenticationContext;
 
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         {
             SubjectName,
             Thumbprint,
-            KeyVaultSecretIdentifier
+            KeyVaultCertificateSecretIdentifier
         };
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="tenantId"></param>
         internal ClientCertificateAzureServiceTokenProvider(string clientId,
             string certificateIdentifier, CertificateIdentifierType certificateIdentifierType,
-            string storeLocation, string tenantId, string azureAdInstance,
+            string storeLocation, string azureAdInstance, string tenantId = null,
             IAuthenticationContext authenticationContext = null, KeyVaultClient keyVaultClient = null)
         {
             if (string.IsNullOrWhiteSpace(clientId))
@@ -93,8 +93,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             _clientId = clientId;
 
             _certificateIdentifierType = certificateIdentifierType;
-            _tenantId = tenantId;
             _azureAdInstance = azureAdInstance;
+            _tenantId = tenantId;
             _authenticationContext = authenticationContext ?? new AdalAuthenticationContext();
             _keyVaultClient = keyVaultClient ?? new KeyVaultClient();
 
@@ -117,8 +117,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
             CancellationToken cancellationToken = default(CancellationToken))
         {
-            // If authority is not specified, create it using azureAdInstance and tenantId. Tenant ID comes from the connection string. 
-            if (string.IsNullOrWhiteSpace(authority))
+            // If authority is not specified and tenantId was present in connection string, create it using azureAdInstance and tenantId. 
+            if (string.IsNullOrWhiteSpace(authority) && !string.IsNullOrWhiteSpace(_tenantId))
             {
                 authority = $"{_azureAdInstance}{_tenantId}";
             }
@@ -126,12 +126,19 @@ namespace Microsoft.Azure.Services.AppAuthentication
             List<X509Certificate2> certs = null;
             switch (_certificateIdentifierType)
             {
-                case CertificateIdentifierType.KeyVaultSecretIdentifier:
+                case CertificateIdentifierType.KeyVaultCertificateSecretIdentifier:
                     // Get certificate for the given Key Vault secret identifier
                     try
                     {
                         var keyVaultCert = await _keyVaultClient.GetCertificateAsync(_certificateIdentifier, cancellationToken);
                         certs = new List<X509Certificate2>() { keyVaultCert };
+
+                        // If authority is still not specified, create it using azureAdInstance and tenantId. Tenant ID comes from Key Vault access token.
+                        if (string.IsNullOrWhiteSpace(authority))
+                        {
+                            _tenantId = _keyVaultClient.PrincipalUsed.TenantId;
+                            authority = $"{_azureAdInstance}{_tenantId}";
+                        }
                     }
                     catch (Exception exp)
                     {

@@ -43,6 +43,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
         internal const string SecretIdentifierInvalidUriError = "Specified secret identifier is not a valid URI.";
         internal const string TokenProviderErrorsFormat = "Tried the following {0} methods to get a Key Vault access token, but none of them worked.";
 
+        internal Principal PrincipalUsed { get; private set; }
+
         public KeyVaultClient(HttpClient httpClient = null, NonInteractiveAzureServiceTokenProviderBase tokenProvider = null)
         {
             _httpClient = httpClient ?? new HttpClient();
@@ -146,6 +148,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                 {
                     var authResult = await tokenProvider.GetAuthResultAsync(challenge.AuthorizationServer,
                         challenge.Resource, challenge.Scope, cancellationToken).ConfigureAwait(false);
+
+                    PrincipalUsed = tokenProvider.PrincipalUsed;
 
                     return authResult.AccessToken;
                 }

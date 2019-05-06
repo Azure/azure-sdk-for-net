@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
         private const string TenantId = "TenantId";
         private const string CertificateSubjectName = "CertificateSubjectName";
         private const string CertificateThumbprint = "CertificateThumbprint";
-        private const string KeyVaultSecretIdentifier = "KeyVaultSecretIdentifier";
+        private const string KeyVaultCertificateSecretIdentifier = "KeyVaultCertificateSecretIdentifier";
         private const string CertificateStoreLocation = "CertificateStoreLocation";
         
         /// <summary>
@@ -95,8 +95,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
                                     ? ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.Thumbprint
                                     : ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.SubjectName,
                                 connectionSettings[CertificateStoreLocation],
-                                connectionSettings[TenantId],
-                                azureAdInstance);
+                                azureAdInstance,
+                                connectionSettings[TenantId]);
                     }
                     else if (connectionSettings.ContainsKey(CertificateThumbprint) ||
                              connectionSettings.ContainsKey(CertificateSubjectName))
@@ -105,18 +105,18 @@ namespace Microsoft.Azure.Services.AppAuthentication
                         throw new ArgumentException($"Connection string {connectionString} is not valid. Must contain '{CertificateStoreLocation}' attribute and it must not be empty " +
                                                     $"when using '{CertificateThumbprint}' and '{CertificateSubjectName}' attributes");
                     }
-                    else if (connectionSettings.ContainsKey(KeyVaultSecretIdentifier))
+                    else if (connectionSettings.ContainsKey(KeyVaultCertificateSecretIdentifier))
                     {
-                        ValidateAttribute(connectionSettings, TenantId, connectionString);
-
                         azureServiceTokenProvider =
                             new ClientCertificateAzureServiceTokenProvider(
                                 connectionSettings[AppId],
-                                connectionSettings[KeyVaultSecretIdentifier],
-                                ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.KeyVaultSecretIdentifier,
+                                connectionSettings[KeyVaultCertificateSecretIdentifier],
+                                ClientCertificateAzureServiceTokenProvider.CertificateIdentifierType.KeyVaultCertificateSecretIdentifier,
                                 null, // storeLocation unused
-                                connectionSettings[TenantId],
-                                azureAdInstance);
+                                azureAdInstance,
+                                connectionSettings.ContainsKey(TenantId) // tenantId can be specified in connection string or retrieved from Key Vault access token later
+                                    ? connectionSettings[TenantId]
+                                    : default(string));
                     }
                     else if (connectionSettings.ContainsKey(AppKey))
                     {

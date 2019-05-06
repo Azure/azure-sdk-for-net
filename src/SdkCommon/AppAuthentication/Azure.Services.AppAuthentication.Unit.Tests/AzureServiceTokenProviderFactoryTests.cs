@@ -144,7 +144,6 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(Constants.ActiveDirectoryIntegratedConnectionString, provider.ConnectionString);
         }
 
-
         [Fact]
         public void ManagedServiceIdentityValidTest()
         {
@@ -181,9 +180,14 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             Assert.Equal(Constants.CertificateConnStringSubjectNameCurrentUser, provider.ConnectionString);
             Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
 
-            provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringKeyVaultSecretIdentifier, Constants.AzureAdInstance);
+            provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifier, Constants.AzureAdInstance);
             Assert.NotNull(provider);
-            Assert.Equal(Constants.CertificateConnStringKeyVaultSecretIdentifier, provider.ConnectionString);
+            Assert.Equal(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifier, provider.ConnectionString);
+            Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
+
+            provider = AzureServiceTokenProviderFactory.Create(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifierWithOptionalTenantId, Constants.AzureAdInstance);
+            Assert.NotNull(provider);
+            Assert.Equal(Constants.CertificateConnStringKeyVaultCertificateSecretIdentifierWithOptionalTenantId, provider.ConnectionString);
             Assert.IsType<ClientCertificateAzureServiceTokenProvider>(provider);
         }
 

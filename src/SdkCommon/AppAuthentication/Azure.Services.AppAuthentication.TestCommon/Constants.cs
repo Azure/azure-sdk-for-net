@@ -68,14 +68,15 @@ namespace Microsoft.Azure.Services.AppAuthentication.TestCommon
         public static readonly string AppConnStringNoLocationOrAppKey = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;";
         public static readonly string CertificateConnStringThumbprintCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateThumbprint=123;CertificateStoreLocation=CurrentUser";
         public static readonly string CertificateConnStringSubjectNameCurrentUser = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};CertificateSubjectName=123;CertificateStoreLocation=CurrentUser";
-        public static readonly string CertificateConnStringKeyVaultSecretIdentifier = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};KeyVaultSecretIdentifier=SecretIdentifier";
+        public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifier = $"RunAs=App;AppId={TestAppId};KeyVaultCertificateSecretIdentifier=SecretIdentifier";
+        public static readonly string CertificateConnStringKeyVaultCertificateSecretIdentifierWithOptionalTenantId = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};KeyVaultCertificateSecretIdentifier=SecretIdentifier";
         public static readonly string ClientSecretConnString = $"RunAs=App;AppId={TestAppId};TenantId={TenantId};AppKey={ClientSecret}";
         public static readonly string ConnectionStringEnvironmentVariableName = "AzureServicesAuthConnectionString";
         public static readonly string CurrentUserStore = "CurrentUser";
         public static readonly string InvalidString = "Invalid";
 
         // Key Vault related constants
-        public static readonly string TestKeyVaultSecretIdentifier = "https://test.vault.azure.net/secrets/testcert/c9328cfacb39440cb1c7a92308dc63de";
+        public static readonly string TestKeyVaultCertificateSecretIdentifier = "https://test.vault.azure.net/secrets/testcert/c9328cfacb39440cb1c7a92308dc63de";
 
         // Http related constants
         public static readonly string JsonContentType = "application/json";
