@@ -2,7 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28803.308
-VisualStudioVersion = 16.0.28902.138
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Configuration", "src\Azure.Configuration.csproj", "{25CE0676-8F2C-497B-8FB5-7DA41A31F6F9}"
 EndProject
@@ -12,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Az
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ApplicationModel.Configuration.Performance", "tests\Performance\Azure.ApplicationModel.Configuration.Performance.csproj", "{2F3CC223-2357-4D24-BCE7-92835C62A201}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Configuration.Samples", "samples\Azure.Configuration.Samples.csproj", "{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Configuration.Samples.Tests", "samples\Azure.Configuration.Samples.Tests.csproj", "{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
