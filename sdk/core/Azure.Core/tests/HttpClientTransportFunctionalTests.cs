@@ -11,7 +11,7 @@ namespace Azure.Core.Tests
         [NonParallelizable]
         [Theory]
         [TestCase("HTTP_PROXY", "http://microsoft.com")]
-        [TestCase("ALL_PROXY", "https://microsoft.com")]
+        [TestCase("ALL_PROXY", "http://microsoft.com")]
         public async Task ProxySettingsAreReadFromEnvironment(string envVar, string url)
         {
             try
