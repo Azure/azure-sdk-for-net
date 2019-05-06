@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "src\Azure.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Testing", "..\Azure.Core.Testing\src\Azure.Core.Testing.csproj", "{BD68EC70-3115-46EA-8B4E-47771910A997}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{84491222-6C36-4FA7-BBAE-1FA804129151}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84491222-6C36-4FA7-BBAE-1FA804129151}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84491222-6C36-4FA7-BBAE-1FA804129151}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD68EC70-3115-46EA-8B4E-47771910A997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD68EC70-3115-46EA-8B4E-47771910A997}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD68EC70-3115-46EA-8B4E-47771910A997}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD68EC70-3115-46EA-8B4E-47771910A997}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
