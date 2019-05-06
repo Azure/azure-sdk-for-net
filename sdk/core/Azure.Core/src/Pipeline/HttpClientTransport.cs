@@ -15,14 +15,22 @@ namespace Azure.Core.Pipeline
 {
     public class HttpClientTransport : HttpPipelineTransport
     {
-        static readonly HttpClient s_defaultClient = new HttpClient();
+        private readonly HttpClient _client;
 
-        readonly HttpClient _client;
+        public HttpClientTransport() : this(CreateDefaultClient())
+        {
+        }
 
-        public HttpClientTransport(HttpClient client = null)
-            => _client = client == null ? s_defaultClient : client;
+        public HttpClientTransport(HttpClient client)
+        {
+            if (client == null)
+            {
+                throw new ArgumentNullException(nameof(client));
+            }
+            _client = client;
+        }
 
-        public readonly static HttpClientTransport Shared = new HttpClientTransport();
+        public static readonly HttpClientTransport Shared = new HttpClientTransport();
 
         public sealed override Request CreateRequest(IServiceProvider services)
             => new PipelineRequest();
@@ -41,6 +49,17 @@ namespace Azure.Core.Pipeline
                     .ConfigureAwait(false);
                 message.Response = new PipelineResponse(message.Request.ClientRequestId, responseMessage);
             }
+        }
+
+        private static HttpClient CreateDefaultClient()
+        {
+            var httpClientHandler = new HttpClientHandler();
+            if (HttpEnvironmentProxy.TryCreate(out IWebProxy webProxy))
+            {
+                httpClientHandler.Proxy = webProxy;
+            }
+
+            return new HttpClient(httpClientHandler);
         }
 
         private static HttpRequestMessage BuildRequestMessage(HttpPipelineMessage message)
