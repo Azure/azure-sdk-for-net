@@ -280,17 +280,17 @@ namespace Azure.ApplicationModel.Configuration
         /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
         /// </summary>
         /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellation = default)
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual async Task<Response<ConfigurationSetting>> UpdateAsync(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateUpdateRequest(setting))
             {
-                Response response = await _pipeline.SendRequestAsync(request, cancellation).ConfigureAwait(false);
+                Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 switch (response.Status)
                 {
                     case 200:
-                        return await CreateResponseAsync(response, cancellation);
+                        return await CreateResponseAsync(response, cancellationToken);
                     default:
                         throw new RequestFailedException(response);
                 }
@@ -301,17 +301,17 @@ namespace Azure.ApplicationModel.Configuration
         /// Updates an existing <see cref="ConfigurationSetting"/> in the configuration store.
         /// </summary>
         /// <param name="setting"><see cref="ConfigurationSetting"/> to update.</param>
-        /// <param name="cancellation">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellation = default)
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
+        public virtual Response<ConfigurationSetting> Update(ConfigurationSetting setting, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateUpdateRequest(setting))
             {
-                Response response = _pipeline.SendRequest(request, cancellation);
+                Response response = _pipeline.SendRequest(request, cancellationToken);
 
                 switch (response.Status)
                 {
                     case 200:
-                        return CreateResponse(response, cancellation);
+                        return CreateResponse(response, cancellationToken);
                     default:
                         throw new RequestFailedException(response);
                 }
