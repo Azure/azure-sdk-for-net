@@ -108,19 +108,22 @@ namespace System.Net.Http
         public static bool TryCreate(out IWebProxy proxy)
         {
             // Get environment variables. Protocol specific take precedence over
-            // general all_*. On Windows, environment variables are case insensitive.
+            // general all_*, lower case variable has precedence over upper case.
+            // Note that curl uses HTTPS_PROXY but not HTTP_PROXY.
 
-            Uri httpProxy = null;
-            if (Environment.GetEnvironmentVariable(EnvCGI) == null)
+            Uri httpProxy = GetUriFromString(Environment.GetEnvironmentVariable(EnvHttpProxyLC));
+            if (httpProxy == null && Environment.GetEnvironmentVariable(EnvCGI) == null)
             {
                 httpProxy = GetUriFromString(Environment.GetEnvironmentVariable(EnvHttpProxyUC));
             }
 
-            Uri httpsProxy = GetUriFromString(Environment.GetEnvironmentVariable(EnvHttpsProxyUC));
+            Uri httpsProxy = GetUriFromString(Environment.GetEnvironmentVariable(EnvHttpsProxyLC)) ??
+                             GetUriFromString(Environment.GetEnvironmentVariable(EnvHttpsProxyUC));
 
             if (httpProxy == null || httpsProxy == null)
             {
-                Uri allProxy = GetUriFromString(Environment.GetEnvironmentVariable(EnvAllProxyUC));
+                Uri allProxy = GetUriFromString(Environment.GetEnvironmentVariable(EnvAllProxyLC)) ??
+                               GetUriFromString(Environment.GetEnvironmentVariable(EnvAllProxyUC));
 
                 if (httpProxy == null)
                 {
@@ -141,7 +144,8 @@ namespace System.Net.Http
                 return false;
             }
 
-            string noProxy = Environment.GetEnvironmentVariable(EnvNoProxyUC);
+            string noProxy = Environment.GetEnvironmentVariable(EnvNoProxyLC) ??
+                             Environment.GetEnvironmentVariable(EnvNoProxyUC);
             proxy = new HttpEnvironmentProxy(httpProxy, httpsProxy, noProxy);
 
             return true;
