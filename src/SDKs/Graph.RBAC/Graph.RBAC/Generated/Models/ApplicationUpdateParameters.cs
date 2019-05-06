@@ -53,8 +53,8 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// issued in a user or OAuth 2.0 access token that the app
         /// expects.</param>
         /// <param name="homepage">The home page of the application.</param>
-        /// <param name="informationalUrls">urls with more informations of the
-        /// application.</param>
+        /// <param name="informationalUrls">URLs with more information about
+        /// the application.</param>
         /// <param name="isDeviceOnlyAuthSupported">Specifies whether this
         /// application supports device authentication without a user. The
         /// default is false.</param>
