@@ -2,6 +2,9 @@
 # This file is generated automatically and any changes will be lost.
 
 pr:
+  branches:
+    include:
+    - master
   paths:
     include:
     - sdk/servicebus/
@@ -10,4 +13,4 @@ variables:
   ProjectFile: sdk/servicebus/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.sln
 
 jobs:
-- template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml 
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml

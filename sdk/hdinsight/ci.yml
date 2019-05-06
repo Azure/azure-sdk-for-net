@@ -2,6 +2,9 @@
 # This file is generated automatically and any changes will be lost.
 
 pr:
+  branches:
+    include:
+    - master
   paths:
     include:
     - sdk/hdinsight/
@@ -10,4 +13,4 @@ variables:
   ProjectFile: sdk/hdinsight/Microsoft.Azure.HDInsight.Job/Microsoft.Azure.HDInsight.sln
 
 jobs:
-- template: ../../.azure-pipelines/templates/jobs/archetype-sdk-client.yml
+- template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml

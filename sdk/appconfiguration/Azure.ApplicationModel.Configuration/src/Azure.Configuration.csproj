@@ -17,6 +17,7 @@
     <NoWarn>$(NoWarn);3021</NoWarn>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Azure.ApplicationModel.Configuration</AssemblyName>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +27,6 @@
     </PackageReference>
   </ItemGroup>
 
-  <!-- Import the Azure.Core project -->  
+  <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
 </Project>

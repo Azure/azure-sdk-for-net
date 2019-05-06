@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.Subscription
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IOperations.
+        /// </summary>
+        public virtual IOperations Operations { get; private set; }
+
+        /// <summary>
         /// Gets the ISubscriptionsOperations.
         /// </summary>
         public virtual ISubscriptionsOperations Subscriptions { get; private set; }
@@ -320,6 +325,7 @@ namespace Microsoft.Azure.Management.Subscription
         /// </summary>
         private void Initialize()
         {
+            Operations = new Operations(this);
             Subscriptions = new SubscriptionsOperations(this);
             Tenants = new TenantsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
