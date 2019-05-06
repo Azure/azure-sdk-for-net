@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Azure.Runtime
+namespace Azure.Data
 {
     public class Class1
     {
