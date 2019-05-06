@@ -44,7 +44,7 @@
 
   <!-- Add Client SDK Analyzers -->
   <ItemGroup>
-    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-preview1" PrivateAssets="All" />
+    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190503.1" PrivateAssets="All" />
   </ItemGroup>
 
   <!-- Import default references if this is not set -->

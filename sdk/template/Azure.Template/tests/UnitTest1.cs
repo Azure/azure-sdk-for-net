@@ -1,4 +1,4 @@
-using Azure.Runtime;
+using Azure.Data;
 using System;
 using Xunit;
 
