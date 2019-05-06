@@ -45,9 +45,11 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="pattern">A regular expression pattern to match token
         /// separators. Default is an expression that matches one or more
         /// whitespace characters.</param>
-        /// <param name="flags">Regular expression flags.</param>
+        /// <param name="flags">Regular expression flags. Possible values
+        /// include: 'CANON_EQ', 'CASE_INSENSITIVE', 'COMMENTS', 'DOTALL',
+        /// 'LITERAL', 'MULTILINE', 'UNICODE_CASE', 'UNIX_LINES'</param>
         /// <param name="stopwords">A list of stopwords.</param>
-        public PatternAnalyzer(string name, bool? lowerCaseTerms = default(bool?), string pattern = default(string), RegexFlags flags = default(RegexFlags), IList<string> stopwords = default(IList<string>))
+        public PatternAnalyzer(string name, bool? lowerCaseTerms = default(bool?), string pattern = default(string), RegexFlags? flags = default(RegexFlags?), IList<string> stopwords = default(IList<string>))
             : base(name)
         {
             LowerCaseTerms = lowerCaseTerms;
@@ -78,10 +80,12 @@ namespace Microsoft.Azure.Search.Models
         public string Pattern { get; set; }
 
         /// <summary>
-        /// Gets or sets regular expression flags.
+        /// Gets or sets regular expression flags. Possible values include:
+        /// 'CANON_EQ', 'CASE_INSENSITIVE', 'COMMENTS', 'DOTALL', 'LITERAL',
+        /// 'MULTILINE', 'UNICODE_CASE', 'UNIX_LINES'
         /// </summary>
         [JsonProperty(PropertyName = "flags")]
-        public RegexFlags Flags { get; set; }
+        public RegexFlags? Flags { get; set; }
 
         /// <summary>
         /// Gets or sets a list of stopwords.

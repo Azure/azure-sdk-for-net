@@ -17,35 +17,35 @@ using System.Collections.Generic;
 
 namespace Reservations.Tests.ScenarioTests
 {
-    public class ReservationTests : TestBase
+    public class ReservationTests : ReservationsTestBase
     {
-        
-        string ReservationOrderId = Common.ReservationOrderId;
-        string ReservationId = Common.ReservationId;
-
-        internal void ValidateReservation(ReservationResponse Reservation)
-        {
-            Assert.NotNull(Reservation);
-            Assert.NotNull(Reservation.Id);
-            Assert.NotNull(Reservation.Etag);
-            Assert.NotNull(Reservation.Name);
-            Assert.NotNull(Reservation.Properties);
-            Assert.NotNull(Reservation.Sku);
-            Assert.NotNull(Reservation.Type);
-
-            Assert.NotNull(Reservation.Properties.InstanceFlexibility);
-            Assert.NotNull(Reservation.Properties.ReservedResourceType);
-            Assert.NotNull(Reservation.Properties.SkuDescription);
-        }
 
         [Fact]
-        public void TestSplitAndMerge()
+        public void TestReservationOperations()
+        {
+            var reservationOrder = PurchaseReservationOrder();
+
+            var idTuple = ExtractIdsFromOrder(reservationOrder);
+            string reservationOrderId = idTuple.Item1;
+            string reservationId = idTuple.Item2;
+
+            TestGetReservation(reservationOrderId, reservationId);
+            TestUpdateReservationToShared(reservationOrderId, reservationId);
+            TestUpdateReservationToSingle(reservationOrderId, reservationId);
+
+            TestSplitAndMerge(reservationOrderId);
+            TestListReservations(reservationOrderId);
+            TestListReservationRevisions(reservationOrderId, reservationId);
+        }
+
+
+        private void TestSplitAndMerge(string reservationOrderId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var reservations = reservationsClient.Reservation.List(ReservationOrderId);
+                var reservations = reservationsClient.Reservation.List(reservationOrderId);
                 var enumerator1 = reservations.GetEnumerator();
                 ReservationResponse validReservation = null;
                 while (enumerator1.MoveNext())
@@ -59,14 +59,14 @@ namespace Reservations.Tests.ScenarioTests
                 }
                 Assert.NotNull(validReservation);
 
-                ReservationId = validReservation.Id.Split('/')[6];
+                var reservationId = validReservation.Id.Split('/')[6];
 
                 // Begin split test
                 SplitRequest Split = new SplitRequest(
-                        new List<int?>() { 1, 1 },
-                        CreateResourceId(ReservationOrderId, ReservationId)
+                        new List<int?>() { 1, 2 },
+                        CreateResourceId(reservationOrderId, reservationId)
                 );
-                var splitResponse = reservationsClient.Reservation.Split(ReservationOrderId, Split);
+                var splitResponse = reservationsClient.Reservation.Split(reservationOrderId, Split);
                 Assert.NotNull(splitResponse);
                 Assert.True(splitResponse.Any());
 
@@ -97,11 +97,11 @@ namespace Reservations.Tests.ScenarioTests
                 MergeRequest Merge = new MergeRequest(
                         new List<string>()
                         {
-                            CreateResourceId(ReservationOrderId, splitReservationId1),
-                            CreateResourceId(ReservationOrderId, splitReservationId2)
+                            CreateResourceId(reservationOrderId, splitReservationId1),
+                            CreateResourceId(reservationOrderId, splitReservationId2)
                         }
                 );
-                var mergeResponse = reservationsClient.Reservation.Merge(ReservationOrderId, Merge);
+                var mergeResponse = reservationsClient.Reservation.Merge(reservationOrderId, Merge);
                 var enumerator3 = splitResponse.GetEnumerator();
 
                 ReservationResponse mergedReservation = null;
@@ -116,31 +116,27 @@ namespace Reservations.Tests.ScenarioTests
 
                 Assert.NotNull(mergedReservation);
                 ValidateReservation(mergedReservation);
-                ReservationId = mergedReservation.Id.Split('/')[6];
-
             }
         }
         
-        [Fact]
-        public void TestGetReservation()
+        private void TestGetReservation(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var reservation = reservationsClient.Reservation.Get(ReservationId, ReservationOrderId);
+                var reservation = reservationsClient.Reservation.Get(reservationId, reservationOrderId);
                 ValidateReservation(reservation);
             }
         }
 
-        [Fact]
-        public void TestUpdateReservationToShared()
+        private void TestUpdateReservationToShared(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var reservations = reservationsClient.Reservation.List(ReservationOrderId);
+                var reservations = reservationsClient.Reservation.List(reservationOrderId);
                 var enumerator1 = reservations.GetEnumerator();
                 ReservationResponse validReservation = null;
                 while (enumerator1.MoveNext())
@@ -154,21 +150,20 @@ namespace Reservations.Tests.ScenarioTests
                 }
                 Assert.NotNull(validReservation);
 
-                ReservationId = validReservation.Id.Split('/')[6];
+                reservationId = validReservation.Id.Split('/')[6];
                 Patch Patch = new Patch(AppliedScopeType.Shared, null, InstanceFlexibility.On);
-                var reservation = reservationsClient.Reservation.Update(ReservationOrderId, ReservationId, Patch);
+                var reservation = reservationsClient.Reservation.Update(reservationOrderId, reservationId, Patch);
                 ValidateReservation(reservation);
             }
         }
 
-        [Fact]
-        public void TestUpdateReservationToSingle()
+        private void TestUpdateReservationToSingle(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var reservations = reservationsClient.Reservation.List(ReservationOrderId);
+                var reservations = reservationsClient.Reservation.List(reservationOrderId);
                 var enumerator1 = reservations.GetEnumerator();
                 ReservationResponse validReservation = null;
                 while (enumerator1.MoveNext())
@@ -182,21 +177,20 @@ namespace Reservations.Tests.ScenarioTests
                 }
                 Assert.NotNull(validReservation);
 
-                ReservationId = validReservation.Id.Split('/')[6];
+                reservationId = validReservation.Id.Split('/')[6];
                 Patch Patch = new Patch(AppliedScopeType.Single, new List<string>() { $"/subscriptions/{Common.SubscriptionId}" }, InstanceFlexibility.On);
-                var reservation = reservationsClient.Reservation.Update(ReservationOrderId, ReservationId, Patch);
+                var reservation = reservationsClient.Reservation.Update(reservationOrderId, reservationId, Patch);
                 ValidateReservation(reservation);
             }
         }
 
-        [Fact]
-        public void TestListReservations()
+        private void TestListReservations(string reservationOrderId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var ReservationList = reservationsClient.Reservation.List(ReservationOrderId);
+                var ReservationList = reservationsClient.Reservation.List(reservationOrderId);
                 Assert.NotNull(ReservationList);
                 Assert.True(ReservationList.Any());
                 var enumerator = ReservationList.GetEnumerator();
@@ -207,14 +201,13 @@ namespace Reservations.Tests.ScenarioTests
             }
         }
 
-        [Fact]
-        public void TestListReservationRevisions()
+        private void TestListReservationRevisions(string reservationOrderId, string reservationId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var revisions = reservationsClient.Reservation.ListRevisions(ReservationId, ReservationOrderId);
+                var revisions = reservationsClient.Reservation.ListRevisions(reservationId, reservationOrderId);
                 Assert.NotNull(revisions);
                 Assert.True(revisions.Any());
                 var enumerator = revisions.GetEnumerator();
@@ -223,18 +216,6 @@ namespace Reservations.Tests.ScenarioTests
                     ValidateReservation(enumerator.Current);
                 }
             }
-        }
-
-        private static string GetSessionsDirectoryPath()
-        {
-            System.Type something = typeof(Reservations.Tests.ScenarioTests.ReservationTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
-        }
-
-        private string CreateResourceId(string ReservationOrderId, string ReservationId)
-        {
-            return string.Format("/providers/Microsoft.Capacity/reservationOrders/{0}/reservations/{1}", ReservationOrderId, ReservationId);
         }
     }
 }

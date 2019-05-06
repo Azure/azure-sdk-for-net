@@ -32,7 +32,7 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         /// <param name="delete">List of Metadata associated with answer to be
         /// deleted</param>
-        /// <param name="add">List of Metadat associated with answer to be
+        /// <param name="add">List of metadata associated with answer to be
         /// added</param>
         public UpdateQnaDTOMetadata(IList<MetadataDTO> delete = default(IList<MetadataDTO>), IList<MetadataDTO> add = default(IList<MetadataDTO>))
             : base(delete, add)

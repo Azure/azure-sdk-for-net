@@ -36,10 +36,20 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// registry. The password is a secret
         /// object that allows multiple ways of providing the value for
         /// it.</param>
-        public CustomRegistryCredentials(SecretObject userName = default(SecretObject), SecretObject password = default(SecretObject))
+        /// <param name="identity">Indicates the managed identity assigned to
+        /// the custom credential. If a user-assigned identity
+        /// this value is the Client ID. If a system-assigned identity, the
+        /// value will be `system`. In
+        /// the case of a system-assigned identity, the Client ID will be
+        /// determined by the runner. This
+        /// identity may be used to authenticate to key vault to retrieve
+        /// credentials or it may be the only
+        /// source of authentication used for accessing the registry.</param>
+        public CustomRegistryCredentials(SecretObject userName = default(SecretObject), SecretObject password = default(SecretObject), string identity = default(string))
         {
             UserName = userName;
             Password = password;
+            Identity = identity;
             CustomInit();
         }
 
@@ -61,6 +71,20 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "password")]
         public SecretObject Password { get; set; }
+
+        /// <summary>
+        /// Gets or sets indicates the managed identity assigned to the custom
+        /// credential. If a user-assigned identity
+        /// this value is the Client ID. If a system-assigned identity, the
+        /// value will be `system`. In
+        /// the case of a system-assigned identity, the Client ID will be
+        /// determined by the runner. This
+        /// identity may be used to authenticate to key vault to retrieve
+        /// credentials or it may be the only
+        /// source of authentication used for accessing the registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public string Identity { get; set; }
 
     }
 }

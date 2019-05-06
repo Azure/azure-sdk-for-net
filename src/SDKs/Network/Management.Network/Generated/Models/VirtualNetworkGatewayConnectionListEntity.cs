@@ -39,8 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="virtualNetworkGateway1">The reference to virtual
         /// network gateway resource.</param>
         /// <param name="connectionType">Gateway connection type. Possible
-        /// values are: 'Ipsec','Vnet2Vnet','ExpressRoute', and 'VPNClient.
-        /// Possible values include: 'IPsec', 'Vnet2Vnet', 'ExpressRoute',
+        /// values include: 'IPsec', 'Vnet2Vnet', 'ExpressRoute',
         /// 'VPNClient'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="name">Resource name.</param>
@@ -56,10 +55,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// connection. Possible values include: 'IKEv2', 'IKEv1'</param>
         /// <param name="routingWeight">The routing weight.</param>
         /// <param name="sharedKey">The IPSec shared key.</param>
-        /// <param name="connectionStatus">Virtual network Gateway connection
-        /// status. Possible values are 'Unknown', 'Connecting', 'Connected'
-        /// and 'NotConnected'. Possible values include: 'Unknown',
-        /// 'Connecting', 'Connected', 'NotConnected'</param>
+        /// <param name="connectionStatus">Virtual Network Gateway connection
+        /// status. Possible values include: 'Unknown', 'Connecting',
+        /// 'Connected', 'NotConnected'</param>
         /// <param name="tunnelConnectionStatus">Collection of all tunnels'
         /// connection health status.</param>
         /// <param name="egressBytesTransferred">The egress bytes transferred
@@ -137,9 +135,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public VirtualNetworkConnectionGatewayReference LocalNetworkGateway2 { get; set; }
 
         /// <summary>
-        /// Gets or sets gateway connection type. Possible values are:
-        /// 'Ipsec','Vnet2Vnet','ExpressRoute', and 'VPNClient. Possible values
-        /// include: 'IPsec', 'Vnet2Vnet', 'ExpressRoute', 'VPNClient'
+        /// Gets or sets gateway connection type. Possible values include:
+        /// 'IPsec', 'Vnet2Vnet', 'ExpressRoute', 'VPNClient'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectionType")]
         public string ConnectionType { get; set; }
@@ -164,10 +161,8 @@ namespace Microsoft.Azure.Management.Network.Models
         public string SharedKey { get; set; }
 
         /// <summary>
-        /// Gets virtual network Gateway connection status. Possible values are
-        /// 'Unknown', 'Connecting', 'Connected' and 'NotConnected'. Possible
-        /// values include: 'Unknown', 'Connecting', 'Connected',
-        /// 'NotConnected'
+        /// Gets virtual Network Gateway connection status. Possible values
+        /// include: 'Unknown', 'Connecting', 'Connected', 'NotConnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.connectionStatus")]
         public string ConnectionStatus { get; private set; }

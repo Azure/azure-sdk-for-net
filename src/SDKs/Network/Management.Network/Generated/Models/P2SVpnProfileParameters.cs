@@ -29,9 +29,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the P2SVpnProfileParameters class.
         /// </summary>
-        /// <param name="authenticationMethod">VPN client Authentication
-        /// Method. Possible values are: 'EAPTLS' and 'EAPMSCHAPv2'. Possible
-        /// values include: 'EAPTLS', 'EAPMSCHAPv2'</param>
+        /// <param name="authenticationMethod">VPN client authentication
+        /// method. Possible values include: 'EAPTLS', 'EAPMSCHAPv2'</param>
         public P2SVpnProfileParameters(string authenticationMethod = default(string))
         {
             AuthenticationMethod = authenticationMethod;
@@ -44,9 +43,8 @@ namespace Microsoft.Azure.Management.Network.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets VPN client Authentication Method. Possible values are:
-        /// 'EAPTLS' and 'EAPMSCHAPv2'. Possible values include: 'EAPTLS',
-        /// 'EAPMSCHAPv2'
+        /// Gets or sets VPN client authentication method. Possible values
+        /// include: 'EAPTLS', 'EAPMSCHAPv2'
         /// </summary>
         [JsonProperty(PropertyName = "authenticationMethod")]
         public string AuthenticationMethod { get; set; }

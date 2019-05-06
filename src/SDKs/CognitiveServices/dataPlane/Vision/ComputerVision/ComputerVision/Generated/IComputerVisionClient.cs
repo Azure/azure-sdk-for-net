@@ -384,9 +384,9 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// the state-of-the-art Optical Character Recognition (OCR) algorithms
         /// optimized for text-heavy documents. When you use the Read File
         /// interface, the response contains a field called
-        /// "Operation-Location". The "Operation-Location" field contains the
-        /// URL that you must use for your "Read Operation Result" operation to
-        /// access OCR results.​
+        /// 'Operation-Location'. The 'Operation-Location' field contains the
+        /// URL that you must use for your 'GetReadOperationResult' operation
+        /// to access OCR results.​
         /// </summary>
         /// <param name='mode'>
         /// Type of text to recognize. Possible values include: 'Handwritten',
@@ -406,11 +406,11 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// <summary>
         /// This interface is used for getting OCR results of Read operation.
         /// The URL to this interface should be retrieved from
-        /// "Operation-Location" field returned from Batch Read File interface.
+        /// 'Operation-Location' field returned from Batch Read File interface.
         /// </summary>
         /// <param name='operationId'>
-        /// Id of read operation returned in the response of the "Batch Read
-        /// File" interface.
+        /// Id of read operation returned in the response of the 'Batch Read
+        /// File' interface.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -713,8 +713,8 @@ namespace Microsoft.Azure.CognitiveServices.Vision.ComputerVision
         /// employing the state-of-the-art Optical Character Recognition (OCR)
         /// algorithms optimized for text-heavy documents. When you use the
         /// Read Document interface, the response contains a field called
-        /// "Operation-Location". The "Operation-Location" field contains the
-        /// URL that you must use for your "Get Read Result operation" to
+        /// 'Operation-Location'. The 'Operation-Location' field contains the
+        /// URL that you must use for your 'Get Read Result operation' to
         /// access OCR results.​
         /// </summary>
         /// <param name='image'>

@@ -44,9 +44,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="addressPrefix">/29 IP address space to carve out
         /// Customer addresses for tunnels.</param>
         /// <param name="circuitConnectionStatus">Express Route Circuit
-        /// Connection State. Possible values are: 'Connected' and
-        /// 'Disconnected'. Possible values include: 'Connected', 'Connecting',
-        /// 'Disconnected'</param>
+        /// connection state. Possible values include: 'Connected',
+        /// 'Connecting', 'Disconnected'</param>
         /// <param name="connectionName">The name of the express route circuit
         /// connection resource.</param>
         /// <param name="authResourceGuid">The resource guid of the
@@ -102,12 +101,11 @@ namespace Microsoft.Azure.Management.Network.Models
         public string AddressPrefix { get; set; }
 
         /// <summary>
-        /// Gets express Route Circuit Connection State. Possible values are:
-        /// 'Connected' and 'Disconnected'. Possible values include:
-        /// 'Connected', 'Connecting', 'Disconnected'
+        /// Gets or sets express Route Circuit connection state. Possible
+        /// values include: 'Connected', 'Connecting', 'Disconnected'
         /// </summary>
         [JsonProperty(PropertyName = "properties.circuitConnectionStatus")]
-        public string CircuitConnectionStatus { get; private set; }
+        public string CircuitConnectionStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the express route circuit connection
