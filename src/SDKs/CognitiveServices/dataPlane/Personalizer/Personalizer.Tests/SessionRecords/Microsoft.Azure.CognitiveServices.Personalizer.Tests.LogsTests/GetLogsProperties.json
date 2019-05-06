@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/personalizer/v1.0/logs/properties",
-      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2xvZ3MvcHJvcGVydGllcw==",
+      "RequestUri": "/personalizer/v1.0/default/logs/properties",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2RlZmF1bHQvbG9ncy9wcm9wZXJ0aWVz",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -21,7 +21,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 04:33:00 GMT"
+          "Mon, 06 May 2019 20:53:43 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,7 +33,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=d1396e87fd4b4f05b26f99bef72f40f9; expires=Thu, 24 Oct 2019 04:33:00 GMT; domain=; path=/; samesite=lax"
+          "pid=8b93cac278cd4e758977d4d7162e89b2; expires=Sat, 02 Nov 2019 20:53:43 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"
@@ -45,7 +45,7 @@
           "0"
         ]
       },
-      "ResponseBody": "{\r\n  \"dateRange\": {\r\n    \"from\": \"2019-04-26T21:33:00.446541-07:00\",\r\n    \"to\": \"2019-04-27T21:33:00.4465419-07:00\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"startTime\": \"0001-01-01T00:00:00-08:00\",\r\n  \"endTime\": \"0001-01-01T00:00:00-08:00\"\r\n}",
       "StatusCode": 200
     }
   ],

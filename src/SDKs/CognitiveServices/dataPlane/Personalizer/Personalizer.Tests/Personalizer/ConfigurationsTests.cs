@@ -19,9 +19,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                 IPersonalizerClient client = GetClient(HttpMockServer.CreateInstance());
 
                 ServiceConfiguration defaultConfig = await client.ServiceConfiguration.GetAsync();
-                Assert.Equal("00:01:00", defaultConfig.RewardWaitTime);
-                Assert.Equal("01:00:00", defaultConfig.ModelExportFrequency);
-                Assert.Equal(0D, defaultConfig.DefaultReward);
+                Assert.Equal(TimeSpan.FromMinutes(1), defaultConfig.RewardWaitTime);
+                Assert.Equal(TimeSpan.FromHours(1), defaultConfig.ModelExportFrequency);
+                Assert.Equal(1, defaultConfig.DefaultReward);
                 Assert.Equal(0.2, defaultConfig.ExplorationPercentage);
                 Assert.Equal(0, defaultConfig.LogRetentionDays);
             }
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                 var config = new ServiceConfiguration
                 {
                     RewardAggregation = newRewardFuntion,
-                    ModelExportFrequency = modelExportFrequency.ToString(),
+                    ModelExportFrequency = modelExportFrequency,
                     DefaultReward = newDefaultReward,
-                    RewardWaitTime = newExperimentalUnitDuration.ToString(),
+                    RewardWaitTime = newExperimentalUnitDuration,
                     ExplorationPercentage = newExplorationPercentage
                 };
 

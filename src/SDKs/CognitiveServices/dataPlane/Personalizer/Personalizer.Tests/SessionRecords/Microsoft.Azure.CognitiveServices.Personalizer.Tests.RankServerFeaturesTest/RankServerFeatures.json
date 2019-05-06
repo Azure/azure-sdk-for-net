@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/personalizer/v1.0/rank",
-      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL3Jhbms=",
+      "RequestUri": "/personalizer/v1.0/default/rank",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2RlZmF1bHQvcmFuaw==",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"contextFeatures\": [\r\n    {\r\n      \"Features\": {\r\n        \"day\": \"tuesday\",\r\n        \"time\": \"night\",\r\n        \"weather\": \"rainy\"\r\n      }\r\n    },\r\n    {\r\n      \"Features\": {\r\n        \"userId\": \"1234\",\r\n        \"payingUser\": true,\r\n        \"favoriteGenre\": \"documentary\",\r\n        \"hoursOnSite\": 0.12,\r\n        \"lastwatchedType\": \"movie\"\r\n      }\r\n    }\r\n  ],\r\n  \"actions\": [\r\n    {\r\n      \"id\": \"Person1\",\r\n      \"features\": [\r\n        {\r\n          \"videoType\": \"documentary\",\r\n          \"videoLength\": 35,\r\n          \"director\": \"CarlSagan\"\r\n        },\r\n        {\r\n          \"mostWatchedByAge\": \"30-35\"\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"Person2\",\r\n      \"features\": [\r\n        {\r\n          \"videoType\": \"documentary\",\r\n          \"videoLength\": 35,\r\n          \"director\": \"CarlSagan\"\r\n        },\r\n        {\r\n          \"mostWatchedByAge\": \"40-45\"\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"excludedActions\": [\r\n    \"Person1\"\r\n  ],\r\n  \"eventId\": \"123456789\"\r\n}",
       "RequestHeaders": {
@@ -27,7 +27,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 04:31:47 GMT"
+          "Mon, 06 May 2019 20:51:54 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -39,7 +39,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=92e59a9443a84d5bbcfde0e875f39141; expires=Thu, 24 Oct 2019 04:31:47 GMT; domain=; path=/; samesite=lax"
+          "pid=a58030dda19c47f7b8b2fb898afa2d7e; expires=Sat, 02 Nov 2019 20:51:54 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"

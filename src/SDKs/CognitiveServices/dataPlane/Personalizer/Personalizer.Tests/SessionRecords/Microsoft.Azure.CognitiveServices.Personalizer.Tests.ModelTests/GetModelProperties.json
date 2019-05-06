@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/personalizer/v1.0/model/properties",
-      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL21vZGVsL3Byb3BlcnRpZXM=",
+      "RequestUri": "/personalizer/v1.0/default/model/properties",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2RlZmF1bHQvbW9kZWwvcHJvcGVydGllcw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -21,7 +21,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 04:32:38 GMT"
+          "Mon, 06 May 2019 20:52:27 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -33,7 +33,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=20fe90df3e4f4d49b8a5864377946eaa; expires=Thu, 24 Oct 2019 04:32:38 GMT; domain=; path=/; samesite=lax"
+          "pid=af77ced8733d4116a8315f14891acfb9; expires=Sat, 02 Nov 2019 20:52:27 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"

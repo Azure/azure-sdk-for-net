@@ -4,7 +4,6 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
 using System.Collections.Generic;
 using System;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
 {
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Tests
                 IList<Evaluation> evaluations = client.Evaluations.List();
 
                 Assert.True(evaluations.Count > 0);
-                Assert.Equal("myFirstEvaluation", evaluations[0].Name);
+                Assert.Equal("fi2", evaluations[0].Name);
             }
         }
 

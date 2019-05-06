@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/personalizer/v1.0/configurations/policy",
-      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2NvbmZpZ3VyYXRpb25zL3BvbGljeQ==",
+      "RequestUri": "/personalizer/v1.0/default/configurations/policy",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2RlZmF1bHQvY29uZmlndXJhdGlvbnMvcG9saWN5",
       "RequestMethod": "PATCH",
       "RequestBody": "{\r\n  \"name\": \"app1\",\r\n  \"arguments\": \"--cb_explore_adf --quadratic GT --quadratic MR --quadratic GR --quadratic ME --quadratic OT --quadratic OE --quadratic OR --quadratic MS --quadratic GX --ignore A --cb_type ips --epsilon 0.2\"\r\n}",
       "RequestHeaders": {
@@ -27,7 +27,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 04:31:47 GMT"
+          "Mon, 06 May 2019 20:52:45 GMT"
         ],
         "Pragma": [
           "no-cache"

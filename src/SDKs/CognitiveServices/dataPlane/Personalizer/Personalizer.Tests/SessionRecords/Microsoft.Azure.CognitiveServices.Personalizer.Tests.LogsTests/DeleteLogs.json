@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/personalizer/v1.0/logs",
-      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2xvZ3M=",
+      "RequestUri": "/personalizer/v1.0/default/logs",
+      "EncodedRequestUri": "L3BlcnNvbmFsaXplci92MS4wL2RlZmF1bHQvbG9ncw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
@@ -21,7 +21,7 @@
           "no-store, must-revalidate, no-cache"
         ],
         "Date": [
-          "Sat, 27 Apr 2019 04:33:00 GMT"
+          "Mon, 06 May 2019 20:51:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -30,7 +30,7 @@
           "Kestrel"
         ],
         "Set-Cookie": [
-          "pid=901e85b2ea6d40068f05b2abef6c6e47; expires=Thu, 24 Oct 2019 04:33:00 GMT; domain=; path=/; samesite=lax"
+          "pid=89e7b66ccd2f47af8dbd64e5b514e055; expires=Sat, 02 Nov 2019 20:51:53 GMT; domain=; path=/; samesite=lax"
         ],
         "Timing-Allow-Origin": [
           "*"
