@@ -6,7 +6,7 @@ using System.Reflection;
 using Castle.DynamicProxy;
 using NUnit.Framework;
 
-namespace Azure.Core.Tests
+namespace Azure.Core.Testing
 {
     [TestFixture(true)]
     [TestFixture(false)]

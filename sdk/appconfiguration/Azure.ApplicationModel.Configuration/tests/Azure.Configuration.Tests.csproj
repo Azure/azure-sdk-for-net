@@ -14,11 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Configuration.csproj" />
-    <ProjectReference Include="..\..\..\core\Azure.Core\tests\Azure.Core.Tests.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\tests\Testing\TestPool.cs" Link="TestPool.cs" />
+    <ProjectReference Include="..\..\..\core\Azure.Core.Testing\src\Azure.Core.Testing.csproj" />
   </ItemGroup>
 
   <!-- Import the Azure.Core project -->

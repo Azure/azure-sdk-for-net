@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Azure.Core.Tests.Testing
+namespace Azure.Core.Testing
 {
     public static class TaskExtensions
     {

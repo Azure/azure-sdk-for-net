@@ -11,9 +11,13 @@
     <PackageReference Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Core.Testing\src\Azure.Core.Testing.csproj" />
     <ProjectReference Include="..\src\Azure.Core.csproj">
       <Project>{FEC0AE57-E241-46DB-B7C7-9181F28E1D3F}</Project>
       <Name>Azure.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Testing\" />
   </ItemGroup>
 </Project>
