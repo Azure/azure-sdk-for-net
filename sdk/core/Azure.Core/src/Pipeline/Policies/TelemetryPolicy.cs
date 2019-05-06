@@ -15,7 +15,7 @@ namespace Azure.Core.Pipeline.Policies
 
         private string _applicationId;
 
-        private readonly bool _disable = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_DISABLE_TELEMETRY")) ?? false;
+        private readonly bool _disable = EnvironmentVariableToBool(Environment.GetEnvironmentVariable("AZURE_TELEMETRY_DISABLED")) ?? false;
 
         public string ApplicationId
         {

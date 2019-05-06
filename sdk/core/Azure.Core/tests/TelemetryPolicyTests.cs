@@ -47,7 +47,7 @@ namespace Azure.Core.Tests
         {
             try
             {
-                Environment.SetEnvironmentVariable("AZURE_DISABLE_TELEMETRY", value);
+                Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", value);
 
                 var transport = new MockTransport(new MockResponse(200));
                 var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly);
