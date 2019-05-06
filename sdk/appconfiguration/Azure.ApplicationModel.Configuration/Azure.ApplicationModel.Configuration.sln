@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\..\core\Az
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ApplicationModel.Configuration.Performance", "tests\Performance\Azure.ApplicationModel.Configuration.Performance.csproj", "{2F3CC223-2357-4D24-BCE7-92835C62A201}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Configuration.Samples.Tests", "samples\Azure.Configuration.Samples.Tests.csproj", "{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F3CC223-2357-4D24-BCE7-92835C62A201}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C4126CB-6EC1-4DFB-9A1F-C52C440BC5CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
