@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Tests;
+using Azure.Core.Testing;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {

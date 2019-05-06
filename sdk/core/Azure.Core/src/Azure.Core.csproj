@@ -9,7 +9,7 @@
       ]]>
     </PackageReleaseNotes>
 
-   <!-- Make sure that we don't pull in additional dependencies during build or package -->	
+   <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
 
     <!-- This is a workaorund until https://github.com/Azure/azure-sdk-for-net/issues/5214 is addressed -->
@@ -19,6 +19,7 @@
     <LangVersion>7.3</LangVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
