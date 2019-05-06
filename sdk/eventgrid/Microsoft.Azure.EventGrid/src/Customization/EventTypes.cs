@@ -63,7 +63,7 @@ namespace Microsoft.Azure.EventGrid
         public const string MediaLiveEventIncomingStreamReceivedEvent = "Microsoft.Media.LiveEventIncomingStreamReceived";
         public const string MediaLiveEventIncomingStreamsOutOfSyncEvent = "Microsoft.Media.LiveEventIncomingStreamsOutOfSync";
         public const string MediaLiveEventIncomingVideoStreamsOutOfSyncEvent = "Microsoft.Media.LiveEventIncomingVideoStreamsOutOfSync";
-        public const string MediaLiveEventIncomingChunkDroppedEvent = "Microsoft.Media.LiveEventIncomingChunkDropped";
+        public const string MediaLiveEventIncomingChunkDroppedEvent = "Microsoft.Media.LiveEventIncomingDataChunkDropped";
         public const string MediaLiveEventIngestHeartbeatEvent = "Microsoft.Media.LiveEventIngestHeartbeat";
         public const string MediaLiveEventTrackDiscontinuityDetectedEvent = "Microsoft.Media.LiveEventTrackDiscontinuityDetected";
 
