@@ -97,7 +97,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{applicationId}/configurations/service";
-            _url = _url.Replace("{endpoint}", this.Endpoint);
+            _url = _url.Replace("{Endpoint}", this.Endpoint);
             _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(Client.ApplicationId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{applicationId}/configurations/service";
-            _url = _url.Replace("{endpoint}", this.Endpoint);
+            _url = _url.Replace("{Endpoint}", this.Endpoint);
             _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(Client.ApplicationId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();

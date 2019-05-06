@@ -225,7 +225,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             Events = new Events(this);
             Logs = new Logs(this);
             Model = new Model(this);
-            BaseUri = "{endpoint}/personalizer/v1.0";
+            BaseUri = "{Endpoint}/personalizer/v1.0";
             ApplicationId = "default";
             SerializationSettings = new JsonSerializerSettings
             {
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             // Construct URL
             var _baseUrl = BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{applicationId}/rank";
-            _url = _url.Replace("{endpoint}", Endpoint);
+            _url = _url.Replace("{Endpoint}", Endpoint);
             _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(ApplicationId));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();

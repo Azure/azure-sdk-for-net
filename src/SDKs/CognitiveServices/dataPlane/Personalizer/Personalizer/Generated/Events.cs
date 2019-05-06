@@ -110,7 +110,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{applicationId}/events/{eventId}/reward";
-            _url = _url.Replace("{endpoint}", this.Endpoint);
+            _url = _url.Replace("{Endpoint}", this.Endpoint);
             _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(Client.ApplicationId));
             _url = _url.Replace("{eventId}", System.Uri.EscapeDataString(eventId));
             // Create HTTP transport objects
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
             // Construct URL
             var _baseUrl = Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "{applicationId}/events/{eventId}/activate";
-            _url = _url.Replace("{endpoint}", this.Endpoint);
+            _url = _url.Replace("{Endpoint}", this.Endpoint);
             _url = _url.Replace("{applicationId}", System.Uri.EscapeDataString(Client.ApplicationId));
             _url = _url.Replace("{eventId}", System.Uri.EscapeDataString(eventId));
             // Create HTTP transport objects
