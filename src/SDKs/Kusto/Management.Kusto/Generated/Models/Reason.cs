@@ -12,11 +12,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
 {
 
     /// <summary>
-    /// Defines values for NameAvailable.
+    /// Defines values for Reason.
     /// </summary>
-    public static class NameAvailable
+    public static class Reason
     {
-        public const string Available = "Available";
-        public const string NotAvailable = "NotAvailable";
+        public const string Invalid = "Invalid";
+        public const string AlreadyExists = "AlreadyExists";
     }
 }

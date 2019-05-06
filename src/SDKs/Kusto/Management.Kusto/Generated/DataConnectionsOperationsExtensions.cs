@@ -139,7 +139,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='dataConnectionName'>
             /// The name of the data connection.
             /// </param>
-            public static CheckNameAvailabilityResult CheckNameAvailability(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameRequest dataConnectionName)
+            public static CheckNameResult CheckNameAvailability(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameRequest dataConnectionName)
             {
                 return operations.CheckNameAvailabilityAsync(resourceGroupName, clusterName, databaseName, dataConnectionName).GetAwaiter().GetResult();
             }
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CheckNameAvailabilityResult> CheckNameAvailabilityAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameRequest dataConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CheckNameResult> CheckNameAvailabilityAsync(this IDataConnectionsOperations operations, string resourceGroupName, string clusterName, string databaseName, DataConnectionCheckNameRequest dataConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, dataConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
