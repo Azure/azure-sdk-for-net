@@ -11,6 +11,8 @@
 namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
 {
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -34,10 +36,11 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// <param name="connectorId">Unique connector id</param>
         /// <param name="connectorDataConfiguration">Serialized JSON object for
         /// detailed properties</param>
-        /// <param name="validateOnly">Boolean indicating validate only</param>
+        /// <param name="validateOnly">True or false string indicating validate
+        /// only</param>
         /// <param name="workItemProperties">Custom work item
         /// properties</param>
-        public WorkItemCreateConfiguration(string connectorId = default(string), string connectorDataConfiguration = default(string), bool? validateOnly = default(bool?), string workItemProperties = default(string))
+        public WorkItemCreateConfiguration(string connectorId = default(string), string connectorDataConfiguration = default(string), string validateOnly = default(string), IDictionary<string, string> workItemProperties = default(IDictionary<string, string>))
         {
             ConnectorId = connectorId;
             ConnectorDataConfiguration = connectorDataConfiguration;
@@ -64,16 +67,16 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         public string ConnectorDataConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets boolean indicating validate only
+        /// Gets or sets true or false string indicating validate only
         /// </summary>
         [JsonProperty(PropertyName = "ValidateOnly")]
-        public bool? ValidateOnly { get; set; }
+        public string ValidateOnly { get; set; }
 
         /// <summary>
         /// Gets or sets custom work item properties
         /// </summary>
         [JsonProperty(PropertyName = "WorkItemProperties")]
-        public string WorkItemProperties { get; set; }
+        public IDictionary<string, string> WorkItemProperties { get; set; }
 
     }
 }
