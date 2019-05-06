@@ -113,7 +113,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("was not found", ex.Message);
                 }
 
                 // cleanup - remove the account
@@ -140,7 +140,7 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Contains("was not found", ex.Message);
                 }
 
                 // cleanup - remove pool and account
@@ -171,7 +171,8 @@ namespace NetApp.Tests.ResourceTests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Contains("Conflict", ex.Message);
+                    // Conflict
+                    Assert.Equal("Can not delete resource before nested resources are deleted.", ex.Message);
                 }
 
                 // clean up
