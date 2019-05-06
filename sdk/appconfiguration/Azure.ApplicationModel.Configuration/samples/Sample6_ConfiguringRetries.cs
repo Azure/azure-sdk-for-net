@@ -5,7 +5,6 @@
 using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
-using System.Threading.Tasks;
 
 namespace Azure.ApplicationModel.Configuration.Samples
 {

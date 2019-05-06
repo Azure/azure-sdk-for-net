@@ -7,7 +7,6 @@ using Azure.Core.Pipeline.Policies;
 using NUnit.Framework;
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Azure.ApplicationModel.Configuration.Samples
 {
