@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
@@ -35,6 +36,29 @@ namespace Azure.Core.Tests
 
             Assert.True(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
             StringAssert.StartsWith("application-id ", userAgent);
+        }
+
+        [NonParallelizable]
+        [Theory]
+        [TestCase("true")]
+        [TestCase("TRUE")]
+        [TestCase("1")]
+        public async Task CanDisableTelemetryWithEnvironmentVariable(string value)
+        {
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_DISABLE_TELEMETRY", value);
+
+                var transport = new MockTransport(new MockResponse(200));
+                var telemetryPolicy = new TelemetryPolicy(typeof(TelemetryPolicyTests).Assembly);
+                await SendGetRequest(transport, telemetryPolicy);
+
+                Assert.False(transport.SingleRequest.TryGetHeader("User-Agent", out var userAgent));
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_DISABLE_TELEMETRY", null);
+            }
         }
     }
 }
