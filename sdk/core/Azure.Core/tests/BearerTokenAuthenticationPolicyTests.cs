@@ -19,11 +19,23 @@ namespace Azure.Core.Tests
         public async Task UsesTokenProvidedByCredentials()
         {
             var credentialsMock = new Mock<TokenCredential>();
-            credentialsMock.Setup(
-                    credential => credential.GetTokenAsync(
-                        It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
-                        It.IsAny<CancellationToken>()))
-                .ReturnsAsync("token");
+
+            if (IsAsync)
+            {
+                credentialsMock.Setup(
+                        credential => credential.GetTokenAsync(
+                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.IsAny<CancellationToken>()))
+                    .ReturnsAsync("token");
+            }
+            else
+            {
+                credentialsMock.Setup(
+                        credential => credential.GetToken(
+                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.IsAny<CancellationToken>()))
+                    .Returns("token");
+            }
 
             var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200));
@@ -38,11 +50,23 @@ namespace Azure.Core.Tests
         {
             string currentToken = null;
             var credentialsMock = new Mock<TokenCredential>();
-            credentialsMock.Setup(
-                    credential => credential.GetTokenAsync(
-                        It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
-                        It.IsAny<CancellationToken>()))
-                .ReturnsAsync(() => currentToken);
+
+            if (IsAsync)
+            {
+                credentialsMock.Setup(
+                        credential => credential.GetTokenAsync(
+                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(() => currentToken);
+            }
+            else
+            {
+                credentialsMock.Setup(
+                        credential => credential.GetToken(
+                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope1", "scope2" })),
+                            It.IsAny<CancellationToken>()))
+                    .Returns(() => currentToken);
+            }
 
             var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, new [] { "scope1", "scope2" });
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
@@ -64,11 +88,22 @@ namespace Azure.Core.Tests
         public async Task CachesHeaderValue()
         {
             var credentialsMock = new Mock<TokenCredential>();
-            credentialsMock.Setup(
-                    credential => credential.GetTokenAsync(
-                        It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope"})),
-                        It.IsAny<CancellationToken>()))
-                .ReturnsAsync("token");
+            if (IsAsync)
+            {
+                credentialsMock.Setup(
+                        credential => credential.GetTokenAsync(
+                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
+                            It.IsAny<CancellationToken>()))
+                    .ReturnsAsync("token");
+            }
+            else
+            {
+                credentialsMock.Setup(
+                        credential => credential.GetToken(
+                            It.Is<string[]>(strings => strings.SequenceEqual(new[] { "scope" })),
+                            It.IsAny<CancellationToken>()))
+                    .Returns("token");
+            }
 
             var policy = new BearerTokenAuthenticationPolicy(credentialsMock.Object, "scope");
             MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));

@@ -52,7 +52,7 @@ namespace Azure.Core.Pipeline.Policies
         {
             string token = async ?
                     await _credential.GetTokenAsync(_scopes, message.Cancellation).ConfigureAwait(false) :
-                    _credential.GetTokenAsync(_scopes, message.Cancellation).GetAwaiter().GetResult();
+                    _credential.GetToken(_scopes, message.Cancellation);
 
             if (token != _currentToken)
             {
