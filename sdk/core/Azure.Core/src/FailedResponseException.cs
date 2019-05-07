@@ -67,7 +67,8 @@ namespace Azure
                 detailsBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
             }
 
-            if (response.ContentStream != null && ResponseUtilities.IsTextResponse(response))
+            if (response.ContentStream != null &&
+                response.Headers.ContentType?.StartsWith("text/", StringComparison.OrdinalIgnoreCase) == true)
             {
                 detailsBuilder.AppendLine();
                 detailsBuilder.AppendLine("Content:");
