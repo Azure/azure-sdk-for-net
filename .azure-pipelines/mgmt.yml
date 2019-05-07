@@ -5,6 +5,9 @@ pr:
     - search-preview
     - BuildToolsForSdk
 
+variables:
+  DotNetCoreVersion: '2.1.503'
+
 jobs:
   - job: Windows_Build
     pool:
@@ -14,7 +17,6 @@ jobs:
       FlpArg: 'Summary;Verbosity=minimal;LogFile=msbuild.sum'
       FlpArg1: 'warningsonly;logfile=msbuild.wrn'
       FlpArg2: 'errorsonly;logfile=msbuild.err'
-      DotNetCoreVersion: '2.1.503'
 
     steps:
       - task: CmdLine@1
@@ -39,7 +41,7 @@ jobs:
   - job: Ubuntu_Build
     pool:
       vmImage: 'ubuntu-16.04'
-
+  
     steps:
         - task: DotNetCoreInstaller@0
           displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
