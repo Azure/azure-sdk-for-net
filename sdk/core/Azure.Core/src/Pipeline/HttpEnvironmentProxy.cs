@@ -5,22 +5,21 @@
 // Copied from https://raw.githubusercontent.com/dotnet/corefx/master/src/System.Net.Http/src/System/Net/Http/SocketsHttpHandler/HttpEnvironmentProxy.cs
 
 using System;
-using System.Net.Http;
 using System.Net;
 using System.Collections.Generic;
 
-namespace System.Net.Http
+namespace Azure.Core.Pipeline
 {
     internal sealed class HttpEnvironmentProxyCredentials : ICredentials
     {
-        // Wrapper class for cases when http and https has different authentication.
+        // Wrapper class for cases when http and https have different authentication.
         private readonly NetworkCredential _httpCred;
         private readonly NetworkCredential _httpsCred;
         private readonly Uri _httpProxy;
         private readonly Uri _httpsProxy;
 
         public HttpEnvironmentProxyCredentials(Uri httpProxy, NetworkCredential httpCred,
-                                                Uri httpsProxy, NetworkCredential httpsCred)
+                                               Uri httpsProxy, NetworkCredential httpsCred)
         {
             _httpCred = httpCred;
             _httpsCred = httpsCred;
