@@ -12,6 +12,8 @@ namespace Azure
     {
         public abstract int Status { get; }
 
+        public abstract string ReasonPhrase { get; }
+
         public abstract Stream ContentStream { get; set; }
 
         public abstract string ClientRequestId { get; set; }

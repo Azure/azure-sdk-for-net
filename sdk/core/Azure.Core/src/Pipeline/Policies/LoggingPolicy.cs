@@ -10,6 +10,14 @@ using Azure.Core.Diagnostics;
 
 namespace Azure.Core.Pipeline.Policies
 {
+    internal static class ResponseUtilities
+    {
+        public static bool IsTextResponse(Response response)
+        {
+            return response.Headers.ContentType?.StartsWith("text/", StringComparison.OrdinalIgnoreCase) == true;
+        }
+    }
+
     public class LoggingPolicy : HttpPipelinePolicy
     {
         private static readonly long s_delayWarningThreshold = 3000; // 3000ms
