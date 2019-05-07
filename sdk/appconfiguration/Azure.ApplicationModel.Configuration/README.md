@@ -14,7 +14,7 @@ Use the client library for App Configuration to create and manage application co
 Install the Azure App Configuration client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-Install-Package Azure.ApplicationModel.Configuration -Version 1.0.0-preview.1
+Install-Package Azure.ApplicationModel.Configuration -Version 1.0.0-preview.2
 ```
 
 **Prerequisites**: You must have an [Azure subscription][azure_sub], and a [Configuration Store][configuration_store] to use this package.
@@ -191,7 +191,7 @@ set UseProjectReferenceToAzureBase=true
 [azconfig_rest]: https://github.com/Azure/AppConfiguration#rest-api-reference
 [azure_cli]: https://docs.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/
-[configuration_client_class]: ./Azure.ApplicationModel.Configuration/ConfigurationClient.cs
+[configuration_client_class]: src/ConfigurationClient.cs
 [configuration_store]: https://docs.microsoft.com/en-us/azure/azure-app-configuration/quickstart-dotnet-core-app#create-an-app-configuration-store
 [nuget]: https://www.nuget.org/
-[package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/1.0.0-preview.1
+[package]: https://www.nuget.org/packages/Azure.ApplicationModel.Configuration/
