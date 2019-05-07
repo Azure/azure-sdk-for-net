@@ -2,6 +2,8 @@ pr:
   branches:
     include:
     - master
+    - search-preview
+    - BuildToolsForSdk
 
 pool:
   vmImage: 'VS2017-Win2016'
