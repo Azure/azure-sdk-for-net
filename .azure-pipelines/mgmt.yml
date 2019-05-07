@@ -1,7 +1,7 @@
 pr:
   branches:
     include:
-    - dev
+    - master
 
 pool:
   vmImage: 'VS2017-Win2016'
