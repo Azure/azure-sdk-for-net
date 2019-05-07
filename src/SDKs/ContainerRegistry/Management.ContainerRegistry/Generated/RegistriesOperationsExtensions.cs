@@ -559,8 +559,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             }
 
             /// <summary>
-            /// Schedules a new run based on the request parameters and add it to the run
-            /// queue.
+            /// Generate keys for a token of a specified container registry.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -571,17 +570,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='registryName'>
             /// The name of the container registry.
             /// </param>
-            /// <param name='runRequest'>
-            /// The parameters of a run that needs to scheduled.
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
             /// </param>
-            public static Run ScheduleRun(this IRegistriesOperations operations, string resourceGroupName, string registryName, RunRequest runRequest)
+            public static GenerateCredentialsResult GenerateCredentials(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters)
             {
-                return operations.ScheduleRunAsync(resourceGroupName, registryName, runRequest).GetAwaiter().GetResult();
+                return operations.GenerateCredentialsAsync(resourceGroupName, registryName, generateCredentialsParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Schedules a new run based on the request parameters and add it to the run
-            /// queue.
+            /// Generate keys for a token of a specified container registry.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -592,55 +590,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='registryName'>
             /// The name of the container registry.
             /// </param>
-            /// <param name='runRequest'>
-            /// The parameters of a run that needs to scheduled.
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Run> ScheduleRunAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, RunRequest runRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<GenerateCredentialsResult> GenerateCredentialsAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ScheduleRunWithHttpMessagesAsync(resourceGroupName, registryName, runRequest, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Get the upload location for the user to be able to upload the source.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            public static SourceUploadDefinition GetBuildSourceUploadUrl(this IRegistriesOperations operations, string resourceGroupName, string registryName)
-            {
-                return operations.GetBuildSourceUploadUrlAsync(resourceGroupName, registryName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Get the upload location for the user to be able to upload the source.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group to which the container registry belongs.
-            /// </param>
-            /// <param name='registryName'>
-            /// The name of the container registry.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<SourceUploadDefinition> GetBuildSourceUploadUrlAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetBuildSourceUploadUrlWithHttpMessagesAsync(resourceGroupName, registryName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GenerateCredentialsWithHttpMessagesAsync(resourceGroupName, registryName, generateCredentialsParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -875,8 +833,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             }
 
             /// <summary>
-            /// Schedules a new run based on the request parameters and add it to the run
-            /// queue.
+            /// Generate keys for a token of a specified container registry.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -887,17 +844,16 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='registryName'>
             /// The name of the container registry.
             /// </param>
-            /// <param name='runRequest'>
-            /// The parameters of a run that needs to scheduled.
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
             /// </param>
-            public static Run BeginScheduleRun(this IRegistriesOperations operations, string resourceGroupName, string registryName, RunRequest runRequest)
+            public static GenerateCredentialsResult BeginGenerateCredentials(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters)
             {
-                return operations.BeginScheduleRunAsync(resourceGroupName, registryName, runRequest).GetAwaiter().GetResult();
+                return operations.BeginGenerateCredentialsAsync(resourceGroupName, registryName, generateCredentialsParameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Schedules a new run based on the request parameters and add it to the run
-            /// queue.
+            /// Generate keys for a token of a specified container registry.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -908,15 +864,15 @@ namespace Microsoft.Azure.Management.ContainerRegistry
             /// <param name='registryName'>
             /// The name of the container registry.
             /// </param>
-            /// <param name='runRequest'>
-            /// The parameters of a run that needs to scheduled.
+            /// <param name='generateCredentialsParameters'>
+            /// The parameters for generating credentials.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Run> BeginScheduleRunAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, RunRequest runRequest, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<GenerateCredentialsResult> BeginGenerateCredentialsAsync(this IRegistriesOperations operations, string resourceGroupName, string registryName, GenerateCredentialsParameters generateCredentialsParameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginScheduleRunWithHttpMessagesAsync(resourceGroupName, registryName, runRequest, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginGenerateCredentialsWithHttpMessagesAsync(resourceGroupName, registryName, generateCredentialsParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
