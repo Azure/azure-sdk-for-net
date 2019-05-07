@@ -1,3 +1,5 @@
+trigger: none
+
 variables:
   ProjectFile: sdk/servicebus/Microsoft.Azure.ServiceBus/Microsoft.Azure.ServiceBus.sln
 

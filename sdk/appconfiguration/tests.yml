@@ -1,3 +1,5 @@
+trigger: none
+
 variables:
   ProjectFile: sdk/appconfiguration/Azure.ApplicationModel.Configuration/Azure.ApplicationModel.Configuration.sln
 

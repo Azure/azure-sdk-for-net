@@ -1,3 +1,5 @@
+trigger: none
+
 variables:
   ProjectFile: sdk/core/Azure.Core/Azure.Core.sln
 
