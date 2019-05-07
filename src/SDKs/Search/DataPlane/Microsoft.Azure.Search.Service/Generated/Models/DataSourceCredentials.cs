@@ -10,7 +10,6 @@
 
 namespace Microsoft.Azure.Search.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -32,7 +31,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="connectionString">The connection string for the
         /// datasource.</param>
-        public DataSourceCredentials(string connectionString)
+        public DataSourceCredentials(string connectionString = default(string))
         {
             ConnectionString = connectionString;
             CustomInit();
@@ -49,18 +48,5 @@ namespace Microsoft.Azure.Search.Models
         [JsonProperty(PropertyName = "connectionString")]
         public string ConnectionString { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (ConnectionString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ConnectionString");
-            }
-        }
     }
 }

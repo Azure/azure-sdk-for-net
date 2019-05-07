@@ -5,6 +5,7 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
+    using System.Collections.Generic;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
@@ -45,7 +46,9 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     new Field("county_name", DataType.String) { IsFilterable = true, IsSearchable = true },
                     new Field("elevation", DataType.Int32) { IsFilterable = true },
                     new Field("map_name", DataType.String) { IsFilterable = true, IsSearchable = true },
-                    new Field("history", DataType.Collection(DataType.String)) { IsSearchable = true }
+                    new Field("history", DataType.Collection(DataType.String)) { IsSearchable = true },
+                    new Field("myEntities", DataType.Collection(DataType.String)) { IsSearchable = true },
+                    new Field("myText", DataType.String) { IsSearchable = true }
                 });
 
             searchClient.Indexes.Create(index);
@@ -76,6 +79,17 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     new FieldMapping("history", FieldMappingFunction.JsonArrayToStringCollection())
                 }
             };
+
+        public Indexer CreateTestIndexerWithSkillset(string skillsetName, IList<FieldMapping> outputFieldMapping)
+        {
+            return new Indexer(name: SearchTestUtilities.GenerateName(), dataSourceName: DataSourceName, targetIndexName: TargetIndexName, skillsetName: skillsetName)
+            {
+                // We can't test startTime because it's an absolute time that must be within 24 hours of the current
+                // time. That doesn't play well with recorded mock payloads.
+                Schedule = new IndexingSchedule(interval: TimeSpan.FromDays(1)),
+                OutputFieldMappings = outputFieldMapping
+            };
+        }
 
         public Indexer MutateIndexer(Indexer indexer)
         {

@@ -16,11 +16,40 @@ required_readme_sections:
   - ^Contributing$
 known_presence_issues:
   - ['sdk/keyvault','#5499']
-  - ['sdk/servicebus','#5857']
+  - ['sdk/servicebus','#5499']
   - ['sdk/eventhub','#5499']
-  - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5945']
+  - ['sdk/eventgrid/Microsoft.Azure.EventGrid','#5499']
+  - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
+  - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
 known_content_issues:
   - ['README.md','Root readme']
   - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
-  - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5857']
+  - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
   - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
+  - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md','#5499']
+  - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/tests/Readme.md','#5499']
+  - ['sdk/core/Azure.Core/README.md','#5499']
+# .net climbs upwards. placing these to prevent assigning readmes to the wrong project
+package_indexing_exclusion_list:
+  - 'AutoRest-AzureDotNetSDK'
+  - 'NetCoreTestPublish'
+  - 'ObjectModelCodeGenerator'
+  - 'ProxyLayerParser'
+  - 'IntegrationTestCommon'
+  - 'Azure.Template'
+  - 'SampleSDKTestPublish'
+  - 'CSProjTestPublish'
+  - 'ConfigureAwaitAnalyzer'
+  - 'Microsoft.WindowsAzure.Build.Tasks'
+  - 'Microsoft.Azure.Services.AppAuthentication.TestCommon'
+  - 'RP2_Sdk'
+  - 'RP1_MgmtPlane'
+  - 'RP1_DataPlane'
+  - 'Gallery'
+  - 'Intune'
+  - 'Common'
+package_indexing_traversal_stops:
+  - 'sdk/'
+  - 'src/SDKs/'
+  - 'src/SdkCommon/'
+  - 'src/AzureStack/'

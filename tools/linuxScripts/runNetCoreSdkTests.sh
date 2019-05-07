@@ -13,8 +13,8 @@ sdkdir=$rootdir/src/SDKs
 azStackDir=$rootdir/src/AzureStack
 
 restoreBuildCR() {
-    echo "Restore ClientRuntime for $ubuntu1404"
-    dotnet restore src/SdkCommon/ClientRuntime.sln -r $ubuntu1404
+    echo "Restore ClientRuntime"
+    dotnet restore src/SdkCommon/ClientRuntime.sln
 
     echo "Build ClientRuntime for $net14"
     #dotnet restore src/SdkCommon/ClientRuntime/ClientRuntime/Microsoft.Rest.ClientRuntime.csproj

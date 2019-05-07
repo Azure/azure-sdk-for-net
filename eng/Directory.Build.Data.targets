@@ -20,7 +20,7 @@
   <PropertyGroup Condition="'$(SignAssembly)' == 'true' and ('$(IsTestProject)' == 'true' or '$(IsPerformanceTestProject)' == 'true')">
     <!-- Always fully sign test assemblies since we have a full public/private key -->
     <PublicSign>false</PublicSign>
-    <DelaySign>true</DelaySign>
+    <DelaySign>false</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
@@ -44,7 +44,7 @@
 
   <!-- Add Client SDK Analyzers -->
   <ItemGroup>
-    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-preview1" PrivateAssets="All" />
+    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190503.1" PrivateAssets="All" />
   </ItemGroup>
 
   <!-- Import default references if this is not set -->

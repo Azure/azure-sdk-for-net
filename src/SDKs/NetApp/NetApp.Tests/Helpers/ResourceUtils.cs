@@ -10,26 +10,26 @@ namespace NetApp.Tests.Helpers
     {
         public const long gibibyte = 1024L * 1024L * 1024L;
 
-        protected const string subsId = "f557b96d-2308-4a18-aae1-b8f7e7e70cc7";
-        protected const string vnet = "sdk-net-tests-rg-vnet";
-        public const string location = "westeurope";
-        public const string resourceGroup = "sdk-net-tests-rg";
-        public const string accountName1 = "sdk-tests-acc1";
-        public const string accountName2 = "sdk-tests-acc2";
-        public const string poolName1 = "sdk-tests-pool1";
-        public const string poolName2 = "sdk-tests-pool2";
-        public const string volumeName1 = "sdk-tests-vol1";
-        public const string volumeName2 = "sdk-tests-vol2";
-        public const string snapshotName1 = "sdk-tests-snap1";
-        public const string snapshotName2 = "sdk-tests-snap2";
+        public const string vnet = "sdk-net-tests-rg-eus2-vnet";
+        public const string subsId = "0661b131-4a11-479b-96bf-2f95acca2f73";
+        public const string location = "eastus2";
+        public const string resourceGroup = "sdk-net-tests-rg-eus2";
+        public const string accountName1 = "sdk-net-tests-acc-1";
+        public const string accountName2 = "sdk-net-tests-acc-2";
+        public const string poolName1 = "sdk-net-tests-pool-1";
+        public const string poolName2 = "sdk-net-tests-pool-2";
+        public const string volumeName1 = "sdk-net-tests-vol-1";
+        public const string volumeName2 = "sdk-net-tests-vol-2";
+        public const string snapshotName1 = "sdk-net-tests-snap-1";
+        public const string snapshotName2 = "sdk-net-tests-snap-2";
 
         public static ActiveDirectory activeDirectory = new ActiveDirectory()
         {
             Username = "sdkuser",
             Password = "sdkpass",
             Domain = "sdkdomain",
-            DNS = "127.0.0.1",
-            SMBServerName = "SDKSMBServerName",
+            Dns = "127.0.0.1",
+            SmbServerName = "SDKSMBServerName",
         };
 
         public static ExportPolicyRule defaultExportPolicyRule = new ExportPolicyRule()
@@ -58,6 +58,9 @@ namespace NetApp.Tests.Helpers
 
         public static NetAppAccount CreateAccount(AzureNetAppFilesManagementClient netAppMgmtClient, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, ActiveDirectory activeDirectory = null)
         {
+            // request reference example
+            // az netappfiles account update -g --account-name cli-lf-acc2  --active-directories '[{"username": "aduser", "password": "aduser", "smbservername": "SMBSERVER", "dns": "1.2.3.4", "domain": "westcentralus"}]' -l westus2
+
             var activeDirectories = new List<ActiveDirectory> { activeDirectory };
 
             var netAppAccount = new NetAppAccount()
@@ -110,7 +113,7 @@ namespace NetApp.Tests.Helpers
             return resource;
         }
 
-        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false)
+        public static Volume CreateVolume(AzureNetAppFilesManagementClient netAppMgmtClient, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, object tags = null, VolumePropertiesExportPolicy exportPolicy = null, bool volumeOnly = false, string snapshotId = null)
         {
             if (!volumeOnly)
             {
@@ -125,7 +128,8 @@ namespace NetApp.Tests.Helpers
                 CreationToken = volumeName,
                 SubnetId = "/subscriptions/" + subsId + "/resourceGroups/" + resourceGroup + "/providers/Microsoft.Network/virtualNetworks/" + vnet + "/subnets/default",
                 Tags = tags,
-                ExportPolicy = exportPolicy
+                ExportPolicy = exportPolicy,
+                SnapshotId = snapshotId
             };
 
             var resource = netAppMgmtClient.Volumes.CreateOrUpdate(volume, resourceGroup, accountName, poolName, volumeName);
@@ -139,21 +143,28 @@ namespace NetApp.Tests.Helpers
         public static void CreateSnapshot(AzureNetAppFilesManagementClient netAppMgmtClient, string snapshotName = snapshotName1, string volumeName = volumeName1, string poolName = poolName1, string accountName = accountName1, string resourceGroup = resourceGroup, string location = location, bool snapshotOnly = false)
         {
             Volume volume = null;
+            var snapshot = new Snapshot();
 
             if (!snapshotOnly)
             {
                 volume = CreateVolume(netAppMgmtClient, volumeName, poolName, accountName);
+
+                snapshot = new Snapshot
+                {
+                    Location = location,
+                    FileSystemId = volume?.FileSystemId
+                };
             }
             else
             {
-                volume = netAppMgmtClient.Volumes.Get(resourceGroup, accountName, poolName, volumeName);
+                // for those tests where snapshotOnly is true, no filesystem id will be available
+                // use this opportunity to test snapshot creation with no filesystem id provided
+                // for these cases it should use the name in the resource id
+                snapshot = new Snapshot
+                {
+                    Location = location,
+                };
             }
-
-            var snapshot = new Snapshot
-            {
-                Location = location,
-                FileSystemId = volume?.FileSystemId
-            };
 
             var resource = netAppMgmtClient.Snapshots.Create(snapshot, resourceGroup, accountName, poolName, volumeName, snapshotName);
             Assert.Equal(resource.Name, accountName + '/' + poolName + '/' + volumeName + '/' + snapshotName);

@@ -8,13 +8,29 @@ namespace Microsoft.Azure.Search.Tests
     using Models;
     using Utilities;
 
+    internal class Author
+    {
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public override bool Equals(object obj) =>
+            obj is Author other &&
+            FirstName == other.FirstName &&
+            LastName == other.LastName;
+
+        public override int GetHashCode() => LastName?.GetHashCode() ?? 0;
+
+        public override string ToString() => $"{FirstName} {LastName}";
+    }
+
     internal class Book
     {
         public string ISBN { get; set; }
 
         public string Title { get; set; }
 
-        public string Author { get; set; }
+        public Author Author { get; set; }
 
         public DateTime? PublishDate { get; set; }
 
@@ -25,10 +41,13 @@ namespace Microsoft.Azure.Search.Tests
                 Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
                 {
-                    new Field(useCamelCase ? "isbn" : "ISBN", DataType.String) { IsKey = true },
-                    new Field(useCamelCase ? "title" : "Title", DataType.String) { IsSearchable = true },
-                    new Field(useCamelCase ? "author" : "Author", DataType.String),
-                    new Field(useCamelCase ? "publishDate" : "PublishDate", DataType.DateTimeOffset)
+                    Field.New(useCamelCase ? "isbn" : "ISBN", DataType.String, isKey: true),
+                    Field.New(useCamelCase ? "title" : "Title", DataType.String, isSearchable: true),
+                    Field.NewComplex(useCamelCase ? "author" : "Author", isCollection: false, fields: new[]{
+                        Field.New(useCamelCase ? "firstName" : "FirstName", DataType.String),
+                        Field.New(useCamelCase ? "lastName" : "LastName", DataType.String)
+                    }),
+                    Field.New(useCamelCase ? "publishDate" : "PublishDate", DataType.DateTimeOffset)
                 },
                 Suggesters = new[] 
                 {
@@ -37,35 +56,15 @@ namespace Microsoft.Azure.Search.Tests
             };
         }
 
-        public override bool Equals(object obj)
-        {
-            Book other = obj as Book;
+        public override bool Equals(object obj) =>
+            obj is Book other &&
+            ISBN == other.ISBN &&
+            Title == other.Title &&
+            Author.EqualsNullSafe(other.Author) &&
+            PublishDate == other.PublishDate;
 
-            if (other == null)
-            {
-                return false;
-            }
+        public override int GetHashCode() => ISBN?.GetHashCode() ?? 0;
 
-            return 
-                this.ISBN == other.ISBN &&
-                this.Title == other.Title &&
-                this.Author == other.Author &&
-                this.PublishDate == other.PublishDate;
-        }
-
-        public override int GetHashCode()
-        {
-            return (this.ISBN != null) ? this.ISBN.GetHashCode() : 0;
-        }
-
-        public override string ToString()
-        {
-            return string.Format(
-                "ISBN: {0}; Title: {1}; Author: {2}; PublishDate: {3}",
-                this.ISBN,
-                this.Title,
-                this.Author,
-                this.PublishDate);
-        }
+        public override string ToString() => $"ISBN: {ISBN}; Title: {Title}; Author: {Author}; PublishDate: {PublishDate}";
     }
 }

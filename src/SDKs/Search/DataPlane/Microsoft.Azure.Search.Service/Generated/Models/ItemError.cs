@@ -33,10 +33,16 @@ namespace Microsoft.Azure.Search.Models
         /// failed.</param>
         /// <param name="errorMessage">The message describing the error that
         /// occurred while processing the item.</param>
-        public ItemError(string key = default(string), string errorMessage = default(string))
+        /// <param name="statusCode">The status code indicating why the
+        /// indexing operation failed. Possible values include: 400 for a
+        /// malformed input document, 404 for document not found, 409 for a
+        /// version conflict, 422 when the index is temporarily unavailable, or
+        /// 503 for when the service is too busy.</param>
+        public ItemError(string key = default(string), string errorMessage = default(string), int statusCode = default(int))
         {
             Key = key;
             ErrorMessage = errorMessage;
+            StatusCode = statusCode;
             CustomInit();
         }
 
@@ -57,6 +63,16 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "errorMessage")]
         public string ErrorMessage { get; private set; }
+
+        /// <summary>
+        /// Gets the status code indicating why the indexing operation failed.
+        /// Possible values include: 400 for a malformed input document, 404
+        /// for document not found, 409 for a version conflict, 422 when the
+        /// index is temporarily unavailable, or 503 for when the service is
+        /// too busy.
+        /// </summary>
+        [JsonProperty(PropertyName = "statusCode")]
+        public int StatusCode { get; private set; }
 
     }
 }

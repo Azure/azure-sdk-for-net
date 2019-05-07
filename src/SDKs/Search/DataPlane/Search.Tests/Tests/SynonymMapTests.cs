@@ -310,9 +310,7 @@ namespace Microsoft.Azure.Search.Tests
 
         private static SynonymMap CreateTestSynonymMap()
         {
-            return new SynonymMap(name: SearchTestUtilities.GenerateName(),
-                format: "solr",
-                synonyms: "word1,word2");
+            return new SynonymMap(name: SearchTestUtilities.GenerateName(), synonyms: "word1,word2");
         }
 
         private static SynonymMap MutateSynonymMap(SynonymMap synonymMap)
