@@ -80,10 +80,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// /pictures/</param>
         /// <param name="deliveryPolicy">A policy that specifies the delivery
         /// rules to be used for an endpoint.</param>
-        /// <param name="webApplicationFirewallPolicyLink">Defines the Web
-        /// Application Firewall policy for the endpoint (if
-        /// applicable)</param>
-        public EndpointUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), string probePath = default(string), IList<GeoFilter> geoFilters = default(IList<GeoFilter>), EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy = default(EndpointPropertiesUpdateParametersDeliveryPolicy), EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink webApplicationFirewallPolicyLink = default(EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink))
+        public EndpointUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), IList<string> contentTypesToCompress = default(IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), string optimizationType = default(string), string probePath = default(string), IList<GeoFilter> geoFilters = default(IList<GeoFilter>), EndpointPropertiesUpdateParametersDeliveryPolicy deliveryPolicy = default(EndpointPropertiesUpdateParametersDeliveryPolicy))
         {
             Tags = tags;
             OriginHostHeader = originHostHeader;
@@ -97,7 +94,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
             ProbePath = probePath;
             GeoFilters = geoFilters;
             DeliveryPolicy = deliveryPolicy;
-            WebApplicationFirewallPolicyLink = webApplicationFirewallPolicyLink;
             CustomInit();
         }
 
@@ -206,13 +202,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.deliveryPolicy")]
         public EndpointPropertiesUpdateParametersDeliveryPolicy DeliveryPolicy { get; set; }
-
-        /// <summary>
-        /// Gets or sets defines the Web Application Firewall policy for the
-        /// endpoint (if applicable)
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.webApplicationFirewallPolicyLink")]
-        public EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink WebApplicationFirewallPolicyLink { get; set; }
 
         /// <summary>
         /// Validate the object.
