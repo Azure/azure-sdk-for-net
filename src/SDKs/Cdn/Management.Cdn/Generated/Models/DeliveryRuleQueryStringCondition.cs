@@ -15,28 +15,28 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the UrlFileExtension condition for the delivery rule.
+    /// Defines the QueryString condition for the delivery rule.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("UrlFileExtension")]
-    public partial class DeliveryRuleUrlFileExtensionCondition : DeliveryRuleCondition
+    [Newtonsoft.Json.JsonObject("QueryString")]
+    public partial class DeliveryRuleQueryStringCondition : DeliveryRuleCondition
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// Initializes a new instance of the DeliveryRuleQueryStringCondition
+        /// class.
         /// </summary>
-        public DeliveryRuleUrlFileExtensionCondition()
+        public DeliveryRuleQueryStringCondition()
         {
-            Parameters = new UrlFileExtensionMatchConditionParameters();
+            Parameters = new QueryStringMatchConditionParameters();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// Initializes a new instance of the DeliveryRuleQueryStringCondition
+        /// class.
         /// </summary>
         /// <param name="parameters">Defines the parameters for the
         /// condition.</param>
-        public DeliveryRuleUrlFileExtensionCondition(UrlFileExtensionMatchConditionParameters parameters)
+        public DeliveryRuleQueryStringCondition(QueryStringMatchConditionParameters parameters)
         {
             Parameters = parameters;
             CustomInit();
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets defines the parameters for the condition.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public UrlFileExtensionMatchConditionParameters Parameters { get; set; }
+        public QueryStringMatchConditionParameters Parameters { get; set; }
 
         /// <summary>
         /// Validate the object.

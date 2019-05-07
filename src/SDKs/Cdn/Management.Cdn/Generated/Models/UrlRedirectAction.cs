@@ -15,28 +15,26 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the UrlFileExtension condition for the delivery rule.
+    /// Defines the url redirect action for the delivery rule.
     /// </summary>
-    [Newtonsoft.Json.JsonObject("UrlFileExtension")]
-    public partial class DeliveryRuleUrlFileExtensionCondition : DeliveryRuleCondition
+    [Newtonsoft.Json.JsonObject("UrlRedirect")]
+    public partial class UrlRedirectAction : DeliveryRuleAction
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// Initializes a new instance of the UrlRedirectAction class.
         /// </summary>
-        public DeliveryRuleUrlFileExtensionCondition()
+        public UrlRedirectAction()
         {
-            Parameters = new UrlFileExtensionMatchConditionParameters();
+            Parameters = new UrlRedirectActionParameters();
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// DeliveryRuleUrlFileExtensionCondition class.
+        /// Initializes a new instance of the UrlRedirectAction class.
         /// </summary>
         /// <param name="parameters">Defines the parameters for the
-        /// condition.</param>
-        public DeliveryRuleUrlFileExtensionCondition(UrlFileExtensionMatchConditionParameters parameters)
+        /// action.</param>
+        public UrlRedirectAction(UrlRedirectActionParameters parameters)
         {
             Parameters = parameters;
             CustomInit();
@@ -48,10 +46,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets defines the parameters for the condition.
+        /// Gets or sets defines the parameters for the action.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public UrlFileExtensionMatchConditionParameters Parameters { get; set; }
+        public UrlRedirectActionParameters Parameters { get; set; }
 
         /// <summary>
         /// Validate the object.
