@@ -152,9 +152,10 @@ namespace NetApp.Tests.ResourceTests
                     var account = netAppMgmtClient.Accounts.Get(ResourceUtils.resourceGroup, ResourceUtils.accountName1);
                     Assert.True(false); // expecting exception
                 }
+
                 catch (Exception ex)
                 {
-                    Assert.Contains("NotFound", ex.Message);
+                    Assert.Equal("The Resource 'Microsoft.NetApp/netAppAccounts/" + ResourceUtils.accountName1 + "' under resource group '" + ResourceUtils.resourceGroup + "' was not found.", ex.Message);
                 }
             }
         }
@@ -186,7 +187,7 @@ namespace NetApp.Tests.ResourceTests
                 ResourceUtils.DeleteAccount(netAppMgmtClient);
             }
         }
-        
+
         private static string GetSessionsDirectoryPath()
         {
             string executingAssemblyPath = typeof(NetApp.Tests.ResourceTests.AccountTests).GetTypeInfo().Assembly.Location;
