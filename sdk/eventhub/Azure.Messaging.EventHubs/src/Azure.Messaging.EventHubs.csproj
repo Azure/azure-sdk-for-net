@@ -1,0 +1,55 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>Azure Event Hubs is a highly scalable publish-subscribe service that can ingest millions of events per second and stream them to multiple consumers.  This client library allow for both sending and receiving of events using Azure Event Hubs. For more information about Event Hubs, see https://azure.microsoft.com/en-us/services/event-hubs/</Description>
+    <VersionPrefix>4.0.0</VersionPrefix>
+    <PackageTags>Azure;Event Hubs;EventHubs;.NET;AMQP;IoT</PackageTags>
+    <PackageReleaseNotes>https://github.com/Azure/azure-event-hubs-dotnet/releases</PackageReleaseNotes>
+    <DocumentationFile>$(OutputPath)$(TargetFramework)\Azure.Messaging.EventHubs.xml</DocumentationFile>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <RootNamespace>Azure.Messaging.EventHubs</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Amqp\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+
+   <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Amqp" Version="2.4.2" />
+    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="5.0.5" />
+    <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="[4.5.1, 4.9.9)" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="System.Reflection.TypeExtensions" Version="[4.5.1, 4.9.0)" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="[5.4.0, 6.0.0)" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetFx)' == 'true'">
+    <Reference Include="System" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.IdentityModel" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(IsTargetingNetStandard)' == 'true'">
+    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
+  </ItemGroup>
+
+  <!-- Import the Azure.Core project -->
+  <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+</Project>

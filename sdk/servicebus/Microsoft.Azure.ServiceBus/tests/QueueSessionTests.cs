@@ -16,14 +16,14 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
         {
             // Expected structure: { usePartitionedQueue, useSessionQueue }
             new object[] { false, true },
-            new object[] { true, true }
+            //new object[] { true, true }
         };
 
         [Theory]
         [MemberData(nameof(TestPermutations))]
         [LiveTest]
         [DisplayTestMethodName]
-        public async Task SessionTest(bool partitioned, bool sessionEnabled)
+        public async Task JESSE_SessionTest(bool partitioned, bool sessionEnabled)
         {
             await ServiceBusScope.UsingQueueAsync(partitioned, sessionEnabled, async queueName =>
             {
@@ -43,7 +43,19 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     TestUtility.Log($"Sent Message: {messageId2} to Session: {sessionId2}");
 
                     // Receive Message, Complete and Close with SessionId - sessionId 1
-                    await this.AcceptAndCompleteSessionsAsync(sessionClient, sessionId1, messageId1).ConfigureAwait(false);
+
+                    try
+                    {
+                      await this.AcceptAndCompleteSessionsAsync(sessionClient, sessionId1, messageId1).ConfigureAwait(false);
+                      
+                    }
+                    catch (Exception ex)
+                    {
+                        var x = ex.GetType().Name;
+                        var y = ex.Message;
+                        var z = y;
+                        throw;
+                    }
 
                     // Receive Message, Complete and Close with SessionId - sessionId 2
                     await this.AcceptAndCompleteSessionsAsync(sessionClient, sessionId2, messageId2).ConfigureAwait(false);
@@ -295,6 +307,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
             Assert.True(message.MessageId == messageId);
             TestUtility.Log($"Received Message: {message.MessageId} from Session: {sessionReceiver.SessionId}");
 
+            await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
             await sessionReceiver.CompleteAsync(message.SystemProperties.LockToken);
             TestUtility.Log($"Completed Message: {message.MessageId} for Session: {sessionReceiver.SessionId}");
 
