@@ -31,4 +31,4 @@ Azure SDK clients use shared libraries implementing retries, logging, transport 
 ...
 
 ## Contributing
-See [contributing guide](https://github.com/Azure/azure-sdk-for-net/CONTRIBUTING.md) for details on contributing to this repo.
+See [contributing guide](CONTRIBUTING.md) for details on contributing to this repo.
