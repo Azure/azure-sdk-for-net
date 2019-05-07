@@ -14,9 +14,9 @@ namespace Azure.Core.Pipeline.Policies
 
         private readonly string[] _scopes;
 
-        private string _currentToken = null;
+        private string _currentToken;
 
-        private string _headerValue = null;
+        private string _headerValue;
 
         public BearerTokenAuthenticationPolicy(TokenCredential credential, string scope) : this(credential, new []{ scope })
         {
