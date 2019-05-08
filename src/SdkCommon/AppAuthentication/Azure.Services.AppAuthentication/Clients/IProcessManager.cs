@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// <summary>
     /// Interface that helps mock invoking a process and getting the result from standard output and error streams. 
     /// </summary>
-    interface IProcessManager
+    internal interface IProcessManager
     {
         Task<string> ExecuteAsync(Process process, CancellationToken cancellationToken);
     }

@@ -41,12 +41,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns></returns>
         private VisualStudioTokenProviderFile GetTokenProviderFile()
         {
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(LocalAppDataPathEnv)))
+            if (string.IsNullOrEmpty(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv)))
             {
                 throw new Exception(NoAppDataEnvironmentVariableError);    
             }
 
-            string tokenProviderPath = Path.Combine(Environment.GetEnvironmentVariable(LocalAppDataPathEnv),
+            string tokenProviderPath = Path.Combine(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv),
                 TokenProviderFilePath);
 
             if (!File.Exists(tokenProviderPath))

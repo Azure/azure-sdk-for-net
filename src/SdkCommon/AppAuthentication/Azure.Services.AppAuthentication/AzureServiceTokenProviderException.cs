@@ -2,15 +2,19 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
+#if FullNetFx || NETSTANDARD2_0
+using System.Runtime.Serialization;
+#endif
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
     /// <summary>
     /// Instance of this exception is thrown if access token cannot be acquired. 
     /// </summary>
-#if FullNetFx
+#if FullNetFx || NETSTANDARD2_0
     [Serializable]
 #endif
+
     public class AzureServiceTokenProviderException : Exception
     {
         internal const string MsiEndpointNotListening = "Unable to connect to the Managed Service Identity (MSI) endpoint. Please check that you are running on an Azure resource that has MSI setup.";
@@ -35,7 +39,6 @@ namespace Microsoft.Azure.Services.AppAuthentication
 
         internal const string RetryFailure = "Failed after 5 retries.";
 
-
         /// <summary>
         /// Creates an instance of AzureServiceTokenProviderException. 
         /// </summary>
@@ -43,10 +46,17 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <param name="resource">Resource for which token was expected.</param>
         /// <param name="authority">Authority for which token was expected.</param>
         /// <param name="message">Reason why token could not be acquired.</param>
-        internal AzureServiceTokenProviderException(string connectionString, string resource, string authority, string message) : 
+        internal AzureServiceTokenProviderException(string connectionString, string resource, string authority, string message) :
             base($"Parameters: Connection String: {connectionString ?? "[No connection string specified]"}, " +
                  $"Resource: {resource}, Authority: {authority ?? "[No authority specified]"}. Exception Message: {message}")
         {
         }
+
+#if FullNetFx || NETSTANDARD2_0
+        protected AzureServiceTokenProviderException(SerializationInfo info, StreamingContext context) :
+            base(info, context)
+        {
+        }
+#endif
     }
 }

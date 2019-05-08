@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// Invokes a process and returns the result from the standard output or error streams.
     /// This is used to invoke az account get-access-token to get a token for local development. 
     /// </summary>
-    class ProcessManager : IProcessManager
+    internal class ProcessManager : IProcessManager
     {
         // Timeout used such that if process does not respond in this time, it is killed. 
         private readonly TimeSpan _timeOutDuration = TimeSpan.FromSeconds(20);

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
     /// <summary>
     /// Interface that helps mock ADAL usage for unit testing. 
     /// </summary>
-    interface IAuthenticationContext
+    internal interface IAuthenticationContext
     {
         Task<AppAuthenticationResult> AcquireTokenSilentAsync(string authority, string resource, string clientId);
         Task<AppAuthenticationResult> AcquireTokenAsync(string authority, string resource, string clientId, UserCredential userCredential);

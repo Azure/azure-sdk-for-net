@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
             // Check the environment variable to see if a connection string is specified. 
             if (connectionString == default(string))
             {
-                connectionString = Environment.GetEnvironmentVariable("AzureServicesAuthConnectionString");
+                connectionString = EnvironmentHelper.GetEnvironmentVariable("AzureServicesAuthConnectionString");
             }
 
             if (!string.IsNullOrWhiteSpace(connectionString))
