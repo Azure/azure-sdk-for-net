@@ -16,7 +16,7 @@ namespace Data.ApplicationInsights.Tests
         private readonly string SimpleQuery = $"union * | take {TakeCount}";
         private readonly string PastHourTimespan = "PT1H";
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task CanExecuteSimplePostQuery_DemoWorkspace()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
@@ -25,7 +25,7 @@ namespace Data.ApplicationInsights.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task CanExecutePostQueryWithTimespan_DemoWorkspace()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
@@ -34,7 +34,7 @@ namespace Data.ApplicationInsights.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetsExceptionWithSyntaxError()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
@@ -60,7 +60,7 @@ namespace Data.ApplicationInsights.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetsExceptionWithShortWait()
         {
             using (var ctx = MockContext.Start(GetType().FullName))

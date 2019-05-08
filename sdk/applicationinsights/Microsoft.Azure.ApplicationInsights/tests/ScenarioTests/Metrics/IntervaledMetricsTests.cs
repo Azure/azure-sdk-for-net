@@ -10,7 +10,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
 {
     public class IntervaledMetricsTests : MetricsTestBase
     {
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetIntervaledMetrics()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
@@ -33,7 +33,7 @@ namespace Data.ApplicationInsights.Tests.Metrics
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6135")]
         public async Task GetIntervaledMetrics_AllAggregations()
         {
             using (var ctx = MockContext.Start(GetType().FullName))
