@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-// Using statement must be outside of namespace for "IModel" to resolve correctly
-using RabbitMQ.Client;
-
 namespace Microsoft.Azure.RabbitMQ.Client.Performance
 {
+    using global::RabbitMQ.Client;
+    using global::RabbitMQ.Client.Events;
     using System;
     using System.Diagnostics;
     using System.Text.RegularExpressions;
@@ -17,27 +16,28 @@ namespace Microsoft.Azure.RabbitMQ.Client.Performance
         private static readonly Stopwatch _stopwatch = Stopwatch.StartNew();
 
         private static readonly byte[] _payload = new byte[1024];
+        private const string _consumerTag = "testConsumerTag";
 
         private static long _messages;
+        private static long _messagesReceived;
 
         static async Task Main(string[] args)
         {
-            var maxInflight = (args.Length >= 1 ? int.Parse(args[0]) : 1);
-            Log($"Maximum inflight messages: {maxInflight}");
+            var messages = (args.Length >= 1 ? long.Parse(args[0]) : 10);
 
-            var messages = (args.Length >= 2 ? long.Parse(args[1]) : 10);
+            var receive = (args.Length >= 2 && String.Equals(args[1], "receive", StringComparison.OrdinalIgnoreCase));
 
             var connectionString = Environment.GetEnvironmentVariable("SERVICE_BUS_CONNECTION_STRING");
             var entityPath = Environment.GetEnvironmentVariable("SERVICE_BUS_QUEUE_NAME");
 
             var writeResultsTask = WriteResults(messages);
 
-            RunTest(connectionString, entityPath, maxInflight, messages);
+            RunTest(connectionString, entityPath, messages, receive);
 
             await writeResultsTask;
         }
 
-        private static void RunTest(string connectionString, string entityPath, int maxInflight, long messages)
+        private static void RunTest(string connectionString, string entityPath, long messages, bool receive)
         {
             var hostname = Regex.Match(connectionString, "//([^/]*)/").Groups[1].Value;
 
@@ -55,18 +55,13 @@ namespace Microsoft.Azure.RabbitMQ.Client.Performance
             {
                 channel.QueueDeclare(queue: entityPath, durable: false, exclusive: false, autoDelete: false, arguments: null);
 
-                var threads = new Thread[maxInflight];
-
-                for (var i = 0; i < maxInflight; i++)
+                if (receive)
                 {
-                    var thread = new Thread(() => ExecuteSends(channel, entityPath, messages));
-                    threads[i] = thread;
-                    thread.Start();
+                    ExecuteReceives(channel, entityPath, messages);
                 }
-
-                foreach (var thread in threads)
+                else
                 {
-                    thread.Join();
+                    ExecuteSends(channel, entityPath, messages);
                 }
             }
         }
@@ -80,6 +75,43 @@ namespace Microsoft.Azure.RabbitMQ.Client.Performance
 
             // Undo last increment, since a message was never sent on the final loop iteration
             Interlocked.Decrement(ref _messages);
+        }
+
+        private static void ExecuteReceives(IModel channel, string entityPath, long messages)
+        {
+            var mre = new ManualResetEvent(false);
+
+            var consumer = new EventingBasicConsumer(channel);
+            consumer.Received += (model, ea) =>
+            {
+                var messagesReceived = Interlocked.Increment(ref _messagesReceived);
+
+                if (messagesReceived <= messages)
+                {
+                    channel.BasicAck(ea.DeliveryTag, multiple: false);
+
+                    if (Interlocked.Increment(ref _messages) == messages)
+                    {
+                        channel.BasicCancel(consumerTag: _consumerTag);
+                    }                    
+                }
+                else
+                {
+                    channel.BasicReject(ea.DeliveryTag, requeue: true);
+                }
+
+            };
+            channel.BasicConsume(queue: entityPath, autoAck: false, consumerTag: _consumerTag, consumer: consumer);
+
+            consumer.Unregistered += (model, ea) => mre.Set();
+
+            // Block until final message is received
+            mre.WaitOne();
+        }
+
+        private static void Consumer_Unregistered(object sender, ConsumerEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private static async Task WriteResults(long messages)
