@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Microsoft.Azure.ServiceBus.csproj" />
+    <ProjectReference Include="..\..\..\src\Microsoft.Azure.ServiceBus.csproj" />
   </ItemGroup>
 
 </Project>
