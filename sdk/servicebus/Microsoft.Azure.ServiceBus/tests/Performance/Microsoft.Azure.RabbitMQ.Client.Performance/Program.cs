@@ -99,7 +99,6 @@ namespace Microsoft.Azure.RabbitMQ.Client.Performance
                 {
                     channel.BasicReject(ea.DeliveryTag, requeue: true);
                 }
-
             };
             channel.BasicConsume(queue: entityPath, autoAck: false, consumerTag: _consumerTag, consumer: consumer);
 
