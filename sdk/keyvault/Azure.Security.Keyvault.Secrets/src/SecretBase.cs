@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Azure.Security.KeyVault.Secrets
 {
@@ -114,7 +111,7 @@ namespace Azure.Security.KeyVault.Secrets
                 json.WriteEndObject();
             }
 
-            // Kid is read-only don't serialize
+            // KeyId is read-only don't serialize
 
             // Managed is read-only don't serialize
         }

@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.Keyvault.Secrets", "Azure.Security.Keyvault.Secrets\src\Azure.Security.Keyvault.Secrets.csproj", "{AA1C6FB6-7176-400E-B556-B04253A69949}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Configuration", "..\appconfiguration\Azure.ApplicationModel.Configuration\src\Azure.Configuration.csproj", "{28311534-E4DC-4B57-9E9E-0D9F41E70FC1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{AA1C6FB6-7176-400E-B556-B04253A69949}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA1C6FB6-7176-400E-B556-B04253A69949}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA1C6FB6-7176-400E-B556-B04253A69949}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28311534-E4DC-4B57-9E9E-0D9F41E70FC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28311534-E4DC-4B57-9E9E-0D9F41E70FC1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28311534-E4DC-4B57-9E9E-0D9F41E70FC1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28311534-E4DC-4B57-9E9E-0D9F41E70FC1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

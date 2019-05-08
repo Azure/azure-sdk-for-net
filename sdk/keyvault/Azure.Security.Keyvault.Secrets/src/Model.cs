@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
 
 namespace Azure.Security.KeyVault.Secrets
