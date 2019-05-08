@@ -210,7 +210,7 @@ namespace Microsoft.Azure.EventGrid
                 DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
                 NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
                 ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
+                ContractResolver = new Newtonsoft.Json.Serialization.DefaultContractResolver(),
                 Converters = new List<JsonConverter>
                     {
                         new Iso8601TimeSpanConverter()
