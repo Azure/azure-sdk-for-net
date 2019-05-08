@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -13,9 +11,6 @@ namespace Azure.Security.KeyVault.Secrets
     {
         private readonly Uri _vaultUri;
         private const string ApiVersion = "7.0";
-        private const string SdkName = "Azure.Security.KeyVault";
-        private const string SdkVersion = "1.0.0";
-
         private readonly HttpPipeline _pipeline;
 
         private const string SecretsPath = "/secrets/";
