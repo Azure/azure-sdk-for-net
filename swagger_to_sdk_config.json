@@ -1,0 +1,16 @@
+{
+  "$schema": "https://raw.githubusercontent.com/lmazuel/swagger-to-sdk/master/swagger_to_sdk_config.schema.json",
+  "meta": {
+    "autorest_options": {
+      "csharp": "",
+      "license-header": "MICROSOFT_MIT_NO_VERSION",
+      "sdkrel:csharp-sdks-folder": ".",
+      "use": "@microsoft.azure/autorest.csharp"
+    },
+    "advanced_options": {
+      "create_sdk_pull_requests": false,
+      "sdk_generation_pull_request_base": "main_branch"
+    },
+    "version": "0.2.0"
+  }
+}
