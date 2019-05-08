@@ -33,7 +33,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         /// Initializes a new instance of the PersonalizerError class.
         /// </summary>
         /// <param name="code">High level error code. Possible values include:
-        /// 'badRequest', 'resourceNotFound', 'internalServerError'</param>
+        /// 'BadRequest', 'ResourceNotFound', 'InternalServerError'</param>
         /// <param name="message">A message explaining the error reported by
         /// the service.</param>
         /// <param name="target">Error source element.</param>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 
         /// <summary>
         /// Gets or sets high level error code. Possible values include:
-        /// 'badRequest', 'resourceNotFound', 'internalServerError'
+        /// 'BadRequest', 'ResourceNotFound', 'InternalServerError'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
         public string Code { get; set; }

@@ -16,8 +16,17 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
     /// </summary>
     public static class ErrorCode
     {
-        public const string BadRequest = "badRequest";
-        public const string ResourceNotFound = "resourceNotFound";
-        public const string InternalServerError = "internalServerError";
+        /// <summary>
+        /// Request could not be understood by the server.
+        /// </summary>
+        public const string BadRequest = "BadRequest";
+        /// <summary>
+        /// Requested resource does not exist on the server.
+        /// </summary>
+        public const string ResourceNotFound = "ResourceNotFound";
+        /// <summary>
+        /// A generic error has occurred on the server.
+        /// </summary>
+        public const string InternalServerError = "InternalServerError";
     }
 }
