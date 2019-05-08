@@ -77,5 +77,6 @@
     <DelaySign Condition="'$(PublicSign)' != 'true'">true</DelaySign>
 
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile Condition="'$(IsClientLibrary)' == 'true'">$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 </Project>
