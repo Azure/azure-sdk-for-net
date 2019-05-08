@@ -34,16 +34,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<GroupContract> List(this IUserGroupOperations operations, string resourceGroupName, string serviceName, string uid, ODataQuery<GroupContract> odataQuery = default(ODataQuery<GroupContract>))
+            public static IPage<GroupContract> List(this IUserGroupOperations operations, string resourceGroupName, string serviceName, string userId, ODataQuery<GroupContract> odataQuery = default(ODataQuery<GroupContract>))
             {
-                return operations.ListAsync(resourceGroupName, serviceName, uid, odataQuery).GetAwaiter().GetResult();
+                return operations.ListAsync(resourceGroupName, serviceName, userId, odataQuery).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='serviceName'>
             /// The name of the API Management service.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
@@ -68,9 +68,9 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GroupContract>> ListAsync(this IUserGroupOperations operations, string resourceGroupName, string serviceName, string uid, ODataQuery<GroupContract> odataQuery = default(ODataQuery<GroupContract>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<GroupContract>> ListAsync(this IUserGroupOperations operations, string resourceGroupName, string serviceName, string userId, ODataQuery<GroupContract> odataQuery = default(ODataQuery<GroupContract>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, uid, odataQuery, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, userId, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

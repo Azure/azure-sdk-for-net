@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search.Models
 {
+    using System;
+    using Microsoft.Azure.Search.Common;
     using Newtonsoft.Json;
     using Serialization;
 
@@ -12,8 +14,10 @@ namespace Microsoft.Azure.Search.Models
     /// <see href="https://docs.microsoft.com/rest/api/searchservice/Language-support"/>
     /// </summary>
     [JsonConverter(typeof(ExtensibleEnumConverter<AnalyzerName>))]
-    public sealed class AnalyzerName : ExtensibleEnum<AnalyzerName>
+    public struct AnalyzerName : IEquatable<AnalyzerName>
     {
+        private readonly string _value;
+
         // MAINTENANCE NOTE: Keep the language analyzers ordered the same as the table on this page:
         // https://docs.microsoft.com/rest/api/searchservice/Language-support
         // The other pre-defined analyzers come next, and should be ordered the same as the table on this page:
@@ -941,7 +945,7 @@ namespace Microsoft.Azure.Search.Models
             /// Standard ASCII Folding Lucene analyzer.
             /// <see href="https://docs.microsoft.com/rest/api/searchservice/Custom-analyzers-in-Azure-Search#Analyzers" /> 
             /// </summary>
-            public static readonly string StandardAsciiFoldingLucene = "standardasciifolding.lucene";
+            public const string StandardAsciiFoldingLucene = "standardasciifolding.lucene";
 
             /// <summary>
             /// Treats the entire content of a field as a single token. This is useful
@@ -975,24 +979,66 @@ namespace Microsoft.Azure.Search.Models
             public const string Whitespace = "whitespace";
         }
 
-        private AnalyzerName(string name) : base(name)
+        private AnalyzerName(string name)
         {
-            // Base class does all initialization.
+            Throw.IfArgumentNull(name, nameof(name));
+            _value = name;
         }
-
-        /// <summary>
-        /// Creates a new AnalyzerName instance, or returns an existing instance if the given name matches that of a
-        /// known analyzer.
-        /// </summary>
-        /// <param name="name">Name of the analyzer.</param>
-        /// <returns>An AnalyzerName instance with the given name.</returns>
-        public static AnalyzerName Create(string name) => Lookup(name) ?? new AnalyzerName(name);
 
         /// <summary>
         /// Defines implicit conversion from string to AnalyzerName.
         /// </summary>
-        /// <param name="name">string to convert.</param>
+        /// <param name="value">string to convert.</param>
         /// <returns>The string as an AnalyzerName.</returns>
-        public static implicit operator AnalyzerName(string name) => Create(name);
+        public static implicit operator AnalyzerName(string value) => new AnalyzerName(value);
+
+        /// <summary>
+        /// Defines explicit conversion from AnalyzerName to string.
+        /// </summary>
+        /// <param name="name">AnalyzerName to convert.</param>
+        /// <returns>The AnalyzerName as a string.</returns>
+        public static explicit operator string(AnalyzerName name) => name.ToString();
+
+        /// <summary>
+        /// Compares two AnalyzerName values for equality.
+        /// </summary>
+        /// <param name="lhs">The first AnalyzerName to compare.</param>
+        /// <param name="rhs">The second AnalyzerName to compare.</param>
+        /// <returns>true if the AnalyzerName objects are equal or are both null; false otherwise.</returns>
+        public static bool operator ==(AnalyzerName lhs, AnalyzerName rhs) => Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares two AnalyzerName values for inequality.
+        /// </summary>
+        /// <param name="lhs">The first AnalyzerName to compare.</param>
+        /// <param name="rhs">The second AnalyzerName to compare.</param>
+        /// <returns>true if the AnalyzerName objects are not equal; false otherwise.</returns>
+        public static bool operator !=(AnalyzerName lhs, AnalyzerName rhs) => !Equals(lhs, rhs);
+
+        /// <summary>
+        /// Compares the AnalyzerName for equality with another AnalyzerName.
+        /// </summary>
+        /// <param name="other">The AnalyzerName with which to compare.</param>
+        /// <returns><c>true</c> if the AnalyzerName objects are equal; otherwise, <c>false</c>.</returns>
+        public bool Equals(AnalyzerName other) => _value == other._value;
+
+        /// <summary>
+        /// Determines whether the specified object is equal to the current object.
+        /// </summary>
+        /// <param name="obj">The object to compare with the current object.</param>
+        /// <returns><c>true</c> if the specified object is equal to the current object; otherwise, <c>false</c>.</returns>
+        public override bool Equals(object obj) => obj is AnalyzerName ? Equals((AnalyzerName)obj) : false;
+
+        /// <summary>
+        /// Serves as the default hash function.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode() => _value.GetHashCode();
+
+        /// <summary>
+        /// Returns a string representation of the AnalyzerName.
+        /// </summary>
+        /// <returns>The AnalyzerName as a string.</returns>
+        public override string ToString() => _value;
     }
 }

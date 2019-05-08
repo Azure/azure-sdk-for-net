@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the TunnelConnectionHealth class.
         /// </summary>
         /// <param name="tunnel">Tunnel name.</param>
-        /// <param name="connectionStatus">Virtual network Gateway connection
+        /// <param name="connectionStatus">Virtual Network Gateway connection
         /// status. Possible values include: 'Unknown', 'Connecting',
         /// 'Connected', 'NotConnected'</param>
         /// <param name="ingressBytesTransferred">The Ingress Bytes Transferred
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string Tunnel { get; private set; }
 
         /// <summary>
-        /// Gets virtual network Gateway connection status. Possible values
+        /// Gets virtual Network Gateway connection status. Possible values
         /// include: 'Unknown', 'Connecting', 'Connected', 'NotConnected'
         /// </summary>
         [JsonProperty(PropertyName = "connectionStatus")]

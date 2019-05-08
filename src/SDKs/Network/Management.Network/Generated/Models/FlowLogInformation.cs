@@ -38,6 +38,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="storageId">ID of the storage account which is used to
         /// store the flow log.</param>
         /// <param name="enabled">Flag to enable/disable flow logging.</param>
+        /// <param name="retentionPolicy">Parameters that define the retention
+        /// policy for flow log.</param>
+        /// <param name="format">Parameters that define the flow log
+        /// format.</param>
+        /// <param name="flowAnalyticsConfiguration">Parameters that define the
+        /// configuration of traffic analytics.</param>
         public FlowLogInformation(string targetResourceId, string storageId, bool enabled, RetentionPolicyParameters retentionPolicy = default(RetentionPolicyParameters), FlowLogFormatParameters format = default(FlowLogFormatParameters), TrafficAnalyticsProperties flowAnalyticsConfiguration = default(TrafficAnalyticsProperties))
         {
             TargetResourceId = targetResourceId;
@@ -75,16 +81,21 @@ namespace Microsoft.Azure.Management.Network.Models
         public bool Enabled { get; set; }
 
         /// <summary>
+        /// Gets or sets parameters that define the retention policy for flow
+        /// log.
         /// </summary>
         [JsonProperty(PropertyName = "properties.retentionPolicy")]
         public RetentionPolicyParameters RetentionPolicy { get; set; }
 
         /// <summary>
+        /// Gets or sets parameters that define the flow log format.
         /// </summary>
         [JsonProperty(PropertyName = "properties.format")]
         public FlowLogFormatParameters Format { get; set; }
 
         /// <summary>
+        /// Gets or sets parameters that define the configuration of traffic
+        /// analytics.
         /// </summary>
         [JsonProperty(PropertyName = "flowAnalyticsConfiguration")]
         public TrafficAnalyticsProperties FlowAnalyticsConfiguration { get; set; }

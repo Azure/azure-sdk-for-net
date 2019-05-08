@@ -40,6 +40,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
         /// </param>
+        /// <param name='expandCommentsAttachments'>
+        /// Expand the comment attachments.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -55,7 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<IssueContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<IssueContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>), bool? expandCommentsAttachments = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the entity state (Etag) version of the Issue for an API
         /// specified by its identifier.
@@ -105,6 +108,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Issue identifier. Must be unique in the current API Management
         /// service instance.
         /// </param>
+        /// <param name='expandCommentsAttachments'>
+        /// Expand the comment attachments.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -120,7 +126,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IssueContract,ApiIssueGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IssueContract,ApiIssueGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, bool? expandCommentsAttachments = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new Issue for an API or updates an existing one.
         /// </summary>
@@ -142,9 +148,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Create parameters.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity
-        /// state from the header response of the GET request or it should be *
-        /// for unconditional update.
+        /// ETag of the Entity. Not required when creating an entity, but
+        /// required when updating an entity.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -161,7 +166,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IssueContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IssueContract,ApiIssueCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates an existing issue for an API.
         /// </summary>
@@ -183,9 +188,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Update parameters.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity
-        /// state from the header response of the GET request or it should be *
-        /// for unconditional update.
+        /// ETag of the Entity. ETag should match the current entity state from
+        /// the header response of the GET request or it should be * for
+        /// unconditional update.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -199,7 +204,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes the specified Issue from an API.
         /// </summary>
@@ -218,9 +223,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service instance.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity
-        /// state from the header response of the GET request or it should be *
-        /// for unconditional update.
+        /// ETag of the Entity. ETag should match the current entity state from
+        /// the header response of the GET request or it should be * for
+        /// unconditional update.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -23,8 +23,7 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class GroupUserOperationsExtensions
     {
             /// <summary>
-            /// Lists a collection of the members of the group, specified by its
-            /// identifier.
+            /// Lists a collection of user entities associated with the group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,8 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of the members of the group, specified by its
-            /// identifier.
+            /// Lists a collection of user entities associated with the group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -95,13 +93,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Group identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static bool CheckEntityExists(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string uid)
+            public static bool CheckEntityExists(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string userId)
             {
-                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, groupId, uid).GetAwaiter().GetResult();
+                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, groupId, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -121,23 +119,23 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Group identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckEntityExistsAsync(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckEntityExistsAsync(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, groupId, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, groupId, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Adds a user to the specified group.
+            /// Add existing user to existing group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,17 +150,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Group identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static UserContract Create(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string uid)
+            public static UserContract Create(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string userId)
             {
-                return operations.CreateAsync(resourceGroupName, serviceName, groupId, uid).GetAwaiter().GetResult();
+                return operations.CreateAsync(resourceGroupName, serviceName, groupId, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Adds a user to the specified group.
+            /// Add existing user to existing group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -177,16 +175,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Group identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UserContract> CreateAsync(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<UserContract> CreateAsync(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serviceName, groupId, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serviceName, groupId, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -208,13 +206,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Group identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static void Delete(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string uid)
+            public static void Delete(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string userId)
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, groupId, uid).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, groupId, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -233,21 +231,20 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// Group identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IGroupUserOperations operations, string resourceGroupName, string serviceName, string groupId, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, groupId, uid, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, groupId, userId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
-            /// Lists a collection of the members of the group, specified by its
-            /// identifier.
+            /// Lists a collection of user entities associated with the group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -261,8 +258,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Lists a collection of the members of the group, specified by its
-            /// identifier.
+            /// Lists a collection of user entities associated with the group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

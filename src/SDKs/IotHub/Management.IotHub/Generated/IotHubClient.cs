@@ -95,6 +95,11 @@ namespace Microsoft.Azure.Management.IotHub
         public virtual ICertificatesOperations Certificates { get; private set; }
 
         /// <summary>
+        /// Gets the IIotHubOperations.
+        /// </summary>
+        public virtual IIotHubOperations IotHub { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the IotHubClient class.
         /// </summary>
         /// <param name='httpClient'>
@@ -339,8 +344,9 @@ namespace Microsoft.Azure.Management.IotHub
             IotHubResource = new IotHubResourceOperations(this);
             ResourceProviderCommon = new ResourceProviderCommonOperations(this);
             Certificates = new CertificatesOperations(this);
+            IotHub = new IotHubOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-12-01-preview";
+            ApiVersion = "2019-03-22-preview";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

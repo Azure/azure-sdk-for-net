@@ -1,0 +1,11 @@
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Project references -->
+  <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'=='true'">
+    <ProjectReference Include="$(MSBuildThisFileDirectory)Azure.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Package references -->
+  <ItemGroup Condition="'$(UseProjectReferenceToAzureBase)'!='true'">
+    <PackageReference Include="Azure.Core" Version="1.0.0-preview.5" />
+  </ItemGroup>
+</Project>

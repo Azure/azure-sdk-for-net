@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     using System.Linq;
 
     /// <summary>
-    /// Defines the URL path condition for the delivery rule.
+    /// Defines the UrlPath condition for the delivery rule.
     /// </summary>
     [Newtonsoft.Json.JsonObject("UrlPath")]
     public partial class DeliveryRuleUrlPathCondition : DeliveryRuleCondition
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         public DeliveryRuleUrlPathCondition()
         {
-            Parameters = new UrlPathConditionParameters();
+            Parameters = new UrlPathMatchConditionParameters();
             CustomInit();
         }
 
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         /// <param name="parameters">Defines the parameters for the
         /// condition.</param>
-        public DeliveryRuleUrlPathCondition(UrlPathConditionParameters parameters)
+        public DeliveryRuleUrlPathCondition(UrlPathMatchConditionParameters parameters)
         {
             Parameters = parameters;
             CustomInit();
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Gets or sets defines the parameters for the condition.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
-        public UrlPathConditionParameters Parameters { get; set; }
+        public UrlPathMatchConditionParameters Parameters { get; set; }
 
         /// <summary>
         /// Validate the object.

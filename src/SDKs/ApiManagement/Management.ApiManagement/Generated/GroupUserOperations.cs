@@ -52,8 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists a collection of the members of the group, specified by its
-        /// identifier.
+        /// Lists a collection of user entities associated with the group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -120,17 +119,17 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -309,7 +308,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Group identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
@@ -331,7 +330,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<bool>> CheckEntityExistsWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -362,36 +361,36 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (uid == null)
+            if (userId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "uid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "userId");
             }
-            if (uid != null)
+            if (userId != null)
             {
-                if (uid.Length > 80)
+                if (userId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "uid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "userId", 80);
                 }
-                if (uid.Length < 1)
+                if (userId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "uid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "userId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(uid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "uid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -412,17 +411,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("groupId", groupId);
-                tracingParameters.Add("uid", uid);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckEntityExists", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{uid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
-            _url = _url.Replace("{uid}", System.Uri.EscapeDataString(uid));
+            _url = _url.Replace("{userId}", System.Uri.EscapeDataString(userId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -533,7 +532,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Adds a user to the specified group.
+        /// Add existing user to existing group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -545,7 +544,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Group identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
@@ -570,7 +569,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<UserContract>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<UserContract>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -601,36 +600,36 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (uid == null)
+            if (userId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "uid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "userId");
             }
-            if (uid != null)
+            if (userId != null)
             {
-                if (uid.Length > 80)
+                if (userId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "uid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "userId", 80);
                 }
-                if (uid.Length < 1)
+                if (userId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "uid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "userId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(uid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "uid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -651,17 +650,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("groupId", groupId);
-                tracingParameters.Add("uid", uid);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{uid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
-            _url = _url.Replace("{uid}", System.Uri.EscapeDataString(uid));
+            _url = _url.Replace("{userId}", System.Uri.EscapeDataString(userId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -819,7 +818,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Group identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
-        /// <param name='uid'>
+        /// <param name='userId'>
         /// User identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
@@ -841,7 +840,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string uid, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string groupId, string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -872,36 +871,36 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
             if (groupId != null)
             {
-                if (groupId.Length > 80)
+                if (groupId.Length > 256)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "groupId", 256);
                 }
                 if (groupId.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "groupId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(groupId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "groupId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "groupId", "^[^*#&+:<>?]+$");
                 }
             }
-            if (uid == null)
+            if (userId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "uid");
+                throw new ValidationException(ValidationRules.CannotBeNull, "userId");
             }
-            if (uid != null)
+            if (userId != null)
             {
-                if (uid.Length > 80)
+                if (userId.Length > 80)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "uid", 80);
+                    throw new ValidationException(ValidationRules.MaxLength, "userId", 80);
                 }
-                if (uid.Length < 1)
+                if (userId.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "uid", 1);
+                    throw new ValidationException(ValidationRules.MinLength, "userId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(uid, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(userId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "uid", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "userId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -922,17 +921,17 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("groupId", groupId);
-                tracingParameters.Add("uid", uid);
+                tracingParameters.Add("userId", userId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{uid}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ApiManagement/service/{serviceName}/groups/{groupId}/users/{userId}").ToString();
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{serviceName}", System.Uri.EscapeDataString(serviceName));
             _url = _url.Replace("{groupId}", System.Uri.EscapeDataString(groupId));
-            _url = _url.Replace("{uid}", System.Uri.EscapeDataString(uid));
+            _url = _url.Replace("{userId}", System.Uri.EscapeDataString(userId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (Client.ApiVersion != null)
@@ -1042,8 +1041,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Lists a collection of the members of the group, specified by its
-        /// identifier.
+        /// Lists a collection of user entities associated with the group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

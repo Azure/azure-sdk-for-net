@@ -13,6 +13,66 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     {
         public string IndexName { get; private set; }
 
+        public static Index CreateTestIndex(string indexName) =>
+            // This is intentionally a different index definition than the one returned by IndexManagementTests.CreateTestIndex().
+            // That index is meant to exercise serialization of the index definition itself, while this one is tuned
+            // more for exercising document serialization, indexing, and querying operations. Also, the fields of this index should
+            // exactly match the properties of the Hotel test model class.
+            new Index()
+            {
+                Name = indexName,
+                Fields = new[]
+                {
+                    Field.New("hotelId", DataType.String, isKey: true, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("hotelName", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: false),
+                    Field.NewSearchableString("description", AnalyzerName.EnLucene),
+                    Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene),
+                    Field.New("category", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isFacetable: true),
+                    Field.New("parkingIncluded", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("lastRenovationDate", DataType.DateTimeOffset, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("rating", DataType.Int32, isFilterable: true, isSortable: true, isFacetable: true),
+                    Field.New("location", DataType.GeographyPoint, isFilterable: true, isSortable: true),
+                    Field.NewComplex("address", isCollection: false, fields: new[]
+                    {
+                        Field.New("streetAddress", DataType.String, isSearchable: true),
+                        Field.New("city", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("stateProvince", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("country", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true),
+                        Field.New("postalCode", DataType.String, isSearchable: true, isFilterable: true, isSortable: true, isFacetable: true)
+                    }),
+                    Field.NewComplex("rooms", isCollection: true, fields: new[]
+                    {
+                        Field.NewSearchableString("description", AnalyzerName.EnLucene),
+                        Field.NewSearchableString("descriptionFr", AnalyzerName.FrLucene),
+                        Field.New("type", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
+                        Field.New("baseRate", DataType.Double, isFilterable: true, isFacetable: true),
+                        Field.New("bedOptions", DataType.String, isSearchable: true, isFilterable: true, isFacetable: true),
+                        Field.New("sleepsCount", DataType.Int32, isFilterable: true, isFacetable: true),
+                        Field.New("smokingAllowed", DataType.Boolean, isFilterable: true, isFacetable: true),
+                        Field.New("tags", DataType.Collection(DataType.String), isSearchable: true, isFilterable: true, isFacetable: true)
+                    })
+                },
+                Suggesters = new[]
+                {
+                    new Suggester(
+                        name: "sg",
+                        sourceFields: new[] { "description", "hotelName" })
+                },
+                ScoringProfiles = new[]
+                {
+                    new ScoringProfile("nearest")
+                    {
+                        FunctionAggregation = ScoringFunctionAggregation.Sum,
+                        Functions = new[]
+                        {
+                            new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100))
+                        }
+                    }
+                }
+            };
+
         public override void Initialize(MockContext context)
         {
             base.Initialize(context);
@@ -21,47 +81,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             IndexName = SearchTestUtilities.GenerateName();
 
-            // This is intentionally a different index definition than the one returned by IndexTests.CreateTestIndex().
-            // That index is meant to exercise serialization of the index definition itself, while this one is tuned
-            // more for exercising document serialization, indexing, and querying operations.
-            var index =
-                new Index()
-                {
-                    Name = IndexName,
-                    Fields = new[]
-                    {
-                        new Field("hotelId", DataType.String) { IsKey = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("baseRate", DataType.Double) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("description", DataType.String) { IsSearchable = true },
-                        new Field("descriptionFr", AnalyzerName.FrLucene),
-                        new Field("hotelName", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("category", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("tags", DataType.Collection(DataType.String)) { IsSearchable = true, IsFilterable = true, IsFacetable = true },
-                        new Field("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                        new Field("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true }
-                    },
-                    Suggesters = new[]
-                    {
-                        new Suggester(
-                            name: "sg", 
-                            sourceFields: new[] { "description", "hotelName" })
-                    },
-                    ScoringProfiles = new[]
-                    {
-                        new ScoringProfile("nearest")
-                        {
-                            FunctionAggregation = ScoringFunctionAggregation.Sum,
-                            Functions = new[]
-                            {
-                                new DistanceScoringFunction("location", 2, new DistanceScoringParameters("myloc", 100))
-                            }
-                        }
-                    }
-                };
-
+            var index = CreateTestIndex(IndexName);
             searchClient.Indexes.Create(index);
 
             // Give the index time to stabilize before running tests.

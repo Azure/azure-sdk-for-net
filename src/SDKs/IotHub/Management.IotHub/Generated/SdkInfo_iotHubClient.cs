@@ -19,10 +19,11 @@ namespace Microsoft.Azure.Management.IotHub
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Devices", "Certificates", "2018-12-01-preview"),
-                new Tuple<string, string, string>("Devices", "IotHubResource", "2018-12-01-preview"),
-                new Tuple<string, string, string>("Devices", "Operations", "2018-12-01-preview"),
-                new Tuple<string, string, string>("Devices", "ResourceProviderCommon", "2018-12-01-preview"),
+                new Tuple<string, string, string>("Devices", "Certificates", "2019-03-22-preview"),
+                new Tuple<string, string, string>("Devices", "IotHub", "2019-03-22-preview"),
+                new Tuple<string, string, string>("Devices", "IotHubResource", "2019-03-22-preview"),
+                new Tuple<string, string, string>("Devices", "Operations", "2019-03-22-preview"),
+                new Tuple<string, string, string>("Devices", "ResourceProviderCommon", "2019-03-22-preview"),
               }.AsEnumerable();
           }
       }

@@ -16,8 +16,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
     using System.Linq;
 
     /// <summary>
-    /// Export policy rule
+    /// exportPolicy
     /// </summary>
+    /// <remarks>
+    /// Set of export policy rules
+    /// </remarks>
     public partial class VolumePatchPropertiesExportPolicy
     {
         /// <summary>
@@ -33,6 +36,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Initializes a new instance of the VolumePatchPropertiesExportPolicy
         /// class.
         /// </summary>
+        /// <param name="rules">Export policy rule</param>
         public VolumePatchPropertiesExportPolicy(IList<ExportPolicyRule> rules = default(IList<ExportPolicyRule>))
         {
             Rules = rules;
@@ -45,7 +49,11 @@ namespace Microsoft.Azure.Management.NetApp.Models
         partial void CustomInit();
 
         /// <summary>
+        /// Gets or sets export policy rule
         /// </summary>
+        /// <remarks>
+        /// Export policy rule
+        /// </remarks>
         [JsonProperty(PropertyName = "rules")]
         public IList<ExportPolicyRule> Rules { get; set; }
 

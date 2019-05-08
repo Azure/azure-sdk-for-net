@@ -60,6 +60,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="provisioningState">The provisioning state of the
         /// P2SVpnServerConfiguration resource. Possible values are:
         /// 'Updating', 'Deleting', and 'Failed'.</param>
+        /// <param name="p2SVpnGateways">List of references to
+        /// P2SVpnGateways.</param>
         /// <param name="p2SVpnServerConfigurationPropertiesEtag">A unique
         /// read-only string that changes whenever the resource is
         /// updated.</param>
@@ -167,6 +169,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; private set; }
 
         /// <summary>
+        /// Gets list of references to P2SVpnGateways.
         /// </summary>
         [JsonProperty(PropertyName = "properties.p2SVpnGateways")]
         public IList<SubResource> P2SVpnGateways { get; private set; }

@@ -41,6 +41,8 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// 'AutoCreated', 'UserSpecified'</param>
         /// <param name="managementId">The management Id.</param>
         /// <param name="protectedDisks">The list of protected disks.</param>
+        /// <param name="unprotectedDisks">The list of unprotected
+        /// disks.</param>
         /// <param name="protectedManagedDisks">The list of protected managed
         /// disks.</param>
         /// <param name="recoveryBootDiagStorageAccountId">The recovery boot
@@ -95,7 +97,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// RPO value was calculated by Protection Service.</param>
         /// <param name="recoveryAvailabilityZone">The recovery availability
         /// zone.</param>
-        public A2AReplicationDetails(string fabricObjectId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmGroupCreateOption = default(string), string managementId = default(string), IList<A2AProtectedDiskDetails> protectedDisks = default(IList<A2AProtectedDiskDetails>), IList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default(IList<A2AProtectedManagedDiskDetails>), string recoveryBootDiagStorageAccountId = default(string), string primaryFabricLocation = default(string), string recoveryFabricLocation = default(string), string osType = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureVMName = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryCloudService = default(string), string recoveryAvailabilitySet = default(string), string selectedRecoveryAzureNetworkId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails = default(AzureToAzureVmSyncedConfigDetails), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string agentVersion = default(string), bool? isReplicationAgentUpdateRequired = default(bool?), string recoveryFabricObjectId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), string lifecycleId = default(string), string testFailoverRecoveryFabricObjectId = default(string), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string recoveryAvailabilityZone = default(string))
+        public A2AReplicationDetails(string fabricObjectId = default(string), string multiVmGroupId = default(string), string multiVmGroupName = default(string), string multiVmGroupCreateOption = default(string), string managementId = default(string), IList<A2AProtectedDiskDetails> protectedDisks = default(IList<A2AProtectedDiskDetails>), IList<A2AUnprotectedDiskDetails> unprotectedDisks = default(IList<A2AUnprotectedDiskDetails>), IList<A2AProtectedManagedDiskDetails> protectedManagedDisks = default(IList<A2AProtectedManagedDiskDetails>), string recoveryBootDiagStorageAccountId = default(string), string primaryFabricLocation = default(string), string recoveryFabricLocation = default(string), string osType = default(string), string recoveryAzureVMSize = default(string), string recoveryAzureVMName = default(string), string recoveryAzureResourceGroupId = default(string), string recoveryCloudService = default(string), string recoveryAvailabilitySet = default(string), string selectedRecoveryAzureNetworkId = default(string), IList<VMNicDetails> vmNics = default(IList<VMNicDetails>), AzureToAzureVmSyncedConfigDetails vmSyncedConfigDetails = default(AzureToAzureVmSyncedConfigDetails), int? monitoringPercentageCompletion = default(int?), string monitoringJobType = default(string), System.DateTime? lastHeartbeat = default(System.DateTime?), string agentVersion = default(string), bool? isReplicationAgentUpdateRequired = default(bool?), string recoveryFabricObjectId = default(string), string vmProtectionState = default(string), string vmProtectionStateDescription = default(string), string lifecycleId = default(string), string testFailoverRecoveryFabricObjectId = default(string), long? rpoInSeconds = default(long?), System.DateTime? lastRpoCalculatedTime = default(System.DateTime?), string recoveryAvailabilityZone = default(string))
         {
             FabricObjectId = fabricObjectId;
             MultiVmGroupId = multiVmGroupId;
@@ -103,6 +105,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
             MultiVmGroupCreateOption = multiVmGroupCreateOption;
             ManagementId = managementId;
             ProtectedDisks = protectedDisks;
+            UnprotectedDisks = unprotectedDisks;
             ProtectedManagedDisks = protectedManagedDisks;
             RecoveryBootDiagStorageAccountId = recoveryBootDiagStorageAccountId;
             PrimaryFabricLocation = primaryFabricLocation;
@@ -173,6 +176,12 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery.Models
         /// </summary>
         [JsonProperty(PropertyName = "protectedDisks")]
         public IList<A2AProtectedDiskDetails> ProtectedDisks { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of unprotected disks.
+        /// </summary>
+        [JsonProperty(PropertyName = "unprotectedDisks")]
+        public IList<A2AUnprotectedDiskDetails> UnprotectedDisks { get; set; }
 
         /// <summary>
         /// Gets or sets the list of protected managed disks.

@@ -10,63 +10,16 @@
 
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for HostnameType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum HostnameType
+    public static class HostnameType
     {
-        [EnumMember(Value = "Proxy")]
-        Proxy,
-        [EnumMember(Value = "Portal")]
-        Portal,
-        [EnumMember(Value = "Management")]
-        Management,
-        [EnumMember(Value = "Scm")]
-        Scm
-    }
-    internal static class HostnameTypeEnumExtension
-    {
-        internal static string ToSerializedValue(this HostnameType? value)
-        {
-            return value == null ? null : ((HostnameType)value).ToSerializedValue();
-        }
-
-        internal static string ToSerializedValue(this HostnameType value)
-        {
-            switch( value )
-            {
-                case HostnameType.Proxy:
-                    return "Proxy";
-                case HostnameType.Portal:
-                    return "Portal";
-                case HostnameType.Management:
-                    return "Management";
-                case HostnameType.Scm:
-                    return "Scm";
-            }
-            return null;
-        }
-
-        internal static HostnameType? ParseHostnameType(this string value)
-        {
-            switch( value )
-            {
-                case "Proxy":
-                    return HostnameType.Proxy;
-                case "Portal":
-                    return HostnameType.Portal;
-                case "Management":
-                    return HostnameType.Management;
-                case "Scm":
-                    return HostnameType.Scm;
-            }
-            return null;
-        }
+        public const string Proxy = "Proxy";
+        public const string Portal = "Portal";
+        public const string Management = "Management";
+        public const string Scm = "Scm";
+        public const string DeveloperPortal = "DeveloperPortal";
     }
 }

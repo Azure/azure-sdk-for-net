@@ -35,25 +35,20 @@ namespace Microsoft.Azure.Management.Monitor.Models
         /// </summary>
         /// <param name="name">Name of the criteria.</param>
         /// <param name="metricName">Name of the metric.</param>
-        /// <param name="operatorProperty">the criteria operator.</param>
         /// <param name="timeAggregation">the criteria time aggregation
         /// types.</param>
+        /// <param name="operatorProperty">the criteria operator.</param>
         /// <param name="threshold">the criteria threshold value that activates
         /// the alert.</param>
         /// <param name="additionalProperties">Unmatched properties from the
         /// message are deserialized this collection</param>
         /// <param name="metricNamespace">Namespace of the metric.</param>
         /// <param name="dimensions">List of dimension conditions.</param>
-        public MetricCriteria(string name, string metricName, object operatorProperty, object timeAggregation, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
-            : base(additionalProperties)
+        public MetricCriteria(string name, string metricName, object timeAggregation, object operatorProperty, double threshold, IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string metricNamespace = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+            : base(name, metricName, timeAggregation, additionalProperties, metricNamespace, dimensions)
         {
-            Name = name;
-            MetricName = metricName;
-            MetricNamespace = metricNamespace;
             OperatorProperty = operatorProperty;
-            TimeAggregation = timeAggregation;
             Threshold = threshold;
-            Dimensions = dimensions;
             CustomInit();
         }
 
@@ -63,34 +58,10 @@ namespace Microsoft.Azure.Management.Monitor.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets name of the criteria.
-        /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets name of the metric.
-        /// </summary>
-        [JsonProperty(PropertyName = "metricName")]
-        public string MetricName { get; set; }
-
-        /// <summary>
-        /// Gets or sets namespace of the metric.
-        /// </summary>
-        [JsonProperty(PropertyName = "metricNamespace")]
-        public string MetricNamespace { get; set; }
-
-        /// <summary>
         /// Gets or sets the criteria operator.
         /// </summary>
         [JsonProperty(PropertyName = "operator")]
         public object OperatorProperty { get; set; }
-
-        /// <summary>
-        /// Gets or sets the criteria time aggregation types.
-        /// </summary>
-        [JsonProperty(PropertyName = "timeAggregation")]
-        public object TimeAggregation { get; set; }
 
         /// <summary>
         /// Gets or sets the criteria threshold value that activates the alert.
@@ -99,44 +70,17 @@ namespace Microsoft.Azure.Management.Monitor.Models
         public double Threshold { get; set; }
 
         /// <summary>
-        /// Gets or sets list of dimension conditions.
-        /// </summary>
-        [JsonProperty(PropertyName = "dimensions")]
-        public IList<MetricDimension> Dimensions { get; set; }
-
-        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
-            if (Name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
-            }
-            if (MetricName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "MetricName");
-            }
+            base.Validate();
             if (OperatorProperty == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "OperatorProperty");
-            }
-            if (TimeAggregation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TimeAggregation");
-            }
-            if (Dimensions != null)
-            {
-                foreach (var element in Dimensions)
-                {
-                    if (element != null)
-                    {
-                        element.Validate();
-                    }
-                }
             }
         }
     }

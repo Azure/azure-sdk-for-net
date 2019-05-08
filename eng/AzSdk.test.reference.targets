@@ -3,6 +3,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    <None Include="$(MSBuildThisFileDirectory)xunit.runner.json" CopyToOutputDirectory="PreserveNewest" Visible="false" />
 
     <PackageReference Include="Microsoft.Azure.Test.HttpRecorder" Version="[1.13.1, 2.0.0)" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime.Azure.TestFramework" Version="[1.7.5, 2.0.0)" />

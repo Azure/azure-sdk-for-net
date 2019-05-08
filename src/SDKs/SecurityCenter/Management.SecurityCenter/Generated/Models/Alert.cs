@@ -79,7 +79,9 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="instanceId">Instance ID of the alert.</param>
         /// <param name="workspaceArmId">Azure resource ID of the workspace
         /// that the alert was reported to.</param>
-        public Alert(string id = default(string), string name = default(string), string type = default(string), string state = default(string), System.DateTime? reportedTimeUtc = default(System.DateTime?), string vendorName = default(string), string alertName = default(string), string alertDisplayName = default(string), System.DateTime? detectedTimeUtc = default(System.DateTime?), string description = default(string), string remediationSteps = default(string), string actionTaken = default(string), string reportedSeverity = default(string), string compromisedEntity = default(string), string associatedResource = default(string), IDictionary<string, object> extendedProperties = default(IDictionary<string, object>), string systemSource = default(string), bool? canBeInvestigated = default(bool?), bool? isIncident = default(bool?), IList<AlertEntity> entities = default(IList<AlertEntity>), double? confidenceScore = default(double?), IList<AlertConfidenceReason> confidenceReasons = default(IList<AlertConfidenceReason>), string subscriptionId = default(string), string instanceId = default(string), string workspaceArmId = default(string))
+        /// <param name="correlationKey">Alerts with the same CorrelationKey
+        /// will be grouped together in Ibiza.</param>
+        public Alert(string id = default(string), string name = default(string), string type = default(string), string state = default(string), System.DateTime? reportedTimeUtc = default(System.DateTime?), string vendorName = default(string), string alertName = default(string), string alertDisplayName = default(string), System.DateTime? detectedTimeUtc = default(System.DateTime?), string description = default(string), string remediationSteps = default(string), string actionTaken = default(string), string reportedSeverity = default(string), string compromisedEntity = default(string), string associatedResource = default(string), IDictionary<string, object> extendedProperties = default(IDictionary<string, object>), string systemSource = default(string), bool? canBeInvestigated = default(bool?), bool? isIncident = default(bool?), IList<AlertEntity> entities = default(IList<AlertEntity>), double? confidenceScore = default(double?), IList<AlertConfidenceReason> confidenceReasons = default(IList<AlertConfidenceReason>), string subscriptionId = default(string), string instanceId = default(string), string workspaceArmId = default(string), string correlationKey = default(string))
             : base(id, name, type)
         {
             State = state;
@@ -104,6 +106,7 @@ namespace Microsoft.Azure.Management.Security.Models
             SubscriptionId = subscriptionId;
             InstanceId = instanceId;
             WorkspaceArmId = workspaceArmId;
+            CorrelationKey = correlationKey;
             CustomInit();
         }
 
@@ -250,6 +253,13 @@ namespace Microsoft.Azure.Management.Security.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.workspaceArmId")]
         public string WorkspaceArmId { get; private set; }
+
+        /// <summary>
+        /// Gets alerts with the same CorrelationKey will be grouped together
+        /// in Ibiza.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.correlationKey")]
+        public string CorrelationKey { get; private set; }
 
         /// <summary>
         /// Validate the object.

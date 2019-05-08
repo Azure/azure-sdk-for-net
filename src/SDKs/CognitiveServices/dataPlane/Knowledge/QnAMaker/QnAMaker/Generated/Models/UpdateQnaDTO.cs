@@ -38,13 +38,16 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// answer.</param>
         /// <param name="metadata">List of metadata associated with the answer
         /// to be updated</param>
-        public UpdateQnaDTO(int? id = default(int?), string answer = default(string), string source = default(string), UpdateQnaDTOQuestions questions = default(UpdateQnaDTOQuestions), UpdateQnaDTOMetadata metadata = default(UpdateQnaDTOMetadata))
+        /// <param name="context">Context associated with Qna to be
+        /// updated.</param>
+        public UpdateQnaDTO(int? id = default(int?), string answer = default(string), string source = default(string), UpdateQnaDTOQuestions questions = default(UpdateQnaDTOQuestions), UpdateQnaDTOMetadata metadata = default(UpdateQnaDTOMetadata), UpdateQnaDTOContext context = default(UpdateQnaDTOContext))
         {
             Id = id;
             Answer = answer;
             Source = source;
             Questions = questions;
             Metadata = metadata;
+            Context = context;
             CustomInit();
         }
 
@@ -84,6 +87,12 @@ namespace Microsoft.Azure.CognitiveServices.Knowledge.QnAMaker.Models
         /// </summary>
         [JsonProperty(PropertyName = "metadata")]
         public UpdateQnaDTOMetadata Metadata { get; set; }
+
+        /// <summary>
+        /// Gets or sets context associated with Qna to be updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "context")]
+        public UpdateQnaDTOContext Context { get; set; }
 
         /// <summary>
         /// Validate the object.

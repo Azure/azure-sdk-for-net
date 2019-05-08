@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// etc.</param>
         /// <param name="operation">Type of operation: get, read, delete,
         /// etc.</param>
-        /// <param name="description">Decription of operation.</param>
+        /// <param name="description">Description of operation.</param>
         public OperationDisplay(string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Provider = provider;
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public string Operation { get; set; }
 
         /// <summary>
-        /// Gets or sets decription of operation.
+        /// Gets or sets description of operation.
         /// </summary>
         [JsonProperty(PropertyName = "description")]
         public string Description { get; set; }

@@ -6,18 +6,15 @@
 	<PropertyGroup>
 		<PackageId>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</PackageId>
 		<Description>Provides developers with libraries for the updated recovery services site recovery feature under Azure Resource manager.</Description>
-		<Version>2.0.0-preview</Version>
+		<Version>2.0.1-preview</Version>
 		<AssemblyName>Microsoft.Azure.Management.RecoveryServices.SiteRecovery</AssemblyName>
 		<PackageTags>Recoveryservices;SiteRecovery;</PackageTags>
 		<PackageReleaseNotes>
 			<![CDATA[
 		  Updates in this release:
-			- Introduced new API version 2018-07-10 for Azure Site Recovery (ASR) service:
+			- Added new property for Azure Site Recovery (ASR) service:
       * Incremental changes:
-      ** new APIs addDisks, removeDisks, resolveHealthErrors, replicationSupportedOperatingSystems got added.
-      * Breaking changes:
-      ** modified properties in InMageAzureV2EnableProtectionInput and InMageAzureV2ReplicationDetails using new contracts InMageAzureV2DiskInputDetails and InMageAzureV2ManagedDiskDetails.
-      ** removed roleAssignment.
+      ** added new property in A2AReplicationDetails
 		      ]]>
 		</PackageReleaseNotes>
 	</PropertyGroup>

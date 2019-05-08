@@ -8,192 +8,393 @@ namespace Microsoft.Azure.Search.Tests
     using System.Collections.Generic;
     using System.Linq;
     using Microsoft.Azure.Search.Models;
+    using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Serialization;
     using Xunit;
 
-    public class FieldBuilderTests
+    public class FieldBuilderTests : SearchTestBase<IndexFixture>
     {
-        [Fact]
-        public void ReportsStringProperties()
+        private static IEnumerable<Type> TestModelTypes
         {
-            Run(fields => Assert.Equal(DataType.String, fields["Text"].Type));
-        }
-
-        [Fact]
-        public void ReportsInt32Properties()
-        {
-            Run(fields => Assert.Equal(DataType.Int32, fields["Id"].Type));
-        }
-
-        [Fact]
-        public void ReportsNullableInt32Properties()
-        {
-            Run(fields => Assert.Equal(DataType.Int32, fields["NullableInt"].Type));
-        }
-
-        [Fact]
-        public void ReportsInt64Properties()
-        {
-            Run(fields => Assert.Equal(DataType.Int64, fields["BigNumber"].Type));
-        }
-
-        [Fact]
-        public void ReportsDoubleProperties()
-        {
-            Run(fields => Assert.Equal(DataType.Double, fields["Double"].Type));
-        }
-
-        [Fact]
-        public void ReportsBooleanProperties()
-        {
-            Run(fields => Assert.Equal(DataType.Boolean, fields["Flag"].Type));
-        }
-
-        [Fact]
-        public void ReportsDateTimeOffsetProperties()
-        {
-            Run(fields => Assert.Equal(DataType.DateTimeOffset, fields["Time"].Type));
-        }
-
-        [Fact]
-        public void ReportsDateTimeProperties()
-        {
-            Run(fields => Assert.Equal(DataType.DateTimeOffset, fields["TimeWithoutOffset"].Type));
-        }
-
-        [Fact]
-        public void ReportsGeographyPointProperties()
-        {
-            Run(fields => Assert.Equal(DataType.GeographyPoint, fields["GeographyPoint"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringArrayProperties()
-        {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringArray"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringIListProperties()
-        {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIList"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringIEnumerableProperties()
-        {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringIEnumerable"].Type));
-        }
-
-        [Fact]
-        public void ReportsStringListProperties()
-        {
-            Run(fields => Assert.Equal(DataType.Collection(DataType.String), fields["StringList"].Type));
-        }
-
-        private void OnlyTrueFor(Func<Field, bool> check, params string[] ids)
-        {
-            Run(fields =>
+            get
             {
-                foreach (var kv in fields)
+                // MAINTENANCE NOTE: These two types and the types of their properties must be identical,
+                // other than that one is a group of classes and one is a group of structs.
+                yield return typeof(ReflectableModel);
+                yield return typeof(ReflectableStructModel);
+            }
+        }
+
+        public static TheoryData<Type> TestModelTypeTestData => new TheoryData<Type>().PopulateFrom(TestModelTypes);
+
+        public static TheoryData<Type, DataType, string> PrimitiveTypeTestData
+        {
+            get
+            {
+                (DataType, string)[] primitivePropertyTestData = new[]
                 {
-                    string id = kv.Key;
-                    Field field = kv.Value;
-                    bool result = check(field);
-                    if (ids.Contains(id))
-                    {
-                        Assert.True(result);
-                    }
-                    else
-                    {
-                        Assert.False(result);
-                    }
-                }
-            });
+                    (DataType.String, nameof(ReflectableModel.Text)),
+                    (DataType.Int32, nameof(ReflectableModel.Id)),
+                    (DataType.Int64, nameof(ReflectableModel.BigNumber)),
+                    (DataType.Double, nameof(ReflectableModel.Double)),
+                    (DataType.Boolean, nameof(ReflectableModel.Flag)),
+                    (DataType.DateTimeOffset, nameof(ReflectableModel.Time)),
+                    (DataType.DateTimeOffset, nameof(ReflectableModel.TimeWithoutOffset)),
+                    (DataType.GeographyPoint, nameof(ReflectableModel.GeographyPoint)),
+                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Rating)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City)),
+                    (DataType.AsString.String, nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country))
+                };
+
+                return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, primitivePropertyTestData));
+            }
         }
 
-        private void OnlyFalseFor(Func<Field, bool> check, params string[] ids) =>
-            OnlyTrueFor(f => !check(f), ids);
-
-        [Fact]
-        public void ReportsKeyOnlyOnPropertyWithKeyAttribute()
+        public static TheoryData<Type, DataType, string> CollectionTypeTestData
         {
-            OnlyTrueFor(field => field.IsKey, nameof(ReflectableModel.Id));
+            get
+            {
+                (DataType, string)[] collectionPropertyTestData = new[]
+                {
+                    (DataType.String, nameof(ReflectableModel.StringArray)),
+                    (DataType.String, nameof(ReflectableModel.StringIList)),
+                    (DataType.String, nameof(ReflectableModel.StringIEnumerable)),
+                    (DataType.String, nameof(ReflectableModel.StringList)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.IntArray)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.IntIList)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.IntIEnumerable)),
+                    (DataType.AsString.Int32, nameof(ReflectableModel.IntList)),
+                    (DataType.AsString.Int64, nameof(ReflectableModel.LongArray)),
+                    (DataType.AsString.Int64, nameof(ReflectableModel.LongIList)),
+                    (DataType.AsString.Int64, nameof(ReflectableModel.LongIEnumerable)),
+                    (DataType.AsString.Int64, nameof(ReflectableModel.LongList)),
+                    (DataType.AsString.Double, nameof(ReflectableModel.DoubleArray)),
+                    (DataType.AsString.Double, nameof(ReflectableModel.DoubleIList)),
+                    (DataType.AsString.Double, nameof(ReflectableModel.DoubleIEnumerable)),
+                    (DataType.AsString.Double, nameof(ReflectableModel.DoubleList)),
+                    (DataType.AsString.Boolean, nameof(ReflectableModel.BoolArray)),
+                    (DataType.AsString.Boolean, nameof(ReflectableModel.BoolIList)),
+                    (DataType.AsString.Boolean, nameof(ReflectableModel.BoolIEnumerable)),
+                    (DataType.AsString.Boolean, nameof(ReflectableModel.BoolList)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeArray)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeIList)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeIEnumerable)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeList)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetArray)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIList)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetIEnumerable)),
+                    (DataType.AsString.DateTimeOffset, nameof(ReflectableModel.DateTimeOffsetList)),
+                    (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointArray)),
+                    (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointIList)),
+                    (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointIEnumerable)),
+                    (DataType.AsString.GeographyPoint, nameof(ReflectableModel.GeographyPointList)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexArray)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexIList)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexIEnumerable)),
+                    (DataType.AsString.Complex, nameof(ReflectableModel.ComplexList))
+                };
+
+                return new TheoryData<Type, DataType, string>().PopulateFrom(CombineTestData(TestModelTypes, collectionPropertyTestData));
+            }
         }
 
-        [Fact]
-        public void ReportsIsSearchableOnlyOnPropertiesWithIsSearchableAttribute()
+        public static TheoryData<Type, string> ComplexTypeTestData
         {
-            OnlyTrueFor(field => field.IsSearchable, nameof(ReflectableModel.Text), nameof(ReflectableModel.MoreText));
+            get
+            {
+                var complexPropertyTestData = new[]
+                {
+                    nameof(ReflectableModel.Complex),
+                    nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address),
+                    nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address)
+                };
+
+                return new TheoryData<Type, string>().PopulateFrom(
+                    from type in TestModelTypes
+                    from fieldPath in complexPropertyTestData
+                    select (type, fieldPath));
+            }
         }
 
-        [Fact]
-        public void IsFilterableOnlyOnPropertiesWithIsFilterableAttribute()
+        [Theory]
+        [MemberData(nameof(PrimitiveTypeTestData))]
+        public void ReportsPrimitiveTypedProperties(Type modelType, DataType expectedDataType, string fieldName)
         {
-            OnlyTrueFor(field => field.IsFilterable, nameof(ReflectableModel.FilterableText));
+            Test(modelType, fields => Assert.Equal(expectedDataType, fields[fieldName].Type));
         }
 
-        [Fact]
-        public void IsSortableOnlyOnPropertiesWithIsSortableAttribute()
+        [Theory]
+        [MemberData(nameof(ComplexTypeTestData))]
+        public void ReportsComplexTypedProperties(Type modelType, string fieldName)
         {
-            OnlyTrueFor(field => field.IsSortable, nameof(ReflectableModel.SortableText));
+            Test(modelType, fields => Assert.Equal(DataType.Complex, fields[fieldName].Type));
         }
 
-        [Fact]
-        public void IsFacetableOnlyOnPropertiesWithIsFacetableAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void ReportsNullableInt32Properties(Type modelType)
         {
-            OnlyTrueFor(field => field.IsFacetable, nameof(ReflectableModel.FacetableText));
+            Test(modelType, fields => Assert.Equal(DataType.Int32, fields[nameof(ReflectableModel.NullableInt)].Type));
         }
 
-        [Fact]
-        public void IsRetrievableOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse()
+        [Theory]
+        [MemberData(nameof(CollectionTypeTestData))]
+        public void ReportsCollectionProperties(Type modelType, DataType expectedElementDataType, string fieldName)
         {
-            OnlyFalseFor(field => field.IsRetrievable, nameof(ReflectableModel.IrretrievableText));
+            Test(modelType, fields => Assert.Equal(DataType.Collection(expectedElementDataType), fields[fieldName].Type));
         }
 
-        [Fact]
-        public void AnalyzerSetOnlyOnPropertiesWithAnalyzerAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void ReportsKeyOnlyOnPropertyWithKeyAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.Analyzer == AnalyzerName.EnMicrosoft, nameof(ReflectableModel.TextWithAnalyzer));
+            OnlyTrueFor(modelType, field => field.IsKey.GetValueOrDefault(false), nameof(ReflectableModel.Id));
         }
 
-        [Fact]
-        public void SearchAnalyzerSetOnlyOnPropertiesWithSearchAnalyzerAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void ReportsIsSearchableOnlyOnPropertiesWithIsSearchableAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.SearchAnalyzer == AnalyzerName.EsLucene, nameof(ReflectableModel.TextWithSearchAnalyzer));
+            OnlyTrueFor(
+                modelType,
+                field => field.IsSearchable.GetValueOrDefault(false),
+                nameof(ReflectableModel.Text),
+                nameof(ReflectableModel.MoreText),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.City));
         }
 
-        [Fact]
-        public void IndexAnalyzerSetOnlyOnPropertiesWithIndexAnalyzerAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsFilterableOnlyOnPropertiesWithIsFilterableAttribute(Type modelType)
         {
-            OnlyTrueFor(field => field.IndexAnalyzer == AnalyzerName.Whitespace, nameof(ReflectableModel.TextWithIndexAnalyzer));
+            OnlyTrueFor(
+                modelType,
+                field => field.IsFilterable.GetValueOrDefault(false),
+                nameof(ReflectableModel.FilterableText),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Rating),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
         }
 
-        [Fact]
-        public void HonoursSerializePropertyNamesAsCamelCaseAttribute()
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsSortableOnlyOnPropertiesWithIsSortableAttribute(Type modelType)
         {
-            RunCamelCase(fieldMap =>
+            OnlyTrueFor(modelType, field => field.IsSortable.GetValueOrDefault(false), nameof(ReflectableModel.SortableText));
+        }
+
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsFacetableOnlyOnPropertiesWithIsFacetableAttribute(Type modelType)
+        {
+            OnlyTrueFor(
+                modelType,
+                field => field.IsFacetable.GetValueOrDefault(false),
+                nameof(ReflectableModel.FacetableText),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Address) + "/" + nameof(ReflectableAddress.Country));
+        }
+
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IsRetrievableOnAllPropertiesExceptOnesWithIsRetrievableAttributeSetToFalse(Type modelType)
+        {
+            OnlyFalseFor(modelType, field => field.IsRetrievable.GetValueOrDefault(true), nameof(ReflectableModel.IrretrievableText));
+        }
+
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void AnalyzerSetOnlyOnPropertiesWithAnalyzerAttribute(Type modelType)
+        {
+            OnlyTrueFor(
+                modelType,
+                field => field.Analyzer == AnalyzerName.EnMicrosoft,
+                nameof(ReflectableModel.TextWithAnalyzer),
+                nameof(ReflectableModel.Complex) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexArray) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexList) + "/" + nameof(ReflectableComplexObject.Name),
+                nameof(ReflectableModel.ComplexIEnumerable) + "/" + nameof(ReflectableComplexObject.Name));
+        }
+
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void SearchAnalyzerSetOnlyOnPropertiesWithSearchAnalyzerAttribute(Type modelType)
+        {
+            OnlyTrueFor(modelType, field => field.SearchAnalyzer == AnalyzerName.EsLucene, nameof(ReflectableModel.TextWithSearchAnalyzer));
+        }
+
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void IndexAnalyzerSetOnlyOnPropertiesWithIndexAnalyzerAttribute(Type modelType)
+        {
+            OnlyTrueFor(modelType, field => field.IndexAnalyzer == AnalyzerName.Whitespace, nameof(ReflectableModel.TextWithIndexAnalyzer));
+        }
+
+        [Theory]
+        [MemberData(nameof(TestModelTypeTestData))]
+        public void SynonymMapsSetOnlyOnPropertiesWithSynonymMapsAttribute(Type modelType)
+        {
+            OnlyTrueFor(modelType, field => field.SynonymMaps?.Contains("myMap") ?? false, nameof(ReflectableModel.Text));
+        }
+
+        [Theory]
+        [InlineData(typeof(ReflectableCamelCaseModel))]
+        [InlineData(typeof(ReflectableStructCamelCaseModel))]
+        public void HonoursSerializePropertyNamesAsCamelCaseAttribute(Type modelType)
+        {
+            void RunTest(Dictionary<string, Field> fieldMap)
             {
                 Assert.True(fieldMap.ContainsKey("id"));
                 Assert.True(fieldMap.ContainsKey("myProperty"));
+                Assert.True(fieldMap.ContainsKey("inner"));
+                Assert.True(fieldMap.ContainsKey("inner/name"));
+                Assert.True(fieldMap.ContainsKey("innerCollection"));
+                Assert.True(fieldMap.ContainsKey("innerCollection/name"));
+            }
+
+            TestForFields(RunTest, FieldBuilder.BuildForType(modelType));
+        }
+
+        [Fact]
+        public void RecursivePropertiesAreIgnored()
+        {
+            void RunTest(Dictionary<string, Field> fieldMap)
+            {
+                Assert.True(fieldMap.ContainsKey(nameof(RecursiveModel.Data)));
+                Assert.True(fieldMap.ContainsKey(nameof(RecursiveModel.Next)));
+                Assert.True(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.Data)));
+                Assert.False(fieldMap.ContainsKey(nameof(RecursiveModel.Next) + "/" + nameof(OtherRecursiveModel.RecursiveReference)));
+            }
+
+            Test(typeof(RecursiveModel), RunTest);
+        }
+
+        [Fact]
+        public void FieldBuilderCreatesIndexEquivalentToManuallyDefinedIndex()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+                Index expectedIndex = serviceClient.Indexes.Get(Data.IndexName);
+
+                string otherIndexName = SearchTestUtilities.GenerateName();
+                var actualIndex = new Index()
+                {
+                    Name = otherIndexName,
+                    Fields = FieldBuilder.BuildForType<Hotel>()
+                };
+
+                // Round-trip the auto-built index definition before comparing.
+                serviceClient.Indexes.Create(actualIndex);
+                actualIndex = serviceClient.Indexes.Get(otherIndexName);
+
+                Assert.Equal(expectedIndex.Fields, actualIndex.Fields, new ModelComparer<IList<Field>>());
             });
         }
 
-        private void Run(Action<Dictionary<string, Field>> run)
+        private static IEnumerable<(Type, DataType, string)> CombineTestData(
+            IEnumerable<Type> modelTypes,
+            IEnumerable<(DataType, string)> testData) =>
+            from type in modelTypes
+            from tuple in testData
+            select (type, tuple.Item1, tuple.Item2);
+
+        private void OnlyTrueFor(Type modelType, Func<Field, bool> check, params string[] expectedFieldNames)
+        {
+            Test(
+                modelType,
+                fields =>
+                {
+                    foreach ((string fieldNameFromModel, Field field) in fields)
+                    {
+                        bool result = check(field);
+
+                        if (expectedFieldNames.Contains(fieldNameFromModel))
+                        {
+                            Assert.True(result, $"Expected true for field {fieldNameFromModel}.");
+                        }
+                        else
+                        {
+                            Assert.False(result, $"Expected false for field {fieldNameFromModel}.");
+                        }
+                    }
+                });
+        }
+
+        private void OnlyFalseFor(Type modelType, Func<Field, bool> check, params string[] expectedFieldNames) =>
+            OnlyTrueFor(modelType, f => !check(f), expectedFieldNames);
+
+        private void Test(Type modelType, Action<Dictionary<string, Field>> run)
         {
             // Test with both with and without bring-your-own-resolver.
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableModel>(new ReadOnlyJsonContractResolver()));
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableModel>());
+            TestForFields(run, FieldBuilder.BuildForType(modelType, new ReadOnlyJsonContractResolver()));
+            TestForFields(run, FieldBuilder.BuildForType(modelType));
         }
 
-        private void RunCamelCase(Action<Dictionary<string, Field>> run)
+        private void TestForFields(Action<Dictionary<string, Field>> run, IList<Field> fields)
         {
-            RunForFields(run, FieldBuilder.BuildForType<ReflectableCamelCaseModel>());
-        }
+            IEnumerable<KeyValuePair<string, Field>> GetSelfAndDescendants(Field topLevelField)
+            {
+                IEnumerable<KeyValuePair<string, Field>> GetSelfAndDescendantsRecursive(Field field, string parentFieldPath)
+                {
+                    string currentFieldPath =
+                        string.IsNullOrEmpty(parentFieldPath) ? field.Name : parentFieldPath + "/" + field.Name;
 
-        private void RunForFields(Action<Dictionary<string, Field>> run, IList<Field> fields)
-        {
-            Dictionary<string, Field> fieldMap = fields.ToDictionary(f => f.Name);
+                    yield return new KeyValuePair<string, Field>(currentFieldPath, field);
+
+                    foreach (Field subField in field.Fields ?? Enumerable.Empty<Field>())
+                    {
+                        foreach (var result in GetSelfAndDescendantsRecursive(subField, currentFieldPath))
+                        {
+                            yield return result;
+                        }
+                    }
+                }
+
+                return GetSelfAndDescendantsRecursive(topLevelField, string.Empty);
+            }
+
+            var fieldMap = fields.SelectMany(f => GetSelfAndDescendants(f)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             run(fieldMap);
         }
     }

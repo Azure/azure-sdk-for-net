@@ -1,0 +1,7 @@
+trigger: none
+
+variables:
+  ProjectFile: sdk/appconfiguration/Azure.ApplicationModel.Configuration/Azure.ApplicationModel.Configuration.sln
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/tests.yml

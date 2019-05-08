@@ -35,23 +35,23 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="password">Plain text password of Active Directory
         /// domain administrator</param>
         /// <param name="domain">Name of the Active Directory domain</param>
-        /// <param name="dNS">Comma separated list of DNS server IP addresses
+        /// <param name="dns">Comma separated list of DNS server IP addresses
         /// for the Active Directory domain</param>
         /// <param name="status">Status of the Active Directory</param>
-        /// <param name="sMBServerName">NetBIOS name of the SMB server. This
+        /// <param name="smbServerName">NetBIOS name of the SMB server. This
         /// name will be registered as a computer account in the AD and used to
         /// mount volumes</param>
         /// <param name="organizationalUnit">The Organizational Unit (OU)
         /// within the Windows Active Directory</param>
-        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dNS = default(string), string status = default(string), string sMBServerName = default(string), string organizationalUnit = default(string))
+        public ActiveDirectory(string activeDirectoryId = default(string), string username = default(string), string password = default(string), string domain = default(string), string dns = default(string), string status = default(string), string smbServerName = default(string), string organizationalUnit = default(string))
         {
             ActiveDirectoryId = activeDirectoryId;
             Username = username;
             Password = password;
             Domain = domain;
-            DNS = dNS;
+            Dns = dns;
             Status = status;
-            SMBServerName = sMBServerName;
+            SmbServerName = smbServerName;
             OrganizationalUnit = organizationalUnit;
             CustomInit();
         }
@@ -90,8 +90,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// Gets or sets comma separated list of DNS server IP addresses for
         /// the Active Directory domain
         /// </summary>
-        [JsonProperty(PropertyName = "dNS")]
-        public string DNS { get; set; }
+        [JsonProperty(PropertyName = "dns")]
+        public string Dns { get; set; }
 
         /// <summary>
         /// Gets or sets status of the Active Directory
@@ -104,8 +104,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// registered as a computer account in the AD and used to mount
         /// volumes
         /// </summary>
-        [JsonProperty(PropertyName = "sMBServerName")]
-        public string SMBServerName { get; set; }
+        [JsonProperty(PropertyName = "smbServerName")]
+        public string SmbServerName { get; set; }
 
         /// <summary>
         /// Gets or sets the Organizational Unit (OU) within the Windows Active

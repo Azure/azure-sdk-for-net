@@ -1,0 +1,35 @@
+pr:
+  branches:
+    include:
+    - master
+    - search-preview
+    - BuildToolsForSdk
+
+pool:
+  vmImage: 'VS2017-Win2016'
+
+variables:
+  IgnoreBuildTokens: 'Microsoft.Rest.ClientRuntime.Tracing.Tests Microsoft.Azure.Services.AppAuthentication.IntegrationTests KeyVault\dataPlane LocationBasedServices Az.Auth.Tests BotService.Tests Search Batch.FileStaging.Tests Azure.Batch.IntegrationTests Azure.Batch.ProtocolTests Batch\Support\FileConventions AzureBatchFileConventions.IntegrationTests Batch\DataPlane\Azure.Batch.Unit.Tests Batch\DataPlane\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.Tests ContainerService\ContainerService.Tests Consumption\Consumption.Tests Billing\Billing.Tests ApplicationInsights\Management\ApplicationInsights.Tests Batch\Management\Management.Batch.Tests SecurityCenter\SecurityCenter.Tests AzureStack\Admin\FabricAdmin\Fabric.Admin.Tests IotHub\IotHub.Tests Monitor\Monitor.Tests Compute\Compute.Tests Reservations\Reservations.Tests NetApp\NetApp.Tests ContainerRegistry\ContainerRegistry.Tests OperationalInsights\Management\OperationalInsights.Test Subscription\Subscription.Tests Cdn\Cdn.Tests'
+  FlpArg: 'Summary;Verbosity=minimal;LogFile=msbuild.sum'
+  FlpArg1: 'warningsonly;logfile=msbuild.wrn'
+  FlpArg2: 'errorsonly;logfile=msbuild.err'
+
+steps:
+  - task: CmdLine@1
+    inputs:
+      filename: C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\sn.exe
+      arguments: -Vr *,31bf3856ad364e35
+  - task: MSBuild@1
+    inputs:
+      solution: build.proj
+  - task: MSBuild@1
+    inputs:
+      solution: build.proj
+      msbuildArguments: /t:RunTests /clp:ShowTimestamp /flp:$(FlpArg) /flp1:$(FlpArg1) /flp2:$(FlpArg2) /p:IgnorePathTokens="$(IgnoreBuildTokens)"
+  - task: PublishTestResults@2
+    condition: succeededOrFailed()
+    inputs:
+      testResultsFiles: '**/*.trx'
+      testRunTitle: 'Windows Test Results'
+      testResultsFormat: 'VSTest'
+      mergeTestResults: true

@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Get Sign-In settings.
+            /// Get Sign In Settings for the Portal
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Get Sign-In settings.
+            /// Get Sign In Settings for the Portal
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -169,9 +169,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Create or update parameters.
             /// </param>
-            public static PortalSigninSettings CreateOrUpdate(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters)
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
+            public static PortalSigninSettings CreateOrUpdate(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters, string ifMatch = default(string))
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, parameters, ifMatch).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -189,12 +193,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='parameters'>
             /// Create or update parameters.
             /// </param>
+            /// <param name='ifMatch'>
+            /// ETag of the Entity. Not required when creating an entity, but required when
+            /// updating an entity.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<PortalSigninSettings> CreateOrUpdateAsync(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<PortalSigninSettings> CreateOrUpdateAsync(this ISignInSettingsOperations operations, string resourceGroupName, string serviceName, PortalSigninSettings parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

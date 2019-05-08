@@ -11,7 +11,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
-    using Microsoft.Rest.Azure;
     using Xunit;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
@@ -24,13 +23,13 @@ namespace Microsoft.Azure.Search.Tests
 
             var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
             DocumentSuggestResult<Hotel> response =
-                client.Documents.Suggest<Hotel>("good", "sg", suggestParameters);
+                client.Documents.Suggest<Hotel>("more", "sg", suggestParameters);
 
             Assert.Null(response.Coverage);
             Assert.NotNull(response.Results);
 
             IEnumerable<Hotel> expectedDocs =
-                Data.TestDocuments.Where(h => h.HotelId == "4" || h.HotelId == "5").OrderBy(h => h.HotelId);
+                Data.TestDocuments.Where(h => h.HotelId == "8" || h.HotelId == "10").OrderBy(h => h.HotelId);
                 
             Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
             Assert.Equal(expectedDocs.Select(h => h.Description), response.Results.Select(r => r.Text));
@@ -41,24 +40,20 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters = new SuggestParameters() { OrderBy = new[] { "hotelId" } };
-            DocumentSuggestResult response = client.Documents.Suggest("good", "sg", suggestParameters);
+            DocumentSuggestResult<Document> response = client.Documents.Suggest("more", "sg", suggestParameters);
 
             Assert.Null(response.Coverage);
             Assert.NotNull(response.Results);
 
             Document[] expectedDocs =
                 Data.TestDocuments
-                    .Where(h => h.HotelId == "4" || h.HotelId == "5")
+                    .Where(h => h.HotelId == "8" || h.HotelId == "10")
                     .OrderBy(h => h.HotelId)
                     .Select(h => h.AsDocument())
                     .ToArray();
 
-            Assert.Equal(expectedDocs.Length, response.Results.Count);
-            for (int i = 0; i < expectedDocs.Length; i++)
-            {
-                Assert.Equal(expectedDocs[i], response.Results[i].Document);
-                Assert.Equal(expectedDocs[i]["description"], response.Results[i].Text);
-            }
+            Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
+            Assert.Equal(expectedDocs.Select(d => d["description"]), response.Results.Select(r => r.Text));
         }
 
         protected void TestSuggestThrowsWhenRequestIsMalformed()
@@ -162,7 +157,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
-            AssertKeySequenceEqual(response, "1", "4", "3", "5", "2");
+            AssertKeySequenceEqual(response, "1", "9", "4", "3", "5");
         }
 
         protected void TestTopTrimsResults()
@@ -179,7 +174,7 @@ namespace Microsoft.Azure.Search.Tests
             DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
-            AssertKeySequenceEqual(response, "1", "2", "3");
+            AssertKeySequenceEqual(response, "1", "10", "2");
         }
 
         protected void TestCanSuggestWithSelectedFields()
@@ -189,15 +184,20 @@ namespace Microsoft.Azure.Search.Tests
             var suggestParameters =
                 new SuggestParameters()
                 {
-                    Select = new[] { "hotelName", "baseRate" }
+                    Select = new[] { "hotelName", "rating", "address/city", "rooms/type" }
                 };
 
             DocumentSuggestResult<Hotel> response =
-                client.Documents.Suggest<Hotel>("luxury", "sg", suggestParameters);
+                client.Documents.Suggest<Hotel>("secret", "sg", suggestParameters);
 
-            var expectedDoc = new Hotel() { HotelName = "Fancy Stay", BaseRate = 199.0 };
+            var expectedDoc = new Hotel()
+            {
+                HotelName = "Secret Point Motel",
+                Rating = 4,
+                Address = new HotelAddress() { City = "New York" },
+                Rooms = new[] { new HotelRoom() { Type = "Budget Room" }, new HotelRoom() { Type = "Budget Room" } }
+            };
 
-            Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(expectedDoc, response.Results.First().Document);
         }
@@ -237,7 +237,8 @@ namespace Microsoft.Azure.Search.Tests
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
-            var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
+            var tolkien = new Author() { FirstName = "J.R.R.", LastName = "Tolkien" };
+            var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = tolkien };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
             var batch = IndexBatch.Upload(new[] { doc1, doc2 });
 
@@ -264,23 +265,26 @@ namespace Microsoft.Azure.Search.Tests
 
         protected void TestCanSuggestWithCustomConverter()
         {
-            TestCanSuggestWithCustomConverter<CustomBookWithConverter>();
+            TestCanSuggestWithCustomConverter<CustomBookWithConverter, CustomAuthorWithConverter>();
         }
 
         protected void TestCanSuggestWithCustomConverterViaSettings()
         {
-            Action<SearchIndexClient> customizeSettings =
-                client =>
-                {
-                    var converter = new CustomBookConverter<CustomBook>();
-                    converter.Install(client);
-                };
+            void CustomizeSettings(SearchIndexClient client)
+            {
+                var bookConverter = new CustomBookConverter<CustomBook, CustomAuthor>();
+                bookConverter.Install(client);
 
-            TestCanSuggestWithCustomConverter<CustomBook>(customizeSettings);
+                var authorConverter = new CustomAuthorConverter<CustomAuthor>();
+                authorConverter.Install(client);
+            }
+
+            TestCanSuggestWithCustomConverter<CustomBook, CustomAuthor>(CustomizeSettings);
         }
 
-        private void TestCanSuggestWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
-            where T : CustomBook, new()
+        private void TestCanSuggestWithCustomConverter<TBook, TAuthor>(Action<SearchIndexClient> customizeSettings = null)
+            where TBook : CustomBookBase<TAuthor>, new()
+            where TAuthor : CustomAuthor, new()
         {
             customizeSettings = customizeSettings ?? (client => { });
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
@@ -290,11 +294,11 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
             customizeSettings(indexClient);
 
-            var doc = new T()
+            var doc = new TBook()
             {
                 InternationalStandardBookNumber = "123",
                 Name = "Lord of the Rings",
-                AuthorName = "J.R.R. Tolkien",
+                AuthorName = new TAuthor() { FullName = "J.R.R. Tolkien" },
                 PublishDateTime = new DateTime(1954, 7, 29)
             };
 
@@ -304,7 +308,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchTestUtilities.WaitForIndexing();
 
             var parameters = new SuggestParameters() { Select = new[] { "*" } };
-            DocumentSuggestResult<T> response = indexClient.Documents.Suggest<T>("Lord", "sg", parameters);
+            DocumentSuggestResult<TBook> response = indexClient.Documents.Suggest<TBook>("Lord", "sg", parameters);
 
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc, response.Results[0].Document);

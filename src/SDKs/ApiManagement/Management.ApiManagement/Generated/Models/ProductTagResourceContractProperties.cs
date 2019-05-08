@@ -48,15 +48,15 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// subscription key. If property is omitted when creating a new
         /// product it's value is assumed to be true.</param>
         /// <param name="approvalRequired">whether subscription approval is
-        /// required. If false, new subscriptions will be approved
+        /// required. If false, new subscriptions will be approved
         /// automatically enabling developers to call the product’s APIs
-        /// immediately after subscribing. If true, administrators must
+        /// immediately after subscribing. If true, administrators must
         /// manually approve the subscription before the developer can any of
         /// the product’s APIs. Can be present only if subscriptionRequired
         /// property is present and has a value of false.</param>
         /// <param name="subscriptionsLimit">Whether the number of
         /// subscriptions a user can have to this product at the same time. Set
-        /// to null or omit to allow unlimited per user subscriptions. Can be
+        /// to null or omit to allow unlimited per user subscriptions. Can be
         /// present only if subscriptionRequired property is present and has a
         /// value of false.</param>
         /// <param name="state">whether product is published or not. Published

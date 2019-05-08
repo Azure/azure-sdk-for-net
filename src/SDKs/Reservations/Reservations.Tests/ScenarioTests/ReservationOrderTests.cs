@@ -14,36 +14,34 @@ using System.Net;
 using System.Reflection;
 using Xunit;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Reservations.Tests.ScenarioTests
 {
-    public class ReservationOrderTests : TestBase
+    public class ReservationOrderTests : ReservationsTestBase
     {
-        string ReservationOrderId = Common.ReservationOrderId;
-
-        internal static void ValidateReservationOrder(ReservationOrderResponse ReservationOrder)
+        [Fact]
+        public void TestReservationOrderOperations()
         {
-            Assert.NotNull(ReservationOrder);
-            Assert.NotNull(ReservationOrder.Etag);
-            Assert.NotNull(ReservationOrder.Id);
-            Assert.NotNull(ReservationOrder.Name);
-            Assert.NotNull(ReservationOrder.Type);
+            var reservationOrder = PurchaseReservationOrder();
+            string reservationOrderId = ExtractIdsFromOrder(reservationOrder).Item1;
+
+            TestGetReservationOrder(reservationOrderId);
+            TestListReservationOrders();
         }
 
-        [Fact]
-        public void TestGetReservationOrder()
+        private void TestGetReservationOrder(string reservationOrderId)
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var reservationsClient = ReservationsTestUtilities.GetAzureReservationAPIClient(context, new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK });
-                var reservationOrder = reservationsClient.ReservationOrder.Get(ReservationOrderId);
+                var reservationOrder = reservationsClient.ReservationOrder.Get(reservationOrderId);
                 ValidateReservationOrder(reservationOrder);
             }
         }
 
-        [Fact]
-        public void TestListReservationOrders()
+        private void TestListReservationOrders()
         {
             HttpMockServer.RecordsDirectory = GetSessionsDirectoryPath();
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -56,13 +54,6 @@ namespace Reservations.Tests.ScenarioTests
                     ValidateReservationOrder(enumerator.Current);
                 }
             }
-        }
-
-        private static string GetSessionsDirectoryPath()
-        {
-            System.Type something = typeof(Reservations.Tests.ScenarioTests.ReservationOrderTests);
-            string executingAssemblyPath = something.GetTypeInfo().Assembly.Location;
-            return Path.Combine(Path.GetDirectoryName(executingAssemblyPath), "SessionRecords");
         }
     }
 }
