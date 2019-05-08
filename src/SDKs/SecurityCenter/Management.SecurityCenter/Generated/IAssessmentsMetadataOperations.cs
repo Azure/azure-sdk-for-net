@@ -19,18 +19,13 @@ namespace Microsoft.Azure.Management.Security
     using System.Threading.Tasks;
 
     /// <summary>
-    /// ComplianceResultsOperations operations.
+    /// AssessmentsMetadataOperations operations.
     /// </summary>
-    public partial interface IComplianceResultsOperations
+    public partial interface IAssessmentsMetadataOperations
     {
         /// <summary>
-        /// Security compliance results in the subscription
+        /// Get metadata information on all assessment types
         /// </summary>
-        /// <param name='scope'>
-        /// Scope of the query, can be subscription
-        /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management
-        /// group (/providers/Microsoft.Management/managementGroups/mgName).
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -46,15 +41,12 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ComplianceResultList>> ListWithHttpMessagesAsync(string scope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SecurityAssessmentMetadata>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Security Compliance Result
+        /// Get metadata information on an assessment type
         /// </summary>
-        /// <param name='resourceId'>
-        /// The identifier of the resource.
-        /// </param>
-        /// <param name='complianceResultName'>
-        /// name of the desired assessment compliance result
+        /// <param name='assessmentsMetadataName'>
+        /// The Assessment Key - Unique key for the assessment type
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -71,6 +63,28 @@ namespace Microsoft.Azure.Management.Security
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ComplianceResult>> GetWithHttpMessagesAsync(string resourceId, string complianceResultName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SecurityAssessmentMetadata>> GetWithHttpMessagesAsync(string assessmentsMetadataName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get metadata information on all assessment types
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<SecurityAssessmentMetadata>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -77,11 +77,6 @@ namespace Microsoft.Azure.Management.Security
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IComplianceResultsOperations.
-        /// </summary>
-        public virtual IComplianceResultsOperations ComplianceResults { get; private set; }
-
-        /// <summary>
         /// Gets the IPricingsOperations.
         /// </summary>
         public virtual IPricingsOperations Pricings { get; private set; }
@@ -165,6 +160,16 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IWorkspaceSettingsOperations.
         /// </summary>
         public virtual IWorkspaceSettingsOperations WorkspaceSettings { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        public virtual IAssessmentsOperations Assessments { get; private set; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        public virtual IAssessmentsMetadataOperations AssessmentsMetadata { get; private set; }
 
         /// <summary>
         /// Gets the IRegulatoryComplianceStandardsOperations.
@@ -422,7 +427,6 @@ namespace Microsoft.Azure.Management.Security
         /// </summary>
         private void Initialize()
         {
-            ComplianceResults = new ComplianceResultsOperations(this);
             Pricings = new PricingsOperations(this);
             Alerts = new AlertsOperations(this);
             Settings = new SettingsOperations(this);
@@ -440,6 +444,8 @@ namespace Microsoft.Azure.Management.Security
             InformationProtectionPolicies = new InformationProtectionPoliciesOperations(this);
             SecurityContacts = new SecurityContactsOperations(this);
             WorkspaceSettings = new WorkspaceSettingsOperations(this);
+            Assessments = new AssessmentsOperations(this);
+            AssessmentsMetadata = new AssessmentsMetadataOperations(this);
             RegulatoryComplianceStandards = new RegulatoryComplianceStandardsOperations(this);
             RegulatoryComplianceControls = new RegulatoryComplianceControlsOperations(this);
             RegulatoryComplianceAssessments = new RegulatoryComplianceAssessmentsOperations(this);
@@ -475,6 +481,8 @@ namespace Microsoft.Azure.Management.Security
             };
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ExternalSecuritySolution>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ExternalSecuritySolution>("kind"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ResourceDetails>("assessedResourceSource"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ResourceDetails>("assessedResourceSource"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter());

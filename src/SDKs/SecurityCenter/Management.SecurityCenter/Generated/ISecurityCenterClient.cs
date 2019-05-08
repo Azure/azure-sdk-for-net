@@ -72,11 +72,6 @@ namespace Microsoft.Azure.Management.Security
 
 
         /// <summary>
-        /// Gets the IComplianceResultsOperations.
-        /// </summary>
-        IComplianceResultsOperations ComplianceResults { get; }
-
-        /// <summary>
         /// Gets the IPricingsOperations.
         /// </summary>
         IPricingsOperations Pricings { get; }
@@ -160,6 +155,16 @@ namespace Microsoft.Azure.Management.Security
         /// Gets the IWorkspaceSettingsOperations.
         /// </summary>
         IWorkspaceSettingsOperations WorkspaceSettings { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsOperations.
+        /// </summary>
+        IAssessmentsOperations Assessments { get; }
+
+        /// <summary>
+        /// Gets the IAssessmentsMetadataOperations.
+        /// </summary>
+        IAssessmentsMetadataOperations AssessmentsMetadata { get; }
 
         /// <summary>
         /// Gets the IRegulatoryComplianceStandardsOperations.
