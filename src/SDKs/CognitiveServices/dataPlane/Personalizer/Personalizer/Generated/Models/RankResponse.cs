@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -74,5 +75,38 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
         [JsonProperty(PropertyName = "rewardActionId")]
         public string RewardActionId { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Ranking != null)
+            {
+                foreach (var element in Ranking)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+            if (EventId != null)
+            {
+                if (EventId.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "EventId", 256);
+                }
+            }
+            if (RewardActionId != null)
+            {
+                if (RewardActionId.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "RewardActionId", 256);
+                }
+            }
+        }
     }
 }
