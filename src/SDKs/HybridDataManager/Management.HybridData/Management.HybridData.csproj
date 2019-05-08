@@ -7,12 +7,11 @@
     <PackageId>Microsoft.Azure.Management.HybridData</PackageId>
     <Description></Description>
     <Version>1.0.0</Version>
-    <Version>0.9.0-preview</Version>
     <AssemblyName>Microsoft.Azure.Management.HybridData</AssemblyName>
-    <PackageTags>Management;Storage;StorSimple;StorSimpleDataManager;</PackageTags>
+    <PackageTags>Management;Storage;StorSimple;StorSimpleDataManager;Azure;HybridDataManager;Microsoft.HybridData</PackageTags>
     <PackageReleaseNotes>
       <![CDATA[
-      This is the first public release of the Azure StorSimple Data Manager SDK.
+      This is the first public release of the Azure StorSimple Data Manager SDK (Microsoft.HybridData).
       ]]>
     </PackageReleaseNotes>
   </PropertyGroup>
