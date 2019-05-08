@@ -1,12 +1,10 @@
 # Azure App Configuration client library for .NET
 
-Azure App Configuration is a managed service that helps developers centralize their application configurations simply and securely.
-
-Modern programs, especially programs running in a cloud, generally have many components that are distributed in nature. Spreading configuration settings across these components can lead to hard-to-troubleshoot errors during an application deployment. Use App Configuration to securely store all the settings for your application in one place.
+Azure App Configuration is a managed service that helps developers centralize their application configurations in one place, simply and securely.
 
 Use the client library for App Configuration to:
 
-* Create secure application configuration settings
+* Create centrally stored application configuration settings
 * Retrieve settings
 * Update settings
 * Delete settings
