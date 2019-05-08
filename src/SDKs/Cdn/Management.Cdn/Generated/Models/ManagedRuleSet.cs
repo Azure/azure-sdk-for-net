@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="ruleSetVersion">Defines the version of the rule set to
         /// use.</param>
         /// <param name="anomalyScore">Verizon only : If the rule set supports
-        /// anomaly detection mode, this descibes the threshold for blocking
+        /// anomaly detection mode, this describes the threshold for blocking
         /// requests.</param>
         /// <param name="ruleGroupOverrides">Defines the rule overrides to
         /// apply to the rule set.</param>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets verizon only : If the rule set supports anomaly
-        /// detection mode, this descibes the threshold for blocking requests.
+        /// detection mode, this describes the threshold for blocking requests.
         /// </summary>
         [JsonProperty(PropertyName = "anomalyScore")]
         public int? AnomalyScore { get; set; }
