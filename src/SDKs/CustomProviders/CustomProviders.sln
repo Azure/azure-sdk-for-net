@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CustomProviders.Tests", "CustomProviders.Tests\CustomProviders.Tests.csproj", "{1928BB6E-0A9C-4B90-9A3C-92CC12625E4C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CustomProviders", "Microsoft.CustomProviders\Microsoft.CustomProviders.csproj", "{54DB2D07-FD74-4A6A-BE00-0CF17418E68C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.CustomProviders", "Management.CustomProviders\Microsoft.Azure.Management.CustomProviders.csproj", "{54DB2D07-FD74-4A6A-BE00-0CF17418E68C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
