@@ -44,8 +44,11 @@ namespace Microsoft.Azure.RabbitMQ.Client.Performance
             var factory = new ConnectionFactory() { HostName = hostname, Port = 5671 };
             factory.Ssl.Enabled = true;
 
-            // Allow self-signed certs
-            factory.Ssl.CertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+            if (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("SERVICE_BUS_ALLOW_UNAUTHORIZED")))
+            {
+                // Allow self-signed certs
+                factory.Ssl.CertificateValidationCallback = (sender, certificate, chain, sslPolicyErrors) => true;
+            }
 
             using (var connection = factory.CreateConnection())
             using (var channel = connection.CreateModel())
