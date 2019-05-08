@@ -152,6 +152,13 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer.Models
                     }
                 }
             }
+            if (EventId != null)
+            {
+                if (EventId.Length > 256)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "EventId", 256);
+                }
+            }
         }
     }
 }
