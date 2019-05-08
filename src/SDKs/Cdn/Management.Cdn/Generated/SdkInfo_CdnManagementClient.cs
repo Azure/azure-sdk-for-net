@@ -19,16 +19,18 @@ namespace Microsoft.Azure.Management.Cdn
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Cdn", "CheckNameAvailability", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "CheckNameAvailabilityWithSubscription", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "CustomDomains", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "EdgeNodes", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Endpoints", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Operations", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Origins", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Profiles", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "ResourceUsage", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "ValidateProbe", "2019-04-15"),
+                new Tuple<string, string, string>("Cdn", "CheckNameAvailability", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "CheckNameAvailabilityWithSubscription", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "CustomDomains", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "EdgeNodes", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "Endpoints", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "ManagedRuleSets", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "Operations", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "Origins", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "Policies", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "Profiles", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "ResourceUsage", "2019-06-15"),
+                new Tuple<string, string, string>("Cdn", "ValidateProbe", "2019-06-15"),
               }.AsEnumerable();
           }
       }
