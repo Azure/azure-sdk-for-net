@@ -80,7 +80,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         {
             if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Client.Endpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (eventId == null)
             {
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         {
             if (Client.Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Client.Endpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.Endpoint");
             }
             if (eventId == null)
             {

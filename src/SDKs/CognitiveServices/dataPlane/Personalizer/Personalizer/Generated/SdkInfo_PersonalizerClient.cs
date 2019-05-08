@@ -24,5 +24,16 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
               }.AsEnumerable();
           }
       }
+      // BEGIN: Code Generation Metadata Section
+      public static readonly String AutoRestVersion = "latest";
+      public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/dwaijam/azure-rest-api-specs/blob/dwmukh/apireviewtrimmedswagger/specification/cognitiveservices/data-plane/Personalizer/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\\Repos\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "dwaijam";
+      public static readonly String GithubBranchName = "dwmukh/apireviewtrimmedswagger";
+      public static readonly String GithubCommidId = "f08a1766803f87d9c05730a1f96e28255cf7316f";
+      public static readonly String CodeGenerationErrors = "";
+      public static readonly String GithubRepoName = "azure-rest-api-specs";
+      // END: Code Generation Metadata Section
   }
 }
+

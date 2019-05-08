@@ -3,12 +3,12 @@ AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/cognitiveservices/data-plane/Personalizer/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\Repos\azure-sdk-for-net\src\SDKs
-2019-05-08 21:15:04 UTC
+cmd.exe /c autorest.cmd https://github.com/dwaijam/azure-rest-api-specs/blob/dwmukh/apireviewtrimmedswagger/specification/cognitiveservices/data-plane/Personalizer/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=D:\Repos\azure-sdk-for-net\src\SDKs
+2019-05-08 21:53:19 UTC
 Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      master
-Commit:      97fc7405e55b3e63a6f4d7bf694cc6a3f8883334
+GitHub fork: dwaijam
+Branch:      dwmukh/apireviewtrimmedswagger
+Commit:      f08a1766803f87d9c05730a1f96e28255cf7316f
 AutoRest information
 Requested version: latest
 Bootstrapper version:    autorest@2.0.4283
