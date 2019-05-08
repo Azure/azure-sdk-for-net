@@ -310,6 +310,8 @@ namespace Azure.Core.Pipeline
 
             public override int Status => (int)_responseMessage.StatusCode;
 
+            public override string ReasonPhrase => _responseMessage.ReasonPhrase;
+
             public override Stream ContentStream
             {
                 get

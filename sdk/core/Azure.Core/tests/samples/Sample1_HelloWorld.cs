@@ -30,7 +30,7 @@ namespace Azure.Core.Samples
                 var reader = new StreamReader(response.ContentStream);
                 string responseText = reader.ReadToEnd();
             }
-            else throw new RequestFailedException(response);
+            else throw await response.CreateRequestFailedExceptionAsync();
         }
     }
 }
