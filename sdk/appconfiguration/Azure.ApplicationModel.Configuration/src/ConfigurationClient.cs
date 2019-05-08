@@ -5,6 +5,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 
@@ -101,7 +102,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 201:
                         return await CreateResponseAsync(response, cancellationToken);
                     default:
-                        throw await RequestFailedException.CreateAsync(response);
+                        throw await response.CreateRequestFailedExceptionAsync();
                 }
             }
         }
@@ -123,7 +124,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 201:
                         return CreateResponse(response, cancellationToken);
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
@@ -193,9 +194,9 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return await CreateResponseAsync(response, cancellationToken);
                     case 409:
-                        throw await RequestFailedException.CreateAsync(response, "The setting is locked");
+                        throw await response.CreateRequestFailedExceptionAsync("The setting is locked");
                     default:
-                        throw await RequestFailedException.CreateAsync(response);
+                        throw await response.CreateRequestFailedExceptionAsync();
                 }
             }
         }
@@ -216,9 +217,9 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return CreateResponse(response, cancellationToken);
                     case 409:
-                        throw RequestFailedException.Create(response, "The setting is locked");
+                        throw response.CreateRequestFailedException("The setting is locked");
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
@@ -292,7 +293,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return await CreateResponseAsync(response, cancellationToken);
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw await response.CreateRequestFailedExceptionAsync();
                 }
             }
         }
@@ -313,7 +314,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return CreateResponse(response, cancellationToken);
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
@@ -367,7 +368,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 204:
                         return response;
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
@@ -393,7 +394,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 204:
                         return response;
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
@@ -433,7 +434,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return await CreateResponseAsync(response, cancellationToken);
                     default:
-                        throw await RequestFailedException.CreateAsync(response);
+                        throw await response.CreateRequestFailedExceptionAsync();
                 }
             }
         }
@@ -456,7 +457,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 200:
                         return CreateResponse(response, cancellationToken);
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
@@ -498,7 +499,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 206:
                         return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken));
                     default:
-                        throw await RequestFailedException.CreateAsync(response);
+                        throw await response.CreateRequestFailedExceptionAsync();
                 }
             }
 
@@ -521,7 +522,7 @@ namespace Azure.ApplicationModel.Configuration
                     case 206:
                         return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken));
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
@@ -560,7 +561,7 @@ namespace Azure.ApplicationModel.Configuration
                         return new Response<SettingBatch>(response, await ConfigurationServiceSerializer.ParseBatchAsync(response, selector, cancellationToken));
                     }
                     default:
-                        throw await RequestFailedException.CreateAsync(response);
+                        throw await response.CreateRequestFailedExceptionAsync();
                 }
             }
         }
@@ -584,7 +585,7 @@ namespace Azure.ApplicationModel.Configuration
                         return new Response<SettingBatch>(response, ConfigurationServiceSerializer.ParseBatch(response, selector, cancellationToken));
                     }
                     default:
-                        throw RequestFailedException.Create(response);
+                        throw response.CreateRequestFailedException();
                 }
             }
         }
