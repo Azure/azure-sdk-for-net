@@ -32,6 +32,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the DeliveryRule class.
         /// </summary>
+        /// <param name="name">Name of the rule</param>
         /// <param name="order">The order in which the rules are applied for
         /// the endpoint. Possible values {0,1,2,3,………}. A rule with a lesser
         /// order will be applied before a rule with a greater order. Rule with
@@ -41,11 +42,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// the conditions of a rule are satisfied.</param>
         /// <param name="conditions">A list of conditions that must be matched
         /// for the actions to be executed</param>
-        public DeliveryRule(int order, IList<DeliveryRuleAction> actions, IList<DeliveryRuleCondition> conditions = default(IList<DeliveryRuleCondition>))
+        public DeliveryRule(string name, int order, IList<DeliveryRuleAction> actions, IList<DeliveryRuleCondition> conditions = default(IList<DeliveryRuleCondition>))
         {
+            Name = name;
             Order = order;
-            Actions = actions;
             Conditions = conditions;
+            Actions = actions;
             CustomInit();
         }
 
@@ -53,6 +55,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
+
+        /// <summary>
+        /// Gets or sets name of the rule
+        /// </summary>
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the order in which the rules are applied for the
@@ -65,18 +73,18 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public int Order { get; set; }
 
         /// <summary>
-        /// Gets or sets a list of actions that are executed when all the
-        /// conditions of a rule are satisfied.
-        /// </summary>
-        [JsonProperty(PropertyName = "actions")]
-        public IList<DeliveryRuleAction> Actions { get; set; }
-
-        /// <summary>
         /// Gets or sets a list of conditions that must be matched for the
         /// actions to be executed
         /// </summary>
         [JsonProperty(PropertyName = "conditions")]
         public IList<DeliveryRuleCondition> Conditions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a list of actions that are executed when all the
+        /// conditions of a rule are satisfied.
+        /// </summary>
+        [JsonProperty(PropertyName = "actions")]
+        public IList<DeliveryRuleAction> Actions { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -86,6 +94,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
             if (Actions == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Actions");

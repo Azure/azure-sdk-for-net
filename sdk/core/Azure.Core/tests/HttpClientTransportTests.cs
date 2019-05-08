@@ -511,12 +511,28 @@ namespace Azure.Core.Tests
 
             Response response = await ExecuteRequest(request, transport);
 
-            byte[] data = new byte[5];
-
             content.CreateContentReadStreamAsyncCompletionSource.SetResult(null);
             Stream stream = response.ContentStream;
 
             Assert.AreSame(content.MemoryStream, stream);
+        }
+
+        [Test]
+        public async Task ReasonPhraseIsExposed()
+        {
+            var httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                ReasonPhrase = "Custom ReasonPhrase"
+            };
+            var mockHandler = new MockHttpClientHandler(httpRequestMessage => Task.FromResult(httpResponseMessage));
+
+            var transport = new HttpClientTransport(new HttpClient(mockHandler));
+            Request request = transport.CreateRequest(null);
+            request.SetRequestLine(HttpPipelineMethod.Get, new Uri("http://example.com:340"));
+
+            Response response = await ExecuteRequest(request, transport);
+
+            Assert.AreEqual("Custom ReasonPhrase", response.ReasonPhrase);
         }
 
         private class AsyncContent : HttpContent

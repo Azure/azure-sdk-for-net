@@ -14,12 +14,15 @@ namespace Azure.Core.Testing
     {
         private readonly Dictionary<string, List<string>> _headers = new Dictionary<string, List<string>>(StringComparer.OrdinalIgnoreCase);
 
-        public MockResponse(int status)
+        public MockResponse(int status, string reasonPhrase = null)
         {
             Status = status;
+            ReasonPhrase = reasonPhrase;
         }
 
         public override int Status { get; }
+
+        public override string ReasonPhrase { get; }
 
         public override Stream ContentStream { get; set; }
 

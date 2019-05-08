@@ -20,7 +20,7 @@ namespace Azure.Core.Samples
 
             var request = pipeline.CreateRequest();
 
-            var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/src/SDKs/Azure.Core/data-plane/README.md");
+            var uri = new Uri(@"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/master/README.md");
             request.SetRequestLine(HttpPipelineMethod.Get, uri);
             request.Headers.Add("Host", uri.Host);
 
@@ -30,7 +30,7 @@ namespace Azure.Core.Samples
                 var reader = new StreamReader(response.ContentStream);
                 string responseText = reader.ReadToEnd();
             }
-            else throw new RequestFailedException(response);
+            else throw await response.CreateRequestFailedExceptionAsync();
         }
     }
 }
