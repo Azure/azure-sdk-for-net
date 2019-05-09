@@ -10,7 +10,7 @@
       ]]>
     </PackageReleaseNotes>
 
-      <LangVersion>8.0</LangVersion>
+    <LangVersion>8.0</LangVersion>
 
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
@@ -29,4 +29,10 @@
 
   <!-- Import the Azure.Core project -->
   <Import Project="$(MSBuildThisFileDirectory)..\..\..\core\Azure.Core\src\Azure.Core.props" />
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" />
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" />
+  </ItemGroup>
+
 </Project>
