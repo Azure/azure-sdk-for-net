@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContainerRegistry.Tests", "ContainerRegistry.Tests\ContainerRegistry.Tests.csproj", "{5D867A48-4861-43CB-BE00-65F54BE82C4E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ContainerRegistry.Tests", "tests\Microsoft.Azure.ContainerRegistry.Tests.csproj", "{5D867A48-4861-43CB-BE00-65F54BE82C4E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ContainerRegistry", "Microsoft.Azure.ContainerRegistry\Microsoft.Azure.ContainerRegistry.csproj", "{E704234A-F8FC-4648-8C2D-A1CB1BE6CCE3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.ContainerRegistry", "src\Microsoft.Azure.ContainerRegistry.csproj", "{E704234A-F8FC-4648-8C2D-A1CB1BE6CCE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
