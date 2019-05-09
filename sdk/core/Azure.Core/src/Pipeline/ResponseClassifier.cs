@@ -39,6 +39,8 @@ namespace Azure.Core.Pipeline
             const string charsetMarker = "; charset=";
             const string utf8Charset = "utf-8";
             const string textContentTypePrefix = "text/";
+            const string jsonSuffix = "json";
+            const string xmlSuffix = "xml";
 
             var contentType = response.Headers.ContentType;
             if (contentType == null)
@@ -58,7 +60,9 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            if (contentType.StartsWith(textContentTypePrefix))
+            if (contentType.StartsWith(textContentTypePrefix) ||
+                contentType.EndsWith(jsonSuffix) ||
+                contentType.EndsWith(xmlSuffix))
             {
                 encoding = Encoding.UTF8;
                 return true;
