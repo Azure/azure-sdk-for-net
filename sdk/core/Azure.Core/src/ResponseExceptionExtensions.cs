@@ -47,7 +47,8 @@ namespace Azure.Core
             if (response.ContentStream != null &&
                 ResponseClassifier.IsTextResponse(response, out var encoding))
             {
-                messageBuilder.AppendLine()
+                messageBuilder
+                    .AppendLine()
                     .AppendLine("Content:");
 
                 using (var streamReader = new StreamReader(response.ContentStream, encoding))
@@ -59,7 +60,9 @@ namespace Azure.Core
             }
 
 
-            messageBuilder.AppendLine("Headers:");
+            messageBuilder
+                .AppendLine()
+                .AppendLine("Headers:");
             foreach (var responseHeader in response.Headers)
             {
                 messageBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
