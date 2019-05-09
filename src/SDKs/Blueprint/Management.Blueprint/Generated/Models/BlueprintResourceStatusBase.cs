@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// definition.</param>
         /// <param name="lastModified">Last modified time of this blueprint
         /// definition.</param>
-        public BlueprintResourceStatusBase(string timeCreated = default(string), string lastModified = default(string))
+        public BlueprintResourceStatusBase(System.DateTime? timeCreated = default(System.DateTime?), System.DateTime? lastModified = default(System.DateTime?))
         {
             TimeCreated = timeCreated;
             LastModified = lastModified;
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.Blueprint.Models
         /// Gets creation time of this blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "timeCreated")]
-        public string TimeCreated { get; private set; }
+        public System.DateTime? TimeCreated { get; private set; }
 
         /// <summary>
         /// Gets last modified time of this blueprint definition.
         /// </summary>
         [JsonProperty(PropertyName = "lastModified")]
-        public string LastModified { get; private set; }
+        public System.DateTime? LastModified { get; private set; }
 
     }
 }

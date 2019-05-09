@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>ContainerRegistry.Tests</PackageId>
+    <Description>Microsoft.Azure.ContainerRegistry tests Library</Description>
+    <AssemblyName>ContainerRegistry.Tests</AssemblyName>
+    <Version>1.0.0</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Tests\ACRTestUtil.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SessionRecords\**\*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Azure.Management.ContainerRegistry" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Azure.Management.ResourceManager" Version="[1.6.0-preview, 2.0.0)" />
+    <ProjectReference Include="..\src\Microsoft.Azure.ContainerRegistry.csproj" />    
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Helpers\ACRTestUtil.cs" />
+  </ItemGroup>
+</Project>

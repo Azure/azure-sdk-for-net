@@ -1,8 +1,6 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
-  </PropertyGroup>
-    <!-- Project references -->
+
+  <!-- Project references -->
   <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'=='true'">
     <ProjectReference Include="$(MSBuildThisFileDirectory)Azure.Core.csproj" />
   </ItemGroup>
