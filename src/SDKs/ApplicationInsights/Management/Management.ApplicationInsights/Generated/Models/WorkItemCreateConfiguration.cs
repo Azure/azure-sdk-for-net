@@ -36,11 +36,10 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         /// <param name="connectorId">Unique connector id</param>
         /// <param name="connectorDataConfiguration">Serialized JSON object for
         /// detailed properties</param>
-        /// <param name="validateOnly">True or false string indicating validate
-        /// only</param>
+        /// <param name="validateOnly">Boolean indicating validate only</param>
         /// <param name="workItemProperties">Custom work item
         /// properties</param>
-        public WorkItemCreateConfiguration(string connectorId = default(string), string connectorDataConfiguration = default(string), string validateOnly = default(string), IDictionary<string, string> workItemProperties = default(IDictionary<string, string>))
+        public WorkItemCreateConfiguration(string connectorId = default(string), string connectorDataConfiguration = default(string), bool? validateOnly = default(bool?), IDictionary<string, string> workItemProperties = default(IDictionary<string, string>))
         {
             ConnectorId = connectorId;
             ConnectorDataConfiguration = connectorDataConfiguration;
@@ -67,10 +66,10 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
         public string ConnectorDataConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets true or false string indicating validate only
+        /// Gets or sets boolean indicating validate only
         /// </summary>
         [JsonProperty(PropertyName = "ValidateOnly")]
-        public string ValidateOnly { get; set; }
+        public bool? ValidateOnly { get; set; }
 
         /// <summary>
         /// Gets or sets custom work item properties
