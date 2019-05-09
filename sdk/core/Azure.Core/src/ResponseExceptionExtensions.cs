@@ -5,17 +5,18 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core
 {
     public static class ResponseExceptionExtensionsExtensions
     {
-        private const string DefaultMessage = "Request failed with status code {0}";
+        private const string DefaultMessage = "Service request failed.";
 
         public static Task<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response)
         {
-            return CreateRequestFailedExceptionAsync(response, string.Format(DefaultMessage, response.Status));
+            return CreateRequestFailedExceptionAsync(response, DefaultMessage);
         }
 
         public static Task<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response, string message)
@@ -25,7 +26,7 @@ namespace Azure.Core
 
         public static RequestFailedException CreateRequestFailedException(this Response response)
         {
-            return CreateRequestFailedException(response, string.Format(DefaultMessage, response.Status));
+            return CreateRequestFailedException(response, DefaultMessage);
         }
 
         public static RequestFailedException CreateRequestFailedException(this Response response, string message)
@@ -35,33 +36,36 @@ namespace Azure.Core
 
         public static async Task<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
         {
-            StringBuilder detailsBuilder = new StringBuilder()
+            StringBuilder messageBuilder = new StringBuilder()
+                .AppendLine(message)
                 .Append("Status: ")
-                .AppendLine(response.Status.ToString())
-                .Append("ReasonPhrase: ")
-                .AppendLine(response.ReasonPhrase)
-                .AppendLine()
-                .AppendLine("Headers:");
-            foreach (var responseHeader in response.Headers)
-            {
-                detailsBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
-            }
+                .Append(response.Status.ToString())
+                .Append(" (")
+                .Append(response.ReasonPhrase)
+                .AppendLine(")");
 
             if (response.ContentStream != null &&
-                response.Headers.ContentType?.StartsWith("text/", StringComparison.OrdinalIgnoreCase) == true)
+                ResponseClassifier.IsTextResponse(response, out var encoding))
             {
-                detailsBuilder.AppendLine()
+                messageBuilder.AppendLine()
                     .AppendLine("Content:");
 
-                using (var streamReader = new StreamReader(response.ContentStream))
+                using (var streamReader = new StreamReader(response.ContentStream, encoding))
                 {
                     string content = async ? await streamReader.ReadToEndAsync() : streamReader.ReadToEnd();
 
-                    detailsBuilder.AppendLine(content);
+                    messageBuilder.AppendLine(content);
                 }
             }
 
-            return new RequestFailedException(response.Status, message, detailsBuilder.ToString());
+
+            messageBuilder.AppendLine("Headers:");
+            foreach (var responseHeader in response.Headers)
+            {
+                messageBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
+            }
+
+            return new RequestFailedException(response.Status, messageBuilder.ToString());
         }
     }
 }

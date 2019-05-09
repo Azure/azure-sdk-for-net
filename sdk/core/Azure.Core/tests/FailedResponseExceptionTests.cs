@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
 
             var exception = await response.CreateRequestFailedExceptionAsync();
-            Assert.AreEqual("Request failed with status code 210", exception.Message);
+            Assert.AreEqual("Request failed with status code 210 (Reason)", exception.Message);
             Assert.AreEqual(formattedResponse, exception.ResponseDetails);
             Assert.AreEqual("Azure.RequestFailedException: " + exception.Message + _nl + exception.ResponseDetails, exception.ToString());
         }
@@ -54,7 +54,7 @@ namespace Azure.Core.Tests
             response.SetContent("{\"errorCode\": 1}");
 
             var exception = await response.CreateRequestFailedExceptionAsync();
-            Assert.AreEqual("Request failed with status code 210", exception.Message);
+            Assert.AreEqual("Request failed with status code 210 (Reason)", exception.Message);
             Assert.AreEqual(formattedResponse, exception.ResponseDetails);
             Assert.AreEqual("Azure.RequestFailedException: " + exception.Message + _nl + exception.ResponseDetails, exception.ToString());
         }
@@ -74,7 +74,7 @@ namespace Azure.Core.Tests
             response.SetContent("{\"errorCode\": 1}");
 
             var exception = await response.CreateRequestFailedExceptionAsync();
-            Assert.AreEqual("Request failed with status code 210", exception.Message);
+            Assert.AreEqual("Request failed with status code 210 (Reason)", exception.Message);
             Assert.AreEqual(formattedResponse, exception.ResponseDetails);
             Assert.AreEqual("Azure.RequestFailedException: " + exception.Message + _nl + exception.ResponseDetails, exception.ToString());
         }

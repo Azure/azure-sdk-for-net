@@ -184,6 +184,7 @@ namespace Azure.ApplicationModel.Configuration
 
         static ReadOnlyMemory<byte> Serialize(ConfigurationSetting setting)
         {
+
             ReadOnlyMemory<byte> content = default;
             int size = 256;
             while (true)
@@ -191,7 +192,7 @@ namespace Azure.ApplicationModel.Configuration
                 byte[] buffer = new byte[size];
                 if (ConfigurationServiceSerializer.TrySerialize(setting, buffer, out int written))
                 {
-                    content = buffer.AsMemory(0, written);
+                    content = buffer.AsMemory(0, 0);
                     break;
                 }
                 size *= 2;

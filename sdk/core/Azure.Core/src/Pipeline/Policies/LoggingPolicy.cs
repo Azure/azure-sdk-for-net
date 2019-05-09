@@ -87,11 +87,7 @@ namespace Azure.Core.Pipeline.Policies
 
             bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
 
-            Encoding responseTextEncoding = null;
-            if (message.Response.TryGetHeader(HttpHeader.Names.ContentType, out contentType) && IsTextContentType(contentType))
-            {
-                responseTextEncoding = Encoding.UTF8;
-            }
+            var textResponse = ResponseClassifier.IsTextResponse(message.Response, out Encoding responseTextEncoding);
 
             bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
 
@@ -107,7 +103,7 @@ namespace Azure.Core.Pipeline.Policies
 
                 if (!wrapResponseStream && message.Response.ContentStream != null)
                 {
-                    if (responseTextEncoding != null)
+                    if (textResponse)
                     {
                         if (async)
                         {
@@ -136,7 +132,7 @@ namespace Azure.Core.Pipeline.Policies
 
             if (!wrapResponseStream && message.Response.ContentStream != null)
             {
-                if (responseTextEncoding != null)
+                if (textResponse)
                 {
                     await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
                 }
