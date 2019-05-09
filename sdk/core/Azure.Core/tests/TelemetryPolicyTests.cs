@@ -57,7 +57,7 @@ namespace Azure.Core.Tests
             }
             finally
             {
-                Environment.SetEnvironmentVariable("AZURE_DISABLE_TELEMETRY", null);
+                Environment.SetEnvironmentVariable("AZURE_TELEMETRY_DISABLED", null);
             }
         }
     }
