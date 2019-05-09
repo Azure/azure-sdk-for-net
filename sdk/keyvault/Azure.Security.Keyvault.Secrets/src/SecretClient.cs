@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 
@@ -250,7 +251,7 @@ namespace Azure.Security.KeyVault.Secrets
                 case 201:
                     return response;
                 default:
-                    throw new RequestFailedException(response);
+                    throw await response.CreateRequestFailedExceptionAsync();
             }
         }
 
