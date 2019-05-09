@@ -17,8 +17,8 @@ namespace Azure.Core.Tests
         public async Task FormatsResponse()
         {
             var formattedResponse =
-                "Status: 210" + _nl +
-                "ReasonPhrase: Reason" + _nl +
+                "Service request failed." + _nl +
+                "Status: 210 (Reason)" + _nl +
                 _nl +
                 "Headers:" + _nl +
                 "Custom-Header: Value" + _nl +
@@ -29,24 +29,22 @@ namespace Azure.Core.Tests
             response.AddHeader(new HttpHeader("x-ms-requestId", "123"));
 
             var exception = await response.CreateRequestFailedExceptionAsync();
-            Assert.AreEqual("Request failed with status code 210 (Reason)", exception.Message);
-            Assert.AreEqual(formattedResponse, exception.ResponseDetails);
-            Assert.AreEqual("Azure.RequestFailedException: " + exception.Message + _nl + exception.ResponseDetails, exception.ToString());
+            Assert.AreEqual(formattedResponse, exception.Message);
         }
 
         [Test]
         public async Task FormatsResponseContentForTextContentTypes()
         {
             var formattedResponse =
-                "Status: 210" + _nl +
-                "ReasonPhrase: Reason" + _nl +
+                "Service request failed." + _nl +
+                "Status: 210 (Reason)" + _nl +
+                _nl +
+                "Content:" + _nl +
+                "{\"errorCode\": 1}" + _nl +
                 _nl +
                 "Headers:" + _nl +
                 "Content-Type: text/json" + _nl +
-                "x-ms-requestId: 123" + _nl +
-                _nl +
-                "Content:" + _nl +
-                "{\"errorCode\": 1}" + _nl;
+                "x-ms-requestId: 123" + _nl;
 
             var response = new MockResponse(210, "Reason");
             response.AddHeader(new HttpHeader("Content-Type", "text/json"));
@@ -54,17 +52,15 @@ namespace Azure.Core.Tests
             response.SetContent("{\"errorCode\": 1}");
 
             var exception = await response.CreateRequestFailedExceptionAsync();
-            Assert.AreEqual("Request failed with status code 210 (Reason)", exception.Message);
-            Assert.AreEqual(formattedResponse, exception.ResponseDetails);
-            Assert.AreEqual("Azure.RequestFailedException: " + exception.Message + _nl + exception.ResponseDetails, exception.ToString());
+            Assert.AreEqual(formattedResponse, exception.Message);
         }
 
         [Test]
         public async Task DoesntFormatsResponseContentForNonTextContentTypes()
         {
             var formattedResponse =
-                "Status: 210" + _nl +
-                "ReasonPhrase: Reason" + _nl +
+                "Service request failed." + _nl +
+                "Status: 210 (Reason)" + _nl +
                 _nl +
                 "Headers:" + _nl +
                 "Content-Type: binary" + _nl;
@@ -74,9 +70,7 @@ namespace Azure.Core.Tests
             response.SetContent("{\"errorCode\": 1}");
 
             var exception = await response.CreateRequestFailedExceptionAsync();
-            Assert.AreEqual("Request failed with status code 210 (Reason)", exception.Message);
-            Assert.AreEqual(formattedResponse, exception.ResponseDetails);
-            Assert.AreEqual("Azure.RequestFailedException: " + exception.Message + _nl + exception.ResponseDetails, exception.ToString());
+            Assert.AreEqual(formattedResponse, exception.Message);
         }
     }
 }
