@@ -13,6 +13,10 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
     using Microsoft.Rest;
     using Models;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Personalizer Service is an Azure Cognitive Service that makes it easy
@@ -55,6 +59,20 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         /// Gets the IEvents.
         /// </summary>
         IEvents Events { get; }
+
+        /// <summary>
+        /// A Personalizer rank request.
+        /// </summary>
+        /// <param name='rankRequest'>
+        /// A Personalizer request.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<RankResponse>> RankWithHttpMessagesAsync(RankRequest rankRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
