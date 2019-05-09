@@ -249,7 +249,7 @@ namespace Microsoft.Azure.CognitiveServices.Personalizer
         {
             if (Endpoint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Client.Endpoint");
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Endpoint");
             }
             if (rankRequest == null)
             {
