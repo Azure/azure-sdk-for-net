@@ -2,11 +2,11 @@
   <PropertyGroup>
     <Description>Data.ApplicationInsights.Tests Class library</Description>
     <AssemblyTitle>Data ApplicationInsights Tests</AssemblyTitle>
-    <Version>1.0.0-preview</Version>
+    <VersionPrefix>1.0.0</VersionPrefix>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Update="SessionRecords\**\*.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
