@@ -11,4 +11,8 @@
   <ItemGroup Condition="'$(UseProjectReferenceToAzureCore)'!='true'">
     <PackageReference Include="Azure.Core" Version="1.0.0-preview.5" />
   </ItemGroup>
+
+  <ItemGroup>
+      <Compile Include="$(MSBuildThisFileDirectory)/Shared/*.cs" />
+  </ItemGroup>
 </Project>
