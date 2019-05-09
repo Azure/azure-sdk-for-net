@@ -48,7 +48,8 @@ namespace Azure.Core
             }
 
             if (response.ContentStream != null &&
-                response.Headers.ContentType?.StartsWith("text/", StringComparison.OrdinalIgnoreCase) == true)
+                response.Headers.ContentType?.StartsWith("text/", StringComparison.OrdinalIgnoreCase) == true ||
+                response.Headers.ContentType?.Contains("charset=") == true)
             {
                 detailsBuilder.AppendLine()
                     .AppendLine("Content:");

@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -462,6 +463,64 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
+        public virtual async IAsyncEnumerable<ConfigurationSetting> GetSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            string nextLink = null;
+            do
+            {
+                SettingBatch batch = await GetSettingsPageAsync(nextLink, selector, cancellationToken);
+                foreach (var setting in batch.Settings)
+                {
+                    yield return setting;
+                }
+                nextLink = batch.NextBatchLink;
+            } while (nextLink != null);
+        }
+
+
+        public virtual IEnumerable<ConfigurationSetting> GetSettings(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            string nextLink = null;
+            do
+            {
+                SettingBatch batch = GetSettingsPage(selector, nextLink, cancellationToken);
+                foreach (var setting in batch.Settings)
+                {
+                    yield return setting;
+                }
+                nextLink = batch.NextBatchLink;
+            } while (nextLink != null);
+        }
+
+        public virtual async IAsyncEnumerable<ConfigurationSetting> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            string nextLink = null;
+            do
+            {
+                SettingBatch batch = await GetRevisionsPageAsync(selector, nextLink, cancellationToken);
+                foreach (var setting in batch.Settings)
+                {
+                    yield return setting;
+                }
+                nextLink = batch.NextBatchLink;
+            } while (nextLink != null);
+        }
+
+
+        public virtual IEnumerable<ConfigurationSetting> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
+        {
+            string nextLink = null;
+            do
+            {
+                SettingBatch batch = GetRevisionsPage(selector, nextLink, cancellationToken);
+                foreach (var setting in batch.Settings)
+                {
+                    yield return setting;
+                }
+                nextLink = batch.NextBatchLink;
+            } while (nextLink != null);
+        }
+
         private Request CreateGetRequest(string key, string label, DateTimeOffset acceptDateTime)
         {
             if (string.IsNullOrEmpty(key))
@@ -487,9 +546,9 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<SettingBatch>> GetBatchAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        private async Task<Response<SettingBatch>> GetSettingsPageAsync(string pageLink, SettingSelector selector, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateBatchRequest(selector))
+            using (Request request = CreateBatchRequest(selector, pageLink))
             {
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
@@ -510,9 +569,9 @@ namespace Azure.ApplicationModel.Configuration
         /// </summary>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<SettingBatch> GetBatch(SettingSelector selector, CancellationToken cancellationToken = default)
+        private Response<SettingBatch> GetSettingsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateBatchRequest(selector))
+            using (Request request = CreateBatchRequest(selector, pageLink))
             {
                 Response response = _pipeline.SendRequest(request, cancellationToken);
 
@@ -527,11 +586,11 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        private Request CreateBatchRequest(SettingSelector selector)
+        private Request CreateBatchRequest(SettingSelector selector, string pageLink)
         {
             Request request = _pipeline.CreateRequest();
             request.Method = HttpPipelineMethod.Get;
-            BuildUriForGetBatch(request.UriBuilder, selector);
+            BuildUriForGetBatch(request.UriBuilder, selector, pageLink);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {
@@ -548,9 +607,9 @@ namespace Azure.ApplicationModel.Configuration
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<SettingBatch>> GetRevisionsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
+        private async Task<Response<SettingBatch>> GetRevisionsPageAsync(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateGetRevisionsRequest(selector))
+            using (Request request = CreateGetRevisionsRequest(selector, pageLink))
             {
                 Response response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
                 switch (response.Status)
@@ -572,9 +631,9 @@ namespace Azure.ApplicationModel.Configuration
         /// <remarks>Revisions are provided in descending order from their respective <see cref="ConfigurationSetting.LastModified"/> date.</remarks>
         /// <param name="selector">Set of options for selecting settings from the configuration store.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<SettingBatch> GetRevisions(SettingSelector selector, CancellationToken cancellationToken = default)
+        private Response<SettingBatch> GetRevisionsPage(SettingSelector selector, string pageLink, CancellationToken cancellationToken = default)
         {
-            using (Request request = CreateGetRevisionsRequest(selector))
+            using (Request request = CreateGetRevisionsRequest(selector, pageLink))
             {
                 Response response = _pipeline.SendRequest(request, cancellationToken);
                 switch (response.Status)
@@ -590,11 +649,11 @@ namespace Azure.ApplicationModel.Configuration
             }
         }
 
-        private Request CreateGetRevisionsRequest(SettingSelector selector)
+        private Request CreateGetRevisionsRequest(SettingSelector selector, string pageLink)
         {
             var request = _pipeline.CreateRequest();
             request.Method = HttpPipelineMethod.Get;
-            BuildUriForRevisions(request.UriBuilder, selector);
+            BuildUriForRevisions(request.UriBuilder, selector, pageLink);
             request.Headers.Add(MediaTypeKeyValueApplicationHeader);
             if (selector.AsOf.HasValue)
             {

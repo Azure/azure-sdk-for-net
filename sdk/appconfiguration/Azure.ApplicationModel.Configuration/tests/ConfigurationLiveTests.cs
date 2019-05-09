@@ -513,12 +513,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 // Test
                 var selector = new SettingSelector(setting.Key);
                 selector.AsOf = DateTimeOffset.MaxValue;
-                SettingBatch batch = await service.GetRevisionsAsync(selector, CancellationToken.None);
 
                 int resultsReturned = 0;
-                for (int i = 0; i < batch.Count; i++)
+                await foreach (var value in service.GetRevisionsAsync(selector, CancellationToken.None))
                 {
-                    var value = batch[i];
                     if (value.Label.Contains("update"))
                     {
                         Assert.AreEqual(value, testSettingUpdate);
@@ -632,19 +630,13 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             int resultsReturned = 0;
             SettingSelector selector = new SettingSelector(key);
-            while (true)
+
+            await foreach (ConfigurationSetting item in service.GetSettingsAsync(selector, CancellationToken.None))
             {
-                using (Response<SettingBatch> response = await service.GetBatchAsync(selector, CancellationToken.None))
-                {
-                    SettingBatch batch = response.Value;
-                    resultsReturned += batch.Count;
-                    var nextBatch = batch.NextBatch;
-
-                    if (nextBatch == null) break;
-
-                    selector = nextBatch;
-                }
+                Assert.AreEqual("test_value", item.Value);
+                resultsReturned ++;
             }
+
             Assert.AreEqual(expectedEvents, resultsReturned);
         }
 
@@ -663,8 +655,8 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 Assert.AreEqual("*", selector.Keys.First());
                 Assert.AreEqual("*", selector.Labels.First());
 
-                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
-                int resultsReturned = batch.Count;
+                var resultsReturned = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .Count();
 
                 //At least there should be one key available
                 Assert.GreaterOrEqual(resultsReturned, 1);
@@ -686,9 +678,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(testSetting);
 
                 var selector = new SettingSelector(testSetting.Key, testSetting.Label);
-                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
 
-                Assert.AreEqual(1, batch.Count);
+                Assert.AreEqual(1, batch.Length);
                 Assert.AreEqual(testSetting.Key, batch[0].Key);
                 Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
@@ -709,9 +702,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 await service.SetAsync(testSetting);
 
                 var selector = new SettingSelector(testSetting.Key);
-                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
 
-                Assert.AreEqual(1, batch.Count);
+                Assert.AreEqual(1, batch.Length);
                 Assert.AreEqual(testSetting.Key, batch[0].Key);
             }
             finally
@@ -734,11 +728,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
                 Assert.AreEqual("*", selector.Keys.First());
 
-                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
-                int resultsReturned = batch.Count;
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
 
                 //At least there should be one key available
-                Assert.GreaterOrEqual(resultsReturned, 1);
+                Assert.GreaterOrEqual(batch.Length, 1);
                 Assert.AreEqual(testSetting.Label, batch[0].Label);
             }
             finally
@@ -762,10 +756,10 @@ namespace Azure.ApplicationModel.Configuration.Tests
                     Fields = SettingFields.Key | SettingFields.Label | SettingFields.ETag
                 };
 
-                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
-                int resultsReturned = batch.Count;
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
 
-                Assert.AreEqual(1, resultsReturned);
+                Assert.AreEqual(1, batch.Length);
 
                 Assert.IsNotNull(batch[0].Key);
                 Assert.IsNotNull(batch[0].Label);
@@ -794,9 +788,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                 {
                     Fields = SettingFields.All
                 };
-                SettingBatch batch = await service.GetBatchAsync(selector, CancellationToken.None);
 
-                Assert.AreEqual(1, batch.Count);
+                ConfigurationSetting[] batch = (await service.GetSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
+
+                Assert.AreEqual(1, batch.Length);
 
                 Assert.IsNotNull(batch[0].Key);
                 Assert.IsNotNull(batch[0].Label);
@@ -815,6 +811,16 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
     public static class ConfigurationSettingExtensions
     {
+        public static async Task<IEnumerable<T>> ToEnumerableAsync<T>(this IAsyncEnumerable<T> asyncEnumerable)
+        {
+            List<T> list = new List<T>();
+            await foreach (T item in asyncEnumerable)
+            {
+                list.Add(item);
+            }
+            return list;
+        }
+
         public static ConfigurationSetting Clone(this ConfigurationSetting setting)
         {
             Dictionary<string, string> tags = new Dictionary<string, string>();

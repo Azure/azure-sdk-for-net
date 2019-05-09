@@ -4,6 +4,7 @@
 
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -21,7 +22,7 @@ namespace Azure.ApplicationModel.Configuration.Samples
         */
         public async Task HelloWorldExtended()
         {
-            // Retrieve the connection string from the configuration store. 
+            // Retrieve the connection string from the configuration store.
             // You can get the string from your Azure portal or using Azure CLI.
             var connectionString = Environment.GetEnvironmentVariable("APP_CONFIG_CONNECTION");
 
@@ -49,17 +50,15 @@ namespace Azure.ApplicationModel.Configuration.Samples
 
             await client.UpdateAsync(instancesToUpdate);
 
-            // We want to gather all the information available for the "production' environment. 
+            // We want to gather all the information available for the "production' environment.
             // By calling GetBatchSync with the proper filter for label "production", we will get
             // all the Configuration Settings that satisfy that condition.
             var selector = new SettingSelector(null, "production");
-            SettingBatch batch = await client.GetBatchAsync(selector);
 
             Debug.WriteLine("Settings for Production environmnet");
-            for (int i = 0; i < batch.Count; i++)
+            await foreach (var setting in client.GetSettingsAsync(selector))
             {
-                var value = batch[i];
-                Debug.WriteLine(batch[i]);
+                Debug.WriteLine(setting);
             }
 
             // Once we don't need the Configuration Setting, we can delete them.
