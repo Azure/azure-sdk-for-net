@@ -17,8 +17,11 @@
 
   <ItemGroup>
     <Compile Remove="obj\**" />
+    <Compile Remove="Performance\**" />
     <EmbeddedResource Remove="obj\**" />
+    <EmbeddedResource Remove="Performance\**" />
     <None Remove="obj\**" />
+    <None Remove="Performance\**" />
   </ItemGroup>
 
   <ItemGroup>
