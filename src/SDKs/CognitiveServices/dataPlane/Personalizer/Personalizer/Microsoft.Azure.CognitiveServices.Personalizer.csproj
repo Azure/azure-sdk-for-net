@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.CognitiveServices.Personalizer</PackageId>
     <Description>This client library provides access to the Microsoft Cognitive Services Personalizer APIs.</Description>
-    <Version>0.9.0-preview</Version>
+    <Version>0.8.0-preview</Version>
     <AssemblyName>Microsoft.Azure.CognitiveServices.Personalizer</AssemblyName>
     <PackageTags>Microsoft Cognitive Services;Cognitive Services;Cognitive Services SDK;Personalizer API;REST HTTP client</PackageTags>
     <PackageReleaseNotes>
