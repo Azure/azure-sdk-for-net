@@ -103,6 +103,48 @@ namespace Microsoft.AzureStack.Management.Fabric.Admin
             }
 
             /// <summary>
+            /// Creates or updates a fabric location.  This will fail if called outside
+            /// deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group.
+            /// </param>
+            /// <param name='fabricObject'>
+            /// Fabric location object.
+            /// </param>
+            public static FabricLocation Create(this IFabricLocationsOperations operations, string resourceGroupName, FabricLocation fabricObject)
+            {
+                return operations.CreateAsync(resourceGroupName, fabricObject).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a fabric location.  This will fail if called outside
+            /// deployment.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group.
+            /// </param>
+            /// <param name='fabricObject'>
+            /// Fabric location object.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<FabricLocation> CreateAsync(this IFabricLocationsOperations operations, string resourceGroupName, FabricLocation fabricObject, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, fabricObject, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Returns a list of all fabric locations.
             /// </summary>
             /// <param name='operations'>
