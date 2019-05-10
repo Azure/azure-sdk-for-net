@@ -10,8 +10,6 @@
       ]]>
     </PackageReleaseNotes>
 
-    <LangVersion>8.0</LangVersion>
-
     <!-- Make sure that we don't pull in additional dependencies during build or package -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
 
