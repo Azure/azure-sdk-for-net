@@ -24,6 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.0.0-preview6.19259.10" />
     <PackageReference Include="System.Text.Json" Version="4.6.0-preview6.19226.8" />
   </ItemGroup>
 
