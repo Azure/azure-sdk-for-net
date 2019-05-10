@@ -62,13 +62,13 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// parent and  first level of children that the user has either direct
         /// access to or indirect access via one of their descendants. Possible
         /// values include: 'AllowedParents', 'AllowedChildren',
-        /// 'ParentAndFirstLevelChildren'
+        /// 'ParentAndFirstLevelChildren', 'ParentOnly', 'ChildrenOnly'
         /// </param>
         /// <param name='filter'>
-        /// The filter parameter allows you to filter on the the name or
-        /// display name fields. You can check for equality on the name field
-        /// (e.g. name eq '{entityName}')  and you can check for substrings on
-        /// either the name or display name fields(e.g. contains(name,
+        /// The filter parameter allows you to filter on the name or display
+        /// name fields. You can check for equality on the name field (e.g.
+        /// name eq '{entityName}')  and you can check for substrings on either
+        /// the name or display name fields(e.g. contains(name,
         /// '{substringToSearch}'), contains(displayName,
         /// '{substringToSearch')). Note that the '{entityName}' and
         /// '{substringToSearch}' fields are checked case insensitively.

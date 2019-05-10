@@ -85,10 +85,11 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// entity. With $search=ParentAndFirstLevelChildren the API will return the
         /// parent and  first level of children that the user has either direct access
         /// to or indirect access via one of their descendants. Possible values
-        /// include: 'AllowedParents', 'AllowedChildren', 'ParentAndFirstLevelChildren'
+        /// include: 'AllowedParents', 'AllowedChildren',
+        /// 'ParentAndFirstLevelChildren', 'ParentOnly', 'ChildrenOnly'
         /// </param>
         /// <param name='filter'>
-        /// The filter parameter allows you to filter on the the name or display name
+        /// The filter parameter allows you to filter on the name or display name
         /// fields. You can check for equality on the name field (e.g. name eq
         /// '{entityName}')  and you can check for substrings on either the name or
         /// display name fields(e.g. contains(name, '{substringToSearch}'),
@@ -179,7 +180,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
             if (search != null)
             {
-                _queryParameters.Add(string.Format("$search={0}", System.Uri.EscapeDataString(search)));
+                _queryParameters.Add(string.Format("$search={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(search, Client.SerializationSettings).Trim('"'))));
             }
             if (filter != null)
             {
@@ -187,7 +188,7 @@ namespace Microsoft.Azure.Management.ManagementGroups
             }
             if (view != null)
             {
-                _queryParameters.Add(string.Format("$view={0}", System.Uri.EscapeDataString(view)));
+                _queryParameters.Add(string.Format("$view={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(view, Client.SerializationSettings).Trim('"'))));
             }
             if (groupName != null)
             {

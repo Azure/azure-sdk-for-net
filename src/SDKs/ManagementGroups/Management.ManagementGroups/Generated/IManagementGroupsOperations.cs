@@ -177,6 +177,40 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// </exception>
         Task<AzureOperationResponse<OperationResults>> DeleteWithHttpMessagesAsync(string groupId, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// List all entities that descend from a management group.
+        ///
+        /// </summary>
+        /// <param name='groupId'>
+        /// Management Group ID.
+        /// </param>
+        /// <param name='skiptoken'>
+        /// Page continuation token is only used if a previous operation
+        /// returned a partial result. If a previous response contains a
+        /// nextLink element, the value of the nextLink element will include a
+        /// token parameter that specifies a starting point to use for
+        /// subsequent calls.
+        /// </param>
+        /// <param name='top'>
+        /// Number of elements to return when retrieving results. Passing this
+        /// in will override $skipToken.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<DescendantInfo>>> GetDescendantsWithHttpMessagesAsync(string groupId, string skiptoken = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update a management group. If a management group is
         /// already created and a subsequent create request is issued with
         /// different properties, the management group properties will be
@@ -258,5 +292,28 @@ namespace Microsoft.Azure.Management.ManagementGroups
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<ManagementGroupInfo>>> ListNextWithHttpMessagesAsync(string nextPageLink, string cacheControl = "no-cache", Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// List all entities that descend from a management group.
+        ///
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<DescendantInfo>>> GetDescendantsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
