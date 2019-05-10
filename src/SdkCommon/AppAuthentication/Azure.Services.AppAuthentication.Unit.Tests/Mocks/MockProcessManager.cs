@@ -4,6 +4,7 @@
 using Microsoft.Azure.Services.AppAuthentication.TestCommon;
 using System;
 using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         /// </summary>
         /// <param name="process"></param>
         /// <returns></returns>
-        public Task<string> ExecuteAsync(Process process)
+        public Task<string> ExecuteAsync(Process process, CancellationToken cancellationToken)
         {
             HitCount++;
                                    
