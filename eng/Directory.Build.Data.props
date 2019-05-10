@@ -79,4 +79,6 @@
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyFile Condition="'$(IsClientLibrary)' == 'true'">$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+
+  <Import Project="Versioning.props" />
 </Project>
