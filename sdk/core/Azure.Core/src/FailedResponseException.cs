@@ -9,22 +9,14 @@ namespace Azure
     {
         public int Status { get; }
 
-        public string ResponseDetails { get; }
-
-        public RequestFailedException(int status, string message, string responseDetails)
-            : this(status, message, responseDetails, null)
+        public RequestFailedException(int status, string message)
+            : this(status, message, null)
         {}
 
-        public RequestFailedException(int status, string message, string responseDetails, Exception innerException)
+        public RequestFailedException(int status, string message, Exception innerException)
             : base(message, innerException)
         {
             Status = status;
-            ResponseDetails = responseDetails;
-        }
-
-        public override string ToString()
-        {
-            return base.ToString() + Environment.NewLine + ResponseDetails;
         }
     }
 }
