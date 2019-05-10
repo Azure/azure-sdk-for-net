@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personalizer", "Personalizer\Personalizer.csproj", "{CCC337A9-A72F-46E4-BBF2-765F1B3BDE39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Personalizer", "Personalizer\Microsoft.Azure.CognitiveServices.Personalizer.csproj", "{CCC337A9-A72F-46E4-BBF2-765F1B3BDE39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Personalizer.Tests", "Personalizer.Tests\Personalizer.Tests.csproj", "{0B598BF1-8435-416F-8633-1E681228AC8C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.Azure.CognitiveServices.Personalizer.Tests", "Personalizer.Tests\Microsoft.Azure.CognitiveServices.Personalizer.Tests.csproj", "{0B598BF1-8435-416F-8633-1E681228AC8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
