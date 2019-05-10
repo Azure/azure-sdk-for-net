@@ -13,9 +13,9 @@
     <PackageReference Include="BenchmarkDotNet" Version="0.11.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="$(MSBuildThisFileDirectory)..\src\Azure.Configuration.csproj" />
+    <Compile Include="..\..\..\core\Azure.Core\tests\TestFramework\*.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\core\Azure.Core\tests\TestFramework\*.cs" />
+    <ProjectReference Include="..\src\Azure.ApplicationModel.Configuration.csproj" />
   </ItemGroup>
 </Project>
