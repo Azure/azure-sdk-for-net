@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// field represents the default redirect URL for the client.</param>
         /// <param name="defaultCustomBlockResponseStatusCode">If the action
         /// type is block, this field defines the default customer overridable
-        /// response status code.</param>
+        /// http response status code.</param>
         /// <param name="defaultCustomBlockResponseBody">If the action type is
         /// block, customer can override the response body. The body must be
         /// specified in base64 encoding.</param>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets or sets if the action type is block, this field defines the
-        /// default customer overridable response status code.
+        /// default customer overridable http response status code.
         /// </summary>
         [JsonProperty(PropertyName = "defaultCustomBlockResponseStatusCode")]
         public int? DefaultCustomBlockResponseStatusCode { get; set; }
@@ -103,6 +103,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </exception>
         public virtual void Validate()
         {
+            if (DefaultCustomBlockResponseStatusCode > 599)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "DefaultCustomBlockResponseStatusCode", 599);
+            }
+            if (DefaultCustomBlockResponseStatusCode < 200)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "DefaultCustomBlockResponseStatusCode", 200);
+            }
             if (DefaultCustomBlockResponseBody != null)
             {
                 if (!System.Text.RegularExpressions.Regex.IsMatch(DefaultCustomBlockResponseBody, "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$"))

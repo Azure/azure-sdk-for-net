@@ -93,6 +93,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ActionTypeProperty");
             }
+            if (CustomBlockResponseStatusCode > 599)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "CustomBlockResponseStatusCode", 599);
+            }
+            if (CustomBlockResponseStatusCode < 200)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "CustomBlockResponseStatusCode", 200);
+            }
             if (CustomBlockResponseBody != null)
             {
                 if (!System.Text.RegularExpressions.Regex.IsMatch(CustomBlockResponseBody, "^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{4})$"))

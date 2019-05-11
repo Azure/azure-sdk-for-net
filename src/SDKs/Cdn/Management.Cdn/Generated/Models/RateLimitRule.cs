@@ -10,6 +10,7 @@
 
 namespace Microsoft.Azure.Management.Cdn.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -72,12 +73,20 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()
         {
             base.Validate();
+            if (RateLimitDurationInMinutes > 60)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "RateLimitDurationInMinutes", 60);
+            }
+            if (RateLimitDurationInMinutes < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitDurationInMinutes", 1);
+            }
         }
     }
 }
