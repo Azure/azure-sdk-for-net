@@ -12,18 +12,18 @@ namespace Microsoft.Azure.Management.Security.Models
 {
 
     /// <summary>
-    /// Defines values for Severity.
+    /// Defines values for AssessmentStatusCode.
     /// </summary>
-    public static class Severity
+    public static class AssessmentStatusCode
     {
         /// <summary>
         /// The resource is healthy
         /// </summary>
-        public const string Passed = "Passed";
+        public const string Healthy = "Healthy";
         /// <summary>
         /// The resource has a security issue that needs to be addressed
         /// </summary>
-        public const string Failed = "Failed";
+        public const string Unhealthy = "Unhealthy";
         /// <summary>
         /// Assessment for this resource did not happen
         /// </summary>

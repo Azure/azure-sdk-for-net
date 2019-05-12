@@ -39,22 +39,14 @@ namespace Microsoft.Azure.Management.Security.Models
         /// <param name="type">Resource type</param>
         /// <param name="displayName">User friendly display name of the
         /// assessment</param>
-        /// <param name="status">Status of the. Possible values include:
-        /// 'Passed', 'Failed', 'NotApplicable'</param>
-        /// <param name="statusReasonCode">Programmatic code for the reason the
-        /// assessment result status</param>
-        /// <param name="statusReasonDescription">Human readable description
-        /// for the reason the assessment result status</param>
         /// <param name="additionalData">Additional data regarding the
         /// assessment</param>
-        public SecurityAssessment(string id = default(string), string name = default(string), string type = default(string), ResourceDetails resourceDetails = default(ResourceDetails), string displayName = default(string), string status = default(string), string statusReasonCode = default(string), string statusReasonDescription = default(string), IList<AssessmentAdditionalData> additionalData = default(IList<AssessmentAdditionalData>))
+        public SecurityAssessment(string id = default(string), string name = default(string), string type = default(string), ResourceDetails resourceDetails = default(ResourceDetails), string displayName = default(string), AssessmentStatus status = default(AssessmentStatus), IDictionary<string, string> additionalData = default(IDictionary<string, string>))
             : base(id, name, type)
         {
             ResourceDetails = resourceDetails;
             DisplayName = displayName;
             Status = status;
-            StatusReasonCode = statusReasonCode;
-            StatusReasonDescription = statusReasonDescription;
             AdditionalData = additionalData;
             CustomInit();
         }
@@ -76,30 +68,15 @@ namespace Microsoft.Azure.Management.Security.Models
         public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets status of the. Possible values include: 'Passed', 'Failed',
-        /// 'NotApplicable'
         /// </summary>
         [JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; private set; }
-
-        /// <summary>
-        /// Gets programmatic code for the reason the assessment result status
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.statusReasonCode")]
-        public string StatusReasonCode { get; private set; }
-
-        /// <summary>
-        /// Gets human readable description for the reason the assessment
-        /// result status
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.statusReasonDescription")]
-        public string StatusReasonDescription { get; private set; }
+        public AssessmentStatus Status { get; set; }
 
         /// <summary>
         /// Gets additional data regarding the assessment
         /// </summary>
         [JsonProperty(PropertyName = "properties.additionalData")]
-        public IList<AssessmentAdditionalData> AdditionalData { get; private set; }
+        public IDictionary<string, string> AdditionalData { get; private set; }
 
     }
 }

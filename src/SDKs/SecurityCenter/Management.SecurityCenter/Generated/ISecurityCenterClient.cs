@@ -72,6 +72,11 @@ namespace Microsoft.Azure.Management.Security
 
 
         /// <summary>
+        /// Gets the IComplianceResultsOperations.
+        /// </summary>
+        IComplianceResultsOperations ComplianceResults { get; }
+
+        /// <summary>
         /// Gets the IPricingsOperations.
         /// </summary>
         IPricingsOperations Pricings { get; }
