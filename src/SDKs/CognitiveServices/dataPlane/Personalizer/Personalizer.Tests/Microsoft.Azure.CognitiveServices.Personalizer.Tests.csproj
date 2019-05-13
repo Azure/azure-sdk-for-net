@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Personalizer\Personalizer.csproj" />
+    <ProjectReference Include="..\Personalizer\Microsoft.Azure.CognitiveServices.Personalizer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
