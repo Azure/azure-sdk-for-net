@@ -109,10 +109,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -122,6 +119,7 @@ namespace Microsoft.Azure.Management.Cdn
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByProfile", tracingParameters);
             }
@@ -132,9 +130,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -323,10 +321,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -337,6 +332,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -348,9 +344,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -737,14 +733,11 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (hostName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "hostName");
             }
+            string apiVersion = "2019-06-15";
             ValidateCustomDomainInput customDomainProperties = new ValidateCustomDomainInput();
             if (hostName != null)
             {
@@ -760,6 +753,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("customDomainProperties", customDomainProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ValidateCustomDomain", tracingParameters);
@@ -772,9 +766,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -969,10 +963,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -983,6 +974,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListResourceUsage", tracingParameters);
             }
@@ -994,9 +986,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1196,10 +1188,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1211,6 +1200,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
                 tracingParameters.Add("endpoint", endpoint);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
@@ -1222,9 +1212,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1465,10 +1455,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1480,6 +1467,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
                 tracingParameters.Add("endpointUpdateProperties", endpointUpdateProperties);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
@@ -1491,9 +1479,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1703,10 +1691,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1717,6 +1702,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -1728,9 +1714,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1900,10 +1886,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1914,6 +1897,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStart", tracingParameters);
             }
@@ -1925,9 +1909,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2133,10 +2117,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
+            string apiVersion = "2019-06-15";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2147,6 +2128,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginStop", tracingParameters);
             }
@@ -2158,9 +2140,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2367,14 +2349,11 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (contentPaths == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "contentPaths");
             }
+            string apiVersion = "2019-06-15";
             PurgeParameters contentFilePaths = new PurgeParameters();
             if (contentPaths != null)
             {
@@ -2390,6 +2369,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("contentFilePaths", contentFilePaths);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginPurgeContent", tracingParameters);
@@ -2402,9 +2382,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -2581,14 +2561,11 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
-            if (Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
             if (contentPaths == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "contentPaths");
             }
+            string apiVersion = "2019-06-15";
             LoadParameters contentFilePaths = new LoadParameters();
             if (contentPaths != null)
             {
@@ -2604,6 +2581,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("contentFilePaths", contentFilePaths);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginLoadContent", tracingParameters);
@@ -2616,9 +2594,9 @@ namespace Microsoft.Azure.Management.Cdn
             _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (Client.ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

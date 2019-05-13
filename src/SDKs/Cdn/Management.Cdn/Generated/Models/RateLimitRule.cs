@@ -83,9 +83,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
             {
                 throw new ValidationException(ValidationRules.InclusiveMaximum, "RateLimitDurationInMinutes", 60);
             }
-            if (RateLimitDurationInMinutes < 1)
+            if (RateLimitDurationInMinutes < 0)
             {
-                throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitDurationInMinutes", 1);
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "RateLimitDurationInMinutes", 0);
             }
         }
     }

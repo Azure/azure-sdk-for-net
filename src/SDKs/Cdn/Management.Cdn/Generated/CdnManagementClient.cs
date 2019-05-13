@@ -54,21 +54,9 @@ namespace Microsoft.Azure.Management.Cdn
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Version of the API to be used with the client request. Current version is
-        /// 2017-04-02.
-        /// </summary>
-        public string ApiVersion { get; private set; }
-
-        /// <summary>
         /// Azure Subscription ID.
         /// </summary>
         public string SubscriptionId1 { get; set; }
-
-        /// <summary>
-        /// Version of the API to be used with the client request. Current version is
-        /// 2017-04-02.
-        /// </summary>
-        public string ApiVersion1 { get; set; }
 
         /// <summary>
         /// The preferred language for the response.
@@ -384,7 +372,6 @@ namespace Microsoft.Azure.Management.Cdn
             Policies = new PoliciesOperations(this);
             ManagedRuleSets = new ManagedRuleSetsOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-06-15";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;
@@ -454,14 +441,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// </return>
         public async Task<AzureOperationResponse<CheckNameAvailabilityOutput>> CheckNameAvailabilityWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
+            string apiVersion = "2019-06-15";
             CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput();
             if (name != null)
             {
@@ -474,6 +458,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("checkNameAvailabilityInput", checkNameAvailabilityInput);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailability", tracingParameters);
@@ -482,9 +467,9 @@ namespace Microsoft.Azure.Management.Cdn
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "providers/Microsoft.Cdn/checkNameAvailability").ToString();
             List<string> _queryParameters = new List<string>();
-            if (ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -646,14 +631,11 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            if (ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
+            string apiVersion = "2019-06-15";
             CheckNameAvailabilityInput checkNameAvailabilityInput = new CheckNameAvailabilityInput();
             if (name != null)
             {
@@ -666,6 +648,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("checkNameAvailabilityInput", checkNameAvailabilityInput);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CheckNameAvailabilityWithSubscription", tracingParameters);
@@ -675,9 +658,9 @@ namespace Microsoft.Azure.Management.Cdn
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Cdn/checkNameAvailability").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -841,14 +824,11 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.SubscriptionId");
             }
-            if (ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
             if (probeURL == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "probeURL");
             }
+            string apiVersion = "2019-06-15";
             ValidateProbeInput validateProbeInput = new ValidateProbeInput();
             if (probeURL != null)
             {
@@ -861,6 +841,7 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("validateProbeInput", validateProbeInput);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ValidateProbe", tracingParameters);
@@ -870,9 +851,9 @@ namespace Microsoft.Azure.Management.Cdn
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/providers/Microsoft.Cdn/validateProbe").ToString();
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(SubscriptionId));
             List<string> _queryParameters = new List<string>();
-            if (ApiVersion != null)
+            if (apiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

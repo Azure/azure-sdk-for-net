@@ -54,7 +54,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="cdnEndpointLinks">Describes Azure CDN endpoints
         /// associated with this Web Application Firewall policy.</param>
         /// <param name="provisioningState">Provisioning state of the
-        /// WebApplicationFirewallPolicy.</param>
+        /// WebApplicationFirewallPolicy. Possible values include: 'Creating',
+        /// 'Succeeded', 'Failed'</param>
         /// <param name="resourceState">Resource status of the policy.</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated.</param>
@@ -111,6 +112,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
 
         /// <summary>
         /// Gets provisioning state of the WebApplicationFirewallPolicy.
+        /// Possible values include: 'Creating', 'Succeeded', 'Failed'
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

@@ -101,6 +101,36 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicy cdnWebApplicationFirewallPolicy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Update an existing CdnWebApplicationFirewallPolicy with the
+        /// specified policy name uner the specified subcription and resource
+        /// group
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Resource group within the Azure subscription.
+        /// </param>
+        /// <param name='policyName'>
+        /// The name of the CdnWebApplicationFirewallPolicy.
+        /// </param>
+        /// <param name='tags'>
+        /// CdnWebApplicationFirewallPolicy tags
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> UpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes Policy
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -152,7 +182,9 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, CdnWebApplicationFirewallPolicy cdnWebApplicationFirewallPolicy, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes Policy
+        /// Update an existing CdnWebApplicationFirewallPolicy with the
+        /// specified policy name uner the specified subcription and resource
+        /// group
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of the Resource group within the Azure subscription.
@@ -160,19 +192,25 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='policyName'>
         /// The name of the CdnWebApplicationFirewallPolicy.
         /// </param>
+        /// <param name='tags'>
+        /// CdnWebApplicationFirewallPolicy tags
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// <exception cref="ErrorResponseException">
         /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string policyName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CdnWebApplicationFirewallPolicy>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists all of the protection policies within a resource group.
         /// </summary>

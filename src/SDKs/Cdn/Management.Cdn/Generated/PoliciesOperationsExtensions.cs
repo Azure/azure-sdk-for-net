@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.Cdn
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -144,6 +146,54 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
+            /// Update an existing CdnWebApplicationFirewallPolicy with the specified
+            /// policy name uner the specified subcription and resource group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='policyName'>
+            /// The name of the CdnWebApplicationFirewallPolicy.
+            /// </param>
+            /// <param name='tags'>
+            /// CdnWebApplicationFirewallPolicy tags
+            /// </param>
+            public static CdnWebApplicationFirewallPolicy Update(this IPoliciesOperations operations, string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            {
+                return operations.UpdateAsync(resourceGroupName, policyName, tags).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an existing CdnWebApplicationFirewallPolicy with the specified
+            /// policy name uner the specified subcription and resource group
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Resource group within the Azure subscription.
+            /// </param>
+            /// <param name='policyName'>
+            /// The name of the CdnWebApplicationFirewallPolicy.
+            /// </param>
+            /// <param name='tags'>
+            /// CdnWebApplicationFirewallPolicy tags
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<CdnWebApplicationFirewallPolicy> UpdateAsync(this IPoliciesOperations operations, string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, policyName, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes Policy
             /// </summary>
             /// <param name='operations'>
@@ -229,7 +279,8 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Update an existing CdnWebApplicationFirewallPolicy with the specified
+            /// policy name uner the specified subcription and resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -240,13 +291,17 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='policyName'>
             /// The name of the CdnWebApplicationFirewallPolicy.
             /// </param>
-            public static void BeginDelete(this IPoliciesOperations operations, string resourceGroupName, string policyName)
+            /// <param name='tags'>
+            /// CdnWebApplicationFirewallPolicy tags
+            /// </param>
+            public static CdnWebApplicationFirewallPolicy BeginUpdate(this IPoliciesOperations operations, string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>))
             {
-                operations.BeginDeleteAsync(resourceGroupName, policyName).GetAwaiter().GetResult();
+                return operations.BeginUpdateAsync(resourceGroupName, policyName, tags).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Deletes Policy
+            /// Update an existing CdnWebApplicationFirewallPolicy with the specified
+            /// policy name uner the specified subcription and resource group
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -256,13 +311,19 @@ namespace Microsoft.Azure.Management.Cdn
             /// </param>
             /// <param name='policyName'>
             /// The name of the CdnWebApplicationFirewallPolicy.
+            /// </param>
+            /// <param name='tags'>
+            /// CdnWebApplicationFirewallPolicy tags
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IPoliciesOperations operations, string resourceGroupName, string policyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CdnWebApplicationFirewallPolicy> BeginUpdateAsync(this IPoliciesOperations operations, string resourceGroupName, string policyName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, policyName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, policyName, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <summary>
