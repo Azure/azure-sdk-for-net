@@ -33,9 +33,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the ApplicationTypeResourceList
         /// class.
         /// </summary>
-        public ApplicationTypeResourceList(IList<ApplicationTypeResource> value = default(IList<ApplicationTypeResource>))
+        /// <param name="nextLink">URL to get the next set of application type
+        /// list results if there are any.</param>
+        public ApplicationTypeResourceList(IList<ApplicationTypeResource> value = default(IList<ApplicationTypeResource>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -48,6 +51,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ApplicationTypeResource> Value { get; set; }
+
+        /// <summary>
+        /// Gets URL to get the next set of application type list results if
+        /// there are any.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
     }
 }

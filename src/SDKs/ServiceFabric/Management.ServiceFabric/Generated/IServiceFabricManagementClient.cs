@@ -41,6 +41,13 @@ namespace Microsoft.Azure.Management.ServiceFabric
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
+        /// The version of the Service Fabric resource provider API. This is a
+        /// required parameter and it's value must be "2019-03-01-preview" for
+        /// this specification.
+        /// </summary>
+        string ApiVersion { get; }
+
+        /// <summary>
         /// The customer subscription identifier.
         /// </summary>
         string SubscriptionId { get; set; }

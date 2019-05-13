@@ -38,6 +38,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="location">Azure resource location.</param>
+        /// <param name="tags">Azure resource tags.</param>
+        /// <param name="etag">Azure resource etag.</param>
         /// <param name="typeVersion">The version of the application type as
         /// defined in the application manifest.</param>
         /// <param name="parameters">List of application parameters with
@@ -61,8 +63,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// application capacity settings.</param>
         /// <param name="metrics">List of application capacity metric
         /// description.</param>
-        public ApplicationResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>))
-            : base(id, name, type, location)
+        public ApplicationResourceUpdate(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), string typeVersion = default(string), IDictionary<string, string> parameters = default(IDictionary<string, string>), ApplicationUpgradePolicy upgradePolicy = default(ApplicationUpgradePolicy), long? minimumNodes = default(long?), long? maximumNodes = default(long?), bool? removeApplicationCapacity = default(bool?), IList<ApplicationMetricDescription> metrics = default(IList<ApplicationMetricDescription>))
+            : base(id, name, type, location, tags, etag)
         {
             TypeVersion = typeVersion;
             Parameters = parameters;

@@ -72,8 +72,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='applicationTypeName'>
         /// The name of the application type name resource.
         /// </param>
-        /// <param name='location'>
-        /// Azure resource location.
+        /// <param name='parameters'>
+        /// The application type name resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApplicationTypeResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationTypeName, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApplicationTypeResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Service Fabric application type name resource.
         /// </summary>

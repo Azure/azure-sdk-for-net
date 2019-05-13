@@ -105,7 +105,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationTypeName");
             }
-            string apiVersion = "2019-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -116,7 +115,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("applicationTypeName", applicationTypeName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -128,9 +126,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{applicationTypeName}", System.Uri.EscapeDataString(applicationTypeName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -268,8 +266,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <param name='applicationTypeName'>
         /// The name of the application type name resource.
         /// </param>
-        /// <param name='location'>
-        /// Azure resource location.
+        /// <param name='parameters'>
+        /// The application type name resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -292,7 +290,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ApplicationTypeResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationTypeName, string location = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ApplicationTypeResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationTypeName, ApplicationTypeResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {
@@ -310,11 +308,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationTypeName");
             }
-            string apiVersion = "2019-03-01-preview";
-            ApplicationTypeResource parameters = new ApplicationTypeResource();
-            if (location != null)
+            if (parameters == null)
             {
-                parameters.Location = location;
+                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -326,7 +322,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("applicationTypeName", applicationTypeName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
@@ -339,9 +334,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{applicationTypeName}", System.Uri.EscapeDataString(applicationTypeName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -547,7 +542,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "clusterName");
             }
-            string apiVersion = "2019-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -557,7 +551,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "List", tracingParameters);
             }
@@ -568,9 +561,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
@@ -744,7 +737,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "applicationTypeName");
             }
-            string apiVersion = "2019-03-01-preview";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -755,7 +747,6 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("clusterName", clusterName);
                 tracingParameters.Add("applicationTypeName", applicationTypeName);
-                tracingParameters.Add("apiVersion", apiVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
@@ -767,9 +758,9 @@ namespace Microsoft.Azure.Management.ServiceFabric
             _url = _url.Replace("{clusterName}", System.Uri.EscapeDataString(clusterName));
             _url = _url.Replace("{applicationTypeName}", System.Uri.EscapeDataString(applicationTypeName));
             List<string> _queryParameters = new List<string>();
-            if (apiVersion != null)
+            if (Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(apiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {

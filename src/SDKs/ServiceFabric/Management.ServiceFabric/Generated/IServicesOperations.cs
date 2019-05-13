@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceResourceUpdate>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResourceUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServiceResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResourceUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Service Fabric service resource.
         /// </summary>
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.ServiceFabric
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ServiceResourceUpdate>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResourceUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ServiceResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string clusterName, string applicationName, string serviceName, ServiceResourceUpdate parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a Service Fabric service resource.
         /// </summary>

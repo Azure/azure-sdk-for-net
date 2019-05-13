@@ -22,9 +22,8 @@ namespace Microsoft.Azure.Management.ServiceFabric
                 new Tuple<string, string, string>("ServiceFabric", "ApplicationTypeVersions", "2019-03-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "ApplicationTypes", "2019-03-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "Applications", "2019-03-01-preview"),
-                new Tuple<string, string, string>("ServiceFabric", "ClusterVersions", "2018-02-01"),
-                new Tuple<string, string, string>("ServiceFabric", "Clusters", "2018-02-01"),
-                new Tuple<string, string, string>("ServiceFabric", "Operations", "2018-02-01"),
+                new Tuple<string, string, string>("ServiceFabric", "ClusterVersions", "2019-03-01-preview"),
+                new Tuple<string, string, string>("ServiceFabric", "Clusters", "2019-03-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "Operations", "2019-03-01-preview"),
                 new Tuple<string, string, string>("ServiceFabric", "Services", "2019-03-01-preview"),
               }.AsEnumerable();

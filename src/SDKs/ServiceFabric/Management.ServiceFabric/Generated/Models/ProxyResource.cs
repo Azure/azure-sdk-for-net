@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
@@ -35,12 +37,16 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="name">Azure resource name.</param>
         /// <param name="type">Azure resource type.</param>
         /// <param name="location">Azure resource location.</param>
-        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+        /// <param name="tags">Azure resource tags.</param>
+        /// <param name="etag">Azure resource etag.</param>
+        public ProxyResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
+            Tags = tags;
+            Etag = etag;
             CustomInit();
         }
 
@@ -72,6 +78,18 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets azure resource tags.
+        /// </summary>
+        [JsonProperty(PropertyName = "tags")]
+        public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets azure resource etag.
+        /// </summary>
+        [JsonProperty(PropertyName = "etag")]
+        public string Etag { get; private set; }
 
     }
 }

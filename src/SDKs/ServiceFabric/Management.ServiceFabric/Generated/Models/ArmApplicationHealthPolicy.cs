@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// <param name="serviceTypeHealthPolicyMap">The map with service type
         /// health policy per service type name. The map is empty by
         /// default.</param>
-        public ArmApplicationHealthPolicy(bool? considerWarningAsError = default(bool?), int? maxPercentUnhealthyDeployedApplications = default(int?), ServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default(ServiceTypeHealthPolicy), IDictionary<string, ServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default(IDictionary<string, ServiceTypeHealthPolicy>))
+        public ArmApplicationHealthPolicy(bool? considerWarningAsError = default(bool?), int? maxPercentUnhealthyDeployedApplications = default(int?), ArmServiceTypeHealthPolicy defaultServiceTypeHealthPolicy = default(ArmServiceTypeHealthPolicy), IDictionary<string, ArmServiceTypeHealthPolicy> serviceTypeHealthPolicyMap = default(IDictionary<string, ArmServiceTypeHealthPolicy>))
         {
             ConsiderWarningAsError = considerWarningAsError;
             MaxPercentUnhealthyDeployedApplications = maxPercentUnhealthyDeployedApplications;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Gets or sets indicates whether warnings are treated with the same
         /// severity as errors.
         /// </summary>
-        [JsonProperty(PropertyName = "ConsiderWarningAsError")]
+        [JsonProperty(PropertyName = "considerWarningAsError")]
         public bool? ConsiderWarningAsError { get; set; }
 
         /// <summary>
@@ -86,22 +86,22 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// of nodes. Default percentage is zero.
         ///
         /// </summary>
-        [JsonProperty(PropertyName = "MaxPercentUnhealthyDeployedApplications")]
+        [JsonProperty(PropertyName = "maxPercentUnhealthyDeployedApplications")]
         public int? MaxPercentUnhealthyDeployedApplications { get; set; }
 
         /// <summary>
         /// Gets or sets the health policy used by default to evaluate the
         /// health of a service type.
         /// </summary>
-        [JsonProperty(PropertyName = "DefaultServiceTypeHealthPolicy")]
-        public ServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get; set; }
+        [JsonProperty(PropertyName = "defaultServiceTypeHealthPolicy")]
+        public ArmServiceTypeHealthPolicy DefaultServiceTypeHealthPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the map with service type health policy per service
         /// type name. The map is empty by default.
         /// </summary>
-        [JsonProperty(PropertyName = "ServiceTypeHealthPolicyMap")]
-        public IDictionary<string, ServiceTypeHealthPolicy> ServiceTypeHealthPolicyMap { get; set; }
+        [JsonProperty(PropertyName = "serviceTypeHealthPolicyMap")]
+        public IDictionary<string, ArmServiceTypeHealthPolicy> ServiceTypeHealthPolicyMap { get; set; }
 
         /// <summary>
         /// Validate the object.

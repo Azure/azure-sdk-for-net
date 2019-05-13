@@ -34,9 +34,12 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// Initializes a new instance of the
         /// ApplicationTypeVersionResourceList class.
         /// </summary>
-        public ApplicationTypeVersionResourceList(IList<ApplicationTypeVersionResource> value = default(IList<ApplicationTypeVersionResource>))
+        /// <param name="nextLink">URL to get the next set of application type
+        /// version list results if there are any.</param>
+        public ApplicationTypeVersionResourceList(IList<ApplicationTypeVersionResource> value = default(IList<ApplicationTypeVersionResource>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
             CustomInit();
         }
 
@@ -49,6 +52,13 @@ namespace Microsoft.Azure.Management.ServiceFabric.Models
         /// </summary>
         [JsonProperty(PropertyName = "value")]
         public IList<ApplicationTypeVersionResource> Value { get; set; }
+
+        /// <summary>
+        /// Gets URL to get the next set of application type version list
+        /// results if there are any.
+        /// </summary>
+        [JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; private set; }
 
     }
 }
