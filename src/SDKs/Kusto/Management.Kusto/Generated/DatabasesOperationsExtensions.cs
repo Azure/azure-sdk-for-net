@@ -24,52 +24,6 @@ namespace Microsoft.Azure.Management.Kusto
     public static partial class DatabasesOperationsExtensions
     {
             /// <summary>
-            /// Checks that the database name is valid and is not already in use.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Kusto cluster.
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the Kusto cluster.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            public static CheckNameResult CheckNameAvailability(this IDatabasesOperations operations, string resourceGroupName, string clusterName, DatabaseCheckNameRequest databaseName)
-            {
-                return operations.CheckNameAvailabilityAsync(resourceGroupName, clusterName, databaseName).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Checks that the database name is valid and is not already in use.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group containing the Kusto cluster.
-            /// </param>
-            /// <param name='clusterName'>
-            /// The name of the Kusto cluster.
-            /// </param>
-            /// <param name='databaseName'>
-            /// The name of the database.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<CheckNameResult> CheckNameAvailabilityAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, DatabaseCheckNameRequest databaseName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Returns the list of databases of the given Kusto cluster.
             /// </summary>
             /// <param name='operations'>
@@ -225,7 +179,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the Update operation.
             /// </param>
-            public static Database Update(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabaseUpdate parameters)
+            public static Database Update(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters)
             {
                 return operations.UpdateAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -251,7 +205,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> UpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabaseUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> UpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -524,7 +478,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='parameters'>
             /// The database parameters supplied to the Update operation.
             /// </param>
-            public static Database BeginUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabaseUpdate parameters)
+            public static Database BeginUpdate(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters)
             {
                 return operations.BeginUpdateAsync(resourceGroupName, clusterName, databaseName, parameters).GetAwaiter().GetResult();
             }
@@ -550,7 +504,7 @@ namespace Microsoft.Azure.Management.Kusto
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Database> BeginUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, DatabaseUpdate parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Database> BeginUpdateAsync(this IDatabasesOperations operations, string resourceGroupName, string clusterName, string databaseName, Database parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, clusterName, databaseName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

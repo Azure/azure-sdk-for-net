@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.Kusto
           {
               return new Tuple<string, string, string>[]
               {
+                new Tuple<string, string, string>("Kusto", "AttachedDatabaseConfigurations", "2019-01-21"),
                 new Tuple<string, string, string>("Kusto", "Clusters", "2019-01-21"),
                 new Tuple<string, string, string>("Kusto", "DataConnections", "2019-01-21"),
                 new Tuple<string, string, string>("Kusto", "Databases", "2019-01-21"),

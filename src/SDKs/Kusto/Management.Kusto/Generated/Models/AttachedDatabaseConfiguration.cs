@@ -14,20 +14,22 @@ namespace Microsoft.Azure.Management.Kusto.Models
     using System.Linq;
 
     /// <summary>
-    /// Class representing a Kusto database.
+    /// Class representing an attached database configuration.
     /// </summary>
-    public partial class Database : ProxyResource
+    public partial class AttachedDatabaseConfiguration : ProxyResource
     {
         /// <summary>
-        /// Initializes a new instance of the Database class.
+        /// Initializes a new instance of the AttachedDatabaseConfiguration
+        /// class.
         /// </summary>
-        public Database()
+        public AttachedDatabaseConfiguration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the Database class.
+        /// Initializes a new instance of the AttachedDatabaseConfiguration
+        /// class.
         /// </summary>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
@@ -36,7 +38,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="location">Resource location.</param>
-        public Database(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+        public AttachedDatabaseConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
             : base(id, name, type)
         {
             Location = location;

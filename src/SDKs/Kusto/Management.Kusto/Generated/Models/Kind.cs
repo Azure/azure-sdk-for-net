@@ -12,15 +12,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for Kind.
     /// </summary>
-    public static class ProvisioningState
+    public static class Kind
     {
-        public const string Running = "Running";
-        public const string Creating = "Creating";
-        public const string Deleting = "Deleting";
-        public const string Succeeded = "Succeeded";
-        public const string Failed = "Failed";
-        public const string Moving = "Moving";
+        public const string All = "All";
+        public const string Specific = "Specific";
     }
 }
