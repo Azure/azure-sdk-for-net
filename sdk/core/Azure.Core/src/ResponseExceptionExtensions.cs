@@ -36,6 +36,12 @@ namespace Azure.Core
 
         public static async Task<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
         {
+            message = await CreateRequestFailedMessageAsync(message, response, async);
+            return new RequestFailedException(response.Status, message);
+        }
+
+        public static async Task<string> CreateRequestFailedMessageAsync(string message, Response response, bool async)
+        {
             StringBuilder messageBuilder = new StringBuilder()
                 .AppendLine(message)
                 .Append("Status: ")
@@ -59,7 +65,6 @@ namespace Azure.Core
                 }
             }
 
-
             messageBuilder
                 .AppendLine()
                 .AppendLine("Headers:");
@@ -68,7 +73,7 @@ namespace Azure.Core
                 messageBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
             }
 
-            return new RequestFailedException(response.Status, messageBuilder.ToString());
+            return messageBuilder.ToString();
         }
     }
 }

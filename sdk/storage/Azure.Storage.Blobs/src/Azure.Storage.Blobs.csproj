@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <AssemblyTitle>Microsoft Azure.Storage.Blobs client library</AssemblyTitle>
+    <AssemblyName>Azure.Storage.Blobs</AssemblyName>
+    <RootNamespace>Azure.Storage.Blobs</RootNamespace>
+    <DefineConstants>BlobSDK;$(DefineConstants)</DefineConstants>
+    <PackageTags>Microsoft Azure Storage Blobs, Microsoft, Azure, Blob, StorageScalable, azureofficial</PackageTags>
+    <Description>
+      This client library enables working with the Microsoft Azure Storage Blob service for storing binary and text data.
+
+      For this release see notes:
+      - https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/README.md and
+      - https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/changelog.txt
+
+      in addition to the breaking changes:
+      - https://github.com/Azure/azure-sdk-for-net/tree/master/sdk/storage/Azure.Storage.Blobs/BreakingChanges.txt
+
+      Microsoft Azure Storage team's blog - http://blogs.msdn.com/b/windowsazurestorage/
+    </Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Shared\src\Azure.Storage.Shared.projitems" Label="Shared" />
+</Project>

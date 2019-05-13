@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>1dfd6176-906a-4620-951b-9ab0ad619fa8</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Azure.Storage.Tests.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AssemblyInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)DebuggingStream.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FaultyHttpClientFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TenantConfiguration.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TenantType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestConfigurations.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestEventListener.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestHelper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestHelper.Asserts.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestResponseClassifier.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)TestConfigurations.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="$(MSBuildThisFileDirectory)TestConfigurationsTemplate.xml" />
+  </ItemGroup>
+  <!-- Ensure an empty TestConfigurations.xml is always present so the build can copy it -->
+  <Target Name="TouchTestConfigurationsFile" BeforeTargets="PreBuildEvent">
+    <Touch Files="$(MSBuildThisFileDirectory)TestConfigurations.xml" AlwaysCreate="True" ContinueOnError="WarnAndContinue" />
+  </Target>
+</Project>
