@@ -1,4 +1,4 @@
-# Blob Storage
+# File Storage
 > see https://aka.ms/autorest
 
 ## Configuration
@@ -10,9 +10,9 @@ pipeline:
   swagger-document/individual/schema-validator:
      scope: unused
 
-# Generate blob storage
-input-file: ./blob.json
-output-folder: ../../Azure.Storage.Blobs/src
+# Generate file storage
+input-file: ./file.json
+output-folder: ../src/Generated
 clear-output-folder: false
 
 # Use the Azure C# Track 2 generator

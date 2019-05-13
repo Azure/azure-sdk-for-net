@@ -21,10 +21,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues", "Azu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Storage.Queues.Tests", "Azure.Storage.Queues\tests\Azure.Storage.Queues.Tests.csproj", "{CA7C46F4-DE70-467F-802E-024063083F66}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Storage.Shared", "Azure.Storage.Shared\src\Azure.Storage.Shared.shproj", "{637D8341-246C-4F63-BC11-820035BF1B32}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Azure.Storage.Tests.Shared", "Azure.Storage.Shared\tests\Azure.Storage.Tests.Shared.shproj", "{1DFD6176-906A-4620-951B-9AB0AD619FA8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{A4D0A040-DB1C-4B1D-B4D8-8004C58DB49D}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
@@ -54,27 +50,23 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{794500
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{69A8687B-B040-451E-A72E-295C6CFC1B8B}"
 	ProjectSection(SolutionItems) = preProject
-		Swagger\Blobs\blob.json = Swagger\Blobs\blob.json
-		Swagger\Blobs\readme.md = Swagger\Blobs\readme.md
+		Azure.Storage.Blobs\swagger\blob.json = Azure.Storage.Blobs\swagger\blob.json
+		Azure.Storage.Blobs\swagger\readme.md = Azure.Storage.Blobs\swagger\readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{AD85524A-FB82-475C-9907-27DBC2BE2945}"
 	ProjectSection(SolutionItems) = preProject
-		Swagger\Files\file.json = Swagger\Files\file.json
-		Swagger\Files\readme.md = Swagger\Files\readme.md
+		Azure.Storage.Files\swagger\file.json = Azure.Storage.Files\swagger\file.json
+		Azure.Storage.Files\swagger\readme.md = Azure.Storage.Files\swagger\readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Swagger", "Swagger", "{6EEF892F-E4EE-4610-9C94-4B206D9E7152}"
 	ProjectSection(SolutionItems) = preProject
-		Swagger\Queues\queue.json = Swagger\Queues\queue.json
-		Swagger\Queues\readme.md = Swagger\Queues\readme.md
+		Azure.Storage.Queues\swagger\queue.json = Azure.Storage.Queues\swagger\queue.json
+		Azure.Storage.Queues\swagger\readme.md = Azure.Storage.Queues\swagger\readme.md
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Azure.Storage.Shared\tests\Azure.Storage.Tests.Shared.projitems*{1dfd6176-906a-4620-951b-9ab0ad619fa8}*SharedItemsImports = 13
-		Azure.Storage.Shared\src\Azure.Storage.Shared.projitems*{637d8341-246c-4f63-bc11-820035bf1b32}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

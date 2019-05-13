@@ -1,8 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs client library tests</AssemblyTitle>
-    <AssemblyName>Azure.Storage.Blobs.Tests</AssemblyName>
-    <RootNamespace>Azure.Storage.Blobs.Tests</RootNamespace>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
@@ -11,9 +9,12 @@
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\src\Azure.Storage.Common.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\**\*.cs" />
+    <None Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\TestConfigurations.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Samples\SampleSource.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <Import Project="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Shared\tests\Azure.Storage.Tests.Shared.projitems" Label="Shared" />
 </Project>

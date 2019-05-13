@@ -12,7 +12,7 @@ a storage account.
 Install the Azure Storage Queues client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-Install-Package Azure.Storage.Queues -Version 1.0.0-preview.1
+Install-Package Azure.Storage.Queues
 ```
 
 **Prerequisites**: You must have an [Azure subscription][azure_sub], and a

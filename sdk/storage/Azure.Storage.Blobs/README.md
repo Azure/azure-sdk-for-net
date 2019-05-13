@@ -11,7 +11,7 @@ definition, such as text or binary data.
 Install the Azure Storage Blobs client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-Install-Package Azure.Storage.Blobs -Version 1.0.0-preview.1
+Install-Package Azure.Storage.Blobs
 ```
 
 **Prerequisites**: You must have an [Azure subscription][azure_sub], and a

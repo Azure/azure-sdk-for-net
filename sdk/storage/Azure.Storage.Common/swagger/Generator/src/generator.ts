@@ -23,6 +23,9 @@ export async function generate(model: IServiceModel) : Promise<void> {
         line => w.line(`// ${line}`));
     w.line();
 
+    w.line(`// This file was automatically generated.  Do not edit.`);
+    w.line();
+
     generateService(w, model);
     generateModels(w, model);
 

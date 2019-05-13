@@ -2,6 +2,8 @@
   <!--
   Import our Directory.Build.props and /eng infrastructure
   -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />  
+
   <PropertyGroup>
     <!--
     We're currently on 1.0.0-preview.X and we'll share this version number
@@ -21,23 +23,13 @@
     test projects (xunit instead of MSTest).
     -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
-  </PropertyGroup>
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />  
 
-
-  <PropertyGroup>
     <!-- We'll target the standard SDK frameworks -->
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
 
     <!-- Note that we disable this for DEBUG -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
-    <!-- Have the compiler generate fully qualified paths for error messages -->
-    <GenerateFullPaths>true</GenerateFullPaths>
-    
-    <DebugSymbols>true</DebugSymbols>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 
     <!--
     Storage used to point to its main documentation page, but the rest of the
@@ -51,9 +43,6 @@
 
   <!-- DEBUG specific settings -->
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <!-- Treat warnings as errors, except in Debug -->
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-
     <!-- Turn on the DEBUG constant -->
     <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
@@ -77,6 +66,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
 
   <!-- Add references for TEST projects -->
   <ItemGroup Condition="'$(IsTestProject)' == 'true'">

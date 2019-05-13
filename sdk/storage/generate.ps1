@@ -1,7 +1,7 @@
-pushd $PSScriptRoot/Swagger/Generator
+pushd $PSScriptRoot/Azure.Storage.Common/swagger/Generator/
 npm install
 popd
 
-autorest $PSScriptRoot/Swagger/Blobs/readme.md --use=$PSScriptRoot/Swagger/Generator/ --verbose
-autorest $PSScriptRoot/Swagger/Files/readme.md --use=$PSScriptRoot/Swagger/Generator/ --verbose
-autorest $PSScriptRoot/Swagger/Queues/readme.md --use=$PSScriptRoot/Swagger/Generator/ --verbose
+autorest $PSScriptRoot/Azure.Storage.Blobs/swagger/readme.md  --use=$PSScriptRoot/Azure.Storage.Common/swagger/Generator/ --verbose
+autorest $PSScriptRoot/Azure.Storage.Files/swagger/readme.md  --use=$PSScriptRoot/Azure.Storage.Common/swagger/Generator/ --verbose
+autorest $PSScriptRoot/Azure.Storage.Queues/swagger/readme.md --use=$PSScriptRoot/Azure.Storage.Common/swagger/Generator/ --verbose

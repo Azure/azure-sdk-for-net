@@ -2,6 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
+// This file was automatically generated.  Do not edit.
+
 #region Service
 namespace Azure.Storage.Files
 {

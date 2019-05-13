@@ -25,6 +25,7 @@
       <FileServiceEndpoint>http://[ACCOUNT].file.core.windows.net</FileServiceEndpoint>
       <BlobServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
       <QueueServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
       <ConnectionString>[CONNECTION STRING HERE]</ConnectionString>
     </TenantConfiguration>
@@ -39,6 +40,7 @@
       <FileServiceEndpoint>http://[2ND ACCOUNT].file.core.windows.net</FileServiceEndpoint>
       <BlobServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
       <QueueServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[2ND ACCOUNT]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
     <TenantConfiguration>
@@ -58,6 +60,7 @@
       <FileServiceEndpoint>http://[OAuthTenant ACCOUNT NAME HERE].file.core.windows.net</FileServiceEndpoint>
       <BlobServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.blob.core.windows.net</BlobServiceSecondaryEndpoint>
       <QueueServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.queue.core.windows.net</QueueServiceSecondaryEndpoint>
+      <FileServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.file.core.windows.net</FileServiceSecondaryEndpoint>
       <TableServiceSecondaryEndpoint>http://[OAuthTenant ACCOUNT NAME HERE]-secondary.table.core.windows.net</TableServiceSecondaryEndpoint>
     </TenantConfiguration>
   </TenantConfigurations>

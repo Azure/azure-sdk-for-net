@@ -1,4 +1,4 @@
-# File Storage
+# Queue Storage
 > see https://aka.ms/autorest
 
 ## Configuration
@@ -10,9 +10,9 @@ pipeline:
   swagger-document/individual/schema-validator:
      scope: unused
 
-# Generate file storage
-input-file: ./file.json
-output-folder: ../../Azure.Storage.Files/src
+# Generate queue storage
+input-file: ./queue.json
+output-folder: ../src/Generated
 clear-output-folder: false
 
 # Use the Azure C# Track 2 generator

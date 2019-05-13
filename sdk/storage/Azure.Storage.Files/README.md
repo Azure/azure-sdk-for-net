@@ -13,7 +13,7 @@ being used.
 Install the Azure Storage Files client library for .NET with [NuGet][nuget]:
 
 ```Powershell
-Install-Package Azure.Storage.Files -Version 1.0.0-preview.1
+Install-Package Azure.Storage.Files
 ```
 
 **Prerequisites**: You must have an [Azure subscription][azure_sub], and a
