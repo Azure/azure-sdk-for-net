@@ -300,6 +300,38 @@ namespace Microsoft.Azure.Management.StorageSync
         /// </exception>
         Task<AzureOperationHeaderResponse<CloudEndpointsPostRestoreHeaders>> PostRestoreWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Triggers detection of changes performed on Azure File share
+        /// connected to the specified Azure File Sync Cloud Endpoint.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='storageSyncServiceName'>
+        /// Name of Storage Sync Service resource.
+        /// </param>
+        /// <param name='syncGroupName'>
+        /// Name of Sync Group resource.
+        /// </param>
+        /// <param name='cloudEndpointName'>
+        /// Name of Cloud Endpoint object.
+        /// </param>
+        /// <param name='parameters'>
+        /// Trigger Change Detecton Action parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="StorageSyncErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<CloudEndpointsTriggerChangeDetectionHeaders>> TriggerChangeDetectionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create a new CloudEndpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -488,5 +520,37 @@ namespace Microsoft.Azure.Management.StorageSync
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationHeaderResponse<CloudEndpointsPostRestoreHeaders>> BeginPostRestoreWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, PostRestoreRequest parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Triggers detection of changes performed on Azure File share
+        /// connected to the specified Azure File Sync Cloud Endpoint.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='storageSyncServiceName'>
+        /// Name of Storage Sync Service resource.
+        /// </param>
+        /// <param name='syncGroupName'>
+        /// Name of Sync Group resource.
+        /// </param>
+        /// <param name='cloudEndpointName'>
+        /// Name of Cloud Endpoint object.
+        /// </param>
+        /// <param name='parameters'>
+        /// Trigger Change Detecton Action parameters.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="StorageSyncErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<CloudEndpointsTriggerChangeDetectionHeaders>> BeginTriggerChangeDetectionWithHttpMessagesAsync(string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
