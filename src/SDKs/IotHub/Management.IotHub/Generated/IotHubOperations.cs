@@ -66,6 +66,34 @@ namespace Microsoft.Azure.Management.IotHub
         /// resource group which Iot Hub belongs to
         /// </param>
         /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse _response = await BeginManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, customHeaders, cancellationToken).ConfigureAwait(false);
+            return await Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Manual Failover Fail over
+        /// </summary>
+        /// <remarks>
+        /// Perform manual fail over of given hub
+        /// </remarks>
+        /// <param name='iotHubName'>
+        /// IotHub to fail over
+        /// </param>
+        /// <param name='failoverInput'>
+        /// Region to failover to. Must be a azure DR pair
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// resource group which Iot Hub belongs to
+        /// </param>
+        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -73,9 +101,6 @@ namespace Microsoft.Azure.Management.IotHub
         /// </param>
         /// <exception cref="ErrorDetailsException">
         /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
         /// </exception>
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
@@ -86,7 +111,7 @@ namespace Microsoft.Azure.Management.IotHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IotHubDescription>> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> BeginManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (iotHubName == null)
             {
@@ -123,7 +148,7 @@ namespace Microsoft.Azure.Management.IotHub
                 tracingParameters.Add("failoverInput", failoverInput);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ManualFailover", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginManualFailover", tracingParameters);
             }
             // Construct URL
             var _baseUrl = Client.BaseUri.AbsoluteUri;
@@ -200,7 +225,7 @@ namespace Microsoft.Azure.Management.IotHub
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 202 && (int)_statusCode != 204)
             {
                 var ex = new ErrorDetailsException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -230,30 +255,12 @@ namespace Microsoft.Azure.Management.IotHub
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IotHubDescription>();
+            var _result = new AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<IotHubDescription>(_responseContent, Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
             }
             if (_shouldTrace)
             {
