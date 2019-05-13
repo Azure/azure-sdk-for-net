@@ -40,13 +40,14 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <param name="features">List of SignalR featureFlags. e.g.
         /// ServiceMode.
         ///
-        /// When updating featureFlags, if certain featureFlag is not included
-        /// in parameters, SignalR service will remain it unchanged.
-        /// And when you GET a SignalR resource, the response will include only
-        /// those featureFlags explicitly set by you. For other featureFlags,
-        /// SignalR service will use its globally default value. Note that,
-        /// default value doesn't mean "false". It varies in terms of different
-        /// FeatureFlags.</param>
+        /// FeatureFlags that are not included in the parameters for the update
+        /// operation will not be modified.
+        /// And the response will only include featureFlags that are explicitly
+        /// set.
+        /// When a featureFlag is not explicitly set, SignalR service will use
+        /// its globally default value.
+        /// But keep in mind, the default value doesn't mean "false". It varies
+        /// in terms of different FeatureFlags.</param>
         public SignalRCreateOrUpdateProperties(string hostNamePrefix = default(string), IList<SignalRFeature> features = default(IList<SignalRFeature>))
         {
             HostNamePrefix = hostNamePrefix;
@@ -71,13 +72,14 @@ namespace Microsoft.Azure.Management.SignalR.Models
         /// <summary>
         /// Gets or sets list of SignalR featureFlags. e.g. ServiceMode.
         ///
-        /// When updating featureFlags, if certain featureFlag is not included
-        /// in parameters, SignalR service will remain it unchanged.
-        /// And when you GET a SignalR resource, the response will include only
-        /// those featureFlags explicitly set by you. For other featureFlags,
-        /// SignalR service will use its globally default value. Note that,
-        /// default value doesn't mean "false". It varies in terms of different
-        /// FeatureFlags.
+        /// FeatureFlags that are not included in the parameters for the update
+        /// operation will not be modified.
+        /// And the response will only include featureFlags that are explicitly
+        /// set.
+        /// When a featureFlag is not explicitly set, SignalR service will use
+        /// its globally default value.
+        /// But keep in mind, the default value doesn't mean "false". It varies
+        /// in terms of different FeatureFlags.
         /// </summary>
         [JsonProperty(PropertyName = "features")]
         public IList<SignalRFeature> Features { get; set; }
