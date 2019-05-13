@@ -49,6 +49,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="cloneSourceControl">&lt;code&gt;true&lt;/code&gt; to
         /// clone source control from source app; otherwise,
         /// &lt;code&gt;false&lt;/code&gt;.</param>
+        /// <param name="sourceWebAppLocation">Location of source app ex: West
+        /// US or North Europe</param>
         /// <param name="hostingEnvironment">App Service Environment.</param>
         /// <param name="appSettingsOverrides">Application setting overrides
         /// for cloned app. If specified, these settings override the settings
@@ -64,13 +66,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <param name="trafficManagerProfileName">Name of Traffic Manager
         /// profile to create. This is only needed if Traffic Manager profile
         /// does not already exist.</param>
-        public CloningInfo(string sourceWebAppId, System.Guid? correlationId = default(System.Guid?), bool? overwrite = default(bool?), bool? cloneCustomHostNames = default(bool?), bool? cloneSourceControl = default(bool?), string hostingEnvironment = default(string), IDictionary<string, string> appSettingsOverrides = default(IDictionary<string, string>), bool? configureLoadBalancing = default(bool?), string trafficManagerProfileId = default(string), string trafficManagerProfileName = default(string))
+        public CloningInfo(string sourceWebAppId, System.Guid? correlationId = default(System.Guid?), bool? overwrite = default(bool?), bool? cloneCustomHostNames = default(bool?), bool? cloneSourceControl = default(bool?), string sourceWebAppLocation = default(string), string hostingEnvironment = default(string), IDictionary<string, string> appSettingsOverrides = default(IDictionary<string, string>), bool? configureLoadBalancing = default(bool?), string trafficManagerProfileId = default(string), string trafficManagerProfileName = default(string))
         {
             CorrelationId = correlationId;
             Overwrite = overwrite;
             CloneCustomHostNames = cloneCustomHostNames;
             CloneSourceControl = cloneSourceControl;
             SourceWebAppId = sourceWebAppId;
+            SourceWebAppLocation = sourceWebAppLocation;
             HostingEnvironment = hostingEnvironment;
             AppSettingsOverrides = appSettingsOverrides;
             ConfigureLoadBalancing = configureLoadBalancing;
@@ -126,6 +129,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceWebAppId")]
         public string SourceWebAppId { get; set; }
+
+        /// <summary>
+        /// Gets or sets location of source app ex: West US or North Europe
+        /// </summary>
+        [JsonProperty(PropertyName = "sourceWebAppLocation")]
+        public string SourceWebAppLocation { get; set; }
 
         /// <summary>
         /// Gets or sets app Service Environment.
