@@ -14,6 +14,12 @@
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <IsTestProject Condition="$(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
+    <IsTestSupportProject Condition="'$(IsTestProject)' != 'true' and ($(MSBuildProjectDirectory.Contains('/tests/')) or $(MSBuildProjectDirectory.Contains('\tests\')))">true</IsTestSupportProject>
+    <EnableClientSdkAnalyzers Condition="'$(IsClientLibrary)' == 'true' and '$(IsTestProject)' != 'true' and '$(IsTestSupportProject)' != 'true'">true</EnableClientSdkAnalyzers>
+  </PropertyGroup>
+
   <!-- TargetFramework default properties -->
   <PropertyGroup>
     <!-- Client libraries are moving forward to NS 2.0 and Net 4.6.1 as the min supported versions -->
@@ -22,6 +28,16 @@
 
     <RequiredTargetFrameworks>net452;netstandard1.4</RequiredTargetFrameworks>
     <RequiredTargetFrameworks Condition="'$(SupportsNetStandard20)' == 'true'">net461;netstandard2.0</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
+    <IsPackable>false</IsPackable>
+    <RequiredTargetFrameworks>netcoreapp2.1</RequiredTargetFrameworks>
+    <RequiredTargetFrameworks Condition="'$(OS)' == 'Windows_NT'">netcoreapp2.1;net461</RequiredTargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <IsTargetingNetFx Condition="$(TargetFramework.StartsWith('net4'))">true</IsTargetingNetFx>
     <IsTargetingNetStandard Condition="$(TargetFramework.StartsWith('netstandard'))">true</IsTargetingNetStandard>
@@ -78,6 +94,13 @@
 
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
     <AssemblyOriginatorKeyFile Condition="'$(IsClientLibrary)' == 'true'">$(MSBuildThisFileDirectory)AzureSDKClient.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">
+    <!-- Always fully sign test assemblies since we have a full public/private key -->
+    <PublicSign>false</PublicSign>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <Import Project="Versioning.props" />
