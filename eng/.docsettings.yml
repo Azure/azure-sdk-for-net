@@ -31,6 +31,10 @@ known_content_issues:
   - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md','#5499']
   - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/tests/Readme.md','#5499']
   - ['sdk/core/Azure.Core/README.md','#5499']
+  - ['sdk/storage/Azure.Storage.Blobs/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Files/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Queues/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Common/swagger/Generator/readme.md','azure-sdk-tools/issues/42']
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'

@@ -5,8 +5,8 @@
     <PackageTags>Microsoft Azure Storage Queues, Microsoft, Azure, Blob, StorageScalable, azureofficial</PackageTags>
     <Description>
       This client library enables working with the Microsoft Azure Storage Queue service for storing messages that may be accessed by a client.
-      For this release see notes - https://github.com/Azure/azure-storage-net/blob/master/Queue/README.md and https://github.com/Azure/azure-storage-net/blob/master/Queue/Changelog.txt
-      in addition to the breaking changes https://github.com/Azure/azure-storage-net/blob/master/Queue/BreakingChanges.txt
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/Changelog.txt
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Queues/BreakingChanges.txt
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
       REST API Reference for Queue Service - https://docs.microsoft.com/en-us/rest/api/storageservices/queue-service-rest-api

@@ -5,8 +5,8 @@
     <PackageTags>Microsoft Azure Storage Files, Microsoft, Azure, File, StorageScalable, azureofficial</PackageTags>
     <Description>
       This client library enables working with the Microsoft Azure Storage File service for storing binary and text data.
-      For this release see notes - https://github.com/Azure/azure-storage-net/blob/master/File/README.md and https://github.com/Azure/azure-storage-net/blob/master/File/Changelog.txt
-      in addition to the breaking changes https://github.com/Azure/azure-storage-net/blob/master/File/BreakingChanges.txt
+      For this release see notes - https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/README.md and https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/Changelog.txt
+      in addition to the breaking changes https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/storage/Azure.Storage.Files/BreakingChanges.txt
       Microsoft Azure Storage quickstarts and tutorials - https://docs.microsoft.com/en-us/azure/storage/
       Microsoft Azure Storage REST API Reference - https://docs.microsoft.com/en-us/rest/api/storageservices/
       REST API Reference for File Service - https://docs.microsoft.com/en-us/rest/api/storageservices/file-service-rest-api
