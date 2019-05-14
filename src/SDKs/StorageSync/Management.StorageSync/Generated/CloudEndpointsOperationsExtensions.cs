@@ -535,7 +535,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// Name of Cloud Endpoint object.
             /// </param>
             /// <param name='parameters'>
-            /// Trigger Change Detecton Action parameters.
+            /// Trigger Change Detection Action parameters.
             /// </param>
             public static CloudEndpointsTriggerChangeDetectionHeaders TriggerChangeDetection(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters)
             {
@@ -562,7 +562,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// Name of Cloud Endpoint object.
             /// </param>
             /// <param name='parameters'>
-            /// Trigger Change Detecton Action parameters.
+            /// Trigger Change Detection Action parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -937,7 +937,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// Name of Cloud Endpoint object.
             /// </param>
             /// <param name='parameters'>
-            /// Trigger Change Detecton Action parameters.
+            /// Trigger Change Detection Action parameters.
             /// </param>
             public static CloudEndpointsTriggerChangeDetectionHeaders BeginTriggerChangeDetection(this ICloudEndpointsOperations operations, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string cloudEndpointName, TriggerChangeDetectionParameters parameters)
             {
@@ -964,7 +964,7 @@ namespace Microsoft.Azure.Management.StorageSync
             /// Name of Cloud Endpoint object.
             /// </param>
             /// <param name='parameters'>
-            /// Trigger Change Detecton Action parameters.
+            /// Trigger Change Detection Action parameters.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

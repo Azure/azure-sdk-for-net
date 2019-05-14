@@ -316,7 +316,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// Name of Cloud Endpoint object.
         /// </param>
         /// <param name='parameters'>
-        /// Trigger Change Detecton Action parameters.
+        /// Trigger Change Detection Action parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.StorageSync
         /// Name of Cloud Endpoint object.
         /// </param>
         /// <param name='parameters'>
-        /// Trigger Change Detecton Action parameters.
+        /// Trigger Change Detection Action parameters.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
