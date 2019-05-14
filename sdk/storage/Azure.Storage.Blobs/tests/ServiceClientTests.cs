@@ -38,6 +38,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListContainersSegmentAsync()
         {
             // Arrange
@@ -54,6 +55,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListContainersSegmentAsync_Marker()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -82,6 +84,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListContainersSegmentAsync_MaxResults()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -101,6 +104,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListContainersSegmentAsync_Prefix()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -123,6 +127,7 @@ namespace Azure.Storage.Blobs.Test
         }
         
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListContainersSegmentAsync_Metadata()
         {
             var service = TestHelper.GetServiceClient_SharedKey();
@@ -145,6 +150,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListContainersSegmentAsync_Error()
         {
             // Arrange
@@ -157,6 +163,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccountInfoAsync()
         {
             // Arrange
@@ -170,6 +177,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange
@@ -184,6 +192,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -197,6 +206,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -212,6 +222,7 @@ namespace Azure.Storage.Blobs.Test
 
         [TestMethod]
         [DoNotParallelize]
+        [TestCategory("Live")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -247,6 +258,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -264,6 +276,7 @@ namespace Azure.Storage.Blobs.Test
 
         // Note: read-access geo-redundant replication must be enabled for test account, or this test will fail.
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetStatisticsAsync()
         {
             // Arrange
@@ -280,6 +293,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetUserDelegationKey()
         {
             // Arrange
@@ -293,6 +307,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetUserDelegationKey_Error()
         {
             // Arrange
@@ -305,6 +320,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetUserDelegationKey_ArgumentException()
         {
             // Arrange

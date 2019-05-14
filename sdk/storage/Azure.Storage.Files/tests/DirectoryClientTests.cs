@@ -41,6 +41,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -57,6 +58,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_Error()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -74,6 +76,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_Metadata()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -92,6 +95,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -105,6 +109,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync_Error()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -120,6 +125,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -133,6 +139,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -148,6 +155,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync()
         {
             using (TestHelper.GetNewDirectory(out var directory))
@@ -165,6 +173,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync_Error()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -181,6 +190,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListFilesAndDirectoriesSegmentAsync()
         {
             // Arrange
@@ -236,6 +246,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListFilesAndDirectoriesSegmentAsync_Error()
         {
             using (TestHelper.GetNewShare(out var share))
@@ -251,6 +262,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListHandles()
         {
             // Arrange
@@ -268,6 +280,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListHandles_Min()
         {
             // Arrange
@@ -283,6 +296,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListHandles_Error()
         {
             // Arrange
@@ -299,6 +313,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ForceCloseHandles_Min()
         {
             // Arrange
@@ -314,6 +329,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ForceCloseHandles_Recursive()
         {
             // Arrange
@@ -329,6 +345,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ForceCloseHandles_Error()
         {
             // Arrange

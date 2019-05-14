@@ -38,6 +38,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -60,6 +61,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
@@ -82,6 +84,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
@@ -104,6 +107,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithQueueServiceSas()
         {
             // Arrange
@@ -135,6 +139,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -151,6 +156,7 @@ namespace Azure.Storage.Queues.Test
 
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -165,6 +171,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -179,6 +186,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync_OnCreate()
         {
             // Arrange
@@ -193,6 +201,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync_Metadata()
         {
             // Arrange
@@ -211,6 +220,7 @@ namespace Azure.Storage.Queues.Test
 
         // Note that this test intentionally does not call queue.CreateAsync()
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
@@ -226,6 +236,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccessPolicyAsync()
         {
             // Arrange
@@ -250,6 +261,7 @@ namespace Azure.Storage.Queues.Test
 
         // Note that this test intentionally does not call queue.CreateAsync()
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -264,6 +276,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetAccessPolicyAsync()
         {
             using (TestHelper.GetNewQueue(out var queue))
@@ -276,6 +289,7 @@ namespace Azure.Storage.Queues.Test
 
         // Note that this test intentionally does not call queue.CreateAsync()
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -291,6 +305,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -308,6 +323,7 @@ namespace Azure.Storage.Queues.Test
 
         // Note that this test intentionally does not call queue.CreateAsync()
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync_Error()
         {
             // Arrange

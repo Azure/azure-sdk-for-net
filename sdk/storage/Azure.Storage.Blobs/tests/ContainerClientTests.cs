@@ -42,6 +42,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithSharedKey()
         {
             // Arrange
@@ -63,6 +64,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithOauth()
         {
             // Arrange
@@ -85,6 +87,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
@@ -107,6 +110,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_WithBlobServiceSas()
         {
             // Arrange
@@ -136,6 +140,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_Metadata()
         {
             // Arrange
@@ -155,6 +160,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_PublicAccess()
         {
             // Arrange
@@ -173,6 +179,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_Error()
         {
             // Arrange
@@ -191,6 +198,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -206,6 +214,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync_Error()
         {
             // Arrange
@@ -221,6 +230,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task DeleteAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -242,6 +252,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task DeleteAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -261,6 +272,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccountInfoAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -274,6 +286,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccountInfoAsync_Error()
         {
             // Arrange
@@ -289,6 +302,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync()
         {
             using (TestHelper.GetNewContainer(out var container, publicAccessType: PublicAccessType.Container))
@@ -302,6 +316,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -315,6 +330,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -332,6 +348,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync_Error()
         {
             // Arrange
@@ -362,6 +379,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(SetMetadataAsync_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -409,6 +427,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(SetMetadataAsync_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task SetMetadataAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -431,6 +450,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccessPolicyAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -444,6 +464,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccessPolicyAsync_Lease()
         {
             // Arrange
@@ -470,6 +491,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccessPolicyAsync_LeaseFail()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -488,6 +510,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -501,6 +524,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetAccessPolicyAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -531,6 +555,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetAccessPolicyAsync_Error()
         {
             // Arrange
@@ -547,6 +572,7 @@ namespace Azure.Storage.Blobs.Test
         [DataTestMethod]
         [DynamicData(nameof(AccessConditions_Data), DynamicDataSourceType.Property)]
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetAccessPolicyAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -584,6 +610,7 @@ namespace Azure.Storage.Blobs.Test
         [DataTestMethod]
         [DynamicData(nameof(AccessConditionsFail_Data), DynamicDataSourceType.Property)]
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetAccessPolicyAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -607,6 +634,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AcquireLeaseAsync()
         {
             // Arrange
@@ -635,6 +663,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AcquireLeaseAsync_Error()
         {
             // Arrange
@@ -653,6 +682,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task AcquireLeaseAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -688,6 +718,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task AcquireLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -712,6 +743,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task RenewLeaseAsync()
         {
             // Arrange
@@ -743,6 +775,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task RenewLeaseAsync_Error()
         {
             // Arrange
@@ -759,6 +792,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task RenewLeaseAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -796,6 +830,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task RenewLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             // Arrange
@@ -832,6 +867,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ReleaseLeaseAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -853,6 +889,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ReleaseLeaseAsync_Error()
         {
             // Arrange
@@ -869,6 +906,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task ReleaseLeaseAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -898,6 +936,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task ReleaseLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             // Arrange
@@ -934,6 +973,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task BreakLeaseAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -955,6 +995,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task BreakLeaseAsync_Error()
         {
             // Arrange
@@ -970,6 +1011,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task BreakLeaseAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -1008,6 +1050,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task BreakLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             // Arrange
@@ -1043,6 +1086,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ChangeLeaseAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1065,6 +1109,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ChangeLeaseAsync_Error()
         {
             // Arrange
@@ -1080,6 +1125,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task ChangeLeaseAsync_AccessConditions(AccessConditionParameters parameters)
         {
             // Arrange
@@ -1121,6 +1167,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(NoLease_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task ChangeLeaseAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             // Arrange
@@ -1159,6 +1206,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1188,6 +1236,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync_MaxResults()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1209,6 +1258,7 @@ namespace Azure.Storage.Blobs.Test
         }
         
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync_Metadata()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1235,6 +1285,7 @@ namespace Azure.Storage.Blobs.Test
 
         [TestMethod]
         [DoNotParallelize]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync_Deleted()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1271,6 +1322,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync_Uncommited()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1306,6 +1358,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync_Snapshot()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1333,6 +1386,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync_Prefix()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1354,6 +1408,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsFlatSegmentAsync_Error()
         {
             // Arrange
@@ -1368,6 +1423,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync()
         { 
 
@@ -1416,6 +1472,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync_MaxResults()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1438,6 +1495,7 @@ namespace Azure.Storage.Blobs.Test
         }
         
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync_Metadata()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1464,6 +1522,7 @@ namespace Azure.Storage.Blobs.Test
 
         [TestMethod]
         [DoNotParallelize]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync_Deleted()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1500,6 +1559,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync_Uncommited()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1535,6 +1595,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync_Snapshot()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1562,6 +1623,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync_Prefix()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -1583,6 +1645,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListBlobsHierarchySegmentAsync_Error()
         {
             // Arrange

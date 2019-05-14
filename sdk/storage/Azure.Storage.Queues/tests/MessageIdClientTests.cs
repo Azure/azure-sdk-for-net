@@ -14,6 +14,7 @@ namespace Azure.Storage.Queues.Test
     public class MessageIdClientTests
     {
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync()
         {
             // Arrange
@@ -32,6 +33,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync_Error()
         {
             // Arrange
@@ -47,6 +49,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DeleteAsync_DeletePeek()
         {
             // Arrange
@@ -66,6 +69,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task UpdateAsync_Update()
         {
             // Arrange
@@ -87,6 +91,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task UpdateAsync_Min()
         {
             // Arrange
@@ -108,6 +113,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task UpdateAsync_UpdatePeek()
         {
             // Arrange
@@ -133,6 +139,7 @@ namespace Azure.Storage.Queues.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task UpdateAsync_Error()
         {
             // Arrange

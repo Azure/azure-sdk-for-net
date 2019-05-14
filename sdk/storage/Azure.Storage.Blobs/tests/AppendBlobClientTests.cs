@@ -75,6 +75,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -97,6 +98,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_Metadata()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -126,6 +128,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task CreateAsync_Error()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -169,6 +172,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(CreateAsync_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task CreateAsync_AccessConditions(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -218,6 +222,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(CreateAsync_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task CreateAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -239,6 +244,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockAsync()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -266,6 +272,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockAsync_MD5()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -289,6 +296,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockAsync_MD5Fail()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -311,6 +319,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockAsync_Error()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -365,6 +374,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(AppendBlockAsync_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task AppendBlockAsync_AccessConditions(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -428,6 +438,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(AppendBlockAsync_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task AppendBlockAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -457,6 +468,7 @@ namespace Azure.Storage.Blobs.Test
 
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockAsync_WithUnreliableConnection()
         {
             const int blobSize = 1 * Constants.MB;
@@ -505,6 +517,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockFromUriAsync_Min()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -530,6 +543,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockFromUriAsync_Range()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -563,6 +577,7 @@ namespace Azure.Storage.Blobs.Test
 
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockFromUriAsync_MD5()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -590,6 +605,7 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlockFromUriAsync_MD5_Fail()
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -671,6 +687,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(AppendBlockFromUriAsync_AccessConditions_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task AppendBlockFromUriAsync_AccessConditions(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))
@@ -759,6 +776,7 @@ namespace Azure.Storage.Blobs.Test
 
         [DataTestMethod]
         [DynamicData(nameof(AppendBlockFromUriAsync_AccessConditionsFail_Data), DynamicDataSourceType.Property)]
+        [TestCategory("Live")]
         public async Task AppendBlockFromUriAsync_AccessConditionsFail(AccessConditionParameters parameters)
         {
             using (TestHelper.GetNewContainer(out var container))

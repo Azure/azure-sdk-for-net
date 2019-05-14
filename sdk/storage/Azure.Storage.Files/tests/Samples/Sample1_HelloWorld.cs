@@ -21,6 +21,7 @@ namespace Azure.Storage.Samples
     public partial class FileSamples
     {
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ShareSample()
         {
             // Instantiate a new FileServiceClient using a connection string.
@@ -44,6 +45,7 @@ namespace Azure.Storage.Samples
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task DirectorySample()
         {
             // Instantiate a new FileServiceClient using a connection string.
@@ -85,6 +87,7 @@ namespace Azure.Storage.Samples
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task FileSample()
         {
             // Instantiate a new FileServiceClient using a connection string.

@@ -38,6 +38,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync()
         {
             // Arrange
@@ -51,6 +52,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task GetPropertiesAsync_Error()
         {
             // Arrange
@@ -69,6 +71,7 @@ namespace Azure.Storage.Files.Test
 
         [TestMethod]
         [DoNotParallelize]
+        [TestCategory("Live")]
         public async Task SetPropertiesAsync()
         {
             // Arrange
@@ -96,6 +99,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task SetPropertiesAsync_Error()
         {
             // Arrange
@@ -115,6 +119,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListSharesSegmentAsync()
         {
             // Arrange
@@ -145,6 +150,7 @@ namespace Azure.Storage.Files.Test
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ListShareSegmentAsync_Error()
         {
             // Arrange

@@ -20,6 +20,7 @@ namespace Azure.Storage.Samples
     public partial class QueueSamples
     {
         [TestMethod]
+        [TestCategory("Live")]
         public async Task QueueSample()
         {
             // Instantiate a new QueueServiceClient using a connection string.
@@ -43,6 +44,7 @@ namespace Azure.Storage.Samples
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task MessageSample()
         {
             // Instantiate a new QueueServiceClient using a connection string.

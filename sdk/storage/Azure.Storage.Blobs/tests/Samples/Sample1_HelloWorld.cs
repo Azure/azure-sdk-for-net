@@ -23,6 +23,7 @@ namespace Azure.Storage.Samples
     public partial class BlobSamples
     {
         [TestMethod]
+        [TestCategory("Live")]
         public async Task ContainerSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
@@ -46,6 +47,7 @@ namespace Azure.Storage.Samples
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task BlockBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
@@ -85,6 +87,7 @@ namespace Azure.Storage.Samples
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task PageBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
@@ -129,6 +132,7 @@ namespace Azure.Storage.Samples
         }
 
         [TestMethod]
+        [TestCategory("Live")]
         public async Task AppendBlobSample()
         {
             // Instantiate a new BlobServiceClient using a connection string.
