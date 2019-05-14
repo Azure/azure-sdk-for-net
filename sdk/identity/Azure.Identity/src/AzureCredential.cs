@@ -62,7 +62,9 @@ namespace Azure.Identity
                 return _cachedResponse.AccessToken;
             }
 
-            lock(_refreshLock)
+            _refreshLock.Wait(cancellationToken);
+
+            try
             {
                 if (NeedsRefresh)
                 {
@@ -70,6 +72,10 @@ namespace Azure.Identity
                 }
 
                 return _cachedResponse.AccessToken;
+            }
+            finally
+            {
+                _refreshLock.Release();
             }
         }
 
