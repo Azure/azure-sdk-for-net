@@ -42,7 +42,7 @@ namespace Azure.Identity.Tests
         [Fact]
         public async Task RefreshLogicDefaultAsync()
         {
-            TimeSpan refreshBuffer = new CredentialOptions().RefreshBuffer;
+            TimeSpan refreshBuffer = new IdentityClientOptions().RefreshBuffer;
 
             var refreshCred1 = new MockRefreshAzureCredential(DateTime.UtcNow);
 

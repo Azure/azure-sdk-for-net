@@ -3,9 +3,6 @@
 
 using Azure.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -32,13 +29,12 @@ namespace Azure.Identity
 
         public override string GetToken(string[] scopes, CancellationToken cancellationToken)
         {
-            return (_credential != null) ? _credential.GetToken(scopes, cancellationToken) : null;
+            return _credential?.GetToken(scopes, cancellationToken);
         }
 
         public async override ValueTask<string> GetTokenAsync(string[] scopes, CancellationToken cancellationToken)
         {
             return (_credential != null) ? await _credential.GetTokenAsync(scopes, cancellationToken) : null;
         }
-
     }
 }

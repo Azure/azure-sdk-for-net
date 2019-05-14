@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -34,7 +32,4 @@ namespace Azure.Identity
             throw new NotImplementedException();
         }
     }
-
-    
-
 }

@@ -15,28 +15,43 @@ namespace Azure.Identity.Tests
         }
     }
 
+    [CollectionDefinition("AltEnvTests", DisableParallelization = true)]
     public class EnvironmentCredentialProviderTests
     {
         [Fact]
         public void CredentialConstruction()
         {
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", "mockclientid");
+            string clientIdBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+            string tenantIdBackup = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            string clientSecretBackup = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
 
-            Environment.SetEnvironmentVariable("AZURE_TENANT_ID", "mocktenantid");
+            try
+            {
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", "mockclientid");
 
-            Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "mockclientsecret");
+                Environment.SetEnvironmentVariable("AZURE_TENANT_ID", "mocktenantid");
 
-            var provider = new EnvironmentCredentialProvider();
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "mockclientsecret");
 
-            ClientSecretCredential cred = provider._credential() as ClientSecretCredential;
+                var provider = new EnvironmentCredentialProvider();
 
-            Assert.NotNull(cred);
+                ClientSecretCredential cred = provider._credential() as ClientSecretCredential;
 
-            Assert.Equal("mockclientid", cred.ClientId);
+                Assert.NotNull(cred);
 
-            Assert.Equal("mocktenantid", cred.TenantId);
+                Assert.Equal("mockclientid", cred.ClientId);
 
-            Assert.Equal("mockclientsecret", cred.ClientSecret);
+                Assert.Equal("mocktenantid", cred.TenantId);
+
+                Assert.Equal("mockclientsecret", cred.ClientSecret);
+            }
+            finally
+            {
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_ID", clientIdBackup);
+                Environment.SetEnvironmentVariable("AZURE_TENANT_ID", tenantIdBackup);
+                Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", clientSecretBackup);
+
+            }
         }
     }
 }

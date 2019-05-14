@@ -18,6 +18,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <AssemblyName>Azure.Identity</AssemblyName>
     <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
   </PropertyGroup>
 
   <ItemGroup>

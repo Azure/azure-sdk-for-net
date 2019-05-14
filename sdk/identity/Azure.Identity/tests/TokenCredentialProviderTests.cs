@@ -37,7 +37,7 @@ namespace Azure.Identity.Tests
             }
         }
 
-        public class ExcpetionalMockTokenCredential : TokenCredential
+        public class ExceptionalMockTokenCredential : TokenCredential
         {
             public override string GetToken(string[] scopes, CancellationToken cancellationToken)
             {
@@ -81,7 +81,7 @@ namespace Azure.Identity.Tests
         public async Task CredentialThrows()
         {
             var cred1 = new SimpleMockTokenCredential("scopeA", "tokenA");
-            var cred2 = new ExcpetionalMockTokenCredential();
+            var cred2 = new ExceptionalMockTokenCredential();
             var cred3 = new SimpleMockTokenCredential("scopeB", "tokenB");
             var provider = new TokenCredentialProvider(cred1, cred2, cred3);
 

@@ -3,9 +3,6 @@
 
 using Azure.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -16,7 +13,7 @@ namespace Azure.Identity
         private IdentityClient _client;
         private AuthenticationResponse _cachedResponse;
         private SemaphoreSlim _refreshLock = new SemaphoreSlim(1, 1);
-        private CredentialOptions _options;
+        private IdentityClientOptions _options;
 
 
         static AzureCredential()
@@ -26,9 +23,9 @@ namespace Azure.Identity
         }
 
 
-        protected AzureCredential(CredentialOptions options = null)
+        protected AzureCredential(IdentityClientOptions options = null)
         {
-            _options = options ?? new CredentialOptions();
+            _options = options ?? new IdentityClientOptions();
 
             _client = new IdentityClient(options);
         }

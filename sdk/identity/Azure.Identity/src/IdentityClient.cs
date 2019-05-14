@@ -8,50 +8,22 @@ using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    public class CredentialOptions : HttpClientOptions
-    {
-        private const string DefaultAuthorityHost = "https://login.microsoftonline.com/";
-        private readonly static TimeSpan DefaultRefreshBuffer = TimeSpan.FromMinutes(2);
-
-        public RetryPolicy RetryPolicy { get; set; }
-
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
-
-        public string AuthorityHost { get; set; }
-
-        public TimeSpan RefreshBuffer { get; set; }
-
-        public CredentialOptions()
-        {
-            AuthorityHost = DefaultAuthorityHost;
-            LoggingPolicy = Core.Pipeline.Policies.LoggingPolicy.Shared;
-            RefreshBuffer = DefaultRefreshBuffer;
-            RetryPolicy = new ExponentialRetryPolicy()
-            {
-                Delay = TimeSpan.FromMilliseconds(800),
-                MaxRetries = 3
-            };
-        }
-    }
-
     internal class IdentityClient
     {
-        private readonly CredentialOptions _options;
+        private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
         
 
-        public IdentityClient(CredentialOptions options = null)
+        public IdentityClient(IdentityClientOptions options = null)
         {
-            _options = options ?? new CredentialOptions();
+            _options = options ?? new IdentityClientOptions();
 
             _pipeline = HttpPipeline.Build(_options,
                     _options.ResponseClassifier,
@@ -67,17 +39,14 @@ namespace Azure.Identity
 
             using (var request = _pipeline.CreateRequest())
             {
-                var body = new Dictionary<string, string>() {
-                    { "response_type", "token" },
-                    { "grant_type", "client_credentials" },
-                    { "client_id", clientId },
-                    { "client_secret", clientSecret },
-                    { "scopes", string.Join(" ", scopes) }
-                };
-
                 request.SetRequestLine(HttpPipelineMethod.Put, authUri);
 
-                ReadOnlyMemory<byte> content = Serialize(body);
+                ReadOnlyMemory<byte> content = Serialize(
+                    ( "response_type", "token" ), 
+                    ( "grant_type", "client_credentials" ),
+                    ( "client_id", clientId ),
+                    ( "client_secret", clientSecret ),
+                    ( "scopes", string.Join(" ", scopes) ));
 
                 request.Content = HttpPipelineRequestContent.Create(content);
 
@@ -94,7 +63,7 @@ namespace Azure.Identity
             }
         }
 
-        private ReadOnlyMemory<byte> Serialize(Dictionary<string,string> dict)
+        private ReadOnlyMemory<byte> Serialize(params (string, string)[] bodyArgs)
         {
             var buff = new byte[1024];
 
@@ -104,9 +73,9 @@ namespace Azure.Identity
 
             json.WriteStartObject();
 
-            foreach(var prop in dict)
+            foreach (var prop in bodyArgs)
             {
-                json.WriteString(prop.Key, prop.Value);
+                json.WriteString(prop.Item1, prop.Item2);
             }
 
             json.WriteEndObject();
@@ -120,12 +89,21 @@ namespace Azure.Identity
             {
                 var response = new Dictionary<string, string>();
 
-                foreach(var property in json.RootElement.EnumerateObject())
+                string accessToken = null;
+
+                DateTimeOffset expiresOn = DateTimeOffset.MaxValue;
+
+                if (json.RootElement.TryGetProperty("access_token", out JsonElement accessTokenProp))
                 {
-                    response.Add(property.Name, property.Value.GetString());
+                    accessToken = accessTokenProp.GetString();
                 }
 
-                return new AuthenticationResponse(response);
+                if(json.RootElement.TryGetProperty("expires_in", out JsonElement expiresInProp))
+                {
+                    expiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(expiresInProp.GetInt64());
+                }
+                
+                return new AuthenticationResponse(accessToken, expiresOn);
             }
         }
 
