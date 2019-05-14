@@ -42,14 +42,13 @@ namespace Azure.Core.Pipeline.Policies
             s_eventSource.Request(message.Request);
 
             Encoding requestTextEncoding = null;
-            if (message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) && IsTextContentType(contentType))
-            {
-                requestTextEncoding = Encoding.UTF8;
-            }
+
+            bool textRequest = message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) &&
+                ContentTypeUtilities.IsText(contentType, out requestTextEncoding);
 
             if (message.Request.Content != null)
             {
-                if (requestTextEncoding != null)
+                if (textRequest)
                 {
                     if (async)
                     {
@@ -87,7 +86,7 @@ namespace Azure.Core.Pipeline.Policies
 
             bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
 
-            var textResponse = ResponseClassifier.IsTextResponse(message.Response, out Encoding responseTextEncoding);
+            var textResponse = ContentTypeUtilities.IsText(message.Response.Headers.ContentType, out Encoding responseTextEncoding);
 
             bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
 
@@ -152,11 +151,6 @@ namespace Azure.Core.Pipeline.Policies
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
-
-        private static bool IsTextContentType(string contentType)
-        {
-            return contentType.StartsWith("text/");
         }
 
         private class LoggingStream : ReadOnlyStream

@@ -7,7 +7,7 @@ using NUnit.Framework;
 
 namespace Azure.Core.Tests
 {
-    public class ResponseClassifierTests
+    public class ContentTypeUtilitiesTests
     {
         [Theory]
         [TestCase(null, false, null)]
@@ -21,10 +21,7 @@ namespace Azure.Core.Tests
 
         public void DetectsTextContentTypes(string contentType, bool isText, string expectedEncoding)
         {
-            var response = new MockResponse(200);
-            response.AddHeader(new HttpHeader("Content-Type", contentType));
-
-            Assert.AreEqual(isText, ResponseClassifier.IsTextResponse(response, out var encoding));
+            Assert.AreEqual(isText, ContentTypeUtilities.IsText(contentType, out var encoding));
             Assert.AreEqual(encoding?.EncodingName, expectedEncoding);
         }
     }
