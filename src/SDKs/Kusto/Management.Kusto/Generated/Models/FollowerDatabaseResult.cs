@@ -31,15 +31,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the FollowerDatabaseResult class.
         /// </summary>
-        /// <param name="kind">Kind of the attached database. Possible values
-        /// include: 'All', 'Specific'</param>
         /// <param name="clusterResourceId">List of resource ids of clusters
         /// that are following the database owned by this cluster.</param>
         /// <param name="databaseName">The database name owned by this cluster
-        /// that was followed. Empty in case following all databases.</param>
-        public FollowerDatabaseResult(string kind = default(string), IList<string> clusterResourceId = default(IList<string>), string databaseName = default(string))
+        /// that was followed. * in case following all databases.</param>
+        public FollowerDatabaseResult(IList<string> clusterResourceId = default(IList<string>), string databaseName = default(string))
         {
-            Kind = kind;
             ClusterResourceId = clusterResourceId;
             DatabaseName = databaseName;
             CustomInit();
@@ -51,13 +48,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets kind of the attached database. Possible values
-        /// include: 'All', 'Specific'
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
-
-        /// <summary>
         /// Gets or sets list of resource ids of clusters that are following
         /// the database owned by this cluster.
         /// </summary>
@@ -66,7 +56,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
 
         /// <summary>
         /// Gets or sets the database name owned by this cluster that was
-        /// followed. Empty in case following all databases.
+        /// followed. * in case following all databases.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }

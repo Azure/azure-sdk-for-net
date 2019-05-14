@@ -30,15 +30,12 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// <summary>
         /// Initializes a new instance of the FollowerDatabaseRequest class.
         /// </summary>
-        /// <param name="kind">Kind of the attached database. Possible values
-        /// include: 'All', 'Specific'</param>
         /// <param name="clusterResourceId">Resource id of the cluster that
         /// follows a database owned by this cluster.</param>
         /// <param name="databaseName">The database name owned by this cluster
-        /// that was followed. Empty in case following all databases.</param>
-        public FollowerDatabaseRequest(string kind, string clusterResourceId, string databaseName = default(string))
+        /// that was followed. * in case following all databases.</param>
+        public FollowerDatabaseRequest(string clusterResourceId, string databaseName)
         {
-            Kind = kind;
             ClusterResourceId = clusterResourceId;
             DatabaseName = databaseName;
             CustomInit();
@@ -50,13 +47,6 @@ namespace Microsoft.Azure.Management.Kusto.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets kind of the attached database. Possible values
-        /// include: 'All', 'Specific'
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
-
-        /// <summary>
         /// Gets or sets resource id of the cluster that follows a database
         /// owned by this cluster.
         /// </summary>
@@ -65,7 +55,7 @@ namespace Microsoft.Azure.Management.Kusto.Models
 
         /// <summary>
         /// Gets or sets the database name owned by this cluster that was
-        /// followed. Empty in case following all databases.
+        /// followed. * in case following all databases.
         /// </summary>
         [JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
@@ -78,13 +68,13 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Kind == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Kind");
-            }
             if (ClusterResourceId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ClusterResourceId");
+            }
+            if (DatabaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DatabaseName");
             }
         }
     }

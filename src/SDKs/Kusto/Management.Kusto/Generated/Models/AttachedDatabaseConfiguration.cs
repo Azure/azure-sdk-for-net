@@ -10,12 +10,17 @@
 
 namespace Microsoft.Azure.Management.Kusto.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
+    using System.Collections;
+    using System.Collections.Generic;
     using System.Linq;
 
     /// <summary>
     /// Class representing an attached database configuration.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class AttachedDatabaseConfiguration : ProxyResource
     {
         /// <summary>
@@ -31,6 +36,11 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Initializes a new instance of the AttachedDatabaseConfiguration
         /// class.
         /// </summary>
+        /// <param name="databaseName">The name of the database which you would
+        /// like to attach, use * if you want to follow all current and future
+        /// databases.</param>
+        /// <param name="clusterResourceId">The resource id of the cluster
+        /// where the databases you would like to attach reside.</param>
         /// <param name="id">Fully qualified resource Id for the resource. Ex -
         /// /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}</param>
         /// <param name="name">The name of the resource</param>
@@ -38,10 +48,16 @@ namespace Microsoft.Azure.Management.Kusto.Models
         /// Microsoft.Compute/virtualMachines or
         /// Microsoft.Storage/storageAccounts.</param>
         /// <param name="location">Resource location.</param>
-        public AttachedDatabaseConfiguration(string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+        /// <param name="attachedDatabaseNames">The list of databases from the
+        /// clusterResourceId which are currently attached to the
+        /// cluster.</param>
+        public AttachedDatabaseConfiguration(string databaseName, string clusterResourceId, string id = default(string), string name = default(string), string type = default(string), string location = default(string), IList<string> attachedDatabaseNames = default(IList<string>))
             : base(id, name, type)
         {
             Location = location;
+            DatabaseName = databaseName;
+            ClusterResourceId = clusterResourceId;
+            AttachedDatabaseNames = attachedDatabaseNames;
             CustomInit();
         }
 
@@ -56,5 +72,44 @@ namespace Microsoft.Azure.Management.Kusto.Models
         [JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
+        /// <summary>
+        /// Gets or sets the name of the database which you would like to
+        /// attach, use * if you want to follow all current and future
+        /// databases.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.databaseName")]
+        public string DatabaseName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the resource id of the cluster where the databases you
+        /// would like to attach reside.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.clusterResourceId")]
+        public string ClusterResourceId { get; set; }
+
+        /// <summary>
+        /// Gets the list of databases from the clusterResourceId which are
+        /// currently attached to the cluster.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.AttachedDatabaseNames")]
+        public IList<string> AttachedDatabaseNames { get; private set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (DatabaseName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "DatabaseName");
+            }
+            if (ClusterResourceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ClusterResourceId");
+            }
+        }
     }
 }

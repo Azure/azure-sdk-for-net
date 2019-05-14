@@ -381,8 +381,6 @@ namespace Microsoft.Azure.Management.Kusto
                         new Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AttachedDatabaseConfiguration>("kind"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AttachedDatabaseConfiguration>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Database>("kind"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Database>("kind"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataConnection>("kind"));
