@@ -4,5 +4,6 @@
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-[assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
+// TODO: Investigate parallel conflicts in the CI
+// [assembly: Parallelize(Workers = 0, Scope = ExecutionScope.MethodLevel)]
 
