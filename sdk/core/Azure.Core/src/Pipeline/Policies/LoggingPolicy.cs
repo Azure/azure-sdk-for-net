@@ -44,7 +44,7 @@ namespace Azure.Core.Pipeline.Policies
             Encoding requestTextEncoding = null;
 
             bool textRequest = message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) &&
-                ContentTypeUtilities.IsText(contentType, out requestTextEncoding);
+                ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
 
             if (message.Request.Content != null)
             {
@@ -86,7 +86,7 @@ namespace Azure.Core.Pipeline.Policies
 
             bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
 
-            var textResponse = ContentTypeUtilities.IsText(message.Response.Headers.ContentType, out Encoding responseTextEncoding);
+            var textResponse = ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding responseTextEncoding);
 
             bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
 

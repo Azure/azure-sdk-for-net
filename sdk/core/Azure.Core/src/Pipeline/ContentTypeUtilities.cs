@@ -8,7 +8,7 @@ namespace Azure.Core.Pipeline
 {
     internal class ContentTypeUtilities
     {
-        public static bool IsText(string contentType, out Encoding encoding)
+        public static bool TryGetTextEncoding(string contentType, out Encoding encoding)
         {
             const string charsetMarker = "; charset=";
             const string utf8Charset = "utf-8";

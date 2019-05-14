@@ -45,7 +45,7 @@ namespace Azure.Core
                 .AppendLine(")");
 
             if (response.ContentStream != null &&
-                ContentTypeUtilities.IsText(response.Headers.ContentType, out var encoding))
+                ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out var encoding))
             {
                 messageBuilder
                     .AppendLine()
