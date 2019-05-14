@@ -10,7 +10,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\**\*.cs" />
-    <None Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\TestConfigurations.xml">
+    <None Include="$(MSBuildThisFileDirectory)..\..\Azure.Storage.Common\tests\Shared\*.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Samples\SampleSource.txt">

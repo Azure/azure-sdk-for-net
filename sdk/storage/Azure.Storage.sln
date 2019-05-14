@@ -30,21 +30,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution", "Solution", "{A4
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blobs", "Blobs", "{B93D17A7-F7D7-4A2E-9E57-7B6ED57EF749}"
 	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Blobs\BreakingChanges.txt = Azure.Storage.Blobs\BreakingChanges.txt
+		Azure.Storage.Blobs\Changelog.txt = Azure.Storage.Blobs\Changelog.txt
 		Azure.Storage.Blobs\README.md = Azure.Storage.Blobs\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Queues", "Queues", "{F4218B06-A246-4762-984D-5BC852B62889}"
 	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Queues\BreakingChanges.txt = Azure.Storage.Queues\BreakingChanges.txt
+		Azure.Storage.Queues\Changelog.txt = Azure.Storage.Queues\Changelog.txt
 		Azure.Storage.Queues\README.md = Azure.Storage.Queues\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{9EF57C69-DC48-4E5C-BBD5-76E23E4ADDA6}"
 	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Files\BreakingChanges.txt = Azure.Storage.Files\BreakingChanges.txt
+		Azure.Storage.Files\Changelog.txt = Azure.Storage.Files\Changelog.txt
 		Azure.Storage.Files\README.md = Azure.Storage.Files\README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{794500AE-0D91-414D-8C8C-08577C65AA7A}"
 	ProjectSection(SolutionItems) = preProject
+		Azure.Storage.Common\BreakingChanges.txt = Azure.Storage.Common\BreakingChanges.txt
+		Azure.Storage.Common\Changelog.txt = Azure.Storage.Common\Changelog.txt
 		Azure.Storage.Common\README.md = Azure.Storage.Common\README.md
 	EndProjectSection
 EndProject
