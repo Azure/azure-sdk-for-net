@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.SignalR.Models
         public IDictionary<string, string> Properties { get; set; }
 
         /// <summary>
-        /// Name of the feature. Required.
+        /// Kind of feature. Required.
         /// </summary>
         [JsonProperty(PropertyName = "flag")]
         public static string Flag { get; private set; }
