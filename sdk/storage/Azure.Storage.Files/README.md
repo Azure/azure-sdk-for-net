@@ -1,4 +1,7 @@
 # Azure Storage Files client library for .NET
+
+> Server Version: 2018-11-09
+
 Azure Files offers fully managed file shares in the cloud that are accessible
 via the industry standard Server Message Block (SMB) protocol. Azure file
 shares can be mounted concurrently by cloud or on-premises deployments of

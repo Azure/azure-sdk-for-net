@@ -1,4 +1,7 @@
 # Azure Storage Queues client library for .NET
+
+> Server Version: 2018-11-09
+
 Azure Queue storage is a service for storing large numbers of messages that 
 can be accessed from anywhere in the world via authenticated calls using
 HTTP or HTTPS.  A single queue message can be up to 64 KB in size, and a

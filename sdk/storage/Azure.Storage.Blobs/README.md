@@ -1,4 +1,7 @@
 # Azure Storage Blobs client library for .NET
+
+> Server Version: 2018-11-09
+
 Azure Blob storage is Microsoft's object storage solution for the cloud. Blob
 storage is optimized for storing massive amounts of unstructured data.
 Unstructured data is data that does not adhere to a particular data model or
