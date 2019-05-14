@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Microsoft.Azure.Services.AppAuthentication
 {
@@ -32,5 +32,25 @@ namespace Microsoft.Azure.Services.AppAuthentication
             }
         }
 #endif
+
+        /// <summary>
+        /// Method to get environment variable value. For supported frameworks, the method looks in both process and machine target locations.
+        /// </summary>
+        internal static string GetEnvironmentVariable(string variable)
+        {
+            string value;
+
+#if FullNetFx || NETSTANDARD2_0
+            value = Environment.GetEnvironmentVariable(variable, EnvironmentVariableTarget.Process);
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                value = Environment.GetEnvironmentVariable(variable, EnvironmentVariableTarget.Machine);
+            }
+#else
+            value = Environment.GetEnvironmentVariable(variable);
+#endif
+
+            return value;
+        }
     }
 }

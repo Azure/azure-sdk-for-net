@@ -16,7 +16,7 @@ namespace Cdn.Tests.ScenarioTests
 {
     public class CustomDomainTests
     {
-        [Fact]
+        [Fact(Skip = "StopEndpoint is now working in prod due to a known issue")]
         public void CustomDomainCRUDTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };

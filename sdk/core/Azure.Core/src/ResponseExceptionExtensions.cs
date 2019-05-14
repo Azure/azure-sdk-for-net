@@ -5,17 +5,18 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Core
 {
     public static class ResponseExceptionExtensionsExtensions
     {
-        private const string DefaultMessage = "Request failed with status code {0}";
+        private const string DefaultMessage = "Service request failed.";
 
         public static Task<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response)
         {
-            return CreateRequestFailedExceptionAsync(response, string.Format(DefaultMessage, response.Status));
+            return CreateRequestFailedExceptionAsync(response, DefaultMessage);
         }
 
         public static Task<RequestFailedException> CreateRequestFailedExceptionAsync(this Response response, string message)
@@ -25,7 +26,7 @@ namespace Azure.Core
 
         public static RequestFailedException CreateRequestFailedException(this Response response)
         {
-            return CreateRequestFailedException(response, string.Format(DefaultMessage, response.Status));
+            return CreateRequestFailedException(response, DefaultMessage);
         }
 
         public static RequestFailedException CreateRequestFailedException(this Response response, string message)
@@ -35,33 +36,39 @@ namespace Azure.Core
 
         public static async Task<RequestFailedException> CreateRequestFailedExceptionAsync(string message, Response response, bool async)
         {
-            StringBuilder detailsBuilder = new StringBuilder()
+            StringBuilder messageBuilder = new StringBuilder()
+                .AppendLine(message)
                 .Append("Status: ")
-                .AppendLine(response.Status.ToString())
-                .Append("ReasonPhrase: ")
-                .AppendLine(response.ReasonPhrase)
+                .Append(response.Status.ToString())
+                .Append(" (")
+                .Append(response.ReasonPhrase)
+                .AppendLine(")");
+
+            if (response.ContentStream != null &&
+                ResponseClassifier.IsTextResponse(response, out var encoding))
+            {
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Content:");
+
+                using (var streamReader = new StreamReader(response.ContentStream, encoding))
+                {
+                    string content = async ? await streamReader.ReadToEndAsync() : streamReader.ReadToEnd();
+
+                    messageBuilder.AppendLine(content);
+                }
+            }
+
+
+            messageBuilder
                 .AppendLine()
                 .AppendLine("Headers:");
             foreach (var responseHeader in response.Headers)
             {
-                detailsBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
+                messageBuilder.AppendLine($"{responseHeader.Name}: {responseHeader.Value}");
             }
 
-            if (response.ContentStream != null &&
-                response.Headers.ContentType?.StartsWith("text/", StringComparison.OrdinalIgnoreCase) == true)
-            {
-                detailsBuilder.AppendLine()
-                    .AppendLine("Content:");
-
-                using (var streamReader = new StreamReader(response.ContentStream))
-                {
-                    string content = async ? await streamReader.ReadToEndAsync() : streamReader.ReadToEnd();
-
-                    detailsBuilder.AppendLine(content);
-                }
-            }
-
-            return new RequestFailedException(response.Status, message, detailsBuilder.ToString());
+            return new RequestFailedException(response.Status, messageBuilder.ToString());
         }
     }
 }

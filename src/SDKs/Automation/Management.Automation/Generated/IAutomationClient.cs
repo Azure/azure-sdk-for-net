@@ -48,12 +48,6 @@ namespace Microsoft.Azure.Management.Automation
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The type of counts to retrieve. Possible values include: 'status',
-        /// 'nodeconfiguration'
-        /// </summary>
-        string CountType1 { get; set; }
-
-        /// <summary>
         /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
