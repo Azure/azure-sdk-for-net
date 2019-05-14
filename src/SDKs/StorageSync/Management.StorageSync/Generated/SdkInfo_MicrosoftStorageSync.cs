@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.StorageSync
               return new Tuple<string, string, string>[]
               {
                 new Tuple<string, string, string>("StorageSync", "CloudEndpoints", "2019-03-01"),
+                new Tuple<string, string, string>("StorageSync", "OperationStatus", "2019-03-01"),
                 new Tuple<string, string, string>("StorageSync", "Operations", "2019-03-01"),
                 new Tuple<string, string, string>("StorageSync", "RegisteredServers", "2019-03-01"),
                 new Tuple<string, string, string>("StorageSync", "ServerEndpoints", "2019-03-01"),
