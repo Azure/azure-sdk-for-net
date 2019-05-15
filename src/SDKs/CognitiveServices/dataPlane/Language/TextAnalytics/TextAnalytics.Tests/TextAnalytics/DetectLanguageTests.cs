@@ -14,19 +14,73 @@ namespace Microsoft.Azure.CognitiveServices.Language.TextAnalytics.Tests
     public class DetectLanguageTests : BaseTests
     {
         [Fact]
-        public async Task DetectLanguage()
+        public async Task LanguageBatchAsync()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
+                HttpMockServer.Initialize(this.GetType().FullName, "LanguageBatchAsync");
                 ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
-                LanguageBatchResult result = await client.DetectLanguageAsync(
-                    null,
+                LanguageBatchResult result = await client.DetectLanguageBatchAsync(
                     new LanguageBatchInput(
                         new List<LanguageInput>()
                         {
                             new LanguageInput("en","id","I love my team mates")
                         }));
+
+                Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
+                Assert.Equal("en", result.Documents[0].DetectedLanguages[0].Iso6391Name);
+                Assert.True(result.Documents[0].DetectedLanguages[0].Score > 0.7);
+                context.Stop();
+            }
+        }
+
+        [Fact]
+        public async Task DetectLanguageAsync()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguageAsync");
+                ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
+                LanguageBatchResult result = await client.DetectLanguageAsync(
+                    "I love my team mates");
+
+                Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
+                Assert.Equal("en", result.Documents[0].DetectedLanguages[0].Iso6391Name);
+                Assert.True(result.Documents[0].DetectedLanguages[0].Score > 0.7);
+                context.Stop();
+            }
+        }
+
+        [Fact]
+        public void DetectLanguageBatch()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguageBatch");
+                ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
+                LanguageBatchResult result = client.DetectLanguageBatch(
+                    new LanguageBatchInput(
+                        new List<LanguageInput>()
+                        {
+                            new LanguageInput("en","id","I love my team mates")
+                        }));
+
+                Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
+                Assert.Equal("en", result.Documents[0].DetectedLanguages[0].Iso6391Name);
+                Assert.True(result.Documents[0].DetectedLanguages[0].Score > 0.7);
+                context.Stop();
+            }
+        }
+
+        [Fact]
+        public void DetectLanguage()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                HttpMockServer.Initialize(this.GetType().FullName, "DetectLanguage");
+                ITextAnalyticsClient client = GetClient(HttpMockServer.CreateInstance());
+                LanguageBatchResult result = client.DetectLanguage(
+                    "I love my team mates");
 
                 Assert.Equal("English", result.Documents[0].DetectedLanguages[0].Name);
                 Assert.Equal("en", result.Documents[0].DetectedLanguages[0].Iso6391Name);
