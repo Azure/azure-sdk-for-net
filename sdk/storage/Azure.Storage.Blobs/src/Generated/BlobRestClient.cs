@@ -889,7 +889,7 @@ namespace Azure.Storage.Blobs
 
                         // Get response headers
                         string _header;
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -2691,7 +2691,7 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -2828,7 +2828,7 @@ namespace Azure.Storage.Blobs
                         {
                             _value.LastModified = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -3103,7 +3103,7 @@ namespace Azure.Storage.Blobs
                         {
                             _value.CreationTime = System.DateTimeOffset.Parse(_header, System.Globalization.CultureInfo.InvariantCulture);
                         }
-                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                        _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
                         foreach (Azure.Core.Pipeline.HttpHeader _headerPair in response.Headers)
                         {
                             if (_headerPair.Name.StartsWith("x-ms-meta-", System.StringComparison.InvariantCulture))
@@ -10688,7 +10688,7 @@ namespace Azure.Storage.Blobs.Models
             if (!skipInitialization)
             {
                 this.Properties = new Azure.Storage.Blobs.Models.BlobItemProperties();
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -10714,7 +10714,7 @@ namespace Azure.Storage.Blobs.Models
                 _value.Snapshot = _child.Value;
             }
             _value.Properties = Azure.Storage.Blobs.Models.BlobItemProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
             if (_child != null)
             {
@@ -11356,7 +11356,7 @@ namespace Azure.Storage.Blobs.Models
             if (!skipInitialization)
             {
                 this.Properties = new Azure.Storage.Blobs.Models.ContainerProperties();
-                this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+                this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             }
         }
 
@@ -11372,7 +11372,7 @@ namespace Azure.Storage.Blobs.Models
             Azure.Storage.Blobs.Models.ContainerItem _value = new Azure.Storage.Blobs.Models.ContainerItem(true);
             _value.Name = element.Element(System.Xml.Linq.XName.Get("Name", "")).Value;
             _value.Properties = Azure.Storage.Blobs.Models.ContainerProperties.FromXml(element.Element(System.Xml.Linq.XName.Get("Properties", "")));
-            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            _value.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             _child = element.Element(System.Xml.Linq.XName.Get("Metadata", ""));
             if (_child != null)
             {
@@ -12218,7 +12218,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public FlattenedContainerItem()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }
@@ -12513,7 +12513,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public FlattenedDownloadProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
         }
     }
 }
@@ -12689,7 +12689,7 @@ namespace Azure.Storage.Blobs.Models
         /// </summary>
         public BlobProperties()
         {
-            this.Metadata = new System.Collections.Generic.Dictionary<string, string>();
+            this.Metadata = new System.Collections.Generic.Dictionary<string, string>(System.StringComparer.OrdinalIgnoreCase);
             this.ContentEncoding = new System.Collections.Generic.List<string>();
             this.ContentLanguage = new System.Collections.Generic.List<string>();
         }
