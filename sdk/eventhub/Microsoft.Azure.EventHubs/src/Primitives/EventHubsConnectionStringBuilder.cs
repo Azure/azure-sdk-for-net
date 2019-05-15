@@ -58,6 +58,9 @@ namespace Microsoft.Azure.EventHubs
         static readonly string OperationTimeoutConfigName = "OperationTimeout";
         static readonly string TransportTypeConfigName = "TransportType";
         static readonly string SharedAccessSignatureConfigName = "SharedAccessSignature";
+        static readonly string AadManagedIdentityConfigName = "AadManagedIdentity";
+
+        bool? aadManagedIdentity;
 
         /// <summary>
         /// Build a connection string consumable by <see cref="EventHubClient.CreateFromConnectionString(string)"/>
@@ -195,6 +198,29 @@ namespace Microsoft.Azure.EventHubs
         public TransportType TransportType { get; set; }
 
         /// <summary>
+        /// Enables AAD Managed Identity authentication
+        /// </summary>
+        public bool AadManagedIdentity
+        {
+            get
+            {
+                if (this.aadManagedIdentity.HasValue)
+                {
+                    return this.aadManagedIdentity.Value;
+                }
+                else
+                {
+                    // Default is false.
+                    return false;
+                }
+            }
+            set
+            {
+                this.aadManagedIdentity = value;
+            }
+        }
+
+        /// <summary>
         /// Creates a cloned object of the current <see cref="EventHubsConnectionStringBuilder"/>.
         /// </summary>
         /// <returns>A new <see cref="EventHubsConnectionStringBuilder"/></returns>
@@ -248,6 +274,11 @@ namespace Microsoft.Azure.EventHubs
                 connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}{KeyValuePairDelimiter}");
             }
 
+            if (this.aadManagedIdentity.HasValue)
+            {
+                connectionStringBuilder.Append($"{AadManagedIdentityConfigName}{KeyValueSeparator}{this.aadManagedIdentity}{KeyValuePairDelimiter}");
+            }
+
             return connectionStringBuilder.ToString();
         }
 
@@ -270,14 +301,14 @@ namespace Microsoft.Azure.EventHubs
                 {
                     throw Fx.Exception.Argument(
                         string.Format("{0},{1}", SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName),
-                        Resources.SasTokenShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName));
+                        Resources.AuthKeyShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyNameConfigName));
                 }
 
                 if (hasSasKey)
                 {
                     throw Fx.Exception.Argument(
                         string.Format("{0},{1}", SharedAccessSignatureConfigName, SharedAccessKeyConfigName),
-                        Resources.SasTokenShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyConfigName));
+                        Resources.AuthKeyShouldBeAlone.FormatForUser(SharedAccessSignatureConfigName, SharedAccessKeyConfigName));
                 }
             }
 
@@ -286,6 +317,20 @@ namespace Microsoft.Azure.EventHubs
                 throw Fx.Exception.Argument(
                     string.Format("{0},{1}", SharedAccessKeyNameConfigName, SharedAccessKeyConfigName),
                     Resources.ArgumentInvalidCombination.FormatForUser(SharedAccessKeyNameConfigName, SharedAccessKeyConfigName));
+            }
+
+            if (this.aadManagedIdentity.HasValue && hasSharedAccessSignature)
+            {
+                throw Fx.Exception.Argument(
+                    string.Format("{0},{1}", AadManagedIdentityConfigName, SharedAccessSignatureConfigName),
+                    Resources.AuthKeyShouldBeAlone.FormatForUser(AadManagedIdentityConfigName, SharedAccessSignatureConfigName));
+            }
+
+            if (this.aadManagedIdentity.HasValue && hasSasKeyName)
+            {
+                throw Fx.Exception.Argument(
+                    string.Format("{0},{1}", AadManagedIdentityConfigName, SharedAccessKeyNameConfigName),
+                    Resources.AuthKeyShouldBeAlone.FormatForUser(AadManagedIdentityConfigName, SharedAccessKeyNameConfigName));
             }
         }
 
@@ -331,6 +376,10 @@ namespace Microsoft.Azure.EventHubs
                 else if (key.Equals(TransportTypeConfigName, StringComparison.OrdinalIgnoreCase))
                 {
                     this.TransportType = (TransportType)Enum.Parse(typeof(TransportType), value);
+                }
+                else if (key.Equals(AadManagedIdentityConfigName, StringComparison.OrdinalIgnoreCase))
+                {
+                    this.AadManagedIdentity = bool.Parse(value);
                 }
                 else
                 {

@@ -42,7 +42,6 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.Amqp" Version="2.3.7" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="[1.0.3, 2.0.0)" />
-    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.0" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" Version="4.5.1" />
     <PackageReference Include="System.Net.Http" Version="4.3.3" />
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.5.1" />

@@ -124,9 +124,16 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 return;
             }
 
-            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
-            var cc = new ClientCredential(aadAppId, aadAppSecret);
-            var tokenProvider = TokenProvider.CreateAadTokenProvider(authContext, cc);
+            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback = 
+                async (audience, state) =>
+                {
+                    var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
+                    var cc = new ClientCredential(aadAppId, aadAppSecret);
+                    var authResult = await authContext.AcquireTokenAsync(audience, cc);
+                    return authResult.AccessToken;
+                };
+
+            var tokenProvider = TokenProvider.CreateAadTokenProvider(authCallback);
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
@@ -172,12 +179,18 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                 return;
             }
 
-            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
-            var cc = new ClientCredential(aadAppId, aadAppSecret);
+            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
+                async (audience, state) =>
+                {
+                    var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
+                    var cc = new ClientCredential(aadAppId, aadAppSecret);
+                    var authResult = await authContext.AcquireTokenAsync(audience, cc);
+                    return authResult.AccessToken;
+                };
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, authContext, cc);
+            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, authCallback);
 
             // Send one event
             TestUtility.Log($"Sending one message.");
