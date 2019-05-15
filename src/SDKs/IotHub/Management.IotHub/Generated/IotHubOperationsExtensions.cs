@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='resourceGroupName'>
             /// resource group which Iot Hub belongs to
             /// </param>
-            public static IotHubDescription ManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
+            public static void ManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
             {
-                return operations.ManualFailoverAsync(iotHubName, failoverInput, resourceGroupName).GetAwaiter().GetResult();
+                operations.ManualFailoverAsync(iotHubName, failoverInput, resourceGroupName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -65,12 +65,58 @@ namespace Microsoft.Azure.Management.IotHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IotHubDescription> ManualFailoverAsync(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task ManualFailoverAsync(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                (await operations.ManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Manual Failover Fail over
+            /// </summary>
+            /// <remarks>
+            /// Perform manual fail over of given hub
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='iotHubName'>
+            /// IotHub to fail over
+            /// </param>
+            /// <param name='failoverInput'>
+            /// Region to failover to. Must be a azure DR pair
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// resource group which Iot Hub belongs to
+            /// </param>
+            public static void BeginManualFailover(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName)
+            {
+                operations.BeginManualFailoverAsync(iotHubName, failoverInput, resourceGroupName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Manual Failover Fail over
+            /// </summary>
+            /// <remarks>
+            /// Perform manual fail over of given hub
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='iotHubName'>
+            /// IotHub to fail over
+            /// </param>
+            /// <param name='failoverInput'>
+            /// Region to failover to. Must be a azure DR pair
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// resource group which Iot Hub belongs to
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginManualFailoverAsync(this IIotHubOperations operations, string iotHubName, FailoverInput failoverInput, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginManualFailoverWithHttpMessagesAsync(iotHubName, failoverInput, resourceGroupName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

@@ -246,8 +246,8 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             // Mock process manager will be hit first, and so hit count will be 1. 
             Assert.Equal(1, mockProcessManager.HitCount);
 
-            // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 1 here.
-            Assert.Equal(1, mockMsi.HitCount);
+            // AzureCliAccessTokenProvider will fail, and so Msi handler will be hit next. So hit count is 2 here (1 for probe request, 1 for token request).
+            Assert.Equal(2, mockMsi.HitCount);
 
             // MsiAccessTokenProvider should succeed, and we should get a valid token. 
             Validator.ValidateToken(token, azureServiceTokenProvider.PrincipalUsed, Constants.AppType, Constants.TenantId, Constants.TestAppId);

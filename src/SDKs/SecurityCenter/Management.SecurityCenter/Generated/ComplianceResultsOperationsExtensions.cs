@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Security
             /// (/subscriptions/0b06d9ea-afe6-4779-bd59-30e5c2d9d13f) or management group
             /// (/providers/Microsoft.Management/managementGroups/mgName).
             /// </param>
-            public static ComplianceResultList List(this IComplianceResultsOperations operations, string scope)
+            public static IPage<ComplianceResult> List(this IComplianceResultsOperations operations, string scope)
             {
                 return operations.ListAsync(scope).GetAwaiter().GetResult();
             }
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Security
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ComplianceResultList> ListAsync(this IComplianceResultsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ComplianceResult>> ListAsync(this IComplianceResultsOperations operations, string scope, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(scope, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -94,6 +94,40 @@ namespace Microsoft.Azure.Management.Security
             public static async Task<ComplianceResult> GetAsync(this IComplianceResultsOperations operations, string resourceId, string complianceResultName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceId, complianceResultName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Security compliance results in the subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static IPage<ComplianceResult> ListNext(this IComplianceResultsOperations operations, string nextPageLink)
+            {
+                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Security compliance results in the subscription
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<ComplianceResult>> ListNextAsync(this IComplianceResultsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

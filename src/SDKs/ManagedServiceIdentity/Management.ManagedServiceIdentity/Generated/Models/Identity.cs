@@ -47,7 +47,9 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
         /// <param name="clientId">The id of the app associated with the
         /// identity. This is a random generated UUID by MSI.</param>
         /// <param name="clientSecretUrl"> The ManagedServiceIdentity DataPlane
-        /// URL that can be queried to obtain the identity credentials.</param>
+        /// URL that can be queried to obtain the identity credentials. If
+        /// identity is user assigned, then the clientSecretUrl will not be
+        /// present in the response, otherwise it will be present.</param>
         /// <param name="type">The type of resource i.e.
         /// Microsoft.ManagedIdentity/userAssignedIdentities. Possible values
         /// include: 'Microsoft.ManagedIdentity/userAssignedIdentities'</param>
@@ -116,7 +118,9 @@ namespace Microsoft.Azure.Management.ManagedServiceIdentity.Models
 
         /// <summary>
         /// Gets  The ManagedServiceIdentity DataPlane URL that can be queried
-        /// to obtain the identity credentials.
+        /// to obtain the identity credentials. If identity is user assigned,
+        /// then the clientSecretUrl will not be present in the response,
+        /// otherwise it will be present.
         /// </summary>
         [JsonProperty(PropertyName = "properties.clientSecretUrl")]
         public string ClientSecretUrl { get; private set; }

@@ -1,0 +1,73 @@
+﻿<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!--
+  Import our Directory.Build.props and /eng infrastructure
+  -->
+  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory).., Directory.Build.props))\Directory.Build.props" />  
+
+  <PropertyGroup>
+    <!--
+    We're currently on 1.0.0-preview.X and we'll share this version number
+    across all Storage projects until the need to version independently arises.
+    See /eng/Versioning.props for more details.
+    -->
+    <VersionPrefix>1.0.0</VersionPrefix>
+
+    <!--
+    The Client SDK Analyzers are based on Design Guidelines that haven't been
+    fully formalized so we won't enable them just yet.
+     -->
+    <EnableClientSdkAnalyzers>false</EnableClientSdkAnalyzers>
+
+    <!--
+    The Azure Storage projects don't want the Rest Client Runtimes or default
+    test projects (xunit instead of MSTest).
+    -->
+    <ImportDefaultReferences>false</ImportDefaultReferences>
+
+    <!-- Note that we disable this for DEBUG -->
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!--
+    Storage used to point to its main documentation page, but the rest of the
+    Azure .NET SDK projects point to the github repo instead.  I'm leaving this
+    commented out for now so we can change it back if required.
+
+    <PackageProjectUrl>http://go.microsoft.com/fwlink/?LinkId=235168</PackageProjectUrl>
+    -->
+  </PropertyGroup>
+
+
+  <!-- DEBUG specific settings -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <!-- Turn on the DEBUG constant -->
+    <DefineConstants>DEBUG;$(DefineConstants)</DefineConstants>
+  </PropertyGroup>
+
+
+  <!-- Add a reference to Azure.Core -->
+  <PropertyGroup>
+    <!--
+    You can set the UseProjectReferenceToAzureCore property to switch between
+    project references and public NuGet references.
+     -->
+    <UseProjectReferenceToAzureCore>true</UseProjectReferenceToAzureCore>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)..\core\Azure.Core\src\Azure.Core.props" />
+
+
+  <!-- Add references for CLIENT LIBRARY projects -->
+  <ItemGroup Condition="'$(IsTestProject)' != 'true'">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.6.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+
+  <!-- Add references for TEST projects -->
+  <ItemGroup Condition="'$(IsTestProject)' == 'true'">
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+  </ItemGroup>
+</Project>

@@ -47,12 +47,37 @@ namespace Microsoft.Azure.Management.IotHub
         /// <exception cref="ErrorDetailsException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Manual Failover Fail over
+        /// </summary>
+        /// <remarks>
+        /// Perform manual fail over of given hub
+        /// </remarks>
+        /// <param name='iotHubName'>
+        /// IotHub to fail over
+        /// </param>
+        /// <param name='failoverInput'>
+        /// Region to failover to. Must be a azure DR pair
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// resource group which Iot Hub belongs to
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorDetailsException">
+        /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IotHubDescription>> ManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginManualFailoverWithHttpMessagesAsync(string iotHubName, FailoverInput failoverInput, string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

@@ -2,7 +2,6 @@
   <PropertyGroup>
     <Description>Microsoft Azure Key Vault Test Framework</Description>
     <AssemblyTitle>Microsoft Azure Key Vault Test Framework</AssemblyTitle>
-    <IsTestHelperLibrary>true</IsTestHelperLibrary>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>

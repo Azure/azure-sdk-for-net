@@ -199,5 +199,111 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
                 }
             }
 
+            /// <summary>
+            /// Gets specified work item configuration for an Application Insights
+            /// component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='workItemConfigId'>
+            /// The unique work item configuration Id. This can be either friendly name of
+            /// connector as defined in connector configuration
+            /// </param>
+            public static WorkItemConfiguration GetItem(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId)
+            {
+                return operations.GetItemAsync(resourceGroupName, resourceName, workItemConfigId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets specified work item configuration for an Application Insights
+            /// component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='workItemConfigId'>
+            /// The unique work item configuration Id. This can be either friendly name of
+            /// connector as defined in connector configuration
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WorkItemConfiguration> GetItemAsync(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetItemWithHttpMessagesAsync(resourceGroupName, resourceName, workItemConfigId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update a work item configuration for an Application Insights component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='workItemConfigId'>
+            /// The unique work item configuration Id. This can be either friendly name of
+            /// connector as defined in connector configuration
+            /// </param>
+            /// <param name='workItemConfigurationProperties'>
+            /// Properties that need to be specified to update a work item configuration
+            /// for this Application Insights component.
+            /// </param>
+            public static WorkItemConfiguration UpdateItem(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId, WorkItemCreateConfiguration workItemConfigurationProperties)
+            {
+                return operations.UpdateItemAsync(resourceGroupName, resourceName, workItemConfigId, workItemConfigurationProperties).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update a work item configuration for an Application Insights component.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='workItemConfigId'>
+            /// The unique work item configuration Id. This can be either friendly name of
+            /// connector as defined in connector configuration
+            /// </param>
+            /// <param name='workItemConfigurationProperties'>
+            /// Properties that need to be specified to update a work item configuration
+            /// for this Application Insights component.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<WorkItemConfiguration> UpdateItemAsync(this IWorkItemConfigurationsOperations operations, string resourceGroupName, string resourceName, string workItemConfigId, WorkItemCreateConfiguration workItemConfigurationProperties, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateItemWithHttpMessagesAsync(resourceGroupName, resourceName, workItemConfigId, workItemConfigurationProperties, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

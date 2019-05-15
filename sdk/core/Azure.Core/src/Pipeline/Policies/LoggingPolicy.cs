@@ -30,11 +30,11 @@ namespace Azure.Core.Pipeline.Policies
             {
                 if (async)
                 {
-                    await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                 }
                 else
                 {
-                    ProcessNext(pipeline, message);
+                    ProcessNext(message, pipeline);
                 }
                 return;
             }
@@ -42,14 +42,13 @@ namespace Azure.Core.Pipeline.Policies
             s_eventSource.Request(message.Request);
 
             Encoding requestTextEncoding = null;
-            if (message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) && IsTextContentType(contentType))
-            {
-                requestTextEncoding = Encoding.UTF8;
-            }
+
+            bool textRequest = message.Request.TryGetHeader(HttpHeader.Names.ContentType, out var contentType) &&
+                ContentTypeUtilities.TryGetTextEncoding(contentType, out requestTextEncoding);
 
             if (message.Request.Content != null)
             {
-                if (requestTextEncoding != null)
+                if (textRequest)
                 {
                     if (async)
                     {
@@ -76,22 +75,18 @@ namespace Azure.Core.Pipeline.Policies
             var before = Stopwatch.GetTimestamp();
             if (async)
             {
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
-                ProcessNext(pipeline, message);
+                ProcessNext(message, pipeline);
             }
 
             var after = Stopwatch.GetTimestamp();
 
             bool isError = message.ResponseClassifier.IsErrorResponse(message.Response);
 
-            Encoding responseTextEncoding = null;
-            if (message.Response.TryGetHeader(HttpHeader.Names.ContentType, out contentType) && IsTextContentType(contentType))
-            {
-                responseTextEncoding = Encoding.UTF8;
-            }
+            var textResponse = ContentTypeUtilities.TryGetTextEncoding(message.Response.Headers.ContentType, out Encoding responseTextEncoding);
 
             bool wrapResponseStream = s_eventSource.ShouldLogContent(isError) && message.Response.ContentStream?.CanSeek == false;
 
@@ -107,7 +102,7 @@ namespace Azure.Core.Pipeline.Policies
 
                 if (!wrapResponseStream && message.Response.ContentStream != null)
                 {
-                    if (responseTextEncoding != null)
+                    if (textResponse)
                     {
                         if (async)
                         {
@@ -136,7 +131,7 @@ namespace Azure.Core.Pipeline.Policies
 
             if (!wrapResponseStream && message.Response.ContentStream != null)
             {
-                if (responseTextEncoding != null)
+                if (textResponse)
                 {
                     await s_eventSource.ResponseContentTextAsync(message.Response, responseTextEncoding, message.Cancellation).ConfigureAwait(false);
                 }
@@ -156,11 +151,6 @@ namespace Azure.Core.Pipeline.Policies
         public override void Process(HttpPipelineMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             ProcessAsync(message, pipeline, false).EnsureCompleted();
-        }
-
-        private static bool IsTextContentType(string contentType)
-        {
-            return contentType.StartsWith("text/");
         }
 
         private class LoggingStream : ReadOnlyStream

@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockKeyVault);
             KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient);
 
-            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
+            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultCertificateSecretIdentifier)));
             Assert.Contains(KeyVaultClient.EndpointNotAvailableError, exception.Message);
         }
 
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             KeyVaultClient keyVaultClient = new KeyVaultClient();
 
-            string secretIdentifier = Constants.TestKeyVaultSecretIdentifier.Replace("https://", string.Empty);
+            string secretIdentifier = Constants.TestKeyVaultCertificateSecretIdentifier.Replace("https://", string.Empty);
 
             var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(secretIdentifier)));
             Assert.Contains(KeyVaultClient.SecretIdentifierInvalidUriError, exception.Message);
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             KeyVaultClient keyVaultClient = new KeyVaultClient();
 
-            string secretIdentifier = Constants.TestKeyVaultSecretIdentifier.Replace("https://", "http://");
+            string secretIdentifier = Constants.TestKeyVaultCertificateSecretIdentifier.Replace("https://", "http://");
 
             var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(secretIdentifier)));
             Assert.Contains(KeyVaultClient.SecretIdentifierInvalidSchemeError, exception.Message);
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             KeyVaultClient keyVaultClient = new KeyVaultClient();
 
-            string secretIdentifier = Constants.TestKeyVaultSecretIdentifier.Replace("vault.azure.net", "vault.baddudes.net");
+            string secretIdentifier = Constants.TestKeyVaultCertificateSecretIdentifier.Replace("vault.azure.net", "vault.baddudes.net");
 
             var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(secretIdentifier)));
             Assert.Contains(KeyVaultClient.SecretIdentifierInvalidHostError, exception.Message);
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
         {
             KeyVaultClient keyVaultClient = new KeyVaultClient();
 
-            string secretIdentifier = Constants.TestKeyVaultSecretIdentifier.Replace("/secrets/", "/keys/");
+            string secretIdentifier = Constants.TestKeyVaultCertificateSecretIdentifier.Replace("/secrets/", "/keys/");
 
             var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(secretIdentifier)));
             Assert.Contains(KeyVaultClient.SecretIdentifierInvalidTypeError, exception.Message);
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockKeyVault);
             KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient);
 
-            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
+            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultCertificateSecretIdentifier)));
             Assert.Contains(KeyVaultClient.KeyVaultAccessTokenRetrievalError, exception.Message);
             Assert.Contains(KeyVaultClient.BearerChallengeMissingOrInvalidError, exception.Message);
         }
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockKeyVault);
             KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient);
 
-            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
+            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultCertificateSecretIdentifier)));
             Assert.Contains(KeyVaultClient.KeyVaultAccessTokenRetrievalError, exception.Message);
             Assert.Contains(KeyVaultClient.BearerChallengeMissingOrInvalidError, exception.Message);
         }
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockKeyVault);
             KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
 
-            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
+            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultCertificateSecretIdentifier)));
             Assert.Contains(AzureServiceTokenProviderException.GenericErrorMessage, exception.Message);
             Assert.Contains(KeyVaultClient.KeyVaultAccessTokenRetrievalError, exception.Message);
             Assert.Contains(string.Format(KeyVaultClient.TokenProviderErrorsFormat, 1), exception.Message);
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockKeyVault);
             KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
 
-            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
+            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultCertificateSecretIdentifier)));
             Assert.Contains(KeyVaultClient.SecretBundleInvalidContentTypeError, exception.Message);
         }
 
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Services.AppAuthentication.Unit.Tests
             HttpClient httpClient = new HttpClient(mockKeyVault);
             KeyVaultClient keyVaultClient = new KeyVaultClient(httpClient, azureCliAccessTokenProvider);
 
-            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultSecretIdentifier)));
+            var exception = await Assert.ThrowsAnyAsync<Exception>(() => Task.Run(() => keyVaultClient.GetCertificateAsync(Constants.TestKeyVaultCertificateSecretIdentifier)));
             Assert.Contains(KeyVaultClient.KeyVaultResponseError, exception.Message);
             Assert.Contains(MockKeyVault.SecretNotFoundErrorMessage, exception.Message);
         }
