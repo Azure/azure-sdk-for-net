@@ -1,21 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26124.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.462
 MinimumVisualStudioVersion = 15.0.26124.0
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ApplicationModel.Configuration", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\src\Azure.ApplicationModel.Configuration.csproj", "{3E69D19C-22E4-4717-88B4-C4206EA87AC1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ApplicationModel.Configuration", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\src\Azure.ApplicationModel.Configuration.csproj", "{3E69D19C-22E4-4717-88B4-C4206EA87AC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ApplicationModel.Configuration.Performance", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\tests\Performance\Azure.ApplicationModel.Configuration.Performance.csproj", "{61D76C9E-E769-4E7D-9120-4594DAE61E7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ApplicationModel.Configuration.Performance", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\tests\Performance\Azure.ApplicationModel.Configuration.Performance.csproj", "{61D76C9E-E769-4E7D-9120-4594DAE61E7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ApplicationModel.Configuration.Samples.Tests", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\samples\Azure.ApplicationModel.Configuration.Samples.Tests.csproj", "{36947C5F-343F-494A-A65B-2E2FB6CA9626}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ApplicationModel.Configuration.Samples.Tests", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\samples\Azure.ApplicationModel.Configuration.Samples.Tests.csproj", "{36947C5F-343F-494A-A65B-2E2FB6CA9626}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.ApplicationModel.Configuration.Tests", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\tests\Azure.ApplicationModel.Configuration.Tests.csproj", "{3C514D58-9B6E-4DD3-92A2-066F432BB842}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ApplicationModel.Configuration.Tests", "..\..\appconfiguration\Azure.ApplicationModel.Configuration\tests\Azure.ApplicationModel.Configuration.Tests.csproj", "{3C514D58-9B6E-4DD3-92A2-066F432BB842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core", "src\Azure.Core.csproj", "{E549C0EE-AD68-4512-BEA7-25A603007121}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "src\Azure.Core.csproj", "{E549C0EE-AD68-4512-BEA7-25A603007121}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.Tests", "tests\Azure.Core.Tests.csproj", "{84491222-6C36-4FA7-BBAE-1FA804129151}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Security.Keyvault.Secrets", "..\..\keyvault\Azure.Security.Keyvault.Secrets\src\Azure.Security.Keyvault.Secrets.csproj", "{8E276BDE-7BE7-4E28-A7EF-9F3737ABF23B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.Keyvault.Secrets", "..\..\keyvault\Azure.Security.Keyvault.Secrets\src\Azure.Security.Keyvault.Secrets.csproj", "{8E276BDE-7BE7-4E28-A7EF-9F3737ABF23B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Blobs", "..\..\storage\Azure.Storage.Blobs\src\Azure.Storage.Blobs.csproj", "{63251EA7-2509-4A6F-AD1C-B34FC243715E}"
 EndProject
@@ -31,8 +31,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Files.Tests",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Queues", "..\..\storage\Azure.Storage.Queues\src\Azure.Storage.Queues.csproj", "{889BB91A-73EC-4134-B1E0-3AC72B442B91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Storage.Queues.Tests", "..\..\storage\Azure.Storage.Queues\tests\Azure.Storage.Queues.Tests.csproj", "{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,9 +39,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3E69D19C-22E4-4717-88B4-C4206EA87AC1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -214,17 +209,11 @@ Global
 		{889BB91A-73EC-4134-B1E0-3AC72B442B91}.Release|x64.Build.0 = Release|Any CPU
 		{889BB91A-73EC-4134-B1E0-3AC72B442B91}.Release|x86.ActiveCfg = Release|Any CPU
 		{889BB91A-73EC-4134-B1E0-3AC72B442B91}.Release|x86.Build.0 = Release|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Debug|x64.Build.0 = Debug|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Debug|x86.Build.0 = Debug|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Release|x64.ActiveCfg = Release|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Release|x64.Build.0 = Release|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Release|x86.ActiveCfg = Release|Any CPU
-		{A7E5603B-1424-4AFC-BAD6-7033C7BD7908}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41A74535-D941-480F-9511-F5285BBC1E89}
 	EndGlobalSection
 EndGlobal
