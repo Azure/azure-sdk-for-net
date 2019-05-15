@@ -24,10 +24,6 @@
     -->
     <ImportDefaultReferences>false</ImportDefaultReferences>
 
-    <!-- We'll target the standard SDK frameworks -->
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-
-
     <!-- Note that we disable this for DEBUG -->
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
