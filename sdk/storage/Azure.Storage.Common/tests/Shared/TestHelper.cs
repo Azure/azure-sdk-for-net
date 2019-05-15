@@ -67,7 +67,7 @@ namespace Azure.Storage.Test
         }
 
         public static Metadata BuildMetadata() =>
-            new Dictionary<string, string>()
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 { "foo", "bar" },
                 { "meta", "data" }
