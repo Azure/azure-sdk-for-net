@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.WebSites
                 new Tuple<string, string, string>("Web", "Validate", "2018-02-01"),
                 new Tuple<string, string, string>("Web", "ValidateContainerSettings", "2018-02-01"),
                 new Tuple<string, string, string>("Web", "VerifyHostingEnvironmentVnet", "2018-02-01"),
-                new Tuple<string, string, string>("Web", "WebApps", "2018-02-01"),
+                new Tuple<string, string, string>("Web", "WebApps", "2018-11-01"),
                 new Tuple<string, string, string>("WebSiteManagementClient", "Move", "2018-02-01"),
                 new Tuple<string, string, string>("WebSiteManagementClient", "ValidateMove", "2018-02-01"),
               }.AsEnumerable();
