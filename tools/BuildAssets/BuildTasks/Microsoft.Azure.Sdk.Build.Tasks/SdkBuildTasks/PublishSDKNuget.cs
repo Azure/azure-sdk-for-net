@@ -136,7 +136,7 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             authScopes = new List<string>() { "all", "sdks", "sdkcommon", "azurestack" };
             //By default do not skip publishing both nuget and symbols
             SkipNugetPublishing = false;
-            SkipSymbolPublishing = false;
+            SkipSymbolPublishing = true;
         }
 
         private void Init()
@@ -180,24 +180,24 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
         private List<Tuple<string, string>> GetAllNugetPackages()
         {
-            var dupeFiles = Directory.EnumerateFiles(PackageOutputPath, "*.nupkg", SearchOption.AllDirectories);
-            var symPkgs = Directory.EnumerateFiles(PackageOutputPath, "*.symbols.nupkg", SearchOption.AllDirectories);
-            var nugetPkgs = dupeFiles.Except<string>(symPkgs, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+            var nugetPkgs = Directory.EnumerateFiles(PackageOutputPath, "*.nupkg", SearchOption.AllDirectories);
+            var symPkgs = Directory.EnumerateFiles(PackageOutputPath, "*.snupkg", SearchOption.AllDirectories);
+            //var nugetPkgs = dupeFiles.Except<string>(symPkgs, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
 
             List<Tuple<string, string>> pkgList = new List<Tuple<string, string>>();
-            
-            foreach(string pkgPath in nugetPkgs)
+
+            foreach (string pkgPath in nugetPkgs)
             {
                 string pkgName = Path.GetFileNameWithoutExtension(pkgPath);
-                //string symName = Path.GetFileNameWithoutExtension(pkgPath)
-                var searchedSymPkgs = symPkgs.Where<string>((sym) => (Path.GetFileNameWithoutExtension(sym)).StartsWith(pkgName));
-                if(searchedSymPkgs.Any<string>())
+                //string symName = Path.GetFileNameWithoutExtension(pkgPath);
+                //var searchedSymPkgs = symPkgs.Where<string>((sym) => (Path.GetFileNameWithoutExtension(sym)).StartsWith(pkgName));
+                if (symPkgs.Any<string>())
                 {
-                    foreach(string symPath in searchedSymPkgs)
+                    foreach (string symPath in symPkgs)
                     {
                         string symPkgName = Path.GetFileNameWithoutExtension(symPath);
-                        string nupkgName = string.Concat(pkgName, ".symbols");
-                        if(symPkgName.Equals(nupkgName, StringComparison.OrdinalIgnoreCase))
+                        //string nupkgName = string.Concat(pkgName, ".symbols");
+                        if (symPkgName.Equals(pkgName, StringComparison.OrdinalIgnoreCase))
                         {
                             Tuple<string, string> tup = new Tuple<string, string>(pkgPath, symPath);
                             pkgList.Add(tup);
@@ -209,10 +209,42 @@ namespace Microsoft.WindowsAzure.Build.Tasks
             return pkgList;
         }
 
+
+        //private List<Tuple<string, string>> GetAllNugetPackages()
+        //{
+        //    var dupeFiles = Directory.EnumerateFiles(PackageOutputPath, "*.nupkg", SearchOption.AllDirectories);
+        //    var symPkgs = Directory.EnumerateFiles(PackageOutputPath, "*.snupkg", SearchOption.AllDirectories);
+        //    var nugetPkgs = dupeFiles.Except<string>(symPkgs, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+
+        //    List<Tuple<string, string>> pkgList = new List<Tuple<string, string>>();
+
+        //    foreach(string pkgPath in nugetPkgs)
+        //    {
+        //        string pkgName = Path.GetFileNameWithoutExtension(pkgPath);
+        //        string symName = Path.GetFileNameWithoutExtension(pkgPath);
+        //        var searchedSymPkgs = symPkgs.Where<string>((sym) => (Path.GetFileNameWithoutExtension(sym)).StartsWith(pkgName));
+        //        if(searchedSymPkgs.Any<string>())
+        //        {
+        //            foreach(string symPath in searchedSymPkgs)
+        //            {
+        //                string symPkgName = Path.GetFileNameWithoutExtension(symPath);
+        //                string nupkgName = string.Concat(pkgName, ".symbols");
+        //                if(symPkgName.Equals(nupkgName, StringComparison.OrdinalIgnoreCase))
+        //                {
+        //                    Tuple<string, string> tup = new Tuple<string, string>(pkgPath, symPath);
+        //                    pkgList.Add(tup);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return pkgList;
+        //}
+
         private Tuple<string, string> GetNugetPkgs(string nugetPkgName)
         {
             string nugPattern = string.Format("*{0}*.nupkg", nugetPkgName);
-            string nugSymPkgPattern = string.Format("*{0}*.symbols.nupkg", nugetPkgName);
+            string nugSymPkgPattern = string.Format("*{0}*.snupkg", nugetPkgName);
 
             LogInfo("Trying to find nuget packages '{0}' and '{1}' under dir '{2}'", nugPattern, nugSymPkgPattern, PackageOutputPath);
             IEnumerable<string> dupeFiles = Directory.EnumerateFiles(PackageOutputPath, nugPattern, SearchOption.AllDirectories);
@@ -262,7 +294,8 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 }
             }
 
-            var foundNugetPkgFiles = dupeFiles.Except<string>(foundSymbolPkgFiles, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+            //var foundNugetPkgFiles = dupeFiles.Except<string>(foundSymbolPkgFiles, new ObjectComparer<string>((left, right) => left.Equals(right, StringComparison.OrdinalIgnoreCase)));
+            IEnumerable<string> foundNugetPkgFiles = dupeFiles;
 
             string nupkg = string.Empty;
             string nuSymPkg = string.Empty;

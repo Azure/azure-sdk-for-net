@@ -23,6 +23,7 @@
   <PropertyGroup Condition=" '$(AfterBuild)' != 'true' ">
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IsPackable>true</IsPackable>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
   <ItemGroup Condition=" '$(AfterBuild)' != 'true' ">
     <PackageReference Include="Microsoft.Build" Version="15.7.179" />
