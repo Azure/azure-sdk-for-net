@@ -77,7 +77,7 @@ namespace Azure.Identity
 
             request.UriBuilder.AppendPath(tenantId);
 
-            request.UriBuilder.AppendPath("/oauth2/token");
+            request.UriBuilder.AppendPath("/oauth2/v2.0/token");
 
             ReadOnlyMemory<byte> content = Serialize(
                 ("response_type", "token"),

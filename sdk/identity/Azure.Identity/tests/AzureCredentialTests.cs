@@ -36,8 +36,6 @@ namespace Azure.Identity.Tests
 
                 return new AuthenticationResponse("mocktoken", _expires);
             }
-
-
         }
 
         [Fact]
