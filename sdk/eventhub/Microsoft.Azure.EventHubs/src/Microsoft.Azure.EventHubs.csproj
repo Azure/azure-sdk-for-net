@@ -8,22 +8,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks);netstandard1.4</TargetFrameworks>
   </PropertyGroup>
 
-  <!--
-      The Identity Model client for Active Directory package does not support client certificate
-      assertions for their Xamarin.iOS10 and uap10.0 targets.  Builds for Xamarin.iOS10 targets will bind to the
-      netstandard 1.4 version of the Event Hubs SDK and the Xamarin.iOS10 version of the Identity Model package.
-
-      Because newer versions of UWP are compatible with netstandard 2.0 we need to ensure that we provide a uap10.0 asset
-      in the package that doesn't depend on client certificate support. In order to do that we will copy the netstandard1.4
-      asset into the uap10.0 target in the package to ensure it always gets chosen when running on uwp.
-
-      Because of the missing support in the Identity Model Client for Azure Active Directory, the client certificate-related constructs
-      in the Event Hubs client will be hidden during compilation for targets that Xamarin iOS and UWP will bind to.
-  -->
-  <PropertyGroup Condition="'$(TargetFramework)' != 'netstandard1.4'">
-    <DefineConstants>$(DefineConstants);ALLOW_CERTIFICATE_IDENTITY</DefineConstants>
-  </PropertyGroup>
-
   <ItemGroup>
     <Compile Update="Resources.Designer.cs">
       <DesignTime>True</DesignTime>
