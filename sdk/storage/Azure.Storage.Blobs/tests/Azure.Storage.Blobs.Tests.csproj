@@ -1,5 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Blobs client library tests</AssemblyTitle>
     <IsPackable>false</IsPackable>
   </PropertyGroup>

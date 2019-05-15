@@ -1,5 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+  <PropertyGroup>
     <AssemblyTitle>Microsoft Azure.Storage.Common client library</AssemblyTitle>
     <DefineConstants>CommonSDK;$(DefineConstants)</DefineConstants>
     <PackageTags>Microsoft Azure Storage Common, Microsoft, Azure, StorageScalable, azureofficial</PackageTags>
@@ -20,7 +23,7 @@
     Unfortunately that shared code isn't used by the common project (and
     will actually break if you include it) so we're explicitly excluding it
     here.
-    -->  
+    -->
     <Compile Remove="Shared\**" />
     <EmbeddedResource Remove="Shared\**" />
     <None Remove="Shared\**" />
