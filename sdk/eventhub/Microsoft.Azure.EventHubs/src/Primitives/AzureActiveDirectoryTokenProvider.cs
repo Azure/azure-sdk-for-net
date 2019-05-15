@@ -11,6 +11,8 @@ namespace Microsoft.Azure.EventHubs
     /// </summary>
     public class AzureActiveDirectoryTokenProvider : TokenProvider
     {
+        const string CommonAuthority = "https://login.microsoftonline.com/common";
+
         readonly string clientId;
         readonly object authCallbackState;
         event AuthenticationCallback AuthCallback;
@@ -30,7 +32,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            var token = await this.AuthCallback(ClientConstants.AadEventHubsAudience, this.authCallbackState).ConfigureAwait(false);
+            var token = await this.AuthCallback(ClientConstants.AadEventHubsAudience, CommonAuthority, this.authCallbackState).ConfigureAwait(false);
 
             return new JsonSecurityToken(token, appliesTo);
         }
@@ -39,8 +41,9 @@ namespace Microsoft.Azure.EventHubs
         /// The authentication delegate to provide access token.
         /// </summary>
         /// <param name="audience">The service resource URI for token acquisition.</param>
+        /// <param name="authority">Address of the authority to issue token.</param>
         /// <param name="state">State to be delivered to callback.</param>
         /// <returns></returns>
-        public delegate Task<string> AuthenticationCallback(string audience, object state);
+        public delegate Task<string> AuthenticationCallback(string audience, string authority, object state);
     }
 }

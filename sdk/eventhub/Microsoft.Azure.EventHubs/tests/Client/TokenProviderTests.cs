@@ -125,9 +125,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
 
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback = 
-                async (audience, state) =>
+                async (audience, authority, state) =>
                 {
-                    var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
+                    var authContext = new AuthenticationContext(authority);
                     var cc = new ClientCredential(aadAppId, aadAppSecret);
                     var authResult = await authContext.AcquireTokenAsync(audience, cc);
                     return authResult.AccessToken;
@@ -180,9 +180,9 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             }
 
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
-                async (audience, state) =>
+                async (audience, authority, state) =>
                 {
-                    var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
+                    var authContext = new AuthenticationContext(authority);
                     var cc = new ClientCredential(aadAppId, aadAppSecret);
                     var authResult = await authContext.AcquireTokenAsync(audience, cc);
                     return authResult.AccessToken;
