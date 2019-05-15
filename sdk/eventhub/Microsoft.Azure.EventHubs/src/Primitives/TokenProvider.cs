@@ -83,22 +83,9 @@ namespace Microsoft.Azure.EventHubs
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
             object state = null)
         {
-            return CreateAadTokenProvider(new Uri(ClientConstants.AadEventHubsAudience), authCallback, state);
-        }
-
-        /// <summary>Creates an Azure Active Directory token provider.</summary>
-        /// <param name="audience">The service resource URI for token acquisition.</param>
-        /// <param name="authCallback">The authentication delegate to provide access token.</param>
-        /// <param name="state">State to be delivered to callback.</param>
-        /// <returns>The <see cref="TokenProvider" /> for returning Json web token.</returns>
-        public static TokenProvider CreateAadTokenProvider(Uri audience,
-            AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
-            object state = null)
-        {
-            Guard.ArgumentNotNull(nameof(audience), audience);
             Guard.ArgumentNotNull(nameof(authCallback), authCallback);
 
-            return new AzureActiveDirectoryTokenProvider(audience, authCallback, state);
+            return new AzureActiveDirectoryTokenProvider(authCallback, state);
         }
 
         /// <summary>Creates Azure Managed Identity token provider.</summary>

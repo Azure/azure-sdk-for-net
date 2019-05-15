@@ -12,14 +12,12 @@ namespace Microsoft.Azure.EventHubs
     public class AzureActiveDirectoryTokenProvider : TokenProvider
     {
         readonly string clientId;
-        readonly string audience;
         readonly object authCallbackState;
         event AuthenticationCallback AuthCallback;
 
-        internal AzureActiveDirectoryTokenProvider(Uri audience, AuthenticationCallback authenticationCallback, object state)
+        internal AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, object state)
         {
             this.clientId = Guid.NewGuid().ToString();
-            this.audience = audience.ToString();
             this.AuthCallback = authenticationCallback;
             this.authCallbackState = state;
         }
@@ -32,7 +30,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            var token = await this.AuthCallback(this.audience, this.authCallbackState).ConfigureAwait(false);
+            var token = await this.AuthCallback(ClientConstants.AadEventHubsAudience, this.authCallbackState).ConfigureAwait(false);
 
             return new JsonSecurityToken(token, appliesTo);
         }
