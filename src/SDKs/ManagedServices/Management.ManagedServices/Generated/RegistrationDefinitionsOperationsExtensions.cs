@@ -206,6 +206,58 @@ namespace Microsoft.Azure.Management.ManagedServices
             }
 
             /// <summary>
+            /// Creates or updates a registration definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='registrationDefinitionId'>
+            /// Guid of the registration definition.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for this operation.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the resource.
+            /// </param>
+            /// <param name='requestBody'>
+            /// The parameters required to create new registration definition.
+            /// </param>
+            public static RegistrationDefinition BeginCreateOrUpdate(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody)
+            {
+                return operations.BeginCreateOrUpdateAsync(registrationDefinitionId, apiVersion, scope, requestBody).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Creates or updates a registration definition.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='registrationDefinitionId'>
+            /// Guid of the registration definition.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The API version to use for this operation.
+            /// </param>
+            /// <param name='scope'>
+            /// Scope of the resource.
+            /// </param>
+            /// <param name='requestBody'>
+            /// The parameters required to create new registration definition.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RegistrationDefinition> BeginCreateOrUpdateAsync(this IRegistrationDefinitionsOperations operations, string registrationDefinitionId, string apiVersion, string scope, RegistrationDefinition requestBody, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(registrationDefinitionId, apiVersion, scope, requestBody, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets a list of the registration definitions.
             /// </summary>
             /// <param name='operations'>

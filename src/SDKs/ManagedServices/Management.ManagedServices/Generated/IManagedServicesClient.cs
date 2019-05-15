@@ -70,6 +70,11 @@ namespace Microsoft.Azure.Management.ManagedServices
         IRegistrationAssignmentsOperations RegistrationAssignments { get; }
 
         /// <summary>
+        /// Gets the IOperationStatusesOperations.
+        /// </summary>
+        IOperationStatusesOperations OperationStatuses { get; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         IOperations Operations { get; }

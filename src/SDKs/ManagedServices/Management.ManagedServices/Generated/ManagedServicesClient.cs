@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.ManagedServices
         public virtual IRegistrationAssignmentsOperations RegistrationAssignments { get; private set; }
 
         /// <summary>
+        /// Gets the IOperationStatusesOperations.
+        /// </summary>
+        public virtual IOperationStatusesOperations OperationStatuses { get; private set; }
+
+        /// <summary>
         /// Gets the IOperations.
         /// </summary>
         public virtual IOperations Operations { get; private set; }
@@ -322,6 +327,7 @@ namespace Microsoft.Azure.Management.ManagedServices
         {
             RegistrationDefinitions = new RegistrationDefinitionsOperations(this);
             RegistrationAssignments = new RegistrationAssignmentsOperations(this);
+            OperationStatuses = new OperationStatusesOperations(this);
             Operations = new Operations(this);
             BaseUri = new System.Uri("https://management.azure.com");
             AcceptLanguage = "en-US";
