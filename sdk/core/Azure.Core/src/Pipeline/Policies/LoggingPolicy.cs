@@ -30,11 +30,11 @@ namespace Azure.Core.Pipeline.Policies
             {
                 if (async)
                 {
-                    await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                    await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
                 }
                 else
                 {
-                    ProcessNext(pipeline, message);
+                    ProcessNext(message, pipeline);
                 }
                 return;
             }
@@ -75,11 +75,11 @@ namespace Azure.Core.Pipeline.Policies
             var before = Stopwatch.GetTimestamp();
             if (async)
             {
-                await ProcessNextAsync(pipeline, message).ConfigureAwait(false);
+                await ProcessNextAsync(message, pipeline).ConfigureAwait(false);
             }
             else
             {
-                ProcessNext(pipeline, message);
+                ProcessNext(message, pipeline);
             }
 
             var after = Stopwatch.GetTimestamp();

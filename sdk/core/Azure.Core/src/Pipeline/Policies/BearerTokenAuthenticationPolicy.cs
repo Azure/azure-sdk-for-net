@@ -65,11 +65,11 @@ namespace Azure.Core.Pipeline.Policies
 
             if (async)
             {
-                await ProcessNextAsync(pipeline, message);
+                await ProcessNextAsync(message, pipeline);
             }
             else
             {
-                ProcessNext(pipeline, message);
+                ProcessNext(message, pipeline);
             }
         }
     }
