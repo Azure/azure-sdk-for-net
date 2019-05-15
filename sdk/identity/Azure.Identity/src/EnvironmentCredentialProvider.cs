@@ -10,20 +10,22 @@ namespace Azure.Identity
 {
     public class EnvironmentCredentialProvider : TokenCredential
     {
-        private static readonly string s_AzureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-
-        private static readonly string s_AzureTenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
-
-        private static readonly string s_AzureClientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
-
         private TokenCredential _credential = null;
 
-
         public EnvironmentCredentialProvider()
+            : this(null)
         {
-            if (s_AzureClientId != null && s_AzureTenantId != null && s_AzureClientSecret != null)
+        }
+
+        public EnvironmentCredentialProvider(IdentityClientOptions options)
+        {
+            string tenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            string clientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+            string clientSecret = Environment.GetEnvironmentVariable("AZURE_CLIENT_SECRET");
+
+            if (tenantId != null && clientId != null && clientSecret != null)
             {
-                _credential = new ClientSecretCredential(s_AzureTenantId, s_AzureClientId, s_AzureClientSecret);
+                _credential = new ClientSecretCredential(tenantId, clientId, clientSecret, options);
             }
         }
 

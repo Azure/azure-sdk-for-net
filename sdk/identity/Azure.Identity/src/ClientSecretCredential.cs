@@ -16,6 +16,12 @@ namespace Azure.Identity
         public string ClientSecret { get; private set; }
 
         public ClientSecretCredential(string tenantId, string clientId, string clientSecret)
+            : this(tenantId, clientId, clientSecret, null)
+        {
+        }
+
+        public ClientSecretCredential(string tenantId, string clientId, string clientSecret, IdentityClientOptions options)
+            : base(options)
         {
             TenantId = tenantId;
             ClientId = clientId;
@@ -27,9 +33,9 @@ namespace Azure.Identity
             return await this.Client.AuthenticateAsync(TenantId, ClientId, ClientSecret, scopes, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override AuthenticationResponse Authenticate(string[] scopes, CancellationToken cancellationToken)
+        protected override AuthenticationResponse Authenticate(string[] scopes, CancellationToken cancellationToken = default)
         {
-            throw new NotImplementedException();
+            return this.Client.Authenticate(TenantId, ClientId, ClientSecret, scopes, cancellationToken);
         }
     }
 }

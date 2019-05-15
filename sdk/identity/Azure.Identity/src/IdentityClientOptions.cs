@@ -8,14 +8,14 @@ using Azure.Core.Pipeline.Policies;
 namespace Azure.Identity
 {    public class IdentityClientOptions : HttpClientOptions
     {
-        private const string DefaultAuthorityHost = "https://login.microsoftonline.com/";
+        private readonly static Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
         private readonly static TimeSpan DefaultRefreshBuffer = TimeSpan.FromMinutes(2);
 
         public RetryPolicy RetryPolicy { get; set; }
 
         public HttpPipelinePolicy LoggingPolicy { get; set; }
 
-        public string AuthorityHost { get; set; }
+        public Uri AuthorityHost { get; set; }
 
         public TimeSpan RefreshBuffer { get; set; }
 

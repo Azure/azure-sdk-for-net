@@ -13,8 +13,7 @@ namespace Azure.Identity
         private IdentityClient _client;
         private AuthenticationResponse _cachedResponse;
         private SemaphoreSlim _refreshLock = new SemaphoreSlim(1, 1);
-        private IdentityClientOptions _options;
-
+        private TimeSpan _refreshBuffer;
 
         static AzureCredential()
         {
@@ -23,11 +22,13 @@ namespace Azure.Identity
         }
 
 
-        protected AzureCredential(IdentityClientOptions options = null)
+        protected AzureCredential(IdentityClientOptions options)
         {
-            _options = options ?? new IdentityClientOptions();
+            options = options ?? new IdentityClientOptions();
 
             _client = new IdentityClient(options);
+
+            _refreshBuffer = options.RefreshBuffer;
         }
 
 
@@ -87,6 +88,6 @@ namespace Azure.Identity
 
         public static TokenCredential Default { get; set; }
 
-        private bool NeedsRefresh => _cachedResponse == null || (DateTime.UtcNow + _options.RefreshBuffer) >= _cachedResponse.ExpiresOn;
+        private bool NeedsRefresh => _cachedResponse == null || (DateTime.UtcNow + _refreshBuffer) >= _cachedResponse.ExpiresOn;
     }
 }

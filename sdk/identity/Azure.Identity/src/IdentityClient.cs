@@ -33,23 +33,10 @@ namespace Azure.Identity
                     BufferResponsePolicy.Singleton);
         }
 
-        public async Task<AuthenticationResponse> AuthenticateAsync(string tenantId, string clientId, string clientSecret, IEnumerable<string> scopes, CancellationToken cancellationToken = default)
+        public async Task<AuthenticationResponse> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
-            Uri authUri = new Uri(_options.AuthorityHost + tenantId + "/oauth2/token");
-
-            using (var request = _pipeline.CreateRequest())
+            using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
-                request.SetRequestLine(HttpPipelineMethod.Put, authUri);
-
-                ReadOnlyMemory<byte> content = Serialize(
-                    ( "response_type", "token" ), 
-                    ( "grant_type", "client_credentials" ),
-                    ( "client_id", clientId ),
-                    ( "client_secret", clientSecret ),
-                    ( "scopes", string.Join(" ", scopes) ));
-
-                request.Content = HttpPipelineRequestContent.Create(content);
-
                 var response = await _pipeline.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
                 if (response.Status == 200 || response.Status == 201)
@@ -61,6 +48,47 @@ namespace Azure.Identity
 
                 throw await response.CreateRequestFailedExceptionAsync();
             }
+        }
+
+        public AuthenticationResponse Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        {
+            using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
+            {
+                var response = _pipeline.SendRequest(request, cancellationToken);
+
+                if (response.Status == 200 || response.Status == 201)
+                {
+                    var result = Deserialize(response.ContentStream);
+
+                    return new Response<AuthenticationResponse>(response, result);
+                }
+
+                throw response.CreateRequestFailedException();
+            }
+        }
+
+        private Request CreateClientSecretAuthRequest(string tenantId, string clientId, string clientSecret, string[] scopes)
+        {
+            Request request = _pipeline.CreateRequest();
+
+            request.Method = HttpPipelineMethod.Post;
+
+            request.UriBuilder.Uri = _options.AuthorityHost;
+
+            request.UriBuilder.AppendPath(tenantId);
+
+            request.UriBuilder.AppendPath("/oauth2/token");
+
+            ReadOnlyMemory<byte> content = Serialize(
+                ("response_type", "token"),
+                ("grant_type", "client_credentials"),
+                ("client_id", clientId),
+                ("client_secret", clientSecret),
+                ("scopes", string.Join(" ", scopes)));
+
+            request.Content = HttpPipelineRequestContent.Create(content);
+
+            return request;
         }
 
         private ReadOnlyMemory<byte> Serialize(params (string, string)[] bodyArgs)
@@ -87,24 +115,35 @@ namespace Azure.Identity
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
             {
-                var response = new Dictionary<string, string>();
-
-                string accessToken = null;
-
-                DateTimeOffset expiresOn = DateTimeOffset.MaxValue;
-
-                if (json.RootElement.TryGetProperty("access_token", out JsonElement accessTokenProp))
-                {
-                    accessToken = accessTokenProp.GetString();
-                }
-
-                if(json.RootElement.TryGetProperty("expires_in", out JsonElement expiresInProp))
-                {
-                    expiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(expiresInProp.GetInt64());
-                }
-                
-                return new AuthenticationResponse(accessToken, expiresOn);
+                return Deserialize(json.RootElement);
             }
+        }
+
+        private AuthenticationResponse Deserialize(Stream content)
+        {
+            using (JsonDocument json = JsonDocument.Parse(content))
+            {
+                return Deserialize(json.RootElement);
+            }
+        }
+
+        private AuthenticationResponse Deserialize(JsonElement json)
+        {
+            string accessToken = null;
+
+            DateTimeOffset expiresOn = DateTimeOffset.MaxValue;
+
+            if (json.TryGetProperty("access_token", out JsonElement accessTokenProp))
+            {
+                accessToken = accessTokenProp.GetString();
+            }
+
+            if (json.TryGetProperty("expires_in", out JsonElement expiresInProp))
+            {
+                expiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(expiresInProp.GetInt64());
+            }
+
+            return new AuthenticationResponse(accessToken, expiresOn);
         }
 
         // TODO (pri 3): CoreFx will soon have a type like this. We should remove this one then.

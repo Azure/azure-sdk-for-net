@@ -16,6 +16,7 @@ namespace Azure.Identity.Tests
             public int AuthCount;
 
             public MockRefreshAzureCredential(DateTimeOffset expires)
+                : base(null)
             {
                 _expires = expires;
             }

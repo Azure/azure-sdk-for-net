@@ -15,7 +15,13 @@ namespace Azure.Identity.Tests
         }
     }
 
-    [CollectionDefinition("AltEnvTests", DisableParallelization = true)]
+    [CollectionDefinition("EnvironmentTests", DisableParallelization = true)]
+    public class EnvironmentTestsCollection
+    {
+    }
+
+
+    [Collection("EnvironmentTests")]
     public class EnvironmentCredentialProviderTests
     {
         [Fact]
