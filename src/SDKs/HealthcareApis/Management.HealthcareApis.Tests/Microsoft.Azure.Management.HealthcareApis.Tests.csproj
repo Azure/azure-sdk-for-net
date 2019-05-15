@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk" ToolsVersion="15.0">
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('AzSdk.test.reference.props'))" />
+  <PropertyGroup>
+    <PackageId>Microsoft.Azure.Management.HealthcareApis.Tests</PackageId>
+    <Description>HealthcareApis.Tests Class Library</Description>
+    <AssemblyName>Microsoft.Azure.Management.HealthcareApis.Tests</AssemblyName>
+    <Version>1.0.0</Version>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <ProjectGuid>{D395417C-1205-48E3-B4DD-0A17D591F656}</ProjectGuid>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="..\Management.HealthcareApis\Microsoft.Azure.Management.HealthcareApis.csproj" />
+  </ItemGroup>
+</Project>
