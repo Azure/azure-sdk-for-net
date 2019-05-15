@@ -229,7 +229,7 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
             await foreach (var value in service.GetSettingsAsync(query, CancellationToken.None))
             {
-                Assert.AreEqual("key" + keyIndex, value.Key);
+                Assert.AreEqual("key" + keyIndex, value.Value.Key);
                 keyIndex++;
             }
 
