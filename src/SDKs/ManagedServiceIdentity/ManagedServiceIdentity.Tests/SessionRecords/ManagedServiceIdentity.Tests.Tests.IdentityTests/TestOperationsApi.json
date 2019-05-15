@@ -1,64 +1,66 @@
 {
   "Entries": [
     {
-      "RequestUri": "/providers/Microsoft.ManagedIdentity/operations?api-version=2015-08-31-preview",
-      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlZElkZW50aXR5L29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNS0wOC0zMS1wcmV2aWV3",
+      "RequestUri": "/providers/Microsoft.ManagedIdentity/operations?api-version=2018-11-30",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuTWFuYWdlZElkZW50aXR5L29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxOC0xMS0zMA==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "3624fc50-1292-4b9f-a70b-d99f261fde2d"
+          "3caff99a-b0d7-43c2-955d-1d333490716c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "FxVersion/4.6.25211.01",
-          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/0.0.0.0"
+          "FxVersion/4.6.26614.01",
+          "OSName/Windows",
+          "OSVersion/Microsoft.Windows.10.0.17763.",
+          "Microsoft.Azure.Management.ManagedServiceIdentity.ManagedServiceIdentityClient/0.10.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/read\",\r\n      \"display\": {\r\n        \"provider\": \"Managed Service Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Get User Assigned Identity\",\r\n        \"description\": \"Gets an existing user assigned identity\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/write\",\r\n      \"display\": {\r\n        \"provider\": \"Managed Service Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Create/Update User Assigned Identity\",\r\n        \"description\": \"Creates a new user assigned identity or updates the tags associated with an existing user assigned identity\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Managed Service Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Delete User Assigned Identity\",\r\n        \"description\": \"Deletes an existing user assigned identity\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/assign/action\",\r\n      \"display\": {\r\n        \"provider\": \"Managed Service Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Assign User Assigned Identity\",\r\n        \"description\": \"RBAC action for assigning an existing user assigned identity to a resource\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Wed, 13 Dec 2017 18:23:44 GMT"
+          "Mon, 13 May 2019 23:19:53 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
-        "Transfer-Encoding": [
-          "chunked"
-        ],
         "Server": [
           "Microsoft-HTTPAPI/2.0"
-        ],
-        "Vary": [
-          "Accept-Encoding"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-tenant-reads": [
-          "14997"
+          "11999"
         ],
         "x-ms-request-id": [
-          "91eedb4a-67ca-46df-aa83-d8a2654e7289"
+          "58c60665-c2f2-4456-81c9-2a717371d596"
         ],
         "x-ms-correlation-request-id": [
-          "91eedb4a-67ca-46df-aa83-d8a2654e7289"
+          "58c60665-c2f2-4456-81c9-2a717371d596"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUSEUAP:20171213T182344Z:91eedb4a-67ca-46df-aa83-d8a2654e7289"
+          "CENTRALUS:20190513T231953Z:58c60665-c2f2-4456-81c9-2a717371d596"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Content-Length": [
+          "1455"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
         ]
       },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Managed Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Get User Assigned Identity\",\r\n        \"description\": \"Gets an existing user assigned identity\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Managed Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Create/Update User Assigned Identity\",\r\n        \"description\": \"Creates a new user assigned identity or updates the tags associated with an existing user assigned identity\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Managed Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Delete User Assigned Identity\",\r\n        \"description\": \"Deletes an existing user assigned identity\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/userAssignedIdentities/assign/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Managed Identity\",\r\n        \"resource\": \"User Assigned Identities\",\r\n        \"operation\": \"Assign User Assigned Identity\",\r\n        \"description\": \"RBAC action for assigning an existing user assigned identity to a resource\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.ManagedIdentity/register/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft Managed Identity\",\r\n        \"resource\": \"Managed Identity Resource Provider\",\r\n        \"operation\": \"Registers the Managed Identity Resource Provider\",\r\n        \"description\": \"Registers the subscription for the managed identity resource provider\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "StatusCode": 200
     }
   ],
