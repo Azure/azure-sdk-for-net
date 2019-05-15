@@ -15,15 +15,6 @@ namespace Microsoft.Azure.EventHubs.Amqp
     {
         const string CbsSaslMechanismName = "MSSBCBS";
         readonly Lazy<AmqpServiceClient> managementServiceClient; // serviceClient that handles management calls
-
-        /*public AmqpEventHubClient(EventHubsConnectionStringBuilder csb)
-            : this(csb,
-                !string.IsNullOrWhiteSpace(csb.SharedAccessSignature)
-                ? TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature)
-                : TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey))
-        {
-        }*/
-
         public AmqpEventHubClient(
             Uri endpointAddress,
             string entityPath,
