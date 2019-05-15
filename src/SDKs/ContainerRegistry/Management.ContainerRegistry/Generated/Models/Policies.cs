@@ -14,29 +14,32 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// An object that represents policies for a container registry.
+    /// The policies for a container registry.
     /// </summary>
-    public partial class RegistryPolicies
+    public partial class Policies
     {
         /// <summary>
-        /// Initializes a new instance of the RegistryPolicies class.
+        /// Initializes a new instance of the Policies class.
         /// </summary>
-        public RegistryPolicies()
+        public Policies()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegistryPolicies class.
+        /// Initializes a new instance of the Policies class.
         /// </summary>
-        /// <param name="quarantinePolicy">An object that represents quarantine
-        /// policy for a container registry.</param>
-        /// <param name="trustPolicy">An object that represents content trust
-        /// policy for a container registry.</param>
-        public RegistryPolicies(QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy))
+        /// <param name="quarantinePolicy">The quarantine policy for a
+        /// container registry.</param>
+        /// <param name="trustPolicy">The content trust policy for a container
+        /// registry.</param>
+        /// <param name="retentionPolicy">The retention policy for a container
+        /// registry.</param>
+        public Policies(QuarantinePolicy quarantinePolicy = default(QuarantinePolicy), TrustPolicy trustPolicy = default(TrustPolicy), RetentionPolicy retentionPolicy = default(RetentionPolicy))
         {
             QuarantinePolicy = quarantinePolicy;
             TrustPolicy = trustPolicy;
+            RetentionPolicy = retentionPolicy;
             CustomInit();
         }
 
@@ -46,18 +49,22 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets an object that represents quarantine policy for a
-        /// container registry.
+        /// Gets or sets the quarantine policy for a container registry.
         /// </summary>
         [JsonProperty(PropertyName = "quarantinePolicy")]
         public QuarantinePolicy QuarantinePolicy { get; set; }
 
         /// <summary>
-        /// Gets or sets an object that represents content trust policy for a
-        /// container registry.
+        /// Gets or sets the content trust policy for a container registry.
         /// </summary>
         [JsonProperty(PropertyName = "trustPolicy")]
         public TrustPolicy TrustPolicy { get; set; }
+
+        /// <summary>
+        /// Gets or sets the retention policy for a container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "retentionPolicy")]
+        public RetentionPolicy RetentionPolicy { get; set; }
 
     }
 }

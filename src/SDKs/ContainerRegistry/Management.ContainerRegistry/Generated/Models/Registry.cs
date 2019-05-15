@@ -57,7 +57,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// for the container registry. Only applicable to Classic SKU.</param>
         /// <param name="networkRuleSet">The network rule set for a container
         /// registry.</param>
-        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet))
+        /// <param name="policies">The policies for a container
+        /// registry.</param>
+        public Registry(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string loginServer = default(string), System.DateTime? creationDate = default(System.DateTime?), string provisioningState = default(string), Status status = default(Status), bool? adminUserEnabled = default(bool?), StorageAccountProperties storageAccount = default(StorageAccountProperties), NetworkRuleSet networkRuleSet = default(NetworkRuleSet), Policies policies = default(Policies))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -68,6 +70,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             AdminUserEnabled = adminUserEnabled;
             StorageAccount = storageAccount;
             NetworkRuleSet = networkRuleSet;
+            Policies = policies;
             CustomInit();
         }
 
@@ -128,6 +131,12 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.networkRuleSet")]
         public NetworkRuleSet NetworkRuleSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the policies for a container registry.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.policies")]
+        public Policies Policies { get; set; }
 
         /// <summary>
         /// Validate the object.

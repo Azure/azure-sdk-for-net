@@ -14,29 +14,31 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
     using System.Linq;
 
     /// <summary>
-    /// The content trust policy for a container registry.
+    /// The retention policy for a container registry.
     /// </summary>
-    public partial class TrustPolicy
+    public partial class RetentionPolicy
     {
         /// <summary>
-        /// Initializes a new instance of the TrustPolicy class.
+        /// Initializes a new instance of the RetentionPolicy class.
         /// </summary>
-        public TrustPolicy()
+        public RetentionPolicy()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the TrustPolicy class.
+        /// Initializes a new instance of the RetentionPolicy class.
         /// </summary>
-        /// <param name="type">The type of trust policy. Possible values
-        /// include: 'Notary'</param>
+        /// <param name="days">The number of days to retain manifest before it
+        /// expires.</param>
+        /// <param name="lastUpdatedTime">The timestamp when the the policy was
+        /// last updated.</param>
         /// <param name="status">The value that indicates whether the policy is
-        /// enabled or not. Possible values include: 'enabled',
-        /// 'disabled'</param>
-        public TrustPolicy(string type = default(string), string status = default(string))
+        /// enabled or not.</param>
+        public RetentionPolicy(double? days = default(double?), System.DateTime? lastUpdatedTime = default(System.DateTime?), string status = default(string))
         {
-            Type = type;
+            Days = days;
+            LastUpdatedTime = lastUpdatedTime;
             Status = status;
             CustomInit();
         }
@@ -47,15 +49,21 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets the type of trust policy. Possible values include:
-        /// 'Notary'
+        /// Gets or sets the number of days to retain manifest before it
+        /// expires.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        [JsonProperty(PropertyName = "days")]
+        public double? Days { get; set; }
+
+        /// <summary>
+        /// Gets the timestamp when the the policy was last updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "lastUpdatedTime")]
+        public System.DateTime? LastUpdatedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the value that indicates whether the policy is enabled
-        /// or not. Possible values include: 'enabled', 'disabled'
+        /// or not.
         /// </summary>
         [JsonProperty(PropertyName = "status")]
         public string Status { get; set; }

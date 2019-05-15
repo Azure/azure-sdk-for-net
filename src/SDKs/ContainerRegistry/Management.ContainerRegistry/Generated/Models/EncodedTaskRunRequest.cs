@@ -49,7 +49,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// source context. It can be an URL to a tar or git repository.
         /// If it is relative URL, the relative path should be obtained from
         /// calling listBuildSourceUploadUrl API.</param>
-        public EncodedTaskRunRequest(string encodedTaskContent, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), string encodedValuesContent = default(string), IList<SetValue> values = default(IList<SetValue>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string))
+        /// <param name="credentials">The properties that describes a set of
+        /// credentials that will be used when this run is invoked.</param>
+        public EncodedTaskRunRequest(string encodedTaskContent, PlatformProperties platform, bool? isArchiveEnabled = default(bool?), string encodedValuesContent = default(string), IList<SetValue> values = default(IList<SetValue>), int? timeout = default(int?), AgentProperties agentConfiguration = default(AgentProperties), string sourceLocation = default(string), Credentials credentials = default(Credentials))
             : base(isArchiveEnabled)
         {
             EncodedTaskContent = encodedTaskContent;
@@ -59,6 +61,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
             Platform = platform;
             AgentConfiguration = agentConfiguration;
             SourceLocation = sourceLocation;
+            Credentials = credentials;
             CustomInit();
         }
 
@@ -115,6 +118,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "sourceLocation")]
         public string SourceLocation { get; set; }
+
+        /// <summary>
+        /// Gets or sets the properties that describes a set of credentials
+        /// that will be used when this run is invoked.
+        /// </summary>
+        [JsonProperty(PropertyName = "credentials")]
+        public Credentials Credentials { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -49,15 +49,18 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// not.</param>
         /// <param name="noCache">The value of this property indicates whether
         /// the image cache is enabled or not.</param>
+        /// <param name="target">The name of the target build stage for the
+        /// docker build.</param>
         /// <param name="arguments">The collection of override arguments to be
         /// used when executing this build step.</param>
-        public DockerBuildStep(string dockerFilePath, IList<BaseImageDependency> baseImageDependencies = default(IList<BaseImageDependency>), string contextPath = default(string), string contextAccessToken = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), IList<Argument> arguments = default(IList<Argument>))
+        public DockerBuildStep(string dockerFilePath, IList<BaseImageDependency> baseImageDependencies = default(IList<BaseImageDependency>), string contextPath = default(string), string contextAccessToken = default(string), IList<string> imageNames = default(IList<string>), bool? isPushEnabled = default(bool?), bool? noCache = default(bool?), string target = default(string), IList<Argument> arguments = default(IList<Argument>))
             : base(baseImageDependencies, contextPath, contextAccessToken)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;
             NoCache = noCache;
             DockerFilePath = dockerFilePath;
+            Target = target;
             Arguments = arguments;
             CustomInit();
         }
@@ -93,6 +96,13 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// </summary>
         [JsonProperty(PropertyName = "dockerFilePath")]
         public string DockerFilePath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the target build stage for the docker
+        /// build.
+        /// </summary>
+        [JsonProperty(PropertyName = "target")]
+        public string Target { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of override arguments to be used when
