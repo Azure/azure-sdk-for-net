@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// <summary>
         /// Gets or sets credentials of the target container host (base64).
         /// </summary>
-        [JsonProperty(PropertyName = "Properties.targetContainerHostCredentialsBase64")]
+        [JsonProperty(PropertyName = "properties.targetContainerHostCredentialsBase64")]
         public string TargetContainerHostCredentialsBase64 { get; set; }
 
     }
