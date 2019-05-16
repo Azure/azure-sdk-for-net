@@ -77,8 +77,11 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="scoringProfile">The name of a scoring profile to
         /// evaluate match scores for matching documents in order to sort the
         /// results.</param>
-        /// <param name="searchFields">The list of field names to include in
-        /// the full-text search.</param>
+        /// <param name="searchFields">The list of field names to which to
+        /// scope the full-text search. When using fielded search
+        /// (fieldName:searchExpression) in a full Lucene query, the field
+        /// names of each fielded search expression take precedence over any
+        /// field names listed in this parameter.</param>
         /// <param name="searchMode">A value that specifies whether any or all
         /// of the search terms must be matched in order to count the document
         /// as a match. Possible values include: 'any', 'all'</param>
@@ -218,8 +221,11 @@ namespace Microsoft.Azure.Search.Models
         public string ScoringProfile { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of field names to include in the full-text
-        /// search.
+        /// Gets or sets the list of field names to which to scope the
+        /// full-text search. When using fielded search
+        /// (fieldName:searchExpression) in a full Lucene query, the field
+        /// names of each fielded search expression take precedence over any
+        /// field names listed in this parameter.
         /// </summary>
         [Newtonsoft.Json.JsonIgnore]
         public IList<string> SearchFields { get; set; }

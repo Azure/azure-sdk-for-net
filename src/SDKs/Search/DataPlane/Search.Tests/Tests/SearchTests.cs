@@ -16,7 +16,6 @@ namespace Microsoft.Azure.Search.Tests
     using Xunit;
     using FacetResults = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Models.FacetResult>>;
     using HitHighlights = System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<string>>;
-    using DataType = Models.DataType;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
     // the mock recording/playback to work properly.
@@ -489,7 +488,7 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestCanContinueSearchForStaticallyTypedDocuments()
         {
             SearchIndexClient client = GetClient();
-            IEnumerable<string> hotelIds = IndexDocuments(client, 2001);
+            IEnumerable<string> hotelIds = Data.IndexDocuments(client, 2001);
 
             var searchParameters =
                 new SearchParameters()
@@ -527,7 +526,7 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestCanContinueSearchForDynamicDocuments()
         {
             SearchIndexClient client = GetClient();
-            IEnumerable<string> hotelIds = IndexDocuments(client, 2001);
+            IEnumerable<string> hotelIds = Data.IndexDocuments(client, 2001);
 
             var searchParameters =
                 new SearchParameters()
@@ -565,7 +564,7 @@ namespace Microsoft.Azure.Search.Tests
         protected void TestCanContinueSearchWithoutTop()
         {
             SearchIndexClient client = GetClient();
-            IEnumerable<string> hotelIds = IndexDocuments(client, 167);
+            IEnumerable<string> hotelIds = Data.IndexDocuments(client, 167);
 
             var searchParameters =
                 new SearchParameters()
@@ -822,34 +821,6 @@ namespace Microsoft.Azure.Search.Tests
 
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(doc, response.Results[0].Document);
-        }
-
-        private IEnumerable<string> IndexDocuments(SearchIndexClient client, int totalDocCount)
-        {
-            int existingDocumentCount = Data.TestDocuments.Length;
-
-            IEnumerable<string> hotelIds =
-                Enumerable.Range(existingDocumentCount + 1, totalDocCount - existingDocumentCount)
-                .Select(id => id.ToString());
-
-            var hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
-
-            for (int i = 0; i < hotels.Count; i += 1000)
-            {
-                IEnumerable<Hotel> nextHotels = hotels.Skip(i).Take(1000);
-
-                if (!nextHotels.Any())
-                {
-                    break;
-                }
-
-                var batch = IndexBatch.Upload(nextHotels);
-                client.Documents.Index(batch);
-
-                SearchTestUtilities.WaitForIndexing();
-            }
-
-            return hotelIds;
         }
 
         private void AssertKeySequenceEqual(DocumentSearchResult<Hotel> response, params string[] expectedKeys)
