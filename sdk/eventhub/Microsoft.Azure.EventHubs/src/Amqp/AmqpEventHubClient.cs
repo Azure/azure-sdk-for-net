@@ -36,15 +36,15 @@ namespace Microsoft.Azure.EventHubs.Amqp
             {
                 this.InternalTokenProvider = tokenProvider;
             }
-            else if (string.IsNullOrWhiteSpace(csb.SharedAccessSignature))
+            else if (!string.IsNullOrWhiteSpace(csb.SharedAccessSignature))
             {
                 this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SharedAccessSignature);
             }
-            else if (string.IsNullOrWhiteSpace(csb.SasKey))
+            else if (!string.IsNullOrWhiteSpace(csb.SasKey))
             {
                 this.InternalTokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
             }
-            else if (string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
+            else if (!string.Equals(csb.Authentication, "Managed Identity", StringComparison.OrdinalIgnoreCase))
             {
                 this.InternalTokenProvider = TokenProvider.CreateManagedIdentityTokenProvider();
             }
