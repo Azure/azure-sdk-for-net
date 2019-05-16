@@ -25,11 +25,6 @@ namespace Azure.Storage
         public RetryPolicy RetryPolicy { get; set; }
 
         /// <summary>
-        /// Logging 
-        /// </summary>
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
-
-        /// <summary>
         /// Construct the default options for making service requests that
         /// don't require authentication.
         /// </summary>
@@ -86,7 +81,6 @@ namespace Azure.Storage
                 ClientRequestIdPolicy.Singleton,
                 this.RetryPolicy,
                 this.GetAuthenticationPipelinePolicy(this.Credentials),
-                this.LoggingPolicy,
                 // TODO: PageBlob's UploadPagesAsync test currently fails
                 // without buffered responses, so I'm leaving this on for now.
                 // It'd be a great perf win to remove it soon.
