@@ -491,6 +491,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             string apiVersion = "2019-04-01";
             // Tracing
@@ -709,6 +713,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 if (resourceName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
             if (roleName == null)
@@ -932,6 +940,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             string apiVersion = "2019-04-01";
             // Tracing
@@ -1148,6 +1160,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             string apiVersion = "2019-04-01";
             // Tracing
@@ -1363,6 +1379,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 if (resourceName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
             string apiVersion = "2019-04-01";
@@ -1723,6 +1743,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             if (parameters == null)
             {
@@ -1974,6 +1998,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             string apiVersion = "2019-04-01";
             TagsObject parameters = new TagsObject();
@@ -2198,6 +2226,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
                 }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
+                }
             }
             string apiVersion = "2019-04-01";
             // Tracing
@@ -2395,6 +2427,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 if (resourceName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
             if (parameters == null)
@@ -2608,6 +2644,10 @@ namespace Microsoft.Azure.Management.ContainerService
                 if (resourceName.Length < 1)
                 {
                     throw new ValidationException(ValidationRules.MinLength, "resourceName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceName, "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "resourceName", "^[a-zA-Z0-9]$|^[a-zA-Z0-9][-_a-zA-Z0-9]{0,61}[a-zA-Z0-9]$");
                 }
             }
             if (parameters == null)
