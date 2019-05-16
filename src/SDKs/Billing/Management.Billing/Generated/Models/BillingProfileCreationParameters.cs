@@ -38,21 +38,18 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="address">Billing address.</param>
         /// <param name="invoiceEmailOptIn">If the billing profile is opted in
         /// to receive invoices via email.</param>
-        /// <param name="enableAzureSkuIds">Azure skus to enable for this
-        /// billing profile.</param>
+        /// <param name="enableAzureSKUs">Azure skus to enable for this billing
+        /// profile..</param>
         /// <param name="createAzureSubscriptions">Create azure subscriptions
         /// when creating this billing profile.</param>
-        /// <param name="paymentInstrumentId">The paymentInstrument associated
-        /// with the billing profile at creation.</param>
-        public BillingProfileCreationParameters(string displayName = default(string), string poNumber = default(string), Address address = default(Address), bool? invoiceEmailOptIn = default(bool?), IList<string> enableAzureSkuIds = default(IList<string>), bool? createAzureSubscriptions = default(bool?), string paymentInstrumentId = default(string))
+        public BillingProfileCreationParameters(string displayName = default(string), string poNumber = default(string), Address address = default(Address), bool? invoiceEmailOptIn = default(bool?), IList<EnabledAzureSKUs> enableAzureSKUs = default(IList<EnabledAzureSKUs>), bool? createAzureSubscriptions = default(bool?))
         {
             DisplayName = displayName;
             PoNumber = poNumber;
             Address = address;
             InvoiceEmailOptIn = invoiceEmailOptIn;
-            EnableAzureSkuIds = enableAzureSkuIds;
+            EnableAzureSKUs = enableAzureSKUs;
             CreateAzureSubscriptions = createAzureSubscriptions;
-            PaymentInstrumentId = paymentInstrumentId;
             CustomInit();
         }
 
@@ -87,10 +84,10 @@ namespace Microsoft.Azure.Management.Billing.Models
         public bool? InvoiceEmailOptIn { get; set; }
 
         /// <summary>
-        /// Gets or sets azure skus to enable for this billing profile.
+        /// Gets or sets azure skus to enable for this billing profile..
         /// </summary>
-        [JsonProperty(PropertyName = "enableAzureSkuIds")]
-        public IList<string> EnableAzureSkuIds { get; set; }
+        [JsonProperty(PropertyName = "enableAzureSKUs")]
+        public IList<EnabledAzureSKUs> EnableAzureSKUs { get; set; }
 
         /// <summary>
         /// Gets or sets create azure subscriptions when creating this billing
@@ -98,13 +95,6 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         [JsonProperty(PropertyName = "createAzureSubscriptions")]
         public bool? CreateAzureSubscriptions { get; set; }
-
-        /// <summary>
-        /// Gets or sets the paymentInstrument associated with the billing
-        /// profile at creation.
-        /// </summary>
-        [JsonProperty(PropertyName = "paymentInstrumentId")]
-        public string PaymentInstrumentId { get; set; }
 
     }
 }
