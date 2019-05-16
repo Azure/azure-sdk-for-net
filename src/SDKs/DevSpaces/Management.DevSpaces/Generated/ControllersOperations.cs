@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -114,17 +114,17 @@ namespace Microsoft.Azure.Management.DevSpaces
             }
             if (name != null)
             {
-                if (name.Length > 31)
+                if (name.Length > 63)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "name", 31);
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 63);
                 }
-                if (name.Length < 3)
+                if (name.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "name", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "name", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$");
                 }
             }
             // Tracing
@@ -210,11 +210,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -340,13 +340,16 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='tags'>
         /// Tags for the Azure Dev Spaces Controller.
         /// </param>
+        /// <param name='targetContainerHostCredentialsBase64'>
+        /// Credentials of the target container host (base64).
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -361,7 +364,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<Controller>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<Controller>> UpdateWithHttpMessagesAsync(string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), string targetContainerHostCredentialsBase64 = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.ApiVersion == null)
             {
@@ -392,23 +395,24 @@ namespace Microsoft.Azure.Management.DevSpaces
             }
             if (name != null)
             {
-                if (name.Length > 31)
+                if (name.Length > 63)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "name", 31);
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 63);
                 }
-                if (name.Length < 3)
+                if (name.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "name", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "name", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$");
                 }
             }
             ControllerUpdateParameters controllerUpdateParameters = new ControllerUpdateParameters();
-            if (tags != null)
+            if (tags != null || targetContainerHostCredentialsBase64 != null)
             {
                 controllerUpdateParameters.Tags = tags;
+                controllerUpdateParameters.TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -498,13 +502,13 @@ namespace Microsoft.Azure.Management.DevSpaces
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -553,6 +557,24 @@ namespace Microsoft.Azure.Management.DevSpaces
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            // Deserialize Response
+            if ((int)_statusCode == 201)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Rest.Serialization.SafeJsonConvert.DeserializeObject<Controller>(_responseContent, Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -576,7 +598,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -697,11 +719,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -770,7 +792,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -874,11 +896,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -957,7 +979,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1003,17 +1025,17 @@ namespace Microsoft.Azure.Management.DevSpaces
             }
             if (name != null)
             {
-                if (name.Length > 31)
+                if (name.Length > 63)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "name", 31);
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 63);
                 }
-                if (name.Length < 3)
+                if (name.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "name", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "name", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$");
                 }
             }
             if (targetContainerHostResourceId == null)
@@ -1115,11 +1137,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1197,7 +1219,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1243,17 +1265,17 @@ namespace Microsoft.Azure.Management.DevSpaces
             }
             if (name != null)
             {
-                if (name.Length > 31)
+                if (name.Length > 63)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "name", 31);
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 63);
                 }
-                if (name.Length < 3)
+                if (name.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "name", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "name", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$");
                 }
             }
             if (controller == null)
@@ -1354,11 +1376,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 201)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1450,7 +1472,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="ValidationException">
@@ -1493,17 +1515,17 @@ namespace Microsoft.Azure.Management.DevSpaces
             }
             if (name != null)
             {
-                if (name.Length > 31)
+                if (name.Length > 63)
                 {
-                    throw new ValidationException(ValidationRules.MaxLength, "name", 31);
+                    throw new ValidationException(ValidationRules.MaxLength, "name", 63);
                 }
-                if (name.Length < 3)
+                if (name.Length < 1)
                 {
-                    throw new ValidationException(ValidationRules.MinLength, "name", 3);
+                    throw new ValidationException(ValidationRules.MinLength, "name", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(name, "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9](-?[a-zA-Z0-9])*$");
+                    throw new ValidationException(ValidationRules.Pattern, "name", "^[a-zA-Z0-9]([_-]*[a-zA-Z0-9])*$");
                 }
             }
             // Tracing
@@ -1589,11 +1611,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200 && (int)_statusCode != 202 && (int)_statusCode != 204)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1647,7 +1669,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1743,11 +1765,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
@@ -1819,7 +1841,7 @@ namespace Microsoft.Azure.Management.DevSpaces
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorResponseException">
+        /// <exception cref="DevSpacesErrorResponseException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="SerializationException">
@@ -1915,11 +1937,11 @@ namespace Microsoft.Azure.Management.DevSpaces
             string _responseContent = null;
             if ((int)_statusCode != 200)
             {
-                var ex = new ErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                var ex = new DevSpacesErrorResponseException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    ErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<ErrorResponse>(_responseContent, Client.DeserializationSettings);
+                    DevSpacesErrorResponse _errorBody =  Rest.Serialization.SafeJsonConvert.DeserializeObject<DevSpacesErrorResponse>(_responseContent, Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;

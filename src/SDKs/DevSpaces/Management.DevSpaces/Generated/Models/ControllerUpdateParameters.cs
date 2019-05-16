@@ -10,6 +10,8 @@
 
 namespace Microsoft.Azure.Management.DevSpaces.Models
 {
+    using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
     /// <summary>
     /// Parameters for updating an Azure Dev Spaces Controller.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class ControllerUpdateParameters
     {
         /// <summary>
@@ -33,9 +36,12 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// </summary>
         /// <param name="tags">Tags for the Azure Dev Spaces
         /// Controller.</param>
-        public ControllerUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="targetContainerHostCredentialsBase64">Credentials of
+        /// the target container host (base64).</param>
+        public ControllerUpdateParameters(IDictionary<string, string> tags = default(IDictionary<string, string>), string targetContainerHostCredentialsBase64 = default(string))
         {
             Tags = tags;
+            TargetContainerHostCredentialsBase64 = targetContainerHostCredentialsBase64;
             CustomInit();
         }
 
@@ -49,6 +55,12 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets credentials of the target container host (base64).
+        /// </summary>
+        [JsonProperty(PropertyName = "Properties.targetContainerHostCredentialsBase64")]
+        public string TargetContainerHostCredentialsBase64 { get; set; }
 
     }
 }
