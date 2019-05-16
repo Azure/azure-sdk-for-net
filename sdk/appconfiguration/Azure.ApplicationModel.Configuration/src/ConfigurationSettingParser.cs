@@ -3,6 +3,7 @@
 // license information.
 
 using System;
+using System.Buffers;
 using System.IO;
 using System.Text.Json;
 using System.Threading;
@@ -12,32 +13,23 @@ namespace Azure.ApplicationModel.Configuration
 {
     static class ConfigurationServiceSerializer
     {
-        public static bool TrySerialize(ConfigurationSetting setting, byte[] buffer, out int written)
+        public static void Serialize(ConfigurationSetting setting, IBufferWriter<byte> writer)
         {
-            try {
-                var writer = new FixedSizedBufferWriter(buffer);
-                var json = new Utf8JsonWriter(writer);
-                json.WriteStartObject();
-                json.WriteString("value", setting.Value);
-                json.WriteString("content_type", setting.ContentType);
-                if(setting.Tags != null)
+            var json = new Utf8JsonWriter(writer);
+            json.WriteStartObject();
+            json.WriteString("value", setting.Value);
+            json.WriteString("content_type", setting.ContentType);
+            if(setting.Tags != null)
+            {
+                json.WriteStartObject("tags");
+                foreach (var tag in setting.Tags)
                 {
-                    json.WriteStartObject("tags");
-                    foreach (var tag in setting.Tags)
-                    {
-                        json.WriteString(tag.Key, tag.Value);
-                    }
-                    json.WriteEndObject();
+                    json.WriteString(tag.Key, tag.Value);
                 }
                 json.WriteEndObject();
-                json.Flush();
-                written = (int)json.BytesWritten;
-                return true;
             }
-            catch(ArgumentException) {
-                written = 0;
-                return false;
-            }
+            json.WriteEndObject();
+            json.Flush();
         }
 
         private static ConfigurationSetting ReadSetting(JsonElement root)
@@ -132,7 +124,7 @@ namespace Azure.ApplicationModel.Configuration
                 settings[i++] = ReadSetting(item);
             }
 
-            return new SettingBatch(settings, nextBatchUri, selector);
+            return new SettingBatch(settings, nextBatchUri);
         }
 
         static readonly string s_link = "Link";

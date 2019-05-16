@@ -7,7 +7,7 @@ namespace Azure.Core
     /// <summary>
     /// Copied from https://github.com/dotnet/corefx/blob/master/src/Common/src/CoreLib/System/HashCode.cs
     /// </summary>
-    public struct HashCodeBuilder
+    internal struct HashCodeBuilder
     {
         private static readonly uint s_seed = GenerateGlobalSeed();
 
