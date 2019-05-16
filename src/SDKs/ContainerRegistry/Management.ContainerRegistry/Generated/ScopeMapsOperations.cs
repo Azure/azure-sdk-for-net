@@ -132,9 +132,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 {
                     throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z][a-zA-Z0-9-]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z][a-zA-Z0-9-]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-]*$");
                 }
             }
             string apiVersion = "2019-05-01-preview";
@@ -687,9 +687,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 {
                     throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z][a-zA-Z0-9-]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z][a-zA-Z0-9-]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-]*$");
                 }
             }
             if (actions == null)
@@ -959,9 +959,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 {
                     throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z][a-zA-Z0-9-]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z][a-zA-Z0-9-]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-]*$");
                 }
             }
             string apiVersion = "2019-05-01-preview";
@@ -1189,9 +1189,9 @@ namespace Microsoft.Azure.Management.ContainerRegistry
                 {
                     throw new ValidationException(ValidationRules.MinLength, "scopeMapName", 5);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z][a-zA-Z0-9-]*$"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(scopeMapName, "^[a-zA-Z0-9-]*$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z][a-zA-Z0-9-]*$");
+                    throw new ValidationException(ValidationRules.Pattern, "scopeMapName", "^[a-zA-Z0-9-]*$");
                 }
             }
             string apiVersion = "2019-05-01-preview";
