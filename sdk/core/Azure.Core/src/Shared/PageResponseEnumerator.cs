@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Azure.Core
 {
-    public static class PagedResponseEnumerator
+    internal static class PageResponseEnumerator
     {
         public static IEnumerable<Response<T>> CreateEnumerable<T>(Func<string, PageResponse<T>> pageFunc)
         {

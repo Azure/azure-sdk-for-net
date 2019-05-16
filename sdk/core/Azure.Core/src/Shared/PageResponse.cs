@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Azure.Core
 {
-    public struct PageResponse<T>
+    internal struct PageResponse<T>
     {
         public IEnumerable<T> Values { get; }
         public Response Response { get; }
