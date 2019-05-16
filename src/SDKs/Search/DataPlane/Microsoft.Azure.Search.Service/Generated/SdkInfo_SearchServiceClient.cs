@@ -31,10 +31,10 @@ namespace Microsoft.Azure.Search
       // BEGIN: Code Generation Metadata Section
       public static readonly String AutoRestVersion = "latest";
       public static readonly String AutoRestBootStrapperVersion = "autorest@2.0.4283";
-      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/jadrefke/azure-rest-api-specs/blob/skillNameDesc/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\src\\azure-sdk-for-net\\src\\SDKs";
-      public static readonly String GithubForkName = "jadrefke";
-      public static readonly String GithubBranchName = "skillNameDesc";
-      public static readonly String GithubCommidId = "ad25939abc72c29f12490807287f442727a329a2";
+      public static readonly String AutoRestCmdExecuted = "cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/master/specification/search/data-plane/Microsoft.Azure.Search.Service/readme.md --csharp --version=latest --reflect-api-versions --csharp-sdks-folder=C:\\src\\azure-sdk-for-net\\src\\SDKs";
+      public static readonly String GithubForkName = "Azure";
+      public static readonly String GithubBranchName = "master";
+      public static readonly String GithubCommidId = "b06a388001d1f156d8ad0d5a7644bf9ca114ee1c";
       public static readonly String CodeGenerationErrors = "";
       public static readonly String GithubRepoName = "azure-rest-api-specs";
       // END: Code Generation Metadata Section
