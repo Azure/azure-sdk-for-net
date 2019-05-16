@@ -8,11 +8,8 @@ namespace Azure.Security.KeyVault.Secrets
     {
         public RetryPolicy RetryPolicy { get; set; }
 
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
-
         public SecretClientOptions()
         {
-            LoggingPolicy = Core.Pipeline.Policies.LoggingPolicy.Shared;
             RetryPolicy = new ExponentialRetryPolicy()
             {
                 Delay = TimeSpan.FromMilliseconds(800),

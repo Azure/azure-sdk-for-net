@@ -15,6 +15,7 @@ namespace Azure.Core.Pipeline
         public HttpClientOptions()
         {
             TelemetryPolicy = new TelemetryPolicy(GetType().Assembly);
+            LoggingPolicy = LoggingPolicy.Shared;
         }
 
         public HttpPipelineTransport Transport {
@@ -23,6 +24,8 @@ namespace Azure.Core.Pipeline
         }
 
         public TelemetryPolicy TelemetryPolicy { get; set; }
+
+        public LoggingPolicy LoggingPolicy { get; set; }
 
         public ResponseClassifier ResponseClassifier { get; set; } = new ResponseClassifier();
 
