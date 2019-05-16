@@ -51,10 +51,17 @@ jobs:
           scriptPath: '$(Build.BinariesDirectory)/sdk-tools/scripts/python/verify_agent_os.py'
           arguments: $(OSName)
 
-      - task: DotNetCoreInstaller@0
-        displayName: 'Use .NET Core sdk $(DotNetCoreVersion)'
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core runtime $(DotNetCoreRuntimeVersion)"
         inputs:
-          version: '$(DotNetCoreVersion)'
+          packageType: runtime
+          version: "$(DotNetCoreRuntimeVersion)"
+
+      - task: DotNetCoreInstaller@2
+        displayName: "Use .NET Core sdk $(DotNetCoreSDKVersion)"
+        inputs:
+          packageType: sdk
+          version: "$(DotNetCoreSDKVersion)"
 
       - script: 'dotnet test $(ProjectFile) --logger trx'
         displayName: 'Build & Test (all tests)'
@@ -69,6 +76,6 @@ jobs:
         condition: succeededOrFailed()
         inputs:
           testResultsFiles: '**/*.trx'
-          testRunTitle: '$(OSName) DotNet $(DotNetCoreVersion)'
+          testRunTitle: '$(OSName) DotNet $(DotNetCoreRuntimeVersion)'
           testResultsFormat: 'VSTest'
           mergeTestResults: true
