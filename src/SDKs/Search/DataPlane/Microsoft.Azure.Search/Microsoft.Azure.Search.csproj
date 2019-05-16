@@ -8,14 +8,16 @@
     <AssemblyName>Microsoft.Azure.Search</AssemblyName>
     <Version>9.0.0</Version>
     <PackageReleaseNotes>Latest release fixes deadlocking issue and exposes optional Skill.Name field</PackageReleaseNotes>
+    <Version>9.0.1</Version>
+    <PackageReleaseNotes>This is the newest major version of the Azure Search .NET SDK, based on version 2019-05-06 of the Azure Search REST API. New in this GA version is support for Cognitive Search, complex types for richer data modeling, the Autocomplete API, and additional parsing modes for Blob indexers. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade. The 9.0.1 release includes a fix for the deadlock issue (https://github.com/Azure/azure-sdk-for-net/issues/6254) in the Search API.</PackageReleaseNotes>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\AssemblyInfo.Common.cs" Link="Properties\AssemblyInfo.Common.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Search.Data" Version="[9.0.0, 10.0.0)" />
-    <PackageReference Include="Microsoft.Azure.Search.Service" Version="[9.0.0, 10.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Data" Version="[9.0.1, 10.0.0)" />
+    <PackageReference Include="Microsoft.Azure.Search.Service" Version="[9.0.1, 10.0.0)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Microsoft.Azure.Search.Data\Microsoft.Azure.Search.Data.csproj" />

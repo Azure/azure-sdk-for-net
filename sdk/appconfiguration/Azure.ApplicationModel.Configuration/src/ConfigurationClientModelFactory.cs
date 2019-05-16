@@ -24,10 +24,5 @@ namespace Azure.ApplicationModel.Configuration
                 Locked = locked
             };
         }
-
-        public static SettingBatch SettingBatch(ConfigurationSetting[] settings, string link, SettingSelector selector)
-        {
-            return new SettingBatch(settings, link, selector);
-        }
     }
 }

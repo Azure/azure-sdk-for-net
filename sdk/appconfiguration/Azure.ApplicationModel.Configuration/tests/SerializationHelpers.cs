@@ -2,9 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
 
-using System;
-using System.Buffers;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
@@ -14,19 +13,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         public static byte[] Serialize<T>(T t, SerializerFunc<T> serializerFunc)
         {
-            // 2048 get a buffer large enough for all test objects
-            var buffer = ArrayPool<byte>.Shared.Rent(2048);
-            try
-            {
-                var writer = new FixedSizedBufferWriter(buffer);
-                var json = new Utf8JsonWriter(writer);
-                serializerFunc(ref json, t);
-                return buffer.AsMemory().Slice(0, (int)json.BytesWritten).ToArray();
-            }
-            finally
-            {
-                ArrayPool<byte>.Shared.Return(buffer);
-            }
+            var writer = new ArrayBufferWriter<byte>();
+            var json = new Utf8JsonWriter(writer);
+            serializerFunc(ref json, t);
+            json.Flush();
+            return writer.WrittenMemory.ToArray();
         }
     }
 }

@@ -2,8 +2,10 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
 
@@ -70,7 +72,18 @@ namespace Azure.Core.Testing
             {
                 object result = methodInfo.Invoke(invocation.InvocationTarget, invocation.Arguments);
 
-                invocation.ReturnValue = TaskFromResultMethod.MakeGenericMethod(methodInfo.ReturnType).Invoke(null, new [] { result });
+                var returnType = methodInfo.ReturnType;
+
+                // Map IEnumerable to IAsyncEnumerable
+                if (returnType.IsGenericType && returnType.GetGenericTypeDefinition() == typeof(IEnumerable<>))
+                {
+                    invocation.ReturnValue = Activator.CreateInstance(
+                        typeof(AsyncEnumerableWrapper<>).MakeGenericType(returnType.GenericTypeArguments), new[] { result });
+                }
+                else
+                {
+                    invocation.ReturnValue = TaskFromResultMethod.MakeGenericMethod(returnType).Invoke(null, new [] { result });
+                }
             }
             catch (TargetInvocationException exception)
             {
@@ -81,6 +94,37 @@ namespace Azure.Core.Testing
         private static MethodInfo GetMethod(IInvocation invocation, string nonAsyncMethodName, Type[] types)
         {
             return invocation.TargetType.GetMethod(nonAsyncMethodName, BindingFlags.Public | BindingFlags.Instance, null, types, null);
+        }
+
+        private class AsyncEnumerableWrapper<T> : IAsyncEnumerable<T>
+        {
+            private readonly IEnumerable<T> _enumerable;
+
+            public AsyncEnumerableWrapper(IEnumerable<T> enumerable)
+            {
+                _enumerable = enumerable;
+            }
+
+            public IAsyncEnumerator<T> GetAsyncEnumerator(CancellationToken cancellationToken = new CancellationToken())
+            {
+                return new Enumerator(_enumerable.GetEnumerator());
+            }
+
+            private class Enumerator: IAsyncEnumerator<T>
+            {
+                private readonly IEnumerator<T> _enumerator;
+
+                public Enumerator(IEnumerator<T> enumerator)
+                {
+                    _enumerator = enumerator;
+                }
+
+                public ValueTask DisposeAsync() => default;
+
+                public ValueTask<bool> MoveNextAsync() => new ValueTask<bool>(_enumerator.MoveNext());
+
+                public T Current => _enumerator.Current;
+            }
         }
     }
 }

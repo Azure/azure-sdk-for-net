@@ -5,6 +5,8 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
@@ -216,6 +218,34 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             indexClient.Documents.Index(batch);
 
             SearchTestUtilities.WaitForIndexing();
+        }
+
+        public IEnumerable<string> IndexDocuments(SearchIndexClient client, int totalDocCount)
+        {
+            int existingDocumentCount = TestDocuments.Length;
+
+            IEnumerable<string> hotelIds =
+                Enumerable.Range(existingDocumentCount + 1, totalDocCount - existingDocumentCount)
+                .Select(id => id.ToString());
+
+            var hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
+
+            for (int i = 0; i < hotels.Count; i += 1000)
+            {
+                IEnumerable<Hotel> nextHotels = hotels.Skip(i).Take(1000);
+
+                if (!nextHotels.Any())
+                {
+                    break;
+                }
+
+                var batch = IndexBatch.Upload(nextHotels);
+                client.Documents.Index(batch);
+
+                SearchTestUtilities.WaitForIndexing();
+            }
+
+            return hotelIds;
         }
     }
 }

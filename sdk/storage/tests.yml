@@ -1,0 +1,7 @@
+trigger: none
+
+variables:
+  ProjectFile: sdk/storage/Azure.Storage.sln
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/tests.yml

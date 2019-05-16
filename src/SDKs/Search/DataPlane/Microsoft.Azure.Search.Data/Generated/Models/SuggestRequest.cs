@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="searchText">The search text to use to suggest
         /// documents. Must be at least 1 character, and no more than 100
         /// characters.</param>
-        /// <param name="searchFields">The list of comma-separated field names
+        /// <param name="searchFields">The comma-separated list of field names
         /// to search for the specified search text. Target fields must be
         /// included in the specified suggester.</param>
         /// <param name="select">The comma-separated list of fields to
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Search.Models
         public string SearchText { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of comma-separated field names to search for
+        /// Gets or sets the comma-separated list of field names to search for
         /// the specified search text. Target fields must be included in the
         /// specified suggester.
         /// </summary>
