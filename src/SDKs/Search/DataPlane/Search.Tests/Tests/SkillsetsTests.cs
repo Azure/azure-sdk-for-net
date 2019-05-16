@@ -589,7 +589,8 @@ namespace Microsoft.Azure.Search.Tests
             skills.Add(new OcrSkill(inputs, outputs, "Tested OCR skill", RootPathString)
             {
                 TextExtractionAlgorithm = TextExtractionAlgorithm.Printed,
-                DefaultLanguageCode = ocrLanguageCode
+                DefaultLanguageCode = ocrLanguageCode,
+                Name = "MyOcrSkill"
             });
 
             var inputs1 = new List<InputFieldMappingEntry>()
