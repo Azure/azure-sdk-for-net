@@ -963,7 +963,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Processor
                     return authResult.AccessToken;
                 };
 
-            var tokenProvider = TokenProvider.CreateAadTokenProvider(authCallback);
+            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback);
             var epo = await GetOptionsAsync();
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
 

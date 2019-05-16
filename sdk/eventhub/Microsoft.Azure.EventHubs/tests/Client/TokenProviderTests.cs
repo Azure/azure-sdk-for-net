@@ -73,7 +73,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
             var tokenProvider = TokenProvider.CreateSharedAccessSignatureTokenProvider(csb.SasKeyName, csb.SasKey);
 
             // Create new client with updated connection string.
-            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, tokenProvider);
+            var ehClient = EventHubClient.CreateWithTokenProvider(csb.Endpoint, csb.EntityPath, tokenProvider);
 
             // Send one event
             TestUtility.Log($"Sending one message.");
@@ -133,11 +133,11 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
                     return authResult.AccessToken;
                 };
 
-            var tokenProvider = TokenProvider.CreateAadTokenProvider(authCallback);
+            var tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback);
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, tokenProvider);
+            var ehClient = EventHubClient.CreateWithTokenProvider(csb.Endpoint, csb.EntityPath, tokenProvider);
 
             // Send one event
             TestUtility.Log($"Sending one message.");
@@ -190,7 +190,7 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
 
             // Create new client with updated connection string.
             var csb = new EventHubsConnectionStringBuilder(TestUtility.EventHubsConnectionString);
-            var ehClient = EventHubClient.Create(csb.Endpoint, csb.EntityPath, authCallback);
+            var ehClient = EventHubClient.CreateWithAzureActiveDirectory(csb.Endpoint, csb.EntityPath, authCallback);
 
             // Send one event
             TestUtility.Log($"Sending one message.");

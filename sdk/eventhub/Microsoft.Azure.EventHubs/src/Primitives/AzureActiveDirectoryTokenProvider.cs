@@ -11,15 +11,20 @@ namespace Microsoft.Azure.EventHubs
     /// </summary>
     public class AzureActiveDirectoryTokenProvider : TokenProvider
     {
-        const string CommonAuthority = "https://login.microsoftonline.com/common";
+        /// <summary>
+        /// Common authority for Azure Active Directory.
+        /// </summary>
+        public const string CommonAuthority = "https://login.microsoftonline.com/common";
 
         readonly string clientId;
         readonly object authCallbackState;
+        readonly string authority;
         event AuthenticationCallback AuthCallback;
 
-        internal AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, object state)
+        internal AzureActiveDirectoryTokenProvider(AuthenticationCallback authenticationCallback, string authority, object state)
         {
             this.clientId = Guid.NewGuid().ToString();
+            this.authority = authority;
             this.AuthCallback = authenticationCallback;
             this.authCallbackState = state;
         }
@@ -32,7 +37,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            var token = await this.AuthCallback(ClientConstants.AadEventHubsAudience, CommonAuthority, this.authCallbackState).ConfigureAwait(false);
+            var token = await this.AuthCallback(ClientConstants.EventHubsAudience, this.authority, this.authCallbackState).ConfigureAwait(false);
 
             return new JsonSecurityToken(token, appliesTo);
         }

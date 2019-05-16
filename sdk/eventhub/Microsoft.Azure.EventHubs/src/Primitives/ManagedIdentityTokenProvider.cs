@@ -22,7 +22,7 @@ namespace Microsoft.Azure.EventHubs
         /// <returns><see cref="SecurityToken"/></returns>
         public override async Task<SecurityToken> GetTokenAsync(string appliesTo, TimeSpan timeout)
         {
-            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.AadEventHubsAudience);
+            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync(ClientConstants.EventHubsAudience);
             return new JsonSecurityToken(accessToken, appliesTo);
         }
     }

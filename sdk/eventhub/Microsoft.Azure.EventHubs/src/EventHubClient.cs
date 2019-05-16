@@ -63,7 +63,7 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
         /// <param name="transportType">Transport type on connection.</param>
         /// <returns></returns>
-        public static EventHubClient Create(
+        public static EventHubClient CreateWithTokenProvider(
             Uri endpointAddress,
             string entityPath,
             ITokenProvider tokenProvider,
@@ -90,19 +90,21 @@ namespace Microsoft.Azure.EventHubs
         /// <param name="endpointAddress">Fully qualified domain name for Event Hubs. Most likely, {yournamespace}.servicebus.windows.net</param>
         /// <param name="path">The path to the Event Hub.</param>
         /// <param name="authCallback">The authentication callback.</param>
+        /// <param name="authority">Address of the authority to issue token.</param>
         /// <param name="operationTimeout">Operation timeout for Event Hubs operations.</param>
         /// <param name="transportType">Transport type on connection.</param>
         /// <returns>The newly created Event Hub client object.</returns>
-        public static EventHubClient Create(
+        public static EventHubClient CreateWithAzureActiveDirectory(
             Uri endpointAddress,
             string path,
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback,
+            string authority = AzureActiveDirectoryTokenProvider.CommonAuthority,
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
-            TokenProvider tokenProvider = TokenProvider.CreateAadTokenProvider(authCallback);
+            TokenProvider tokenProvider = TokenProvider.CreateAzureActiveDirectoryTokenProvider(authCallback, authority);
 
-            return Create(
+            return CreateWithTokenProvider(
                 endpointAddress,
                 path,
                 tokenProvider,
@@ -124,7 +126,7 @@ namespace Microsoft.Azure.EventHubs
             TimeSpan? operationTimeout = null,
             TransportType transportType = TransportType.Amqp)
         {
-            return Create(
+            return CreateWithTokenProvider(
                 endpointAddress,
                 entityPath,
                 TokenProvider.CreateManagedIdentityTokenProvider(),

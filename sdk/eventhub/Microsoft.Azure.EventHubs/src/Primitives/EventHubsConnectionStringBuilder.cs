@@ -58,9 +58,7 @@ namespace Microsoft.Azure.EventHubs
         static readonly string OperationTimeoutConfigName = "OperationTimeout";
         static readonly string TransportTypeConfigName = "TransportType";
         static readonly string SharedAccessSignatureConfigName = "SharedAccessSignature";
-        static readonly string AadManagedIdentityConfigName = "AadManagedIdentity";
-
-        bool? aadManagedIdentity;
+        static readonly string AuthenticationConfigName = "Authentication";
 
         /// <summary>
         /// Build a connection string consumable by <see cref="EventHubClient.CreateFromConnectionString(string)"/>
@@ -198,27 +196,9 @@ namespace Microsoft.Azure.EventHubs
         public TransportType TransportType { get; set; }
 
         /// <summary>
-        /// Enables AAD Managed Identity authentication
+        /// Enables Azure Active Directory Managed Identity authentication when set to 'Managed Identity'
         /// </summary>
-        public bool AadManagedIdentity
-        {
-            get
-            {
-                if (this.aadManagedIdentity.HasValue)
-                {
-                    return this.aadManagedIdentity.Value;
-                }
-                else
-                {
-                    // Default is false.
-                    return false;
-                }
-            }
-            set
-            {
-                this.aadManagedIdentity = value;
-            }
-        }
+        public string Authentication { get; set; }
 
         /// <summary>
         /// Creates a cloned object of the current <see cref="EventHubsConnectionStringBuilder"/>.
@@ -274,9 +254,9 @@ namespace Microsoft.Azure.EventHubs
                 connectionStringBuilder.Append($"{TransportTypeConfigName}{KeyValueSeparator}{this.TransportType}{KeyValuePairDelimiter}");
             }
 
-            if (this.aadManagedIdentity.HasValue)
+            if (!string.IsNullOrWhiteSpace(this.Authentication))
             {
-                connectionStringBuilder.Append($"{AadManagedIdentityConfigName}{KeyValueSeparator}{this.aadManagedIdentity}{KeyValuePairDelimiter}");
+                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication}{KeyValuePairDelimiter}");
             }
 
             return connectionStringBuilder.ToString();
@@ -319,18 +299,19 @@ namespace Microsoft.Azure.EventHubs
                     Resources.ArgumentInvalidCombination.FormatForUser(SharedAccessKeyNameConfigName, SharedAccessKeyConfigName));
             }
 
-            if (this.aadManagedIdentity.HasValue && hasSharedAccessSignature)
+            var hasAuthentication = !string.IsNullOrWhiteSpace(this.Authentication);
+            if (hasAuthentication && hasSharedAccessSignature)
             {
                 throw Fx.Exception.Argument(
-                    string.Format("{0},{1}", AadManagedIdentityConfigName, SharedAccessSignatureConfigName),
-                    Resources.AuthKeyShouldBeAlone.FormatForUser(AadManagedIdentityConfigName, SharedAccessSignatureConfigName));
+                    string.Format("{0},{1}", AuthenticationConfigName, SharedAccessSignatureConfigName),
+                    Resources.AuthKeyShouldBeAlone.FormatForUser(AuthenticationConfigName, SharedAccessSignatureConfigName));
             }
 
-            if (this.aadManagedIdentity.HasValue && hasSasKeyName)
+            if (hasAuthentication && hasSasKeyName)
             {
                 throw Fx.Exception.Argument(
-                    string.Format("{0},{1}", AadManagedIdentityConfigName, SharedAccessKeyNameConfigName),
-                    Resources.AuthKeyShouldBeAlone.FormatForUser(AadManagedIdentityConfigName, SharedAccessKeyNameConfigName));
+                    string.Format("{0},{1}", AuthenticationConfigName, SharedAccessKeyNameConfigName),
+                    Resources.AuthKeyShouldBeAlone.FormatForUser(AuthenticationConfigName, SharedAccessKeyNameConfigName));
             }
         }
 
@@ -377,9 +358,9 @@ namespace Microsoft.Azure.EventHubs
                 {
                     this.TransportType = (TransportType)Enum.Parse(typeof(TransportType), value);
                 }
-                else if (key.Equals(AadManagedIdentityConfigName, StringComparison.OrdinalIgnoreCase))
+                else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
                 {
-                    this.AadManagedIdentity = bool.Parse(value);
+                    this.Authentication = value;
                 }
                 else
                 {
