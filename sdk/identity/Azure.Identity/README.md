@@ -91,6 +91,9 @@ If the package or a related package supports it, include tips for logging or ena
 * If appropriate, point users to other packages that might be useful.
 * If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
+## Contributing
+Provide guidance for contributing to the client library.
+
 <!-- LINKS -->
 [style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://worldready.cloudapp.net/Styleguide/Read?id=2696&topicid=25357
