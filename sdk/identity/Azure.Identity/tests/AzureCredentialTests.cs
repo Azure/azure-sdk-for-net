@@ -21,20 +21,20 @@ namespace Azure.Identity.Tests
                 _expires = expires;
             }
 
-            protected override AuthenticationResponse Authenticate(string[] scopes, CancellationToken cancellationToken)
+            protected override AccessToken GetTokenCore(string[] scopes, CancellationToken cancellationToken)
             {
                 AuthCount++;
 
-                return new AuthenticationResponse("mocktoken", _expires);
+                return new AccessToken("mocktoken", _expires);
             }
 
-            protected override async Task<AuthenticationResponse> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken)
+            protected override async Task<AccessToken> GetTokenCoreAsync(string[] scopes, CancellationToken cancellationToken)
             {
                 AuthCount++;
 
                 await Task.CompletedTask;
 
-                return new AuthenticationResponse("mocktoken", _expires);
+                return new AccessToken("mocktoken", _expires);
             }
         }
 

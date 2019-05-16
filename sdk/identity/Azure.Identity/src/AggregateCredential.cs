@@ -9,17 +9,23 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    public class TokenCredentialProvider : TokenCredential
+    public class AggregateCredential : TokenCredential
     {
         private TokenCredential[] _sources;
 
-        public TokenCredentialProvider(params TokenCredential[] sources)
+        public AggregateCredential(params TokenCredential[] sources)
         {
             if (sources == null) throw new ArgumentNullException(nameof(sources));
 
             if (sources.Length == 0) throw new ArgumentException("sources must not be empty", nameof(sources));
 
-            if (sources.Any(tc => tc == null)) throw new ArgumentException("sources must not contain null", nameof(sources));
+            for(int i = 0; i < sources.Length; i++)
+            {
+                if (sources[i] == null)
+                {
+                    throw new ArgumentException("sources must not contain null", nameof(sources));
+                }
+            }
 
             _sources = sources;
         }

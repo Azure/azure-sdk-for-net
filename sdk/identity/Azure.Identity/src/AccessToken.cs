@@ -6,15 +6,15 @@ using System.Collections.Generic;
 
 namespace Azure.Identity
 {
-    public class AuthenticationResponse
+    public class AccessToken
     {
-        public AuthenticationResponse(string accessToken, DateTimeOffset expiresOn)
+        public AccessToken(string accessToken, DateTimeOffset expiresOn)
         {
-            AccessToken = accessToken;
+            Token = accessToken;
             ExpiresOn = expiresOn;
         }
 
-        public string AccessToken { get; private set; }
+        public string Token { get; private set; }
 
         public DateTimeOffset ExpiresOn { get; private set; }
     }

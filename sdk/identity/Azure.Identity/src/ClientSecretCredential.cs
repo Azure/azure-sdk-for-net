@@ -28,12 +28,12 @@ namespace Azure.Identity
             ClientSecret = clientSecret;
         }
 
-        protected override async Task<AuthenticationResponse> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken = default)
+        protected override async Task<AccessToken> GetTokenCoreAsync(string[] scopes, CancellationToken cancellationToken = default)
         {
             return await this.Client.AuthenticateAsync(TenantId, ClientId, ClientSecret, scopes, cancellationToken).ConfigureAwait(false);
         }
 
-        protected override AuthenticationResponse Authenticate(string[] scopes, CancellationToken cancellationToken = default)
+        protected override AccessToken GetTokenCore(string[] scopes, CancellationToken cancellationToken = default)
         {
             return this.Client.Authenticate(TenantId, ClientId, ClientSecret, scopes, cancellationToken);
         }

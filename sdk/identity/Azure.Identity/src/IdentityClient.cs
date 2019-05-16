@@ -33,7 +33,7 @@ namespace Azure.Identity
                     BufferResponsePolicy.Singleton);
         }
 
-        public async Task<AuthenticationResponse> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public async Task<AccessToken> AuthenticateAsync(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -43,14 +43,14 @@ namespace Azure.Identity
                 {
                     var result = await DeserializeAsync(response.ContentStream, cancellationToken).ConfigureAwait(false);
 
-                    return new Response<AuthenticationResponse>(response, result);
+                    return new Response<AccessToken>(response, result);
                 }
 
                 throw await response.CreateRequestFailedExceptionAsync();
             }
         }
 
-        public AuthenticationResponse Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
+        public AccessToken Authenticate(string tenantId, string clientId, string clientSecret, string[] scopes, CancellationToken cancellationToken = default)
         {
             using (Request request = CreateClientSecretAuthRequest(tenantId, clientId, clientSecret, scopes))
             {
@@ -60,7 +60,7 @@ namespace Azure.Identity
                 {
                     var result = Deserialize(response.ContentStream);
 
-                    return new Response<AuthenticationResponse>(response, result);
+                    return new Response<AccessToken>(response, result);
                 }
 
                 throw response.CreateRequestFailedException();
@@ -111,7 +111,7 @@ namespace Azure.Identity
             return buff.AsMemory(0, (int)json.BytesWritten);
         }
 
-        private async Task<AuthenticationResponse> DeserializeAsync(Stream content, CancellationToken cancellationToken)
+        private async Task<AccessToken> DeserializeAsync(Stream content, CancellationToken cancellationToken)
         {
             using (JsonDocument json = await JsonDocument.ParseAsync(content, default, cancellationToken).ConfigureAwait(false))
             {
@@ -119,7 +119,7 @@ namespace Azure.Identity
             }
         }
 
-        private AuthenticationResponse Deserialize(Stream content)
+        private AccessToken Deserialize(Stream content)
         {
             using (JsonDocument json = JsonDocument.Parse(content))
             {
@@ -127,7 +127,7 @@ namespace Azure.Identity
             }
         }
 
-        private AuthenticationResponse Deserialize(JsonElement json)
+        private AccessToken Deserialize(JsonElement json)
         {
             string accessToken = null;
 
@@ -143,7 +143,7 @@ namespace Azure.Identity
                 expiresOn = DateTime.UtcNow + TimeSpan.FromSeconds(expiresInProp.GetInt64());
             }
 
-            return new AuthenticationResponse(accessToken, expiresOn);
+            return new AccessToken(accessToken, expiresOn);
         }
 
         // TODO (pri 3): CoreFx will soon have a type like this. We should remove this one then.

@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Azure.Identity
 {
-    public class EnvironmentCredentialProvider : TokenCredential
+    public class EnvironmentCredential : TokenCredential
     {
         private TokenCredential _credential = null;
 
-        public EnvironmentCredentialProvider()
+        public EnvironmentCredential()
             : this(null)
         {
         }
 
-        public EnvironmentCredentialProvider(IdentityClientOptions options)
+        public EnvironmentCredential(IdentityClientOptions options)
         {
             string tenantId = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
             string clientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");

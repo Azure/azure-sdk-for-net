@@ -9,9 +9,9 @@ namespace Azure.Identity.Tests
 {
     public static class TestAccessibilityExtensions
     {
-        public static TokenCredential _credential(this EnvironmentCredentialProvider provider)
+        public static TokenCredential _credential(this EnvironmentCredential provider)
         {
-            return (TokenCredential)typeof(EnvironmentCredentialProvider).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
+            return (TokenCredential)typeof(EnvironmentCredential).GetField("_credential", BindingFlags.NonPublic | BindingFlags.Instance).GetValue(provider);
         }
     }
 
@@ -39,7 +39,7 @@ namespace Azure.Identity.Tests
 
                 Environment.SetEnvironmentVariable("AZURE_CLIENT_SECRET", "mockclientsecret");
 
-                var provider = new EnvironmentCredentialProvider();
+                var provider = new EnvironmentCredential();
 
                 ClientSecretCredential cred = provider._credential() as ClientSecretCredential;
 

@@ -11,14 +11,14 @@ namespace Azure.Identity
     public abstract class AzureCredential : TokenCredential
     {
         private IdentityClient _client;
-        private AuthenticationResponse _cachedResponse;
+        private AccessToken _cachedResponse;
         private SemaphoreSlim _refreshLock = new SemaphoreSlim(1, 1);
         private TimeSpan _refreshBuffer;
 
         static AzureCredential()
         {
             // TODO: update to TokenCredentialProvider once other credential providers are available
-            AzureCredential.Default = new EnvironmentCredentialProvider();
+            AzureCredential.Default = new EnvironmentCredential();
         }
 
 
@@ -36,7 +36,7 @@ namespace Azure.Identity
         {
             if (!NeedsRefresh)
             {
-                return _cachedResponse.AccessToken;
+                return _cachedResponse.Token;
             }
 
             await _refreshLock.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -45,10 +45,10 @@ namespace Azure.Identity
             {
                 if (NeedsRefresh)
                 {
-                    _cachedResponse = await AuthenticateAsync(scopes, cancellationToken).ConfigureAwait(false);
+                    _cachedResponse = await GetTokenCoreAsync(scopes, cancellationToken).ConfigureAwait(false);
                 }
 
-                return _cachedResponse.AccessToken;
+                return _cachedResponse.Token;
             }
             finally
             {
@@ -56,11 +56,11 @@ namespace Azure.Identity
             }
         }
 
-        public override string GetToken(string[] scopes, CancellationToken cancellationToken)
+        public override string GetToken(string[] scopes, CancellationToken cancellationToken = default)
         {
             if (!NeedsRefresh)
             {
-                return _cachedResponse.AccessToken;
+                return _cachedResponse.Token;
             }
 
             _refreshLock.Wait(cancellationToken);
@@ -69,10 +69,10 @@ namespace Azure.Identity
             {
                 if (NeedsRefresh)
                 {
-                    _cachedResponse = Authenticate(scopes, cancellationToken);
+                    _cachedResponse = GetTokenCore(scopes, cancellationToken);
                 }
 
-                return _cachedResponse.AccessToken;
+                return _cachedResponse.Token;
             }
             finally
             {
@@ -80,9 +80,9 @@ namespace Azure.Identity
             }
         }
 
-        protected abstract Task<AuthenticationResponse> AuthenticateAsync(string[] scopes, CancellationToken cancellationToken);
+        protected abstract Task<AccessToken> GetTokenCoreAsync(string[] scopes, CancellationToken cancellationToken);
 
-        protected abstract AuthenticationResponse Authenticate(string[] scopes, CancellationToken cancellationToken);
+        protected abstract AccessToken GetTokenCore(string[] scopes, CancellationToken cancellationToken);
 
         internal IdentityClient Client => _client;
 
