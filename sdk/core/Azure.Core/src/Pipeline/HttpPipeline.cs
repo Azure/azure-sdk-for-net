@@ -73,6 +73,8 @@ namespace Azure.Core.Pipeline
 
             policies.AddRange(options.PerRetryPolicies);
 
+            policies.Add(options.LoggingPolicy);
+
             policies.RemoveAll(policy => policy == null);
 
             return new HttpPipeline(options.Transport, policies.ToArray(), options.ResponseClassifier, options.ServiceProvider);

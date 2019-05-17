@@ -17,21 +17,21 @@ namespace Microsoft.Azure.Management.DevSpaces.Models
     /// Error response indicates that the service is not able to process the
     /// incoming request. The reason is provided in the error message.
     /// </summary>
-    public partial class ErrorResponse
+    public partial class DevSpacesErrorResponse
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the DevSpacesErrorResponse class.
         /// </summary>
-        public ErrorResponse()
+        public DevSpacesErrorResponse()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the DevSpacesErrorResponse class.
         /// </summary>
         /// <param name="error">The details of the error.</param>
-        public ErrorResponse(ErrorDetails error = default(ErrorDetails))
+        public DevSpacesErrorResponse(ErrorDetails error = default(ErrorDetails))
         {
             Error = error;
             CustomInit();

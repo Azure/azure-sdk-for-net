@@ -1,34 +1,40 @@
 # Microsoft Azure SDK for .NET
 
-This repo contains official .NET client libraries for Microsoft Azure services.
+This repository contains official .NET client libraries for Microsoft Azure services.
 
-## NuGet Packages
+## NuGet packages
 
-[All Nuget Packages](https://github.com/Azure/azure-sdk-for-net/blob/master/packages.md).
+See the list of [all NuGet packages](packages.md).
 
-## Getting Started
+## Getting started
 
-You can find _getting started guides_ in README.md files located in component specific sub-directories. 
-Below you can find direct links to the most commonly used components.
+To get started with a library, see the **README<span />.md** file for that component. Each README is located within the subdirectory for the component. For example, the getting started READMEs for App Configuration and Service Bus are in the following subdirectories:
 
-### Core Services
-[Azure.Messaging.EventHub](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/eventhub/Microsoft.Azure.EventHubs/README.md)
+* [/sdk/appconfiguration/Azure.ApplicationModel.Configuration/](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
+* [/sdk/servicebus/Microsoft.Azure.ServiceBus/](/sdk/servicebus/Microsoft.Azure.ServiceBus/README.md)
 
-[Azure.Identity.KeyVault](https://github.com/Azure/azure-sdk-for-net/blob/master/sdk/keyvault/Microsoft.Azure.KeyVault/README.md)
+The following sections provide direct links to the most commonly used components.
+
+### Core services
+
+[Azure.Messaging.EventHub](/sdk/eventhub/Microsoft.Azure.EventHubs/README.md)
+
+[Azure.Identity.KeyVault](/sdk/keyvault/Microsoft.Azure.KeyVault/README.md)
 
 Azure.Storage.Blobs
 
 Azure.Data.Cosmos
 
-### Shared Libraries
-Azure SDK clients use shared libraries implementing retries, logging, transport protocols, authentication protocols, etc. 
+### Shared libraries
 
-[Azure.Core](https://github.com/Azure/azure-sdk-for-net/blob/master/src/SDKs/Azure.Core/data-plane/README.md)
+Azure SDK clients use shared libraries implementing retries, logging, transport protocols, authentication protocols, etc.
 
-### Other Services
-[Azure.Data.Configuration](https://github.com/Azure/azure-sdk-for-net/blob/master/src/SDKs/Azure.ApplicationModel.Configuration/data-plane/README.md)
+[Azure.Core](/sdk/core/Azure.Core/README.md)
 
-...
+### Other services
+
+[Azure.ApplicationModel.Configuration](/sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md)
 
 ## Contributing
-See [contributing guide](CONTRIBUTING.md) for details on contributing to this repo.
+
+For details on contributing to this repository, see the [contributing guide](CONTRIBUTING.md).
