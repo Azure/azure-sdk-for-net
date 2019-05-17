@@ -33,7 +33,7 @@ namespace ComputerVisionSDK.Tests
             return null;
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void BatchReadFileTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -73,7 +73,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
         public void BatchReadFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
