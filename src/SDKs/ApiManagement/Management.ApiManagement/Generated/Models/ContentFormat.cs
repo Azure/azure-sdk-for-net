@@ -43,5 +43,20 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// address.
         /// </summary>
         public const string WsdlLink = "wsdl-link";
+        /// <summary>
+        /// The contents are inline and Content Type is a OpenApi 3.0 Document
+        /// in YAML format.
+        /// </summary>
+        public const string Openapi = "openapi";
+        /// <summary>
+        /// The contents are inline and Content Type is a OpenApi 3.0 Document
+        /// in JSON format.
+        /// </summary>
+        public const string Openapijson = "openapi+json";
+        /// <summary>
+        /// The Open Api 3.0 document is hosted on a publicly accessible
+        /// internet address.
+        /// </summary>
+        public const string OpenapiLink = "openapi-link";
     }
 }

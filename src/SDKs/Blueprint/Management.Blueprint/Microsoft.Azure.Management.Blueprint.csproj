@@ -6,7 +6,7 @@
   <PropertyGroup>
     <PackageId>Microsoft.Azure.Management.Blueprint</PackageId>
     <Description>Provides Microsoft Azure Blueprint management operations including the ability to create, update and delete Blueprint definition and assignment.</Description>
-    <Version>0.11.0-preview</Version>
+    <Version>0.13.0-preview</Version>
     <!-- Remove the Preview description in PackageReleaseNotes once the preview is removed.-->
     <AssemblyTitle>Microsoft Azure Blueprint Management Library</AssemblyTitle>
     <AssemblyName>Microsoft.Azure.Management.Blueprint</AssemblyName>
@@ -14,10 +14,8 @@
     <PackageReleaseNotes>
 <![CDATA[This is a preview release sdk for Azure Blueprints, allows you to do Blueprint definition and assignment CRUD.
 
-Changes in 0.11.0-preview (includes breaking changes):
- - Breaking change: Removing AllResources lock mode
- - Adding AllResourcesReadOnly, and AllResourcesDoNotDelete lock modes for assignments
- - Adding support for specifying tags on resource groups
+Changes in 0.13.0-preview:
+ - Change the type of Blueprint properties lastModified and timeCreated to DateTime.
 ]]>
 </PackageReleaseNotes>
   </PropertyGroup>

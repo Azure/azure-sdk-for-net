@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             public static IPage<ApplicationInsightsComponent> ListByResourceGroup(this IComponentsOperations operations, string resourceGroupName)
             {
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -194,7 +194,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -243,7 +243,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the resource group. The name is case insensitive.
             /// </param>
             /// <param name='resourceName'>
             /// The name of the Application Insights component resource.
@@ -257,6 +257,104 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
             public static async Task<ApplicationInsightsComponent> UpdateTagsAsync(this IComponentsOperations operations, string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateTagsWithHttpMessagesAsync(resourceGroupName, resourceName, tags, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Purges data in an Application Insights component by a set of user-defined
+            /// filters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='body'>
+            /// Describes the body of a request to purge data in a single table of an
+            /// Application Insights component
+            /// </param>
+            public static ComponentPurgeResponse Purge(this IComponentsOperations operations, string resourceGroupName, string resourceName, ComponentPurgeBody body)
+            {
+                return operations.PurgeAsync(resourceGroupName, resourceName, body).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Purges data in an Application Insights component by a set of user-defined
+            /// filters.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='body'>
+            /// Describes the body of a request to purge data in a single table of an
+            /// Application Insights component
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ComponentPurgeResponse> PurgeAsync(this IComponentsOperations operations, string resourceGroupName, string resourceName, ComponentPurgeBody body, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PurgeWithHttpMessagesAsync(resourceGroupName, resourceName, body, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get status for an ongoing purge operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='purgeId'>
+            /// In a purge status request, this is the Id of the operation the status of
+            /// which is returned.
+            /// </param>
+            public static ComponentPurgeStatusResponse GetPurgeStatus(this IComponentsOperations operations, string resourceGroupName, string resourceName, string purgeId)
+            {
+                return operations.GetPurgeStatusAsync(resourceGroupName, resourceName, purgeId).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get status for an ongoing purge operation.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceName'>
+            /// The name of the Application Insights component resource.
+            /// </param>
+            /// <param name='purgeId'>
+            /// In a purge status request, this is the Id of the operation the status of
+            /// which is returned.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ComponentPurgeStatusResponse> GetPurgeStatusAsync(this IComponentsOperations operations, string resourceGroupName, string resourceName, string purgeId, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetPurgeStatusWithHttpMessagesAsync(resourceGroupName, resourceName, purgeId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

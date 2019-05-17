@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// include: 'Speed', 'Balanced', 'Quality'</param>
         /// <param name="layers">The collection of output H.264 layers to be
         /// produced by the encoder.</param>
-        public H264Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), string stretchMode = default(string), bool? sceneChangeDetection = default(bool?), string complexity = default(string), IList<H264Layer> layers = default(IList<H264Layer>))
+        public H264Video(string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), bool? sceneChangeDetection = default(bool?), H264Complexity? complexity = default(H264Complexity?), IList<H264Layer> layers = default(IList<H264Layer>))
             : base(label, keyFrameInterval, stretchMode)
         {
             SceneChangeDetection = sceneChangeDetection;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Balanced', 'Quality'
         /// </summary>
         [JsonProperty(PropertyName = "complexity")]
-        public string Complexity { get; set; }
+        public H264Complexity? Complexity { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of output H.264 layers to be produced

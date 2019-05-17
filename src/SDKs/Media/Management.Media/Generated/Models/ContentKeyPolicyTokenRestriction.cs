@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// claims.</param>
         /// <param name="openIdConnectDiscoveryDocument">The OpenID connect
         /// discovery document.</param>
-        public ContentKeyPolicyTokenRestriction(string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, string restrictionTokenType, IList<ContentKeyPolicyRestrictionTokenKey> alternateVerificationKeys = default(IList<ContentKeyPolicyRestrictionTokenKey>), IList<ContentKeyPolicyTokenClaim> requiredClaims = default(IList<ContentKeyPolicyTokenClaim>), string openIdConnectDiscoveryDocument = default(string))
+        public ContentKeyPolicyTokenRestriction(string issuer, string audience, ContentKeyPolicyRestrictionTokenKey primaryVerificationKey, ContentKeyPolicyRestrictionTokenType restrictionTokenType, IList<ContentKeyPolicyRestrictionTokenKey> alternateVerificationKeys = default(IList<ContentKeyPolicyRestrictionTokenKey>), IList<ContentKeyPolicyTokenClaim> requiredClaims = default(IList<ContentKeyPolicyTokenClaim>), string openIdConnectDiscoveryDocument = default(string))
         {
             Issuer = issuer;
             Audience = audience;
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Swt', 'Jwt'
         /// </summary>
         [JsonProperty(PropertyName = "restrictionTokenType")]
-        public string RestrictionTokenType { get; set; }
+        public ContentKeyPolicyRestrictionTokenType RestrictionTokenType { get; set; }
 
         /// <summary>
         /// Gets or sets the OpenID connect discovery document.
@@ -127,10 +127,6 @@ namespace Microsoft.Azure.Management.Media.Models
             if (PrimaryVerificationKey == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "PrimaryVerificationKey");
-            }
-            if (RestrictionTokenType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RestrictionTokenType");
             }
         }
     }

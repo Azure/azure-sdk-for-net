@@ -40,6 +40,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// When set to true, the response contains an array of groups that
         /// have visibility to the product. The default is false.
         /// </param>
+        /// <param name='tags'>
+        /// Products which are part of a specific tag.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -55,7 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ProductContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<ProductContract> odataQuery = default(ODataQuery<ProductContract>), bool? expandGroups = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ProductContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<ProductContract> odataQuery = default(ODataQuery<ProductContract>), bool? expandGroups = default(bool?), string tags = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the entity state (Etag) version of the product specified by
         /// its identifier.
@@ -147,9 +150,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ProductContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, ProductContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ProductContract,ProductCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, ProductContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update product.
+        /// Update existing product details.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -217,6 +220,37 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string productId, string ifMatch, bool? deleteSubscriptions = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Lists a collection of products associated with tags.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='serviceName'>
+        /// The name of the API Management service.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='includeNotTaggedProducts'>
+        /// Include not tagged Products.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TagResourceContract>>> ListByTagsWithHttpMessagesAsync(string resourceGroupName, string serviceName, ODataQuery<TagResourceContract> odataQuery = default(ODataQuery<TagResourceContract>), bool? includeNotTaggedProducts = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists a collection of products in the specified service instance.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -238,5 +272,27 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<IPage<ProductContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists a collection of products associated with tags.
+        /// </summary>
+        /// <param name='nextPageLink'>
+        /// The NextLink from the previous successful call to List operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="ErrorResponseException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<IPage<TagResourceContract>>> ListByTagsNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

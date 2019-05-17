@@ -1,0 +1,16 @@
+trigger: none
+
+variables:
+  ProjectFile: sdk/storage/Azure.Storage.sln
+
+jobs:
+- template: ../../eng/pipelines/templates/jobs/tests.yml
+  parameters:
+    presteps:
+      - powershell: |
+          $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
+          '$(net-storage-test-configuration)' | Out-File -Encoding Utf8 $TestConfigurationPath
+          Write-Host "##vso[task.setvariable variable=TestConfigurationPath]$TestConfigurationPath"
+
+    envvars:
+      AZ_STORAGE_CONFIG_PATH: $(TestConfigurationPath)

@@ -75,6 +75,11 @@ namespace Microsoft.Azure.Management.Advisor
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
+        /// Gets the IRecommendationMetadataOperations.
+        /// </summary>
+        public virtual IRecommendationMetadataOperations RecommendationMetadata { get; private set; }
+
+        /// <summary>
         /// Gets the IConfigurationsOperations.
         /// </summary>
         public virtual IConfigurationsOperations Configurations { get; private set; }
@@ -335,6 +340,7 @@ namespace Microsoft.Azure.Management.Advisor
         /// </summary>
         private void Initialize()
         {
+            RecommendationMetadata = new RecommendationMetadataOperations(this);
             Configurations = new ConfigurationsOperations(this);
             Recommendations = new RecommendationsOperations(this);
             Operations = new Operations(this);

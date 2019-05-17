@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'ReadWriteDelete'</param>
         /// <param name="expiryTime">The SAS URL expiration time.  This must be
         /// less than 24 hours from the current time.</param>
-        public ListContainerSasInput(string permissions = default(string), System.DateTime? expiryTime = default(System.DateTime?))
+        public ListContainerSasInput(AssetContainerPermission? permissions = default(AssetContainerPermission?), System.DateTime? expiryTime = default(System.DateTime?))
         {
             Permissions = permissions;
             ExpiryTime = expiryTime;
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// include: 'Read', 'ReadWrite', 'ReadWriteDelete'
         /// </summary>
         [JsonProperty(PropertyName = "permissions")]
-        public string Permissions { get; set; }
+        public AssetContainerPermission? Permissions { get; set; }
 
         /// <summary>
         /// Gets or sets the SAS URL expiration time.  This must be less than

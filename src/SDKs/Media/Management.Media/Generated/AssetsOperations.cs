@@ -1141,7 +1141,7 @@ namespace Microsoft.Azure.Management.Media
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AssetContainerSas>> ListContainerSasWithHttpMessagesAsync(string resourceGroupName, string accountName, string assetName, string permissions = default(string), System.DateTime? expiryTime = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<AssetContainerSas>> ListContainerSasWithHttpMessagesAsync(string resourceGroupName, string accountName, string assetName, AssetContainerPermission? permissions = default(AssetContainerPermission?), System.DateTime? expiryTime = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (Client.SubscriptionId == null)
             {

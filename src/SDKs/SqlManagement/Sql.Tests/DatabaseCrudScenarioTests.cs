@@ -73,9 +73,25 @@ namespace Sql.Tests
                 Assert.NotNull(db4);
                 SqlManagementTestUtilities.ValidateDatabase(db4Input, db4, dbName);
 
+                // Create database with Serverless specific parameters
+                //
+                dbName = SqlManagementTestUtilities.GenerateName();
+                var db5Input = new Database()
+                {
+                    Location = server.Location,
+                    Sku = new Microsoft.Azure.Management.Sql.Models.Sku("GP_S_Gen5_2"),
+                    Tags = tags,
+                    AutoPauseDelay = 360,
+                    MinCapacity = 0.5,
+                };
+                var db5 = sqlClient.Databases.CreateOrUpdate(resourceGroup.Name, server.Name, dbName, db5Input);
+                Assert.NotNull(db5);
+                SqlManagementTestUtilities.ValidateDatabase(db5Input, db5, dbName);
+
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db1.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db2.Name);
                 sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db4.Name);
+                sqlClient.Databases.Delete(resourceGroup.Name, server.Name, db5.Name);
             }
         }
 

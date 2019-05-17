@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using System.Linq;
 
     /// <summary>
-    /// A rule governing the accesibility of a vault from a specific ip address
-    /// or ip range.
+    /// A rule governing the accessibility of a vault from a specific ip
+    /// address or ip range.
     /// </summary>
     public partial class IPRule
     {

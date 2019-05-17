@@ -11,12 +11,14 @@
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     using Microsoft.Rest;
+    using Microsoft.Rest.Serialization;
     using Newtonsoft.Json;
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the Deploy Configuration operation.
+    /// Deploy Tenant Configuration Contract.
     /// </summary>
+    [Rest.Serialization.JsonTransformation]
     public partial class DeployConfigurationParameters
     {
         /// <summary>
@@ -53,14 +55,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets the name of the Git branch from which the
         /// configuration is to be deployed to the configuration database.
         /// </summary>
-        [JsonProperty(PropertyName = "branch")]
+        [JsonProperty(PropertyName = "properties.branch")]
         public string Branch { get; set; }
 
         /// <summary>
         /// Gets or sets the value enforcing deleting subscriptions to products
         /// that are deleted in this update.
         /// </summary>
-        [JsonProperty(PropertyName = "force")]
+        [JsonProperty(PropertyName = "properties.force")]
         public bool? Force { get; set; }
 
         /// <summary>

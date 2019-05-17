@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="type">Resource type.</param>
         /// <param name="displayName">The billing profile name.</param>
         /// <param name="poNumber">Purchase order number.</param>
-        /// <param name="billingAddress">Billing address.</param>
+        /// <param name="address">Billing address.</param>
         /// <param name="invoiceEmailOptIn">If the billing profile is opted in
         /// to receive invoices via email.</param>
         /// <param name="isClassic">Is OMS bootstrapped billing
@@ -51,12 +51,12 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// product.</param>
         /// <param name="invoiceSections">The invoice sections associated to
         /// the billing profile.</param>
-        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), Address billingAddress = default(Address), bool? invoiceEmailOptIn = default(bool?), bool? isClassic = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<EnabledAzureSKUs> enabledAzureSKUs = default(IList<EnabledAzureSKUs>), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>))
+        public BillingProfile(string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), string poNumber = default(string), Address address = default(Address), bool? invoiceEmailOptIn = default(bool?), bool? isClassic = default(bool?), int? invoiceDay = default(int?), string currency = default(string), IList<EnabledAzureSKUs> enabledAzureSKUs = default(IList<EnabledAzureSKUs>), IList<InvoiceSection> invoiceSections = default(IList<InvoiceSection>))
             : base(id, name, type)
         {
             DisplayName = displayName;
             PoNumber = poNumber;
-            BillingAddress = billingAddress;
+            Address = address;
             InvoiceEmailOptIn = invoiceEmailOptIn;
             IsClassic = isClassic;
             InvoiceDay = invoiceDay;
@@ -86,8 +86,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Gets or sets billing address.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.billingAddress")]
-        public Address BillingAddress { get; set; }
+        [JsonProperty(PropertyName = "properties.address")]
+        public Address Address { get; set; }
 
         /// <summary>
         /// Gets if the billing profile is opted in to receive invoices via

@@ -476,5 +476,53 @@ namespace Management.HDInsight.Tests
             workerNode = cluster.Properties.ComputeProfile.Roles.First(role => role.Name == "workernode");
             Assert.Equal(workerNodeParams.TargetInstanceCount.Value + 1, workerNode.TargetInstanceCount);
         }
+
+        [Fact]
+        public void TestGetOrUpdateGatewaySettings()
+        {
+            TestInitialize();
+
+            string clusterName = TestUtilities.GenerateName("hdisdk-gateway");
+            var createParams = CommonData.PrepareClusterCreateParamsForWasb();
+            var cluster = HDInsightClient.Clusters.Create(CommonData.ResourceGroupName, clusterName, createParams);
+            ValidateCluster(clusterName, createParams, cluster);
+
+            string expectedUserName = CommonData.ClusterUserName;
+            string expectedPassword = CommonData.ClusterPassword;
+            var gatewaySettings = HDInsightClient.Clusters.GetGatewaySettings(CommonData.ResourceGroupName, clusterName);
+            ValidateGatewaySettings(expectedUserName, expectedPassword, gatewaySettings);
+
+            // Disable gateway settings is not allowed.
+            var updateParams = new UpdateGatewaySettingsParameters
+            {
+                IsCredentialEnabled = false
+            };
+
+            try
+            {
+                HDInsightClient.Clusters.UpdateGatewaySettings(CommonData.ResourceGroupName, clusterName, updateParams);
+                Assert.True(false, "Disable gateway settings should fail");
+            }
+            catch(ErrorResponseException ex)
+            {
+                Assert.Equal(HttpStatusCode.MethodNotAllowed, ex.Response.StatusCode);
+            }
+
+            // Make sure anything stay unchanged after attempting to disable gateway settings.
+            gatewaySettings = HDInsightClient.Clusters.GetGatewaySettings(CommonData.ResourceGroupName, clusterName);
+            ValidateGatewaySettings(expectedUserName, expectedPassword, gatewaySettings);
+
+            string newExpectedPassword = "NewPassword1!";
+            updateParams = new UpdateGatewaySettingsParameters
+            {
+                IsCredentialEnabled = true,
+                UserName = expectedUserName,
+                Password = newExpectedPassword
+            };
+
+            HDInsightClient.Clusters.UpdateGatewaySettings(CommonData.ResourceGroupName, clusterName, updateParams);
+            gatewaySettings = HDInsightClient.Clusters.GetGatewaySettings(CommonData.ResourceGroupName, clusterName);
+            ValidateGatewaySettings(expectedUserName, newExpectedPassword, gatewaySettings);
+        }
     }
 }

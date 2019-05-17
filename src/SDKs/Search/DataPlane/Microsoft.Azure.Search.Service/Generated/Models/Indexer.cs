@@ -41,22 +41,28 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="targetIndexName">The name of the index to which this
         /// indexer writes data.</param>
         /// <param name="description">The description of the indexer.</param>
+        /// <param name="skillsetName">The name of the cognitive skillset
+        /// executing with this indexer.</param>
         /// <param name="schedule">The schedule for this indexer.</param>
         /// <param name="parameters">Parameters for indexer execution.</param>
         /// <param name="fieldMappings">Defines mappings between fields in the
         /// data source and corresponding target fields in the index.</param>
+        /// <param name="outputFieldMappings">Output field mappings are applied
+        /// after enrichment and immediately before indexing.</param>
         /// <param name="isDisabled">A value indicating whether the indexer is
         /// disabled. Default is false.</param>
         /// <param name="eTag">The ETag of the Indexer.</param>
-        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?), string eTag = default(string))
+        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), string skillsetName = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), IList<FieldMapping> outputFieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?), string eTag = default(string))
         {
             Name = name;
             Description = description;
             DataSourceName = dataSourceName;
+            SkillsetName = skillsetName;
             TargetIndexName = targetIndexName;
             Schedule = schedule;
             Parameters = parameters;
             FieldMappings = fieldMappings;
+            OutputFieldMappings = outputFieldMappings;
             IsDisabled = isDisabled;
             ETag = eTag;
             CustomInit();
@@ -87,6 +93,13 @@ namespace Microsoft.Azure.Search.Models
         public string DataSourceName { get; set; }
 
         /// <summary>
+        /// Gets or sets the name of the cognitive skillset executing with this
+        /// indexer.
+        /// </summary>
+        [JsonProperty(PropertyName = "skillsetName")]
+        public string SkillsetName { get; set; }
+
+        /// <summary>
         /// Gets or sets the name of the index to which this indexer writes
         /// data.
         /// </summary>
@@ -111,6 +124,13 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "fieldMappings")]
         public IList<FieldMapping> FieldMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets output field mappings are applied after enrichment and
+        /// immediately before indexing.
+        /// </summary>
+        [JsonProperty(PropertyName = "outputFieldMappings")]
+        public IList<FieldMapping> OutputFieldMappings { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the indexer is disabled.
@@ -156,6 +176,16 @@ namespace Microsoft.Azure.Search.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (OutputFieldMappings != null)
+            {
+                foreach (var element1 in OutputFieldMappings)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

@@ -3,12 +3,12 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using System;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.ApiManagement;
 using Microsoft.Azure.Management.ApiManagement.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Xunit;
-using System.Threading.Tasks;
-using System;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -45,9 +45,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         portalDelegationSettingsParams);
                     Assert.NotNull(portalDelegationSettings);
                     Assert.Equal(urlParameter, portalDelegationSettings.Url);
-                    // this is bug in the api, where the validation key is coming out as encrypted. 
-                    // https://msazure.visualstudio.com/DefaultCollection/One/_workitems/edit/2202008
-                    //Assert.Equal(testBase.base64EncodedTestCertificateData, portalDelegationSettings.ValidationKey);
+                    // validation key is generated brand new on playback mode and hence validation fails
+                    //Assert.Equal(portalDelegationSettingsParams.ValidationKey, portalDelegationSettings.ValidationKey);
                     Assert.True(portalDelegationSettings.UserRegistration.Enabled);
                     Assert.True(portalDelegationSettings.Subscriptions.Enabled);
 
@@ -75,8 +74,8 @@ namespace ApiManagement.Tests.ManagementApiTests
                         testBase.rgName,
                         testBase.serviceName);
                     Assert.NotNull(portalDelegationSettings);
-                    //Assert.Null(portalDelegationSettings.Url);
-                    //Assert.Null(portalDelegationSettings.ValidationKey);
+                    Assert.Null(portalDelegationSettings.Url);
+                    Assert.Null(portalDelegationSettings.ValidationKey);
                     Assert.False(portalDelegationSettings.UserRegistration.Enabled);
                     Assert.False(portalDelegationSettings.Subscriptions.Enabled);                    
                 }

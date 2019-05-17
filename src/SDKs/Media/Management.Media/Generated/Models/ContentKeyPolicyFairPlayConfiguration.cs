@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'PersistentUnlimited', 'PersistentLimited'</param>
         /// <param name="rentalDuration">The rental duration. Must be greater
         /// than or equal to 0.</param>
-        public ContentKeyPolicyFairPlayConfiguration(byte[] ask, string fairPlayPfxPassword, string fairPlayPfx, string rentalAndLeaseKeyType, long rentalDuration)
+        public ContentKeyPolicyFairPlayConfiguration(byte[] ask, string fairPlayPfxPassword, string fairPlayPfx, ContentKeyPolicyFairPlayRentalAndLeaseKeyType rentalAndLeaseKeyType, long rentalDuration)
         {
             Ask = ask;
             FairPlayPfxPassword = fairPlayPfxPassword;
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'PersistentLimited'
         /// </summary>
         [JsonProperty(PropertyName = "rentalAndLeaseKeyType")]
-        public string RentalAndLeaseKeyType { get; set; }
+        public ContentKeyPolicyFairPlayRentalAndLeaseKeyType RentalAndLeaseKeyType { get; set; }
 
         /// <summary>
         /// Gets or sets the rental duration. Must be greater than or equal to
@@ -115,10 +115,6 @@ namespace Microsoft.Azure.Management.Media.Models
             if (FairPlayPfx == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FairPlayPfx");
-            }
-            if (RentalAndLeaseKeyType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RentalAndLeaseKeyType");
             }
         }
     }

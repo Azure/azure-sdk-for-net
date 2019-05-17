@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="storageEncryptionFormat">The Asset encryption format.
         /// One of None or MediaStorageEncryption. Possible values include:
         /// 'None', 'MediaStorageClientEncryption'</param>
-        public Asset(string id = default(string), string name = default(string), string type = default(string), System.Guid assetId = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string alternateId = default(string), string description = default(string), string container = default(string), string storageAccountName = default(string), string storageEncryptionFormat = default(string))
+        public Asset(string id = default(string), string name = default(string), string type = default(string), System.Guid assetId = default(System.Guid), System.DateTime created = default(System.DateTime), System.DateTime lastModified = default(System.DateTime), string alternateId = default(string), string description = default(string), string container = default(string), string storageAccountName = default(string), AssetStorageEncryptionFormat storageEncryptionFormat = default(AssetStorageEncryptionFormat))
             : base(id, name, type)
         {
             AssetId = assetId;
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'MediaStorageClientEncryption'
         /// </summary>
         [JsonProperty(PropertyName = "properties.storageEncryptionFormat")]
-        public string StorageEncryptionFormat { get; private set; }
+        public AssetStorageEncryptionFormat StorageEncryptionFormat { get; private set; }
 
     }
 }

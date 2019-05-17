@@ -185,9 +185,12 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='tags'>
             /// Tags for the Azure Dev Spaces Controller.
             /// </param>
-            public static Controller Update(this IControllersOperations operations, string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>))
+            /// <param name='targetContainerHostCredentialsBase64'>
+            /// Credentials of the target container host (base64).
+            /// </param>
+            public static Controller Update(this IControllersOperations operations, string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), string targetContainerHostCredentialsBase64 = default(string))
             {
-                return operations.UpdateAsync(resourceGroupName, name, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, name, tags, targetContainerHostCredentialsBase64).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -209,12 +212,15 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='tags'>
             /// Tags for the Azure Dev Spaces Controller.
             /// </param>
+            /// <param name='targetContainerHostCredentialsBase64'>
+            /// Credentials of the target container host (base64).
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Controller> UpdateAsync(this IControllersOperations operations, string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Controller> UpdateAsync(this IControllersOperations operations, string resourceGroupName, string name, IDictionary<string, string> tags = default(IDictionary<string, string>), string targetContainerHostCredentialsBase64 = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, tags, targetContainerHostCredentialsBase64, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -314,9 +320,13 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='name'>
             /// Name of the resource.
             /// </param>
-            public static ControllerConnectionDetailsList ListConnectionDetails(this IControllersOperations operations, string resourceGroupName, string name)
+            /// <param name='targetContainerHostResourceId'>
+            /// Resource ID of the target container host mapped to the Azure Dev Spaces
+            /// Controller.
+            /// </param>
+            public static ControllerConnectionDetailsList ListConnectionDetails(this IControllersOperations operations, string resourceGroupName, string name, string targetContainerHostResourceId)
             {
-                return operations.ListConnectionDetailsAsync(resourceGroupName, name).GetAwaiter().GetResult();
+                return operations.ListConnectionDetailsAsync(resourceGroupName, name, targetContainerHostResourceId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -335,12 +345,16 @@ namespace Microsoft.Azure.Management.DevSpaces
             /// <param name='name'>
             /// Name of the resource.
             /// </param>
+            /// <param name='targetContainerHostResourceId'>
+            /// Resource ID of the target container host mapped to the Azure Dev Spaces
+            /// Controller.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ControllerConnectionDetailsList> ListConnectionDetailsAsync(this IControllersOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ControllerConnectionDetailsList> ListConnectionDetailsAsync(this IControllersOperations operations, string resourceGroupName, string name, string targetContainerHostResourceId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListConnectionDetailsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListConnectionDetailsWithHttpMessagesAsync(resourceGroupName, name, targetContainerHostResourceId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

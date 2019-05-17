@@ -100,13 +100,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
             /// 'QuotaLimitApproachingPublisherNotificationMessage'
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static bool CheckEntityExists(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string uid)
+            public static bool CheckEntityExists(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId)
             {
-                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, notificationName, uid).GetAwaiter().GetResult();
+                return operations.CheckEntityExistsAsync(resourceGroupName, serviceName, notificationName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -130,16 +130,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
             /// 'QuotaLimitApproachingPublisherNotificationMessage'
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckEntityExistsAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<bool> CheckEntityExistsAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CheckEntityExistsWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -166,13 +166,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
             /// 'QuotaLimitApproachingPublisherNotificationMessage'
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static RecipientUserContract CreateOrUpdate(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string uid)
+            public static RecipientUserContract CreateOrUpdate(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, notificationName, uid).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, notificationName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -196,16 +196,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
             /// 'QuotaLimitApproachingPublisherNotificationMessage'
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RecipientUserContract> CreateOrUpdateAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecipientUserContract> CreateOrUpdateAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, uid, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, userId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -231,13 +231,13 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
             /// 'QuotaLimitApproachingPublisherNotificationMessage'
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
-            public static void Delete(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string uid)
+            public static void Delete(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId)
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, notificationName, uid).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, notificationName, userId).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -260,16 +260,16 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// 'NewIssuePublisherNotificationMessage', 'AccountClosedPublisher',
             /// 'QuotaLimitApproachingPublisherNotificationMessage'
             /// </param>
-            /// <param name='uid'>
+            /// <param name='userId'>
             /// User identifier. Must be unique in the current API Management service
             /// instance.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string uid, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this INotificationRecipientUserOperations operations, string resourceGroupName, string serviceName, string notificationName, string userId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, uid, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, notificationName, userId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

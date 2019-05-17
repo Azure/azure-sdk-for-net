@@ -507,6 +507,27 @@ namespace Storage.Tests
         }
 
         [Fact]
+        public void StorageAccountRevokeUserDelegationKeysTest()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = StorageManagementTestUtilities.GetResourceManagementClient(context, handler);
+                var storageMgmtClient = StorageManagementTestUtilities.GetStorageManagementClient(context, handler);
+
+                // Create resource group
+                string rgname = StorageManagementTestUtilities.CreateResourceGroup(resourcesClient);
+
+                // Create storage account
+                string accountName = StorageManagementTestUtilities.CreateStorageAccount(storageMgmtClient, rgname);
+
+                // Revoke User DelegationKeys
+                storageMgmtClient.StorageAccounts.RevokeUserDelegationKeys(rgname, accountName);
+            }
+        }
+
+        [Fact]
         public void StorageAccountCheckNameTest()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -1545,7 +1566,7 @@ namespace Storage.Tests
                 Assert.NotNull(skulist);
                 Assert.Equal(@"storageAccounts", skulist.ElementAt(0).ResourceType);
                 Assert.NotNull(skulist.ElementAt(0).Name);
-                Assert.IsType<SkuName>(skulist.ElementAt(0).Name);
+                Assert.IsType<string>(skulist.ElementAt(0).Name);
                 Assert.True(skulist.ElementAt(0).Name.Equals(SkuName.PremiumLRS)
                     || skulist.ElementAt(0).Name.Equals(SkuName.StandardGRS)
                     || skulist.ElementAt(0).Name.Equals(SkuName.StandardLRS)

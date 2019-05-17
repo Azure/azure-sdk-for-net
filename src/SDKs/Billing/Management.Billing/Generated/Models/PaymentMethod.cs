@@ -35,16 +35,16 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <param name="id">Resource Id.</param>
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type.</param>
-        /// <param name="methodType">Payment method type. Possible values
-        /// include: 'Credits', 'ChequeWire'</param>
+        /// <param name="paymentMethodType">Payment method type. Possible
+        /// values include: 'Credits', 'ChequeWire'</param>
         /// <param name="details">Details about the payment method.</param>
         /// <param name="expiration">Expiration date.</param>
         /// <param name="currency">The currency associated with the payment
         /// method.</param>
-        public PaymentMethod(string id = default(string), string name = default(string), string type = default(string), string methodType = default(string), string details = default(string), System.DateTime? expiration = default(System.DateTime?), string currency = default(string))
+        public PaymentMethod(string id = default(string), string name = default(string), string type = default(string), string paymentMethodType = default(string), string details = default(string), System.DateTime? expiration = default(System.DateTime?), string currency = default(string))
             : base(id, name, type)
         {
-            MethodType = methodType;
+            PaymentMethodType = paymentMethodType;
             Details = details;
             Expiration = expiration;
             Currency = currency;
@@ -60,8 +60,8 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// Gets or sets payment method type. Possible values include:
         /// 'Credits', 'ChequeWire'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.methodType")]
-        public string MethodType { get; set; }
+        [JsonProperty(PropertyName = "properties.paymentMethodType")]
+        public string PaymentMethodType { get; set; }
 
         /// <summary>
         /// Gets details about the payment method.

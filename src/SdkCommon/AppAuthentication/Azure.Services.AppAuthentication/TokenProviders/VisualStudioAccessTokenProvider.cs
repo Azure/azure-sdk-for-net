@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Services.AppAuthentication
@@ -40,12 +41,12 @@ namespace Microsoft.Azure.Services.AppAuthentication
         /// <returns></returns>
         private VisualStudioTokenProviderFile GetTokenProviderFile()
         {
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(LocalAppDataPathEnv)))
+            if (string.IsNullOrEmpty(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv)))
             {
                 throw new Exception(NoAppDataEnvironmentVariableError);    
             }
 
-            string tokenProviderPath = Path.Combine(Environment.GetEnvironmentVariable(LocalAppDataPathEnv),
+            string tokenProviderPath = Path.Combine(EnvironmentHelper.GetEnvironmentVariable(LocalAppDataPathEnv),
                 TokenProviderFilePath);
 
             if (!File.Exists(tokenProviderPath))
@@ -99,7 +100,8 @@ namespace Microsoft.Azure.Services.AppAuthentication
             return processStartInfos;
         }
 
-        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority)
+        public override async Task<AppAuthenticationResult> GetAuthResultAsync(string resource, string authority,
+            CancellationToken cancellationToken = default(CancellationToken))
         {
             try
             {
@@ -120,7 +122,7 @@ namespace Microsoft.Azure.Services.AppAuthentication
                     {
                         // For each of them, try to get token
                         string response = await _processManager
-                            .ExecuteAsync(new Process {StartInfo = startInfo})
+                            .ExecuteAsync(new Process {StartInfo = startInfo}, cancellationToken)
                             .ConfigureAwait(false);
 
                         TokenResponse tokenResponse = TokenResponse.Parse(response);

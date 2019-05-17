@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         public ApiManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lists all issues assosiated with the specified API.
+        /// Lists all issues associated with the specified API.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -66,6 +66,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='odataQuery'>
         /// OData parameters to apply to the operation.
+        /// </param>
+        /// <param name='expandCommentsAttachments'>
+        /// Expand the comment attachments.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -88,7 +91,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<IssueContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<IssueContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<IssueContract> odataQuery = default(ODataQuery<IssueContract>), bool? expandCommentsAttachments = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -127,9 +130,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (Client.ApiVersion == null)
@@ -151,6 +154,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
+                tracingParameters.Add("expandCommentsAttachments", expandCommentsAttachments);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListByService", tracingParameters);
             }
@@ -169,6 +173,10 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     _queryParameters.Add(_odataFilter);
                 }
+            }
+            if (expandCommentsAttachments != null)
+            {
+                _queryParameters.Add(string.Format("expandCommentsAttachments={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expandCommentsAttachments, Client.SerializationSettings).Trim('"'))));
             }
             if (Client.ApiVersion != null)
             {
@@ -369,9 +377,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (issueId == null)
@@ -560,6 +568,9 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Issue identifier. Must be unique in the current API Management service
         /// instance.
         /// </param>
+        /// <param name='expandCommentsAttachments'>
+        /// Expand the comment attachments.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -581,7 +592,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IssueContract,ApiIssueGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IssueContract,ApiIssueGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, bool? expandCommentsAttachments = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -620,9 +631,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (issueId == null)
@@ -663,6 +674,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("serviceName", serviceName);
                 tracingParameters.Add("apiId", apiId);
                 tracingParameters.Add("issueId", issueId);
+                tracingParameters.Add("expandCommentsAttachments", expandCommentsAttachments);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
@@ -675,6 +687,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             _url = _url.Replace("{issueId}", System.Uri.EscapeDataString(issueId));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (expandCommentsAttachments != null)
+            {
+                _queryParameters.Add(string.Format("expandCommentsAttachments={0}", System.Uri.EscapeDataString(Rest.Serialization.SafeJsonConvert.SerializeObject(expandCommentsAttachments, Client.SerializationSettings).Trim('"'))));
+            }
             if (Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(Client.ApiVersion)));
@@ -833,9 +849,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Create parameters.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity state from
-        /// the header response of the GET request or it should be * for unconditional
-        /// update.
+        /// ETag of the Entity. Not required when creating an entity, but required when
+        /// updating an entity.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -858,7 +873,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IssueContract>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IssueContract,ApiIssueCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -897,9 +912,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (issueId == null)
@@ -1068,7 +1083,7 @@ namespace Microsoft.Azure.Management.ApiManagement
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IssueContract>();
+            var _result = new AzureOperationResponse<IssueContract,ApiIssueCreateOrUpdateHeaders>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1111,6 +1126,19 @@ namespace Microsoft.Azure.Management.ApiManagement
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<ApiIssueCreateOrUpdateHeaders>(JsonSerializer.Create(Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -1139,8 +1167,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Update parameters.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity state from
-        /// the header response of the GET request or it should be * for unconditional
+        /// ETag of the Entity. ETag should match the current entity state from the
+        /// header response of the GET request or it should be * for unconditional
         /// update.
         /// </param>
         /// <param name='customHeaders'>
@@ -1161,7 +1189,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> UpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string issueId, IssueUpdateContract parameters, string ifMatch, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1200,9 +1228,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (issueId == null)
@@ -1227,6 +1255,10 @@ namespace Microsoft.Azure.Management.ApiManagement
             if (parameters == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
+            }
+            if (ifMatch == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ifMatch");
             }
             if (Client.ApiVersion == null)
             {
@@ -1399,8 +1431,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// instance.
         /// </param>
         /// <param name='ifMatch'>
-        /// ETag of the Issue Entity. ETag should match the current entity state from
-        /// the header response of the GET request or it should be * for unconditional
+        /// ETag of the Entity. ETag should match the current entity state from the
+        /// header response of the GET request or it should be * for unconditional
         /// update.
         /// </param>
         /// <param name='customHeaders'>
@@ -1460,9 +1492,9 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     throw new ValidationException(ValidationRules.MinLength, "apiId", 1);
                 }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)"))
+                if (!System.Text.RegularExpressions.Regex.IsMatch(apiId, "^[^*#&+:<>?]+$"))
                 {
-                    throw new ValidationException(ValidationRules.Pattern, "apiId", "(^[\\w]+$)|(^[\\w][\\w\\-]+[\\w]$)");
+                    throw new ValidationException(ValidationRules.Pattern, "apiId", "^[^*#&+:<>?]+$");
                 }
             }
             if (issueId == null)
@@ -1635,7 +1667,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
 
         /// <summary>
-        /// Lists all issues assosiated with the specified API.
+        /// Lists all issues associated with the specified API.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

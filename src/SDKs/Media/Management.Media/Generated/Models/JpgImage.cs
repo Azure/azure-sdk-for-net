@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// relative value (For example, 100%).</param>
         /// <param name="layers">A collection of output JPEG image layers to be
         /// produced by the encoder.</param>
-        public JpgImage(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), string stretchMode = default(string), string step = default(string), string range = default(string), IList<JpgLayer> layers = default(IList<JpgLayer>))
+        public JpgImage(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), string step = default(string), string range = default(string), IList<JpgLayer> layers = default(IList<JpgLayer>))
             : base(start, label, keyFrameInterval, stretchMode, step, range)
         {
             Layers = layers;

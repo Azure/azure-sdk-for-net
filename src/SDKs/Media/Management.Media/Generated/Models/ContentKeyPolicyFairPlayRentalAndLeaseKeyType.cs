@@ -10,29 +10,122 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for ContentKeyPolicyFairPlayRentalAndLeaseKeyType.
     /// </summary>
-    public static class ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(ContentKeyPolicyFairPlayRentalAndLeaseKeyTypeConverter))]
+    public struct ContentKeyPolicyFairPlayRentalAndLeaseKeyType : System.IEquatable<ContentKeyPolicyFairPlayRentalAndLeaseKeyType>
     {
+        private ContentKeyPolicyFairPlayRentalAndLeaseKeyType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Represents a ContentKeyPolicyFairPlayRentalAndLeaseKeyType that is
         /// unavailable in current API version.
         /// </summary>
-        public const string Unknown = "Unknown";
+        public static readonly ContentKeyPolicyFairPlayRentalAndLeaseKeyType Unknown = "Unknown";
+
         /// <summary>
         /// Key duration is not specified.
         /// </summary>
-        public const string Undefined = "Undefined";
+        public static readonly ContentKeyPolicyFairPlayRentalAndLeaseKeyType Undefined = "Undefined";
+
         /// <summary>
         /// Content key can be persisted with an unlimited duration
         /// </summary>
-        public const string PersistentUnlimited = "PersistentUnlimited";
+        public static readonly ContentKeyPolicyFairPlayRentalAndLeaseKeyType PersistentUnlimited = "PersistentUnlimited";
+
         /// <summary>
         /// Content key can be persisted and the valid duration is limited by
         /// the Rental Duration value
         /// </summary>
-        public const string PersistentLimited = "PersistentLimited";
+        public static readonly ContentKeyPolicyFairPlayRentalAndLeaseKeyType PersistentLimited = "PersistentLimited";
+
+
+        /// <summary>
+        /// Underlying value of enum
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        public bool Equals(ContentKeyPolicyFairPlayRentalAndLeaseKeyType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        public static implicit operator ContentKeyPolicyFairPlayRentalAndLeaseKeyType(string value)
+        {
+            return new ContentKeyPolicyFairPlayRentalAndLeaseKeyType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType to string
+        /// </summary>
+        public static implicit operator string(ContentKeyPolicyFairPlayRentalAndLeaseKeyType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        public static bool operator == (ContentKeyPolicyFairPlayRentalAndLeaseKeyType e1, ContentKeyPolicyFairPlayRentalAndLeaseKeyType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        public static bool operator != (ContentKeyPolicyFairPlayRentalAndLeaseKeyType e1, ContentKeyPolicyFairPlayRentalAndLeaseKeyType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for
+        /// ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is ContentKeyPolicyFairPlayRentalAndLeaseKeyType && Equals((ContentKeyPolicyFairPlayRentalAndLeaseKeyType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode ContentKeyPolicyFairPlayRentalAndLeaseKeyType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

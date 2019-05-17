@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="softDeleteColumnName">The name of the column to use
         /// for soft-deletion detection.</param>
         /// <param name="softDeleteMarkerValue">The marker value that
-        /// indentifies an item as deleted.</param>
+        /// identifies an item as deleted.</param>
         public SoftDeleteColumnDeletionDetectionPolicy(string softDeleteColumnName = default(string), string softDeleteMarkerValue = default(string))
         {
             SoftDeleteColumnName = softDeleteColumnName;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Search.Models
         public string SoftDeleteColumnName { get; set; }
 
         /// <summary>
-        /// Gets or sets the marker value that indentifies an item as deleted.
+        /// Gets or sets the marker value that identifies an item as deleted.
         /// </summary>
         [JsonProperty(PropertyName = "softDeleteMarkerValue")]
         public string SoftDeleteMarkerValue { get; set; }

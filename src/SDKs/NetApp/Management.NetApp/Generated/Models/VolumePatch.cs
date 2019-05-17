@@ -40,7 +40,8 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// <param name="tags">Resource tags</param>
         /// <param name="serviceLevel">serviceLevel</param>
         /// <param name="usageThreshold">usageThreshold</param>
-        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string serviceLevel = default(string), long? usageThreshold = default(long?))
+        /// <param name="exportPolicy">exportPolicy</param>
+        public VolumePatch(string location = default(string), string id = default(string), string name = default(string), string type = default(string), object tags = default(object), string serviceLevel = default(string), long? usageThreshold = default(long?), VolumePatchPropertiesExportPolicy exportPolicy = default(VolumePatchPropertiesExportPolicy))
         {
             Location = location;
             Id = id;
@@ -49,6 +50,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
             Tags = tags;
             ServiceLevel = serviceLevel;
             UsageThreshold = usageThreshold;
+            ExportPolicy = exportPolicy;
             CustomInit();
         }
 
@@ -92,7 +94,7 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </summary>
         /// <remarks>
         /// The service level of the file system. Possible values include:
-        /// 'Standard', 'Premium', 'Extreme'
+        /// 'Standard', 'Premium', 'Ultra'
         /// </remarks>
         [JsonProperty(PropertyName = "properties.serviceLevel")]
         public string ServiceLevel { get; set; }
@@ -107,6 +109,15 @@ namespace Microsoft.Azure.Management.NetApp.Models
         /// </remarks>
         [JsonProperty(PropertyName = "properties.usageThreshold")]
         public long? UsageThreshold { get; set; }
+
+        /// <summary>
+        /// Gets or sets exportPolicy
+        /// </summary>
+        /// <remarks>
+        /// Set of export policy rules
+        /// </remarks>
+        [JsonProperty(PropertyName = "properties.exportPolicy")]
+        public VolumePatchPropertiesExportPolicy ExportPolicy { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.352
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core", "..\core\Azure.Core\src\Azure.Core.csproj", "{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Security.Keyvault.Secrets", "Azure.Security.Keyvault.Secrets\src\Azure.Security.Keyvault.Secrets.csproj", "{AA1C6FB6-7176-400E-B556-B04253A69949}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AEC7876-E05F-479C-91A2-AA12F95CC9E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA1C6FB6-7176-400E-B556-B04253A69949}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA1C6FB6-7176-400E-B556-B04253A69949}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA1C6FB6-7176-400E-B556-B04253A69949}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA1C6FB6-7176-400E-B556-B04253A69949}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AFEF6AF0-9A67-494B-B40B-35F6BD47E2A9}
+	EndGlobalSection
+EndGlobal

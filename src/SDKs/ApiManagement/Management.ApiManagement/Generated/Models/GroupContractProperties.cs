@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="externalId">For external groups, this property
         /// contains the id of the group from the external identity provider,
         /// e.g. for Azure Active Directory
-        /// aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object
-        /// id&gt;; otherwise the value is null.</param>
+        /// `aad://&lt;tenant&gt;.onmicrosoft.com/groups/&lt;group object
+        /// id&gt;`; otherwise the value is null.</param>
         public GroupContractProperties(string displayName, string description = default(string), bool? builtIn = default(bool?), GroupType? type = default(GroupType?), string externalId = default(string))
         {
             DisplayName = displayName;
@@ -88,8 +88,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Gets or sets for external groups, this property contains the id of
         /// the group from the external identity provider, e.g. for Azure
         /// Active Directory
-        /// aad://&amp;lt;tenant&amp;gt;.onmicrosoft.com/groups/&amp;lt;group
-        /// object id&amp;gt;; otherwise the value is null.
+        /// `aad://&amp;lt;tenant&amp;gt;.onmicrosoft.com/groups/&amp;lt;group
+        /// object id&amp;gt;`; otherwise the value is null.
         /// </summary>
         [JsonProperty(PropertyName = "externalId")]
         public string ExternalId { get; set; }

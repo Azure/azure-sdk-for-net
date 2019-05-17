@@ -1,5 +1,16 @@
 ## Microsoft.Azure.Management.Storage release notes
 
+### Changes in 11.0.0
+
+- Upgrade to rest api version 2019-04-01
+- Support Revoke UserDelegationKeys on a specified Storage account
+- Support Enable/Disable Automatic Snapshot Policy on Blob Service Properties of a specified Storage account 
+
+**Breaking changes**
+
+- Change the type of StorageAccount.Kind, StorageAccountCreateParameters.Kind, StorageAccountUpdateParameters.Kind, from enum to string.
+- Change the type of StorageAccount.Sku.Name, StorageAccountCreateParameters.Sku.Name, StorageAccountUpdateParameters.Sku.Name, from enum to string.
+
 ### Changes in 10.0.0
 
 - Microsoft.Azure.Management.Storage SDK is GA

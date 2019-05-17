@@ -41,11 +41,11 @@ namespace Microsoft.Azure.Management.ResourceGraph.Tests
 
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK, IsPassThrough = true };
 
-            var policyInsightsClient = HttpMockServer.Mode == HttpRecorderMode.Record
+            var resourceGraphClient = HttpMockServer.Mode == HttpRecorderMode.Record
                 ? context.GetServiceClient<ResourceGraphClient>(TestEnvironment, handlers: handler)
                 : context.GetServiceClient<ResourceGraphClient>(handlers: handler);
 
-            return policyInsightsClient;
+            return resourceGraphClient;
         }
 
         /// <summary>

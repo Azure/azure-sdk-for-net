@@ -10,13 +10,96 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for AnalysisResolution.
     /// </summary>
-    public static class AnalysisResolution
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(AnalysisResolutionConverter))]
+    public struct AnalysisResolution : System.IEquatable<AnalysisResolution>
     {
-        public const string SourceResolution = "SourceResolution";
-        public const string StandardDefinition = "StandardDefinition";
+        private AnalysisResolution(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
+        public static readonly AnalysisResolution SourceResolution = "SourceResolution";
+
+        public static readonly AnalysisResolution StandardDefinition = "StandardDefinition";
+
+
+        /// <summary>
+        /// Underlying value of enum AnalysisResolution
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for AnalysisResolution
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type AnalysisResolution
+        /// </summary>
+        public bool Equals(AnalysisResolution e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to AnalysisResolution
+        /// </summary>
+        public static implicit operator AnalysisResolution(string value)
+        {
+            return new AnalysisResolution(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert AnalysisResolution to string
+        /// </summary>
+        public static implicit operator string(AnalysisResolution e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum AnalysisResolution
+        /// </summary>
+        public static bool operator == (AnalysisResolution e1, AnalysisResolution e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum AnalysisResolution
+        /// </summary>
+        public static bool operator != (AnalysisResolution e1, AnalysisResolution e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for AnalysisResolution
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is AnalysisResolution && Equals((AnalysisResolution)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode AnalysisResolution
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

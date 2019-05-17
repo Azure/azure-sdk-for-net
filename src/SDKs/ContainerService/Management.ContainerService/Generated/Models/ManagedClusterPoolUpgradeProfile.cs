@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// <param name="name">Pool name.</param>
         /// <param name="upgrades">List of orchestrator types and versions
         /// available for upgrade.</param>
-        public ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string osType, string name = default(string), IList<string> upgrades = default(IList<string>))
+        public ManagedClusterPoolUpgradeProfile(string kubernetesVersion, string osType, string name = default(string), IList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default(IList<ManagedClusterPoolUpgradeProfileUpgradesItem>))
         {
             KubernetesVersion = kubernetesVersion;
             Name = name;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ContainerService.Models
         /// upgrade.
         /// </summary>
         [JsonProperty(PropertyName = "upgrades")]
-        public IList<string> Upgrades { get; set; }
+        public IList<ManagedClusterPoolUpgradeProfileUpgradesItem> Upgrades { get; set; }
 
         /// <summary>
         /// Validate the object.

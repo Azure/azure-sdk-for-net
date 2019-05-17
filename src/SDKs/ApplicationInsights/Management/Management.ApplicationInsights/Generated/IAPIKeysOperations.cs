@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Gets a list of API keys of an Application Insights component.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Create an API Key of an Application Insights component.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Delete an API Key of an Application Insights component.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Get the API Key for this key id.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.

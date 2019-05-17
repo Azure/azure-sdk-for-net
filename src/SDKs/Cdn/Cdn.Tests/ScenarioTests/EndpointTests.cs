@@ -38,7 +38,7 @@ namespace Cdn.Tests.ScenarioTests
                 Profile createParameters = new Profile
                 {
                     Location = "WestUs",
-                    Sku = new Sku { Name = SkuName.StandardAkamai },
+                    Sku = new Sku { Name = SkuName.StandardMicrosoft },
                     Tags = new Dictionary<string, string>
                         {
                             {"key1","value1"},
@@ -109,17 +109,6 @@ namespace Cdn.Tests.ScenarioTests
                             HostName = "host1.hello.com"
                         }
                     },
-                    GeoFilters = new List<GeoFilter>
-                    {
-                        new GeoFilter {
-                            RelativePath = "/mycar",
-                            Action = GeoFilterActions.Block,
-                            CountryCodes = new List<string>
-                            {
-                                "AT"
-                            }
-                        }
-                    },
                     DeliveryPolicy = new EndpointPropertiesUpdateParametersDeliveryPolicy
                     {
                         Description = "Test description for a policy.",
@@ -127,6 +116,7 @@ namespace Cdn.Tests.ScenarioTests
                         {
                             new DeliveryRule
                             {
+                                Name = "rule1",
                                 Order = 1,
                                 Actions = new List<DeliveryRuleAction>
                                 {
@@ -143,10 +133,10 @@ namespace Cdn.Tests.ScenarioTests
                                 {
                                     new DeliveryRuleUrlPathCondition
                                     {
-                                        Parameters = new UrlPathConditionParameters
+                                        Parameters = new UrlPathMatchConditionParameters
                                         {
-                                            Path = "/folder",
-                                            MatchType = "Literal"
+                                            OperatorProperty = "Equal",
+                                            MatchValues = new List <string> {"abc"}
                                         }
                                     }
                                 }
@@ -169,7 +159,6 @@ namespace Cdn.Tests.ScenarioTests
                     OriginHostHeader = "azurecdn-files.azureedge.net",
                     OriginPath = "/dsa-test",
                     QueryStringCachingBehavior = QueryStringCachingBehavior.NotSet,
-                    OptimizationType = OptimizationType.DynamicSiteAcceleration,
                     ProbePath = "/probe-v.txt",
                     ContentTypesToCompress = new List<string>(),
                     Tags = new Dictionary<string, string> { { "kay1", "value1" } },
@@ -179,17 +168,6 @@ namespace Cdn.Tests.ScenarioTests
                         {
                             Name = "origin1",
                             HostName = "host1.hello.com"
-                        }
-                    },
-                    GeoFilters = new List<GeoFilter>
-                    {
-                        new GeoFilter {
-                            RelativePath = "/mycar",
-                            Action = GeoFilterActions.Block,
-                            CountryCodes = new List<string>
-                            {
-                                "AT"
-                            }
                         }
                     }
                 };
@@ -212,19 +190,7 @@ namespace Cdn.Tests.ScenarioTests
                             HostName = "host1.hello.com"
                         }
                     },
-                    OptimizationType = OptimizationType.LargeFileDownload,
-                    Tags = new Dictionary<string, string> { { "kay1", "value1" } },
-                    GeoFilters = new List<GeoFilter>
-                    {
-                        new GeoFilter {
-                            RelativePath = "/mycar",
-                            Action = GeoFilterActions.Block,
-                            CountryCodes = new List<string>
-                            {
-                                "AT"
-                            }
-                        }
-                    }
+                    Tags = new Dictionary<string, string> { { "kay1", "value1" } }
                 };
 
                 endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
@@ -252,6 +218,7 @@ namespace Cdn.Tests.ScenarioTests
                         {
                             new DeliveryRule
                             {
+                                Name = "rule1",
                                 Order = 1,
                                 Actions = new List<DeliveryRuleAction>
                                 {
@@ -268,10 +235,10 @@ namespace Cdn.Tests.ScenarioTests
                                 {
                                     new DeliveryRuleUrlPathCondition
                                     {
-                                        Parameters = new UrlPathConditionParameters
+                                        Parameters = new UrlPathMatchConditionParameters
                                         {
-                                            Path = "/folder",
-                                            MatchType = "Literal"
+                                            OperatorProperty = "Equal",
+                                            MatchValues = new List <string> {"abc"}
                                         }
                                     }
                                 }
@@ -305,6 +272,7 @@ namespace Cdn.Tests.ScenarioTests
                         {
                             new DeliveryRule
                             {
+                                Name = "rule1",
                                 Order = 1,
                                 Actions = new List<DeliveryRuleAction>
                                 {
@@ -321,10 +289,10 @@ namespace Cdn.Tests.ScenarioTests
                                 {
                                     new DeliveryRuleUrlPathCondition
                                     {
-                                        Parameters = new UrlPathConditionParameters
+                                        Parameters = new UrlPathMatchConditionParameters
                                         {
-                                            Path = "/folder",
-                                            MatchType = "Literal"
+                                            OperatorProperty = "Equal",
+                                            MatchValues = new List <string> {"abc"}
                                         }
                                     }
                                 }
@@ -424,17 +392,6 @@ namespace Cdn.Tests.ScenarioTests
                             Name = "origin1",
                             HostName = "host1.hello.com"
                         }
-                    },
-                    GeoFilters = new List<GeoFilter>
-                    {
-                        new GeoFilter {
-                            RelativePath = "/mypicture",
-                            Action = GeoFilterActions.Block,
-                            CountryCodes = new List<string>
-                            {
-                                "AT"
-                            }
-                        }
                     }
                 };
 
@@ -514,10 +471,10 @@ namespace Cdn.Tests.ScenarioTests
                                 {
                                     new DeliveryRuleUrlPathCondition
                                     {
-                                        Parameters = new UrlPathConditionParameters
+                                        Parameters = new UrlPathMatchConditionParameters
                                         {
-                                            Path = "/folder",
-                                            MatchType = "Literal"
+                                            OperatorProperty = "Equal",
+                                            MatchValues = new List <string> {"abc"}
                                         }
                                     }
                                 }
@@ -573,40 +530,7 @@ namespace Cdn.Tests.ScenarioTests
                                 "AU"
                             }
                         }
-                    },
-                    DeliveryPolicy = new EndpointPropertiesUpdateParametersDeliveryPolicy
-                    {
-                        Description = "Test description for a policy.",
-                        Rules = new List<DeliveryRule>
-                        {
-                            new DeliveryRule
-                            {
-                                Order = 1,
-                                Actions = new List<DeliveryRuleAction>
-                                {
-                                    new DeliveryRuleCacheExpirationAction
-                                    {
-                                       Parameters = new CacheExpirationActionParameters
-                                       {
-                                           CacheBehavior = "BypassCache",
-                                           CacheDuration = null
-                                       }
-                                    }
-                                },
-                                Conditions = new List<DeliveryRuleCondition>
-                                {
-                                    new DeliveryRuleUrlPathCondition
-                                    {
-                                        Parameters = new UrlPathConditionParameters
-                                        {
-                                            Path = "/folder",
-                                            MatchType = "Literal"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }   
+                    }
                 };
 
                 var endpoint = cdnMgmtClient.Endpoints.Update(resourceGroupName, profileName, endpointName, endpointUpdateParameters);

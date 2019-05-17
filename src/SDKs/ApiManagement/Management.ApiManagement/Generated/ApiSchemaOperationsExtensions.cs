@@ -38,9 +38,22 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
-            public static IPage<SchemaContract> ListByApi(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId)
+            /// <param name='filter'>
+            /// |   Field     |     Usage     |     Supported operators     |     Supported
+            /// functions
+            /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
+            /// contentType | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+            /// startswith, endswith | &lt;/br&gt;
+            /// </param>
+            /// <param name='top'>
+            /// Number of records to return.
+            /// </param>
+            /// <param name='skip'>
+            /// Number of records to skip.
+            /// </param>
+            public static IPage<SchemaContract> ListByApi(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string filter = default(string), int? top = default(int?), int? skip = default(int?))
             {
-                return operations.ListByApiAsync(resourceGroupName, serviceName, apiId).GetAwaiter().GetResult();
+                return operations.ListByApiAsync(resourceGroupName, serviceName, apiId, filter, top, skip).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,12 +73,25 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// service instance. Non-current revision has ;rev=n as a suffix where n is
             /// the revision number.
             /// </param>
+            /// <param name='filter'>
+            /// |   Field     |     Usage     |     Supported operators     |     Supported
+            /// functions
+            /// |&lt;/br&gt;|-------------|-------------|-------------|-------------|&lt;/br&gt;|
+            /// contentType | filter | ge, le, eq, ne, gt, lt | substringof, contains,
+            /// startswith, endswith | &lt;/br&gt;
+            /// </param>
+            /// <param name='top'>
+            /// Number of records to return.
+            /// </param>
+            /// <param name='skip'>
+            /// Number of records to skip.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SchemaContract>> ListByApiAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SchemaContract>> ListByApiAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string filter = default(string), int? top = default(int?), int? skip = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByApiWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, filter, top, skip, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -217,7 +243,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// ETag of the Entity. Not required when creating an entity, but required when
             /// updating an entity.
             /// </param>
-            public static SchemaContract CreateOrUpdate(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string))
+            public static SchemaContract CreateOrUpdate(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaCreateOrUpdateContract parameters, string ifMatch = default(string))
             {
                 return operations.CreateOrUpdateAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch).GetAwaiter().GetResult();
             }
@@ -253,7 +279,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SchemaContract> CreateOrUpdateAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SchemaContract> CreateOrUpdateAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, SchemaCreateOrUpdateContract parameters, string ifMatch = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, parameters, ifMatch, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -287,9 +313,12 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
-            public static void Delete(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, string ifMatch)
+            /// <param name='force'>
+            /// If true removes all references to the schema before deleting it.
+            /// </param>
+            public static void Delete(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, string ifMatch, bool? force = default(bool?))
             {
-                operations.DeleteAsync(resourceGroupName, serviceName, apiId, schemaId, ifMatch).GetAwaiter().GetResult();
+                operations.DeleteAsync(resourceGroupName, serviceName, apiId, schemaId, ifMatch, force).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -318,12 +347,15 @@ namespace Microsoft.Azure.Management.ApiManagement
             /// header response of the GET request or it should be * for unconditional
             /// update.
             /// </param>
+            /// <param name='force'>
+            /// If true removes all references to the schema before deleting it.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, string ifMatch, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IApiSchemaOperations operations, string resourceGroupName, string serviceName, string apiId, string schemaId, string ifMatch, bool? force = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, ifMatch, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, apiId, schemaId, ifMatch, force, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

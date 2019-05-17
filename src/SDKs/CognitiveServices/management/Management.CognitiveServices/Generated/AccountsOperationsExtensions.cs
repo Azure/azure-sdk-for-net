@@ -95,9 +95,12 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// have a key no greater than 128 characters and value no greater than 256
             /// characters.
             /// </param>
-            public static CognitiveServicesAccount Update(this IAccountsOperations operations, string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            /// <param name='properties'>
+            /// Additional properties for Account. Only provided fields will be updated.
+            /// </param>
+            public static CognitiveServicesAccount Update(this IAccountsOperations operations, string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
             {
-                return operations.UpdateAsync(resourceGroupName, accountName, sku, tags).GetAwaiter().GetResult();
+                return operations.UpdateAsync(resourceGroupName, accountName, sku, tags, properties).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -122,12 +125,15 @@ namespace Microsoft.Azure.Management.CognitiveServices
             /// have a key no greater than 128 characters and value no greater than 256
             /// characters.
             /// </param>
+            /// <param name='properties'>
+            /// Additional properties for Account. Only provided fields will be updated.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CognitiveServicesAccount> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CognitiveServicesAccount> UpdateAsync(this IAccountsOperations operations, string resourceGroupName, string accountName, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, sku, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, accountName, sku, tags, properties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

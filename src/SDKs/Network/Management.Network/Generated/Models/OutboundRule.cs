@@ -39,8 +39,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="backendAddressPool">A reference to a pool of DIPs.
         /// Outbound traffic is randomly load balanced across IPs in the
         /// backend IPs.</param>
-        /// <param name="protocol">Protocol - TCP, UDP or All. Possible values
-        /// include: 'Tcp', 'Udp', 'All'</param>
+        /// <param name="protocol">The protocol for the outbound rule in load
+        /// balancer. Possible values are: 'Tcp', 'Udp', and 'All'. Possible
+        /// values include: 'Tcp', 'Udp', 'All'</param>
         /// <param name="id">Resource ID.</param>
         /// <param name="allocatedOutboundPorts">The number of outbound ports
         /// to be used for NAT.</param>
@@ -104,8 +105,9 @@ namespace Microsoft.Azure.Management.Network.Models
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets protocol - TCP, UDP or All. Possible values include:
-        /// 'Tcp', 'Udp', 'All'
+        /// Gets or sets the protocol for the outbound rule in load balancer.
+        /// Possible values are: 'Tcp', 'Udp', and 'All'. Possible values
+        /// include: 'Tcp', 'Udp', 'All'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }

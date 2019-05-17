@@ -379,6 +379,62 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
+            /// Gets the backend health for given combination of backend pool and http
+            /// setting of the specified application gateway in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='probeRequest'>
+            /// Request body for on-demand test probe operation.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            public static ApplicationGatewayBackendHealthOnDemand BackendHealthOnDemand(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = default(string))
+            {
+                return operations.BackendHealthOnDemandAsync(resourceGroupName, applicationGatewayName, probeRequest, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the backend health for given combination of backend pool and http
+            /// setting of the specified application gateway in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='probeRequest'>
+            /// Request body for on-demand test probe operation.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayBackendHealthOnDemand> BackendHealthOnDemandAsync(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BackendHealthOnDemandWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, probeRequest, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Lists all available server variables.
             /// </summary>
             /// <param name='operations'>
@@ -828,6 +884,62 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<ApplicationGatewayBackendHealth> BeginBackendHealthAsync(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginBackendHealthWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the backend health for given combination of backend pool and http
+            /// setting of the specified application gateway in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='probeRequest'>
+            /// Request body for on-demand test probe operation.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            public static ApplicationGatewayBackendHealthOnDemand BeginBackendHealthOnDemand(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = default(string))
+            {
+                return operations.BeginBackendHealthOnDemandAsync(resourceGroupName, applicationGatewayName, probeRequest, expand).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the backend health for given combination of backend pool and http
+            /// setting of the specified application gateway in a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='probeRequest'>
+            /// Request body for on-demand test probe operation.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayBackendHealthOnDemand> BeginBackendHealthOnDemandAsync(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, ApplicationGatewayOnDemandProbe probeRequest, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginBackendHealthOnDemandWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, probeRequest, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -24,9 +24,12 @@ namespace Microsoft.Azure.Management.NetApp
     public partial interface IMountTargetsOperations
     {
         /// <summary>
-        /// List mount targets
+        /// Describe all mount targets
         /// </summary>
-        /// <param name='resourceGroup'>
+        /// <remarks>
+        /// List all mount targets associated with the volume
+        /// </remarks>
+        /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='accountName'>
@@ -44,7 +47,7 @@ namespace Microsoft.Azure.Management.NetApp
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        /// <exception cref="ErrorException">
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
         /// <exception cref="Microsoft.Rest.SerializationException">
@@ -53,6 +56,6 @@ namespace Microsoft.Azure.Management.NetApp
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IEnumerable<MountTarget>>> ListWithHttpMessagesAsync(string resourceGroup, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IEnumerable<MountTarget>>> ListWithHttpMessagesAsync(string resourceGroupName, string accountName, string poolName, string volumeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

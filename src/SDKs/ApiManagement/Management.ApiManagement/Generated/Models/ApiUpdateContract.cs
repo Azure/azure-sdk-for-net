@@ -56,6 +56,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Version.</param>
         /// <param name="apiVersionSetId">A resource identifier for the related
         /// ApiVersionSet.</param>
+        /// <param name="subscriptionRequired">Specifies whether an API or
+        /// Product subscription is required for accessing the API.</param>
         /// <param name="displayName">API name.</param>
         /// <param name="serviceUrl">Absolute URL of the backend service
         /// implementing this API.</param>
@@ -66,7 +68,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// API.</param>
         /// <param name="protocols">Describes on which protocols the operations
         /// in this API can be invoked.</param>
-        public ApiUpdateContract(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), string displayName = default(string), string serviceUrl = default(string), string path = default(string), IList<Protocol?> protocols = default(IList<Protocol?>))
+        public ApiUpdateContract(string description = default(string), AuthenticationSettingsContract authenticationSettings = default(AuthenticationSettingsContract), SubscriptionKeyParameterNamesContract subscriptionKeyParameterNames = default(SubscriptionKeyParameterNamesContract), string apiType = default(string), string apiRevision = default(string), string apiVersion = default(string), bool? isCurrent = default(bool?), bool? isOnline = default(bool?), string apiRevisionDescription = default(string), string apiVersionDescription = default(string), string apiVersionSetId = default(string), bool? subscriptionRequired = default(bool?), string displayName = default(string), string serviceUrl = default(string), string path = default(string), IList<Protocol?> protocols = default(IList<Protocol?>))
         {
             Description = description;
             AuthenticationSettings = authenticationSettings;
@@ -79,6 +81,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             ApiRevisionDescription = apiRevisionDescription;
             ApiVersionDescription = apiVersionDescription;
             ApiVersionSetId = apiVersionSetId;
+            SubscriptionRequired = subscriptionRequired;
             DisplayName = displayName;
             ServiceUrl = serviceUrl;
             Path = path;
@@ -132,10 +135,10 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string ApiVersion { get; set; }
 
         /// <summary>
-        /// Gets indicates if API revision is current api revision.
+        /// Gets or sets indicates if API revision is current api revision.
         /// </summary>
         [JsonProperty(PropertyName = "properties.isCurrent")]
-        public bool? IsCurrent { get; private set; }
+        public bool? IsCurrent { get; set; }
 
         /// <summary>
         /// Gets indicates if API revision is accessible via the gateway.
@@ -160,6 +163,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiVersionSetId")]
         public string ApiVersionSetId { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies whether an API or Product subscription is
+        /// required for accessing the API.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.subscriptionRequired")]
+        public bool? SubscriptionRequired { get; set; }
 
         /// <summary>
         /// Gets or sets API name.

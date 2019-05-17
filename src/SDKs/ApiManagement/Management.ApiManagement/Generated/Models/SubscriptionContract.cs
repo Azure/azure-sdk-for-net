@@ -32,13 +32,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Initializes a new instance of the SubscriptionContract class.
         /// </summary>
-        /// <param name="userId">The user resource identifier of the
-        /// subscription owner. The value is a valid relative URL in the format
-        /// of /users/{uid} where {uid} is a user identifier.</param>
-        /// <param name="productId">The product resource identifier of the
-        /// subscribed product. The value is a valid relative URL in the format
-        /// of /products/{productId} where {productId} is a product
-        /// identifier.</param>
+        /// <param name="scope">Scope like /products/{productId} or /apis or
+        /// /apis/{apiId}.</param>
         /// <param name="state">Subscription state. Possible states are *
         /// active – the subscription is active, * suspended – the subscription
         /// is blocked, and the subscriber cannot call any APIs of the product,
@@ -55,6 +50,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <param name="name">Resource name.</param>
         /// <param name="type">Resource type for API Management
         /// resource.</param>
+        /// <param name="ownerId">The user resource identifier of the
+        /// subscription owner. The value is a valid relative URL in the format
+        /// of /users/{userId} where {userId} is a user identifier.</param>
         /// <param name="displayName">The name of the subscription, or null if
         /// the subscription has no name.</param>
         /// <param name="createdDate">Subscription creation date. The date
@@ -88,11 +86,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </param>
         /// <param name="stateComment">Optional subscription comment added by
         /// an administrator.</param>
-        public SubscriptionContract(string userId, string productId, SubscriptionState state, string primaryKey, string secondaryKey, string id = default(string), string name = default(string), string type = default(string), string displayName = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), System.DateTime? notificationDate = default(System.DateTime?), string stateComment = default(string))
+        /// <param name="allowTracing">Determines whether tracing is
+        /// enabled</param>
+        public SubscriptionContract(string scope, SubscriptionState state, string primaryKey, string secondaryKey, string id = default(string), string name = default(string), string type = default(string), string ownerId = default(string), string displayName = default(string), System.DateTime? createdDate = default(System.DateTime?), System.DateTime? startDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.DateTime? endDate = default(System.DateTime?), System.DateTime? notificationDate = default(System.DateTime?), string stateComment = default(string), bool? allowTracing = default(bool?))
             : base(id, name, type)
         {
-            UserId = userId;
-            ProductId = productId;
+            OwnerId = ownerId;
+            Scope = scope;
             DisplayName = displayName;
             State = state;
             CreatedDate = createdDate;
@@ -103,6 +103,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             StateComment = stateComment;
+            AllowTracing = allowTracing;
             CustomInit();
         }
 
@@ -114,18 +115,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// <summary>
         /// Gets or sets the user resource identifier of the subscription
         /// owner. The value is a valid relative URL in the format of
-        /// /users/{uid} where {uid} is a user identifier.
+        /// /users/{userId} where {userId} is a user identifier.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userId")]
-        public string UserId { get; set; }
+        [JsonProperty(PropertyName = "properties.ownerId")]
+        public string OwnerId { get; set; }
 
         /// <summary>
-        /// Gets or sets the product resource identifier of the subscribed
-        /// product. The value is a valid relative URL in the format of
-        /// /products/{productId} where {productId} is a product identifier.
+        /// Gets or sets scope like /products/{productId} or /apis or
+        /// /apis/{apiId}.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.productId")]
-        public string ProductId { get; set; }
+        [JsonProperty(PropertyName = "properties.scope")]
+        public string Scope { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the subscription, or null if the
@@ -221,6 +221,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public string StateComment { get; set; }
 
         /// <summary>
+        /// Gets or sets determines whether tracing is enabled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowTracing")]
+        public bool? AllowTracing { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -228,13 +234,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (UserId == null)
+            if (Scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserId");
-            }
-            if (ProductId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ProductId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Scope");
             }
             if (PrimaryKey == null)
             {

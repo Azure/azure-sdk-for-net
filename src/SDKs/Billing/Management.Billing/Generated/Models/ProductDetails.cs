@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// <summary>
         /// Initializes a new instance of the ProductDetails class.
         /// </summary>
-        /// <param name="productType">Type of the prouct to be transferred.
+        /// <param name="productType">Type of the product to be transferred.
         /// Possible values include: 'AzureSubscription',
         /// 'AzureReservation'</param>
         /// <param name="productId">Id of product to be transferred.</param>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         partial void CustomInit();
 
         /// <summary>
-        /// Gets or sets type of the prouct to be transferred. Possible values
+        /// Gets or sets type of the product to be transferred. Possible values
         /// include: 'AzureSubscription', 'AzureReservation'
         /// </summary>
         [JsonProperty(PropertyName = "productType")]

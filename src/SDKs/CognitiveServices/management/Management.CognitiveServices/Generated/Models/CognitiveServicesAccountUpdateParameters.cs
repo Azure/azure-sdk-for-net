@@ -40,10 +40,13 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// tags can be provided for a resource. Each tag must have a key no
         /// greater than 128 characters and value no greater than 256
         /// characters.</param>
-        public CognitiveServicesAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="properties">Additional properties for Account. Only
+        /// provided fields will be updated.</param>
+        public CognitiveServicesAccountUpdateParameters(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), object properties = default(object))
         {
             Sku = sku;
             Tags = tags;
+            Properties = properties;
             CustomInit();
         }
 
@@ -67,6 +70,13 @@ namespace Microsoft.Azure.Management.CognitiveServices.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets additional properties for Account. Only provided
+        /// fields will be updated.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public object Properties { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListByServiceWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, ODataQuery<ApiReleaseContract> odataQuery = default(ODataQuery<ApiReleaseContract>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Returns the etag of an API release.
         /// </summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiReleaseContract>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiReleaseContract,ApiReleaseGetHeaders>> GetWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a new Release for the API.
         /// </summary>
@@ -142,6 +142,10 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='parameters'>
         /// Create parameters.
         /// </param>
+        /// <param name='ifMatch'>
+        /// ETag of the Entity. Not required when creating an entity, but
+        /// required when updating an entity.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -157,7 +161,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ApiReleaseContract>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ApiReleaseContract,ApiReleaseCreateOrUpdateHeaders>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string apiId, string releaseId, ApiReleaseContract parameters, string ifMatch = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Updates the details of the release of the API specified by its
         /// identifier.
@@ -256,6 +260,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ApiReleaseContract>>> ListByServiceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

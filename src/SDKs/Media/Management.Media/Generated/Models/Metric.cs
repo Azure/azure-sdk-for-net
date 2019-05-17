@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="aggregationType">The metric aggregation type. Possible
         /// values include: 'Average', 'Count', 'Total'</param>
         /// <param name="dimensions">The metric dimensions.</param>
-        public Metric(string name = default(string), string displayName = default(string), string displayDescription = default(string), string unit = default(string), string aggregationType = default(string), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
+        public Metric(string name = default(string), string displayName = default(string), string displayDescription = default(string), MetricUnit unit = default(MetricUnit), MetricAggregationType aggregationType = default(MetricAggregationType), IList<MetricDimension> dimensions = default(IList<MetricDimension>))
         {
             Name = name;
             DisplayName = displayName;
@@ -79,14 +79,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Milliseconds'
         /// </summary>
         [JsonProperty(PropertyName = "unit")]
-        public string Unit { get; private set; }
+        public MetricUnit Unit { get; private set; }
 
         /// <summary>
         /// Gets the metric aggregation type. Possible values include:
         /// 'Average', 'Count', 'Total'
         /// </summary>
         [JsonProperty(PropertyName = "aggregationType")]
-        public string AggregationType { get; private set; }
+        public MetricAggregationType AggregationType { get; private set; }
 
         /// <summary>
         /// Gets the metric dimensions.

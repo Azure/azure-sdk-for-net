@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Search.Serialization
             object existingValue, 
             JsonSerializer serializer)
         {
-            SearchContinuationTokenPayload payload = serializer.Deserialize<SearchContinuationTokenPayload>(reader);
+            Payload payload = serializer.Deserialize<Payload>(reader);
 
             Uri nextLinkUri;
             try
@@ -54,10 +54,10 @@ namespace Microsoft.Azure.Search.Serialization
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            SearchContinuationToken token = (SearchContinuationToken)value;
+            var token = (SearchContinuationToken)value;
 
             var payload = 
-                new SearchContinuationTokenPayload()
+                new Payload()
                 {
                     NextLink = token.NextLink,
                     NextPageParameters = token.NextPageParameters
@@ -91,6 +91,15 @@ namespace Microsoft.Azure.Search.Serialization
             }
 
             return null;
+        }
+
+        private class Payload
+        {
+            [JsonProperty("@odata.nextLink")]
+            public string NextLink { get; set; }
+
+            [JsonProperty("@search.nextPageParameters")]
+            public SearchRequest NextPageParameters { get; set; }
         }
     }
 }

@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Storage
             BlobServices = new BlobServicesOperations(this);
             BlobContainers = new BlobContainersOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2018-11-01";
+            ApiVersion = "2019-04-01";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

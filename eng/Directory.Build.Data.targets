@@ -10,26 +10,6 @@
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
 
-  <PropertyGroup>
-    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
-    <IsTestProject Condition="'$(IsTestProject)' == '' and $(MSBuildProjectName.EndsWith('.Tests'))">true</IsTestProject>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(IsTestProject)' != 'true' and '$(IsTestHelperLibrary)' != 'true'">
-    <SignTestAssembly>false</SignTestAssembly>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(IsTestProject)' == 'true' or '$(IsTestHelperLibrary)' == 'true'">
-    <IsPackable>false</IsPackable>
-    <SignAssembly>false</SignAssembly>
-    <RequiredTargetFrameworks>netcoreapp2.0</RequiredTargetFrameworks>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <DefaultReferenceTargets>AzSdk.test.reference.targets</DefaultReferenceTargets>
-
-    <!-- Disable running of tests for test helper libraries -->
-    <IsTestProject Condition="'$(IsTestHelperLibrary)' == 'true'">false</IsTestProject>
-  </PropertyGroup>
-
   <!-- This allows us to build .NET Framework targets on non-windows
     TODO: Move the NETFramework reference assemblies to a feed other then the roslyn feed.
   -->
@@ -37,24 +17,21 @@
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0-alpha-004" PrivateAssets="all" IsImplicitlyDefined="true" />
   </ItemGroup>
 
-  <!-- If signing is enabled for an SDK library, delay sign using the shared key -->
-  <PropertyGroup Condition="'$(SignAssembly)' != 'false'">
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>true</DelaySign>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)MSSharedLibKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+  <!-- Add Client SDK Analyzers -->
+  <ItemGroup>
+    <PackageReference Condition="'$(EnableClientSdkAnalyzers)' == 'true'" Include="Azure.ClientSdk.Analyzers" Version="0.1.1-dev.20190503.1" PrivateAssets="All" />
+  </ItemGroup>
 
-  <!-- If signing is enabled for a Test library, sign immediately using the test key -->
-  <PropertyGroup Condition="'$(SignTestAssembly)' == 'true'">
-    <SignAssembly>true</SignAssembly>
-    <DelaySign>false</DelaySign>
-    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)AzSdkTestLibKey.snk</AssemblyOriginatorKeyFile>
-  </PropertyGroup>
+  <PropertyGroup>
+    <ImportDefaultReferences Condition="'$(ImportDefaultReferences)' == ''">true</ImportDefaultReferences>
+    <DefaultReferenceTargets>AzSdk.reference.targets</DefaultReferenceTargets>
+    <DefaultReferenceTargets Condition="'$(IsTestProject)' == 'true' or '$(IsTestSupportProject)' == 'true'">AzSdk.test.reference.targets</DefaultReferenceTargets>
 
-  <!-- Import default references if this is not set -->
-  <PropertyGroup Condition="'$(ImportDefaultReferences)'==''">
-    <ImportDefaultReferences>true</ImportDefaultReferences>
+    <!-- Disable running of tests for test helper libraries -->
+    <IsTestProject Condition="'$(IsTestSupportProject)' == 'true'">false</IsTestProject>
   </PropertyGroup>
 
   <Import Project="$(DefaultReferenceTargets)" Condition="Exists('$(DefaultReferenceTargets)') And '$(ImportDefaultReferences)'=='true'" />
+
+  <Import Project="Versioning.targets" />
 </Project>

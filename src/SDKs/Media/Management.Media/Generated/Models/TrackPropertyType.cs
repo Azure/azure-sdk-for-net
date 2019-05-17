@@ -10,19 +10,102 @@
 
 namespace Microsoft.Azure.Management.Media.Models
 {
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Defines values for TrackPropertyType.
     /// </summary>
-    public static class TrackPropertyType
+    /// <summary>
+    /// Determine base value for a given allowed value if exists, else return
+    /// the value itself
+    /// </summary>
+    [JsonConverter(typeof(TrackPropertyTypeConverter))]
+    public struct TrackPropertyType : System.IEquatable<TrackPropertyType>
     {
+        private TrackPropertyType(string underlyingValue)
+        {
+            UnderlyingValue=underlyingValue;
+        }
+
         /// <summary>
         /// Unknown track property
         /// </summary>
-        public const string Unknown = "Unknown";
+        public static readonly TrackPropertyType Unknown = "Unknown";
+
         /// <summary>
         /// Track FourCC
         /// </summary>
-        public const string FourCC = "FourCC";
+        public static readonly TrackPropertyType FourCC = "FourCC";
+
+
+        /// <summary>
+        /// Underlying value of enum TrackPropertyType
+        /// </summary>
+        private readonly string UnderlyingValue;
+
+        /// <summary>
+        /// Returns string representation for TrackPropertyType
+        /// </summary>
+        public override string ToString()
+        {
+            return UnderlyingValue == null ? null : UnderlyingValue.ToString();
+        }
+
+        /// <summary>
+        /// Compares enums of type TrackPropertyType
+        /// </summary>
+        public bool Equals(TrackPropertyType e)
+        {
+            return UnderlyingValue.Equals(e.UnderlyingValue);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert string to TrackPropertyType
+        /// </summary>
+        public static implicit operator TrackPropertyType(string value)
+        {
+            return new TrackPropertyType(value);
+        }
+
+        /// <summary>
+        /// Implicit operator to convert TrackPropertyType to string
+        /// </summary>
+        public static implicit operator string(TrackPropertyType e)
+        {
+            return e.UnderlyingValue;
+        }
+
+        /// <summary>
+        /// Overriding == operator for enum TrackPropertyType
+        /// </summary>
+        public static bool operator == (TrackPropertyType e1, TrackPropertyType e2)
+        {
+            return e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overriding != operator for enum TrackPropertyType
+        /// </summary>
+        public static bool operator != (TrackPropertyType e1, TrackPropertyType e2)
+        {
+            return !e2.Equals(e1);
+        }
+
+        /// <summary>
+        /// Overrides Equals operator for TrackPropertyType
+        /// </summary>
+        public override bool Equals(object obj)
+        {
+            return obj is TrackPropertyType && Equals((TrackPropertyType)obj);
+        }
+
+        /// <summary>
+        /// Returns for hashCode TrackPropertyType
+        /// </summary>
+        public override int GetHashCode()
+        {
+            return UnderlyingValue.GetHashCode();
+        }
+
     }
 }

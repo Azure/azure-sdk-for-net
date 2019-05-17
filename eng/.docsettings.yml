@@ -15,5 +15,73 @@ required_readme_sections:
   - ^Next steps$
   - ^Contributing$
 known_presence_issues:
+  - ['sdk/keyvault','#5499']
+  - ['sdk/servicebus','#5499']
+  - ['sdk/eventhub','#5499']
+  - ['sdk/eventgrid/Microsoft.Azure.EventGrid','#5499']
+  - ['sdk/operationalinsights/Microsoft.Azure.OperationalInsights','#5499']
+  - ['sdk/hdinsight/Microsoft.Azure.HDInsight.Job','#5499']
+  - ['sdk/applicationinsights/Microsoft.Azure.ApplicationInsights','#5499']
+  - ['sdk/containerregistry/Microsoft.Azure.ContainerRegistry','#5499']
+  - ['sdk/storage','azure-sdk-tools/issues/43']
+  - ['sdk/cognitiveservices/Language.LUIS.Runtime','#5499']
+  - ['sdk/cognitiveservices/Search.BingEntitySearch','#5499']
+  - ['sdk/cognitiveservices/Search.BingWebSearch','#5499']
+  - ['sdk/cognitiveservices/Knowledge.QnAMaker','#5499']
+  - ['sdk/cognitiveservices/AnomalyDetector','#5499']
+  - ['sdk/cognitiveservices/Search.BingVisualSearch','#5499']
+  - ['sdk/cognitiveservices/Search.BingCustomSearch','#5499']
+  - ['sdk/cognitiveservices/Search.BingImageSearch','#5499']
+  - ['sdk/cognitiveservices/Vision.FormRecognizer','#5499']
+  - ['sdk/cognitiveservices/Search.BingVideoSearch','#5499']
+  - ['sdk/cognitiveservices/Search.BingNewsSearch','#5499']
+  - ['sdk/cognitiveservices/Personalizer','#5499']
+  - ['sdk/cognitiveservices/Vision.ComputerVision','#5499']
+  - ['sdk/cognitiveservices/Vision.CustomVision.Training','#5499']
+  - ['sdk/cognitiveservices/Vision.Face','#5499']
+  - ['sdk/cognitiveservices/Search.BingAutoSuggest','#5499']
+  - ['sdk/cognitiveservices/Language.LUIS.Authoring','#5499']
+  - ['sdk/cognitiveservices/Vision.ContentModerator','#5499']
+  - ['sdk/cognitiveservices/Vision.CustomVision.Prediction','#5499']
+  - ['sdk/cognitiveservices/Language.SpellCheck','#5499']
+  - ['sdk/cognitiveservices/Language.TextAnalytics','#5499']
+  - ['sdk/cognitiveservices/Search.BingLocalSearch','#5499']
+  - ['sdk/cognitiveservices/Search.BingCustomImageSearch','#5499']
 known_content_issues:
   - ['README.md','Root readme']
+  - ['sdk/keyvault/Microsoft.Azure.KeyVault/README.md','#5499']
+  - ['sdk/servicebus/Microsoft.Azure.ServiceBus/README.md','#5499']
+  - ['sdk/eventhub/Microsoft.Azure.EventHubs/README.md','#5499']
+  - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/README.md','#5499']
+  - ['sdk/appconfiguration/Azure.ApplicationModel.Configuration/tests/Readme.md','#5499']
+  - ['sdk/core/Azure.Core/README.md','#5499']
+  - ['sdk/storage/Azure.Storage.Blobs/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Files/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Queues/swagger/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/storage/Azure.Storage.Common/swagger/Generator/readme.md','azure-sdk-tools/issues/42']
+  - ['sdk/cognitiveservices/Language.TextAnalytics/src/Readme.md','#5499']
+  - ['sdk/cognitiveservices/Personalizer/src/Readme.md','#5499']
+# .net climbs upwards. placing these to prevent assigning readmes to the wrong project
+package_indexing_exclusion_list:
+  - 'AutoRest-AzureDotNetSDK'
+  - 'NetCoreTestPublish'
+  - 'ObjectModelCodeGenerator'
+  - 'ProxyLayerParser'
+  - 'IntegrationTestCommon'
+  - 'Azure.Template'
+  - 'SampleSDKTestPublish'
+  - 'CSProjTestPublish'
+  - 'ConfigureAwaitAnalyzer'
+  - 'Microsoft.WindowsAzure.Build.Tasks'
+  - 'Microsoft.Azure.Services.AppAuthentication.TestCommon'
+  - 'RP2_Sdk'
+  - 'RP1_MgmtPlane'
+  - 'RP1_DataPlane'
+  - 'Gallery'
+  - 'Intune'
+  - 'Common'
+package_indexing_traversal_stops:
+  - 'sdk/'
+  - 'src/SDKs/'
+  - 'src/SdkCommon/'
+  - 'src/AzureStack/'

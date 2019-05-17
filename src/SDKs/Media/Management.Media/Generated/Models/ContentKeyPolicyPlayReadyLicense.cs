@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// of license.</param>
         /// <param name="gracePeriod">The grace period of license.</param>
         /// <param name="playRight">The license PlayRight</param>
-        public ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, string licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, string contentType, System.DateTime? beginDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.TimeSpan? relativeBeginDate = default(System.TimeSpan?), System.TimeSpan? relativeExpirationDate = default(System.TimeSpan?), System.TimeSpan? gracePeriod = default(System.TimeSpan?), ContentKeyPolicyPlayReadyPlayRight playRight = default(ContentKeyPolicyPlayReadyPlayRight))
+        public ContentKeyPolicyPlayReadyLicense(bool allowTestDevices, ContentKeyPolicyPlayReadyLicenseType licenseType, ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation, ContentKeyPolicyPlayReadyContentType contentType, System.DateTime? beginDate = default(System.DateTime?), System.DateTime? expirationDate = default(System.DateTime?), System.TimeSpan? relativeBeginDate = default(System.TimeSpan?), System.TimeSpan? relativeExpirationDate = default(System.TimeSpan?), System.TimeSpan? gracePeriod = default(System.TimeSpan?), ContentKeyPolicyPlayReadyPlayRight playRight = default(ContentKeyPolicyPlayReadyPlayRight))
         {
             AllowTestDevices = allowTestDevices;
             BeginDate = beginDate;
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'NonPersistent', 'Persistent'
         /// </summary>
         [JsonProperty(PropertyName = "licenseType")]
-        public string LicenseType { get; set; }
+        public ContentKeyPolicyPlayReadyLicenseType LicenseType { get; set; }
 
         /// <summary>
         /// Gets or sets the content key location.
@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'UltraVioletStreaming'
         /// </summary>
         [JsonProperty(PropertyName = "contentType")]
-        public string ContentType { get; set; }
+        public ContentKeyPolicyPlayReadyContentType ContentType { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -141,17 +141,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (LicenseType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "LicenseType");
-            }
             if (ContentKeyLocation == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "ContentKeyLocation");
-            }
-            if (ContentType == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ContentType");
             }
             if (PlayRight != null)
             {

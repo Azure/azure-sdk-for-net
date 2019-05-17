@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         /// </summary>
         /// <param name="creationTime">Transfer creation time.</param>
         /// <param name="expirationTime">Transfer expiration time.</param>
-        /// <param name="invoiceSectionId">Target invoice setion Id.</param>
+        /// <param name="invoiceSectionId">Target invoice section Id.</param>
         /// <param name="billingAccountId">Target billing account Id.</param>
         /// <param name="transferStatus">Overall transfer status. Possible
         /// values include: 'Pending', 'InProgress', 'Completed',
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Billing.Models
         public System.DateTime? ExpirationTime { get; private set; }
 
         /// <summary>
-        /// Gets target invoice setion Id.
+        /// Gets target invoice section Id.
         /// </summary>
         [JsonProperty(PropertyName = "properties.invoiceSectionId")]
         public string InvoiceSectionId { get; private set; }

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// relative value (For example, 100%).</param>
         /// <param name="layers">A collection of output PNG image layers to be
         /// produced by the encoder.</param>
-        public PngImage(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), string stretchMode = default(string), string step = default(string), string range = default(string), IList<PngLayer> layers = default(IList<PngLayer>))
+        public PngImage(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), string step = default(string), string range = default(string), IList<PngLayer> layers = default(IList<PngLayer>))
             : base(start, label, keyFrameInterval, stretchMode, step, range)
         {
             Layers = layers;

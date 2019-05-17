@@ -22,7 +22,47 @@ namespace Microsoft.Azure.Management.ApiManagement
     public static partial class TenantAccessOperationsExtensions
     {
             /// <summary>
-            /// Get tenant access information details.
+            /// Tenant access metadata
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            public static TenantAccessGetEntityTagHeaders GetEntityTag(this ITenantAccessOperations operations, string resourceGroupName, string serviceName)
+            {
+                return operations.GetEntityTagAsync(resourceGroupName, serviceName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Tenant access metadata
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the API Management service.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TenantAccessGetEntityTagHeaders> GetEntityTagAsync(this ITenantAccessOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetEntityTagWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
+            /// Get tenant access information details
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,7 +79,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Get tenant access information details.
+            /// Get tenant access information details
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -115,7 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Regenerate primary access key.
+            /// Regenerate primary access key
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,7 +172,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Regenerate primary access key.
+            /// Regenerate primary access key
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -152,7 +192,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Regenerate secondary access key.
+            /// Regenerate secondary access key
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -169,7 +209,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             }
 
             /// <summary>
-            /// Regenerate secondary access key.
+            /// Regenerate secondary access key
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -29,7 +29,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// <remarks>
             /// Split a `Reservation` into two `Reservation`s with specified quantity
             /// distribution.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,7 +50,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// <remarks>
             /// Split a `Reservation` into two `Reservation`s with specified quantity
             /// distribution.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -264,7 +262,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </summary>
             /// <remarks>
             /// List of all the revisions for the `Reservation`.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -285,7 +282,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </summary>
             /// <remarks>
             /// List of all the revisions for the `Reservation`.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -313,7 +309,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// <remarks>
             /// Split a `Reservation` into two `Reservation`s with specified quantity
             /// distribution.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -335,7 +330,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// <remarks>
             /// Split a `Reservation` into two `Reservation`s with specified quantity
             /// distribution.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -502,7 +496,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </summary>
             /// <remarks>
             /// List of all the revisions for the `Reservation`.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -520,7 +513,6 @@ namespace Microsoft.Azure.Management.Reservations
             /// </summary>
             /// <remarks>
             /// List of all the revisions for the `Reservation`.
-            ///
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.

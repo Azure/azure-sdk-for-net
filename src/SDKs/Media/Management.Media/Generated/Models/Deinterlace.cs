@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="mode">The deinterlacing mode. Defaults to
         /// AutoPixelAdaptive. Possible values include: 'Off',
         /// 'AutoPixelAdaptive'</param>
-        public Deinterlace(string parity = default(string), string mode = default(string))
+        public Deinterlace(DeinterlaceParity? parity = default(DeinterlaceParity?), DeinterlaceMode? mode = default(DeinterlaceMode?))
         {
             Parity = parity;
             Mode = mode;
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'BottomFieldFirst'
         /// </summary>
         [JsonProperty(PropertyName = "parity")]
-        public string Parity { get; set; }
+        public DeinterlaceParity? Parity { get; set; }
 
         /// <summary>
         /// Gets or sets the deinterlacing mode. Defaults to AutoPixelAdaptive.
         /// Possible values include: 'Off', 'AutoPixelAdaptive'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
-        public string Mode { get; set; }
+        public DeinterlaceMode? Mode { get; set; }
 
     }
 }

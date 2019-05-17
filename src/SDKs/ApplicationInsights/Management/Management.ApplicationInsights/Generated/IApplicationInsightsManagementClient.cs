@@ -41,29 +41,30 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for this operation.
         /// </summary>
         string ApiVersion { get; }
 
         /// <summary>
-        /// The Azure subscription ID.
+        /// The ID of the target subscription.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Gets or sets the preferred language for the response.
+        /// The preferred language for the response.
         /// </summary>
         string AcceptLanguage { get; set; }
 
         /// <summary>
-        /// Gets or sets the retry timeout in seconds for Long Running
-        /// Operations. Default value is 30.
+        /// The retry timeout in seconds for Long Running Operations. Default
+        /// value is 30.
         /// </summary>
         int? LongRunningOperationRetryTimeout { get; set; }
 
         /// <summary>
-        /// When set to true a unique x-ms-client-request-id value is generated
-        /// and included in each request. Default is true.
+        /// Whether a unique x-ms-client-request-id should be generated. When
+        /// set to true a unique x-ms-client-request-id value is generated and
+        /// included in each request. Default is true.
         /// </summary>
         bool? GenerateClientRequestId { get; set; }
 
@@ -74,14 +75,14 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         IOperations Operations { get; }
 
         /// <summary>
-        /// Gets the IComponentsOperations.
+        /// Gets the IAnnotationsOperations.
         /// </summary>
-        IComponentsOperations Components { get; }
+        IAnnotationsOperations Annotations { get; }
 
         /// <summary>
-        /// Gets the IWebTestsOperations.
+        /// Gets the IAPIKeysOperations.
         /// </summary>
-        IWebTestsOperations WebTests { get; }
+        IAPIKeysOperations APIKeys { get; }
 
         /// <summary>
         /// Gets the IExportConfigurationsOperations.
@@ -99,9 +100,54 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         IComponentQuotaStatusOperations ComponentQuotaStatus { get; }
 
         /// <summary>
-        /// Gets the IAPIKeysOperations.
+        /// Gets the IComponentFeatureCapabilitiesOperations.
         /// </summary>
-        IAPIKeysOperations APIKeys { get; }
+        IComponentFeatureCapabilitiesOperations ComponentFeatureCapabilities { get; }
+
+        /// <summary>
+        /// Gets the IComponentAvailableFeaturesOperations.
+        /// </summary>
+        IComponentAvailableFeaturesOperations ComponentAvailableFeatures { get; }
+
+        /// <summary>
+        /// Gets the IProactiveDetectionConfigurationsOperations.
+        /// </summary>
+        IProactiveDetectionConfigurationsOperations ProactiveDetectionConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IComponentsOperations.
+        /// </summary>
+        IComponentsOperations Components { get; }
+
+        /// <summary>
+        /// Gets the IWorkItemConfigurationsOperations.
+        /// </summary>
+        IWorkItemConfigurationsOperations WorkItemConfigurations { get; }
+
+        /// <summary>
+        /// Gets the IFavoritesOperations.
+        /// </summary>
+        IFavoritesOperations Favorites { get; }
+
+        /// <summary>
+        /// Gets the IWebTestLocationsOperations.
+        /// </summary>
+        IWebTestLocationsOperations WebTestLocations { get; }
+
+        /// <summary>
+        /// Gets the IWebTestsOperations.
+        /// </summary>
+        IWebTestsOperations WebTests { get; }
+
+        /// <summary>
+        /// Gets the IAnalyticsItemsOperations.
+        /// </summary>
+        IAnalyticsItemsOperations AnalyticsItems { get; }
+
+        /// <summary>
+        /// Gets the IWorkbooksOperations.
+        /// </summary>
+        IWorkbooksOperations Workbooks { get; }
 
     }
 }

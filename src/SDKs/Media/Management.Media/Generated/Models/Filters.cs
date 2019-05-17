@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="overlays">The properties of overlays to be applied to
         /// the input video. These could be audio, image or video
         /// overlays.</param>
-        public Filters(Deinterlace deinterlace = default(Deinterlace), string rotation = default(string), Rectangle crop = default(Rectangle), IList<Overlay> overlays = default(IList<Overlay>))
+        public Filters(Deinterlace deinterlace = default(Deinterlace), Rotation? rotation = default(Rotation?), Rectangle crop = default(Rectangle), IList<Overlay> overlays = default(IList<Overlay>))
         {
             Deinterlace = deinterlace;
             Rotation = rotation;
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Rotate270'
         /// </summary>
         [JsonProperty(PropertyName = "rotation")]
-        public string Rotation { get; set; }
+        public Rotation? Rotation { get; set; }
 
         /// <summary>
         /// Gets or sets the parameters for the rectangular window with which

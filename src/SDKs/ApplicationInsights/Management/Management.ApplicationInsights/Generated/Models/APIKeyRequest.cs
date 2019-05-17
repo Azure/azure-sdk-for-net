@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management.Models
     using System.Linq;
 
     /// <summary>
-    /// An Application Insights component API Key createion request definition.
+    /// An Application Insights component API Key creation request definition.
     /// </summary>
     public partial class APIKeyRequest
     {

@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// this JobOutput within the Job. Note that this index is the same as
         /// the relative index of the corresponding TransformOutput within its
         /// Transform.</param>
-        public JobOutput(JobError error = default(JobError), string state = default(string), int progress = default(int), string label = default(string))
+        public JobOutput(JobError error = default(JobError), JobState state = default(JobState), int progress = default(int), string label = default(string))
         {
             Error = error;
             State = state;
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Queued', 'Scheduled'
         /// </summary>
         [JsonProperty(PropertyName = "state")]
-        public string State { get; private set; }
+        public JobState State { get; private set; }
 
         /// <summary>
         /// Gets if the JobOutput is in a Processing state, this contains the

@@ -31,10 +31,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="location">Location of the SKU</param>
         /// <param name="zones">List of availability zones where the SKU is
         /// supported.</param>
-        public ResourceSkuLocationInfo(string location = default(string), IList<string> zones = default(IList<string>))
+        /// <param name="zoneDetails">Details of capabilities available to a
+        /// SKU in specific zones.</param>
+        public ResourceSkuLocationInfo(string location = default(string), IList<string> zones = default(IList<string>), IList<ResourceSkuZoneDetails> zoneDetails = default(IList<ResourceSkuZoneDetails>))
         {
             Location = location;
             Zones = zones;
+            ZoneDetails = zoneDetails;
             CustomInit();
         }
 
@@ -54,6 +57,12 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "zones")]
         public IList<string> Zones { get; private set; }
+
+        /// <summary>
+        /// Gets details of capabilities available to a SKU in specific zones.
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneDetails")]
+        public IList<ResourceSkuZoneDetails> ZoneDetails { get; private set; }
 
     }
 }

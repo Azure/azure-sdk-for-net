@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// (ISO 8601, e.g: PT5M30S to stop at 5 minutes and 30 seconds), or a
         /// frame count (For example, 300 to stop at the 300th frame), or a
         /// relative value (For example, 100%).</param>
-        public Image(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), string stretchMode = default(string), string step = default(string), string range = default(string))
+        public Image(string start, string label = default(string), System.TimeSpan? keyFrameInterval = default(System.TimeSpan?), StretchMode? stretchMode = default(StretchMode?), string step = default(string), string range = default(string))
             : base(label, keyFrameInterval, stretchMode)
         {
             Start = start;

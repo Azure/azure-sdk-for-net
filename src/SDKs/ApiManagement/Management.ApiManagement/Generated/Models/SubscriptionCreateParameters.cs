@@ -34,11 +34,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the SubscriptionCreateParameters
         /// class.
         /// </summary>
-        /// <param name="userId">User (user id path) for whom subscription is
-        /// being created in form /users/{uid}</param>
-        /// <param name="productId">Product (product id path) for which
-        /// subscription is being created in form /products/{productid}</param>
+        /// <param name="scope">Scope like /products/{productId} or /apis or
+        /// /apis/{apiId}.</param>
         /// <param name="displayName">Subscription name.</param>
+        /// <param name="ownerId">User (user id path) for whom subscription is
+        /// being created in form /users/{userId}</param>
         /// <param name="primaryKey">Primary subscription key. If not specified
         /// during request key will be generated automatically.</param>
         /// <param name="secondaryKey">Secondary subscription key. If not
@@ -56,14 +56,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// reached its expiration date and was deactivated. Possible values
         /// include: 'suspended', 'active', 'expired', 'submitted', 'rejected',
         /// 'cancelled'</param>
-        public SubscriptionCreateParameters(string userId, string productId, string displayName, string primaryKey = default(string), string secondaryKey = default(string), SubscriptionState? state = default(SubscriptionState?))
+        /// <param name="allowTracing">Determines whether tracing can be
+        /// enabled</param>
+        public SubscriptionCreateParameters(string scope, string displayName, string ownerId = default(string), string primaryKey = default(string), string secondaryKey = default(string), SubscriptionState? state = default(SubscriptionState?), bool? allowTracing = default(bool?))
         {
-            UserId = userId;
-            ProductId = productId;
+            OwnerId = ownerId;
+            Scope = scope;
             DisplayName = displayName;
             PrimaryKey = primaryKey;
             SecondaryKey = secondaryKey;
             State = state;
+            AllowTracing = allowTracing;
             CustomInit();
         }
 
@@ -74,17 +77,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
 
         /// <summary>
         /// Gets or sets user (user id path) for whom subscription is being
-        /// created in form /users/{uid}
+        /// created in form /users/{userId}
         /// </summary>
-        [JsonProperty(PropertyName = "properties.userId")]
-        public string UserId { get; set; }
+        [JsonProperty(PropertyName = "properties.ownerId")]
+        public string OwnerId { get; set; }
 
         /// <summary>
-        /// Gets or sets product (product id path) for which subscription is
-        /// being created in form /products/{productid}
+        /// Gets or sets scope like /products/{productId} or /apis or
+        /// /apis/{apiId}.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.productId")]
-        public string ProductId { get; set; }
+        [JsonProperty(PropertyName = "properties.scope")]
+        public string Scope { get; set; }
 
         /// <summary>
         /// Gets or sets subscription name.
@@ -123,6 +126,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         public SubscriptionState? State { get; set; }
 
         /// <summary>
+        /// Gets or sets determines whether tracing can be enabled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.allowTracing")]
+        public bool? AllowTracing { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -130,13 +139,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (UserId == null)
+            if (Scope == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserId");
-            }
-            if (ProductId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ProductId");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Scope");
             }
             if (DisplayName == null)
             {

@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Deletes an Application Insights component.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Returns an Application Insights component.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// in the Put operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.
@@ -149,7 +149,7 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// the CreateOrUpdate method.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the resource group. The name is case insensitive.
         /// </param>
         /// <param name='resourceName'>
         /// The name of the Application Insights component resource.
@@ -173,6 +173,65 @@ namespace Microsoft.Azure.Management.ApplicationInsights.Management
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ApplicationInsightsComponent>> UpdateTagsWithHttpMessagesAsync(string resourceGroupName, string resourceName, IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Purges data in an Application Insights component by a set of
+        /// user-defined filters.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Application Insights component resource.
+        /// </param>
+        /// <param name='body'>
+        /// Describes the body of a request to purge data in a single table of
+        /// an Application Insights component
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ComponentPurgeResponse>> PurgeWithHttpMessagesAsync(string resourceGroupName, string resourceName, ComponentPurgeBody body, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get status for an ongoing purge operation.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group. The name is case insensitive.
+        /// </param>
+        /// <param name='resourceName'>
+        /// The name of the Application Insights component resource.
+        /// </param>
+        /// <param name='purgeId'>
+        /// In a purge status request, this is the Id of the operation the
+        /// status of which is returned.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse<ComponentPurgeStatusResponse>> GetPurgeStatusWithHttpMessagesAsync(string resourceGroupName, string resourceName, string purgeId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of all Application Insights components within a
         /// subscription.

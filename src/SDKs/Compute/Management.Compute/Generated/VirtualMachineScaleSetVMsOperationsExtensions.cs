@@ -425,9 +425,14 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            public static void PowerOff(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
+            public static void PowerOff(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? skipShutdown = false)
             {
-                operations.PowerOffAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+                operations.PowerOffAsync(resourceGroupName, vmScaleSetName, instanceId, skipShutdown).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -447,12 +452,17 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task PowerOffAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task PowerOffAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? skipShutdown = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.PowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, skipShutdown, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>
@@ -938,9 +948,14 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
-            public static void BeginPowerOff(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId)
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
+            public static void BeginPowerOff(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? skipShutdown = false)
             {
-                operations.BeginPowerOffAsync(resourceGroupName, vmScaleSetName, instanceId).GetAwaiter().GetResult();
+                operations.BeginPowerOffAsync(resourceGroupName, vmScaleSetName, instanceId, skipShutdown).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -960,12 +975,17 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='instanceId'>
             /// The instance ID of the virtual machine.
             /// </param>
+            /// <param name='skipShutdown'>
+            /// The parameter to request non-graceful VM shutdown. True value for this flag
+            /// indicates non-graceful shutdown whereas false indicates otherwise. Default
+            /// value for this flag is false if not specified
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginPowerOffAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task BeginPowerOffAsync(this IVirtualMachineScaleSetVMsOperations operations, string resourceGroupName, string vmScaleSetName, string instanceId, bool? skipShutdown = false, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, null, cancellationToken).ConfigureAwait(false)).Dispose();
+                (await operations.BeginPowerOffWithHttpMessagesAsync(resourceGroupName, vmScaleSetName, instanceId, skipShutdown, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

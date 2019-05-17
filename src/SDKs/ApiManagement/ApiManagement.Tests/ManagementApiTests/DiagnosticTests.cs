@@ -3,15 +3,13 @@
 // license information.
 // using ApiManagement.Management.Tests;
 
-using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using Microsoft.Azure.Management.ApiManagement;
-using Microsoft.Azure.Management.ApiManagement.Models;
-using Xunit;
-using System.Linq;
-using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
-using ApiManagementManagement.Tests.Helpers;
+using System.Threading.Tasks;
+using Microsoft.Azure.Management.ApiManagement;
+using Microsoft.Azure.Management.ApiManagement.Models;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+using Xunit;
 
 namespace ApiManagement.Tests.ManagementApiTests
 {
@@ -41,20 +39,6 @@ namespace ApiManagement.Tests.ManagementApiTests
 
                 try
                 {
-                    // create a diagnostic entity
-                    var diagnosticContractParams = new DiagnosticContract()
-                    {
-                        Enabled = true
-                    };
-                    var diagnosticContract = await testBase.client.Diagnostic.CreateOrUpdateAsync(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        diagnosticId,
-                        diagnosticContractParams);
-                    Assert.NotNull(diagnosticContract);
-                    Assert.Equal(diagnosticId, diagnosticContract.Name);
-                    Assert.Equal(diagnosticContractParams.Enabled, diagnosticContract.Enabled);
-
                     // create a logger
                     Guid applicationInsightsGuid = TestUtilities.GenerateGuid("appInsights");
                     var credentials = new Dictionary<string, string>();
@@ -72,26 +56,19 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(loggerContract.Credentials);
                     Assert.Equal(1, loggerContract.Credentials.Keys.Count);
 
-                    // create a diagnostic logger
-                    loggerContract = await testBase.client.DiagnosticLogger.CreateOrUpdateAsync(
+                    // create a diagnostic entity with just loggerId
+                    var diagnosticContractParams = new DiagnosticContract()
+                    {
+                        LoggerId = loggerContract.Id
+                    };
+                    var diagnosticContract = await testBase.client.Diagnostic.CreateOrUpdateAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         diagnosticId,
-                        loggerId);
-                    Assert.NotNull(loggerContract);
-                    Assert.Equal(loggerId, loggerContract.Name);
-                    Assert.Equal(LoggerType.ApplicationInsights, loggerContract.LoggerType);
-                    
-                    //list diagnostic loggers
-                    var loggerContractList = await testBase.client.DiagnosticLogger.ListByServiceAsync(
-                        testBase.rgName,
-                        testBase.serviceName,
-                        diagnosticId);
-                    Assert.NotNull(loggerContractList);
-                    Assert.Single(loggerContractList);
-                    Assert.Equal(loggerId, loggerContractList.GetEnumerator().ToIEnumerable().First().Name);
-                    Assert.Equal(LoggerType.ApplicationInsights, loggerContractList.GetEnumerator().ToIEnumerable().First().LoggerType);
-                    
+                        diagnosticContractParams);
+                    Assert.NotNull(diagnosticContract);
+                    Assert.Equal(diagnosticId, diagnosticContract.Name);
+
                     // check the diagnostic entity etag
                     var diagnosticTag = await testBase.client.Diagnostic.GetEntityTagAsync(
                         testBase.rgName,
@@ -100,12 +77,58 @@ namespace ApiManagement.Tests.ManagementApiTests
                     Assert.NotNull(diagnosticTag);
                     Assert.NotNull(diagnosticTag.ETag);
 
+                    // now update the sampling and other settings of the diagnostic
+                    diagnosticContractParams.EnableHttpCorrelationHeaders = true;
+                    diagnosticContractParams.AlwaysLog = "allErrors";
+                    diagnosticContractParams.Sampling = new SamplingSettings("fixed", 50);
+                    var listOfHeaders = new List<string> { "Content-type" };
+                    var bodyDiagnostic = new BodyDiagnosticSettings(512);
+                    diagnosticContractParams.Frontend = new PipelineDiagnosticSettings
+                    {
+                        Request = new HttpMessageDiagnostic()
+                        {
+                            Body = bodyDiagnostic,
+                            Headers = listOfHeaders
+                        },
+                        Response = new HttpMessageDiagnostic()
+                        {
+                            Body = bodyDiagnostic,
+                            Headers = listOfHeaders
+                        }
+                    };
+                    diagnosticContractParams.Backend = new PipelineDiagnosticSettings
+                    {
+                        Request = new HttpMessageDiagnostic()
+                        {
+                            Body = bodyDiagnostic,
+                            Headers = listOfHeaders
+                        },
+                        Response = new HttpMessageDiagnostic()
+                        {
+                            Body = bodyDiagnostic,
+                            Headers = listOfHeaders
+                        }
+                    };
+
+                    var updatedDiagnostic = await testBase.client.Diagnostic.CreateOrUpdateWithHttpMessagesAsync(
+                        testBase.rgName,
+                        testBase.serviceName,
+                        diagnosticId,
+                        diagnosticContractParams,
+                        diagnosticTag.ETag);
+                    Assert.NotNull(updatedDiagnostic);
+                    Assert.True(updatedDiagnostic.Body.EnableHttpCorrelationHeaders.Value);
+                    Assert.Equal("allErrors", updatedDiagnostic.Body.AlwaysLog);
+                    Assert.NotNull(updatedDiagnostic.Body.Sampling);
+                    Assert.NotNull(updatedDiagnostic.Body.Frontend);
+                    Assert.NotNull(updatedDiagnostic.Body.Backend);
+
                     // delete the diagnostic entity
                     await testBase.client.Diagnostic.DeleteAsync(
                         testBase.rgName,
                         testBase.serviceName,
                         diagnosticId,
-                        diagnosticTag.ETag);
+                        updatedDiagnostic.Headers.ETag);
 
                     Assert.Throws<ErrorResponseException>(()
                         => testBase.client.Diagnostic.GetEntityTag(testBase.rgName, testBase.serviceName, diagnosticId));

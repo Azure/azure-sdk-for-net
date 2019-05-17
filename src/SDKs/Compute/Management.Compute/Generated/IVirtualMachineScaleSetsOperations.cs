@@ -313,6 +313,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
+        /// <param name='skipShutdown'>
+        /// The parameter to request non-graceful VM shutdown. True value for
+        /// this flag indicates non-graceful shutdown whereas false indicates
+        /// otherwise. Default value for this flag is false if not specified
+        /// </param>
         /// <param name='instanceIds'>
         /// The virtual machine scale set instance ids. Omitting the virtual
         /// machine scale set instance ids will result in the operation being
@@ -330,7 +335,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> PowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = false, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restarts one or more virtual machines in a VM scale set.
         /// </summary>
@@ -557,6 +562,36 @@ namespace Microsoft.Azure.Management.Compute
         /// </exception>
         Task<AzureOperationResponse<RecoveryWalkResponse>> ForceRecoveryServiceFabricPlatformUpdateDomainWalkWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, int platformUpdateDomain, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Converts SinglePlacementGroup property to false for a existing
+        /// virtual machine scale set.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='vmScaleSetName'>
+        /// The name of the virtual machine scale set to create or update.
+        /// </param>
+        /// <param name='activePlacementGroupId'>
+        /// Id of the placement group in which you want future virtual machine
+        /// instances to be placed. To query placement group Id, please use
+        /// Virtual Machine Scale Set VMs - Get API. If not provided, the
+        /// platform will choose one with maximum number of virtual machine
+        /// instances.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="Microsoft.Rest.Azure.CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> ConvertToSinglePlacementGroupWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, string activePlacementGroupId = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Create or update a VM scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -701,6 +736,11 @@ namespace Microsoft.Azure.Management.Compute
         /// <param name='vmScaleSetName'>
         /// The name of the VM scale set.
         /// </param>
+        /// <param name='skipShutdown'>
+        /// The parameter to request non-graceful VM shutdown. True value for
+        /// this flag indicates non-graceful shutdown whereas false indicates
+        /// otherwise. Default value for this flag is false if not specified
+        /// </param>
         /// <param name='instanceIds'>
         /// The virtual machine scale set instance ids. Omitting the virtual
         /// machine scale set instance ids will result in the operation being
@@ -718,7 +758,7 @@ namespace Microsoft.Azure.Management.Compute
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> BeginPowerOffWithHttpMessagesAsync(string resourceGroupName, string vmScaleSetName, bool? skipShutdown = false, IList<string> instanceIds = default(IList<string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Restarts one or more virtual machines in a VM scale set.
         /// </summary>

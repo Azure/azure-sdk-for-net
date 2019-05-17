@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'MayRetry'</param>
         /// <param name="details">An array of details about specific errors
         /// that led to this reported error.</param>
-        public JobError(string code = default(string), string message = default(string), string category = default(string), string retry = default(string), IList<JobErrorDetail> details = default(IList<JobErrorDetail>))
+        public JobError(JobErrorCode code = default(JobErrorCode), string message = default(string), JobErrorCategory category = default(JobErrorCategory), JobRetry retry = default(JobRetry), IList<JobErrorDetail> details = default(IList<JobErrorDetail>))
         {
             Code = code;
             Message = message;
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'ContentMalformed', 'ContentUnsupported'
         /// </summary>
         [JsonProperty(PropertyName = "code")]
-        public string Code { get; private set; }
+        public JobErrorCode Code { get; private set; }
 
         /// <summary>
         /// Gets a human-readable language-dependent representation of the
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Service', 'Download', 'Upload', 'Configuration', 'Content'
         /// </summary>
         [JsonProperty(PropertyName = "category")]
-        public string Category { get; private set; }
+        public JobErrorCategory Category { get; private set; }
 
         /// <summary>
         /// Gets indicates that it may be possible to retry the Job. If retry
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// Possible values include: 'DoNotRetry', 'MayRetry'
         /// </summary>
         [JsonProperty(PropertyName = "retry")]
-        public string Retry { get; private set; }
+        public JobRetry Retry { get; private set; }
 
         /// <summary>
         /// Gets an array of details about specific errors that led to this

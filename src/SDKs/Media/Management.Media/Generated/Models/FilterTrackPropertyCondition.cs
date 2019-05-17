@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// <param name="value">The track proprty value.</param>
         /// <param name="operation">The track property condition operation.
         /// Possible values include: 'Equal', 'NotEqual'</param>
-        public FilterTrackPropertyCondition(string property, string value, string operation)
+        public FilterTrackPropertyCondition(FilterTrackPropertyType property, string value, FilterTrackPropertyCompareOperation operation)
         {
             Property = property;
             Value = value;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// 'Unknown', 'Type', 'Name', 'Language', 'FourCC', 'Bitrate'
         /// </summary>
         [JsonProperty(PropertyName = "property")]
-        public string Property { get; set; }
+        public FilterTrackPropertyType Property { get; set; }
 
         /// <summary>
         /// Gets or sets the track proprty value.
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Media.Models
         /// values include: 'Equal', 'NotEqual'
         /// </summary>
         [JsonProperty(PropertyName = "operation")]
-        public string Operation { get; set; }
+        public FilterTrackPropertyCompareOperation Operation { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -79,17 +79,9 @@ namespace Microsoft.Azure.Management.Media.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (Property == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Property");
-            }
             if (Value == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Value");
-            }
-            if (Operation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Operation");
             }
         }
     }

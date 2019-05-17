@@ -54,6 +54,11 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="overprovision">Specifies whether the Virtual Machine
         /// Scale Set should be overprovisioned.</param>
+        /// <param name="doNotRunExtensionsOnOverprovisionedVMs">When
+        /// Overprovision is enabled, extensions are launched only on the
+        /// requested number of VMs which are finally kept. This property will
+        /// hence ensure that the extensions do not run on the extra
+        /// overprovisioned VMs.</param>
         /// <param name="uniqueId">Specifies the ID which uniquely identifies a
         /// Virtual Machine Scale Set.</param>
         /// <param name="singlePlacementGroup">When true this limits the scale
@@ -64,10 +69,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// outage.</param>
         /// <param name="platformFaultDomainCount">Fault Domain count for each
         /// placement group.</param>
+        /// <param name="proximityPlacementGroup">Specifies information about
+        /// the proximity placement group that the virtual machine scale set
+        /// should be assigned to. &lt;br&gt;&lt;br&gt;Minimum api-version:
+        /// 2018-04-01.</param>
+        /// <param name="additionalCapabilities">Specifies additional
+        /// capabilities enabled or disabled on the Virtual Machines in the
+        /// Virtual Machine Scale Set. For instance: whether the Virtual
+        /// Machines have the capability to support attaching managed data
+        /// disks with UltraSSD_LRS storage account type.</param>
         /// <param name="identity">The identity of the virtual machine scale
         /// set, if configured.</param>
         /// <param name="zones">The virtual machine scale set zones.</param>
-        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
+        public VirtualMachineScaleSet(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), Plan plan = default(Plan), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overprovision = default(bool?), bool? doNotRunExtensionsOnOverprovisionedVMs = default(bool?), string uniqueId = default(string), bool? singlePlacementGroup = default(bool?), bool? zoneBalance = default(bool?), int? platformFaultDomainCount = default(int?), SubResource proximityPlacementGroup = default(SubResource), AdditionalCapabilities additionalCapabilities = default(AdditionalCapabilities), VirtualMachineScaleSetIdentity identity = default(VirtualMachineScaleSetIdentity), IList<string> zones = default(IList<string>))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -76,10 +90,13 @@ namespace Microsoft.Azure.Management.Compute.Models
             VirtualMachineProfile = virtualMachineProfile;
             ProvisioningState = provisioningState;
             Overprovision = overprovision;
+            DoNotRunExtensionsOnOverprovisionedVMs = doNotRunExtensionsOnOverprovisionedVMs;
             UniqueId = uniqueId;
             SinglePlacementGroup = singlePlacementGroup;
             ZoneBalance = zoneBalance;
             PlatformFaultDomainCount = platformFaultDomainCount;
+            ProximityPlacementGroup = proximityPlacementGroup;
+            AdditionalCapabilities = additionalCapabilities;
             Identity = identity;
             Zones = zones;
             CustomInit();
@@ -134,6 +151,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         public bool? Overprovision { get; set; }
 
         /// <summary>
+        /// Gets or sets when Overprovision is enabled, extensions are launched
+        /// only on the requested number of VMs which are finally kept. This
+        /// property will hence ensure that the extensions do not run on the
+        /// extra overprovisioned VMs.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.doNotRunExtensionsOnOverprovisionedVMs")]
+        public bool? DoNotRunExtensionsOnOverprovisionedVMs { get; set; }
+
+        /// <summary>
         /// Gets specifies the ID which uniquely identifies a Virtual Machine
         /// Scale Set.
         /// </summary>
@@ -159,6 +185,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.platformFaultDomainCount")]
         public int? PlatformFaultDomainCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies information about the proximity placement
+        /// group that the virtual machine scale set should be assigned to.
+        /// &amp;lt;br&amp;gt;&amp;lt;br&amp;gt;Minimum api-version:
+        /// 2018-04-01.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.proximityPlacementGroup")]
+        public SubResource ProximityPlacementGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets specifies additional capabilities enabled or disabled
+        /// on the Virtual Machines in the Virtual Machine Scale Set. For
+        /// instance: whether the Virtual Machines have the capability to
+        /// support attaching managed data disks with UltraSSD_LRS storage
+        /// account type.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.additionalCapabilities")]
+        public AdditionalCapabilities AdditionalCapabilities { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the virtual machine scale set, if
