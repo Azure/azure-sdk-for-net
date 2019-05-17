@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Cdn
             Operations = new Operations(this);
             EdgeNodes = new EdgeNodesOperations(this);
             BaseUri = new System.Uri("https://management.azure.com");
-            ApiVersion = "2019-04-15";
+            ApiVersion = "41234123412341234";
             AcceptLanguage = "en-US";
             LongRunningOperationRetryTimeout = 30;
             GenerateClientRequestId = true;

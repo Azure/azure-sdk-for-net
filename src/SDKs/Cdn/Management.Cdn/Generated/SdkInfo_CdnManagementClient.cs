@@ -19,16 +19,16 @@ namespace Microsoft.Azure.Management.Cdn
           {
               return new Tuple<string, string, string>[]
               {
-                new Tuple<string, string, string>("Cdn", "CheckNameAvailability", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "CheckNameAvailabilityWithSubscription", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "CustomDomains", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "EdgeNodes", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Endpoints", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Operations", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Origins", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "Profiles", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "ResourceUsage", "2019-04-15"),
-                new Tuple<string, string, string>("Cdn", "ValidateProbe", "2019-04-15"),
+                new Tuple<string, string, string>("Cdn", "CheckNameAvailability", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "CheckNameAvailabilityWithSubscription", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "CustomDomains", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "EdgeNodes", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "Endpoints", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "Operations", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "Origins", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "Profiles", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "ResourceUsage", "41234123412341234"),
+                new Tuple<string, string, string>("Cdn", "ValidateProbe", "41234123412341234"),
               }.AsEnumerable();
           }
       }
