@@ -36,8 +36,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// used as is without any modification.</param>
         /// <param name="type">The type of the secret object which determines
         /// how the value of the secret object has to be
-        /// interpreted. Possible values include: 'Opaque',
-        /// 'Vaultsecret'</param>
+        /// interpreted. Possible values include: 'Opaque'</param>
         public SecretObject(string value = default(string), string type = default(string))
         {
             Value = value;
@@ -63,7 +62,7 @@ namespace Microsoft.Azure.Management.ContainerRegistry.Models
         /// <summary>
         /// Gets or sets the type of the secret object which determines how the
         /// value of the secret object has to be
-        /// interpreted. Possible values include: 'Opaque', 'Vaultsecret'
+        /// interpreted. Possible values include: 'Opaque'
         /// </summary>
         [JsonProperty(PropertyName = "type")]
         public string Type { get; set; }
