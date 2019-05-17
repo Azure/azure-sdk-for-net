@@ -51,19 +51,19 @@ namespace Microsoft.Azure.Management.EventGrid
         public EventGridManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Get a domain topic
+        /// Get a domain topic.
         /// </summary>
         /// <remarks>
-        /// Get properties of a domain topic
+        /// Get properties of a domain topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='domainTopicName'>
-        /// Name of the topic
+        /// Name of the topic.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Create or update a domain topic
+        /// Create or update a domain topic.
         /// </summary>
         /// <remarks>
         /// Asynchronously creates or updates a new domain topic with the specified
@@ -269,10 +269,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='domainTopicName'>
-        /// Name of the domain topic
+        /// Name of the domain topic.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -288,19 +288,19 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Delete a domain topic
+        /// Delete a domain topic.
         /// </summary>
         /// <remarks>
-        /// Delete existing domain topic
+        /// Delete existing domain topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='domainTopicName'>
-        /// Name of the domain topic
+        /// Name of the domain topic.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -328,10 +328,18 @@ namespace Microsoft.Azure.Management.EventGrid
         /// Domain name.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax. Filtering
+        /// is permitted on the 'name' property only and with limited number of OData
+        /// operations. These operations are: the 'contains' function as well as the
+        /// following logical operations: not, and, or, eq (for equal), and ne (for not
+        /// equal). No arithmetic operations are supported. The following is a valid
+        /// filter example: $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'.
+        /// The following is not a valid filter example: $filter=location eq 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
+        /// The number of results to return per page for the list operation. Valid
+        /// range for top parameter is 1 to 100. If not specified, the default number
+        /// of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -531,7 +539,7 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Create or update a domain topic
+        /// Create or update a domain topic.
         /// </summary>
         /// <remarks>
         /// Asynchronously creates or updates a new domain topic with the specified
@@ -541,10 +549,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='domainTopicName'>
-        /// Name of the domain topic
+        /// Name of the domain topic.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -740,19 +748,19 @@ namespace Microsoft.Azure.Management.EventGrid
         }
 
         /// <summary>
-        /// Delete a domain topic
+        /// Delete a domain topic.
         /// </summary>
         /// <remarks>
-        /// Delete existing domain topic
+        /// Delete existing domain topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the domain
+        /// Name of the domain.
         /// </param>
         /// <param name='domainTopicName'>
-        /// Name of the domain topic
+        /// Name of the domain topic.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

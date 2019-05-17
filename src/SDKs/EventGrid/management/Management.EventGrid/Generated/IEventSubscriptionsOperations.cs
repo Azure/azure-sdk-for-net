@@ -24,10 +24,10 @@ namespace Microsoft.Azure.Management.EventGrid
     public partial interface IEventSubscriptionsOperations
     {
         /// <summary>
-        /// Get an event subscription
+        /// Get an event subscription.
         /// </summary>
         /// <remarks>
-        /// Get properties of an event subscription
+        /// Get properties of an event subscription.
         /// </remarks>
         /// <param name='scope'>
         /// The scope of the event subscription. The scope can be a
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription
+        /// Name of the event subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<EventSubscription>> GetWithHttpMessagesAsync(string scope, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update an event subscription
+        /// Create or update an event subscription.
         /// </summary>
         /// <remarks>
         /// Asynchronously creates a new event subscription or updates an
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='eventSubscriptionInfo'>
         /// Event subscription properties containing the destination and filter
-        /// information
+        /// information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -107,10 +107,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<EventSubscription>> CreateOrUpdateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an event subscription
+        /// Delete an event subscription.
         /// </summary>
         /// <remarks>
-        /// Delete an existing event subscription
+        /// Delete an existing event subscription.
         /// </remarks>
         /// <param name='scope'>
         /// The scope of the event subscription. The scope can be a
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription
+        /// Name of the event subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string scope, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an event subscription
+        /// Update an event subscription.
         /// </summary>
         /// <remarks>
         /// Asynchronously updates an existing event subscription.
@@ -161,10 +161,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription to be updated
+        /// Name of the event subscription to be updated.
         /// </param>
         /// <param name='eventSubscriptionUpdateParameters'>
-        /// Updated event subscription information
+        /// Updated event subscription information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -183,10 +183,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<EventSubscription>> UpdateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Get full URL of an event subscription
+        /// Get full URL of an event subscription.
         /// </summary>
         /// <remarks>
-        /// Get the full endpoint URL for an event subscription
+        /// Get the full endpoint URL for an event subscription.
         /// </remarks>
         /// <param name='scope'>
         /// The scope of the event subscription. The scope can be a
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription
+        /// Name of the event subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -222,20 +222,27 @@ namespace Microsoft.Azure.Management.EventGrid
         Task<AzureOperationResponse<EventSubscriptionFullUrl>> GetFullUrlWithHttpMessagesAsync(string scope, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get an aggregated list of all global event subscriptions under an
-        /// Azure subscription
+        /// Azure subscription.
         /// </summary>
         /// <remarks>
         /// List all aggregated global event subscriptions under a specific
-        /// Azure subscription
+        /// Azure subscription.
         /// </remarks>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -252,25 +259,32 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionWithHttpMessagesAsync(string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all global event subscriptions for a topic type
+        /// List all global event subscriptions for a topic type.
         /// </summary>
         /// <remarks>
         /// List all global event subscriptions under an Azure subscription for
         /// a topic type.
         /// </remarks>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -287,26 +301,33 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionForTopicTypeWithHttpMessagesAsync(string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionForTopicTypeWithHttpMessagesAsync(string topicTypeName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all global event subscriptions under an Azure subscription and
-        /// resource group
+        /// resource group.
         /// </summary>
         /// <remarks>
         /// List all global event subscriptions under a specific Azure
-        /// subscription and resource group
+        /// subscription and resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -323,10 +344,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all global event subscriptions under a resource group for a
-        /// topic type
+        /// topic type.
         /// </summary>
         /// <remarks>
         /// List all global event subscriptions under a resource group for a
@@ -336,16 +357,23 @@ namespace Microsoft.Azure.Management.EventGrid
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -362,25 +390,32 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string topicTypeName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all regional event subscriptions under an Azure subscription
+        /// List all regional event subscriptions under an Azure subscription.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
-        /// specific Azure subscription
+        /// specific Azure subscription.
         /// </remarks>
         /// <param name='location'>
-        /// Name of the location
+        /// Name of the location.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -397,29 +432,36 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionWithHttpMessagesAsync(string location, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionWithHttpMessagesAsync(string location, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
-        /// and resource group
+        /// and resource group.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
-        /// specific Azure subscription and resource group
+        /// specific Azure subscription and resource group.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='location'>
-        /// Name of the location
+        /// Name of the location.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -436,29 +478,36 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupWithHttpMessagesAsync(string resourceGroupName, string location, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
-        /// for a topic type
+        /// for a topic type.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
         /// specific Azure subscription and topic type.
         /// </remarks>
         /// <param name='location'>
-        /// Name of the location
+        /// Name of the location.
         /// </param>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -475,32 +524,39 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionForTopicTypeWithHttpMessagesAsync(string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionForTopicTypeWithHttpMessagesAsync(string location, string topicTypeName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
-        /// and resource group for a topic type
+        /// and resource group for a topic type.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
-        /// specific Azure subscription and resource group and topic type
+        /// specific Azure subscription and resource group and topic type.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='location'>
-        /// Name of the location
+        /// Name of the location.
         /// </param>
         /// <param name='topicTypeName'>
-        /// Name of the topic type
+        /// Name of the topic type.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -517,34 +573,41 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeWithHttpMessagesAsync(string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific topic
+        /// List all event subscriptions for a specific topic.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// topic
+        /// topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='providerNamespace'>
-        /// Namespace of the provider of the topic
+        /// Namespace of the provider of the topic.
         /// </param>
         /// <param name='resourceTypeName'>
-        /// Name of the resource type
+        /// Name of the resource type.
         /// </param>
         /// <param name='resourceName'>
-        /// Name of the resource
+        /// Name of the resource.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -561,31 +624,38 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByResourceWithHttpMessagesAsync(string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific domain topic
+        /// List all event subscriptions for a specific domain topic.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// domain topic
+        /// domain topic.
         /// </remarks>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the user's subscription.
         /// </param>
         /// <param name='domainName'>
-        /// Name of the top level domain
+        /// Name of the top level domain.
         /// </param>
         /// <param name='topicName'>
-        /// Name of the domain topic
+        /// Name of the domain topic.
         /// </param>
         /// <param name='filter'>
-        /// Filter the results using OData syntax.
+        /// The query used to filter the search results using OData syntax.
+        /// Filtering is permitted on the 'name' property only and with limited
+        /// number of OData operations. These operations are: the 'contains'
+        /// function as well as the following logical operations: not, and, or,
+        /// eq (for equal), and ne (for not equal). No arithmetic operations
+        /// are supported. The following is a valid filter example:
+        /// $filter=contains(namE, 'PATTERN') and name ne 'PATTERN-1'. The
+        /// following is not a valid filter example: $filter=location eq
+        /// 'westus'.
         /// </param>
         /// <param name='top'>
-        /// The number of results to return.
-        /// </param>
-        /// <param name='label'>
-        /// The label used to filter the results for event subscriptions list.
+        /// The number of results to return per page for the list operation.
+        /// Valid range for top parameter is 1 to 100. If not specified, the
+        /// default number of results to be returned is 20 iterms per page.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -602,9 +672,9 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByDomainTopicWithHttpMessagesAsync(string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?), string label = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<EventSubscription>>> ListByDomainTopicWithHttpMessagesAsync(string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Create or update an event subscription
+        /// Create or update an event subscription.
         /// </summary>
         /// <remarks>
         /// Asynchronously creates a new event subscription or updates an
@@ -630,7 +700,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </param>
         /// <param name='eventSubscriptionInfo'>
         /// Event subscription properties containing the destination and filter
-        /// information
+        /// information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -649,10 +719,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<EventSubscription>> BeginCreateOrUpdateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscription eventSubscriptionInfo, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Delete an event subscription
+        /// Delete an event subscription.
         /// </summary>
         /// <remarks>
-        /// Delete an existing event subscription
+        /// Delete an existing event subscription.
         /// </remarks>
         /// <param name='scope'>
         /// The scope of the event subscription. The scope can be a
@@ -668,7 +738,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription
+        /// Name of the event subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -684,7 +754,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string scope, string eventSubscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Update an event subscription
+        /// Update an event subscription.
         /// </summary>
         /// <remarks>
         /// Asynchronously updates an existing event subscription.
@@ -703,10 +773,10 @@ namespace Microsoft.Azure.Management.EventGrid
         /// for an EventGrid topic.
         /// </param>
         /// <param name='eventSubscriptionName'>
-        /// Name of the event subscription to be updated
+        /// Name of the event subscription to be updated.
         /// </param>
         /// <param name='eventSubscriptionUpdateParameters'>
-        /// Updated event subscription information
+        /// Updated event subscription information.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -726,11 +796,11 @@ namespace Microsoft.Azure.Management.EventGrid
         Task<AzureOperationResponse<EventSubscription>> BeginUpdateWithHttpMessagesAsync(string scope, string eventSubscriptionName, EventSubscriptionUpdateParameters eventSubscriptionUpdateParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Get an aggregated list of all global event subscriptions under an
-        /// Azure subscription
+        /// Azure subscription.
         /// </summary>
         /// <remarks>
         /// List all aggregated global event subscriptions under a specific
-        /// Azure subscription
+        /// Azure subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -752,7 +822,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all global event subscriptions for a topic type
+        /// List all global event subscriptions for a topic type.
         /// </summary>
         /// <remarks>
         /// List all global event subscriptions under an Azure subscription for
@@ -779,11 +849,11 @@ namespace Microsoft.Azure.Management.EventGrid
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalBySubscriptionForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all global event subscriptions under an Azure subscription and
-        /// resource group
+        /// resource group.
         /// </summary>
         /// <remarks>
         /// List all global event subscriptions under a specific Azure
-        /// subscription and resource group
+        /// subscription and resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -806,7 +876,7 @@ namespace Microsoft.Azure.Management.EventGrid
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all global event subscriptions under a resource group for a
-        /// topic type
+        /// topic type.
         /// </summary>
         /// <remarks>
         /// List all global event subscriptions under a resource group for a
@@ -832,11 +902,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListGlobalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all regional event subscriptions under an Azure subscription
+        /// List all regional event subscriptions under an Azure subscription.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
-        /// specific Azure subscription
+        /// specific Azure subscription.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -859,11 +929,11 @@ namespace Microsoft.Azure.Management.EventGrid
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
-        /// and resource group
+        /// and resource group.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
-        /// specific Azure subscription and resource group
+        /// specific Azure subscription and resource group.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -886,7 +956,7 @@ namespace Microsoft.Azure.Management.EventGrid
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
-        /// for a topic type
+        /// for a topic type.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
@@ -913,11 +983,11 @@ namespace Microsoft.Azure.Management.EventGrid
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalBySubscriptionForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// List all regional event subscriptions under an Azure subscription
-        /// and resource group for a topic type
+        /// and resource group for a topic type.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions from the given location under a
-        /// specific Azure subscription and resource group and topic type
+        /// specific Azure subscription and resource group and topic type.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -939,11 +1009,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListRegionalByResourceGroupForTopicTypeNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific topic
+        /// List all event subscriptions for a specific topic.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// topic
+        /// topic.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -965,11 +1035,11 @@ namespace Microsoft.Azure.Management.EventGrid
         /// </exception>
         Task<AzureOperationResponse<IPage<EventSubscription>>> ListByResourceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// List all event subscriptions for a specific domain topic
+        /// List all event subscriptions for a specific domain topic.
         /// </summary>
         /// <remarks>
         /// List all event subscriptions that have been created for a specific
-        /// domain topic
+        /// domain topic.
         /// </remarks>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

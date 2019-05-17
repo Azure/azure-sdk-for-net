@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.EventGrid.Models
     using System.Linq;
 
     /// <summary>
-    /// Information about the retry policy for an event subscription
+    /// Information about the retry policy for an event subscription.
     /// </summary>
     public partial class RetryPolicy
     {

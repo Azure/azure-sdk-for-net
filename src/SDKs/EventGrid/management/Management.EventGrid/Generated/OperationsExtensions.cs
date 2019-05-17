@@ -24,11 +24,11 @@ namespace Microsoft.Azure.Management.EventGrid
     public static partial class OperationsExtensions
     {
             /// <summary>
-            /// List available operations
+            /// List available operations.
             /// </summary>
             /// <remarks>
             /// List the available operations supported by the Microsoft.EventGrid resource
-            /// provider
+            /// provider.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -39,11 +39,11 @@ namespace Microsoft.Azure.Management.EventGrid
             }
 
             /// <summary>
-            /// List available operations
+            /// List available operations.
             /// </summary>
             /// <remarks>
             /// List the available operations supported by the Microsoft.EventGrid resource
-            /// provider
+            /// provider.
             /// </remarks>
             /// <param name='operations'>
             /// The operations group for this extension method.
