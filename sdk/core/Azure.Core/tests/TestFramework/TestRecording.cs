@@ -5,12 +5,13 @@ using System;
 using System.IO;
 using System.Text.Json;
 using Azure.Core.Pipeline;
-using Azure.Core.Testing;
 
-namespace Azure.ApplicationModel.Configuration.Tests
+namespace Azure.Core.Testing
 {
     public class TestRecording
     {
+        private const string RandomSeedVariableKey = "RandomSeed";
+
         public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer)
         {
             Mode = mode;
@@ -42,11 +43,11 @@ namespace Azure.ApplicationModel.Configuration.Tests
                         case RecordedTestMode.Record:
                             _random = new Random();
                             int seed = _random.Next();
-                            _session.Variables["RandomSeed"] = seed.ToString();
+                            _session.Variables[RandomSeedVariableKey] = seed.ToString();
                             _random = new Random(seed);
                             break;
                         case RecordedTestMode.Playback:
-                            _random = new Random(int.Parse(_session.Variables["RandomSeed"]));
+                            _random = new Random(int.Parse(_session.Variables[RandomSeedVariableKey]));
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();

@@ -5,76 +5,13 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
-    [Category("Recorded")]
-    public abstract class RecordedTestBase: ClientTestBase
-    {
-        private const string ModeEnvironmentVariableName = "AZURE_TEST_MODE";
-
-        protected RecordedTestSanitizer Sanitizer { get; set; } = new RecordedTestSanitizer();
-
-        protected TestRecording Recording { get; private set; }
-
-        protected virtual RecordedTestMode Mode
-        {
-            get
-            {
-                string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
-
-                if (!string.IsNullOrEmpty(modeString) ||
-                    !Enum.TryParse(modeString, true, out RecordedTestMode mode))
-                {
-                    mode = RecordedTestMode.None;
-                }
-
-                mode = RecordedTestMode.Playback;
-                return mode;
-            }
-        }
-
-        protected virtual string SessionFilePath
-        {
-            get
-            {
-                TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
-                var className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
-                return Path.Combine(TestContext.CurrentContext.TestDirectory , "SessionRecordings", className, testAdapter.Name + (IsAsync ? "Async":"") + ".json");
-            }
-        }
-
-        [SetUp]
-        public virtual void Setup()
-        {
-            Recording = new TestRecording(Mode, SessionFilePath, Sanitizer);
-            Recording.Start();
-        }
-
-        [TearDown]
-        public virtual void TearDown()
-        {
-            Recording.Stop();
-        }
-
-        public T InstrumentClientOptions<T>(T clientOptions) where T: HttpClientOptions
-        {
-            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
-            return clientOptions;
-        }
-
-        protected RecordedTestBase(bool isAsync) : base(isAsync)
-        {
-        }
-    }
-
-    [Category("Live")]
     public class ConfigurationLiveTests: RecordedTestBase
     {
         public ConfigurationLiveTests(bool isAsync) : base(isAsync) { }

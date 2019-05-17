@@ -14,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\..\core\Azure.Core\tests\TestFramework\*.cs" />
+    <None Update="SessionRecords\**\*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ApplicationModel.Configuration.csproj" />
