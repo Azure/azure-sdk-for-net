@@ -31,10 +31,10 @@ namespace Azure.Core.Testing
             {
                 string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
 
-                if (!string.IsNullOrEmpty(modeString) ||
-                    !Enum.TryParse(modeString, true, out RecordedTestMode mode))
+                RecordedTestMode mode = RecordedTestMode.None;
+                if (!string.IsNullOrEmpty(modeString))
                 {
-                    mode = RecordedTestMode.None;
+                    mode = (RecordedTestMode)Enum.Parse(typeof(RecordedTestMode), modeString, true);
                 }
 
                 return mode;
