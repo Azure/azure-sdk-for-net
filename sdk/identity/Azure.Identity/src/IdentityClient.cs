@@ -19,7 +19,6 @@ namespace Azure.Identity
     {
         private readonly IdentityClientOptions _options;
         private readonly HttpPipeline _pipeline;
-        
 
         public IdentityClient(IdentityClientOptions options = null)
         {
@@ -29,7 +28,6 @@ namespace Azure.Identity
                     _options.ResponseClassifier,
                     _options.RetryPolicy,
                     ClientRequestIdPolicy.Singleton,
-                    _options.LoggingPolicy,
                     BufferResponsePolicy.Singleton);
         }
 
