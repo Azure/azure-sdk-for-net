@@ -77,6 +77,11 @@ namespace Microsoft.Azure.Management.Billing
         IBillingAccountsOperations BillingAccounts { get; }
 
         /// <summary>
+        /// Gets the IBillingAccountsValidateAddressOperations.
+        /// </summary>
+        IBillingAccountsValidateAddressOperations BillingAccountsValidateAddress { get; }
+
+        /// <summary>
         /// Gets the IAvailableBalancesOperations.
         /// </summary>
         IAvailableBalancesOperations AvailableBalances { get; }
