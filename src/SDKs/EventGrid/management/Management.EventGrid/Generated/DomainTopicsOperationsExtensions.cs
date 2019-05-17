@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<DomainTopic> ListByDomain(this IDomainTopicsOperations operations, string resourceGroupName, string domainName, string filter = default(string), int? top = default(int?))
             {
@@ -237,7 +237,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

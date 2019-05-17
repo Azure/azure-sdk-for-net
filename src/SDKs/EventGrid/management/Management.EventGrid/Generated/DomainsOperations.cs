@@ -349,7 +349,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='top'>
         /// The number of results to return per page for the list operation. Valid
         /// range for top parameter is 1 to 100. If not specified, the default number
-        /// of results to be returned is 20 iterms per page.
+        /// of results to be returned is 20 items per page.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -557,7 +557,7 @@ namespace Microsoft.Azure.Management.EventGrid
         /// <param name='top'>
         /// The number of results to return per page for the list operation. Valid
         /// range for top parameter is 1 to 100. If not specified, the default number
-        /// of results to be returned is 20 iterms per page.
+        /// of results to be returned is 20 items per page.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

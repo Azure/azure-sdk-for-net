@@ -381,7 +381,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListGlobalBySubscription(this IEventSubscriptionsOperations operations, string filter = default(string), int? top = default(int?))
             {
@@ -411,7 +411,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -449,7 +449,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListGlobalBySubscriptionForTopicType(this IEventSubscriptionsOperations operations, string topicTypeName, string filter = default(string), int? top = default(int?))
             {
@@ -481,7 +481,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListGlobalByResourceGroup(this IEventSubscriptionsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?))
             {
@@ -553,7 +553,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -595,7 +595,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListGlobalByResourceGroupForTopicType(this IEventSubscriptionsOperations operations, string resourceGroupName, string topicTypeName, string filter = default(string), int? top = default(int?))
             {
@@ -631,7 +631,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -669,7 +669,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListRegionalBySubscription(this IEventSubscriptionsOperations operations, string location, string filter = default(string), int? top = default(int?))
             {
@@ -701,7 +701,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -743,7 +743,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListRegionalByResourceGroup(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string filter = default(string), int? top = default(int?))
             {
@@ -779,7 +779,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -821,7 +821,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListRegionalBySubscriptionForTopicType(this IEventSubscriptionsOperations operations, string location, string topicTypeName, string filter = default(string), int? top = default(int?))
             {
@@ -857,7 +857,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -902,7 +902,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListRegionalByResourceGroupForTopicType(this IEventSubscriptionsOperations operations, string resourceGroupName, string location, string topicTypeName, string filter = default(string), int? top = default(int?))
             {
@@ -941,7 +941,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -987,7 +987,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListByResource(this IEventSubscriptionsOperations operations, string resourceGroupName, string providerNamespace, string resourceTypeName, string resourceName, string filter = default(string), int? top = default(int?))
             {
@@ -1027,7 +1027,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -1071,7 +1071,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<EventSubscription> ListByDomainTopic(this IEventSubscriptionsOperations operations, string resourceGroupName, string domainName, string topicName, string filter = default(string), int? top = default(int?))
             {
@@ -1109,7 +1109,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

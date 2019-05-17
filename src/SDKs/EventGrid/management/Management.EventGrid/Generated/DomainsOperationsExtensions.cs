@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<Domain> ListBySubscription(this IDomainsOperations operations, string filter = default(string), int? top = default(int?))
             {
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -304,7 +304,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             public static IPage<Domain> ListByResourceGroup(this IDomainsOperations operations, string resourceGroupName, string filter = default(string), int? top = default(int?))
             {
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Management.EventGrid
             /// <param name='top'>
             /// The number of results to return per page for the list operation. Valid
             /// range for top parameter is 1 to 100. If not specified, the default number
-            /// of results to be returned is 20 iterms per page.
+            /// of results to be returned is 20 items per page.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
