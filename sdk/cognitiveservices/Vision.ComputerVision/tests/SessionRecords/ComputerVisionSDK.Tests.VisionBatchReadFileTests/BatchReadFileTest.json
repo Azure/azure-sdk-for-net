@@ -1,10 +1,10 @@
 {
   "Entries": [
     {
-      "RequestUri": "/vision/v2.0/read/core/asyncBatchAnalyze?mode=Printed",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlYWQvY29yZS9hc3luY0JhdGNoQW5hbHl6ZT9tb2RlPVByaW50ZWQ=",
+      "RequestUri": "/vision/v2.0/read/core/asyncBatchAnalyze",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlYWQvY29yZS9hc3luY0JhdGNoQW5hbHl6ZQ==",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/Azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/signage.jpg\"\r\n}",
+      "RequestBody": "{\r\n  \"url\": \"https://raw.githubusercontent.com/azure/azure-sdk-for-net/psSdkJson6/src/SDKs/CognitiveServices/dataPlane/Vision/ComputerVision/ComputerVision.Tests/TestImages/signage.jpg\"\r\n}",
       "RequestHeaders": {
         "Ocp-Apim-Subscription-Key": [
           ""
@@ -13,7 +13,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.3.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -27,13 +27,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 10:00:54 GMT"
+          "Sun, 21 Apr 2019 11:34:05 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Operation-Location": [
-          "https://ocrv1-usw2-dev.azure-api.net/vision/v2.0/read/operations/e4aa248d-3925-44bf-8108-d845e15ef55b"
+          "https://ocrv1usw2dev.azure-api.net/vision/v2.0/read/operations/b2ff632e-0a84-42b5-b8b9-3086fb3d3e4f"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -42,7 +42,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "6afe3a4d-c05c-48e7-9009-dd836496ce5e"
+          "fc9dfdb6-7aec-418d-a12e-935cec2fa863"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -61,8 +61,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/vision/v2.0/read/operations/e4aa248d-3925-44bf-8108-d845e15ef55b",
-      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlYWQvb3BlcmF0aW9ucy9lNGFhMjQ4ZC0zOTI1LTQ0YmYtODEwOC1kODQ1ZTE1ZWY1NWI=",
+      "RequestUri": "/vision/v2.0/read/operations/b2ff632e-0a84-42b5-b8b9-3086fb3d3e4f",
+      "EncodedRequestUri": "L3Zpc2lvbi92Mi4wL3JlYWQvb3BlcmF0aW9ucy9iMmZmNjMyZS0wYTg0LTQyYjUtYjhiOS0zMDg2ZmIzZDNlNGY=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -73,7 +73,7 @@
           "FxVersion/4.6.26614.01",
           "OSName/Windows",
           "OSVersion/Microsoft.Windows.10.0.17763.",
-          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/3.3.0.0"
+          "Microsoft.Azure.CognitiveServices.Vision.ComputerVision.ComputerVisionClient/5.0.0.0"
         ]
       },
       "ResponseHeaders": {
@@ -81,7 +81,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 14 Feb 2019 10:00:59 GMT"
+          "Sun, 21 Apr 2019 11:34:06 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -93,7 +93,7 @@
           "ASP.NET"
         ],
         "apim-request-id": [
-          "847e51e5-48a9-4895-b0b5-5aff158cfe90"
+          "74a5ed7b-2c31-441f-94d9-fae5632e0af7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains; preload"
@@ -102,7 +102,7 @@
           "nosniff"
         ],
         "Content-Length": [
-          "528"
+          "771"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -111,7 +111,7 @@
           "-1"
         ]
       },
-      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"recognitionResults\": [\r\n    {\r\n      \"page\": 1,\r\n      \"clockwiseOrientation\": 3.14,\r\n      \"width\": 250,\r\n      \"height\": 258,\r\n      \"unit\": \"pixel\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": [\r\n            68,\r\n            40,\r\n            103,\r\n            43,\r\n            101,\r\n            63,\r\n            66,\r\n            61\r\n          ],\r\n          \"text\": \"520\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                66,\r\n                39,\r\n                105,\r\n                41,\r\n                103,\r\n                62,\r\n                64,\r\n                60\r\n              ],\r\n              \"text\": \"520\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": [\r\n            121,\r\n            32,\r\n            202,\r\n            35,\r\n            200,\r\n            58,\r\n            119,\r\n            54\r\n          ],\r\n          \"text\": \"WEST\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                123,\r\n                32,\r\n                202,\r\n                37,\r\n                201,\r\n                59,\r\n                121,\r\n                55\r\n              ],\r\n              \"text\": \"WEST\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": [\r\n            58,\r\n            100,\r\n            204,\r\n            108,\r\n            202,\r\n            141,\r\n            56,\r\n            133\r\n          ],\r\n          \"text\": \"Seattle\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                62,\r\n                102,\r\n                204,\r\n                111,\r\n                201,\r\n                141,\r\n                61,\r\n                134\r\n              ],\r\n              \"text\": \"Seattle\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"status\": \"Succeeded\",\r\n  \"recognitionResults\": [\r\n    {\r\n      \"page\": 1,\r\n      \"clockwiseOrientation\": 2.47,\r\n      \"width\": 250,\r\n      \"height\": 258,\r\n      \"unit\": \"pixel\",\r\n      \"lines\": [\r\n        {\r\n          \"boundingBox\": [\r\n            64,\r\n            41,\r\n            104,\r\n            42,\r\n            103,\r\n            61,\r\n            61,\r\n            60\r\n          ],\r\n          \"text\": \"520\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                67,\r\n                41,\r\n                102,\r\n                41,\r\n                102,\r\n                60,\r\n                66,\r\n                60\r\n              ],\r\n              \"text\": \"520\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": [\r\n            123,\r\n            31,\r\n            204,\r\n            35,\r\n            202,\r\n            57,\r\n            121,\r\n            54\r\n          ],\r\n          \"text\": \"WEST\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                126,\r\n                32,\r\n                203,\r\n                36,\r\n                203,\r\n                57,\r\n                124,\r\n                53\r\n              ],\r\n              \"text\": \"WEST\"\r\n            }\r\n          ]\r\n        },\r\n        {\r\n          \"boundingBox\": [\r\n            60,\r\n            102,\r\n            204,\r\n            108,\r\n            202,\r\n            139,\r\n            58,\r\n            132\r\n          ],\r\n          \"text\": \"Seattle\",\r\n          \"words\": [\r\n            {\r\n              \"boundingBox\": [\r\n                64,\r\n                103,\r\n                204,\r\n                109,\r\n                201,\r\n                140,\r\n                64,\r\n                134\r\n              ],\r\n              \"text\": \"Seattle\"\r\n            }\r\n          ]\r\n        }\r\n      ]\r\n    }\r\n  ],\r\n  \"perfTrace\": {\r\n    \"GetImageStreamElapsedMS\": 7,\r\n    \"GenerateBitmapElapsedMS\": 1,\r\n    \"GenerateMultipleBitmapsElapsedMS\": 0,\r\n    \"UploadImageStreamElapsedMS\": 10,\r\n    \"DownloadImageElapsedMS\": 24,\r\n    \"DistributeTaskElapsedMS\": 0,\r\n    \"ProcessImageElapsedMS\": 94,\r\n    \"TotalElapsedMS\": 296\r\n  }\r\n}",
       "StatusCode": 200
     }
   ],

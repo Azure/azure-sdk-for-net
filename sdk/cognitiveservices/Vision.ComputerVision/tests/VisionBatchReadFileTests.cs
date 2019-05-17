@@ -33,7 +33,7 @@ namespace ComputerVisionSDK.Tests
             return null;
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void BatchReadFileTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -44,7 +44,7 @@ namespace ComputerVisionSDK.Tests
 
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 {
-                    BatchReadFileHeaders headers = client.BatchReadFileAsync(imageUrl, TextRecognitionMode.Printed).Result;
+                    BatchReadFileHeaders headers = client.BatchReadFileAsync(imageUrl).Result;
 
                     Assert.NotNull(headers.OperationLocation);
 
@@ -73,7 +73,7 @@ namespace ComputerVisionSDK.Tests
             }
         }
 
-        [Fact(Skip = "https://github.com/Azure/azure-sdk-for-net/issues/6214")]
+        [Fact]
         public void BatchReadFileInStreamTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -83,7 +83,7 @@ namespace ComputerVisionSDK.Tests
                 using (IComputerVisionClient client = GetComputerVisionClient(HttpMockServer.CreateInstance()))
                 using (FileStream stream = new FileStream(GetTestImagePath("whiteboard.jpg"), FileMode.Open))
                 {
-                    BatchReadFileInStreamHeaders headers = client.BatchReadFileInStreamAsync(stream, TextRecognitionMode.Printed).Result;
+                    BatchReadFileInStreamHeaders headers = client.BatchReadFileInStreamAsync(stream).Result;
 
                     Assert.NotNull(headers.OperationLocation);
 
@@ -102,11 +102,11 @@ namespace ComputerVisionSDK.Tests
                     Assert.Equal(664, recognitionResult.Height);
 
                     Assert.Equal(
-                        new string[] { "you must be the change", "you want to see in the world !" }.OrderBy(t => t),
+                        new string[] { "you must be the change", "you want to see in the world!" }.OrderBy(t => t),
                         recognitionResult.Lines.Select(line => line.Text).OrderBy(t => t));
                     Assert.Equal(2, recognitionResult.Lines.Count);
                     Assert.Equal(5, recognitionResult.Lines[0].Words.Count);
-                    Assert.Equal(8, recognitionResult.Lines[1].Words.Count);
+                    Assert.Equal(7, recognitionResult.Lines[1].Words.Count);
                 }
             }
         }
