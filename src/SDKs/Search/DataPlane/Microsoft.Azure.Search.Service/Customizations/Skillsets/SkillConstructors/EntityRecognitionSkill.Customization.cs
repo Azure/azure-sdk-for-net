@@ -6,6 +6,10 @@ namespace Microsoft.Azure.Search.Models
 {
     using System.Collections.Generic;
 
+    // Note: The addition of the optional field Skill.Name changed auto generated constructors
+    // such that they were no longer be binary backwards compatiable. This additional constructor
+    // is to preserve backwards compatability such that this new field is not considered a breaking change.
+    // This customization can be removed in the next major version bump (10.0.0)
     public partial class EntityRecognitionSkill
     {
         /// <summary>

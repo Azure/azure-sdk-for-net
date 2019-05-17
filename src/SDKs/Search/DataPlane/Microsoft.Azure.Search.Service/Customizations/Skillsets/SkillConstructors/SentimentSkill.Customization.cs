@@ -6,10 +6,14 @@ namespace Microsoft.Azure.Search.Models
 {
     using System.Collections.Generic;
 
-    public partial class LanguageDetectionSkill
+    // Note: The addition of the optional field Skill.Name changed auto generated constructors
+    // such that they were no longer be binary backwards compatiable. This additional constructor
+    // is to preserve backwards compatability such that this new field is not considered a breaking change.
+    // This customization can be removed in the next major version bump (10.0.0)
+    public partial class SentimentSkill
     {
         /// <summary>
-        /// Initializes a new instance of the LanguageDetectionSkill class.
+        /// Initializes a new instance of the SentimentSkill class.
         /// </summary>
         /// <param name="inputs">Inputs of the skills could be a column in the
         /// source data set, or the output of an upstream skill.</param>
@@ -21,9 +25,14 @@ namespace Microsoft.Azure.Search.Models
         /// <param name="context">Represents the level at which operations take
         /// place, such as the document root or document content (for example,
         /// /document or /document/content). The default is /document.</param>
-        public LanguageDetectionSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string))
+        /// <param name="defaultLanguageCode">A value indicating which language
+        /// code to use. Default is en. Possible values include: 'da', 'nl',
+        /// 'en', 'fi', 'fr', 'de', 'el', 'it', 'no', 'pl', 'pt-PT', 'ru',
+        /// 'es', 'sv', 'tr'</param>
+        public SentimentSkill(IList<InputFieldMappingEntry> inputs, IList<OutputFieldMappingEntry> outputs, string description = default(string), string context = default(string), SentimentSkillLanguage? defaultLanguageCode = default(SentimentSkillLanguage?))
             : base(inputs, outputs, description, context)
         {
+            DefaultLanguageCode = defaultLanguageCode;
             CustomInit();
         }
     }
