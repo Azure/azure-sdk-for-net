@@ -6,14 +6,13 @@ using Azure.Core.Pipeline;
 using Azure.Core.Pipeline.Policies;
 
 namespace Azure.Identity
-{    public class IdentityClientOptions : HttpClientOptions
+{
+    public class IdentityClientOptions : HttpClientOptions
     {
         private readonly static Uri DefaultAuthorityHost = new Uri("https://login.microsoftonline.com/");
         private readonly static TimeSpan DefaultRefreshBuffer = TimeSpan.FromMinutes(2);
 
         public RetryPolicy RetryPolicy { get; set; }
-
-        public HttpPipelinePolicy LoggingPolicy { get; set; }
 
         public Uri AuthorityHost { get; set; }
 
@@ -22,7 +21,6 @@ namespace Azure.Identity
         public IdentityClientOptions()
         {
             AuthorityHost = DefaultAuthorityHost;
-            LoggingPolicy = Core.Pipeline.Policies.LoggingPolicy.Shared;
             RefreshBuffer = DefaultRefreshBuffer;
             RetryPolicy = new ExponentialRetryPolicy()
             {
