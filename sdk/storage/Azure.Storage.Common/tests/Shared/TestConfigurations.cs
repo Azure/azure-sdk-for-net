@@ -17,7 +17,7 @@ namespace Azure.Storage.Test
         /// <summary>
         /// Add a static TestEventListener which will redirect SDK logging
         /// to Console.Out for easy debugging.
-        /// 
+        ///
         /// This is only here to run before any of our tests make requests.
         /// </summary>
 #pragma warning disable IDE0052 // Remove unread private members
@@ -35,7 +35,7 @@ namespace Azure.Storage.Test
         /// configuration settings.
         /// </summary>
         const string DefaultTestConfigFilePath = @"TestConfigurations.xml";
-        
+
         /// <summary>
         /// Path of the file containing the live test configurations.
         /// </summary>
@@ -54,6 +54,8 @@ namespace Azure.Storage.Test
             {
                 // Get the live test configurations path
                 TestConfigurationsPath = Environment.GetEnvironmentVariable(DefaultTestConfigPathEnvironmentVariable);
+
+                System.Console.WriteLine($"AZ_STORAGE_CONFIG_PATH={TestConfigurationsPath}");
                 if (String.IsNullOrEmpty(TestConfigurationsPath) || !File.Exists(TestConfigurationsPath))
                 {
                     TestConfigurationsPath = DefaultTestConfigFilePath;
@@ -66,6 +68,7 @@ namespace Azure.Storage.Test
                 // Load the live test configurations
                 try
                 {
+                    System.Console.WriteLine($"Reading Test Configuration from {TestConfigurationsPath}");
                     return ReadFromXml(XDocument.Load(TestConfigurationsPath));
                 }
                 catch (Exception ex)
@@ -150,7 +153,7 @@ namespace Azure.Storage.Test
                                 ActiveDirectoryApplicationSecret = (string)tenantConfigurationElement.Element("ActiveDirectoryApplicationSecret"),
                                 ActiveDirectoryTenantId = (string)tenantConfigurationElement.Element("ActiveDirectoryTenantId"),
                                 ActiveDirectoryAuthEndpoint = (string)tenantConfigurationElement.Element("ActiveDirectoryAuthEndpoint"),
-                                ConnectionString = 
+                                ConnectionString =
                                     !String.IsNullOrWhiteSpace((string)tenantConfigurationElement.Element("ConnectionString"))
                                     ? (string)tenantConfigurationElement.Element("ConnectionString")
                                     : new StorageConnectionString(

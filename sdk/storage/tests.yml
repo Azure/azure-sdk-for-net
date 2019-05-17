@@ -11,6 +11,13 @@ jobs:
           $TestConfigurationPath = "$(Build.ArtifactStagingDirectory)/TestConfiguration.xml"
           '$(net-storage-test-configuration)' | Out-File -Encoding Utf8 $TestConfigurationPath
           Write-Host "##vso[task.setvariable variable=TestConfigurationPath]$TestConfigurationPath"
+      - powershell: |
+          Write-Host $(gc $(TestConfigurationPath))
+      - task: PublishPipelineArtifact@0
+        condition: succeededOrFailed()
+        inputs:
+          artifactName: testconfig
+          targetPath: $(TestConfigurationPath)
 
     envvars:
       AZ_STORAGE_CONFIG_PATH: $(TestConfigurationPath)
