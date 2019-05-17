@@ -12,6 +12,7 @@
     <PackageReference Include="nunit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="System.Memory" Version="4.5.2" />
+    <PackageReference Include="System.Text.Json" Version="4.6.0-preview6.19226.8" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.Core.csproj">

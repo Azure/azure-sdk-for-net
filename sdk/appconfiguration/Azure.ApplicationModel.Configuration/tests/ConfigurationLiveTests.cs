@@ -5,26 +5,191 @@
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core.Pipeline;
 using Azure.Core.Testing;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
+
+    public class TestRecording
+    {
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestRedactions recordedTestRedactions)
+        {
+            Mode = mode;
+            _sessionFile = sessionFile;
+            _recordedTestRedactions = recordedTestRedactions;
+        }
+
+        public RecordedTestMode Mode { get; }
+
+        private readonly string _sessionFile;
+
+        private readonly RecordedTestRedactions _recordedTestRedactions;
+
+        private RecordedTransportFactory _transportFactory;
+
+        private Random _random;
+
+        public RecordSession Session { get; private set; }
+
+        public Random Random
+        {
+            get
+            {
+                if (_random == null)
+                {
+                    switch (Mode)
+                    {
+                        case RecordedTestMode.Live:
+                            _random = new Random();
+                            break;
+                        case RecordedTestMode.Record:
+                            _random = new Random();
+                            int seed = _random.Next();
+                            Session.Variables["RandomSeed"] = seed.ToString();
+                            _random = new Random(seed);
+                            break;
+                        case RecordedTestMode.Playback:
+                            _random = new Random(int.Parse(Session.Variables["RandomSeed"]));
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
+                }
+                return _random;
+            }
+        }
+
+        private RecordSession Load()
+        {
+            using FileStream fileStream = File.OpenRead(_sessionFile);
+            using JsonDocument jsonDocument = JsonDocument.Parse(fileStream);
+            return RecordSession.Deserialize(jsonDocument.RootElement);
+        }
+
+        public void Start()
+        {
+            switch (Mode)
+            {
+                case RecordedTestMode.Record:
+                    Session = new RecordSession();
+                    break;
+                case RecordedTestMode.Playback:
+                    Session = Load();
+                    break;
+            }
+
+            _transportFactory = new RecordedTransportFactory(Mode, Session);
+        }
+
+        public void Stop()
+        {
+            if (Mode == RecordedTestMode.Record)
+            {
+                using FileStream fileStream = File.Create(_sessionFile);
+                var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
+                {
+                    Indented = true
+                });
+                Session.Redact(_recordedTestRedactions);
+                Session.Serialize(utf8JsonWriter);
+                utf8JsonWriter.Flush();
+            }
+        }
+
+        public HttpPipelineTransport CreateTransport(HttpPipelineTransport innerTransport)
+        {
+            return _transportFactory.CreateTransport(innerTransport);
+        }
+
+        public void SetConnectionString(string name, string connectionString)
+        {
+            ConnectionString s = ConnectionString.Parse(connectionString);
+            _recordedTestRedactions.RedactConnectionString(s);
+            Session.Variables[name] = s.ToString();
+        }
+
+        public string GetConnectionString(string name)
+        {
+            return Session.Variables[name];
+        }
+
+        public string GenerateId()
+        {
+            return Random.Next().ToString();
+        }
+    }
+
+    public abstract class RecordedTestBase: ClientTestBase
+    {
+        private TestRecording _testRecording;
+
+        [SetUp]
+        public virtual void Setup()
+        {
+            _testRecording = new TestRecording(RecordedTestMode.Playback, "d:\\temp\\" + TestContext.CurrentContext.Test.Name + (IsAsync?"Async":"") + ".json", new RecordedTestRedactions());
+            _testRecording.Start();
+        }
+
+        [TearDown]
+        public virtual void TearDown()
+        {
+            _testRecording.Stop();
+        }
+
+        public T InstrumentClientOptions<T>(T clientOptions) where T: HttpClientOptions
+        {
+            clientOptions.Transport = _testRecording.CreateTransport(clientOptions.Transport);
+            return clientOptions;
+        }
+
+        public RecordedTestBase(bool isAsync) : base(isAsync)
+        {
+        }
+
+        public string GetConnectionStringFromEnvironment(string variableName)
+        {
+            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
+            switch (_testRecording.Mode)
+            {
+                case RecordedTestMode.Record:
+                    _testRecording.SetConnectionString(variableName, environmentVariableValue);
+                    return environmentVariableValue;
+                case RecordedTestMode.Live:
+                    return environmentVariableValue;
+                case RecordedTestMode.Playback:
+                    return _testRecording.GetConnectionString(variableName);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        protected string GetNewId()
+        {
+            return _testRecording.GenerateId();
+        }
+    }
+
     [Category("Live")]
-    public class ConfigurationLiveTests: ClientTestBase
+    public class ConfigurationLiveTests: RecordedTestBase
     {
         public ConfigurationLiveTests(bool isAsync) : base(isAsync) { }
 
         private string GenerateKeyId(string prefix = null)
         {
-            return prefix + Guid.NewGuid().ToString("N");
+            return prefix + GetNewId();
         }
 
         private ConfigurationClient GetClient()
         {
-            return InstrumentClient(TestEnvironment.GetClient());
+            return InstrumentClient(
+                new ConfigurationClient(GetConnectionStringFromEnvironment("APP_CONFIG_CONNECTION"),
+                    InstrumentClientOptions(new ConfigurationClientOptions())));
         }
 
         private ConfigurationSetting CreateSetting()
