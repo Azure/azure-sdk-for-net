@@ -12,11 +12,12 @@ namespace Azure.Core.Testing
     {
         private const string RandomSeedVariableKey = "RandomSeed";
 
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer)
+        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestSanitizer sanitizer, RecordMatcher matcher)
         {
             Mode = mode;
             _sessionFile = sessionFile;
             _sanitizer = sanitizer;
+            _matcher = matcher;
         }
 
         public RecordedTestMode Mode { get; }
@@ -24,6 +25,8 @@ namespace Azure.Core.Testing
         private readonly string _sessionFile;
 
         private readonly RecordedTestSanitizer _sanitizer;
+
+        private readonly RecordMatcher _matcher;
 
         private RecordSession _session;
 
@@ -103,7 +106,7 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Record:
                     return new RecordTransport(_session, currentTransport);
                 case RecordedTestMode.Playback:
-                    return new PlaybackTransport(_session, _sanitizer);
+                    return new PlaybackTransport(_session, _matcher);
                 default:
                     throw new ArgumentOutOfRangeException(nameof(Mode), Mode, null);
             }

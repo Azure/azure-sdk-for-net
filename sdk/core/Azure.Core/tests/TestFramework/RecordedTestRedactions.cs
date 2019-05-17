@@ -8,7 +8,9 @@ namespace Azure.Core.Testing
     public class RecordedTestSanitizer
     {
         private const string SanitizeValue = "Sanitized";
-        private static readonly string[] SanitizeValueArray = new [] { SanitizeValue };
+        private static readonly string[] SanitizeValueArray = { SanitizeValue };
+
+        private static readonly string[] SanitizedHeaders = { "Authorization" };
 
         public virtual string SanitizeUri(string uri)
         {
@@ -17,9 +19,12 @@ namespace Azure.Core.Testing
 
         public virtual void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
-            if (headers.ContainsKey("Authorization"))
+            foreach (var header in SanitizedHeaders)
             {
-                headers["Authorization"] = SanitizeValueArray;
+                if (headers.ContainsKey(header))
+                {
+                    headers[header] = SanitizeValueArray;
+                }
             }
         }
 
@@ -35,10 +40,6 @@ namespace Azure.Core.Testing
 
         public virtual void SanitizeConnectionString(ConnectionString connectionString)
         {
-            if (connectionString.Pairs.ContainsKey("Secret"))
-            {
-                connectionString.Pairs["Secret"] = SanitizeValue;
-            }
         }
     }
 }

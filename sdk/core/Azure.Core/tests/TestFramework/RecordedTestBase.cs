@@ -13,11 +13,17 @@ namespace Azure.Core.Testing
     {
         private const string ModeEnvironmentVariableName = "AZURE_TEST_MODE";
 
-        protected RecordedTestSanitizer Sanitizer { get; set; } = new RecordedTestSanitizer();
+        protected RecordedTestSanitizer Sanitizer { get; set; }
+
+        protected RecordMatcher Matcher { get; set; }
 
         protected TestRecording Recording { get; private set; }
 
-        protected RecordedTestBase(bool isAsync) : base(isAsync) { }
+        protected RecordedTestBase(bool isAsync) : base(isAsync)
+        {
+            Sanitizer = new RecordedTestSanitizer();
+            Matcher = new RecordMatcher(Sanitizer);
+        }
 
         protected virtual RecordedTestMode Mode
         {
@@ -48,7 +54,7 @@ namespace Azure.Core.Testing
         [SetUp]
         public virtual void StartTestRecording()
         {
-            Recording = new TestRecording(Mode, SessionFilePath, Sanitizer);
+            Recording = new TestRecording(Mode, SessionFilePath, Sanitizer, Matcher);
             Recording.Start();
         }
 

@@ -1,19 +1,19 @@
 {
-  "Entries": [
+  "_entries": [
     {
-      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-749340606?label=test_label",
+      "RequestUri": "https://pakrym-azconfig-ui.azconfig.io/kv/key-237869509?label=test_label",
       "RequestMethod": "PUT",
       "RequestHeaders": {
         "Accept": "application/vnd.microsoft.appconfig.kv\u002bjson",
         "Authorization": "Sanitized",
         "Content-Type": "application/json",
-        "Date": "Fri, 17 May 2019 20:54:47 GMT",
+        "Date": "Fri, 17 May 2019 21:44:21 GMT",
         "If-Match": "*",
         "User-Agent": [
           "azsdk-net-config/1.0.0.0",
           "(.NET Core 4.6.27617.04; Microsoft Windows 10.0.16299 )"
         ],
-        "x-ms-client-request-id": "38a57ede-201e-402d-8a49-ca47f974be22",
+        "x-ms-client-request-id": "9d94ab0c-5d25-4fb7-a3c8-52dde68c4b6d",
         "x-ms-content-sha256": "b11OQu6GthUatwGXUIKHHSRVyik0TdrUk5kZm3yZd2A=",
         "x-ms-return-client-request-id": "true"
       },
@@ -22,18 +22,18 @@
       "ResponseHeaders": {
         "Connection": "keep-alive",
         "Content-Length": "0",
-        "Date": "Fri, 17 May 2019 20:54:47 GMT",
+        "Date": "Fri, 17 May 2019 21:44:21 GMT",
         "Server": "nginx/1.13.9",
         "Strict-Transport-Security": "max-age=15724800; includeSubDomains;",
-        "x-ms-client-request-id": "38a57ede-201e-402d-8a49-ca47f974be22",
-        "x-ms-correlation-request-id": "f2bc896b-fafe-4a66-8375-910c0f212aaa",
-        "x-ms-request-id": "f2bc896b-fafe-4a66-8375-910c0f212aaa"
+        "x-ms-client-request-id": "9d94ab0c-5d25-4fb7-a3c8-52dde68c4b6d",
+        "x-ms-correlation-request-id": "f85de98b-d039-49e7-8517-03e93b678de9",
+        "x-ms-request-id": "f85de98b-d039-49e7-8517-03e93b678de9"
       },
       "ResponseBody": ""
     }
   ],
   "Variables": {
-    "APP_CONFIG_CONNECTION": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=Sanitized;",
-    "RandomSeed": "669509934"
+    "APP_CONFIG_CONNECTION": "Endpoint=https://pakrym-azconfig-ui.azconfig.io;Id=0-l1-s0:h5pHKElA5IjSL3z\u002bFOYz;Secret=;",
+    "RandomSeed": "829303582"
   }
 }
