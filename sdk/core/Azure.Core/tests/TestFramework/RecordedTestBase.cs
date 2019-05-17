@@ -31,7 +31,6 @@ namespace Azure.Core.Testing
                     mode = RecordedTestMode.None;
                 }
 
-                mode = RecordedTestMode.Record;
                 return mode;
             }
         }
