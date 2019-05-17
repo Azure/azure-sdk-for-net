@@ -171,36 +171,36 @@ namespace Azure.Core.Testing
                    ContentTypeUtilities.TryGetTextEncoding(contentType[0], out encoding);
         }
 
-        public void Redact(RecordedTestRedactions recordedTestRedactions)
+        public void Sanitize(RecordedTestSanitizer sanitizer)
         {
-            RequestUri = recordedTestRedactions.RedactUri(RequestUri);
+            RequestUri = sanitizer.SanitizeUri(RequestUri);
             if (RequestBody != null)
             {
                 if (IsTextContentType(RequestHeaders, out Encoding encoding))
                 {
-                    RequestBody = Encoding.UTF8.GetBytes(recordedTestRedactions.RedactTextBody(encoding.GetString(RequestBody)));
+                    RequestBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(encoding.GetString(RequestBody)));
                 }
                 else
                 {
-                    RequestBody = recordedTestRedactions.RedactBody(RequestBody);
+                    RequestBody = sanitizer.SanitizeBody(RequestBody);
                 }
             }
 
-            recordedTestRedactions.RedactHeaders(RequestHeaders);
+            sanitizer.SanitizeHeaders(RequestHeaders);
 
             if (ResponseBody != null)
             {
                 if (IsTextContentType(ResponseHeaders, out Encoding encoding))
                 {
-                    ResponseBody = Encoding.UTF8.GetBytes(recordedTestRedactions.RedactTextBody(encoding.GetString(ResponseBody)));
+                    ResponseBody = Encoding.UTF8.GetBytes(sanitizer.SanitizeTextBody(encoding.GetString(ResponseBody)));
                 }
                 else
                 {
-                    ResponseBody = recordedTestRedactions.RedactBody(ResponseBody);
+                    ResponseBody = sanitizer.SanitizeBody(ResponseBody);
                 }
             }
 
-            recordedTestRedactions.RedactHeaders(ResponseHeaders);
+            sanitizer.SanitizeHeaders(ResponseHeaders);
         }
     }
 }

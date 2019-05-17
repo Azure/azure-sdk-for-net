@@ -12,19 +12,22 @@ namespace Azure.Core.Testing
     {
         private readonly RecordSession _session;
 
-        public PlaybackTransport(RecordSession session)
+        private readonly RecordedTestSanitizer _sanitizer;
+
+        public PlaybackTransport(RecordSession session, RecordedTestSanitizer sanitizer)
         {
             _session = session;
+            _sanitizer = sanitizer;
         }
 
         public override void Process(HttpPipelineMessage message)
         {
-            message.Response = GetResponse(_session.Lookup(message.Request));
+            message.Response = GetResponse(_session.Lookup(message.Request, _sanitizer));
         }
 
         public override Task ProcessAsync(HttpPipelineMessage message)
         {
-            message.Response = GetResponse(_session.Lookup(message.Request));
+            message.Response = GetResponse(_session.Lookup(message.Request, _sanitizer));
             return Task.CompletedTask;
         }
 

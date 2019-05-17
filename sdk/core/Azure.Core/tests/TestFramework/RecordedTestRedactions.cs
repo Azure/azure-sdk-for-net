@@ -5,39 +5,39 @@ using System.Collections.Generic;
 
 namespace Azure.Core.Testing
 {
-    public class RecordedTestRedactions
+    public class RecordedTestSanitizer
     {
-        private const string RedactedValue = "REDACTED";
-        private static readonly string[] RedactedValueArray = new [] { RedactedValue };
+        private const string SanitizeValue = "Sanitized";
+        private static readonly string[] SanitizeValueArray = new [] { SanitizeValue };
 
-        public virtual string RedactUri(string uri)
+        public virtual string SanitizeUri(string uri)
         {
             return uri;
         }
 
-        public virtual void RedactHeaders(IDictionary<string, string[]> headers)
+        public virtual void SanitizeHeaders(IDictionary<string, string[]> headers)
         {
             if (headers.ContainsKey("Authorization"))
             {
-                headers["Authorization"] = RedactedValueArray;
+                headers["Authorization"] = SanitizeValueArray;
             }
         }
 
-        public virtual string RedactTextBody(string body)
+        public virtual string SanitizeTextBody(string body)
         {
             return body;
         }
 
-        public virtual byte[] RedactBody(byte[] body)
+        public virtual byte[] SanitizeBody(byte[] body)
         {
             return body;
         }
 
-        public virtual void RedactConnectionString(ConnectionString connectionString)
+        public virtual void SanitizeConnectionString(ConnectionString connectionString)
         {
             if (connectionString.Pairs.ContainsKey("Secret"))
             {
-                connectionString.Pairs["Secret"] = RedactedValue;
+                connectionString.Pairs["Secret"] = SanitizeValue;
             }
         }
     }

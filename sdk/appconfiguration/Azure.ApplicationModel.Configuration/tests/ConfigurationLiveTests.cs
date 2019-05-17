@@ -7,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -15,163 +14,63 @@ using Azure.Core.Testing;
 
 namespace Azure.ApplicationModel.Configuration.Tests
 {
-
-    public class TestRecording
+    [Category("Recorded")]
+    public abstract class RecordedTestBase: ClientTestBase
     {
-        public TestRecording(RecordedTestMode mode, string sessionFile, RecordedTestRedactions recordedTestRedactions)
-        {
-            Mode = mode;
-            _sessionFile = sessionFile;
-            _recordedTestRedactions = recordedTestRedactions;
-        }
+        private const string ModeEnvironmentVariableName = "AZURE_TEST_MODE";
 
-        public RecordedTestMode Mode { get; }
+        protected RecordedTestSanitizer Sanitizer { get; set; } = new RecordedTestSanitizer();
 
-        private readonly string _sessionFile;
+        protected TestRecording Recording { get; private set; }
 
-        private readonly RecordedTestRedactions _recordedTestRedactions;
-
-        private RecordedTransportFactory _transportFactory;
-
-        private Random _random;
-
-        public RecordSession Session { get; private set; }
-
-        public Random Random
+        protected virtual RecordedTestMode Mode
         {
             get
             {
-                if (_random == null)
+                string modeString = Environment.GetEnvironmentVariable(ModeEnvironmentVariableName);
+
+                if (!string.IsNullOrEmpty(modeString) ||
+                    !Enum.TryParse(modeString, true, out RecordedTestMode mode))
                 {
-                    switch (Mode)
-                    {
-                        case RecordedTestMode.Live:
-                            _random = new Random();
-                            break;
-                        case RecordedTestMode.Record:
-                            _random = new Random();
-                            int seed = _random.Next();
-                            Session.Variables["RandomSeed"] = seed.ToString();
-                            _random = new Random(seed);
-                            break;
-                        case RecordedTestMode.Playback:
-                            _random = new Random(int.Parse(Session.Variables["RandomSeed"]));
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
+                    mode = RecordedTestMode.None;
                 }
-                return _random;
+
+                mode = RecordedTestMode.Playback;
+                return mode;
             }
         }
 
-        private RecordSession Load()
+        protected virtual string SessionFilePath
         {
-            using FileStream fileStream = File.OpenRead(_sessionFile);
-            using JsonDocument jsonDocument = JsonDocument.Parse(fileStream);
-            return RecordSession.Deserialize(jsonDocument.RootElement);
-        }
-
-        public void Start()
-        {
-            switch (Mode)
+            get
             {
-                case RecordedTestMode.Record:
-                    Session = new RecordSession();
-                    break;
-                case RecordedTestMode.Playback:
-                    Session = Load();
-                    break;
-            }
-
-            _transportFactory = new RecordedTransportFactory(Mode, Session);
-        }
-
-        public void Stop()
-        {
-            if (Mode == RecordedTestMode.Record)
-            {
-                using FileStream fileStream = File.Create(_sessionFile);
-                var utf8JsonWriter = new Utf8JsonWriter(fileStream, new JsonWriterOptions()
-                {
-                    Indented = true
-                });
-                Session.Redact(_recordedTestRedactions);
-                Session.Serialize(utf8JsonWriter);
-                utf8JsonWriter.Flush();
+                TestContext.TestAdapter testAdapter = TestContext.CurrentContext.Test;
+                var className = testAdapter.ClassName.Substring(testAdapter.ClassName.LastIndexOf('.') + 1);
+                return Path.Combine(TestContext.CurrentContext.TestDirectory , "SessionRecordings", className, testAdapter.Name + (IsAsync ? "Async":"") + ".json");
             }
         }
-
-        public HttpPipelineTransport CreateTransport(HttpPipelineTransport innerTransport)
-        {
-            return _transportFactory.CreateTransport(innerTransport);
-        }
-
-        public void SetConnectionString(string name, string connectionString)
-        {
-            ConnectionString s = ConnectionString.Parse(connectionString);
-            _recordedTestRedactions.RedactConnectionString(s);
-            Session.Variables[name] = s.ToString();
-        }
-
-        public string GetConnectionString(string name)
-        {
-            return Session.Variables[name];
-        }
-
-        public string GenerateId()
-        {
-            return Random.Next().ToString();
-        }
-    }
-
-    public abstract class RecordedTestBase: ClientTestBase
-    {
-        private TestRecording _testRecording;
 
         [SetUp]
         public virtual void Setup()
         {
-            _testRecording = new TestRecording(RecordedTestMode.Playback, "d:\\temp\\" + TestContext.CurrentContext.Test.Name + (IsAsync?"Async":"") + ".json", new RecordedTestRedactions());
-            _testRecording.Start();
+            Recording = new TestRecording(Mode, SessionFilePath, Sanitizer);
+            Recording.Start();
         }
 
         [TearDown]
         public virtual void TearDown()
         {
-            _testRecording.Stop();
+            Recording.Stop();
         }
 
         public T InstrumentClientOptions<T>(T clientOptions) where T: HttpClientOptions
         {
-            clientOptions.Transport = _testRecording.CreateTransport(clientOptions.Transport);
+            clientOptions.Transport = Recording.CreateTransport(clientOptions.Transport);
             return clientOptions;
         }
 
-        public RecordedTestBase(bool isAsync) : base(isAsync)
+        protected RecordedTestBase(bool isAsync) : base(isAsync)
         {
-        }
-
-        public string GetConnectionStringFromEnvironment(string variableName)
-        {
-            var environmentVariableValue = Environment.GetEnvironmentVariable(variableName);
-            switch (_testRecording.Mode)
-            {
-                case RecordedTestMode.Record:
-                    _testRecording.SetConnectionString(variableName, environmentVariableValue);
-                    return environmentVariableValue;
-                case RecordedTestMode.Live:
-                    return environmentVariableValue;
-                case RecordedTestMode.Playback:
-                    return _testRecording.GetConnectionString(variableName);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-        }
-
-        protected string GetNewId()
-        {
-            return _testRecording.GenerateId();
         }
     }
 
@@ -182,13 +81,14 @@ namespace Azure.ApplicationModel.Configuration.Tests
 
         private string GenerateKeyId(string prefix = null)
         {
-            return prefix + GetNewId();
+            return prefix + Recording.GenerateId();
         }
 
         private ConfigurationClient GetClient()
         {
             return InstrumentClient(
-                new ConfigurationClient(GetConnectionStringFromEnvironment("APP_CONFIG_CONNECTION"),
+                new ConfigurationClient(
+                    Recording.GetConnectionStringFromEnvironment("APP_CONFIG_CONNECTION"),
                     InstrumentClientOptions(new ConfigurationClientOptions())));
         }
 

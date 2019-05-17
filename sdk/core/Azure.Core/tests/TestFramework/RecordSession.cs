@@ -61,12 +61,12 @@ namespace Azure.Core.Testing
             }
         }
 
-        public RecordEntry Lookup(Request request)
+        public RecordEntry Lookup(Request request, RecordedTestSanitizer sanitizer)
         {
+            string uri = sanitizer.SanitizeUri(request.UriBuilder.ToString());
+
             lock (Entries)
             {
-                string uri = request.UriBuilder.ToString();
-
                 for (int i = 0; i < Entries.Count; i++)
                 {
                     RecordEntry entry = Entries[i];
@@ -74,22 +74,21 @@ namespace Azure.Core.Testing
                     if (entry.RequestUri == uri)
                     {
                         Entries.RemoveAt(i);
+                        return entry;
                     }
-
-                    return entry;
                 }
-
-                throw new InvalidOperationException();
             }
+
+            throw new InvalidOperationException($"Unable to find recorded request with Uri {uri}");
         }
 
-        public void Redact(RecordedTestRedactions recordedTestRedactions)
+        public void Sanitize(RecordedTestSanitizer sanitizer)
         {
             lock (Entries)
             {
                 foreach (RecordEntry entry in Entries)
                 {
-                    entry.Redact(recordedTestRedactions);
+                    entry.Sanitize(sanitizer);
                 }
             }
         }
