@@ -40,6 +40,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
                 new Tuple<string, string, string>("RecoveryServices", "ReplicationStorageClassificationMappings", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "ReplicationStorageClassifications", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "ReplicationVaultHealth", "2018-07-10"),
+                new Tuple<string, string, string>("RecoveryServices", "ReplicationVaultSetting", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "ReplicationvCenters", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "SupportedOperatingSystems", "2018-07-10"),
                 new Tuple<string, string, string>("RecoveryServices", "TargetComputeSizes", "2018-07-10"),

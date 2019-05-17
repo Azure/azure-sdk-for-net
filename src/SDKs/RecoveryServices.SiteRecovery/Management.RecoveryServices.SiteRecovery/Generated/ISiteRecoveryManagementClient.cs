@@ -199,5 +199,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.SiteRecovery
         /// </summary>
         IReplicationVaultHealthOperations ReplicationVaultHealth { get; }
 
+        /// <summary>
+        /// Gets the IReplicationVaultSettingOperations.
+        /// </summary>
+        IReplicationVaultSettingOperations ReplicationVaultSetting { get; }
+
     }
 }
