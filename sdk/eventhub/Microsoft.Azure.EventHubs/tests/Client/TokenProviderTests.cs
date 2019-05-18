@@ -109,20 +109,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         /// <summary>
         /// This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret before running.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "Manual run only")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task UseITokenProviderWithAad()
         {
-            var tenantId = "";
             var aadAppId = "";
             var aadAppSecret = "";
-
-            if (string.IsNullOrEmpty(tenantId))
-            {
-                TestUtility.Log($"Skipping test during scheduled runs.");
-                return;
-            }
 
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback = 
                 async (audience, authority, state) =>
@@ -164,20 +157,13 @@ namespace Microsoft.Azure.EventHubs.Tests.Client
         /// This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret before running.
         /// </summary>
         /// <returns></returns>
-        [Fact]
+        [Fact (Skip = "Manual run only")]
         [LiveTest]
         [DisplayTestMethodName]
         public async Task UseCreateApiWithAad()
         {
-            var tenantId = "";
             var aadAppId = "";
             var aadAppSecret = "";
-
-            if (string.IsNullOrEmpty(tenantId))
-            {
-                TestUtility.Log($"Skipping test during scheduled runs.");
-                return;
-            }
 
             AzureActiveDirectoryTokenProvider.AuthenticationCallback authCallback =
                 async (audience, authority, state) =>
