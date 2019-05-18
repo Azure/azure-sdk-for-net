@@ -21,6 +21,7 @@ namespace Microsoft.Azure.ServiceBus
         const string SharedAccessKeyNameConfigName = "SharedAccessKeyName";
         const string SharedAccessKeyConfigName = "SharedAccessKey";
         const string SharedAccessSignatureConfigName = "SharedAccessSignature";
+        const string AuthenticationConfigName = "Authentication";
 
         const string EntityPathConfigName = "EntityPath";
         const string TransportTypeConfigName = "TransportType";
@@ -221,6 +222,11 @@ namespace Microsoft.Azure.ServiceBus
         /// <remarks>Defaults to 1 minute.</remarks>
         public TimeSpan OperationTimeout { get; set; } = Constants.DefaultOperationTimeout;
 
+        /// <summary>
+        /// Enables Azure Active Directory Managed Identity authentication when set to 'Managed Identity'
+        /// </summary>
+        public string Authentication { get; set; }
+
         internal Dictionary<string, string> ConnectionStringProperties = new Dictionary<string, string>(StringComparer.CurrentCultureIgnoreCase);
 
         /// <summary>
@@ -229,6 +235,7 @@ namespace Microsoft.Azure.ServiceBus
         /// <returns>Namespace connection string</returns>
         public string GetNamespaceConnectionString()
         {
+            validate();
             var connectionStringBuilder = new StringBuilder();
             if (this.Endpoint != null)
             {
@@ -258,6 +265,11 @@ namespace Microsoft.Azure.ServiceBus
             if (this.OperationTimeout != Constants.DefaultOperationTimeout)
             {
                 connectionStringBuilder.Append($"{OperationTimeoutConfigName}{KeyValueSeparator}{this.OperationTimeout}{KeyValuePairDelimiter}");
+            }
+
+            if (!string.IsNullOrWhiteSpace(this.Authentication))
+            {
+                connectionStringBuilder.Append($"{AuthenticationConfigName}{KeyValueSeparator}{this.Authentication}{KeyValuePairDelimiter}");
             }
 
             return connectionStringBuilder.ToString().Trim(';');
@@ -358,10 +370,32 @@ namespace Microsoft.Azure.ServiceBus
                         throw Fx.Exception.Argument(nameof(connectionString), $"The {OperationTimeoutConfigName} ({value}) must be smaller than one hour.");
                     }
                 }
+                else if (key.Equals(AuthenticationConfigName, StringComparison.OrdinalIgnoreCase))
+                {
+                    this.Authentication = value;
+                }
                 else
                 {
                     ConnectionStringProperties[key] = value;
                 }
+            }
+            validate();
+        }
+
+        void validate()
+        {
+            bool hasAuthentication = !string.IsNullOrWhiteSpace(this.Authentication);
+            bool hasSharedAccessKeyName = !string.IsNullOrWhiteSpace(this.SasKeyName);
+            bool hasSharedAccessSignature = !string.IsNullOrWhiteSpace(this.SasToken);
+
+            if (hasAuthentication && hasSharedAccessKeyName)
+            {
+                throw Fx.Exception.Argument("Authentication, SharedAccessKeyName", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessKeyName"));
+            }
+
+            if (hasAuthentication && hasSharedAccessSignature)
+            {
+                throw Fx.Exception.Argument("Authentication, SharedAccessSignature", Resources.ArgumentInvalidCombination.FormatForUser("Authentication, SharedAccessSignature"));
             }
         }
     }

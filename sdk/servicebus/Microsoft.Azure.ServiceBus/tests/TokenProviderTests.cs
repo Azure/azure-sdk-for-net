@@ -12,37 +12,7 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
 
     public class TokenProviderTests : SenderReceiverClientTestBase
     {
-        #pragma warning disable xUnit1013
-        /// <remarks>
-        ///   This test is for manual only purpose. Fill in the tenant-id, app-id and app-secret and uncomment
-        ///   the [Fact] attribute before running.
-        /// </remarks>
-        //[Fact]
-        [DisplayTestMethodName]
-        public async Task UseITokenProviderWithAad()
-        {
-            var tenantId = "";
-            var aadAppId = "";
-            var aadAppSecret = "";
-
-            if (string.IsNullOrEmpty(tenantId))
-            {
-                TestUtility.Log($"Skipping test during scheduled runs.");
-                return;
-            }
-
-            var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}");
-            var cc = new ClientCredential(aadAppId, aadAppSecret);
-            var tokenProvider = TokenProvider.CreateAadTokenProvider(authContext, cc);
-
-            // Create new client with updated connection string.
-            var csb = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
-            var queueClient = new QueueClient(csb.Endpoint, csb.EntityPath, tokenProvider);
-
-            // Send and receive messages.
-            await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, 10);
-        }
-        #pragma warning restore xUnit1013
+        static readonly Uri ServiceBusAudience = new Uri("https://servicebus.azure.net");
 
         [Fact]
         [LiveTest]
@@ -68,6 +38,84 @@ namespace Microsoft.Azure.ServiceBus.UnitTests
                     await receiver.CloseAsync();
                 }
             });
+        }
+
+        /// <summary>
+        /// This test is for manual only purpose. Fill in the entity name before running.
+        /// </summary>
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task QueueWithAadTokenProviderTest()
+        {
+            // Please fill out the entity name of the Queue being used
+            string entityName = "bailiu_queue_test";
+            var authCallback = GetAadCallback();
+
+            if (authCallback == null)
+            {
+                TestUtility.Log($"Skipping test during scheduled runs.");
+                return;
+            }
+
+            var builder = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+
+            var queueClient = QueueClient.CreateWithAzureActiveDirectory(builder.Endpoint, entityName, authCallback);
+
+            // Send and receive messages.
+            await this.PeekLockTestCase(queueClient.InnerSender, queueClient.InnerReceiver, 10);
+        }
+
+        /// <summary>
+        /// This test is for manual only purpose. Fill in the entity name before running.
+        /// </summary>
+        [Fact]
+        [LiveTest]
+        [DisplayTestMethodName]
+        public async Task TopicWithAadTokenProviderTest()
+        {
+            // Please fill out the entity name of the Topic being used
+            string entityName = "bailiu_topic_test";
+            var authCallback = GetAadCallback();
+
+            if (authCallback == null)
+            {
+                TestUtility.Log($"Skipping test during scheduled runs.");
+                return;
+            }
+
+            var builder = new ServiceBusConnectionStringBuilder(TestUtility.NamespaceConnectionString);
+
+            var topicClient = TopicClient.CreateWithAzureActiveDirectory(builder.Endpoint, entityName, authCallback);
+            try
+            {
+                await topicClient.SendAsync(new Message(new byte[5]));
+            }
+            finally
+            {
+                await topicClient.CloseAsync();
+            }
+        }
+
+        AzureActiveDirectoryTokenProvider.AuthenticationCallback GetAadCallback()
+        {
+            // Please fill out values below manually if the AAD tests should be run
+            string tenantId = "72f988bf-86f1-41af-91ab-2d7cd011db47";
+            string aadAppId = "b92f645b-4561-4bd7-a609-46a6b3010b92";
+            string aadAppSecret = "RTyRw=NAiE4ogwCDl01WqZ3SfBFnA]==";
+
+            if (string.IsNullOrEmpty(tenantId))
+            {
+                return null;
+            }
+
+            return async (audience, authority, state) =>
+            {
+                var authContext = new AuthenticationContext($"https://login.windows.net/{tenantId}", false);
+                var cc = new ClientCredential(aadAppId, aadAppSecret);
+                var authResult = await authContext.AcquireTokenAsync(ServiceBusAudience.ToString(), cc);
+                return authResult.AccessToken;
+            };
         }
     }
 }
