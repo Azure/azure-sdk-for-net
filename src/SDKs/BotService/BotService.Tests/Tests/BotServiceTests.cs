@@ -11,17 +11,11 @@ using ResourceGroups.Tests;
 using Xunit;
 using Microsoft.Azure.Management.BotService;
 using Microsoft.Azure.Management.BotService.Models;
-using Microsoft.Azure.Management.ResourceManager.Fluent;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure.Authentication;
 
 namespace BotService.Tests
 {
     public class BotServiceTests
     {
-        const string skip = "We are updating tests";
-
         private const string OmitMsaAppIdCreationEnvironmentVariableName = "BOT_SERVICE_OMIT_MSA_APPID";
 
         public BotServiceTests()
