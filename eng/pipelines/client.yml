@@ -9,4 +9,4 @@ pr: none
 jobs:
 - template: templates/jobs/archetype-sdk-client.yml
   parameters:
-    ProjectFile: eng/data-plane.proj
+    ProjectFile: $(ProjectFile)
