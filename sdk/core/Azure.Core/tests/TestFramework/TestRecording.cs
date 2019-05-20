@@ -40,7 +40,7 @@ namespace Azure.Core.Testing
                 {
                     switch (Mode)
                     {
-                        case RecordedTestMode.None:
+                        case RecordedTestMode.Live:
                             _random = new Random();
                             break;
                         case RecordedTestMode.Record:
@@ -101,7 +101,7 @@ namespace Azure.Core.Testing
         {
             switch (Mode)
             {
-                case RecordedTestMode.None:
+                case RecordedTestMode.Live:
                     return currentTransport;
                 case RecordedTestMode.Record:
                     return new RecordTransport(_session, currentTransport);
@@ -127,7 +127,7 @@ namespace Azure.Core.Testing
                     _sanitizer.SanitizeConnectionString(s);
                     _session.Variables[variableName] = s.ToString();
                     return environmentVariableValue;
-                case RecordedTestMode.None:
+                case RecordedTestMode.Live:
                     return environmentVariableValue;
                 case RecordedTestMode.Playback:
                     return _session.Variables[variableName];
@@ -144,7 +144,7 @@ namespace Azure.Core.Testing
                 case RecordedTestMode.Record:
                     _session.Variables[variableName] = environmentVariableValue;
                     return environmentVariableValue;
-                case RecordedTestMode.None:
+                case RecordedTestMode.Live:
                     return environmentVariableValue;
                 case RecordedTestMode.Playback:
                     return _session.Variables[variableName];
