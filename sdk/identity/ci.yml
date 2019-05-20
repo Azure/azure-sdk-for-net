@@ -7,7 +7,7 @@ trigger:
     - master
   paths:
     include:
-    - sdk/keyvault/
+    - sdk/identity/
     - sdk/core/
     - eng/
 
@@ -17,11 +17,11 @@ pr:
     - master
   paths:
     include:
-    - sdk/keyvault/
+    - sdk/identity/
     - sdk/core/
     - eng/
 
 jobs:
 - template: ../../eng/pipelines/templates/jobs/archetype-sdk-client.yml
   parameters:
-    ProjectFile: sdk/keyvault/Microsoft.Azure.KeyVault.sln
+    ProjectFile: sdk/identity/Azure.Identity/Azure.Identity.sln
